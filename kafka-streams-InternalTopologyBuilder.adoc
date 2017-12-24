@@ -30,6 +30,20 @@ Used when...FIXME
 Used when...FIXME
 |===
 
+=== [[addProcessor]] `addProcessor` Method
+
+[source, java]
+----
+void addProcessor(
+  final String name,
+  final ProcessorSupplier supplier,
+  final String... predecessorNames)
+----
+
+`addProcessor`...FIXME
+
+NOTE: `addProcessor` is used when...FIXME
+
 === [[addSource]] Registering New Source Topic -- `addSource` Method
 
 [source, scala]

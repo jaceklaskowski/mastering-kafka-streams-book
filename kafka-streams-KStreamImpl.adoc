@@ -1,6 +1,8 @@
 == [[KStreamImpl]] KStreamImpl
 
-`KStreamImpl` is...FIXME
+`KStreamImpl` is the concrete link:kafka-streams-KStream.adoc[KStream].
+
+`KStreamImpl` is <<creating-instance, created>> when...FIXME
 
 [[internal-registries]]
 .KStreamImpl's Internal Properties (e.g. Registries, Counters and Flags)
@@ -13,9 +15,24 @@
 | link:kafka-streams-KeyValueMapper.adoc[KeyValueMapper]
 |===
 
+=== [[mapValues]] Creating New Processor with KStreamMapValues Processor Supplier (with KSTREAM-MAPVALUES Prefix) -- `mapValues` Operator
+
+[source, java]
+----
+<V1> KStream<K, V1> mapValues(final ValueMapper<? super V, ? extends V1> mapper)
+----
+
+NOTE: `mapValues` is a part of link:kafka-streams-KStream.adoc#mapValues[KStream Contract] to...FIXME.
+
+`mapValues` creates a new `KStreamImpl` for a new processor (with the current <<builder, InternalStreamsBuilder>>, <<sourceNodes, source nodes>> and <<repartitionRequired, repartitionRequired>> flag).
+
+Internally, `mapValues` requests <<builder, InternalStreamsBuilder>> for a new processor name with *KSTREAM-MAPVALUES-* prefix and link:kafka-streams-InternalTopologyBuilder.adoc#addProcessor[registers] a `KStreamMapValues` processor supplier under the name.
+
+NOTE: `mapValues` uses <<builder, InternalStreamsBuilder>> to access the current link:kafka-streams-InternalStreamsBuilder.adoc#internalTopologyBuilder[InternalTopologyBuilder].
+
 === [[createReparitionedSource]] `createReparitionedSource` Method
 
-[source, scala]
+[source, java]
 ----
 String createReparitionedSource(
   final InternalStreamsBuilder builder,
@@ -39,5 +56,3 @@ NOTE: `createReparitionedSource` is used when...FIXME
 * [[repartitionRequired]] Flag whether repartitioning is required or not
 
 `KStreamImpl` initializes the <<internal-registries, internal registries and counters>>.
-
-`KStreamImpl` is <<creating-instance, created>> when...FIXME

@@ -14,3 +14,24 @@ import org.apache.kafka.streams.kstream.KStream
 // Else...Scala type inferencer gives us a stream of "nothing", i.e. KStream[Nothing, Nothing]
 val input: KStream[String, String] = builder.stream("input")
 ----
+
+`KStream` comes with a rich set of <<operators, operators>> (aka _KStream API_) that allow for building topologies to process key-value records.
+
+NOTE: link:kafka-streams-KStreamImpl.adoc[KStreamImpl] is the one and only implementation of `KStream`.
+
+[[operators]]
+.KStream Operators
+[cols="1,2",options="header",width="100%"]
+|===
+| Operator
+| Description
+
+| [[mapValues]] `mapValues`
+a|
+
+[source, java]
+----
+<VR> KStream<K, VR> mapValues(ValueMapper<? super V, ? extends VR> mapper);
+----
+
+|===
