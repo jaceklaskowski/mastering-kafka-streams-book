@@ -1,0 +1,15 @@
+== Mastering Kafka Streams
+
+Welcome to *Mastering Kafka Streams* gitbook!
+
+I'm https://pl.linkedin.com/in/jaceklaskowski[Jacek Laskowski], an independent consultant, developer and trainer focusing exclusively on Apache Spark, Apache Kafka and recently *Kafka Streams* (with Scala and sbt on Apache Mesos, Hadoop YARN and DC/OS). I offer courses, workshops, mentoring and software development services.
+
+I lead http://www.meetup.com/WarsawScala/[Warsaw Scala Enthusiasts] and http://www.meetup.com/Warsaw-Spark[Warsaw Spark] meetups in Warsaw, Poland.
+
+Contact me at jacek@japila.pl or https://twitter.com/jaceklaskowski[@jaceklaskowski] to discuss Apache Spark, Apache Kafka and Kafka Streams opportunities, e.g. courses, workshops, mentoring or application development services.
+
+If you like the Mastering Kafka Streams notes you should seriously consider participating in my own, very hands-on https://github.com/jaceklaskowski/spark-workshop/blob/gh-pages/slides/README.md#toc[workshops].
+
+This collections of notes (what some may rashly call a "book") serves as the ultimate place of mine to collect all the nuts and bolts of leveraging https://kafka.apache.org/documentation/streams/[Kafka Streams] in your projects. The notes aim to help me designing and developing better products with Kafka Streams. It is also a viable proof of my understanding of Kafka Streams. I do eventually want to reach the highest level of mastery in Kafka Streams.
+
+Expect text and code snippets from a variety of public sources. Attribution follows.
