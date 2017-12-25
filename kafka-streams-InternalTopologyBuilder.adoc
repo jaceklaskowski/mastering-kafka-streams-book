@@ -44,6 +44,23 @@ void addProcessor(
 
 NOTE: `addProcessor` is used when...FIXME
 
+=== [[addSink]] `addSink` Method
+
+[source, java]
+----
+void addSink(
+  final String name,
+  final String topic,
+  final Serializer<K> keySerializer,
+  final Serializer<V> valSerializer,
+  final StreamPartitioner<? super K, ? super V> partitioner,
+  final String... predecessorNames)
+----
+
+`addSink`...FIXME
+
+NOTE: `addSink` is used when...FIXME
+
 === [[addSource]] Registering New Source Topic -- `addSource` Method
 
 [source, scala]

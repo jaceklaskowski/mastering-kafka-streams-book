@@ -27,6 +27,7 @@
 
 . link:kafka-streams-Consumed.adoc[Consumed]
 . link:kafka-streams-Produced.adoc[Produced]
+. link:kafka-streams-Printed.adoc[Printed]
 
 . link:kafka-streams-StreamPartitioner.adoc[StreamPartitioner]
 .. link:kafka-streams-WindowedStreamPartitioner.adoc[WindowedStreamPartitioner]

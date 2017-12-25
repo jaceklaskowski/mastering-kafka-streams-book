@@ -34,6 +34,14 @@ a|
 <VR> KStream<K, VR> mapValues(ValueMapper<? super V, ? extends VR> mapper);
 ----
 
+| [[print]] `print`
+a|
+
+[source, java]
+----
+void print(final Printed<K, V> printed);
+----
+
 | [[through]] `through`
 a|
 
