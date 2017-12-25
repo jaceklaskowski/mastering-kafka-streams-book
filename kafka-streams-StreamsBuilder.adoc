@@ -6,7 +6,7 @@
 [[internalStreamsBuilder]]
 `StreamsBuilder` uses link:kafka-streams-InternalStreamsBuilder.adoc[InternalStreamsBuilder] for...FIXME
 
-=== [[stream]] `stream` Factory Method
+=== [[stream]] Creating KStream of Records for Topics -- `stream` Factory Method
 
 [source, java]
 ----
@@ -23,6 +23,6 @@ synchronized <K, V> KStream<K, V> stream(
 <1> Calls `stream(final Collection<String> topics)`
 <2> Calls `stream(final Collection<String> topics, final Consumed<K, V> consumed)` with `Consumed` with all fields `null`
 
-`stream` creates a link:kafka-streams-KStream.adoc[KStream] (of keys of type `K` and values of type `V`) for the defined topic(s) and the parameters in the input link:kafka-streams-Consumed.adoc[consumed].
+`stream` creates a link:kafka-streams-KStream.adoc[KStream] (of keys of type `K` and values of type `V`) for the defined topic(s) and the parameters in the input link:kafka-streams-Consumed.adoc[Consumed].
 
-Internally, `stream` requests <<internalStreamsBuilder, InternalStreamsBuilder>> to link:kafka-streams-InternalStreamsBuilder.adoc#stream[create a KStream] for the input `topics` and a `ConsumedInternal` for the input `consumed`.
+Internally, `stream` requests <<internalStreamsBuilder, InternalStreamsBuilder>> to link:kafka-streams-InternalStreamsBuilder.adoc#stream[create a KStream] for the input `topics` and a `ConsumedInternal` for the input link:kafka-streams-Consumed.adoc[Consumed].

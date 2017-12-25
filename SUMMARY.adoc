@@ -25,13 +25,18 @@
 . link:kafka-streams-TaskCreator.adoc[TaskCreator]
 . link:kafka-streams-AbstractTaskCreator.adoc[AbstractTaskCreator]
 
+. link:kafka-streams-Consumed.adoc[Consumed]
+. link:kafka-streams-Produced.adoc[Produced]
+
+. link:kafka-streams-StreamPartitioner.adoc[StreamPartitioner]
+.. link:kafka-streams-WindowedStreamPartitioner.adoc[WindowedStreamPartitioner]
+
 . link:kafka-streams-KStream.adoc[KStream]
 .. link:kafka-streams-KStreamImpl.adoc[KStreamImpl]
 
 . link:kafka-streams-StreamsBuilder.adoc[StreamsBuilder]
 . link:kafka-streams-Topology.adoc[Topology]
 . link:kafka-streams-InternalTopologyBuilder.adoc[InternalTopologyBuilder]
-. link:kafka-streams-Consumed.adoc[Consumed]
 . link:kafka-streams-InternalStreamsBuilder.adoc[InternalStreamsBuilder]
 . link:kafka-streams-KeyValueMapper.adoc[KeyValueMapper]
 . link:kafka-streams-StreamsConfig.adoc[StreamsConfig]

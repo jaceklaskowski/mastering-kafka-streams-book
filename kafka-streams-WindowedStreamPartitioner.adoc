@@ -1,0 +1,3 @@
+== [[WindowedStreamPartitioner]] WindowedStreamPartitioner
+
+`WindowedStreamPartitioner` is...FIXME

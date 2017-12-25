@@ -15,7 +15,7 @@ import org.apache.kafka.streams.kstream.KStream
 val input: KStream[String, String] = builder.stream("input")
 ----
 
-`KStream` comes with a rich set of <<operators, operators>> (aka _KStream API_) that allow for building topologies to process key-value records.
+`KStream` comes with a rich set of <<operators, operators>> (aka _KStream API_) that allow for building topologies to consume, process and produce key-value records.
 
 NOTE: link:kafka-streams-KStreamImpl.adoc[KStreamImpl] is the one and only implementation of `KStream`.
 
@@ -33,5 +33,25 @@ a|
 ----
 <VR> KStream<K, VR> mapValues(ValueMapper<? super V, ? extends VR> mapper);
 ----
+
+| [[through]] `through`
+a|
+
+[source, java]
+----
+KStream<K, V> through(final String topic);
+KStream<K, V> through(final String topic, final Produced<K, V> produced);
+----
+
+| [[to]] `to`
+a|
+
+[source, java]
+----
+void to(final String topic);
+void to(final String topic, final Produced<K, V> produced);
+----
+
+NOTE: The specified `topic` should be manually created before the Kafka Streams application is started.
 
 |===

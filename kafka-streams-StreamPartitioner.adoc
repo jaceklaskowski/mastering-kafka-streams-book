@@ -1,0 +1,3 @@
+== [[StreamPartitioner]] StreamPartitioner
+
+`StreamPartitioner` is...FIXME

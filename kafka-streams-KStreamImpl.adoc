@@ -15,7 +15,7 @@
 | link:kafka-streams-KeyValueMapper.adoc[KeyValueMapper]
 |===
 
-=== [[mapValues]] Creating New Processor with KStreamMapValues Processor Supplier (with KSTREAM-MAPVALUES Prefix) -- `mapValues` Operator
+=== [[mapValues]] Registering Node Processor with KStreamMapValues Processor Supplier (with KSTREAM-MAPVALUES Prefix) -- `mapValues` Operator
 
 [source, java]
 ----
@@ -26,9 +26,54 @@ NOTE: `mapValues` is a part of link:kafka-streams-KStream.adoc#mapValues[KStream
 
 `mapValues` creates a new `KStreamImpl` for a new processor (with the current <<builder, InternalStreamsBuilder>>, <<sourceNodes, source nodes>> and <<repartitionRequired, repartitionRequired>> flag).
 
-Internally, `mapValues` requests <<builder, InternalStreamsBuilder>> for a new processor name with *KSTREAM-MAPVALUES-* prefix and link:kafka-streams-InternalTopologyBuilder.adoc#addProcessor[registers] a `KStreamMapValues` processor supplier under the name.
+Internally, `mapValues` requests <<builder, InternalStreamsBuilder>> for a new processor name with *KSTREAM-MAPVALUES* prefix and link:kafka-streams-InternalTopologyBuilder.adoc#addProcessor[registers] a `KStreamMapValues` processor supplier under the name.
 
 NOTE: `mapValues` uses <<builder, InternalStreamsBuilder>> to access the current link:kafka-streams-InternalStreamsBuilder.adoc#internalTopologyBuilder[InternalTopologyBuilder].
+
+=== [[through]] `through` Operator
+
+[source, java]
+----
+KStream<K, V> through(final String topic) // <1>
+KStream<K, V> through(final String topic, final Produced<K, V> produced)
+----
+<1> Calls the other `to` with `Produced` of `nulls`
+
+NOTE: `through` is a part of link:kafka-streams-KStream.adoc#through[KStream Contract] to...FIXME.
+
+`through`...FIXME
+
+=== [[to]] Registering Sink Node (with KSTREAM-SINK Prefix) -- `to` Operator
+
+[source, java]
+----
+void to(final String topic) // <1>
+void to(final String topic, final Produced<K, V> produced)
+----
+<1> Calls the other `to` with `Produced` of `nulls`
+
+NOTE: `to` is a part of link:kafka-streams-KStream.adoc#to[KStream Contract] to...FIXME.
+
+`to` merely passes the call on to the internal <<to-internal, to>> with a new `ProducedInternal` for the input link:kafka-streams-Produced.adoc[Produced].
+
+=== [[to-internal]] Registering Sink Node (with KSTREAM-SINK Prefix) -- `to` Internal Method
+
+[source, java]
+----
+void to(final String topic, final ProducedInternal<K, V> produced)
+----
+
+`to` requests <<builder, InternalStreamsBuilder>> for a new processor name with *KSTREAM-SINK* prefix.
+
+NOTE: `to` uses the input `ProducedInternal` to access the `key` and `value` serializers, and `streamPartitioner`.
+
+`to` link:kafka-streams-InternalTopologyBuilder.adoc#addProcessor[registers a new sink node] under the name.
+
+NOTE: `to` uses <<builder, InternalStreamsBuilder>> to access the current link:kafka-streams-InternalStreamsBuilder.adoc#internalTopologyBuilder[InternalTopologyBuilder].
+
+NOTE: `to` uses link:kafka-streams-WindowedStreamPartitioner.adoc[WindowedStreamPartitioner] when the input `ProducedInternal` defines no stream partitioner and uses `WindowedSerializer` for the key serializer.
+
+NOTE: `to` is used in <<to, to>> and <<through, through>> operators.
 
 === [[createReparitionedSource]] `createReparitionedSource` Method
 
