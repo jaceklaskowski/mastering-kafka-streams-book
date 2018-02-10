@@ -51,6 +51,16 @@ KStream<K, V> through(final String topic);
 KStream<K, V> through(final String topic, final Produced<K, V> produced);
 ----
 
+| [[transform]] `transform`
+a| Stateful record transformation
+
+[source, java]
+----
+KStream<K1, V1> transform(
+  final TransformerSupplier<? super K, ? super V, KeyValue<K1, V1>> transformerSupplier,
+  final String... stateStoreNames)
+----
+
 | [[to]] `to`
 a|
 

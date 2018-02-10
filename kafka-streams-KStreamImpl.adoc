@@ -1,8 +1,8 @@
 == [[KStreamImpl]] KStreamImpl
 
-`KStreamImpl` is the concrete link:kafka-streams-KStream.adoc[KStream].
+`KStreamImpl` is a concrete link:kafka-streams-KStream.adoc[KStream] (and the one and only in Kafka Streams).
 
-`KStreamImpl` is <<creating-instance, created>> when...FIXME
+`KStreamImpl` is <<creating-instance, created>> every time a transformation is executed and when...FIXME
 
 [[internal-registries]]
 .KStreamImpl's Internal Properties (e.g. Registries, Counters and Flags)
@@ -14,6 +14,29 @@
 | [[defaultKeyValueMapper]] `defaultKeyValueMapper`
 | link:kafka-streams-KeyValueMapper.adoc[KeyValueMapper]
 |===
+
+=== [[transform]] Stateful Record Transformation -- `transform` Operator
+
+[source, java]
+----
+KStream<K1, V1> transform(
+  final TransformerSupplier<? super K, ? super V, KeyValue<K1, V1>> transformerSupplier,
+  final String... stateStoreNames)
+----
+
+NOTE: `transform` is part of link:kafka-streams-KStream.adoc#transform[KStream Contract] to...FIXME.
+
+`transform` requests <<builder, InternalStreamsBuilder>> for a new processor name with *KSTREAM-TRANSFORM* prefix.
+
+`transform` then creates a new `KStreamTransform` (for the input `transformerSupplier`) and requests `InternalTopologyBuilder` to link:kafka-streams-InternalTopologyBuilder.adoc#addProcessor[register] a new processor supplier under the name.
+
+NOTE: `print` uses <<builder, InternalStreamsBuilder>> to access the current link:kafka-streams-InternalStreamsBuilder.adoc#internalTopologyBuilder[InternalTopologyBuilder].
+
+`transform` requests `InternalTopologyBuilder` to link:kafka-streams-InternalTopologyBuilder.adoc#connectProcessorAndStateStores[connect the processor supplier with state stores] if specified.
+
+In the end, `transform` creates a new <<creating-instance, KStreamImpl>> for the processor name and <<repartitionRequired, repartitionRequired>> flag turned on.
+
+`transform` reports a `NullPointerException` when `transformerSupplier` is `null`.
 
 === [[mapValues]] Registering Processor Node with KStreamMapValues Processor Supplier and KSTREAM-MAPVALUES Prefix -- `mapValues` Operator
 

@@ -7,7 +7,7 @@ NOTE: `KafkaStreams` is "merely" a <<clientSupplier, Kafka client>> that consume
 [[topology]]
 `KafkaStreams` processes records through a topology.
 
-NOTE: A Kafka Streams developer defines the processing logic either using a link:kafka-streams-Topology.adoc[Topology] directly (and define a DAG topology of `Processor`s) or indirectly through a link:kafka-streams-StreamsBuilder.adoc[StreamsBuilder] that provides the high-level DSL to define transformations.
+NOTE: A Kafka Streams developer defines the processing logic either using a link:kafka-streams-Topology.adoc[Topology] directly (and define a DAG topology of link:kafka-streams-Processor.adoc[Processors]) or indirectly through a link:kafka-streams-StreamsBuilder.adoc[StreamsBuilder] that provides the high-level DSL to define transformations.
 
 [source, scala]
 ----

@@ -44,6 +44,19 @@ void addProcessor(
 
 NOTE: `addProcessor` is used when...FIXME
 
+=== [[connectProcessorAndStateStores]] `connectProcessorAndStateStores` Method
+
+[source, java]
+----
+void connectProcessorAndStateStores(
+  final String processorName,
+  final String... stateStoreNames)
+----
+
+`connectProcessorAndStateStores`...FIXME
+
+NOTE: `connectProcessorAndStateStores` is used when...FIXME
+
 === [[addSink]] `addSink` Method
 
 [source, java]

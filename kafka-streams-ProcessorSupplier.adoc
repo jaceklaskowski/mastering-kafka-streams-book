@@ -1,0 +1,3 @@
+== [[ProcessorSupplier]] ProcessorSupplier
+
+`ProcessorSupplier` is the <<contract, contract>> for factory objects for link:kafka-streams-Processor.adoc[Processors], i.e. objects that can create (aka _supply_) processors.

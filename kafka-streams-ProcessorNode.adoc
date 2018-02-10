@@ -9,7 +9,7 @@
 `ProcessorNode` takes the following when created:
 
 * [[name]] Name
-* [[processor]] `Processor`
+* [[processor]] link:kafka-streams-Processor.adoc[Processor]
 * [[stateStores]] State stores
 
 `ProcessorNode` initializes the <<internal-registries, internal registries and counters>>.

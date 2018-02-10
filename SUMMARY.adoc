@@ -17,6 +17,9 @@
 .. link:kafka-streams-StandbyTask.adoc[StandbyTask]
 .. link:kafka-streams-AbstractTask.adoc[AbstractTask]
 
+. link:kafka-streams-Processor.adoc[Processor -- Contract for Stream Processors]
+. link:kafka-streams-ProcessorSupplier.adoc[ProcessorSupplier]
+
 . link:kafka-streams-ProcessorNode.adoc[ProcessorNode]
 . link:kafka-streams-ProcessorNodeFactory.adoc[ProcessorNodeFactory]
 . link:kafka-streams-SourceNodeFactory.adoc[SourceNodeFactory]
