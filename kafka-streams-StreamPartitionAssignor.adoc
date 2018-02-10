@@ -1,0 +1,25 @@
+== [[StreamPartitionAssignor]] StreamPartitionAssignor
+
+`StreamPartitionAssignor` is...FIXME
+
+=== [[subscription]] `subscription` Method
+
+[source, java]
+----
+Subscription subscription(Set<String> topics)
+----
+
+NOTE: `subscription` is part of Kafka Consumer's `PartitionAssignor` contract to...FIXME.
+
+`subscription`...FIXME
+
+=== [[onAssignment]] `onAssignment` Method
+
+[source, java]
+----
+void onAssignment(Assignment assignment)
+----
+
+NOTE: `onAssignment` is part of Kafka Consumer's `PartitionAssignor` contract to...FIXME.
+
+`onAssignment`...FIXME

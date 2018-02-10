@@ -45,7 +45,7 @@ In the end, `transform` creates a new <<creating-instance, KStreamImpl>> for the
 <V1> KStream<K, V1> mapValues(final ValueMapper<? super V, ? extends V1> mapper)
 ----
 
-NOTE: `mapValues` is a part of link:kafka-streams-KStream.adoc#mapValues[KStream Contract] to...FIXME.
+NOTE: `mapValues` is part of link:kafka-streams-KStream.adoc#mapValues[KStream Contract] to...FIXME.
 
 `mapValues` creates a new `KStreamImpl` for a new processor (with the current <<builder, InternalStreamsBuilder>>, <<sourceNodes, source nodes>> and <<repartitionRequired, repartitionRequired>> flag).
 
@@ -62,7 +62,7 @@ KStream<K, V> through(final String topic, final Produced<K, V> produced)
 ----
 <1> Calls the other `to` with `Produced` of `nulls`
 
-NOTE: `through` is a part of link:kafka-streams-KStream.adoc#through[KStream Contract] to...FIXME.
+NOTE: `through` is part of link:kafka-streams-KStream.adoc#through[KStream Contract] to...FIXME.
 
 `through`...FIXME
 
@@ -73,7 +73,7 @@ NOTE: `through` is a part of link:kafka-streams-KStream.adoc#through[KStream Con
 void print(final Printed<K, V> printed)
 ----
 
-NOTE: `print` is a part of link:kafka-streams-KStream.adoc#print[KStream Contract] to...FIXME.
+NOTE: `print` is part of link:kafka-streams-KStream.adoc#print[KStream Contract] to...FIXME.
 
 `print` creates a `PrintedInternal` for the input link:kafka-streams-Printed.adoc[Printed].
 
@@ -90,7 +90,7 @@ void to(final String topic, final Produced<K, V> produced)
 ----
 <1> Calls the other `to` with `Produced` of `nulls`
 
-NOTE: `to` is a part of link:kafka-streams-KStream.adoc#to[KStream Contract] to...FIXME.
+NOTE: `to` is part of link:kafka-streams-KStream.adoc#to[KStream Contract] to...FIXME.
 
 `to` merely passes the call on to the internal <<to-internal, to>> with a new `ProducedInternal` for the input link:kafka-streams-Produced.adoc[Produced].
 

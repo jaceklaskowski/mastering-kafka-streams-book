@@ -2,6 +2,20 @@
 
 `TaskManager` is...FIXME
 
+[[logging]]
+[TIP]
+====
+Enable `TRACE` logging level for `org.apache.kafka.streams.processor.internals.TaskManager` logger to see what happens inside.
+
+Add the following line to `log4j.properties`:
+
+```
+log4j.logger.org.apache.kafka.streams.processor.internals.TaskManager=TRACE
+```
+
+Refer to link:kafka-logging.adoc#log4j.properties[Application Logging Using log4j].
+====
+
 === [[addStreamTasks]] `addStreamTasks` Internal Method
 
 [source, java]
@@ -12,6 +26,28 @@ void addStreamTasks(final Collection<TopicPartition> assignment)
 `addStreamTasks`...FIXME
 
 NOTE: `addStreamTasks` is used exclusively when `TaskManager` is requested to <<createTasks, create processor tasks for assigned topic partitions>>.
+
+=== [[updateSubscriptionsFromAssignment]] `updateSubscriptionsFromAssignment` Method
+
+[source, java]
+----
+void updateSubscriptionsFromAssignment(List<TopicPartition> partitions)
+----
+
+`updateSubscriptionsFromAssignment`...FIXME
+
+NOTE: `updateSubscriptionsFromAssignment` is used exclusively when `StreamPartitionAssignor` is requested to link:kafka-streams-StreamPartitionAssignor.adoc#onAssignment[onAssignment]
+
+=== [[updateSubscriptionsFromMetadata]] `updateSubscriptionsFromMetadata` Method
+
+[source, java]
+----
+void updateSubscriptionsFromMetadata(Set<String> topics)
+----
+
+`updateSubscriptionsFromMetadata`...FIXME
+
+NOTE: `updateSubscriptionsFromMetadata` is used when `StreamPartitionAssignor` is requested to link:kafka-streams-StreamPartitionAssignor.adoc#subscription[subscription]
 
 === [[createTasks]] Creating Processor Tasks for Assigned Topic Partitions -- `createTasks` Method
 

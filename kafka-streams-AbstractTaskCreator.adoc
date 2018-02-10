@@ -20,7 +20,7 @@ abstract class StreamThread.AbstractTaskCreator<T extends Task> {
 | Description
 
 | [[createTask]] `createTask`
-| Used when...
+| Used exclusively when `AbstractTaskCreator` is requested to <<createTasks, create tasks>> for...FIXME
 |===
 
 [[implementations]]

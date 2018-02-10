@@ -12,14 +12,18 @@ image::images/kafka-streams-StreamThread.png[align="center"]
 | Name
 | Description
 
-| [[consumer]] `consumer`
-| Kafka `Consumer`
-
 | [[builder]] `builder`
 | link:kafka-streams-InternalTopologyBuilder.adoc[InternalTopologyBuilder]
 
+| [[consumer]] `consumer`
+| Kafka https://kafka.apache.org/10/javadoc/org/apache/kafka/clients/consumer/KafkaConsumer.html[Consumer] that consumes records from a Kafka cluster
+
 | [[rebalanceListener]] `rebalanceListener`
-| link:kafka-streams-StreamThread-RebalanceListener.adoc[RebalanceListener]
+a| link:kafka-streams-StreamThread-RebalanceListener.adoc[RebalanceListener]
+
+* Used exclusively when `StreamThread` is requested to <<runLoop, run the main event loop>> (and requests the Kafka <<consumer, Consumer>> to subscribe to get dynamically assigned partitions of topics matching specified pattern)
+
+NOTE: `StreamThread` requests <<builder, InternalTopologyBuilder>> for the link:kafka-streams-InternalTopologyBuilder.adoc#sourceTopicPattern[source topic pattern] to subscribe to.
 
 | [[timerStartedMs]] `timerStartedMs`
 | The timestamp when the timer has started
@@ -193,7 +197,7 @@ NOTE: `isRunning` is used when...FIXME
 void run()
 ----
 
-NOTE: `run` is a part of Java's https://docs.oracle.com/javase/9/docs/api/java/lang/Thread.html#run--[Thread Contract] to be executed by a JVM thread.
+NOTE: `run` is part of Java's https://docs.oracle.com/javase/9/docs/api/java/lang/Thread.html#run--[Thread Contract] to be executed by a JVM thread.
 
 Internally, `run` prints out the following INFO message to the logs.
 

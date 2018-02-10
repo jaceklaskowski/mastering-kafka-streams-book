@@ -1,3 +1,17 @@
 == [[TaskCreator]] TaskCreator
 
 `TaskCreator` is...FIXME
+
+=== [[createTask]] `createTask` Method
+
+[source, java]
+----
+StreamTask createTask(
+  final Consumer<byte[], byte[]> consumer,
+  final TaskId taskId,
+  final Set<TopicPartition> partitions)
+----
+
+NOTE: `createTask` is part of link:kafka-streams-AbstractTaskCreator.adoc#createTask[AbstractTaskCreator Contract] to...FIXME.
+
+`createTask`...FIXME

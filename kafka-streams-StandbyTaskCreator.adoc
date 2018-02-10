@@ -12,7 +12,7 @@ StandbyTask createTask(
   final Set<TopicPartition> partitions)
 ----
 
-NOTE: `createTask` is a part of link:kafka-streams-AbstractTaskCreator.adoc#createTask[AbstractTaskCreator Contract] to...FIXME.
+NOTE: `createTask` is part of link:kafka-streams-AbstractTaskCreator.adoc#createTask[AbstractTaskCreator Contract] to...FIXME.
 
 `createTask`...FIXME
 

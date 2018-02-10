@@ -38,6 +38,8 @@
 . link:kafka-streams-KStream.adoc[KStream]
 .. link:kafka-streams-KStreamImpl.adoc[KStreamImpl]
 
+. link:kafka-streams-StreamPartitionAssignor.adoc[StreamPartitionAssignor]
+
 . link:kafka-streams-StreamsBuilder.adoc[StreamsBuilder]
 . link:kafka-streams-Topology.adoc[Topology]
 . link:kafka-streams-InternalTopologyBuilder.adoc[InternalTopologyBuilder]

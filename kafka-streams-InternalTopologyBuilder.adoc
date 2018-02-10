@@ -28,6 +28,11 @@ Used when...FIXME
 | Collection of <<addSource, registered>> topic names
 
 Used when...FIXME
+
+| [[topicPattern]] `topicPattern`
+a| Source topic pattern to subscribe to
+
+* Initialized the first time when `InternalTopologyBuilder` is requested for the <<sourceTopicPattern, source topic pattern>>
 |===
 
 === [[addGlobalStore]] `addGlobalStore` Internal Method
@@ -166,13 +171,15 @@ ProcessorTopology build(final Set<String> nodeGroup)
 
 `build`...FIXME
 
+NOTE: `nodeGroup` can be either <<globalNodeGroups, global node groups>> (aka _global state topology_) or a concrete or all <<nodeGroups, topic node group>>.
+
 [NOTE]
 ====
 `build` is used internally when:
 
 * `InternalTopologyBuilder` is requested to <<buildGlobalStateTopology, build a global processor task topology>>
-* `StandbyTaskCreator` is requested to create a `StandbyTask`
-* `TaskCreator` is requested to create a `StreamTask`
+* `StandbyTaskCreator` is requested to link:kafka-streams-StandbyTaskCreator.adoc#createTask[create a StandbyTask for a topic group]
+* `TaskCreator` is requested to link:kafka-streams-TaskCreator.adoc#createTask[create a StreamTask for a topic group]
 ====
 
 === [[buildGlobalStateTopology]] Building Global Processor Task Topology -- `buildGlobalStateTopology` Method
@@ -192,7 +199,7 @@ synchronized ProcessorTopology buildGlobalStateTopology()
 * `ProcessorTopology` is requested to `buildGlobalStateTopology`
 ====
 
-=== [[sourceTopicPattern]] `sourceTopicPattern` Method
+=== [[sourceTopicPattern]] Getting Source Topic Pattern -- `sourceTopicPattern` Method
 
 [source, java]
 ----
@@ -201,4 +208,11 @@ synchronized Pattern sourceTopicPattern()
 
 `sourceTopicPattern`...FIXME
 
-NOTE: `sourceTopicPattern` is used when...FIXME
+[NOTE]
+====
+`sourceTopicPattern` is used when:
+
+1. `StreamThread` is started (and requested to link:kafka-streams-StreamThread.adoc#runLoop[run the main event loop])
+
+1. `TaskManager` is requested for link:kafka-streams-TaskManager.adoc#updateSubscriptionsFromAssignment[updateSubscriptionsFromAssignment] and link:kafka-streams-TaskManager.adoc#updateSubscriptionsFromMetadata[updateSubscriptionsFromMetadata]
+====
