@@ -22,7 +22,7 @@ NOTE: `NodeFactory` is a `private` contract.
 | Description
 
 | [[build]] `build`
-| Used exclusively when `InternalTopologyBuilder`...FIXME
+| Used exclusively when `InternalTopologyBuilder` is requested to link:kafka-streams-InternalTopologyBuilder.adoc#build[build a processor task topology] for specified node groups
 
 | [[describe]] `describe`
 | Used when...

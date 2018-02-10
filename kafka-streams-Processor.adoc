@@ -13,7 +13,8 @@ interface Processor<K, V> {
   void init(ProcessorContext context);
   void process(K key, V value);
   void close();
-  // deprecated
+
+  @Deprecated
   void punctuate(long timestamp);
 }
 ----
@@ -25,36 +26,16 @@ interface Processor<K, V> {
 | Description
 
 | [[init]] `init`
-a|
-
-[source, java]
-----
-void init(ProcessorContext context);
-----
+|
 
 | [[process]] `process`
-a|
-
-[source, java]
-----
-void process(K key, V value);
-----
+|
 
 | [[close]] `close`
-a|
-
-[source, java]
-----
-void close();
-----
+|
 
 | [[punctuate]] `punctuate`
-a| *DEPRECATED*
-
-[source, java]
-----
-void punctuate(long timestamp);
-----
+| *DEPRECATED*
 |===
 
 The lifecycle of a `Processor` starts at <<init, init>> when....FIXME

@@ -30,6 +30,26 @@ Used when...FIXME
 Used when...FIXME
 |===
 
+=== [[addGlobalStore]] `addGlobalStore` Internal Method
+
+[source, java]
+----
+void addGlobalStore(
+  final String sourceName,
+  final TimestampExtractor timestampExtractor,
+  final Deserializer keyDeserializer,
+  final Deserializer valueDeserializer,
+  final String topic,
+  final String processorName,
+  final ProcessorSupplier stateUpdateSupplier,
+  final String name,
+  final KeyValueStore store)
+----
+
+`addGlobalStore`...FIXME
+
+NOTE: `addGlobalStore` is used when...FIXME
+
 === [[addProcessor]] `addProcessor` Method
 
 [source, java]
@@ -44,7 +64,7 @@ void addProcessor(
 
 NOTE: `addProcessor` is used when...FIXME
 
-=== [[connectProcessorAndStateStores]] `connectProcessorAndStateStores` Method
+=== [[connectProcessorAndStateStores]] `connectProcessorAndStateStores` Internal Method
 
 [source, java]
 ----
