@@ -1,0 +1,45 @@
+== [[ProcessorContext]] ProcessorContext
+
+`ProcessorContext` is a <<contract, contract>> of...FIXME
+
+[[contract]]
+[source, java]
+----
+package org.apache.kafka.streams.processor;
+
+interface ProcessorContext {
+  String applicationId();
+  TaskId taskId();
+  Serde<?> keySerde();
+  Serde<?> valueSerde();
+  File stateDir();
+  StreamsMetrics metrics();
+  void register(
+    StateStore store,
+    boolean loggingEnabledIsDeprecatedAndIgnored,
+    StateRestoreCallback stateRestoreCallback);
+  StateStore getStateStore(String name);
+  Cancellable schedule(long intervalMs, PunctuationType type, Punctuator callback);
+  void schedule(long interval);
+  <K, V> void forward(K key, V value);
+  <K, V> void forward(K key, V value, int childIndex);
+  <K, V> void forward(K key, V value, String childName);
+  void commit();
+  String topic();
+  int partition();
+  long offset();
+  long timestamp();
+  Map<String, Object> appConfigs();
+  Map<String, Object> appConfigsWithPrefix(String prefix);
+}
+----
+
+.ProcessorContext Contract
+[cols="1,2",options="header",width="100%"]
+|===
+| Method
+| Description
+
+| [[getStateStore]] `getStateStore`
+| Used when...FIXME
+|===

@@ -1,0 +1,14 @@
+== [[ProcessorContextImpl]] ProcessorContextImpl
+
+`ProcessorContextImpl` is a `AbstractProcessorContext` that...FIXME
+
+=== [[getStateStore]] `getStateStore` Method
+
+[source, scala]
+----
+StateStore getStateStore(final String name)
+----
+
+NOTE: `getStateStore` is part of link:kafka-streams-ProcessorContext.adoc#getStateStore[ProcessorContext Contract] to get the state store per name.
+
+`getStateStore`...FIXME

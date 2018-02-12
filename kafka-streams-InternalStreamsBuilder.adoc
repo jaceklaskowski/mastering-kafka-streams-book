@@ -19,6 +19,24 @@ KStream<K, V> stream(
 
 `stream` creates a new processor name (with *KSTREAM-SOURCE* prefix) and requests <<internalTopologyBuilder, InternalTopologyBuilder>> to link:kafka-streams-InternalTopologyBuilder.adoc#addSource[register a new source topic] and returns a new instance of link:kafka-streams-KStreamImpl.adoc#creating-instance[KStreamImpl]
 
+=== [[table]] Creating KTable for Topic -- `table` Method
+
+[source, java]
+----
+KTable<K, V> table(
+  final String topic,
+  final ConsumedInternal<K, V> consumed,
+  final MaterializedInternal<K, V, KeyValueStore<Bytes, byte[]>> materialized)
+KTable<K, V> table(
+  final String topic,
+  final ConsumedInternal<K, V> consumed,
+  final org.apache.kafka.streams.processor.StateStoreSupplier<KeyValueStore> storeSupplier)
+----
+
+`table`...FIXME
+
+NOTE: `table` is used exclusively when `StreamsBuilder` is requested to link:kafka-streams-StreamsBuilder.adoc#table[create a KTable for a topic].
+
 === [[createKTable]] `createKTable` Internal Method
 
 [source, scala]
@@ -34,4 +52,4 @@ KTable<K, V> createKTable(
 
 `createKTable`...FIXME
 
-NOTE: `createKTable` is used when...FIXME
+NOTE: `createKTable` is used exclusively when `InternalStreamsBuilder` is requested to <<table, create a KTable for a topic>>.

@@ -1,0 +1,66 @@
+== [[StateStore]] StateStore
+
+`StateStore` is the <<contract, contract>> of a storage engine that manages the state maintained by a stream processor.
+
+[[contract]]
+[source, java]
+----
+package org.apache.kafka.streams.processor;
+
+interface StateStore {
+  void close();
+  void flush();
+  void init(ProcessorContext context, StateStore root);
+  boolean isOpen();
+  String name();
+  boolean persistent();
+}
+----
+
+.StateStore Contract
+[cols="1,2",options="header",width="100%"]
+|===
+| Method
+| Description
+
+| [[close]] `close`
+| Used when...FIXME
+
+| [[flush]] `flush`
+| Used when...FIXME
+
+| [[init]] `init`
+| Used when...FIXME
+
+| [[isOpen]] `isOpen`
+| Used when...FIXME
+
+| [[name]] `name`
+| Used when...FIXME
+
+| [[persistent]] `persistent`
+| Used when...FIXME
+|===
+
+[[implementations]]
+.StateStores
+[cols="1,2",options="header",width="100%"]
+|===
+| StateStore
+| Description
+
+| [[SegmentedBytesStore]] `SegmentedBytesStore`
+|
+
+| [[KeyValueStore]] `KeyValueStore`
+|
+
+| [[WrappedStateStore]] `WrappedStateStore`
+|
+
+| [[SessionStore]] `SessionStore`
+|
+
+| [[WindowStore]] `WindowStore`
+|
+|===

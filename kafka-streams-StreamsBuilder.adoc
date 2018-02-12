@@ -6,6 +6,23 @@
 [[internalStreamsBuilder]]
 `StreamsBuilder` uses link:kafka-streams-InternalStreamsBuilder.adoc[InternalStreamsBuilder] for...FIXME
 
+=== [[table]] `table` Method
+
+[source, java]
+----
+KTable<K, V> table(final String topic)
+KTable<K, V> table(final String topic, final Consumed<K, V> consumed)
+KTable<K, V> table(
+  final String topic,
+  final Consumed<K, V> consumed,
+  final Materialized<K, V, KeyValueStore<Bytes, byte[]>> materialized)
+KTable<K, V> table(
+  final String topic,
+  final Materialized<K, V, KeyValueStore<Bytes, byte[]>> materialized)
+----
+
+`table`...FIXME
+
 === [[stream]] Creating KStream of Records for Topics -- `stream` Factory Method
 
 [source, java]
