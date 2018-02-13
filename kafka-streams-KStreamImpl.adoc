@@ -15,24 +15,23 @@
 | link:kafka-streams-KeyValueMapper.adoc[KeyValueMapper]
 |===
 
-=== [[transformValues]] `transformValues` Method
+=== [[transformValues]] Transforming Values with State -- `transformValues` Method
 
 [source, java]
 ----
 KStream<K, V1> transformValues(
   final ValueTransformerSupplier<? super V, ? extends V1> valueTransformerSupplier,
   final String... stateStoreNames)
-// private
-private <VR> KStream<K, VR> transformValues(
-  final InternalValueTransformerWithKeySupplier<? super K, ? super V, ? extends VR> internalValueTransformerWithKeySupplier,
+KStream<K, VR> transformValues(
+  final ValueTransformerWithKeySupplier<? super K, ? super V, ? extends VR> valueTransformerSupplier,
   final String... stateStoreNames)
 ----
 
 NOTE: `transformValues` is part of link:kafka-streams-KStream.adoc#transformValues[KStream Contract] for a stateful record-by-record value transformation.
 
-`transformValues` <<toInternalValueTransformerSupplier, toInternalValueTransformerSupplier>> followed by <<transformValues, transformValues>>.
+`transformValues` link:kafka-streams-AbstractStream.adoc#toInternalValueTransformerSupplier[converts ValueTransformerSupplier or ValueTransformerWithKeySupplier to InternalValueTransformerWithKeySupplier] followed by the internal <<transformValues-private, transformValues>>.
 
-`transformValues` reports a `NullPointerException` when `ValueTransformerSupplier` is `null`.
+`transformValues` reports a `NullPointerException` when either `ValueTransformerSupplier` or `ValueTransformerWithKeySupplier` is `null`.
 
 === [[transform]] Stateful Record Transformation -- `transform` Operator
 
@@ -49,7 +48,7 @@ NOTE: `transform` is part of link:kafka-streams-KStream.adoc#transform[KStream C
 
 `transform` then creates a new `KStreamTransform` (for the input `transformerSupplier`) and requests `InternalTopologyBuilder` to link:kafka-streams-InternalTopologyBuilder.adoc#addProcessor[register] a new processor supplier under the name.
 
-NOTE: `print` uses <<builder, InternalStreamsBuilder>> to access the current link:kafka-streams-InternalStreamsBuilder.adoc#internalTopologyBuilder[InternalTopologyBuilder].
+NOTE: `transform` uses <<builder, InternalStreamsBuilder>> to access the current link:kafka-streams-InternalStreamsBuilder.adoc#internalTopologyBuilder[InternalTopologyBuilder].
 
 `transform` requests `InternalTopologyBuilder` to link:kafka-streams-InternalTopologyBuilder.adoc#connectProcessorAndStateStores[connect the processor supplier with state stores] if specified.
 
@@ -158,3 +157,24 @@ NOTE: `createReparitionedSource` is used when...FIXME
 * [[repartitionRequired]] Flag whether repartitioning is required or not
 
 `KStreamImpl` initializes the <<internal-registries, internal registries and counters>>.
+
+=== [[transformValues-private]] Transforming Values with State -- `transformValues` Internal Method
+
+[source, java]
+----
+private <VR> KStream<K, VR> transformValues(
+  final InternalValueTransformerWithKeySupplier<? super K, ? super V, ? extends VR> internalValueTransformerWithKeySupplier,
+  final String... stateStoreNames)
+----
+
+`transformValues` requests <<builder, InternalStreamsBuilder>> for a new processor name with *KSTREAM-TRANSFORMVALUES* prefix.
+
+`transformValues` then creates a new `KStreamTransformValues` (for the input `internalValueTransformerWithKeySupplier`) and requests `InternalTopologyBuilder` to link:kafka-streams-InternalTopologyBuilder.adoc#addProcessor[register] a new processor supplier under the name.
+
+NOTE: `transformValues` uses <<builder, InternalStreamsBuilder>> to access the current link:kafka-streams-InternalStreamsBuilder.adoc#internalTopologyBuilder[InternalTopologyBuilder].
+
+`transformValues` requests `InternalTopologyBuilder` to link:kafka-streams-InternalTopologyBuilder.adoc#connectProcessorAndStateStores[connect the processor supplier with state stores] if specified.
+
+In the end, `transformValues` creates a new <<creating-instance, KStreamImpl>> for the processor name.
+
+NOTE: `transformValues` is used when `KStreamImpl` is requested to <<transformValues, transformValues>>.

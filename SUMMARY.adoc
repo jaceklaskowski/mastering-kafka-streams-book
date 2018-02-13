@@ -21,6 +21,9 @@
 . link:kafka-streams-ProcessorSupplier.adoc[ProcessorSupplier]
 
 . link:kafka-streams-StateStore.adoc[StateStore]
+.. link:kafka-streams-Stores.adoc[Stores]
+.. (Deprecated) link:kafka-streams-StoreFactory.adoc[StoreFactory]
+
 . link:kafka-streams-ProcessorContext.adoc[ProcessorContext]
 .. link:kafka-streams-ProcessorContextImpl.adoc[ProcessorContextImpl]
 
@@ -42,6 +45,14 @@
 . link:kafka-streams-KStream.adoc[KStream]
 .. link:kafka-streams-KStreamImpl.adoc[KStreamImpl]
 
+. link:kafka-streams-KTableImpl.adoc[KTableImpl]
+. link:kafka-streams-KGroupedTableImpl.adoc[KGroupedTableImpl]
+. link:kafka-streams-TimeWindowedKStreamImpl.adoc[TimeWindowedKStreamImpl]
+. link:kafka-streams-SessionWindowedKStreamImpl.adoc[SessionWindowedKStreamImpl]
+. link:kafka-streams-KGroupedStreamImpl.adoc[KGroupedStreamImpl]
+
+. link:kafka-streams-AbstractStream.adoc[AbstractStream]
+
 . link:kafka-streams-StreamPartitionAssignor.adoc[StreamPartitionAssignor]
 
 . link:kafka-streams-StreamsBuilder.adoc[StreamsBuilder]
@@ -53,7 +64,6 @@
 . link:kafka-streams-KafkaClientSupplier.adoc[KafkaClientSupplier]
 .. link:kafka-streams-DefaultKafkaClientSupplier.adoc[DefaultKafkaClientSupplier]
 
-. link:kafka-streams-AbstractStream.adoc[AbstractStream]
 . link:kafka-streams-ValueTransformer.adoc[ValueTransformer -- Stateful Record-by-Record Value Transformation]
 . link:kafka-streams-ValueTransformerSupplier.adoc[ValueTransformerSupplier -- ValueTransformers Object Factory]
 

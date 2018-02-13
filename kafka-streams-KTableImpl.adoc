@@ -1,0 +1,3 @@
+== [[KTableImpl]] KTableImpl
+
+`KTableImpl` is...FIXME

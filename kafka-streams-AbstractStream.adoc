@@ -1,15 +1,106 @@
 == [[AbstractStream]] AbstractStream
 
-`AbstractStream` is...FIXME
+`AbstractStream` is a base abstraction for the <<implementations, different concrete streams>>.
 
-=== [[toInternalValueTransformerSupplier]] `toInternalValueTransformerSupplier` Method
+[[creating-instance]]
+Every `AbstractStream` has the following internal properties:
 
-[source, scala]
+* [[builder]] link:kafka-streams-InternalStreamsBuilder.adoc[InternalStreamsBuilder]
+* [[name]] Name
+* [[sourceNodes]] One or more names of the source nodes
+
+[[implementations]]
+.AbstractStreams
+[cols="1,2",options="header",width="100%"]
+|===
+| AbstractStream
+| Description
+
+| [[KTableImpl]] link:kafka-streams-KTableImpl.adoc[KTableImpl]
+|
+
+| [[KGroupedTableImpl]] link:kafka-streams-KGroupedTableImpl.adoc[KGroupedTableImpl]
+|
+
+| [[TimeWindowedKStreamImpl]] link:kafka-streams-TimeWindowedKStreamImpl.adoc[TimeWindowedKStreamImpl]
+|
+
+| [[SessionWindowedKStreamImpl]] link:kafka-streams-SessionWindowedKStreamImpl.adoc[SessionWindowedKStreamImpl]
+|
+
+| [[KStreamImpl]] link:kafka-streams-KStreamImpl.adoc[KStreamImpl]
+|
+
+| [[KGroupedStreamImpl]] link:kafka-streams-KGroupedStreamImpl.adoc[KGroupedStreamImpl]
+|
+|===
+
+=== [[storeFactory]] `storeFactory` Static Method
+
+[source, java]
+----
+static <T, K> Stores.PersistentKeyValueFactory<K, T> storeFactory(
+  final Serde<K> keySerde,
+  final Serde<T> aggValueSerde,
+  final String storeName)
+----
+
+`storeFactory` simply requests `Stores` to link:kafka-streams-Stores.adoc#create[create a StoreFactory] with the input parameters.
+
+[NOTE]
+====
+`storeFactory` is used when:
+
+* `AbstractStream` is requested for <<keyValueStore, keyValueStore>> and <<windowedStore, windowedStore>>
+
+* `KGroupedStreamImpl` is requested for link:kafka-streams-KGroupedStreamImpl.adoc#aggregate[aggregate] and link:kafka-streams-KGroupedStreamImpl.adoc#reduce[reduce]
+====
+
+=== [[keyValueStore]] `keyValueStore` Static Method
+
+[source, java]
+----
+static <T, K> org.apache.kafka.streams.processor.StateStoreSupplier<KeyValueStore>
+keyValueStore(
+  final Serde<K> keySerde,
+  final Serde<T> aggValueSerde,
+  final String storeName)
+----
+
+`keyValueStore`...FIXME
+
+NOTE: `keyValueStore` is used when...FIXME
+
+=== [[windowedStore]] `windowedStore` Static Method
+
+[source, java]
+----
+static <W extends Window, T, K> org.apache.kafka.streams.processor.StateStoreSupplier<WindowStore>
+windowedStore(
+  final Serde<K> keySerde,
+  final Serde<T> aggValSerde,
+  final Windows<W> windows,
+  final String storeName)
+----
+
+`windowedStore`...FIXME
+
+NOTE: `windowedStore` is used when...FIXME
+
+=== [[toInternalValueTransformerSupplier]] Converting ValueTransformerSupplier or ValueTransformerWithKeySupplier to InternalValueTransformerWithKeySupplier -- `toInternalValueTransformerSupplier` Method
+
+[source, java]
 ----
 static <K, V, VR> InternalValueTransformerWithKeySupplier<K, V, VR>
 toInternalValueTransformerSupplier(final ValueTransformerSupplier<V, VR> valueTransformerSupplier)
+static <K, V, VR> InternalValueTransformerWithKeySupplier<K, V, VR>
+toInternalValueTransformerSupplier(final ValueTransformerWithKeySupplier<K, V, VR> valueTransformerWithKeySupplier)
 ----
 
-`toInternalValueTransformerSupplier`...FIXME
+`toInternalValueTransformerSupplier` requests a `ValueTransformer` or `ValueTransformerWithKey` from the link:kafka-streams-ValueTransformerSupplier.adoc#get[ValueTransformerSupplier] or `ValueTransformerWithKeySupplier`, respectively.
 
-NOTE: `toInternalValueTransformerSupplier` is used exclusively when `KStreamImpl` is requested to link:kafka-streams-KStreamImpl.adoc#transformValues[transformValues]
+`toInternalValueTransformerSupplier` then creates a `InternalValueTransformerWithKeySupplier` that can produce a `InternalValueTransformerWithKey` that passes all calls to the `ValueTransformerSupplier` or `ValueTransformerWithKeySupplier`, respectively.
+
+`toInternalValueTransformerSupplier` reports an `NullPointerException` when `ValueTransformerSupplier` or `ValueTransformerWithKeySupplier` are `null`.
+
+NOTE: `toInternalValueTransformerSupplier` is used exclusively when `KStreamImpl` is requested for link:kafka-streams-KStreamImpl.adoc#transformValues[transforming values with state].

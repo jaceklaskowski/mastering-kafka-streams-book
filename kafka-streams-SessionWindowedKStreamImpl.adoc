@@ -1,0 +1,3 @@
+== [[SessionWindowedKStreamImpl]] SessionWindowedKStreamImpl
+
+`SessionWindowedKStreamImpl` is...FIXME

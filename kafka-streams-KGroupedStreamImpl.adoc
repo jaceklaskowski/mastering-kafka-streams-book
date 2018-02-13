@@ -1,0 +1,34 @@
+== [[KGroupedStreamImpl]] KGroupedStreamImpl
+
+`KGroupedStreamImpl` is...FIXME
+
+=== [[aggregate]] `aggregate` Method
+
+[source, java]
+----
+KTable<Windowed<K>, T> aggregate(
+  final Initializer<T> initializer,
+  final Aggregator<? super K, ? super V, T> aggregator,
+  final Merger<? super K, T> sessionMerger,
+  final SessionWindows sessionWindows,
+  final Serde<T> aggValueSerde,
+  final String queryableStoreName)
+----
+
+NOTE: `aggregate` is part of link:LINK#aggregate[HERE Contract] to...FIXME.
+
+`aggregate`...FIXME
+
+=== [[reduce]] `reduce` Method
+
+[source, java]
+----
+KTable<Windowed<K>, V> reduce(
+  final Reducer<V> reducer,
+  final SessionWindows sessionWindows,
+  final String queryableStoreName)
+----
+
+NOTE: `reduce` is part of link:LINK#reduce[HERE Contract] to...FIXME.
+
+`reduce`...FIXME

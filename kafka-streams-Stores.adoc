@@ -1,0 +1,16 @@
+== [[Stores]] Stores
+
+`Stores` is...FIXME
+
+=== [[create]] Creating StoreFactory -- `create` Method
+
+[source, java]
+----
+static StoreFactory create(final String name)
+----
+
+NOTE: `create` is a deprecated method and may disappear at any major release of Kafka Streams. You should use...FIXME...instead.
+
+`create`...FIXME
+
+NOTE: `create` is used when...FIXME

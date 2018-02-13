@@ -1,0 +1,3 @@
+== [[KGroupedTableImpl]] KGroupedTableImpl
+
+`KGroupedTableImpl` is...FIXME

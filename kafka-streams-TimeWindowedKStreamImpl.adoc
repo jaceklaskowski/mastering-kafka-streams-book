@@ -1,0 +1,3 @@
+== [[TimeWindowedKStreamImpl]] TimeWindowedKStreamImpl
+
+`TimeWindowedKStreamImpl` is...FIXME
