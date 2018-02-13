@@ -1,0 +1,38 @@
+== [[ValueTransformer]] ValueTransformer -- Stateful Record-by-Record Value Transformation
+
+`ValueTransformer` is the <<contract, contract>> in Kafka Streams for *stateful mapping* of a value to a new value of an arbitrary type.
+
+[[contract]]
+[source, java]
+----
+package org.apache.kafka.streams.kstream;
+
+interface ValueTransformer<V, VR> {
+  void close();
+  void init(final ProcessorContext context);
+  VR transform(final V value);
+  // deprecated
+  VR punctuate(final long timestamp);
+}
+----
+
+`ValueTransformer` is used when a stream (`AbstractStream`) is requested to `toInternalValueTransformerSupplier`.
+
+.ValueTransformer Contract
+[cols="1,2",options="header",width="100%"]
+|===
+| Method
+| Description
+
+| [[close]] `close`
+| Used when...FIXME
+
+| [[init]] `init`
+| Used when...FIXME
+
+| [[transform]] `transform`
+| Used when...FIXME
+
+| [[punctuate]] `punctuate`
+| *DEPRECATED* Use link:kafka-streams-Punctuator.adoc[Punctuator] interface
+|===

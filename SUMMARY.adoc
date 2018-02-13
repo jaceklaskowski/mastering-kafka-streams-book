@@ -53,6 +53,12 @@
 . link:kafka-streams-KafkaClientSupplier.adoc[KafkaClientSupplier]
 .. link:kafka-streams-DefaultKafkaClientSupplier.adoc[DefaultKafkaClientSupplier]
 
+. link:kafka-streams-AbstractStream.adoc[AbstractStream]
+. link:kafka-streams-ValueTransformer.adoc[ValueTransformer -- Stateful Record-by-Record Value Transformation]
+. link:kafka-streams-ValueTransformerSupplier.adoc[ValueTransformerSupplier -- ValueTransformers Object Factory]
+
+. link:kafka-streams-Punctuator.adoc[Punctuator]
+
 . link:kafka-streams-properties.adoc[Configuration Properties]
 
 . link:kafka-logging.adoc[Logging]

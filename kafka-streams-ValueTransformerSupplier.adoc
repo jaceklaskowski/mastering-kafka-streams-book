@@ -1,0 +1,23 @@
+== [[ValueTransformerSupplier]] ValueTransformerSupplier -- ValueTransformers Object Factory
+
+`ValueTransformerSupplier` is a <<contract, single-method interface>> in Kafka Streams for *object factories* (aka _suppliers_) that <<get, can create one or many ValueTransformers>>.
+
+[[contract]]
+[[get]]
+[source, java]
+----
+package org.apache.kafka.streams.kstream;
+
+interface ValueTransformerSupplier<V, VR> {
+  ValueTransformer<V, VR> get();
+}
+----
+
+`ValueTransformerSupplier` is used exclusively in link:kafka-streams-KStream.adoc#transformValues[KStream.transformValues] stateful transformation (of record values in a stream) to get a new link:kafka-streams-ValueTransformer.adoc[ValueTransformer] where the transformation happens.
+
+[source, scala]
+----
+FIXME Example of KStream.transformValues
+----
+
+`get` is used exclusively when `AbstractStream` is requested for link:kafka-streams-AbstractStream.adoc#toInternalValueTransformerSupplier[toInternalValueTransformerSupplier]

@@ -26,6 +26,21 @@ NOTE: link:kafka-streams-KStreamImpl.adoc[KStreamImpl] is the one and only imple
 | Operator
 | Description
 
+| [[transformValues]] `transformValues`
+a| Stateful record-by-record value transformation
+
+[source, java]
+----
+KStream<K, VR> transformValues(
+  final ValueTransformerSupplier<? super V, ? extends VR> valueTransformerSupplier,
+  final String... stateStoreNames)
+KStream<K, VR> transformValues(
+  final ValueTransformerWithKeySupplier<? super K, ? super V, ? extends VR> valueTransformerSupplier,
+  final String... stateStoreNames)
+----
+
+`transformValues` uses link:kafka-streams-ValueTransformerSupplier.adoc[ValueTransformerSupplier] to create a link:kafka-streams-ValueTransformer.adoc[ValueTransformer] that is used for a stateful transformation of record values in a stream.
+
 | [[mapValues]] `mapValues`
 a|
 

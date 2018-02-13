@@ -15,6 +15,25 @@
 | link:kafka-streams-KeyValueMapper.adoc[KeyValueMapper]
 |===
 
+=== [[transformValues]] `transformValues` Method
+
+[source, java]
+----
+KStream<K, V1> transformValues(
+  final ValueTransformerSupplier<? super V, ? extends V1> valueTransformerSupplier,
+  final String... stateStoreNames)
+// private
+private <VR> KStream<K, VR> transformValues(
+  final InternalValueTransformerWithKeySupplier<? super K, ? super V, ? extends VR> internalValueTransformerWithKeySupplier,
+  final String... stateStoreNames)
+----
+
+NOTE: `transformValues` is part of link:kafka-streams-KStream.adoc#transformValues[KStream Contract] for a stateful record-by-record value transformation.
+
+`transformValues` <<toInternalValueTransformerSupplier, toInternalValueTransformerSupplier>> followed by <<transformValues, transformValues>>.
+
+`transformValues` reports a `NullPointerException` when `ValueTransformerSupplier` is `null`.
+
 === [[transform]] Stateful Record Transformation -- `transform` Operator
 
 [source, java]

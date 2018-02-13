@@ -1,0 +1,15 @@
+== [[AbstractStream]] AbstractStream
+
+`AbstractStream` is...FIXME
+
+=== [[toInternalValueTransformerSupplier]] `toInternalValueTransformerSupplier` Method
+
+[source, scala]
+----
+static <K, V, VR> InternalValueTransformerWithKeySupplier<K, V, VR>
+toInternalValueTransformerSupplier(final ValueTransformerSupplier<V, VR> valueTransformerSupplier)
+----
+
+`toInternalValueTransformerSupplier`...FIXME
+
+NOTE: `toInternalValueTransformerSupplier` is used exclusively when `KStreamImpl` is requested to link:kafka-streams-KStreamImpl.adoc#transformValues[transformValues]
