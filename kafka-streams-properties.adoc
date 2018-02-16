@@ -11,6 +11,10 @@
 | 1
 | The number of link:kafka-streams-KafkaStreams.adoc#threads[threads to execute stream processing].
 
+| [[poll.ms]] `poll.ms`
+| `100`
+| Polling interval, i.e. the amount of time (in milliseconds) to block waiting for input.
+
 | [[state.cleanup.delay.ms]] `state.cleanup.delay.ms`
 | 10 * 60 * 1000
 | The amount of time (in milliseconds) to wait before deleting state when a partition has migrated. Only state directories that have not been modified for at least `state.cleanup.delay.ms` will be removed.

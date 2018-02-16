@@ -5,6 +5,23 @@
 .StreamThread and Stream Processing
 image::images/kafka-streams-StreamThread.png[align="center"]
 
+`StreamThread` is <<create, created>> exclusively when `KafkaStreams` is link:kafka-streams-KafkaStreams.adoc#creating-instance[created].
+
+NOTE: `KafkaStreams` uses link:kafka-streams-KafkaStreams.adoc#threads[num.stream.threads] configuration property for the number of `StreamThreads` to create.
+
+[[pollTimeMs]]
+`StreamThread` uses link:kafka-streams-properties.adoc#poll.ms[poll.ms] configuration property as the *polling interval* while <<pollRequests, polling the topics for records>>.
+
+`StreamThread` uses the Kafka <<consumer, consumer>> to:
+
+* Subscribe to topics (with <<rebalanceListener, RebalanceListener>>) right after `StreamThread` has been requested to <<runLoop, run the main event loop>>
+
+* Poll the topics subscribed and fetch records if available right after `StreamThread` has been requested to <<pollRequests, get the next batch of records by polling>>
+
+* <<resetInvalidOffsets, resetInvalidOffsets>> (when an `InvalidOffsetException` is reported while <<pollRequests, polling the topics for records>>)
+
+`StreamThread` closes the Kafka <<consumer, consumer>> while <<completeShutdown, shuting down>>.
+
 [[internal-registries]]
 .StreamThread's Internal Properties (e.g. Registries, Counters and Flags)
 [cols="1,2",options="header",width="100%"]
@@ -14,9 +31,6 @@ image::images/kafka-streams-StreamThread.png[align="center"]
 
 | [[builder]] `builder`
 | link:kafka-streams-InternalTopologyBuilder.adoc[InternalTopologyBuilder]
-
-| [[consumer]] `consumer`
-| Kafka https://kafka.apache.org/10/javadoc/org/apache/kafka/clients/consumer/KafkaConsumer.html[Consumer] that consumes records from a Kafka cluster
 
 | [[rebalanceListener]] `rebalanceListener`
 a| link:kafka-streams-StreamThread-RebalanceListener.adoc[RebalanceListener]
@@ -40,7 +54,7 @@ long processAndMaybeCommit(final long recordsProcessedBeforeCommit)
 
 NOTE: `processAndMaybeCommit` is used exclusively when `StreamThread` is requested to <<runOnce, consume records once>>.
 
-=== [[pollRequests]] `pollRequests` Internal Method
+=== [[pollRequests]] Polling for Records -- `pollRequests` Internal Method
 
 [source, java]
 ----
@@ -49,7 +63,36 @@ ConsumerRecords<byte[], byte[]> pollRequests(final long pollTimeMs)
 
 `pollRequests`...FIXME
 
-NOTE: `pollRequests` is used exclusively when `StreamThread` is requested to <<runOnce, consume records once>>.
+[NOTE]
+====
+`pollRequests` is used exclusively when `StreamThread` is requested to <<runOnce, consume records once>>:
+
+* With `0` for `pollTimeMs` when in `PARTITIONS_ASSIGNED` <<state, state>>
+
+* With <<pollTimeMs, pollTimeMs>> in any other state but `PARTITIONS_ASSIGNED`
+====
+
+=== [[resetInvalidOffsets]] `resetInvalidOffsets` Internal Method
+
+[source, java]
+----
+void resetInvalidOffsets(final InvalidOffsetException e)
+----
+
+`resetInvalidOffsets`...FIXME
+
+NOTE: `resetInvalidOffsets` is used exclusively when `StreamThread` is requested to <<pollRequests, pollRequests>> (and an `InvalidOffsetException` is reported).
+
+=== [[completeShutdown]] `completeShutdown` Internal Method
+
+[source, java]
+----
+void completeShutdown(final boolean cleanRun)
+----
+
+`completeShutdown`...FIXME
+
+NOTE: `completeShutdown` is used when...FIXME
 
 === [[runOnce]] Consuming Records Once -- `runOnce` Method
 
@@ -148,7 +191,7 @@ NOTE: `create` is used exclusively when `KafkaStreams` is link:kafka-streams-Kaf
 * [[time]] `Time`
 * [[config]] link:kafka-streams-StreamsConfig.adoc[StreamsConfig]
 * [[restoreConsumer]] Restore Kafka consumer (of keys and values as array of bytes)
-* [[consumer]] Kafka Consumer (of keys and values as array of bytes)
+* [[consumer]] Kafka https://kafka.apache.org/10/javadoc/org/apache/kafka/clients/consumer/KafkaConsumer.html[Consumer] (of keys and values as array of bytes)
 * [[originalReset]] `originalReset`
 * [[taskManager]] link:kafka-streams-TaskManager.adoc[TaskManager]
 * [[streamsMetrics]] `StreamsMetricsThreadImpl`
@@ -157,8 +200,6 @@ NOTE: `create` is used exclusively when `KafkaStreams` is link:kafka-streams-Kaf
 * [[logContext]] `LogContext`
 
 `StreamThread` initializes the <<internal-registries, internal registries and counters>>.
-
-`StreamThread` is <<creating-instance, created>> when...FIXME
 
 === [[runLoop]] Running Main Event Loop -- `runLoop` Internal Method
 
