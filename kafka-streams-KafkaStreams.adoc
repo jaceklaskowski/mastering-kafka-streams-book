@@ -69,9 +69,7 @@ public synchronized void start()
   throws IllegalStateException, StreamsException
 ----
 
-`start` starts <<topology, Topology>> (and so consuming, processing, and producing records).
-
-NOTE: `start` is called and is actually when a Kafka Streams application starts processing records.
+`start` starts the <<topology, Topology>> that starts consuming, processing, and producing records.
 
 Internally, `start` prints out the following DEBUG message to the logs:
 

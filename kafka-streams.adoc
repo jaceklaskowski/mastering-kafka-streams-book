@@ -2,9 +2,11 @@
 
 *Kafka Streams* is a stream processing library on top of Apache Kafka.
 
-Kafka Streams aims at simplifying development of stream processing applications with Apache Kafka as the data storage for input and output messages.
+Kafka Streams aims at simplifying development of stream processing applications with Apache Kafka as the data storage for input and output messages (with a key and a value).
 
-Kafka Streams processes records through topologies. A Kafka Streams developer defines the processing logic either using a link:kafka-streams-Topology.adoc[Topology] directly (and define a DAG topology of link:kafka-streams-Processor.adoc[Processors]) or indirectly through a link:kafka-streams-StreamsBuilder.adoc[StreamsBuilder] that provides the high-level DSL to define transformations.
+Kafka Streams applications process records through *topologies*. A Kafka Streams developer defines the processing logic using either the lower-level link:kafka-streams-Topology.adoc[Topology] API directly (and define a DAG topology of link:kafka-streams-Processor.adoc[Processors]) or indirectly through link:kafka-streams-StreamsBuilder.adoc[StreamsBuilder] that provides the high-level DSL to define transformations.
+
+Once you have defined the processing logic in the form of a Kafka Stream topology, you should define the execution environment of the application using link:kafka-streams-KafkaStreams.adoc[KafkaStreams] API that you link:kafka-streams-KafkaStreams.adoc#start[start] in the end.
 
 [source, scala]
 ----
@@ -14,17 +16,25 @@ object KafkaStreamsApp extends App {
   // Consume records from input topic and produce records to upper topic
   import org.apache.kafka.streams.StreamsBuilder
   val builder = new StreamsBuilder
+
   import org.apache.kafka.streams.Consumed
   import org.apache.kafka.common.serialization.Serdes
   val consumed = Consumed.`with`(Serdes.String, Serdes.String)
+
+  // Read (consume) records from input topic with keys and values being Strings
   import org.apache.kafka.streams.kstream.KStream
   val input: KStream[String, String] = builder.stream("input", consumed)
+
+  // Transform the values of the records to their upper case equivalents
   val upper: KStream[String, String] = input.mapValues { record: String => record.toUpperCase }
+
   import org.apache.kafka.streams.kstream.Produced
   val produced = Produced.`with`(Serdes.String, Serdes.String)
+
+  // Write (produce) the records out to upper topic
   upper.to("upper", produced)
 
-  // Print out records to stdout for demo purposes
+  // Print out records to stdout for debugging purposes
   import org.apache.kafka.streams.kstream.Printed
   val sysout = Printed
     .toSysOut[String, String]
@@ -35,11 +45,17 @@ object KafkaStreamsApp extends App {
   import org.apache.kafka.streams.Topology
   val topology: Topology = builder.build
 
+  // You can describe the topology and just finish
+  println(topology.describe())
+
+  // That finishes the "declaration" part of developing a Kafka Stream application
+  // Nothing is executed at this time (no threads have started yet)
+
   // Step 3. Specify Configuration
   import java.util.Properties
   val props = new Properties()
   import org.apache.kafka.streams.StreamsConfig
-  props.put(StreamsConfig.APPLICATION_ID_CONFIG, "kafka-streams-app")
+  props.put(StreamsConfig.APPLICATION_ID_CONFIG, "KafkaStreamsApp")
   props.put(StreamsConfig.BOOTSTRAP_SERVERS_CONFIG, "localhost:9092")
   import org.apache.kafka.streams.StreamsConfig
   val config = new StreamsConfig(props)
