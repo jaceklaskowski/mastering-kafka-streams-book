@@ -1,0 +1,18 @@
+== [[ConsumedInternal]] ConsumedInternal
+
+`ConsumedInternal` is...FIXME
+
+`ConsumedInternal` is <<creating-instance, created>> when...FIXME
+
+=== [[creating-instance]] Creating ConsumedInternal Instance
+
+`ConsumedInternal` takes either of the following when created:
+
+* [[consumed]] link:kafka-streams-Consumed.adoc[Consumed]
+
+or
+
+* [[keySerde]] `Serde` for the keys
+* [[valSerde]] `Serde` for the values
+* [[timestampExtractor]] `TimestampExtractor`
+* [[offsetReset]] `Topology.AutoOffsetReset`

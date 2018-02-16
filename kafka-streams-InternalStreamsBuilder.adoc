@@ -5,7 +5,7 @@
 [[internalTopologyBuilder]]
 `InternalStreamsBuilder` uses a link:kafka-streams-InternalTopologyBuilder.adoc[InternalTopologyBuilder] for...FIXME
 
-=== [[stream]] `stream` Method
+=== [[stream]] Creating KStream -- `stream` Method
 
 [source, java]
 ----
@@ -17,7 +17,27 @@ KStream<K, V> stream(
   final ConsumedInternal<K, V> consumed)
 ----
 
-`stream` creates a new processor name (with *KSTREAM-SOURCE* prefix) and requests <<internalTopologyBuilder, InternalTopologyBuilder>> to link:kafka-streams-InternalTopologyBuilder.adoc#addSource[register a new source topic] and returns a new instance of link:kafka-streams-KStreamImpl.adoc#creating-instance[KStreamImpl]
+`stream` creates a new processor name (with *KSTREAM-SOURCE* prefix) and requests <<internalTopologyBuilder, InternalTopologyBuilder>> to link:kafka-streams-InternalTopologyBuilder.adoc#addSource[register a new source topic].
+
+In the end, `stream` gives a new instance of link:kafka-streams-KStreamImpl.adoc#creating-instance[KStreamImpl].
+
+[source, scala]
+----
+import org.apache.kafka.streams.processor.internals.InternalTopologyBuilder
+val internalTopologyBuilder = new InternalTopologyBuilder()
+
+import org.apache.kafka.streams.kstream.internals.InternalStreamsBuilder
+val internalStreamsBuilder = new InternalStreamsBuilder(internalTopologyBuilder)
+
+val topics = Seq("input")
+import org.apache.kafka.streams.kstream.internals.ConsumedInternal
+val consumed = new ConsumedInternal[String, String]()
+import collection.JavaConverters._
+val kstream = internalStreamsBuilder.stream(topics.asJava, consumed)
+
+import org.apache.kafka.streams.kstream.internals.KStreamImpl
+val kstreamImpl = kstream.asInstanceOf[KStreamImpl[String, String]]
+----
 
 === [[table]] Creating KTable for Topic -- `table` Method
 
