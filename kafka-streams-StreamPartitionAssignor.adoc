@@ -2,6 +2,30 @@
 
 `StreamPartitionAssignor` is...FIXME
 
+[[internal-registries]]
+.StreamPartitionAssignor's Internal Properties (e.g. Registries, Counters and Flags)
+[cols="1,2",options="header",width="100%"]
+|===
+| Name
+| Description
+
+| [[internalTopicManager]] `internalTopicManager`
+| link:kafka-streams-InternalTopicManager.adoc[InternalTopicManager]
+
+Used when...FIXME
+|===
+
+=== [[configure]] `configure` Method
+
+[source, scala]
+----
+void configure(final Map<String, ?> configs)
+----
+
+NOTE: `configure` is part of link:kafka-streams-Configurable.adoc#configure[Configurable Contract] to...FIXME.
+
+`configure`...FIXME
+
 === [[subscription]] `subscription` Method
 
 [source, java]

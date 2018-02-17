@@ -2,6 +2,10 @@
 
 `TaskManager` is...FIXME
 
+`TaskManager` is <<creating-instance, created>> exclusively when `StreamThread` is link:kafka-streams-StreamThread.adoc#create[created] (for the only purpose of creating a link:kafka-streams-StreamThread.adoc#rebalanceListener[RebalanceListener]).
+
+`TaskManager` uses Kafka's <<adminClient, AdminClient>> for <<maybePurgeCommitedRecords, maybePurgeCommitedRecords>> and for `StreamPartitionAssignor` to link:kafka-streams-StreamPartitionAssignor.adoc#configure[configure] itself (and create the internal link:kafka-streams-StreamPartitionAssignor.adoc#internalTopicManager[InternalTopicManager]).
+
 [[logging]]
 [TIP]
 ====
@@ -26,6 +30,17 @@ void addStreamTasks(final Collection<TopicPartition> assignment)
 `addStreamTasks`...FIXME
 
 NOTE: `addStreamTasks` is used exclusively when `TaskManager` is requested to <<createTasks, create processor tasks for assigned topic partitions>>.
+
+=== [[maybePurgeCommitedRecords]] `maybePurgeCommitedRecords` Method
+
+[source, java]
+----
+void maybePurgeCommitedRecords()
+----
+
+`maybePurgeCommitedRecords`...FIXME
+
+NOTE: `maybePurgeCommitedRecords` is used exclusively when...FIXME
 
 === [[updateSubscriptionsFromAssignment]] `updateSubscriptionsFromAssignment` Method
 
@@ -59,6 +74,17 @@ void createTasks(final Collection<TopicPartition> assignment)
 `createTasks`...FIXME
 
 NOTE: `createTasks` is used exclusively when `RebalanceListener` handles link:kafka-streams-StreamThread-RebalanceListener.adoc#onPartitionsAssigned[onPartitionsAssigned].
+
+=== [[suspendTasksAndState]] Suspending All (Active and Standby) Stream Tasks And State -- `suspendTasksAndState` Method
+
+[source, java]
+----
+void suspendTasksAndState()
+----
+
+`suspendTasksAndState`...FIXME
+
+NOTE: `suspendTasksAndState` is used exclusively when `RebalanceListener` handles link:kafka-streams-StreamThread-RebalanceListener.adoc#onPartitionsAssigned[onPartitionsAssigned].
 
 === [[addStandbyTasks]] `addStandbyTasks` Internal Method
 
@@ -114,3 +140,20 @@ boolean hasActiveRunningTasks()
 `hasActiveRunningTasks`...FIXME
 
 NOTE: `hasActiveRunningTasks` is used exclusively when `StreamThread` is requested to link:kafka-streams-StreamThread.adoc#runOnce[consume records once].
+
+=== [[creating-instance]] Creating TaskManager Instance
+
+`TaskManager` takes the following when created:
+
+* [[changelogReader]] ChangelogReader
+* [[processId]] UUID
+* [[logPrefix]] String
+* [[restoreConsumer]] Kafka `Consumer<byte[], byte[]>`
+* [[streamsMetadataState]] `StreamsMetadataState`
+* [[taskCreator]] `StreamThread.AbstractTaskCreator<StreamTask>`
+* [[standbyTaskCreator]] `StreamThread.AbstractTaskCreator<StandbyTask>`
+* [[adminClient]] Kafka `AdminClient`
+* [[active]] link:kafka-streams-AssignedStreamsTasks.adoc[AssignedStreamsTasks]
+* [[standby]] `AssignedStandbyTasks`
+
+`TaskManager` initializes the <<internal-registries, internal registries and counters>>.

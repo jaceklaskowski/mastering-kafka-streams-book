@@ -34,6 +34,13 @@ ks.start()
 | [[globalStreamThread]] `globalStreamThread`
 | Global stream thread (`GlobalStreamThread`) that...FIXME
 
+| [[adminClient]] `adminClient`
+a| Administrative client for Kafka, i.e. https://kafka.apache.org/10/javadoc/org/apache/kafka/clients/admin/AdminClient.html[AdminClient], that supports managing and inspecting topics, brokers, configurations and ACLs.
+
+* Created while `KafkaStreams` is being <<creating-instance, created>> for the only purpose of link:kafka-streams-StreamThread.adoc#create[creating a StreamThread] (which is actually passed along to a link:kafka-streams-TaskManager.adoc#adminClient[TaskManager])
+
+* Closed while `KafkaStreams` is being <<close, closed>>
+
 | [[stateDirectory]] `stateDirectory`
 | `StateDirectory`
 
@@ -166,8 +173,6 @@ KafkaStreams(
 * [[time]] `Time`
 
 `KafkaStreams` initializes the <<internal-registries, internal registries and counters>>.
-
-`KafkaStreams` is <<creating-instance, created>> when...FIXME
 
 === [[setRunningFromCreated]] `setRunningFromCreated` Internal Method
 

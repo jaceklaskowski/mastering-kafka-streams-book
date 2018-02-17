@@ -1,8 +1,8 @@
 == [[KafkaClientSupplier]] KafkaClientSupplier
 
-`KafkaClientSupplier` is the <<contract, contract>> in Kafka Streams to...FIXME
+`KafkaClientSupplier` is the <<contract, contract>> for objects that can provide (_supply_) Kafka clients, i.e. <<getAdminClient, AdminClient>>, <<getProducer, Producer>>, <<getConsumer, Consumer>> and <<getRestoreConsumer, restore Consumer>>.
 
-NOTE: link:kafka-streams-DefaultKafkaClientSupplier.adoc[DefaultKafkaClientSupplier] is the default `KafkaClientSupplier` that...FIXME
+NOTE: link:kafka-streams-DefaultKafkaClientSupplier.adoc[DefaultKafkaClientSupplier] is the default `KafkaClientSupplier`.
 
 === [[contract]] KafkaClientSupplier Contract
 
@@ -25,7 +25,7 @@ interface KafkaClientSupplier {
 | Description
 
 | [[getAdminClient]] `getAdminClient`
-| Used when...
+| Used exclusively when `KafkaStreams` is link:kafka-streams-KafkaStreams.adoc#creating-instance[created] (and creates the link:kafka-streams-KafkaStreams.adoc#adminClient[AdminClient])
 
 | [[getProducer]] `getProducer`
 | Used when...

@@ -5,6 +5,10 @@
 .RebalanceListener, StreamThread and KafkaStreams
 image::images/kafka-streams-RebalanceListener.png[align="center"]
 
+At <<onPartitionsAssigned, onPartitionsAssigned>> event `RebalanceListener` requests <<taskManager, TaskManager>> for link:kafka-streams-TaskManager.adoc#createTasks[creating processor tasks for assigned topic partitions].
+
+At <<onPartitionsRevoked, onPartitionsRevoked>> event `RebalanceListener` requests <<taskManager, TaskManager>> for link:kafka-streams-TaskManager.adoc#suspendTasksAndState[suspending all stream tasks and state].
+
 `RebalanceListener` is <<creating-instance, created>> exclusively when `StreamThread` is link:kafka-streams-StreamThread.adoc#rebalanceListener[created].
 
 [[logging]]

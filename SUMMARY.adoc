@@ -70,6 +70,8 @@
 . link:kafka-streams-Punctuator.adoc[Punctuator]
 
 . link:kafka-streams-ConsumedInternal.adoc[ConsumedInternal]
+. link:kafka-streams-Configurable.adoc[Configurable]
+. link:kafka-streams-InternalTopicManager.adoc[InternalTopicManager]
 
 . link:kafka-streams-properties.adoc[Configuration Properties]
 

@@ -1,6 +1,8 @@
 == [[StreamThread]] StreamThread -- Stream Processor Thread
 
-`StreamThread` is a <<run, thread of execution>> (i.e. Java's https://docs.oracle.com/javase/9/docs/api/java/lang/Thread.html[Thread]) that...FIXME
+`StreamThread` is the *stream processor thread* in a KafkaStreams application.
+
+`StreamThread` is simply a <<run, thread of execution>> (i.e. Java's https://docs.oracle.com/javase/9/docs/api/java/lang/Thread.html[Thread]) that...FIXME
 
 .StreamThread and Stream Processing
 image::images/kafka-streams-StreamThread.png[align="center"]
@@ -16,7 +18,7 @@ NOTE: `KafkaStreams` uses link:kafka-streams-KafkaStreams.adoc#threads[num.strea
 
 * Subscribe to topics (with <<rebalanceListener, RebalanceListener>>) right after `StreamThread` has been requested to <<runLoop, run the main event loop>>
 
-* Poll the topics subscribed and fetch records if available right after `StreamThread` has been requested to <<pollRequests, get the next batch of records by polling>>
+* Poll the topics subscribed (and fetch records if available) right after `StreamThread` has been requested to <<pollRequests, get the next batch of records by polling>>
 
 * <<resetInvalidOffsets, resetInvalidOffsets>> (when an `InvalidOffsetException` is reported while <<pollRequests, polling the topics for records>>)
 
