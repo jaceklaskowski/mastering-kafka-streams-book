@@ -13,7 +13,23 @@
 
 | [[poll.ms]] `poll.ms`
 | `100`
-| Polling interval, i.e. the amount of time (in milliseconds) to block waiting for input.
+a| Polling interval (in milliseconds), i.e. the amount of time to block waiting for input.
+
+* Used when `GlobalStreamThread` is requested to link:kafka-streams-GlobalStreamThread.adoc#initialize[initialize] (which is right after `KafkaStreams` has been link:kafka-streams-KafkaStreams.adoc#start[started]) and creates a link:kafka-streams-StateConsumer.adoc#pollMs[StateConsumer]
+
+* Used when `StreamThread` is link:kafka-streams-StreamThread.adoc#pollTimeMs[created]
+
+Use `StreamsConfig.POLL_MS_CONFIG` to reference the property.
+
+| [[commit.interval.ms]] `commit.interval.ms`
+a|
+
+* `100L` when 'processing.guarantee' is 'exactly_once'
+* `30000L` otherwise
+
+a| The frequency with which to save the position of the processor
+
+Use `StreamsConfig.COMMIT_INTERVAL_MS_CONFIG` to reference the property.
 
 | [[state.cleanup.delay.ms]] `state.cleanup.delay.ms`
 | 10 * 60 * 1000

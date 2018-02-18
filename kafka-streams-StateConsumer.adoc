@@ -1,0 +1,18 @@
+== [[StateConsumer]] StateConsumer
+
+`StateConsumer` is...FIXME
+
+`StateConsumer` is <<creating-instance, created>> when...FIXME
+
+=== [[creating-instance]] Creating StateConsumer Instance
+
+`StateConsumer` takes the following when created:
+
+* [[logContext]] `LogContext`
+* [[globalConsumer]] Kafka `Consumer<byte[], byte[]>`
+* [[stateMaintainer]] `GlobalStateMaintainer`
+* [[time]] `Time`
+* [[pollMs]] `pollMs`
+* [[flushInterval]] `flushInterval`
+
+`StateConsumer` initializes the <<internal-registries, internal registries and counters>>.

@@ -32,7 +32,7 @@ ks.start()
 | Description
 
 | [[globalStreamThread]] `globalStreamThread`
-| Global stream thread (`GlobalStreamThread`) that...FIXME
+| link:kafka-streams-GlobalStreamThread.adoc[GlobalStreamThread]
 
 | [[adminClient]] `adminClient`
 a| Administrative client for Kafka, i.e. https://kafka.apache.org/10/javadoc/org/apache/kafka/clients/admin/AdminClient.html[AdminClient], that supports managing and inspecting topics, brokers, configurations and ACLs.
