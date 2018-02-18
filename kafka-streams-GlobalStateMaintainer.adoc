@@ -1,6 +1,6 @@
 == [[GlobalStateMaintainer]] GlobalStateMaintainer
 
-`GlobalStateMaintainer` is the <<contract, contract>> for...FIXME
+`GlobalStateMaintainer` is the <<contract, contract>> for managing global state stores.
 
 [source, java]
 ----
