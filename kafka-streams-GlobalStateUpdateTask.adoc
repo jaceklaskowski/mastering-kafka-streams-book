@@ -1,0 +1,3 @@
+== [[GlobalStateUpdateTask]] GlobalStateUpdateTask
+
+`GlobalStateUpdateTask` is the one and only link:kafka-streams-GlobalStateMaintainer.adoc[GlobalStateMaintainer] that...FIXME

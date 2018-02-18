@@ -1,0 +1,36 @@
+== [[GlobalStateMaintainer]] GlobalStateMaintainer
+
+`GlobalStateMaintainer` is the <<contract, contract>> for...FIXME
+
+[source, java]
+----
+package org.apache.kafka.streams.processor.internals;
+
+interface GlobalStateMaintainer {
+  void close() throws IOException;
+  void flushState();
+  Map<TopicPartition, Long> initialize();
+  void update(ConsumerRecord<byte[], byte[]> record);
+}
+----
+
+.GlobalStateMaintainer Contract
+[cols="1,2",options="header",width="100%"]
+|===
+| Method
+| Description
+
+| [[close]] `close`
+| Used when...FIXME
+
+| [[flushState]] `flushState`
+| Used when...FIXME
+
+| [[initialize]] `initialize`
+| Used when...FIXME
+
+| [[update]] `update`
+| Used when...FIXME
+|===
+
+NOTE: link:kafka-streams-GlobalStateUpdateTask.adoc[GlobalStateUpdateTask] is the one and only `GlobalStateMaintainer`.

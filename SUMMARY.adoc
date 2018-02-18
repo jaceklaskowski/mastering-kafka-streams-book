@@ -74,6 +74,8 @@
 . link:kafka-streams-ConsumedInternal.adoc[ConsumedInternal]
 . link:kafka-streams-Configurable.adoc[Configurable]
 . link:kafka-streams-InternalTopicManager.adoc[InternalTopicManager]
+. link:kafka-streams-GlobalStateMaintainer.adoc[GlobalStateMaintainer]
+.. link:kafka-streams-GlobalStateUpdateTask.adoc[GlobalStateUpdateTask]
 
 . link:kafka-streams-properties.adoc[Configuration Properties]
 

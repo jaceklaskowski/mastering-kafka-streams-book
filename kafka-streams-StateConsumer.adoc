@@ -2,7 +2,20 @@
 
 `StateConsumer` is...FIXME
 
-`StateConsumer` is <<creating-instance, created>> when...FIXME
+`StateConsumer` is <<creating-instance, created>> exclusively when `GlobalStreamThread` is requested to link:kafka-streams-GlobalStreamThread.adoc#initialize[initialize].
+
+`StateConsumer` uses link:kafka-streams-properties.adoc#poll.ms[poll.ms] configuration property as the <<pollMs, polling interval>> while <<pollAndUpdate, polling the topics for records>>.
+
+=== [[pollAndUpdate]] `pollAndUpdate` Method
+
+[source, java]
+----
+void pollAndUpdate()
+----
+
+`pollAndUpdate`...FIXME
+
+NOTE: `pollAndUpdate` is used exclusively when `GlobalStreamThread` is link:kafka-streams-GlobalStreamThread.adoc#run[running].
 
 === [[creating-instance]] Creating StateConsumer Instance
 
@@ -10,9 +23,9 @@
 
 * [[logContext]] `LogContext`
 * [[globalConsumer]] Kafka `Consumer<byte[], byte[]>`
-* [[stateMaintainer]] `GlobalStateMaintainer`
+* [[stateMaintainer]] link:kafka-streams-GlobalStateMaintainer.adoc[GlobalStateMaintainer]
 * [[time]] `Time`
-* [[pollMs]] `pollMs`
+* [[pollMs]] Polling interval (in milliseconds)
 * [[flushInterval]] `flushInterval`
 
 `StateConsumer` initializes the <<internal-registries, internal registries and counters>>.
