@@ -4,28 +4,59 @@
 
 `StateConsumer` is <<creating-instance, created>> exclusively when `GlobalStreamThread` is requested to link:kafka-streams-GlobalStreamThread.adoc#initialize[initialize].
 
-`StateConsumer` uses link:kafka-streams-properties.adoc#poll.ms[poll.ms] configuration property as the <<pollMs, polling interval>> while <<pollAndUpdate, polling the topics for records>>.
+`StateConsumer` uses <<globalConsumer, global Kafka consumer>> that is the link:kafka-streams-KafkaClientSupplier.adoc#getRestoreConsumer[restore Kafka consumer] from `KafkaClientSupplier` (which by default is link:kafka-streams-DefaultKafkaClientSupplier.adoc[DefaultKafkaClientSupplier]).
 
-=== [[pollAndUpdate]] `pollAndUpdate` Method
+`StateConsumer` uses Kafka Consumer's *manual topic assignment* feature when <<initialize, initializing>> itself, i.e. uses link:++https://kafka.apache.org/10/javadoc/org/apache/kafka/clients/consumer/Consumer.html#assign-java.util.Collection-++[Consumer.assign] and link:++https://kafka.apache.org/10/javadoc/org/apache/kafka/clients/consumer/Consumer.html#seek-org.apache.kafka.common.TopicPartition-long-++[Consumer.seek] methods to assign topics and seek to offsets, respectively.
+
+`StateConsumer` uses link:kafka-streams-properties.adoc#poll.ms[poll.ms] configuration property as the <<pollMs, polling interval>> while <<pollAndUpdate, polling the topics assigned for records>>.
+
+`StateConsumer` uses link:kafka-streams-properties.adoc#commit.interval.ms[commit.interval.ms] configuration property as the <<flushInterval, flush interval>> while <<pollAndUpdate, polling the topics assigned for records>>.
+
+=== [[pollAndUpdate]] Polling Topics Assigned for Records and Flushing State -- `pollAndUpdate` Method
 
 [source, java]
 ----
 void pollAndUpdate()
 ----
 
-`pollAndUpdate`...FIXME
+`pollAndUpdate` requests the <<globalConsumer, global Kafka Consumer>> to fetch records from the topics and partitions assigned (upon <<initialize, initialization>>).
 
-NOTE: `pollAndUpdate` is used exclusively when `GlobalStreamThread` is link:kafka-streams-GlobalStreamThread.adoc#run[running].
+`pollAndUpdate` polls for records for the <<pollMs, polling interval>> that is configured by link:kafka-streams-properties.adoc#poll.ms[poll.ms] configuration property.
+
+For every record received, `pollAndUpdate` requests <<stateMaintainer, GlobalStateMaintainer>> to link:kafka-streams-GlobalStateMaintainer.adoc#update[update].
+
+If the time between the <<lastFlush, last flush>> is longer than the <<flushInterval, flush interval>> `pollAndUpdate` requests <<stateMaintainer, GlobalStateMaintainer>> to link:kafka-streams-GlobalStateMaintainer.adoc#flushState[flushState] and records the current time in <<lastFlush, last flush>> internal registry.
+
+In case of `InvalidOffsetException` `pollAndUpdate` prints out the following ERROR message and reports a `StreamsException`.
+
+```
+Updating global state failed. You can restart KafkaStreams to recover from this error.
+```
+
+NOTE: `pollAndUpdate` is used exclusively when `GlobalStreamThread` is link:kafka-streams-GlobalStreamThread.adoc#run[up and running].
+
+=== [[initialize]] Initializing StateConsumer (Initializing GlobalStateMaintainer and Setting Offsets) -- `initialize` Method
+
+[source, java]
+----
+void initialize()
+----
+
+`initialize` requests <<stateMaintainer, GlobalStateMaintainer>> to link:kafka-streams-GlobalStateMaintainer.adoc#initialize[initialize] (and give topic partitions and offsets).
+
+`initialize` then assigns the topic partitions to the <<globalConsumer, global Kafka Consumer>> and sets the fetch offsets that the consumer will use (on the next `poll`).
+
+In the end, `initialize` records the current time in <<lastFlush, lastFlush>>.
+
+NOTE: `initialize` is used exclusively when `GlobalStreamThread` is requested to link:kafka-streams-GlobalStreamThread.adoc#initialize[initialize].
 
 === [[creating-instance]] Creating StateConsumer Instance
 
 `StateConsumer` takes the following when created:
 
 * [[logContext]] `LogContext`
-* [[globalConsumer]] Kafka `Consumer<byte[], byte[]>`
+* [[globalConsumer]] (Global) Kafka https://kafka.apache.org/10/javadoc/org/apache/kafka/clients/consumer/KafkaConsumer.html[Consumer] (of keys and values as array of bytes)
 * [[stateMaintainer]] link:kafka-streams-GlobalStateMaintainer.adoc[GlobalStateMaintainer]
 * [[time]] `Time`
 * [[pollMs]] Polling interval (in milliseconds)
-* [[flushInterval]] `flushInterval`
-
-`StateConsumer` initializes the <<internal-registries, internal registries and counters>>.
+* [[flushInterval]] Flush interval (in milliseconds)

@@ -145,14 +145,14 @@ NOTE: `hasActiveRunningTasks` is used exclusively when `StreamThread` is request
 
 `TaskManager` takes the following when created:
 
-* [[changelogReader]] ChangelogReader
-* [[processId]] UUID
-* [[logPrefix]] String
-* [[restoreConsumer]] Kafka `Consumer<byte[], byte[]>`
+* [[changelogReader]] `ChangelogReader`
+* [[processId]] `UUID`
+* [[logPrefix]] `logPrefix`
+* [[restoreConsumer]] Kafka https://kafka.apache.org/10/javadoc/org/apache/kafka/clients/consumer/KafkaConsumer.html[Consumer] (of keys and values as array of bytes)
 * [[streamsMetadataState]] `StreamsMetadataState`
 * [[taskCreator]] `StreamThread.AbstractTaskCreator<StreamTask>`
 * [[standbyTaskCreator]] `StreamThread.AbstractTaskCreator<StandbyTask>`
-* [[adminClient]] Kafka `AdminClient`
+* [[adminClient]] Kafka https://kafka.apache.org/10/javadoc/org/apache/kafka/clients/admin/AdminClient.html[AdminClient]
 * [[active]] link:kafka-streams-AssignedStreamsTasks.adoc[AssignedStreamsTasks]
 * [[standby]] `AssignedStandbyTasks`
 
