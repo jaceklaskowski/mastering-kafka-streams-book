@@ -1,0 +1,11 @@
+== [[ProcessorRecordContext]] ProcessorRecordContext -- Record Metadata
+
+`ProcessorRecordContext` is a `RecordContext` that is the metadata of a record:
+
+* [[timestamp]] Timestamp
+* [[offset]] Offset
+* [[partition]] Partition
+* [[topic]] Topic
+
+[[creating-instance]]
+`ProcessorRecordContext` is created when...FIXME

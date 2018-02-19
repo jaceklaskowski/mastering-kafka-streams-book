@@ -4,6 +4,19 @@
 
 `ProcessorNode` is <<creating-instance, created>> exclusively when `ProcessorNodeFactory` is requested to link:kafka-streams-ProcessorNodeFactory.adoc#build[build] a processor node.
 
+`ProcessorNode` can <<process, process>> a record.
+
+=== [[process]] `process` Method
+
+[source, java]
+----
+void process(final K key, final V value)
+----
+
+`process`...FIXME
+
+NOTE: `process` is used when...FIXME
+
 === [[creating-instance]] Creating ProcessorNode Instance
 
 `ProcessorNode` takes the following when created:

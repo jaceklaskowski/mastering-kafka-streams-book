@@ -1,0 +1,29 @@
+== [[InternalProcessorContext]] InternalProcessorContext
+
+`InternalProcessorContext` is the <<contract, contract>> of link:kafka-streams-ProcessorContext.adoc[ProcessorContexts] that...FIXME
+
+[[contract]]
+[source, java]
+----
+package org.apache.kafka.streams.processor.internals;
+
+interface InternalProcessorContext extends ProcessorContext {
+  RecordContext recordContext();
+  void setRecordContext(RecordContext recordContext);
+  void setCurrentNode(ProcessorNode currentNode);
+  ProcessorNode currentNode();
+  ThreadCache getCache();
+  void initialized();
+  void uninitialize();
+}
+----
+
+.InternalProcessorContext Contract
+[cols="1,2",options="header",width="100%"]
+|===
+| Method
+| Description
+
+| [[setRecordContext]] `setRecordContext`
+| Used when...FIXME
+|===

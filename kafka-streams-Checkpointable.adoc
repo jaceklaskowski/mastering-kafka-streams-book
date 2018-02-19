@@ -1,0 +1,27 @@
+== [[Checkpointable]] Checkpointable
+
+`Checkpointable` is the <<contract, contract>> for...FIXME
+
+[[contract]]
+[source, java]
+----
+package org.apache.kafka.streams.processor.internals;
+
+interface Checkpointable {
+    void checkpoint(final Map<TopicPartition, Long> offsets);
+    Map<TopicPartition, Long> checkpointed();
+}
+----
+
+.Checkpointable Contract
+[cols="1,2",options="header",width="100%"]
+|===
+| Method
+| Description
+
+| [[checkpoint]] `checkpoint`
+| Used when...FIXME
+
+| [[checkpointed]] `checkpointed`
+| Used when...FIXME
+|===

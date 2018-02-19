@@ -1,0 +1,14 @@
+== [[SourceNode]] SourceNode
+
+`SourceNode` is a link:kafka-streams-ProcessorNode.adoc[ProcessorNode] that...FIXME
+
+=== [[process]] `process` Method
+
+[source, java]
+----
+void process(final K key, final V value)
+----
+
+NOTE: `process` is part of link:kafka-streams-ProcessorNode.adoc#process[ProcessorNode Contract] to...FIXME.
+
+`process`...FIXME

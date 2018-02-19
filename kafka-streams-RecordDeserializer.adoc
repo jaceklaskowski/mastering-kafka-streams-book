@@ -1,0 +1,21 @@
+== [[RecordDeserializer]] RecordDeserializer
+
+[[creating-instance]]
+`RecordDeserializer` is the metadata of a `SourceNode` that <<deserialize, knows how to deserialize a raw record>> in a given `ProcessorContext`.
+
+* [[sourceNode]] `SourceNode`
+* [[deserializationExceptionHandler]] `DeserializationExceptionHandler`
+* [[logContext]] `LogContext`
+
+=== [[deserialize]] Deserializing Raw Record in ProcessorContext -- `deserialize` Method
+
+[source, java]
+----
+ConsumerRecord<Object, Object> deserialize(
+  final ProcessorContext processorContext,
+  final ConsumerRecord<byte[], byte[]> rawRecord)
+----
+
+`deserialize`...FIXME
+
+NOTE: `deserialize` is used when...FIXME

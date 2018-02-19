@@ -1,0 +1,27 @@
+== [[GlobalStateManager]] GlobalStateManager
+
+`GlobalStateManager` is the <<contract, contract>> for custom link:kafka-streams-StateManager.adoc[StateManagers] that are link:kafka-streams-Checkpointable.adoc[checkpointable] and...FIXME
+
+[[contract]]
+[source, java]
+----
+package org.apache.kafka.streams.processor.internals;
+
+interface GlobalStateManager extends StateManager {
+  Set<String> initialize();
+  void setGlobalProcessorContext(final InternalProcessorContext processorContext);
+}
+----
+
+.GlobalStateManager Contract
+[cols="1,2",options="header",width="100%"]
+|===
+| Method
+| Description
+
+| [[initialize]] `initialize`
+| Used when...FIXME
+
+| [[setGlobalProcessorContext]] `setGlobalProcessorContext`
+| Used when...FIXME
+|===

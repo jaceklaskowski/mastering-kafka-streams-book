@@ -1,0 +1,54 @@
+== [[StateManager]] StateManager
+
+`StateManager` is the <<contract, contract>> for...FIXME
+
+[[contract]]
+[source, java]
+----
+package org.apache.kafka.streams.processor.internals;
+
+interface StateManager extends Checkpointable {
+  File baseDir();
+  void close(final Map<TopicPartition, Long> offsets) throws IOException;
+  void flush();
+  StateStore getGlobalStore(final String name);
+  StateStore getStore(final String name);
+  void register(final StateStore store, final StateRestoreCallback stateRestoreCallback);
+  void reinitializeStateStoresForPartitions(
+    final Collection<TopicPartition> partitions,
+    final InternalProcessorContext processorContext);
+}
+----
+
+.StateManager Contract
+[cols="1,2",options="header",width="100%"]
+|===
+| Method
+| Description
+
+| [[baseDir]] `baseDir`
+| Used when...FIXME
+
+| [[close]] `close`
+a| Closes a state manager
+
+Used when:
+
+* `AbstractTask` is requested to link:kafka-streams-AbstractTask.adoc#closeStateManager[closeStateManager]
+* `GlobalStateUpdateTask` is requested to link:kafka-streams-GlobalStateUpdateTask.adoc#close[close]
+
+| [[flush]] `flush`
+| Used when...FIXME
+
+| [[getGlobalStore]] `getGlobalStore`
+| Used when...FIXME
+
+| [[getStore]] `getStore`
+| Used when...FIXME
+
+| [[register]] `register`
+| Used when...FIXME
+
+| [[reinitializeStateStoresForPartitions]] `reinitializeStateStoresForPartitions`
+| Used when...FIXME
+|===

@@ -1,3 +1,14 @@
 == [[AbstractTask]] AbstractTask
 
 `AbstractTask` is a base link:kafka-streams-Task.adoc[stream processor task] that...FIXME
+
+=== [[closeStateManager]] `closeStateManager` Method
+
+[source, java]
+----
+void closeStateManager(final boolean writeCheckpoint) throws ProcessorStateException
+----
+
+`closeStateManager`...FIXME
+
+NOTE: `closeStateManager` is used when...FIXME

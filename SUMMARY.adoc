@@ -32,6 +32,7 @@
 . link:kafka-streams-ProcessorNode.adoc[ProcessorNode]
 . link:kafka-streams-ProcessorNodeFactory.adoc[ProcessorNodeFactory]
 . link:kafka-streams-SourceNodeFactory.adoc[SourceNodeFactory]
+. link:kafka-streams-SourceNode.adoc[SourceNode]
 . link:kafka-streams-NodeFactory.adoc[NodeFactory]
 . link:kafka-streams-StandbyTaskCreator.adoc[StandbyTaskCreator]
 . link:kafka-streams-TaskCreator.adoc[TaskCreator]
@@ -74,8 +75,16 @@
 . link:kafka-streams-ConsumedInternal.adoc[ConsumedInternal]
 . link:kafka-streams-Configurable.adoc[Configurable]
 . link:kafka-streams-InternalTopicManager.adoc[InternalTopicManager]
+
 . link:kafka-streams-GlobalStateMaintainer.adoc[GlobalStateMaintainer]
 .. link:kafka-streams-GlobalStateUpdateTask.adoc[GlobalStateUpdateTask -- The Default GlobalStateMaintainer]
+
+. link:kafka-streams-StateManager.adoc[StateManager]
+. link:kafka-streams-GlobalStateManager.adoc[GlobalStateManager]
+. link:kafka-streams-Checkpointable.adoc[Checkpointable]
+. link:kafka-streams-ProcessorRecordContext.adoc[ProcessorRecordContext]
+. link:kafka-streams-InternalProcessorContext.adoc[InternalProcessorContext]
+. link:kafka-streams-RecordDeserializer.adoc[RecordDeserializer]
 
 . link:kafka-streams-properties.adoc[Configuration Properties]
 
