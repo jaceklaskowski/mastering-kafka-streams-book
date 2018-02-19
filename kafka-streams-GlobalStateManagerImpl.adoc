@@ -33,7 +33,7 @@ NOTE: `checkpoint` is part of link:kafka-streams-Checkpointable.adoc#checkpoint[
 * [[logContext]] `LogContext`
 * [[topology]] `ProcessorTopology`
 * [[globalConsumer]] (Global) Kafka https://kafka.apache.org/10/javadoc/org/apache/kafka/clients/consumer/KafkaConsumer.html[Consumer] (of keys and values as array of bytes)
-* [[stateDirectory]] `StateDirectory`
+* [[stateDirectory]] link:kafka-streams-StateDirectory.adoc[StateDirectory]
 * [[stateRestoreListener]] `StateRestoreListener`
 * [[config]] link:kafka-streams-StreamsConfig.adoc[StreamsConfig]
 

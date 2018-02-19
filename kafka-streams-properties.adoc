@@ -7,6 +7,14 @@
 | Default Value
 | Description
 
+| [[application.id]] `application.id`
+|
+| *Application ID*, i.e. the identifier of a stream processing application.
+
+It must be unique within the Kafka cluster as it is used as the default client-id prefix, the group-id for membership management, and the changelog topic prefix.
+
+Use `StreamsConfig.APPLICATION_ID_CONFIG` to reference the property.
+
 | [[commit.interval.ms]] `commit.interval.ms`
 a|
 
@@ -52,4 +60,13 @@ Use `StreamsConfig.PROCESSING_GUARANTEE_CONFIG` to reference the property.
 | [[state.cleanup.delay.ms]] `state.cleanup.delay.ms`
 | 10 * 60 * 1000
 | The amount of time (in milliseconds) to wait before deleting state when a partition has migrated. Only state directories that have not been modified for at least `state.cleanup.delay.ms` will be removed.
+
+| [[state.dir]] `state.dir`
+| `/tmp/kafka-streams`
+a| Path to the base directory for a state storage
+
+* Used when `StateDirectory` is link:kafka-streams-StateDirectory.adoc#creating-instance[created]
+
+Use `StreamsConfig.STATE_DIR_CONFIG` to reference the property.
+
 |===

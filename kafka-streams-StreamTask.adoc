@@ -49,7 +49,7 @@ NOTE: `process` is used exclusively when `AssignedStreamsTasks` does link:kafka-
 * [[changelogReader]] `ChangelogReader`
 * [[config]] link:kafka-streams-StreamsConfig.adoc[StreamsConfig]
 * [[metrics]] `StreamsMetrics`
-* [[stateDirectory]] `StateDirectory`
+* [[stateDirectory]] link:kafka-streams-StateDirectory.adoc[StateDirectory]
 * [[cache]] `ThreadCache`
 * [[time]] `Time`
 * [[producer]] Kafka producer (of keys and values as array of bytes)

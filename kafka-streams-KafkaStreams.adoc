@@ -42,7 +42,7 @@ a| Administrative client for Kafka, i.e. https://kafka.apache.org/10/javadoc/org
 * Closed while `KafkaStreams` is being <<close, closed>>
 
 | [[stateDirectory]] `stateDirectory`
-| `StateDirectory`
+| link:kafka-streams-StateDirectory.adoc[StateDirectory]
 
 | [[threads]] `threads`
 a| Collection of link:kafka-streams-StreamThread.adoc[StreamThread] stream processor threads
@@ -68,6 +68,34 @@ log4j.logger.org.apache.kafka.streams.KafkaStreams=DEBUG
 Refer to link:kafka-logging.adoc#log4j.properties[Application Logging Using log4j].
 ====
 
+=== [[cleanUp]] Cleaning Up Local Directory of State Store -- `cleanUp` Method
+
+[source, java]
+----
+void cleanUp()
+----
+
+`cleanUp` simply requests <<stateDirectory, StateDirectory>> to link:kafka-streams-StateDirectory.adoc#clean[clean] when `KafkaStreams` is not <<isRunning, running>>.
+
+NOTE: `cleanUp` can only be executed before `KafkaStreams` will be <<start, started>> or after has been <<close, closed>>.
+
+`cleanUp` reports a `IllegalStateException` when `KafkaStreams` is <<isRunning, running>>.
+
+```
+Cannot clean up while running.
+```
+
+=== [[isRunning]] `isRunning` Internal Method
+
+[source, java]
+----
+boolean isRunning()
+----
+
+`isRunning`...FIXME
+
+NOTE: `isRunning` is used when...FIXME
+
 === [[start]] Starting KafkaStreams -- `start` Method
 
 [source, java]
@@ -90,7 +118,7 @@ Starting Streams client
 
 `start` starts <<threads, stream threads>>.
 
-`start` schedules a thread that requests <<stateDirectory, StateDirectory>> to `cleanRemovedTasks` every link:kafka-streams-properties.adoc#state.cleanup.delay.ms[state.cleanup.delay.ms] milliseconds.
+`start` schedules a thread that requests <<stateDirectory, StateDirectory>> to link:kafka-streams-StateDirectory.adoc#cleanRemovedTasks[cleanRemovedTasks] every link:kafka-streams-properties.adoc#state.cleanup.delay.ms[state.cleanup.delay.ms] milliseconds.
 
 You should see the following DEBUG message in the logs:
 

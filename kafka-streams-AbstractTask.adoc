@@ -31,7 +31,7 @@ NOTE: `closeStateManager` is used when...FIXME
 * [[consumer]] Kafka https://kafka.apache.org/10/javadoc/org/apache/kafka/clients/consumer/KafkaConsumer.html[Consumer] (of keys and values as array of bytes)
 * [[changelogReader]] `ChangelogReader`
 * [[isStandby]] `isStandby` Flag
-* [[stateDirectory]] `StateDirectory`
+* [[stateDirectory]] link:kafka-streams-StateDirectory.adoc[StateDirectory]
 * [[config]] link:kafka-streams-StreamsConfig.adoc[StreamsConfig]
 
 `AbstractTask` initializes the <<internal-registries, internal registries and counters>>.

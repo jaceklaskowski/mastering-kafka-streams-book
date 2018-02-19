@@ -1,3 +1,59 @@
 == [[StateDirectory]] StateDirectory
 
 `StateDirectory` is...FIXME
+
+`StateDirectory` is <<creating-instance, created>> when `KafkaStreams` is link:kafka-streams-KafkaStreams.adoc#stateDirectory[created].
+
+[[stateDir]]
+`StateDirectory` uses link:kafka-streams-properties.adoc#state.dir[state.dir] and link:kafka-streams-properties.adoc#application.id[application.id] configuration properties for the location of the state store.
+
+NOTE: link:kafka-streams-properties.adoc#state.dir[state.dir] configuration property defaults to `/tmp/kafka-streams`.
+
+[[logging]]
+[TIP]
+====
+Enable any of `ERROR`, `INFO`, `DEBUG`, `TRACE` logging levels for `org.apache.kafka.streams.processor.internals.StateDirectory` logger to see what happens inside.
+
+Add the following line to `log4j.properties`:
+
+```
+log4j.logger.org.apache.kafka.streams.processor.internals.StateDirectory=TRACE
+```
+
+Refer to link:kafka-logging.adoc#log4j.properties[Application Logging Using log4j].
+====
+
+=== [[clean]] `clean` Method
+
+[source, java]
+----
+synchronized void clean()
+----
+
+`clean`...FIXME
+
+NOTE: `clean` is used when...FIXME
+
+=== [[cleanRemovedTasks]] `cleanRemovedTasks` Method
+
+[source, java]
+----
+synchronized void cleanRemovedTasks(final long cleanupDelayMs)
+// private
+private synchronized void cleanRemovedTasks(
+  final long cleanupDelayMs,
+  final boolean manualUserCall) throws Exception
+----
+
+`cleanRemovedTasks`...FIXME
+
+NOTE: `cleanRemovedTasks` is used when...FIXME
+
+=== [[creating-instance]] Creating StateDirectory Instance
+
+`StateDirectory` takes the following when created:
+
+* [[config]] link:kafka-streams-StreamsConfig.adoc[StreamsConfig]
+* [[time]] `Time`
+
+`StateDirectory` initializes the <<internal-registries, internal registries and counters>>.

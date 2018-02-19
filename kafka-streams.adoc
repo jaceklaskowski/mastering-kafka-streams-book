@@ -1,6 +1,6 @@
 == Kafka Streams -- Stream Processing Library on Apache Kafka
 
-*Kafka Streams* is a stream processing library on top of Apache Kafka.
+*Kafka Streams* is a library for stream processing applications on top of Apache Kafka.
 
 Kafka Streams aims at simplifying development of stream processing applications with Apache Kafka as the data storage for input and output messages (with a key and a value).
 
