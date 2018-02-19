@@ -1,0 +1,40 @@
+== [[GlobalStateManagerImpl]] GlobalStateManagerImpl
+
+`GlobalStateManagerImpl` is a custom link:kafka-streams-GlobalStateManager.adoc[GlobalStateManager] that...FIXME
+
+`GlobalStateManagerImpl` is <<creating-instance, created>> when...FIXME
+
+=== [[initialize]] `initialize` Method
+
+[source, java]
+----
+Set<String> initialize()
+----
+
+NOTE: `initialize` is part of link:kafka-streams-GlobalStateManager.adoc#initialize[GlobalStateManager Contract] to...FIXME.
+
+`initialize`...FIXME
+
+=== [[checkpoint]] `checkpoint` Method
+
+[source, java]
+----
+void checkpoint(final Map<TopicPartition, Long> offsets)
+----
+
+NOTE: `checkpoint` is part of link:kafka-streams-Checkpointable.adoc#checkpoint[Checkpointable Contract] to...FIXME.
+
+`checkpoint`...FIXME
+
+=== [[creating-instance]] Creating GlobalStateManagerImpl Instance
+
+`GlobalStateManagerImpl` takes the following when created:
+
+* [[logContext]] `LogContext`
+* [[topology]] `ProcessorTopology`
+* [[globalConsumer]] (Global) Kafka https://kafka.apache.org/10/javadoc/org/apache/kafka/clients/consumer/KafkaConsumer.html[Consumer] (of keys and values as array of bytes)
+* [[stateDirectory]] `StateDirectory`
+* [[stateRestoreListener]] `StateRestoreListener`
+* [[config]] link:kafka-streams-StreamsConfig.adoc[StreamsConfig]
+
+`GlobalStateManagerImpl` initializes the <<internal-registries, internal registries and counters>>.

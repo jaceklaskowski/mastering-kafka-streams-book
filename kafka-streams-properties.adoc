@@ -10,7 +10,7 @@
 | [[commit.interval.ms]] `commit.interval.ms`
 a|
 
-* `100L` when 'processing.guarantee' is 'exactly_once'
+* `100L` when <<processing.guarantee, processing.guarantee>> is <<exactly_once, exactly_once>> (which is not by default)
 * `30000L` otherwise
 
 a| *Flush interval* (in milliseconds), i.e. the time between persisting the position of a processor.
@@ -30,6 +30,24 @@ a| *Polling interval* (in milliseconds), i.e. the time spent waiting in `Consume
 * Used when `StreamThread` is link:kafka-streams-StreamThread.adoc#pollTimeMs[created]
 
 Use `StreamsConfig.POLL_MS_CONFIG` to reference the property.
+
+| [[processing.guarantee]] `processing.guarantee`
+| `at_least_once`
+a| *Processing guarantee* (aka _Exactly-Once Support_ or _EOS support_)
+
+Possible values are:
+
+* [[at_least_once]] *at_least_once* (default)
+* [[exactly_once]] *exactly_once*
+
+[NOTE]
+====
+<<exactly_once, exactly-once>> processing guarantee requires a Kafka cluster with at least three brokers (which is the recommended setting for production).
+
+For development you can change this by adjusting broker setting `transaction.state.log.replication.factor`.
+====
+
+Use `StreamsConfig.PROCESSING_GUARANTEE_CONFIG` to reference the property.
 
 | [[state.cleanup.delay.ms]] `state.cleanup.delay.ms`
 | 10 * 60 * 1000

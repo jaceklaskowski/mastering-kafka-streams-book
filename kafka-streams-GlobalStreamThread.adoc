@@ -34,7 +34,7 @@ NOTE: `run` is used when `KafkaStreams` is link:kafka-streams-KafkaStreams.adoc#
 
 * [[topology]] `ProcessorTopology`
 * [[config]] link:kafka-streams-StreamsConfig.adoc[StreamsConfig]
-* [[globalConsumer]] Kafka https://kafka.apache.org/10/javadoc/org/apache/kafka/clients/consumer/KafkaConsumer.html[Consumer] (of keys and values as array of bytes)
+* [[globalConsumer]] (Global) Kafka https://kafka.apache.org/10/javadoc/org/apache/kafka/clients/consumer/KafkaConsumer.html[Consumer] (of keys and values as array of bytes)
 * [[stateDirectory]] `StateDirectory`
 * [[cacheSizeBytes]] `cacheSizeBytes`
 * [[metrics]] `Metrics`

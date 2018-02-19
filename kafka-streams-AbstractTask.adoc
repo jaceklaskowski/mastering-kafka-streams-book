@@ -2,6 +2,14 @@
 
 `AbstractTask` is a base link:kafka-streams-Task.adoc[stream processor task] that...FIXME
 
+`AbstractTask` is <<creating-instance, created>> when...FIXME
+
+
+NOTE: The number of `threads` is controlled using link:kafka-streams-properties.adoc#num.stream.threads[num.stream.threads] configuration property with the default being 1 thread.
+
+[[eosEnabled]]
+`AbstractTask` uses link:kafka-streams-properties.adoc#processing.guarantee[processing.guarantee] configuration property to enable link:kafka-streams-exactly-once-support-eos.adoc[Exactly-Once Support] for...FIXME
+
 === [[closeStateManager]] `closeStateManager` Method
 
 [source, java]
@@ -12,3 +20,18 @@ void closeStateManager(final boolean writeCheckpoint) throws ProcessorStateExcep
 `closeStateManager`...FIXME
 
 NOTE: `closeStateManager` is used when...FIXME
+
+=== [[creating-instance]] Creating AbstractTask Instance
+
+`AbstractTask` takes the following when created:
+
+* [[id]] Task ID
+* [[partitions]] Partitions (as Kafka `TopicPartitions`)
+* [[topology]] `ProcessorTopology`
+* [[consumer]] Kafka https://kafka.apache.org/10/javadoc/org/apache/kafka/clients/consumer/KafkaConsumer.html[Consumer] (of keys and values as array of bytes)
+* [[changelogReader]] `ChangelogReader`
+* [[isStandby]] `isStandby` Flag
+* [[stateDirectory]] `StateDirectory`
+* [[config]] link:kafka-streams-StreamsConfig.adoc[StreamsConfig]
+
+`AbstractTask` initializes the <<internal-registries, internal registries and counters>>.

@@ -85,6 +85,13 @@
 . link:kafka-streams-ProcessorRecordContext.adoc[ProcessorRecordContext]
 . link:kafka-streams-InternalProcessorContext.adoc[InternalProcessorContext]
 . link:kafka-streams-RecordDeserializer.adoc[RecordDeserializer]
+. link:kafka-streams-OffsetCheckpoint.adoc[OffsetCheckpoint]
+. link:kafka-streams-AbstractStateManager.adoc[AbstractStateManager]
+. link:kafka-streams-ProcessorStateManager.adoc[ProcessorStateManager]
+. link:kafka-streams-GlobalStateManagerImpl.adoc[GlobalStateManagerImpl]
+. link:kafka-streams-StateDirectory.adoc[StateDirectory]
+
+. link:kafka-streams-exactly-once-support-eos.adoc[Exactly-Once Support (EOS)]
 
 . link:kafka-streams-properties.adoc[Configuration Properties]
 

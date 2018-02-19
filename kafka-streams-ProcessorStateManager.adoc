@@ -1,0 +1,31 @@
+== [[ProcessorStateManager]] ProcessorStateManager
+
+`ProcessorStateManager` is a concrete link:kafka-streams-AbstractStateManager.adoc[AbstractStateManager] that...FIXME
+
+`ProcessorStateManager` is <<creating-instance, created>> exclusively when `AbstractTask` is link:kafka-streams-AbstractTask.adoc#creating-instance[created].
+
+=== [[checkpoint]] `checkpoint` Method
+
+[source, java]
+----
+void checkpoint(final Map<TopicPartition, Long> ackedOffsets)
+----
+
+NOTE: `checkpoint` is part of link:kafka-streams-Checkpointable.adoc#checkpoint[Checkpointable Contract] to...FIXME.
+
+`checkpoint`...FIXME
+
+=== [[creating-instance]] Creating ProcessorStateManager Instance
+
+`ProcessorStateManager` takes the following when created:
+
+* [[taskId]] Task ID
+* [[sources]] Sources (by Kafka `TopicPartitions`)
+* [[isStandby]] `isStandby` Flag
+* [[stateDirectory]] `StateDirectory`
+* [[storeToChangelogTopic]] `Map<String, String>`
+* [[changelogReader]] `ChangelogReader`
+* [[eosEnabled]] `eosEnabled` Flag (that corresponds to link:kafka-streams-properties.adoc#processing.guarantee[processing.guarantee] configuration property)
+* [[logContext]] `LogContext`
+
+`ProcessorStateManager` initializes the <<internal-registries, internal registries and counters>>.

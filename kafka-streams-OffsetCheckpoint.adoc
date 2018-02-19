@@ -1,0 +1,64 @@
+== [[OffsetCheckpoint]] OffsetCheckpoint
+
+`OffsetCheckpoint` is...FIXME
+
+`OffsetCheckpoint` is <<creating-instance, created>> when:
+
+1. `AbstractStateManager` is link:kafka-streams-AbstractStateManager.adoc#creating-instance[created]
+
+1. `ProcessorStateManager` is requested to link:kafka-streams-ProcessorStateManager.adoc#checkpoint[checkpoint]
+
+[[creating-instance]]
+[[file]]
+`OffsetCheckpoint` only takes the *offset checkpoint file* when created.
+
+NOTE: The default name of the file is link:kafka-streams-AbstractStateManager.adoc#CHECKPOINT_FILE_NAME[.checkpoint].
+
+[[VERSION]]
+`OffsetCheckpoint` uses the internal *version* to maintain compatibility between checkpointing protocols. The current version is 0.
+
+=== [[read]] Loading Offset Checkpoint File -- `read` Method
+
+[source, java]
+----
+Map<TopicPartition, Long> read() throws IOException
+----
+
+`read`...FIXME
+
+[NOTE]
+====
+`read` is used when:
+
+* `GlobalStateManagerImpl` is requested to link:kafka-streams-GlobalStateManagerImpl.adoc#initialize[initialize]
+* `ProcessorStateManager` is link:kafka-streams-ProcessorStateManager.adoc#creating-instance[created]
+====
+
+=== [[write]] Writing Offset Checkpoint File -- `write` Method
+
+[source, java]
+----
+void write(final Map<TopicPartition, Long> offsets) throws IOException
+----
+
+`write`...FIXME
+
+[NOTE]
+====
+`write` is used when:
+
+* `AbstractStateManager` is requested to link:kafka-streams-AbstractStateManager.adoc#reinitializeStateStoresForPartitions[reinitializeStateStoresForPartitions]
+* `GlobalStateManagerImpl` is requested to link:kafka-streams-GlobalStateManagerImpl.adoc#checkpoint[checkpoint]
+* `ProcessorStateManager` is requested to link:kafka-streams-ProcessorStateManager.adoc#checkpoint[checkpoint]
+====
+
+=== [[delete]] Deleting Offset Checkpoint File -- `delete` Method
+
+[source, java]
+----
+void delete() throws IOException
+----
+
+`delete` simply deletes the <<file, offset checkpoint file>> if exists.
+
+NOTE: `delete` is used exclusively when `ProcessorStateManager` is link:kafka-streams-ProcessorStateManager.adoc#creating-instance[created] (with link:kafka-streams-exactly-once-support-eos.adoc[Exactly-Once Support (EOS)] enabled).

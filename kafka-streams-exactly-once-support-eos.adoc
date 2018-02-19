@@ -1,0 +1,3 @@
+== Exactly-Once Support (EOS)
+
+*Exactly-Once Support (EOS)* is...FIXME

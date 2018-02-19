@@ -1,0 +1,42 @@
+== [[AbstractStateManager]] AbstractStateManager
+
+`AbstractStateManager` is a base link:kafka-streams-StateManager.adoc[StateManager]...FIXME
+
+[[creating-instance]]
+[[baseDir]]
+`AbstractStateManager` only takes the directory that...FIXME
+
+NOTE: `AbstractStateManager` is an abstract class and cannot be <<creating-instance, created>> directly.
+
+[[CHECKPOINT_FILE_NAME]]
+`AbstractStateManager` uses *.checkpoint* for...FIXME
+
+[[implementations]]
+.AbstractStateManagers
+[cols="1,2",options="header",width="100%"]
+|===
+| AbstractStateManager
+| Description
+
+| [[GlobalStateManagerImpl]] link:kafka-streams-GlobalStateManagerImpl.adoc[GlobalStateManagerImpl]
+|
+
+| [[ProcessorStateManager]] link:kafka-streams-ProcessorStateManager.adoc[ProcessorStateManager]
+|
+|===
+
+=== [[reinitializeStateStoresForPartitions]] `reinitializeStateStoresForPartitions` Method
+
+[source, java]
+----
+void reinitializeStateStoresForPartitions(
+  final Logger log,
+  final Map<String, StateStore> stateStores,
+  final Map<String, String> storeToChangelogTopic,
+  final Collection<TopicPartition> partitions,
+  final InternalProcessorContext processorContext)
+----
+
+`reinitializeStateStoresForPartitions`...FIXME
+
+NOTE: `reinitializeStateStoresForPartitions` is used when...FIXME
