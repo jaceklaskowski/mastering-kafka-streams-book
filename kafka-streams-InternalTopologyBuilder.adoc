@@ -16,6 +16,11 @@ a| Names of global topics
 
 * Used when `InternalTopologyBuilder` <<isGlobalSource, isGlobalSource>>
 
+| [[internalTopicNames]] `internalTopicNames`
+a| Names of...FIXME
+
+* New element is added when `InternalTopologyBuilder` is requested to <<addInternalTopic, addInternalTopic>>
+
 | [[nodeFactories]] `nodeFactories`
 | Collection of named link:kafka-streams-NodeFactory.adoc[NodeFactories]
 
@@ -94,6 +99,38 @@ void addProcessor(
 `addProcessor`...FIXME
 
 NOTE: `addProcessor` is used when...FIXME
+
+=== [[addInternalTopic]] `addInternalTopic` Method
+
+[source, java]
+----
+final void addInternalTopic(final String topicName)
+----
+
+`addInternalTopic`...FIXME
+
+[NOTE]
+====
+`addInternalTopic` is used when:
+
+1. `KStreamImpl` is requested to link:kafka-streams-KStreamImpl.adoc#createReparitionedSource[createReparitionedSource]
+1. `KGroupedTableImpl` is requested to `buildAggregate`
+====
+
+=== [[buildSourceNode]] `buildSourceNode` Internal Method
+
+[source, java]
+----
+void buildSourceNode(
+  final Map<String, SourceNode> topicSourceMap,
+  final Set<String> repartitionTopics,
+  final SourceNodeFactory sourceNodeFactory,
+  final SourceNode node)
+----
+
+`buildSourceNode`...FIXME
+
+NOTE: `buildSourceNode` is used exclusively when `InternalTopologyBuilder` is requested to link:kafka-streams-InternalTopologyBuilder.adoc#build[build a topology of processor tasks] (aka *processor topology*).
 
 === [[connectProcessorAndStateStores]] `connectProcessorAndStateStores` Internal Method
 

@@ -90,6 +90,7 @@
 . link:kafka-streams-ProcessorStateManager.adoc[ProcessorStateManager]
 . link:kafka-streams-GlobalStateManagerImpl.adoc[GlobalStateManagerImpl]
 . link:kafka-streams-StateDirectory.adoc[StateDirectory]
+. link:kafka-streams-GroupedStreamAggregateBuilder.adoc[GroupedStreamAggregateBuilder]
 
 . link:kafka-streams-TopologyTestDriver.adoc[TopologyTestDriver]
 . link:kafka-streams-ProcessorTopologyTestDriver.adoc[ProcessorTopologyTestDriver]

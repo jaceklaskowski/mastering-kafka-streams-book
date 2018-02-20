@@ -9,28 +9,39 @@ package org.apache.kafka.streams.processor;
 
 interface ProcessorContext {
   String applicationId();
+
+  void commit();
+
+  <K, V> void forward(K key, V value);
+  <K, V> void forward(K key, V value, int childIndex);
+  <K, V> void forward(K key, V value, String childName);
+
   TaskId taskId();
+
   Serde<?> keySerde();
   Serde<?> valueSerde();
-  File stateDir();
-  StreamsMetrics metrics();
+
   void register(
     StateStore store,
     boolean loggingEnabledIsDeprecatedAndIgnored,
     StateRestoreCallback stateRestoreCallback);
   StateStore getStateStore(String name);
+
   Cancellable schedule(long intervalMs, PunctuationType type, Punctuator callback);
+  // @Deprecated
   void schedule(long interval);
-  <K, V> void forward(K key, V value);
-  <K, V> void forward(K key, V value, int childIndex);
-  <K, V> void forward(K key, V value, String childName);
-  void commit();
+
+  File stateDir();
+
   String topic();
   int partition();
   long offset();
   long timestamp();
+
   Map<String, Object> appConfigs();
   Map<String, Object> appConfigsWithPrefix(String prefix);
+
+  StreamsMetrics metrics();
 }
 ----
 
@@ -41,5 +52,8 @@ interface ProcessorContext {
 | Description
 
 | [[getStateStore]] `getStateStore`
+| Used when...FIXME
+
+| [[forward]] `forward`
 | Used when...FIXME
 |===

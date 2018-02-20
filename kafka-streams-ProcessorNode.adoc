@@ -6,6 +6,17 @@
 
 `ProcessorNode` can <<process, process>> a record.
 
+=== [[init]] `init` Method
+
+[source, java]
+----
+void init(ProcessorContext context)
+----
+
+`init`...FIXME
+
+NOTE: `init` is used when...FIXME
+
 === [[process]] `process` Method
 
 [source, java]

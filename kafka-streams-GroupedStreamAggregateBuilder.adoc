@@ -1,0 +1,14 @@
+== [[GroupedStreamAggregateBuilder]] GroupedStreamAggregateBuilder
+
+`GroupedStreamAggregateBuilder` is...FIXME
+
+=== [[repartitionIfRequired]] `repartitionIfRequired` Internal Method
+
+[source, java]
+----
+String repartitionIfRequired(final String queryableStoreName)
+----
+
+`repartitionIfRequired`...FIXME
+
+NOTE: `repartitionIfRequired` is used when...FIXME

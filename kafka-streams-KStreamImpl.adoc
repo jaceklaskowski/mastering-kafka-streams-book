@@ -131,6 +131,19 @@ NOTE: `to` uses link:kafka-streams-WindowedStreamPartitioner.adoc[WindowedStream
 
 NOTE: `to` is used in <<to, to>> and <<through, through>> operators.
 
+=== [[repartitionForJoin]] `repartitionForJoin` Internal Method
+
+[source, scala]
+----
+KStreamImpl<K, V> repartitionForJoin(
+  final Serde<K> keySerde,
+  final Serde<V> valSerde)
+----
+
+`repartitionForJoin`...FIXME
+
+NOTE: `repartitionForJoin` is used when...FIXME
+
 === [[createReparitionedSource]] `createReparitionedSource` Method
 
 [source, java]
@@ -145,7 +158,16 @@ String createReparitionedSource(
 
 `createReparitionedSource`...FIXME
 
-NOTE: `createReparitionedSource` is used when...FIXME
+[NOTE]
+====
+`createReparitionedSource` is used when:
+
+1. `GroupedStreamAggregateBuilder` is requested to link:kafka-streams-GroupedStreamAggregateBuilder.adoc#repartitionIfRequired[repartitionIfRequired]
+
+1. `KGroupedStreamImpl` is requested to link:kafka-streams-KGroupedStreamImpl.adoc#repartitionIfRequired[repartitionIfRequired]
+
+1. `KStreamImpl` is requested to <<repartitionForJoin, repartitionForJoin>>
+====
 
 === [[creating-instance]] Creating KStreamImpl Instance
 
