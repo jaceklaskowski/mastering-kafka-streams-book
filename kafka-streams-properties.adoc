@@ -31,7 +31,7 @@ Use `StreamsConfig.COMMIT_INTERVAL_MS_CONFIG` to reference the property.
 
 | [[poll.ms]] `poll.ms`
 | `100`
-a| *Polling interval* (in milliseconds), i.e. the time spent waiting in `Consumer.poll` if data is not available in the buffer. If `0`, returns immediately with any records that are available currently in the buffer, else returns empty. Must not be negative.
+a| *Polling interval* (in milliseconds), i.e. the time spent waiting in `Consumer.poll` (unless data is available in the buffer). If `0`, returns immediately with any records that are available currently in the buffer, else returns empty. Must not be negative.
 
 * Used when `GlobalStreamThread` is requested to link:kafka-streams-GlobalStreamThread.adoc#initialize[initialize] (which is right after `KafkaStreams` has been link:kafka-streams-KafkaStreams.adoc#start[started]) and creates a link:kafka-streams-StateConsumer.adoc#pollMs[StateConsumer]
 

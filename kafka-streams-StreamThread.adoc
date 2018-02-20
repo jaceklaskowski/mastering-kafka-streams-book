@@ -12,7 +12,7 @@ image::images/kafka-streams-StreamThread.png[align="center"]
 NOTE: `KafkaStreams` uses link:kafka-streams-KafkaStreams.adoc#threads[num.stream.threads] configuration property for the number of `StreamThreads` to create.
 
 [[pollTimeMs]]
-`StreamThread` uses link:kafka-streams-properties.adoc#poll.ms[poll.ms] configuration property as the *polling interval* while <<pollRequests, polling the topics for records>>.
+`StreamThread` uses link:kafka-streams-properties.adoc#poll.ms[poll.ms] configuration property as the *polling interval* for <<pollRequests, polling the topics for records>>.
 
 `StreamThread` uses the Kafka <<consumer, consumer>> to:
 
@@ -45,6 +45,20 @@ NOTE: `StreamThread` requests <<builder, InternalTopologyBuilder>> for the link:
 | The timestamp when the timer has started
 |===
 
+[[logging]]
+[TIP]
+====
+Enable any of `WARN`, `ERROR`, `INFO`, `DEBUG`, `TRACE` logging levels for `org.apache.kafka.streams.processor.internals.StreamThread` logger to see what happens inside.
+
+Add the following line to `log4j.properties`:
+
+```
+log4j.logger.org.apache.kafka.streams.processor.internals.StreamThread=TRACE
+```
+
+Refer to link:kafka-logging.adoc#log4j.properties[Application Logging Using log4j].
+====
+
 === [[processAndMaybeCommit]] `processAndMaybeCommit` Internal Method
 
 [source, java]
@@ -54,7 +68,7 @@ long processAndMaybeCommit(final long recordsProcessedBeforeCommit)
 
 `processAndMaybeCommit`...FIXME
 
-NOTE: `processAndMaybeCommit` is used exclusively when `StreamThread` is requested to <<runOnce, consume records once>>.
+NOTE: `processAndMaybeCommit` is used exclusively when `StreamThread` is requested for <<runOnce, polling records once>> (and there have been records to be processed).
 
 === [[pollRequests]] Polling for Records -- `pollRequests` Internal Method
 
@@ -96,20 +110,57 @@ void completeShutdown(final boolean cleanRun)
 
 NOTE: `completeShutdown` is used when...FIXME
 
-=== [[runOnce]] Consuming Records Once -- `runOnce` Method
+=== [[runOnce]] Polling Records Once -- `runOnce` Method
 
 [source, java]
 ----
 long runOnce(final long recordsProcessedBeforeCommit)
 ----
 
-`runOnce` pools for records with timeout `0` (when `StreamThread` is in `PARTITIONS_ASSIGNED` state) or <<pollTimeMs, poll.ms>> milliseconds.
+`runOnce` does...FIXME
 
-`runOnce` checks <<taskManager, TaskManager>> if link:kafka-streams-TaskManager.adoc#updateNewAndRestoringTasks[updateNewAndRestoringTasks] and, if positive, <<setState, sets the state>> to `RUNNING`.
+[NOTE]
+====
+`recordsProcessedBeforeCommit` starts as `UNLIMITED_RECORDS`, i.e. `-1` in <<runLoop, runLoop>> (where the record stream processing starts off), and is passed along to every invocation of `runOnce`.
 
-If there are records to processed and <<taskManager, TaskManager>> link:kafka-streams-TaskManager.adoc#hasActiveRunningTasks[hasActiveRunningTasks], `runOnce`...FIXME
+`runOnce` can <<adjustRecordsProcessedBeforeCommit, adjust>> `recordsProcessedBeforeCommit` (i.e. scale it down or up) given the current processing latency and commit time.
 
-CAUTION: FIXME
+Eventually, `recordsProcessedBeforeCommit` reaches <<processAndMaybeCommit, processAndMaybeCommit>>.
+====
+
+Internally, `runOnce` first <<runOnce-branches-state, branches off>> per <<state, state>>.
+
+[[runOnce-branches-state]]
+.runOnce's State Branches
+[cols="1,2",options="header",width="100%"]
+|===
+| PARTITIONS_ASSIGNED
+| Other states
+
+a|
+
+1. `runOnce` <<pollRequests, pollRequests>> with timeout `0`
+
+1. Requests <<taskManager, TaskManager>> to link:kafka-streams-TaskManager.adoc#updateNewAndRestoringTasks[updateNewAndRestoringTasks]
+
+  i. (optionally) Changes the <<state, state>> to `RUNNING`
+
+a|
+
+1. `runOnce` <<pollRequests, pollRequests>> with timeout as defined by <<pollTimeMs, poll.ms>> configuration property
+
+1. If (for some reason) the <<state, state>> has changed to `PARTITIONS_ASSIGNED` `runOnce` requests <<taskManager, TaskManager>> to link:kafka-streams-TaskManager.adoc#updateNewAndRestoringTasks[updateNewAndRestoringTasks]
+
+  i. (optionally) Changes the <<state, state>> to `RUNNING`
+|===
+
+If there are records to processed (i.e. <<pollRequests, pollRequests>> gave records) and the <<taskManager, TaskManager>> has link:kafka-streams-TaskManager.adoc#hasActiveRunningTasks[active running tasks], `runOnce` requests `pollTimeSensor` to record the current poll latency.
+
+`runOnce` <<addRecordsToTasks, addRecordsToTasks>> followed by <<processAndMaybeCommit, processAndMaybeCommit>> (with the input number of records as `recordsProcessedBeforeCommit`).
+
+With at least one record processed (as computed in <<processAndMaybeCommit, processAndMaybeCommit>>) `runOnce` requests `processTimeSensor` to record the current process latency and <<adjustRecordsProcessedBeforeCommit, adjustRecordsProcessedBeforeCommit>>.
+
+CAUTION: FIXME How would you name the block above with the records polled and `taskManager.hasActiveRunningTasks()`? What's the purpose of the above?
 
 `runOnce` <<punctuate, punctuate>>
 
@@ -272,3 +323,29 @@ boolean setState(final State newState)
 `setState`...FIXME
 
 NOTE: `setState` is used when...FIXME
+
+=== [[adjustRecordsProcessedBeforeCommit]] Scaling Up or Down (Per Current Processing Latency and Commit Time) -- `adjustRecordsProcessedBeforeCommit` Internal Method
+
+[source, java]
+----
+long adjustRecordsProcessedBeforeCommit(
+  final long prevRecordsProcessedBeforeCommit,
+  final long totalProcessed,
+  final long processLatency, final long commitTime)
+----
+
+`adjustRecordsProcessedBeforeCommit` scales (adjusts) the number of records (`recordsProcessedBeforeCommit`) up or down per current `processLatency` and `commitTime` times.
+
+If `processLatency` is greater than `0` and `commitTime`, `adjustRecordsProcessedBeforeCommit` scales `recordsProcessedBeforeCommit` down and prints out the following DEBUG message to the logs:
+
+```
+processing latency [processLatency] > commit time [commitTime] for [totalProcessed] records. Adjusting down recordsProcessedBeforeCommit=[recordsProcessedBeforeCommit]
+```
+
+If however `prevRecordsProcessedBeforeCommit` is available (measured) and `processLatency` is greater than `0` (but not `commitTime`), `adjustRecordsProcessedBeforeCommit` scales `recordsProcessedBeforeCommit` up and prints out the following DEBUG message to the logs:
+
+```
+processing latency [processLatency] < commit time [commitTime] for [totalProcessed] records. Adjusting up recordsProcessedBeforeCommit=[recordsProcessedBeforeCommit]
+```
+
+NOTE: `adjustRecordsProcessedBeforeCommit` is used exclusively when `StreamThread` is requested to <<runOnce, poll records once>> (and there have been records available).

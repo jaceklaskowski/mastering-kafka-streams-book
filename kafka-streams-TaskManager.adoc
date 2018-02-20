@@ -2,7 +2,7 @@
 
 `TaskManager` is...FIXME
 
-`TaskManager` is <<creating-instance, created>> exclusively when `StreamThread` is link:kafka-streams-StreamThread.adoc#create[created] (for the only purpose of creating a link:kafka-streams-StreamThread.adoc#rebalanceListener[RebalanceListener]).
+`TaskManager` is <<creating-instance, created>> exclusively when `StreamThread` is link:kafka-streams-StreamThread.adoc#create[created].
 
 `TaskManager` uses Kafka's <<adminClient, AdminClient>> for <<maybePurgeCommitedRecords, maybePurgeCommitedRecords>> and for `StreamPartitionAssignor` to link:kafka-streams-StreamPartitionAssignor.adoc#configure[configure] itself (and create the internal link:kafka-streams-StreamPartitionAssignor.adoc#internalTopicManager[InternalTopicManager]).
 
@@ -107,6 +107,17 @@ int process()
 `process`...FIXME
 
 NOTE: `process` is used exclusively when `StreamThread` is requested to link:kafka-streams-StreamThread.adoc#processAndMaybeCommit[processAndMaybeCommit].
+
+=== [[maybeCommitActiveTasks]] `maybeCommitActiveTasks` Method
+
+[source, java]
+----
+int maybeCommitActiveTasks()
+----
+
+`maybeCommitActiveTasks`...FIXME
+
+NOTE: `maybeCommitActiveTasks` is used exclusively when `StreamThread` is requested to link:kafka-streams-StreamThread.adoc#processAndMaybeCommit[processAndMaybeCommit].
 
 === [[updateNewAndRestoringTasks]] `updateNewAndRestoringTasks` Method
 
