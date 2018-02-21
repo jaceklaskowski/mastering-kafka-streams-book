@@ -27,6 +27,9 @@ Tasks IDs are added or removed as follows:
 * Added when when `AssignedTasks` is requested to <<transitionToRunning, transition a task to a running state>>
 
 * Removed when `AssignedTasks` is requested to <<suspend, suspend>> or <<clear, clear>>
+
+| [[runningByPartition]] `runningByPartition`
+| Registry of Kafka's `TopicPartitions` by the task
 |===
 
 === [[close]] `close` Method
@@ -73,17 +76,6 @@ RuntimeException suspend()
 
 NOTE: `suspend` is used when...FIXME
 
-=== [[transitionToRunning]] `transitionToRunning` Internal Method
-
-[source, java]
-----
-void transitionToRunning(final T task, final Set<TopicPartition> readyPartitions)
-----
-
-`transitionToRunning`...FIXME
-
-NOTE: `transitionToRunning` is used when...FIXME
-
 === [[hasRunningTasks]] Checking If There Is At Least One Running Task -- `hasRunningTasks` Method
 
 [source, java]
@@ -94,3 +86,67 @@ boolean hasRunningTasks()
 `hasRunningTasks` simply checks whether there is at least one task registered in <<running, running>> internal registry or not.
 
 NOTE: `hasRunningTasks` is used exclusively when `TaskManager` is requested to check if there are any link:kafka-streams-TaskManager.adoc#hasActiveRunningTasks[running] or link:kafka-streams-TaskManager.adoc#hasStandbyRunningTasks[standby] tasks registered.
+
+=== [[updateRestored]] `updateRestored` Method
+
+[source, java]
+----
+Set<TopicPartition> updateRestored(final Collection<TopicPartition> restored)
+----
+
+`updateRestored`...FIXME
+
+NOTE: `updateRestored` is used when...FIXME
+
+=== [[maybeResumeSuspendedTask]] `maybeResumeSuspendedTask` Method
+
+[source, java]
+----
+boolean maybeResumeSuspendedTask(final TaskId taskId, final Set<TopicPartition> partitions)
+----
+
+`maybeResumeSuspendedTask`...FIXME
+
+NOTE: `maybeResumeSuspendedTask` is used when...FIXME
+
+=== [[initializeNewTasks]] `initializeNewTasks` Method
+
+[source, java]
+----
+Set<TopicPartition> initializeNewTasks()
+----
+
+`initializeNewTasks`...FIXME
+
+NOTE: `initializeNewTasks` is used when...FIXME
+
+=== [[transitionToRunning]] Scheduling Task For Execution -- `transitionToRunning` Internal Method
+
+[source, java]
+----
+void transitionToRunning(final T task, final Set<TopicPartition> readyPartitions)
+----
+
+`transitionToRunning` simply makes a task available for scheduling.
+
+Internally, `transitionToRunning` prints out the following DEBUG message to the logs:
+
+```
+transitioning [taskTypeName] [taskId] to running
+```
+
+`transitionToRunning` registers the input `task` in <<running, running>> internal registry.
+
+NOTE: Registering a task in <<running, running>> internal registry is the only way to mark the task as running.
+
+`transitionToRunning` requests the input `task` to link:kafka-streams-Task.adoc#initializeTopology[initializeTopology].
+
+`transitionToRunning` registers the link:kafka-streams-Task.adoc#partitions[partitions] of the input `task` with the `task` (in <<runningByPartition, runningByPartition>> internal registry).
+
+If the input `task` link:kafka-streams-Task.adoc#[has state stores] `transitionToRunning` adds the partitions to the input `readyPartitions`.
+
+NOTE: The input `readyPartitions` could really be an output.
+
+`transitionToRunning` registers the link:kafka-streams-Task.adoc#changelogPartitions[changelog partitions] of the input `task` with the `task` (in <<runningByPartition, runningByPartition>> internal registry).
+
+NOTE: `transitionToRunning` is used when `AssignedTasks` is requested to <<initializeNewTasks, initializeNewTasks>>, <<maybeResumeSuspendedTask, maybeResumeSuspendedTask>> and <<updateRestored, updateRestored>>.
