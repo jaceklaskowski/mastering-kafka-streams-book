@@ -1,0 +1,14 @@
+== [[AssignedTasks]] AssignedTasks
+
+`AssignedTasks` is...FIXME
+
+=== [[hasRunningTasks]] `hasRunningTasks` Method
+
+[source, java]
+----
+boolean hasRunningTasks()
+----
+
+`hasRunningTasks`...FIXME
+
+NOTE: `hasRunningTasks` is used...FIXME

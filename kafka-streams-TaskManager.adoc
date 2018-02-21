@@ -141,17 +141,6 @@ StreamTask activeTask(final TopicPartition partition)
 
 NOTE: `activeTask` is used exclusively when `StreamThread` is requested to link:kafka-streams-StreamThread.adoc#addRecordsToTasks[addRecordsToTasks].
 
-=== [[hasActiveRunningTasks]] `hasActiveRunningTasks` Method
-
-[source, java]
-----
-boolean hasActiveRunningTasks()
-----
-
-`hasActiveRunningTasks`...FIXME
-
-NOTE: `hasActiveRunningTasks` is used exclusively when `StreamThread` is requested to link:kafka-streams-StreamThread.adoc#runOnce[consume records once].
-
 === [[creating-instance]] Creating TaskManager Instance
 
 `TaskManager` takes the following when created:
@@ -168,3 +157,17 @@ NOTE: `hasActiveRunningTasks` is used exclusively when `StreamThread` is request
 * [[standby]] `AssignedStandbyTasks`
 
 `TaskManager` initializes the <<internal-registries, internal registries and counters>>.
+
+=== [[hasActiveRunningTasks]] `hasActiveRunningTasks` Method
+
+[source, java]
+----
+boolean hasActiveRunningTasks()
+----
+
+`hasActiveRunningTasks` simply asks <<active, AssignedStreamsTasks>> whether it link:kafka-streams-AssignedTasks.adoc#hasRunningTasks[has running tasks or not].
+
+.TaskManager and AssignedStreamsTasks
+image::images/kafka-streams-TaskManager-hasActiveRunningTasks.png[align="center"]
+
+NOTE: `hasActiveRunningTasks` is used exclusively when `StreamThread` is requested to link:kafka-streams-StreamThread.adoc#runOnce[consume records once] (and there are records to be processed).

@@ -12,7 +12,6 @@
 ... link:kafka-streams-StateConsumer.adoc[StateConsumer]
 .. link:kafka-streams-TaskManager.adoc[TaskManager]
 .. link:kafka-streams-PartitionGroup.adoc[PartitionGroup]
-.. link:kafka-streams-AssignedStreamsTasks.adoc[AssignedStreamsTasks]
 
 . link:kafka-streams-Task.adoc[Task -- Contract for Stream Processor Tasks]
 .. link:kafka-streams-StreamTask.adoc[StreamTask]
@@ -96,6 +95,10 @@
 . link:kafka-streams-ProcessorTopologyTestDriver.adoc[ProcessorTopologyTestDriver]
 
 . link:kafka-streams-exactly-once-support-eos.adoc[Exactly-Once Support (EOS)]
+
+. link:kafka-streams-AssignedTasks.adoc[AssignedTasks]
+.. link:kafka-streams-AssignedStandbyTasks.adoc[AssignedStandbyTasks]
+.. link:kafka-streams-AssignedStreamsTasks.adoc[AssignedStreamsTasks]
 
 . link:kafka-streams-properties.adoc[Configuration Properties]
 
