@@ -2,6 +2,22 @@
 
 `AssignedStreamsTasks` is...FIXME
 
+It _appears_ that `AssignedStreamsTasks` simply operates on the running tasks (i.e. the tasks that are in link:kafka-streams-AssignedTasks.adoc#running[running] internal registry). When requested to <<process, process>> or <<punctuate, punctuate>> `AssignedStreamsTasks` simply walks over the `running` internal registry and triggers execution of every task.
+
+[[logging]]
+[TIP]
+====
+Enable any of `ERROR`, `WARN`, `INFO`, `DEBUG`, `TRACE` logging levels for `org.apache.kafka.streams.processor.internals.AssignedStreamsTasks` logger to see what happens inside.
+
+Add the following line to `log4j.properties`:
+
+```
+log4j.logger.org.apache.kafka.streams.processor.internals.AssignedStreamsTasks=TRACE
+```
+
+Refer to link:kafka-logging.adoc#log4j.properties[Application Logging Using log4j].
+====
+
 === [[process]] `process` Method
 
 [source, java]
@@ -12,3 +28,14 @@ int process()
 `process`...FIXME
 
 NOTE: `process` is used exclusively when `TaskManager` is requested to link:kafka-streams-TaskManager.adoc#process[process]...FIXME
+
+=== [[punctuate]] `punctuate` Method
+
+[source, java]
+----
+int punctuate()
+----
+
+`punctuate`...FIXME
+
+NOTE: `punctuate` is used when...FIXME

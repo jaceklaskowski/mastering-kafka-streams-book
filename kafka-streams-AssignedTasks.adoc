@@ -2,13 +2,95 @@
 
 `AssignedTasks` is...FIXME
 
-=== [[hasRunningTasks]] `hasRunningTasks` Method
+`AssignedTasks` manages tasks in different internal registries that are the means of assigning a status:
+
+1. <<running, running>> for tasks that are considered running (that `AssignedStreamsTasks` uses when requested to link:kafka-streams-AssignedStreamsTasks.adoc#process[process])
+
+1. FIXME
+
+[[internal-registries]]
+.AssignedTasks's Internal Properties (e.g. Registries, Counters and Flags)
+[cols="1,2",options="header",width="100%"]
+|===
+| Name
+| Description
+
+| [[running]] `running`
+a| Registry of running tasks by their ids
+
+`running` is a https://docs.oracle.com/javase/9/docs/api/java/util/concurrent/ConcurrentHashMap.html[java.util.concurrent.ConcurrentHashMap], i.e. `ConcurrentHashMap<TaskId, Task>`.
+
+Used when...FIXME
+
+Tasks IDs are added or removed as follows:
+
+* Added when when `AssignedTasks` is requested to <<transitionToRunning, transition a task to a running state>>
+
+* Removed when `AssignedTasks` is requested to <<suspend, suspend>> or <<clear, clear>>
+|===
+
+=== [[close]] `close` Method
+
+[source, java]
+----
+void close(final boolean clean)
+----
+
+`close`...FIXME
+
+NOTE: `close` is used when...FIXME
+
+=== [[clear]] Removing All Task References -- `clear` Method
+
+[source, java]
+----
+void clear()
+----
+
+`clear` simply removes all entries from the internal registries: <<runningByPartition, runningByPartition>>, <<restoringByPartition, restoringByPartition>>, <<running, running>>, <<created, created>>, <<suspended, suspended>> and <<restoredPartitions, restoredPartitions>>.
+
+NOTE: `clear` is used exclusively when `AssignedTasks` is requested to <<close, close>>.
+
+=== [[suspendTasks]] Suspending Tasks -- `suspendTasks` Internal Method
+
+[source, java]
+----
+RuntimeException suspendTasks(final Collection<T> tasks)
+----
+
+`suspendTasks`...FIXME
+
+NOTE: `suspendTasks` is used when...FIXME
+
+=== [[suspend]] Suspending All Active Tasks -- `suspend` Method
+
+[source, java]
+----
+RuntimeException suspend()
+----
+
+`suspend`...FIXME
+
+NOTE: `suspend` is used when...FIXME
+
+=== [[transitionToRunning]] `transitionToRunning` Internal Method
+
+[source, java]
+----
+void transitionToRunning(final T task, final Set<TopicPartition> readyPartitions)
+----
+
+`transitionToRunning`...FIXME
+
+NOTE: `transitionToRunning` is used when...FIXME
+
+=== [[hasRunningTasks]] Checking If There Is At Least One Running Task -- `hasRunningTasks` Method
 
 [source, java]
 ----
 boolean hasRunningTasks()
 ----
 
-`hasRunningTasks`...FIXME
+`hasRunningTasks` simply checks whether there is at least one task registered in <<running, running>> internal registry or not.
 
-NOTE: `hasRunningTasks` is used...FIXME
+NOTE: `hasRunningTasks` is used exclusively when `TaskManager` is requested to check if there are any link:kafka-streams-TaskManager.adoc#hasActiveRunningTasks[running] or link:kafka-streams-TaskManager.adoc#hasStandbyRunningTasks[standby] tasks registered.

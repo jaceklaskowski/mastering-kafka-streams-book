@@ -1,3 +1,17 @@
 == [[AssignedStandbyTasks]] AssignedStandbyTasks
 
 `AssignedStandbyTasks` is...FIXME
+
+[[logging]]
+[TIP]
+====
+Enable any of `ERROR`, `WARN`, `INFO`, `DEBUG`, `TRACE` logging levels for `org.apache.kafka.streams.processor.internals.AssignedStandbyTasks` logger to see what happens inside.
+
+Add the following line to `log4j.properties`:
+
+```
+log4j.logger.org.apache.kafka.streams.processor.internals.AssignedStandbyTasks=TRACE
+```
+
+Refer to link:kafka-logging.adoc#log4j.properties[Application Logging Using log4j].
+====

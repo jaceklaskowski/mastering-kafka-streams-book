@@ -6,6 +6,8 @@
 
 `TaskManager` uses Kafka's <<adminClient, AdminClient>> for <<maybePurgeCommitedRecords, maybePurgeCommitedRecords>> and for `StreamPartitionAssignor` to link:kafka-streams-StreamPartitionAssignor.adoc#configure[configure] itself (and create the internal link:kafka-streams-StreamPartitionAssignor.adoc#internalTopicManager[InternalTopicManager]).
 
+`TaskManager` manages tasks through <<active, AssignedStreamsTasks>> and <<standby, AssignedStandbyTasks>> collection of tasks.
+
 [[logging]]
 [TIP]
 ====
@@ -165,9 +167,23 @@ NOTE: `activeTask` is used exclusively when `StreamThread` is requested to link:
 boolean hasActiveRunningTasks()
 ----
 
-`hasActiveRunningTasks` simply asks <<active, AssignedStreamsTasks>> whether it link:kafka-streams-AssignedTasks.adoc#hasRunningTasks[has running tasks or not].
+`hasActiveRunningTasks` simply asks <<active, AssignedStreamsTasks>> whether it link:kafka-streams-AssignedTasks.adoc#hasRunningTasks[has any tasks registered or not].
 
 .TaskManager and AssignedStreamsTasks
 image::images/kafka-streams-TaskManager-hasActiveRunningTasks.png[align="center"]
 
 NOTE: `hasActiveRunningTasks` is used exclusively when `StreamThread` is requested to link:kafka-streams-StreamThread.adoc#runOnce[consume records once] (and there are records to be processed).
+
+=== [[hasStandbyRunningTasks]] `hasStandbyRunningTasks` Method
+
+[source, java]
+----
+boolean hasStandbyRunningTasks()
+----
+
+`hasStandbyRunningTasks` simply asks <<standby, AssignedStandbyTasks>> whether it link:kafka-streams-AssignedTasks.adoc#hasRunningTasks[has any tasks registered or not].
+
+.TaskManager and AssignedStandbyTasks
+image::images/kafka-streams-TaskManager-hasStandbyRunningTasks.png[align="center"]
+
+NOTE: `hasStandbyRunningTasks` is used exclusively when `StreamThread` is requested to link:kafka-streams-StreamThread.adoc#maybeUpdateStandbyTasks[maybeUpdateStandbyTasks] (while link:kafka-streams-StreamThread.adoc#runOnce[consuming records once]).
