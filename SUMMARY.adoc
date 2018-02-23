@@ -94,6 +94,8 @@
 . link:kafka-streams-TopologyTestDriver.adoc[TopologyTestDriver]
 . link:kafka-streams-ProcessorTopologyTestDriver.adoc[ProcessorTopologyTestDriver]
 
+. link:kafka-streams-ChangelogReader.adoc[ChangelogReader]
+
 . link:kafka-streams-exactly-once-support-eos.adoc[Exactly-Once Support (EOS)]
 
 . link:kafka-streams-AssignedTasks.adoc[AssignedTasks]

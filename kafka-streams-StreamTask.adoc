@@ -45,7 +45,7 @@ NOTE: `process` is used exclusively when `AssignedStreamsTasks` does link:kafka-
 * [[id]] `TaskId`
 * [[partitions]] Collection of `TopicPartition`
 * [[topology]] `ProcessorTopology`
-* [[consumer]] Kafka consumer (of keys and values as array of bytes)
+* [[consumer]] Kafka https://kafka.apache.org/10/javadoc/org/apache/kafka/clients/consumer/KafkaConsumer.html[Consumer] (of keys and values as array of bytes)
 * [[changelogReader]] `ChangelogReader`
 * [[config]] link:kafka-streams-StreamsConfig.adoc[StreamsConfig]
 * [[metrics]] `StreamsMetrics`

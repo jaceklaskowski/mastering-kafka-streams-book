@@ -8,10 +8,30 @@
 
 `TaskManager` manages tasks through <<active, AssignedStreamsTasks>> and <<standby, AssignedStandbyTasks>> collection of tasks.
 
+[[internal-registries]]
+.TaskManager's Internal Properties (e.g. Registries, Counters and Flags)
+[cols="1,2",options="header",width="100%"]
+|===
+| Name
+| Description
+
+| [[assignedActiveTasks]] `assignedActiveTasks`
+|
+
+| [[assignedStandbyTasks]] `assignedStandbyTasks`
+|
+
+| [[consumer]] `consumer`
+a| Kafka https://kafka.apache.org/10/javadoc/org/apache/kafka/clients/consumer/KafkaConsumer.html[Consumer] (of keys and values as array of bytes)
+
+[[setConsumer]]
+Assigned right when `StreamThread` is link:kafka-streams-StreamThread.adoc#create[created] (and corresponds to the link:kafka-streams-StreamThread.adoc#consumer[Kafka consumer] from the link:kafka-streams-KafkaClientSupplier.adoc#getConsumer[KafkaClientSupplier] that was used to create the link:kafka-streams-KafkaStreams.adoc#creating-instance[KafkaStreams])
+|===
+
 [[logging]]
 [TIP]
 ====
-Enable `TRACE` logging level for `org.apache.kafka.streams.processor.internals.TaskManager` logger to see what happens inside.
+Enable one of `ERROR`, `WARN`, `DEBUG`, `TRACE` logging levels for `org.apache.kafka.streams.processor.internals.TaskManager` logger to see what happens inside.
 
 Add the following line to `log4j.properties`:
 
@@ -65,17 +85,6 @@ void updateSubscriptionsFromMetadata(Set<String> topics)
 `updateSubscriptionsFromMetadata`...FIXME
 
 NOTE: `updateSubscriptionsFromMetadata` is used when `StreamPartitionAssignor` is requested to link:kafka-streams-StreamPartitionAssignor.adoc#subscription[subscription]
-
-=== [[createTasks]] Creating Processor Tasks for Assigned Topic Partitions -- `createTasks` Method
-
-[source, java]
-----
-void createTasks(final Collection<TopicPartition> assignment)
-----
-
-`createTasks`...FIXME
-
-NOTE: `createTasks` is used exclusively when `RebalanceListener` handles link:kafka-streams-StreamThread-RebalanceListener.adoc#onPartitionsAssigned[onPartitionsAssigned].
 
 === [[suspendTasksAndState]] Suspending All (Active and Standby) Stream Tasks And State -- `suspendTasksAndState` Method
 
@@ -187,3 +196,39 @@ boolean hasStandbyRunningTasks()
 image::images/kafka-streams-TaskManager-hasStandbyRunningTasks.png[align="center"]
 
 NOTE: `hasStandbyRunningTasks` is used exclusively when `StreamThread` is requested to link:kafka-streams-StreamThread.adoc#maybeUpdateStandbyTasks[maybeUpdateStandbyTasks] (while link:kafka-streams-StreamThread.adoc#runOnce[consuming records once]).
+
+=== [[createTasks]] Creating Processor Tasks for Assigned Topic Partitions -- `createTasks` Method
+
+[source, java]
+----
+void createTasks(final Collection<TopicPartition> assignment)
+----
+
+.TaskManager.createTasks
+image::images/kafka-streams-TaskManager-createTasks.png[align="center"]
+
+`createTasks` requests <<changelogReader, ChangelogReader>> to link:kafka-streams-ChangelogReader.adoc#reset[reset].
+
+`createTasks` requests <<standby, AssignedStandbyTasks>> and <<active, AssignedStreamsTasks>> to link:kafka-streams-AssignedTasks.adoc#closeNonAssignedSuspendedTasks[closeNonAssignedSuspendedTasks] (with <<assignedStandbyTasks, assignedStandbyTasks>> and <<assignedActiveTasks, assignedActiveTasks>>, respectively).
+
+`createTasks` <<addStreamTasks, addStreamTasks>> for the input `assignment` partitions.
+
+`createTasks` <<addStandbyTasks, addStandbyTasks>>.
+
+`createTasks` requests <<active, AssignedStreamsTasks>> for link:kafka-streams-AssignedTasks.adoc#uninitializedPartitions[uninitializedPartitions] and requests the <<consumer, Kafka consumer>> to pause them.
+
+NOTE: `createTasks` triggers `Consumer.pause` method that suspends fetching records from partitions until they have been resumed using `Consumer.resume`.
+
+You should see the following TRACE message in the logs:
+
+```
+Pausing partitions: [partitions]
+```
+
+`createTasks` reports an `IllegalStateException` if <<consumer, consumer>> is `null`.
+
+```
+stream-thread [threadClientId] consumer has not been initialized while adding stream tasks. This should not happen.
+```
+
+NOTE: `createTasks` is used exclusively when `RebalanceListener` handles link:kafka-streams-StreamThread-RebalanceListener.adoc#onPartitionsAssigned[onPartitionsAssigned].

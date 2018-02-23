@@ -1,0 +1,26 @@
+== [[ChangelogReader]] ChangelogReader
+
+`ChangelogReader` is the <<contract, contract>> for...FIXME
+
+[[contract]]
+[source, java]
+----
+package org.apache.kafka.streams.processor.internals;
+
+interface ChangelogReader {
+  void register(final StateRestorer restorer);
+  Collection<TopicPartition> restore(final RestoringTasks active);
+  Map<TopicPartition, Long> restoredOffsets();
+  void reset();
+}
+----
+
+.ChangelogReader Contract
+[cols="1,2",options="header",width="100%"]
+|===
+| Method
+| Description
+
+| [[reset]] `reset`
+| Used when...FIXME
+|===
