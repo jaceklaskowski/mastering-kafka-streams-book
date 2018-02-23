@@ -1,0 +1,14 @@
+== [[AssignmentInfo]] AssignmentInfo
+
+`AssignmentInfo` is...FIXME
+
+=== [[decode]] `decode` Method
+
+[source, java]
+----
+static AssignmentInfo decode(ByteBuffer data)
+----
+
+`decode`...FIXME
+
+NOTE: `decode` is used when...FIXME

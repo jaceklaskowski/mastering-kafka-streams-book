@@ -55,7 +55,7 @@
 
 . link:kafka-streams-AbstractStream.adoc[AbstractStream]
 
-. link:kafka-streams-StreamPartitionAssignor.adoc[StreamPartitionAssignor]
+. link:kafka-streams-StreamPartitionAssignor.adoc[StreamPartitionAssignor -- Partition Assignment Strategy]
 
 . link:kafka-streams-StreamsBuilder.adoc[StreamsBuilder]
 . link:kafka-streams-Topology.adoc[Topology]
@@ -72,7 +72,6 @@
 . link:kafka-streams-Punctuator.adoc[Punctuator]
 
 . link:kafka-streams-ConsumedInternal.adoc[ConsumedInternal]
-. link:kafka-streams-Configurable.adoc[Configurable]
 . link:kafka-streams-InternalTopicManager.adoc[InternalTopicManager]
 
 . link:kafka-streams-GlobalStateMaintainer.adoc[GlobalStateMaintainer]
@@ -95,6 +94,8 @@
 . link:kafka-streams-ProcessorTopologyTestDriver.adoc[ProcessorTopologyTestDriver]
 
 . link:kafka-streams-ChangelogReader.adoc[ChangelogReader]
+. link:kafka-streams-AssignmentInfo.adoc[AssignmentInfo]
+. link:kafka-streams-StreamsMetadataState.adoc[StreamsMetadataState]
 
 . link:kafka-streams-exactly-once-support-eos.adoc[Exactly-Once Support (EOS)]
 

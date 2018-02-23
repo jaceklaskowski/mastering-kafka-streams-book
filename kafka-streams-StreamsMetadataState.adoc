@@ -1,0 +1,3 @@
+== [[StreamsMetadataState]] StreamsMetadataState
+
+`StreamsMetadataState` is...FIXME

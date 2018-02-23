@@ -1,3 +1,16 @@
 == [[StreamsConfig]] StreamsConfig
 
 `StreamsConfig` is...FIXME
+
+=== [[getConsumerConfigs]] `getConsumerConfigs` Method
+
+[source, java]
+----
+Map<String, Object> getConsumerConfigs(
+  final String groupId,
+  final String clientId)
+----
+
+`getConsumerConfigs`...FIXME
+
+NOTE: `getConsumerConfigs` is used when...FIXME

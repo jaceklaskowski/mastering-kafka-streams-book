@@ -1,3 +1,0 @@
-== [[Configurable]] Configurable
-
-`Configurable` is the <<contract, contract>> for...FIXME
