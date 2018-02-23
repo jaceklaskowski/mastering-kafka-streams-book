@@ -2,9 +2,15 @@
 
 `AssignedTasks` is...FIXME
 
-`AssignedTasks` manages tasks in different internal registries that are the means of assigning a status:
+`AssignedTasks` manages tasks in the following internal registries that are the only way of assigning a status to a task, i.e. a task is in a given state if it is in one of the following registries:
 
 1. <<running, running>> for tasks that are considered running (that `AssignedStreamsTasks` uses when requested to link:kafka-streams-AssignedStreamsTasks.adoc#process[process])
+
+1. <<created, created>> for tasks that are considered new
+
+1. <<suspended, suspended>> for...FIXME
+
+1. <<restoring, restoring>> for...FIXME
 
 1. FIXME
 
@@ -15,8 +21,14 @@
 | Name
 | Description
 
+| [[created]] `created`
+a| FIXME
+
+| [[restoring]] `restoring`
+a| FIXME
+
 | [[running]] `running`
-a| Registry of running tasks by their ids
+a| Running tasks by their ids
 
 `running` is a https://docs.oracle.com/javase/9/docs/api/java/util/concurrent/ConcurrentHashMap.html[java.util.concurrent.ConcurrentHashMap], i.e. `ConcurrentHashMap<TaskId, Task>`.
 
@@ -29,7 +41,10 @@ Tasks IDs are added or removed as follows:
 * Removed when `AssignedTasks` is requested to <<suspend, suspend>> or <<clear, clear>>
 
 | [[runningByPartition]] `runningByPartition`
-| Registry of Kafka's `TopicPartitions` by the task
+| Kafka's `TopicPartitions` by the task
+
+| [[suspended]] `suspended`
+a| FIXME
 |===
 
 === [[close]] `close` Method
@@ -109,17 +124,6 @@ boolean maybeResumeSuspendedTask(final TaskId taskId, final Set<TopicPartition> 
 
 NOTE: `maybeResumeSuspendedTask` is used when...FIXME
 
-=== [[initializeNewTasks]] `initializeNewTasks` Method
-
-[source, java]
-----
-Set<TopicPartition> initializeNewTasks()
-----
-
-`initializeNewTasks`...FIXME
-
-NOTE: `initializeNewTasks` is used when...FIXME
-
 === [[transitionToRunning]] Scheduling Task For Execution -- `transitionToRunning` Internal Method
 
 [source, java]
@@ -150,3 +154,45 @@ NOTE: The input `readyPartitions` could really be an output.
 `transitionToRunning` registers the link:kafka-streams-Task.adoc#changelogPartitions[changelog partitions] of the input `task` with the `task` (in <<runningByPartition, runningByPartition>> internal registry).
 
 NOTE: `transitionToRunning` is used when `AssignedTasks` is requested to <<initializeNewTasks, initializeNewTasks>>, <<maybeResumeSuspendedTask, maybeResumeSuspendedTask>> and <<updateRestored, updateRestored>>.
+
+=== [[initializeNewTasks]] Initializing New Tasks -- `initializeNewTasks` Method
+
+[source, java]
+----
+Set<TopicPartition> initializeNewTasks()
+----
+
+`initializeNewTasks` initializes new tasks, i.e. moves tasks from <<created, created>> registry to either <<restoring, restoring>> or <<running, running>> per whether a task has state stores that may need restoring or not, respectively. In the end `initializeNewTasks` gives the Kafka `TopicPartitions` of the tasks that have state stores.
+
+.AssignedTasks.initializeNewTasks
+image::images/kafka-streams-AssignedTasks-initializeNewTasks.png[align="center"]
+
+NOTE: `initializeNewTasks` does nothing (and simply gives no `TopicPartitions`) unless <<created, created>> registry has at least one task.
+
+`initializeNewTasks` prints out the following DEBUG message to the logs:
+
+```
+Initializing [taskTypeName]s [created]
+```
+
+`initializeNewTasks` walks over all tasks in <<created, created>>.
+
+`initializeNewTasks` checks if a task should link:kafka-streams-Task.adoc#initializeStateStores[initializeStateStores].
+
+If a task should link:kafka-streams-Task.adoc#initializeStateStores[initializeStateStores], `initializeNewTasks` simply <<transitionToRunning, schedules the task for execution>> (passing in the collection of Kafka `TopicPartitions` that `initializeNewTasks` gives in the end).
+
+Otherwise, `initializeNewTasks` prints out the following DEBUG message to the logs and <<addToRestoring, addToRestoring>>.
+
+```
+Transitioning [taskTypeName] [taskId] to restoring
+```
+
+`initializeNewTasks` removes the tasks that have been processed successfully from <<created, created>> registry.
+
+In case of `LockException`, `initializeNewTasks` prints out the following TRACE message to the logs:
+
+```
+Could not create [taskTypeName] [taskId] due to [message]; will retry
+```
+
+NOTE: `initializeNewTasks` is used exclusively when `TaskManager` is requested to link:kafka-streams-TaskManager.adoc#updateNewAndRestoringTasks[updateNewAndRestoringTasks].

@@ -50,6 +50,9 @@ public interface Task {
 | [[hasStateStores]] `hasStateStores`
 | Used when...
 
+| [[initializeStateStores]] `initializeStateStores`
+| Used when...
+
 | [[initializeTopology]] `initializeTopology`
 | Used when...
 
