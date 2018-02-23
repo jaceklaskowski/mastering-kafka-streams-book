@@ -16,7 +16,10 @@
 | Description
 
 | [[assignedActiveTasks]] `assignedActiveTasks`
-|
+a| Partitions (i.e. Kafka `TopicPartitions`) per task id
+
+[[setAssignmentMetadata]]
+* Set when `StreamPartitionAssignor` does link:kafka-streams-StreamPartitionAssignor.adoc#onAssignment[onAssignment]
 
 | [[assignedStandbyTasks]] `assignedStandbyTasks`
 |
@@ -41,17 +44,6 @@ log4j.logger.org.apache.kafka.streams.processor.internals.TaskManager=TRACE
 
 Refer to link:kafka-logging.adoc#log4j.properties[Application Logging Using log4j].
 ====
-
-=== [[addStreamTasks]] `addStreamTasks` Internal Method
-
-[source, java]
-----
-void addStreamTasks(final Collection<TopicPartition> assignment)
-----
-
-`addStreamTasks`...FIXME
-
-NOTE: `addStreamTasks` is used exclusively when `TaskManager` is requested to <<createTasks, create processor tasks for assigned topic partitions>>.
 
 === [[maybePurgeCommitedRecords]] `maybePurgeCommitedRecords` Method
 
@@ -232,3 +224,41 @@ stream-thread [threadClientId] consumer has not been initialized while adding st
 ```
 
 NOTE: `createTasks` is used exclusively when `RebalanceListener` handles link:kafka-streams-StreamThread-RebalanceListener.adoc#onPartitionsAssigned[onPartitionsAssigned].
+
+=== [[addStreamTasks]] Registering New Stream Tasks -- `addStreamTasks` Internal Method
+
+[source, java]
+----
+void addStreamTasks(final Collection<TopicPartition> assignment)
+----
+
+`addStreamTasks` registers new stream tasks.
+
+NOTE: `addStreamTasks` does nothing (and simply returns back) unless <<assignedActiveTasks, assignedActiveTasks>> has at least one task id.
+
+.TaskManager.addStreamTasks
+image::images/kafka-streams-TaskManager-addStreamTasks.png[align="center"]
+
+`addStreamTasks` prints out the following DEBUG message to the logs:
+
+```
+Adding assigned tasks as active: [assignedActiveTasks]
+```
+
+For every task id in <<assignedActiveTasks, assignedActiveTasks>>, if the partitions of a task are all included in the input `assignment` partitions `addStreamTasks` requests <<active, AssignedStreamsTasks>> to <<maybeResumeSuspendedTask, maybeResumeSuspendedTask>> (passing in the task id and partitions). If negative, `addStreamTasks` records the task and partitions in a local registry of new tasks to be created.
+
+If the partitions of a task are not all included in the input `assignment` partitions `addStreamTasks` prints out the following WARN message to the logs:
+
+```
+Task [taskId] owned partitions [partitions] are not contained in the assignment [assignment]
+```
+
+When there are new tasks to be created, `addStreamTasks` prints out the following TRACE message to the logs:
+
+```
+New active tasks to be created: [newTasks]
+```
+
+`addStreamTasks` then requests <<taskCreator, StreamThread.AbstractTaskCreator<StreamTask&gt;>> to link:kafka-streams-AbstractTaskCreator.adoc#createTasks[createTasks] for every new task (with the <<consumer, Kafka Consumer>>) and requests <<active, AssignedStreamsTasks>> to link:kafka-streams-AssignedTasks.adoc#addNewTask[register a new task].
+
+NOTE: `addStreamTasks` is used exclusively when `TaskManager` is requested to <<createTasks, create processor tasks for assigned topic partitions>>.
