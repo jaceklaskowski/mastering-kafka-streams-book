@@ -2,17 +2,17 @@
 
 `AssignedTasks` is...FIXME
 
-`AssignedTasks` manages tasks in the following internal registries that are the only way of assigning a status to a task, i.e. a task is in a given state if it is in one of the following registries:
+`AssignedTasks` manages tasks in the following internal registries (that are the only way of assigning a status to a task, i.e. a task is in a given status if it is in the following registries):
 
-1. <<running, running>> for tasks that are considered running (that `AssignedStreamsTasks` uses when requested to link:kafka-streams-AssignedStreamsTasks.adoc#process[process])
+1. <<running, running>> for tasks that are considered *running* (that `AssignedStreamsTasks` uses when requested to link:kafka-streams-AssignedStreamsTasks.adoc#process[process])
 
-1. <<created, created>> for tasks that are considered new
+1. <<created, created>> for tasks that are considered *new*
 
-1. <<suspended, suspended>> for...FIXME
+1. <<suspended, suspended>> for tasks that are considered *suspended*
 
-1. <<restoring, restoring>> for...FIXME
+1. <<restoring, restoring>> for tasks that are considered *restoring*
 
-1. FIXME
+NOTE: Use <<toString, toString>> or <<describe, describe>> methods to list the tasks by status.
 
 [[internal-registries]]
 .AssignedTasks's Internal Properties (e.g. Registries, Counters and Flags)
@@ -22,7 +22,11 @@
 | Description
 
 | [[created]] `created`
-a| FIXME
+a| *New tasks* by their ids
+
+* Tasks are added when `AssignedTasks` is requested to <<addNewTask, addNewTask>>
+
+* Tasks are removed when `AssignedTasks` is requested to <<initializeNewTasks, initializeNewTasks>>, <<suspend, suspend>> or <<clear, clear>>
 
 | [[restoring]] `restoring`
 a| FIXME
