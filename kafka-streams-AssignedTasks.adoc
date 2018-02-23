@@ -159,6 +159,20 @@ NOTE: The input `readyPartitions` could really be an output.
 
 NOTE: `transitionToRunning` is used when `AssignedTasks` is requested to <<initializeNewTasks, initializeNewTasks>>, <<maybeResumeSuspendedTask, maybeResumeSuspendedTask>> and <<updateRestored, updateRestored>>.
 
+=== [[addNewTask]] Registering New Task -- `addNewTask` Method
+
+[source, java]
+----
+void addNewTask(final T task)
+----
+
+`addNewTask` just adds the input `task` in <<created, created>> internal registry.
+
+.AssignedTasks.addNewTask
+image::images/kafka-streams-AssignedTasks-addNewTask.png[align="center"]
+
+NOTE: `addNewTask` is used exclusively when `TaskManager` is requested to link:kafka-streams-TaskManager.adoc#createTasks[create processor tasks for assigned topic partitions] (that in turn triggers link:kafka-streams-TaskManager.adoc#addStandbyTasks[addStandbyTasks] and link:kafka-streams-TaskManager.adoc#addStreamTasks[addStreamTasks]).
+
 === [[initializeNewTasks]] Initializing New Tasks -- `initializeNewTasks` Method
 
 [source, java]
