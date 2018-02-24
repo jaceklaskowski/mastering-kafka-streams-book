@@ -1,8 +1,48 @@
-== [[StreamsConfig]] StreamsConfig
+== [[StreamsConfig]] StreamsConfig -- Configuration Properties for Kafka Clients
 
-`StreamsConfig` is...FIXME
+`StreamsConfig` is Apache Kafka's https://kafka.apache.org/10/javadoc/org/apache/kafka/common/config/AbstractConfig.html[AbstractConfig] for the configuration properties for the following Kafka clients (that Kafka Streams uses under the covers):
 
-=== [[getConsumerConfigs]] `getConsumerConfigs` Method
+* <<getConsumerConfigs, Consumer>>
+
+* <<getProducerConfigs, Producer>>
+
+* <<getAdminConfigs, AdminClient>>
+
+`StreamsConfig` does not allow users to configure certain Kafka configurations (e.g. for <<CONSUMER_DEFAULT_OVERRIDES, consumer>>) that are simply <<checkIfUnexpectedUserSpecifiedConsumerConfig, removed>> (with a WARN message in the logs).
+
+[[CONSUMER_DEFAULT_OVERRIDES]]
+.Kafka Consumer Non-Overridable Configurations
+[cols="1,1,2",options="header",width="100%"]
+|===
+| Name
+| Value
+| Description
+
+| [[max.poll.records]] `max.poll.records`
+| `1000`
+|
+
+| [[auto.offset.reset]] `auto.offset.reset`
+| `earliest`
+|
+
+| [[enable.auto.commit]] `enable.auto.commit`
+| `false`
+|
+
+| [[internal.leave.group.on.close]] `internal.leave.group.on.close`
+| `false`
+|
+
+| [[max.poll.interval.ms]] `max.poll.interval.ms`
+| `Integer.MAX_VALUE`
+|
+|===
+
+[[CONSUMER_PREFIX]]
+`StreamsConfig` uses `consumer` prefix for custom Kafka configurations of a Kafka consumer.
+
+=== [[getConsumerConfigs]] Getting Consumer Configuration -- `getConsumerConfigs` Method
 
 [source, java]
 ----
@@ -14,3 +54,87 @@ Map<String, Object> getConsumerConfigs(
 `getConsumerConfigs`...FIXME
 
 NOTE: `getConsumerConfigs` is used when...FIXME
+
+=== [[getProducerConfigs]] `getProducerConfigs` Method
+
+[source, java]
+----
+Map<String, Object> getProducerConfigs(final String clientId)
+----
+
+`getProducerConfigs`...FIXME
+
+NOTE: `getProducerConfigs` is used when...FIXME
+
+=== [[getAdminConfigs]] `getAdminConfigs` Method
+
+[source, java]
+----
+Map<String, Object> getAdminConfigs(final String clientId)
+----
+
+`getAdminConfigs`...FIXME
+
+NOTE: `getAdminConfigs` is used when...FIXME
+
+=== [[clientProps]] Collecting Properties per Key -- `clientProps` Internal Method
+
+[source, java]
+----
+Map<String, Object> clientProps(
+  final Set<String> configNames,
+  final Map<String, Object> originals)
+----
+
+`clientProps` collects the configuration properties from `originals` that have their names in the input `configNames`, i.e. includes the properties that have been listed in `configNames`.
+
+NOTE: `clientProps` is used exclusively when `StreamsConfig` is requested to <<getClientPropsWithPrefix, getClientPropsWithPrefix>>.
+
+=== [[getClientPropsWithPrefix]] Getting Subset of User Configuration by Given Names and Prefix -- `getClientPropsWithPrefix` Internal Method
+
+[source, java]
+----
+Map<String, Object> getClientPropsWithPrefix(
+  final String prefix,
+  final Set<String> configNames)
+----
+
+`getClientPropsWithPrefix` takes only the properties (as passed in by a user) that have their keys in `configNames` and adds all properties with the given `prefix`.
+
+Internally, `getClientPropsWithPrefix` <<clientProps, collects the configuration properties>> from the original values of Kafka properties as passed in by a user that have their names in `configNames`.
+
+`getClientPropsWithPrefix` then copies all original settings with the given `prefix` (stripping the prefix before adding them) to the collected properties (and possibly overwriting some).
+
+NOTE: `getClientPropsWithPrefix` uses link:++https://kafka.apache.org/10/javadoc/org/apache/kafka/common/config/AbstractConfig.html#originals--++[AbstractConfig.originals] to get the original values of Kafka properties as passed in by the user.
+
+NOTE: `getClientPropsWithPrefix` is used when `StreamsConfig` is requested for <<getAdminConfigs, getAdminConfigs>>, <<getCommonConsumerConfigs, getCommonConsumerConfigs>>, <<getConsumerConfigs, getConsumerConfigs>> and <<getProducerConfigs, getProducerConfigs>>.
+
+=== [[getCommonConsumerConfigs]] Getting Common Consumer Configuration -- `getCommonConsumerConfigs` Internal Method
+
+[source, java]
+----
+Map<String, Object> getCommonConsumerConfigs()
+----
+
+`getCommonConsumerConfigs` <<getClientPropsWithPrefix, gets a subset of user configuration>> for a Kafka consumer and with <<CONSUMER_PREFIX, consumer>> prefix.
+
+NOTE: `getCommonConsumerConfigs` uses https://kafka.apache.org/10/javadoc/org/apache/kafka/clients/consumer/ConsumerConfig.html[ConsumerConfig.configNames] for the list of the Kafka Consumer-specific configuration keys.
+
+CAUTION: FIXME
+
+NOTE: `getCommonConsumerConfigs` is used when `StreamsConfig` is requested for <<getConsumerConfigs, getConsumerConfigs>> and <<getRestoreConsumerConfigs, getRestoreConsumerConfigs>>.
+
+=== [[checkIfUnexpectedUserSpecifiedConsumerConfig]] Removing "Illegal" User-Defined Configuration Properties -- `checkIfUnexpectedUserSpecifiedConsumerConfig` Internal Method
+
+[source, java]
+----
+void checkIfUnexpectedUserSpecifiedConsumerConfig(
+  final Map<String, Object> clientProvidedProps,
+  final String[] nonConfigurableConfigs)
+----
+
+`checkIfUnexpectedUserSpecifiedConsumerConfig` removes non-configurable configurations (`nonConfigurableConfigs`) from user-defined configurations (`clientProvidedProps`) and logging a warning.
+
+Internally, `checkIfUnexpectedUserSpecifiedConsumerConfig` iterates over `nonConfigurableConfigs`...FIXME
+
+NOTE: `checkIfUnexpectedUserSpecifiedConsumerConfig` is used when `StreamsConfig` is requested for <<getCommonConsumerConfigs, getCommonConsumerConfigs>> and <<getProducerConfigs, getProducerConfigs>>.

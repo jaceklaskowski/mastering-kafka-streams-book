@@ -62,7 +62,7 @@
 . link:kafka-streams-InternalTopologyBuilder.adoc[InternalTopologyBuilder]
 . link:kafka-streams-InternalStreamsBuilder.adoc[InternalStreamsBuilder]
 . link:kafka-streams-KeyValueMapper.adoc[KeyValueMapper]
-. link:kafka-streams-StreamsConfig.adoc[StreamsConfig]
+. link:kafka-streams-StreamsConfig.adoc[StreamsConfig -- Configuration Properties for Kafka Clients]
 . link:kafka-streams-KafkaClientSupplier.adoc[KafkaClientSupplier]
 .. link:kafka-streams-DefaultKafkaClientSupplier.adoc[DefaultKafkaClientSupplier]
 
