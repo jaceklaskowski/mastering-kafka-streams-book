@@ -8,6 +8,36 @@
 
 * <<getAdminConfigs, AdminClient>>
 
+[source, scala]
+----
+import org.apache.kafka.streams.StreamsConfig
+val props = new java.util.Properties()
+props.put(StreamsConfig.APPLICATION_ID_CONFIG, "appId")
+import org.apache.kafka.clients.consumer.ConsumerConfig
+props.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, "localhost:8082")
+val conf = new StreamsConfig(props)
+
+// Consumer Properties
+val consumerConfigs = conf.getConsumerConfigs("groupId", "clientId")
+import scala.collection.JavaConverters._
+scala> consumerConfigs.asScala.map { case (key, value) => s"$key -> $value" }.foreach(println)
+replication.factor -> 1
+num.standby.replicas -> 0
+max.poll.records -> 1000
+group.id -> groupId
+partition.assignment.strategy -> org.apache.kafka.streams.processor.internals.StreamPartitionAssignor
+bootstrap.servers -> localhost:8082
+enable.auto.commit -> false
+admin.retries -> 5
+application.server ->
+max.poll.interval.ms -> 2147483647
+auto.offset.reset -> earliest
+windowstore.changelog.additional.retention.ms -> 86400000
+internal.leave.group.on.close -> false
+application.id -> groupId
+client.id -> clientId-consumer
+----
+
 `StreamsConfig` does not allow users to configure certain Kafka configurations (e.g. for <<CONSUMER_DEFAULT_OVERRIDES, consumer>>) that are simply <<checkIfUnexpectedUserSpecifiedConsumerConfig, removed>> (with a WARN message in the logs).
 
 [[CONSUMER_DEFAULT_OVERRIDES]]
@@ -51,9 +81,34 @@ Map<String, Object> getConsumerConfigs(
   final String clientId)
 ----
 
-`getConsumerConfigs`...FIXME
+`getConsumerConfigs` <<getCommonConsumerConfigs, gets the common consumer configuration>> first.
 
-NOTE: `getConsumerConfigs` is used when...FIXME
+`getConsumerConfigs` then adds the <<getConsumerConfigs-properties, additional consumer configuration properties>>.
+
+[[getConsumerConfigs-properties]]
+.Kafka Consumer Configuration Properties
+[cols="1,1,2",options="header",width="100%"]
+|===
+| Name
+| Value
+| Description
+
+| [[application.id]] `application.id`
+| `groupId`
+|
+
+| [[group.id]] `group.id`
+| `groupId`
+|
+
+| [[client.id]] `client.id`
+| `[clientId]-consumer`
+|
+|===
+
+CAUTION: FIXME
+
+NOTE: `getConsumerConfigs` is used exclusively when `StreamThread` is link:kafka-streams-StreamThread.adoc#create[created].
 
 === [[getProducerConfigs]] `getProducerConfigs` Method
 
@@ -116,7 +171,7 @@ NOTE: `getClientPropsWithPrefix` is used when `StreamsConfig` is requested for <
 Map<String, Object> getCommonConsumerConfigs()
 ----
 
-`getCommonConsumerConfigs` <<getClientPropsWithPrefix, gets a subset of user configuration>> for a Kafka consumer and with <<CONSUMER_PREFIX, consumer>> prefix.
+`getCommonConsumerConfigs` <<getClientPropsWithPrefix, gets a subset of user configuration>> for a Kafka consumer as well as the properties with <<CONSUMER_PREFIX, consumer>> prefix.
 
 NOTE: `getCommonConsumerConfigs` uses https://kafka.apache.org/10/javadoc/org/apache/kafka/clients/consumer/ConsumerConfig.html[ConsumerConfig.configNames] for the list of the Kafka Consumer-specific configuration keys.
 
