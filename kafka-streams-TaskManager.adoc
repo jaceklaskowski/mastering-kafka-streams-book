@@ -118,17 +118,6 @@ void suspendTasksAndState()
 
 NOTE: `suspendTasksAndState` is used exclusively when `RebalanceListener` handles link:kafka-streams-StreamThread-RebalanceListener.adoc#onPartitionsAssigned[onPartitionsAssigned].
 
-=== [[addStandbyTasks]] `addStandbyTasks` Internal Method
-
-[source, java]
-----
-void addStreamTasks(final Collection<TopicPartition> assignment)
-----
-
-`addStandbyTasks`...FIXME
-
-NOTE: `addStandbyTasks` is used exclusively when `TaskManager` is requested to <<createTasks, create tasks for assigned topic partitions>>.
-
 === [[process]] `process` Method
 
 [source, java]
@@ -291,3 +280,37 @@ New active tasks to be created: [newTasks]
 `addStreamTasks` then requests <<taskCreator, StreamThread.AbstractTaskCreator<StreamTask&gt;>> to link:kafka-streams-AbstractTaskCreator.adoc#createTasks[createTasks] for every new task (with the <<consumer, Kafka Consumer>>) and requests <<active, AssignedStreamsTasks>> to link:kafka-streams-AssignedTasks.adoc#addNewTask[register a new task].
 
 NOTE: `addStreamTasks` is used exclusively when `TaskManager` is requested to <<createTasks, create processor tasks for assigned topic partitions>>.
+
+=== [[addStandbyTasks]] Registering New Standby Tasks -- `addStandbyTasks` Internal Method
+
+[source, java]
+----
+void addStandbyTasks()
+----
+
+`addStandbyTasks` registers new standby tasks.
+
+NOTE: `addStandbyTasks` does nothing and simply exits if <<assignedStandbyTasks, assignedStandbyTasks>> has no task.
+
+.TaskManager.addStandbyTasks
+image::images/kafka-streams-TaskManager-addStandbyTasks.png[align="center"]
+
+`addStandbyTasks` prints out the following DEBUG message to the logs:
+
+```
+Adding assigned standby tasks [assignedStandbyTasks]
+```
+
+For every task (id and partitions) in <<assignedStandbyTasks, assignedStandbyTasks>> registry, `addStandbyTasks` requests <<standby, AssignedStandbyTasks>> to link:kafka-streams-AssignedTasks.adoc#maybeResumeSuspendedTask[maybeResumeSuspendedTask] and, if negative, adds the task to tasks to be created in standby mode.
+
+If no new tasks should be in standby mode, `addStandbyTasks` simply exits.
+
+When there are new tasks to be in standby mode, `addStandbyTasks` prints out the following TRACE message to the logs:
+
+```
+New standby tasks to be created: [newStandbyTasks]
+```
+
+`addStandbyTasks` then requests <<standbyTaskCreator, StreamThread.AbstractTaskCreator<StandbyTask&gt;>> to link:kafka-streams-AbstractTaskCreator.adoc#createTasks[createTasks] for every new standby task (with the <<consumer, Kafka Consumer>>) and requests <<standby, AssignedStandbyTasks>> to link:kafka-streams-AssignedTasks.adoc#addNewTask[register a new task].
+
+NOTE: `addStandbyTasks` is used exclusively when `TaskManager` is requested to <<createTasks, create tasks for assigned topic partitions>>.
