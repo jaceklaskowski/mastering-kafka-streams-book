@@ -47,6 +47,9 @@ public interface Task {
 | [[changelogPartitions]] `changelogPartitions`
 | Used when...
 
+| [[closeSuspended]] `closeSuspended`
+| Used when...
+
 | [[hasStateStores]] `hasStateStores`
 | Used when...
 

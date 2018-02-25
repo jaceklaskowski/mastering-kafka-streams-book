@@ -62,17 +62,6 @@ void close(final boolean clean)
 
 NOTE: `close` is used when...FIXME
 
-=== [[closeNonAssignedSuspendedTasks]] `closeNonAssignedSuspendedTasks` Method
-
-[source, java]
-----
-void closeNonAssignedSuspendedTasks(final Map<TaskId, Set<TopicPartition>> newAssignment)
-----
-
-`closeNonAssignedSuspendedTasks`...FIXME
-
-NOTE: `closeNonAssignedSuspendedTasks` is used when...FIXME
-
 === [[uninitializedPartitions]] `uninitializedPartitions` Method
 
 [source, java]
@@ -236,3 +225,32 @@ Could not create [taskTypeName] [taskId] due to [message]; will retry
 ```
 
 NOTE: `initializeNewTasks` is used exclusively when `TaskManager` is requested to link:kafka-streams-TaskManager.adoc#updateNewAndRestoringTasks[updateNewAndRestoringTasks].
+
+=== [[closeNonAssignedSuspendedTasks]] Closing Non-Assigned Suspended Tasks -- `closeNonAssignedSuspendedTasks` Method
+
+[source, java]
+----
+void closeNonAssignedSuspendedTasks(final Map<TaskId, Set<TopicPartition>> newAssignment)
+----
+
+`closeNonAssignedSuspendedTasks` closes non-assigned tasks that were suspended, but are no longer assigned to the Kafka Streams instance or the partitions of the task and the assignment do not match.
+
+Internally, `closeNonAssignedSuspendedTasks` takes the <<suspended, suspended>> tasks and for every task checks if either condition holds:
+
+1. `newAssignment` does not contain the id of the suspended task
+
+1. The link:kafka-streams-Task.adoc#partitions[partitions] of the suspended task are not equal the partitions in `newAssignment` for the task id
+
+If either condition holds, `closeNonAssignedSuspendedTasks` prints out the following DEBUG message to the logs, requests the task to link:kafka-streams-Task.adoc#closeSuspended[closeSuspended] (with the `clean` flag enabled) and in the end removes the task from <<suspended, suspended>> tasks.
+
+```
+Closing suspended and not re-assigned [taskType] [id]
+```
+
+In case of a `Exception`, `closeNonAssignedSuspendedTasks` prints out the following ERROR message to the logs followed by the exception message.
+
+```
+Failed to remove suspended [taskType] [id] due to the following error
+```
+
+NOTE: `closeNonAssignedSuspendedTasks` is used exclusively when `TaskManager` is requested to link:kafka-streams-TaskManager.adoc#createTasks[create processor tasks for assigned topic partitions].
