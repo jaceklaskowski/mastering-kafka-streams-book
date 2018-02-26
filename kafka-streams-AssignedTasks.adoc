@@ -1,6 +1,6 @@
 == [[AssignedTasks]] AssignedTasks
 
-`AssignedTasks` is...FIXME
+`AssignedTasks` is the <<implementations, base for tasks>> that...FIXME
 
 `AssignedTasks` manages tasks in the following internal registries (that are the only way of assigning a status to a task, i.e. a task is in a given status if it is in the following registries):
 
@@ -13,6 +13,20 @@
 1. <<restoring, restoring>> for tasks that are considered *restoring*
 
 NOTE: Use <<toString, toString>> or <<describe, describe>> methods to list the tasks by status.
+
+[[implementations]]
+.Concrete AssignedTasks
+[cols="1,2",options="header",width="100%"]
+|===
+| Task
+| Description
+
+| link:kafka-streams-AssignedStandbyTasks.adoc[AssignedStandbyTasks]
+|
+
+| link:kafka-streams-AssignedStreamsTasks.adoc[AssignedStreamsTasks]
+|
+|===
 
 [[internal-registries]]
 .AssignedTasks's Internal Properties (e.g. Registries, Counters and Flags)
@@ -61,6 +75,17 @@ void close(final boolean clean)
 `close`...FIXME
 
 NOTE: `close` is used when...FIXME
+
+=== [[closeZombieTask]] `closeZombieTask` Method
+
+[source, java]
+----
+RuntimeException closeZombieTask(final T task)
+----
+
+`closeZombieTask`...FIXME
+
+NOTE: `closeZombieTask` is used when...FIXME
 
 === [[uninitializedPartitions]] `uninitializedPartitions` Method
 
@@ -127,17 +152,6 @@ Set<TopicPartition> updateRestored(final Collection<TopicPartition> restored)
 `updateRestored`...FIXME
 
 NOTE: `updateRestored` is used when...FIXME
-
-=== [[maybeResumeSuspendedTask]] `maybeResumeSuspendedTask` Method
-
-[source, java]
-----
-boolean maybeResumeSuspendedTask(final TaskId taskId, final Set<TopicPartition> partitions)
-----
-
-`maybeResumeSuspendedTask`...FIXME
-
-NOTE: `maybeResumeSuspendedTask` is used when...FIXME
 
 === [[transitionToRunning]] Scheduling Task For Execution -- `transitionToRunning` Internal Method
 
@@ -254,3 +268,44 @@ Failed to remove suspended [taskType] [id] due to the following error
 ```
 
 NOTE: `closeNonAssignedSuspendedTasks` is used exclusively when `TaskManager` is requested to link:kafka-streams-TaskManager.adoc#createTasks[create processor tasks for assigned topic partitions].
+
+=== [[maybeResumeSuspendedTask]] Resuming Suspended Task -- `maybeResumeSuspendedTask` Method
+
+[source, java]
+----
+boolean maybeResumeSuspendedTask(final TaskId taskId, final Set<TopicPartition> partitions)
+----
+
+`maybeResumeSuspendedTask` is positive (and gives `true`) after successful transitioning a task (by its `taskId`) from suspended to running state when the partitions of the suspended task and the input ones are equal. Otherwise, `maybeResumeSuspendedTask` reports an exception (`RuntimeException` or `TaskMigratedException`) or is negative (and gives `false`).
+
+Internally, `maybeResumeSuspendedTask` branches off per whether the task (given `taskId`) is <<suspended, suspended>> or not.
+
+If not, `maybeResumeSuspendedTask` is negative (i.e. returns `false`).
+
+If the task is suspended, `maybeResumeSuspendedTask` prints out the following TRACE message to the logs:
+
+```
+found suspended [taskTypeName] [taskId]
+```
+
+`maybeResumeSuspendedTask` checks whether the link:kafka-streams-Task.adoc#partitions[partitions] of the task are exactly the input `partitions`.
+
+If the partitions do not match, `maybeResumeSuspendedTask` prints out the following WARN message to the logs:
+
+```
+couldn't resume task [taskId] assigned partitions [partitions], task partitions [partitions]
+```
+
+If however the partitions are equal, `maybeResumeSuspendedTask` removes the task (by the input `taskId`) from <<suspended, suspended>> registry and requests the task to link:kafka-streams-Task.adoc#resume[resume].
+
+`maybeResumeSuspendedTask` <<transitionToRunning, schedules the task for execution>> and prints out the following TRACE message to the logs:
+
+```
+resuming suspended [taskTypeName] [taskId]
+```
+
+`maybeResumeSuspendedTask` returns `true`.
+
+In case of `TaskMigratedException`, `maybeResumeSuspendedTask` <<closeZombieTask, closeZombieTask>>. If it gives a `RuntimeException`, `maybeResumeSuspendedTask` re-throws it. Otherwise, `maybeResumeSuspendedTask` removes the task (by the input `taskId`) from <<suspended, suspended>> registry (_again?!_) and re-throws the initial `TaskMigratedException`.
+
+NOTE: `maybeResumeSuspendedTask` is used when `TaskManager` is requested to link:kafka-streams-TaskManager.adoc#createTasks[create processor tasks for assigned topic partitions] (and register new link:kafka-streams-TaskManager.adoc#addStandbyTasks[standby] and link:kafka-streams-TaskManager.adoc#addStreamTasks[stream] tasks).
