@@ -225,7 +225,7 @@ image::images/kafka-streams-TaskManager-createTasks.png[align="center"]
 
 `createTasks` <<addStandbyTasks, addStandbyTasks>>.
 
-`createTasks` requests <<active, AssignedStreamsTasks>> for link:kafka-streams-AssignedTasks.adoc#uninitializedPartitions[uninitializedPartitions] and requests the <<consumer, Kafka consumer>> to pause them.
+`createTasks` requests <<active, AssignedStreamsTasks>> for the link:kafka-streams-AssignedTasks.adoc#uninitializedPartitions[partitions of the new tasks with a state store] and requests the <<consumer, Kafka consumer>> to pause them.
 
 NOTE: `createTasks` triggers `Consumer.pause` method that suspends fetching records from partitions until they have been resumed using `Consumer.resume`.
 

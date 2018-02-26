@@ -87,17 +87,6 @@ RuntimeException closeZombieTask(final T task)
 
 NOTE: `closeZombieTask` is used when...FIXME
 
-=== [[uninitializedPartitions]] `uninitializedPartitions` Method
-
-[source, java]
-----
-Set<TopicPartition> uninitializedPartitions()
-----
-
-`uninitializedPartitions`...FIXME
-
-NOTE: `uninitializedPartitions` is used when...FIXME
-
 === [[clear]] Removing All Task References -- `clear` Method
 
 [source, java]
@@ -353,3 +342,16 @@ FIXME toString in action
 ----
 
 NOTE: `describe` is used exclusively when `AssignedTasks` is requested for a <<toString, text representation>>.
+
+=== [[uninitializedPartitions]] Getting Partitions of New Tasks with State Store -- `uninitializedPartitions` Method
+
+[source, java]
+----
+Set<TopicPartition> uninitializedPartitions()
+----
+
+`uninitializedPartitions` gives the link:kafka-streams-Task.adoc#partitions[partitions] of the new tasks (from <<created, created>> registry) that link:kafka-streams-Task.adoc#hasStateStores[have state store].
+
+NOTE: `uninitializedPartitions` gives an empty set of partitions if <<created, created>> is empty, i.e. has no tasks registered.
+
+NOTE: `uninitializedPartitions` is used exclusively when `TaskManager` is requested to link:kafka-streams-TaskManager.adoc#createTasks[create processor tasks for assigned topic partitions].
