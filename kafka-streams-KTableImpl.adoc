@@ -1,3 +1,20 @@
 == [[KTableImpl]] KTableImpl
 
 `KTableImpl` is...FIXME
+
+=== [[buildJoin]] `buildJoin` Internal Method
+
+[source, java]
+----
+<V1, R> KTable<K, R> buildJoin(
+  final AbstractStream<K> other,
+  final ValueJoiner<? super V, ? super V1, ? extends R> joiner,
+  final boolean leftOuter,
+  final boolean rightOuter,
+  final String joinMergeName,
+  final String internalQueryableName)
+----
+
+`buildJoin`...FIXME
+
+NOTE: `buildJoin` is used when...FIXME

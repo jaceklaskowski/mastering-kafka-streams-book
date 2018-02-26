@@ -2,6 +2,9 @@
 
 `Topology` is...FIXME
 
+[[internalTopologyBuilder]]
+`Topology` owns a link:kafka-streams-InternalTopologyBuilder.adoc[InternalTopologyBuilder]. When created, `Topology` creates a link:kafka-streams-InternalTopologyBuilder.adoc#creating-instance[InternalTopologyBuilder] and...FIXME
+
 === [[addSource]] `addSource` Method
 
 [source, scala]
@@ -45,3 +48,14 @@ synchronized Topology addSource(
 `addSource`...FIXME
 
 NOTE: `addSource` is used when...FIXME
+
+=== [[connectProcessorAndStateStores]] `connectProcessorAndStateStores` Method
+
+[source, java]
+----
+synchronized Topology connectProcessorAndStateStores(
+  final String processorName,
+  final String... stateStoreNames)
+----
+
+`connectProcessorAndStateStores` simply requests <<internalTopologyBuilder, InternalTopologyBuilder>> to link:kafka-streams-InternalTopologyBuilder.adoc#connectProcessorAndStateStores[connectProcessorAndStateStores] and returns itself (the `Topology` being built).

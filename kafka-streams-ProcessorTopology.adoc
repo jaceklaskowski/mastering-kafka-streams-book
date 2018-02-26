@@ -113,7 +113,7 @@ NOTE: `withSources` is used when...FIXME
 * [[processorNodes]] link:kafka-streams-ProcessorNode.adoc[ProcessorNodes]
 * [[sourcesByTopic]] link:kafka-streams-SourceNode.adoc[SourceNodes] by name
 * [[sinksByTopic]] link:kafka-streams-SinkNode.adoc[SinkNodes] by name
-* [[stateStores]] link:kafka-streams-StateStore.adoc[StateStores]
+* [[stateStores]] Local link:kafka-streams-StateStore.adoc[StateStores]
 * [[globalStateStores]] Global link:kafka-streams-StateStore.adoc[StateStores]
 * [[stateStoreToChangelogTopic]] Names of changelog topics by the names of state stores
 * [[repartitionTopics]] Names of repartition topics

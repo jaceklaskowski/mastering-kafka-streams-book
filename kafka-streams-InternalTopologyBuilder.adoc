@@ -2,6 +2,9 @@
 
 `InternalTopologyBuilder` is...FIXME
 
+[[creating-instance]]
+When created, `InternalTopologyBuilder` simply initializes the <<internal-registries, internal registries and counters>>.
+
 [[internal-registries]]
 .InternalTopologyBuilder's Internal Properties (e.g. Registries, Counters and Flags)
 [cols="1,2",options="header",width="100%"]
@@ -131,19 +134,6 @@ void buildSourceNode(
 `buildSourceNode`...FIXME
 
 NOTE: `buildSourceNode` is used exclusively when `InternalTopologyBuilder` is requested to link:kafka-streams-InternalTopologyBuilder.adoc#build[build a topology of processor tasks] (aka *processor topology*).
-
-=== [[connectProcessorAndStateStores]] `connectProcessorAndStateStores` Internal Method
-
-[source, java]
-----
-void connectProcessorAndStateStores(
-  final String processorName,
-  final String... stateStoreNames)
-----
-
-`connectProcessorAndStateStores`...FIXME
-
-NOTE: `connectProcessorAndStateStores` is used when...FIXME
 
 === [[addSink]] `addSink` Method
 
@@ -279,3 +269,62 @@ synchronized Pattern sourceTopicPattern()
 
 1. `TaskManager` is requested for link:kafka-streams-TaskManager.adoc#updateSubscriptionsFromAssignment[updateSubscriptionsFromAssignment] and link:kafka-streams-TaskManager.adoc#updateSubscriptionsFromMetadata[updateSubscriptionsFromMetadata]
 ====
+
+=== [[addStateStore]] `addStateStore` Method
+
+[source, java]
+----
+void addStateStore(
+  final org.apache.kafka.streams.processor.StateStoreSupplier supplier,
+  final String... processorNames)
+void addStateStore(
+  final StoreBuilder storeBuilder,
+  final String... processorNames)
+----
+
+`addStateStore`...FIXME
+
+NOTE: `addStateStore` is used when...FIXME
+
+=== [[connectProcessorAndStateStores]] `connectProcessorAndStateStores` Method
+
+[source, java]
+----
+void connectProcessorAndStateStores(
+  final String processorName,
+  final String... stateStoreNames)
+----
+
+`connectProcessorAndStateStores` simply <<connectProcessorAndStateStore, connectProcessorAndStateStore>> with `processorName` and every state store name in `stateStoreNames`.
+
+`connectProcessorAndStateStores` reports a `NullPointerException` when `processorName`, `stateStoreNames` or any state store name are `nulls`.
+
+`connectProcessorAndStateStores` reports a `TopologyException` when `stateStoreNames` is an empty collection.
+
+NOTE: `connectProcessorAndStateStores` (plural) is a public method that uses the internal <<connectProcessorAndStateStore, connectProcessorAndStateStore>> (singular) for a "bulk connect".
+
+[NOTE]
+====
+`connectProcessorAndStateStores` is used when:
+
+* `KStreamImpl` is requested to link:kafka-streams-KStreamImpl.adoc#doStreamTableJoin[doStreamTableJoin], link:kafka-streams-KStreamImpl.adoc#process[process], link:kafka-streams-KStreamImpl.adoc#transform[transform], link:kafka-streams-KStreamImpl.adoc#transformValues[transformValues]
+
+* `KTableImpl` is requested to link:kafka-streams-KTableImpl.adoc#buildJoin[buildJoin]
+
+* `Topology` is requested to link:kafka-streams-Topology.adoc#connectProcessorAndStateStores[connectProcessorAndStateStores]
+====
+
+=== [[connectProcessorAndStateStore]] `connectProcessorAndStateStore` Internal Method
+
+[source, java]
+----
+void connectProcessorAndStateStore(
+  final String processorName,
+  final String stateStoreName)
+----
+
+`connectProcessorAndStateStore`...FIXME
+
+NOTE: `connectProcessorAndStateStore` (singular) is an internal method that is used by the public <<connectProcessorAndStateStores, connectProcessorAndStateStores>> (plural).
+
+NOTE: `connectProcessorAndStateStore` is used when `InternalTopologyBuilder` is requested to <<addStateStore, addStateStore>> and <<connectProcessorAndStateStores, connectProcessorAndStateStores>>

@@ -9,6 +9,9 @@ NOTE: `ProcessorNodeFactory` is a private class.
 [[stateStoreNames]]
 `ProcessorNodeFactory` manages *names of the state stores* that a `Processor` can be associated with (as part of a <<build, ProcessorNode>>).
 
+[[addStateStore]]
+A state store can be added to `ProcessorNodeFactory` by the store name (which happens when `InternalTopologyBuilder` is requested to link:kafka-streams-InternalTopologyBuilder.adoc#addGlobalStore[register a global state store] or link:kafka-streams-InternalTopologyBuilder.adoc#connectProcessorAndStateStore[connectProcessorAndStateStore]).
+
 === [[build]] `build` Factory Method
 
 [source, java]
@@ -25,5 +28,5 @@ NOTE: `build` is part of link:kafka-streams-NodeFactory.adoc#build[NodeFactory C
 `ProcessorNodeFactory` takes the following when created:
 
 * [[name]] Name
-* [[predecessors]] Predecessors
+* [[predecessors]] Predecessor nodes (by name)
 * [[supplier]] link:kafka-streams-ProcessorSupplier.adoc[ProcessorSupplier]
