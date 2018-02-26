@@ -212,3 +212,16 @@ boolean setRunningFromCreated()
 `setRunningFromCreated`...FIXME
 
 NOTE: `setRunningFromCreated` is used exclusively when `KafkaStreams` is <<start, started>>.
+
+=== [[toString]] Describing Itself (Text Representation) -- `toString` Method
+
+[source, java]
+----
+String toString() // <1>
+String toString(final String indent)
+----
+<1> Calls `toString(final String indent)` with an empty indent, i.e. `""`
+
+NOTE: `toString` with an indent is *deprecated* and should not be used. Use <<localThreadsMetadata, localThreadsMetadata>> instead.
+
+`toString`...FIXME

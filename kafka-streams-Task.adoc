@@ -64,6 +64,9 @@ public interface Task {
 
 | [[resume]] `resume`
 | Used when...
+
+| [[toString]] `toString`
+| Used when...
 |===
 
 [[implementations]]

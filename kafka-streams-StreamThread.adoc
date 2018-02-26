@@ -349,3 +349,21 @@ processing latency [processLatency] < commit time [commitTime] for [totalProcess
 ```
 
 NOTE: `adjustRecordsProcessedBeforeCommit` is used exclusively when `StreamThread` is requested to <<runOnce, poll records once>> (and there have been records available).
+
+=== [[toString]] Describing Itself (Text Representation) -- `toString` Method
+
+[source, java]
+----
+String toString() // <1>
+String toString(final String indent)
+----
+<1> Calls `toString(final String indent)` with an empty indent, i.e. `""`
+
+`toString` gives a text representation with "StreamsThread threadId:" and the thread name followed by the link:kafka-streams-TaskManager.adoc#toString[text representation] of the <<taskManager, TaskManager>>.
+
+[source, scala]
+----
+FIXME toString in action
+----
+
+NOTE: `toString` is used when `KafkaStreams` is requested to link:kafka-streams-KafkaStreams.adoc#toString[describe itself].

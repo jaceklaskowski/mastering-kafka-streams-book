@@ -12,7 +12,7 @@
 
 1. <<restoring, restoring>> for tasks that are considered *restoring*
 
-NOTE: Use <<toString, toString>> or <<describe, describe>> methods to list the tasks by status.
+NOTE: Use <<toString, toString>> method to list the tasks by status.
 
 [[implementations]]
 .Concrete AssignedTasks
@@ -309,3 +309,47 @@ resuming suspended [taskTypeName] [taskId]
 In case of `TaskMigratedException`, `maybeResumeSuspendedTask` <<closeZombieTask, closeZombieTask>>. If it gives a `RuntimeException`, `maybeResumeSuspendedTask` re-throws it. Otherwise, `maybeResumeSuspendedTask` removes the task (by the input `taskId`) from <<suspended, suspended>> registry (_again?!_) and re-throws the initial `TaskMigratedException`.
 
 NOTE: `maybeResumeSuspendedTask` is used when `TaskManager` is requested to link:kafka-streams-TaskManager.adoc#createTasks[create processor tasks for assigned topic partitions] (and register new link:kafka-streams-TaskManager.adoc#addStandbyTasks[standby] and link:kafka-streams-TaskManager.adoc#addStreamTasks[stream] tasks).
+
+=== [[toString]] Describing Itself (Text Representation) -- `toString` Method
+
+[source, java]
+----
+String toString(final String indent)
+----
+
+`toString` gives a text representation and <<describe, describes>> the following:
+
+* <<running, running>> tasks with "Running:" header
+
+* <<suspended, suspended>> tasks with "Suspended:" header
+
+* <<restoring, restoring>> tasks with "Restoring:" header
+
+* <<created, created>> tasks with "New:" header
+
+[source, scala]
+----
+FIXME toString in action
+----
+
+NOTE: `toString` is used exclusively when `TaskManager` is requested to link:kafka-streams-TaskManager.adoc#toString[describe itself].
+
+=== [[describe]] `describe` Internal Method
+
+[source, java]
+----
+void describe(
+  final StringBuilder builder,
+  final Collection<T> tasks,
+  final String indent,
+  final String name)
+----
+
+`describe` simply requests every task in the input `tasks` to link:kafka-streams-Task.adoc#toString[describe itself] and uses the `indent` and `name` to create a text representation.
+
+[source, scala]
+----
+FIXME toString in action
+----
+
+NOTE: `describe` is used exclusively when `AssignedTasks` is requested for a <<toString, text representation>>.

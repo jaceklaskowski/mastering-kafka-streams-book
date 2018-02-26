@@ -314,3 +314,23 @@ New standby tasks to be created: [newStandbyTasks]
 `addStandbyTasks` then requests <<standbyTaskCreator, StreamThread.AbstractTaskCreator<StandbyTask&gt;>> to link:kafka-streams-AbstractTaskCreator.adoc#createTasks[createTasks] for every new standby task (with the <<consumer, Kafka Consumer>>) and requests <<standby, AssignedStandbyTasks>> to link:kafka-streams-AssignedTasks.adoc#addNewTask[register a new task].
 
 NOTE: `addStandbyTasks` is used exclusively when `TaskManager` is requested to <<createTasks, create tasks for assigned topic partitions>>.
+
+=== [[toString]] Describing Itself (Text Representation) -- `toString` Method
+
+[source, java]
+----
+String toString(final String indent)
+----
+
+`toString` gives a text representation with the following:
+
+* "Active tasks:" followed by the link:kafka-streams-AssignedTasks.adoc#toString[text representation] of <<active, AssignedStreamsTasks>>
+
+* "Standby tasks:" followed by the link:kafka-streams-AssignedTasks.adoc#toString[text representation] of <<standby, AssignedStandbyTasks>>
+
+[source, scala]
+----
+FIXME toString in action
+----
+
+NOTE: `toString` is used exclusively when `StreamThread` is requested to link:kafka-streams-StreamThread.adoc#toString[describe itself].
