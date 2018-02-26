@@ -19,7 +19,7 @@ val conf = new StreamsConfig(props)
 
 // Consumer Properties
 val consumerConfigs = conf.getConsumerConfigs("groupId", "clientId")
-import scala.collection.JavaConverters._
+import collection.JavaConverters._
 scala> consumerConfigs.asScala.map { case (key, value) => s"$key -> $value" }.foreach(println)
 replication.factor -> 1
 num.standby.replicas -> 0

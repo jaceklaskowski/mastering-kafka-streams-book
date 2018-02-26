@@ -1,0 +1,119 @@
+== [[ProcessorTopology]] ProcessorTopology
+
+`ProcessorTopology` is...FIXME
+
+`ProcessorTopology` is <<creating-instance, created>> exclusively when `InternalTopologyBuilder` is requested to link:kafka-streams-InternalTopologyBuilder.adoc#build[build a topology].
+
+[source, scala]
+----
+// Please note that I use Scala with Java-centric API of Kafka Streams
+import collection.JavaConverters._
+import org.apache.kafka.streams.processor.internals.ProcessorNode
+val processorNodes = Seq.empty[ProcessorNode[_, _]].asJava
+import org.apache.kafka.streams.processor.internals.SourceNode
+val sourcesByTopic = Map.empty[String, SourceNode[_, _]].asJava
+import org.apache.kafka.streams.processor.StateStore
+val stateStoresByName = Seq.empty[StateStore].asJava
+val storeToChangelogTopic = Map.empty[String, String].asJava
+
+import org.apache.kafka.streams.processor.internals.ProcessorTopology
+val topology = ProcessorTopology.`with`(processorNodes, sourcesByTopic, stateStoresByName, storeToChangelogTopic)
+
+// The topology is empty (no children) so nothing is printed out except the header "ProcessorTopology:"
+scala> println(topology)
+ProcessorTopology:
+----
+
+NOTE: Once <<creating-instance, created>>, all internal registries in `ProcessorTopology` will never change.
+
+`ProcessorTopology` can also be created using the builder methods:
+
+* <<with, with>>
+
+* <<withGlobalStores, withGlobalStores>>
+
+* <<withLocalStores, withLocalStores>>
+
+* <<withRepartitionTopics, withRepartitionTopics>>
+
+* <<withSources, withSources>>
+
+=== [[with]] `with` Method
+
+[source, java]
+----
+static ProcessorTopology with(
+  final List<ProcessorNode> processorNodes,
+  final Map<String, SourceNode> sourcesByTopic,
+  final List<StateStore> stateStoresByName,
+  final Map<String, String> storeToChangelogTopic)
+----
+
+`with`...FIXME
+
+NOTE: `with` is used when...FIXME
+
+=== [[withGlobalStores]] `withGlobalStores` Method
+
+[source, java]
+----
+static ProcessorTopology withGlobalStores(
+  final List<StateStore> stateStores,
+  final Map<String, String> storeToChangelogTopic)
+----
+
+`withGlobalStores`...FIXME
+
+NOTE: `withGlobalStores` is used when...FIXME
+
+=== [[withLocalStores]] `withLocalStores` Method
+
+[source, java]
+----
+static ProcessorTopology withLocalStores(
+  final List<StateStore> stateStores,
+  final Map<String, String> storeToChangelogTopic)
+----
+
+`withLocalStores`...FIXME
+
+NOTE: `withLocalStores` is used when...FIXME
+
+=== [[withRepartitionTopics]] `withRepartitionTopics` Method
+
+[source, java]
+----
+static ProcessorTopology withRepartitionTopics(
+  final List<ProcessorNode> processorNodes,
+  final Map<String, SourceNode> sourcesByTopic,
+  final Set<String> repartitionTopics)
+----
+
+`withRepartitionTopics`...FIXME
+
+NOTE: `withRepartitionTopics` is used when...FIXME
+
+=== [[withSources]] `withSources` Method
+
+[source, java]
+----
+static ProcessorTopology withSources(
+  final List<ProcessorNode> processorNodes,
+  final Map<String, SourceNode> sourcesByTopic)
+----
+
+`withSources`...FIXME
+
+NOTE: `withSources` is used when...FIXME
+
+=== [[creating-instance]] Creating ProcessorTopology Instance
+
+`ProcessorTopology` takes the following when created:
+
+* [[processorNodes]] link:kafka-streams-ProcessorNode.adoc[ProcessorNodes]
+* [[sourcesByTopic]] link:kafka-streams-SourceNode.adoc[SourceNodes] by name
+* [[sinksByTopic]] link:kafka-streams-SinkNode.adoc[SinkNodes] by name
+* [[stateStores]] link:kafka-streams-StateStore.adoc[StateStores]
+* [[globalStateStores]] Global link:kafka-streams-StateStore.adoc[StateStores]
+* [[stateStoreToChangelogTopic]] Names of changelog topics by the names of state stores
+* [[repartitionTopics]] Names of repartition topics

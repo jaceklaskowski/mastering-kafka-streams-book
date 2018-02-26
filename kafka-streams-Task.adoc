@@ -2,6 +2,8 @@
 
 `Task` is the <<contract, contract>> in Kafka Streams for *stream processor tasks* that are identified by <<id, id>> and...FIXME
 
+NOTE: link:kafka-streams-AbstractTask.adoc[AbstractTask] is the direct implementation of `Task` available with the concrete link:kafka-streams-StandbyTask.adoc[StandbyTask] and link:kafka-streams-StreamTask.adoc[StreamTask] implementations.
+
 The lifecycle of a task is...FIXME
 
 There are two types of partitions that a task operates on:
@@ -51,7 +53,17 @@ public interface Task {
 | Used when...
 
 | [[hasStateStores]] `hasStateStores`
-| Used when...
+a|
+
+Used when `AssignedTasks` is requested to:
+
+* link:kafka-streams-AssignedTasks.adoc#transitionToRunning[Schedule a task for execution]
+
+* link:kafka-streams-AssignedTasks.adoc#uninitializedPartitions[Get the partitions of the new tasks with a state store]
+
+---
+
+Implemented exclusively in link:kafka-streams-AbstractTask.adoc#hasStateStores[AbstractTask].
 
 | [[initializeStateStores]] `initializeStateStores`
 | Used when...

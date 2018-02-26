@@ -32,6 +32,7 @@
 . link:kafka-streams-ProcessorNodeFactory.adoc[ProcessorNodeFactory]
 . link:kafka-streams-SourceNodeFactory.adoc[SourceNodeFactory]
 . link:kafka-streams-SourceNode.adoc[SourceNode]
+. link:kafka-streams-SinkNode.adoc[SinkNode]
 . link:kafka-streams-NodeFactory.adoc[NodeFactory]
 . link:kafka-streams-StandbyTaskCreator.adoc[StandbyTaskCreator]
 . link:kafka-streams-TaskCreator.adoc[TaskCreator]
@@ -89,6 +90,7 @@
 . link:kafka-streams-GlobalStateManagerImpl.adoc[GlobalStateManagerImpl]
 . link:kafka-streams-StateDirectory.adoc[StateDirectory]
 . link:kafka-streams-GroupedStreamAggregateBuilder.adoc[GroupedStreamAggregateBuilder]
+. link:kafka-streams-ProcessorTopology.adoc[ProcessorTopology]
 
 . link:kafka-streams-TopologyTestDriver.adoc[TopologyTestDriver]
 . link:kafka-streams-ProcessorTopologyTestDriver.adoc[ProcessorTopologyTestDriver]

@@ -4,7 +4,6 @@
 
 `AbstractTask` is <<creating-instance, created>> when...FIXME
 
-
 NOTE: The number of `threads` is controlled using link:kafka-streams-properties.adoc#num.stream.threads[num.stream.threads] configuration property with the default being 1 thread.
 
 [[eosEnabled]]
@@ -35,3 +34,14 @@ NOTE: `closeStateManager` is used when...FIXME
 * [[config]] link:kafka-streams-StreamsConfig.adoc[StreamsConfig]
 
 `AbstractTask` initializes the <<internal-registries, internal registries and counters>>.
+
+=== [[hasStateStores]] Checking If Topology Uses State Stores -- `hasStateStores` Method
+
+[source, java]
+----
+boolean hasStateStores()
+----
+
+NOTE: `hasStateStores` is part of link:kafka-streams-Task.adoc#hasStateStores[Task Contract] to...FIXME.
+
+`hasStateStores` is positive (and returns `true`) when <<topology, ProcessorTopology>> has at least one link:kafka-streams-ProcessorTopology.adoc#stateStores[state store].

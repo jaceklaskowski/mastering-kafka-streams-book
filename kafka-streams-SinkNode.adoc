@@ -1,0 +1,3 @@
+== [[SinkNode]] SinkNode
+
+`SinkNode` is...FIXME
