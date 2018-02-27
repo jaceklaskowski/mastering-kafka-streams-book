@@ -12,6 +12,11 @@ When created, `InternalTopologyBuilder` simply initializes the <<internal-regist
 | Name
 | Description
 
+| [[globalStateStores]] `globalStateStores`
+a| link:kafka-streams-StateStore.adoc[StateStores] by name
+
+* A new global link:kafka-streams-StateStore.adoc[StateStore] is added exclusively when `InternalTopologyBuilder` <<addGlobalStore, addGlobalStore>>
+
 | [[globalTopics]] `globalTopics`
 a| Names of global topics
 
@@ -44,50 +49,16 @@ Used when...FIXME
 
 Used when...FIXME
 
+| [[storeToChangelogTopic]] `storeToChangelogTopic`
+a| Topic names by the names of state stores
+
+* A new entry is added when `InternalTopologyBuilder` is requested to <<buildProcessorNode, buildProcessorNode>> and <<connectSourceStoreAndTopic, associate the names of a state store and a topic>>
+
 | [[topicPattern]] `topicPattern`
 a| Source topic pattern to subscribe to
 
 * Initialized the first time when `InternalTopologyBuilder` is requested for the <<sourceTopicPattern, source topic pattern>>
 |===
-
-=== [[addGlobalStore]] `addGlobalStore` Method
-
-[source, java]
-----
-void addGlobalStore(
-  final StoreBuilder<KeyValueStore> storeBuilder,
-  final String sourceName,
-  final TimestampExtractor timestampExtractor,
-  final Deserializer keyDeserializer,
-  final Deserializer valueDeserializer,
-  final String topic,
-  final String processorName,
-  final ProcessorSupplier stateUpdateSupplier)
-void addGlobalStore(
-  final org.apache.kafka.streams.processor.StateStoreSupplier<KeyValueStore> storeSupplier,
-  final String sourceName,
-  final TimestampExtractor timestampExtractor,
-  final Deserializer keyDeserializer,
-  final Deserializer valueDeserializer,
-  final String topic,
-  final String processorName,
-  final ProcessorSupplier stateUpdateSupplier)
-// private
-private void addGlobalStore(
-  final String sourceName,
-  final TimestampExtractor timestampExtractor,
-  final Deserializer keyDeserializer,
-  final Deserializer valueDeserializer,
-  final String topic,
-  final String processorName,
-  final ProcessorSupplier stateUpdateSupplier,
-  final String name,
-  final KeyValueStore store)
-----
-
-`addGlobalStore`...FIXME
-
-NOTE: `addGlobalStore` is used when...FIXME
 
 === [[addProcessor]] `addProcessor` Method
 
@@ -102,6 +73,21 @@ void addProcessor(
 `addProcessor`...FIXME
 
 NOTE: `addProcessor` is used when...FIXME
+
+=== [[buildProcessorNode]] `buildProcessorNode` Internal Method
+
+[source, java]
+----
+void buildProcessorNode(
+  final Map<String, ProcessorNode> processorMap,
+  final Map<String, StateStore> stateStoreMap,
+  final ProcessorNodeFactory factory,
+  final ProcessorNode node)
+----
+
+`buildProcessorNode`...FIXME
+
+NOTE: `buildProcessorNode` is used when...FIXME
 
 === [[addInternalTopic]] `addInternalTopic` Method
 
@@ -328,3 +314,135 @@ void connectProcessorAndStateStore(
 NOTE: `connectProcessorAndStateStore` (singular) is an internal method that is used by the public <<connectProcessorAndStateStores, connectProcessorAndStateStores>> (plural).
 
 NOTE: `connectProcessorAndStateStore` is used when `InternalTopologyBuilder` is requested to <<addStateStore, addStateStore>> and <<connectProcessorAndStateStores, connectProcessorAndStateStores>>
+
+=== [[addGlobalStore]] Registering Global State Store -- `addGlobalStore` Method
+
+[source, java]
+----
+void addGlobalStore(
+  final StoreBuilder<KeyValueStore> storeBuilder,
+  final String sourceName,
+  final TimestampExtractor timestampExtractor,
+  final Deserializer keyDeserializer,
+  final Deserializer valueDeserializer,
+  final String topic,
+  final String processorName,
+  final ProcessorSupplier stateUpdateSupplier)  // <1>
+// StateStoreSupplier is @Deprecated so the following addGlobalStore should not be used either
+void addGlobalStore(
+  final org.apache.kafka.streams.processor.StateStoreSupplier<KeyValueStore> storeSupplier,
+  final String sourceName,
+  final TimestampExtractor timestampExtractor,
+  final Deserializer keyDeserializer,
+  final Deserializer valueDeserializer,
+  final String topic,
+  final String processorName,
+  final ProcessorSupplier stateUpdateSupplier)  // <2>
+// private
+private void addGlobalStore(
+  final String sourceName,
+  final TimestampExtractor timestampExtractor,
+  final Deserializer keyDeserializer,
+  final Deserializer valueDeserializer,
+  final String topic,
+  final String processorName,
+  final ProcessorSupplier stateUpdateSupplier,
+  final String name,
+  final KeyValueStore store)  // <3>
+----
+<1> Calls the private `addGlobalStore` after validating arguments
+<2> Calls the private `addGlobalStore` after validating arguments
+
+The public `addGlobalStore` <<validateGlobalStoreArguments, validateGlobalStoreArguments>>, <<validateTopicNotAlreadyRegistered, validateTopicNotAlreadyRegistered>> and calls the private `addGlobalStore`.
+
+NOTE: `StateStoreSupplier` is *deprecated* and therefore the public `addGlobalStore` that accepts it should no longer be used.
+
+The private `addGlobalStore` creates a link:kafka-streams-ProcessorNodeFactory.adoc#creating-instance[ProcessorNodeFactory] with the input `processorName`, `sourceName` (as link:kafka-streams-ProcessorNodeFactory.adoc#predecessors[predecessors]) and `stateUpdateSupplier` (as link:kafka-streams-ProcessorNodeFactory.adoc#supplier[supplier]).
+
+`addGlobalStore` then does the following housekeeping:
+
+1. Adds the `topic` to <<globalTopics, globalTopics>>
+
+1. Creates a link:kafka-streams-SourceNodeFactory.adoc#creating-instance[SourceNodeFactory] and registers it in <<nodeFactories, nodeFactories>> as `sourceName`
+
+1. Associates the `sourceName` with `topic` to <<nodeToSourceTopics, nodeToSourceTopics>>
+
+1. Adds the `sourceName` to <<nodeGrouper, QuickUnion>>
+
+1. link:kafka-streams-ProcessorNodeFactory.adoc#addStateStore[Adds] the `name` (of a state store) to the `ProcessorNodeFactory`
+
+1. Associates the `processorName` with `nodeFactory` in <<nodeFactories, nodeFactories>>
+
+1. Adds the `processorName` to <<nodeGrouper, QuickUnion>>
+
+1. Requests <<nodeGrouper, QuickUnion>> to unite the `processorName` and `predecessors`
+
+1. Associates the `name` with the `store` in <<globalStateStores, globalStateStores>>
+
+In the end, `addGlobalStore` <<connectSourceStoreAndTopic, associates the names of the state store and the topic>> (with the `name` and `topic`).
+
+[NOTE]
+====
+`addGlobalStore` is used when:
+
+* `InternalStreamsBuilder` is requested for a link:kafka-streams-InternalStreamsBuilder.adoc#globalTable[globalTable] or link:kafka-streams-InternalStreamsBuilder.adoc#addGlobalStore[addGlobalStore]
+
+* `Topology` is requested to link:kafka-streams-Topology.adoc#addGlobalStore[addGlobalStore]
+====
+
+=== [[validateGlobalStoreArguments]] Validating Arguments for Creating Global State Store -- `validateGlobalStoreArguments` Internal Method
+
+[source, java]
+----
+void validateGlobalStoreArguments(
+  final String sourceName,
+  final String topic,
+  final String processorName,
+  final ProcessorSupplier stateUpdateSupplier,
+  final String storeName,
+  final boolean loggingEnabled)
+----
+
+`validateGlobalStoreArguments` validates the input parameters (before <<addGlobalStore, registering a global state store>>).
+
+`validateGlobalStoreArguments` throws a `NullPointerException` when `sourceName`, `topic`, `stateUpdateSupplier` or `processorName` are `null`.
+
+`validateGlobalStoreArguments` throws a `TopologyException` when:
+
+* <<nodeFactories, nodeFactories>> contains `sourceName` or `processorName`
+
+* `storeName` is already registered in <<stateFactories, stateFactories>> or <<globalStateStores, globalStateStores>>
+
+* `loggingEnabled` is enabled (i.e. `true`)
+
+* `sourceName` and `processorName` are equal
+
+NOTE: `validateGlobalStoreArguments` is used exclusively when `InternalTopologyBuilder` is requested to <<addGlobalStore, register a global state store>>.
+
+=== [[connectSourceStoreAndTopic]] Registering State Store with Topic (Associating Names) -- `connectSourceStoreAndTopic` Method
+
+[source, java]
+----
+void connectSourceStoreAndTopic(
+  final String sourceStoreName,
+  final String topic)
+----
+
+`connectSourceStoreAndTopic` registers the `sourceStoreName` with the `topic` in <<storeToChangelogTopic, storeToChangelogTopic>>.
+
+`connectSourceStoreAndTopic` reports a `TopologyException` when <<storeToChangelogTopic, storeToChangelogTopic>> has `sourceStoreName` already been registered.
+
+```
+Source store [sourceStoreName] is already added.
+```
+
+[NOTE]
+====
+`connectSourceStoreAndTopic` is used when:
+
+* `InternalStreamsBuilder` is requested to link:kafka-streams-InternalStreamsBuilder.adoc#table[create a KTable for a topic]
+
+* `InternalTopologyBuilder` is requested to <<addGlobalStore, addGlobalStore>>
+
+* *(deprecated)* `TopologyBuilder` is requested to `connectSourceStoreAndTopic`
+====

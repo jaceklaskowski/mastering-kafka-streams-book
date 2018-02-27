@@ -1,6 +1,8 @@
-== [[SourceNodeFactory]] SourceNodeFactory
+== [[SourceNodeFactory]] SourceNodeFactory -- NodeFactory With No Predecessors
 
-`SourceNodeFactory` is...FIXME
+`SourceNodeFactory` is a link:kafka-streams-NodeFactory.adoc[NodeFactory] that has no link:kafka-streams-NodeFactory.adoc#predecessors[predecessors].
+
+`SourceNodeFactory` is <<creating-instance, created>> when...FIXME
 
 === [[build]] `build` Method
 
@@ -12,3 +14,16 @@ ProcessorNode build()
 NOTE: `build` is part of link:kafka-streams-NodeFactory.adoc#build[NodeFactory Contract] to...FIXME.
 
 `build`...FIXME
+
+=== [[creating-instance]] Creating SourceNodeFactory Instance
+
+`SourceNodeFactory` takes the following when created:
+
+* [[name]] Name
+* [[topics]] Topic names
+* [[pattern]] Topic pattern
+* [[timestampExtractor]] `TimestampExtractor`
+* [[keyDeserializer]] Key deserializer
+* [[valDeserializer]] Value deserializer
+
+`SourceNodeFactory` initializes the <<internal-registries, internal registries and counters>>.

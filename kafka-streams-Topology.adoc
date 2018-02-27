@@ -49,6 +49,33 @@ synchronized Topology addSource(
 
 NOTE: `addSource` is used when...FIXME
 
+=== [[addGlobalStore]] `addGlobalStore` Method
+
+[source, java]
+----
+synchronized Topology addGlobalStore(
+  final StoreBuilder storeBuilder,
+  final String sourceName,
+  final Deserializer keyDeserializer,
+  final Deserializer valueDeserializer,
+  final String topic,
+  final String processorName,
+  final ProcessorSupplier stateUpdateSupplier)
+synchronized Topology addGlobalStore(
+  final StoreBuilder storeBuilder,
+  final String sourceName,
+  final TimestampExtractor timestampExtractor,
+  final Deserializer keyDeserializer,
+  final Deserializer valueDeserializer,
+  final String topic,
+  final String processorName,
+  final ProcessorSupplier stateUpdateSupplier)
+----
+
+`addGlobalStore`...FIXME
+
+NOTE: `addGlobalStore` is used when...FIXME
+
 === [[connectProcessorAndStateStores]] `connectProcessorAndStateStores` Method
 
 [source, java]

@@ -2,6 +2,10 @@
 
 `NodeFactory` is the internal <<contract, contract>> for...FIXME
 
+[[name]]
+[[predecessors]]
+`NodeFactory` has a *name* and zero, one or more *predecessors*.
+
 [[contract]]
 [source, java]
 ----
@@ -13,7 +17,7 @@ abstract class NodeFactory {
 }
 ----
 
-NOTE: `NodeFactory` is a `private` contract.
+NOTE: `NodeFactory` is a `private` and `static` contract in link:kafka-streams-InternalTopologyBuilder.adoc[InternalTopologyBuilder].
 
 .NodeFactory Contract
 [cols="1,2",options="header",width="100%"]

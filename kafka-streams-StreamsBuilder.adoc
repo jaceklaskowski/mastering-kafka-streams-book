@@ -29,6 +29,19 @@ KTable<K, V> table(
 
 `table`...FIXME
 
+=== [[addGlobalStore]] `addGlobalStore` Method
+
+[source, java]
+----
+synchronized StreamsBuilder addGlobalStore(
+  final StoreBuilder storeBuilder,
+  final String topic,
+  final Consumed consumed,
+  final ProcessorSupplier stateUpdateSupplier)
+----
+
+`addGlobalStore`...FIXME
+
 === [[stream]] Creating KStream of Records for Topics -- `stream` Factory Method
 
 [source, java]

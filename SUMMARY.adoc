@@ -30,7 +30,7 @@
 
 . link:kafka-streams-ProcessorNode.adoc[ProcessorNode]
 . link:kafka-streams-ProcessorNodeFactory.adoc[ProcessorNodeFactory]
-. link:kafka-streams-SourceNodeFactory.adoc[SourceNodeFactory]
+. link:kafka-streams-SourceNodeFactory.adoc[SourceNodeFactory -- NodeFactory With No Predecessors]
 . link:kafka-streams-SourceNode.adoc[SourceNode]
 . link:kafka-streams-SinkNode.adoc[SinkNode]
 . link:kafka-streams-NodeFactory.adoc[NodeFactory]
