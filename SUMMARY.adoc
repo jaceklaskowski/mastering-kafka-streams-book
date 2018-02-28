@@ -4,29 +4,37 @@
 
 . link:kafka-streams.adoc[Kafka Streams -- Stream Processing Library on Apache Kafka]
 
+== Developing Stream Processing Applications with Kafka Streams
+
 . link:kafka-streams-KafkaStreams.adoc[KafkaStreams]
-.. link:kafka-streams-StateListener.adoc[StateListener -- KafkaStreams State Listener]
-.. link:kafka-streams-StreamThread.adoc[StreamThread -- Stream Processor Thread]
-... link:kafka-streams-StreamThread-RebalanceListener.adoc[RebalanceListener]
-.. link:kafka-streams-GlobalStreamThread.adoc[GlobalStreamThread]
-... link:kafka-streams-StateConsumer.adoc[StateConsumer]
-.. link:kafka-streams-TaskManager.adoc[TaskManager]
-.. link:kafka-streams-PartitionGroup.adoc[PartitionGroup]
-
-. link:kafka-streams-Task.adoc[Task -- Contract for Stream Processor Tasks]
-.. link:kafka-streams-StreamTask.adoc[StreamTask]
-.. link:kafka-streams-StandbyTask.adoc[StandbyTask]
-.. link:kafka-streams-AbstractTask.adoc[AbstractTask]
-
+. link:kafka-streams-StreamsBuilder.adoc[StreamsBuilder]
+. link:kafka-streams-KStream.adoc[KStream]
+. link:kafka-streams-Topology.adoc[Topology]
 . link:kafka-streams-Processor.adoc[Processor -- Contract for Stream Processors]
-. link:kafka-streams-ProcessorSupplier.adoc[ProcessorSupplier]
+. link:kafka-streams-ProcessorContext.adoc[ProcessorContext]
 
 . link:kafka-streams-StateStore.adoc[StateStore]
 .. link:kafka-streams-Stores.adoc[Stores]
 .. (Deprecated) link:kafka-streams-StoreFactory.adoc[StoreFactory]
 
-. link:kafka-streams-ProcessorContext.adoc[ProcessorContext]
-.. link:kafka-streams-ProcessorContextImpl.adoc[ProcessorContextImpl]
+. link:kafka-streams-Consumed.adoc[Consumed]
+. link:kafka-streams-Produced.adoc[Produced]
+. link:kafka-streams-Printed.adoc[Printed]
+
+. link:kafka-streams-KeyValueMapper.adoc[KeyValueMapper]
+. link:kafka-streams-StreamsConfig.adoc[StreamsConfig -- Configuration Properties for Kafka Clients]
+
+. link:kafka-streams-ValueTransformer.adoc[ValueTransformer -- Stateful Record-by-Record Value Transformation]
+. link:kafka-streams-ValueTransformerSupplier.adoc[ValueTransformerSupplier -- ValueTransformers Object Factory]
+
+. link:kafka-streams-Punctuator.adoc[Punctuator]
+
+. link:kafka-streams-exactly-once-support-eos.adoc[Exactly-Once Support (EOS)]
+
+. link:kafka-streams-properties.adoc[Configuration Properties]
+. link:kafka-logging.adoc[Logging]
+
+== Internals of Kafka Streams
 
 . link:kafka-streams-ProcessorNode.adoc[ProcessorNode]
 . link:kafka-streams-ProcessorNodeFactory.adoc[ProcessorNodeFactory]
@@ -34,20 +42,39 @@
 . link:kafka-streams-SourceNode.adoc[SourceNode]
 . link:kafka-streams-SinkNode.adoc[SinkNode]
 . link:kafka-streams-NodeFactory.adoc[NodeFactory]
-. link:kafka-streams-StandbyTaskCreator.adoc[StandbyTaskCreator]
-. link:kafka-streams-TaskCreator.adoc[TaskCreator]
-. link:kafka-streams-AbstractTaskCreator.adoc[AbstractTaskCreator]
 
-. link:kafka-streams-Consumed.adoc[Consumed]
-. link:kafka-streams-Produced.adoc[Produced]
-. link:kafka-streams-Printed.adoc[Printed]
+. link:kafka-streams-Task.adoc[Task -- Contract for Stream Processor Tasks]
+.. link:kafka-streams-AbstractTask.adoc[AbstractTask -- Base Processor Task]
+.. link:kafka-streams-StreamTask.adoc[StreamTask]
+.. link:kafka-streams-StandbyTask.adoc[StandbyTask]
+
+. link:kafka-streams-TaskManager.adoc[TaskManager]
+. link:kafka-streams-AbstractTaskCreator.adoc[AbstractTaskCreator]
+.. link:kafka-streams-StandbyTaskCreator.adoc[StandbyTaskCreator -- Factory of Standby Tasks]
+.. link:kafka-streams-TaskCreator.adoc[TaskCreator -- Factory of Stream Tasks]
+
+. link:kafka-streams-AssignedTasks.adoc[AssignedTasks]
+.. link:kafka-streams-AssignedStandbyTasks.adoc[AssignedStandbyTasks]
+.. link:kafka-streams-AssignedStreamsTasks.adoc[AssignedStreamsTasks]
+
+. link:kafka-streams-StateListener.adoc[StateListener -- KafkaStreams State Listener]
+
+. link:kafka-streams-ProcessorContextImpl.adoc[ProcessorContextImpl]
+
+. link:kafka-streams-StreamThread.adoc[StreamThread -- Stream Processor Thread]
+.. link:kafka-streams-StreamThread-RebalanceListener.adoc[RebalanceListener]
+
+. link:kafka-streams-ProcessorSupplier.adoc[ProcessorSupplier]
+
+. link:kafka-streams-GlobalStreamThread.adoc[GlobalStreamThread]
+.. link:kafka-streams-StateConsumer.adoc[StateConsumer]
+
+. link:kafka-streams-PartitionGroup.adoc[PartitionGroup]
 
 . link:kafka-streams-StreamPartitioner.adoc[StreamPartitioner]
 .. link:kafka-streams-WindowedStreamPartitioner.adoc[WindowedStreamPartitioner]
 
-. link:kafka-streams-KStream.adoc[KStream]
-.. link:kafka-streams-KStreamImpl.adoc[KStreamImpl]
-
+. link:kafka-streams-KStreamImpl.adoc[KStreamImpl]
 . link:kafka-streams-KTableImpl.adoc[KTableImpl]
 . link:kafka-streams-KGroupedTableImpl.adoc[KGroupedTableImpl]
 . link:kafka-streams-TimeWindowedKStreamImpl.adoc[TimeWindowedKStreamImpl]
@@ -58,20 +85,11 @@
 
 . link:kafka-streams-StreamPartitionAssignor.adoc[StreamPartitionAssignor -- Partition Assignment Strategy]
 
-. link:kafka-streams-StreamsBuilder.adoc[StreamsBuilder]
-. link:kafka-streams-Topology.adoc[Topology]
 . link:kafka-streams-InternalTopologyBuilder.adoc[InternalTopologyBuilder]
 . link:kafka-streams-InternalStreamsBuilder.adoc[InternalStreamsBuilder]
-. link:kafka-streams-KeyValueMapper.adoc[KeyValueMapper]
-. link:kafka-streams-StreamsConfig.adoc[StreamsConfig -- Configuration Properties for Kafka Clients]
+
 . link:kafka-streams-KafkaClientSupplier.adoc[KafkaClientSupplier]
 .. link:kafka-streams-DefaultKafkaClientSupplier.adoc[DefaultKafkaClientSupplier]
-
-. link:kafka-streams-ValueTransformer.adoc[ValueTransformer -- Stateful Record-by-Record Value Transformation]
-. link:kafka-streams-ValueTransformerSupplier.adoc[ValueTransformerSupplier -- ValueTransformers Object Factory]
-
-. link:kafka-streams-Punctuator.adoc[Punctuator]
-
 . link:kafka-streams-ConsumedInternal.adoc[ConsumedInternal]
 . link:kafka-streams-InternalTopicManager.adoc[InternalTopicManager]
 
@@ -98,13 +116,3 @@
 . link:kafka-streams-ChangelogReader.adoc[ChangelogReader]
 . link:kafka-streams-AssignmentInfo.adoc[AssignmentInfo]
 . link:kafka-streams-StreamsMetadataState.adoc[StreamsMetadataState]
-
-. link:kafka-streams-exactly-once-support-eos.adoc[Exactly-Once Support (EOS)]
-
-. link:kafka-streams-AssignedTasks.adoc[AssignedTasks]
-.. link:kafka-streams-AssignedStandbyTasks.adoc[AssignedStandbyTasks]
-.. link:kafka-streams-AssignedStreamsTasks.adoc[AssignedStreamsTasks]
-
-. link:kafka-streams-properties.adoc[Configuration Properties]
-
-. link:kafka-logging.adoc[Logging]

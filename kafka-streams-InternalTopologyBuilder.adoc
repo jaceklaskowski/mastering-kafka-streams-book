@@ -2,6 +2,11 @@
 
 `InternalTopologyBuilder` is...FIXME
 
+`InternalTopologyBuilder` is <<creating-instance, created>> exclusively when `Topology` is link:kafka-streams-Topology.adoc#internalTopologyBuilder[created].
+
+.InternalTopologyBuilder and Topology
+image::images/kafka-streams-InternalTopologyBuilder-Topology.png[align="center"]
+
 [[creating-instance]]
 When created, `InternalTopologyBuilder` simply initializes the <<internal-registries, internal registries and counters>>.
 
@@ -59,6 +64,20 @@ a| Source topic pattern to subscribe to
 
 * Initialized the first time when `InternalTopologyBuilder` is requested for the <<sourceTopicPattern, source topic pattern>>
 |===
+
+[[logging]]
+[TIP]
+====
+Enable `DEBUG` logging level for `org.apache.kafka.streams.processor.internals.InternalTopologyBuilder` logger to see what happens inside.
+
+Add the following line to `log4j.properties`:
+
+```
+log4j.logger.org.apache.kafka.streams.processor.internals.InternalTopologyBuilder=DEBUG
+```
+
+Refer to link:kafka-logging.adoc#log4j.properties[Application Logging Using log4j].
+====
 
 === [[addProcessor]] `addProcessor` Method
 

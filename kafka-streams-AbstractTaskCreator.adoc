@@ -1,6 +1,6 @@
 == [[AbstractTaskCreator]] AbstractTaskCreator
 
-`AbstractTaskCreator` is the <<contract, contract>> in Kafka Streams to <<createTask, create stream processor tasks>>.
+`AbstractTaskCreator` is the <<contract, contract>> to <<createTask, create processor tasks>>.
 
 [[contract]]
 [source, java]
@@ -23,6 +23,8 @@ abstract class StreamThread.AbstractTaskCreator<T extends Task> {
 | Used exclusively when `AbstractTaskCreator` is requested to <<createTasks, create tasks>> for...FIXME
 |===
 
+`AbstractTaskCreator` is a Java abstract class and cannot be <<creating-instance, created>> directly. It is created indirectly when the <<implementations, concrete AbstractTaskCreators>> are.
+
 [[implementations]]
 .AbstractTaskCreators
 [cols="1,2",options="header",width="100%"]
@@ -31,13 +33,13 @@ abstract class StreamThread.AbstractTaskCreator<T extends Task> {
 | Description
 
 | link:kafka-streams-StandbyTaskCreator.adoc[StandbyTaskCreator]
-|
+| Creates link:kafka-streams-StandbyTask.adoc[standby tasks]
 
 | link:kafka-streams-TaskCreator.adoc[TaskCreator]
-|
+| Creates link:kafka-streams-StreamTask.adoc[stream tasks]
 |===
 
-=== [[createTasks]] `createTasks` Method
+=== [[createTasks]] Creating Processor Tasks -- `createTasks` Method
 
 [source, java]
 ----
@@ -48,4 +50,17 @@ Collection<T> createTasks(
 
 `createTasks`...FIXME
 
-NOTE: `createTasks` is used when `TaskManager` is requested for link:kafka-streams-TaskManager.adoc#addStandbyTasks[addStandbyTasks] or link:kafka-streams-TaskManager.adoc#addStreamTasks[addStreamTasks].
+NOTE: `createTasks` is used when `TaskManager` is requested for link:kafka-streams-TaskManager.adoc#addStandbyTasks[standby] or link:kafka-streams-TaskManager.adoc#addStreamTasks[stream] tasks.
+
+=== [[creating-instance]] Creating AbstractTaskCreator Instance
+
+`AbstractTaskCreator` takes the following when created:
+
+* [[builder]] link:kafka-streams-InternalTopologyBuilder.adoc[InternalTopologyBuilder]
+* [[config]] link:kafka-streams-StreamsConfig.adoc[StreamsConfig]
+* [[streamsMetrics]] `StreamsMetrics`
+* [[stateDirectory]] link:kafka-streams-StateDirectory.adoc[StateDirectory]
+* [[taskCreatedSensor]] `Sensor`
+* [[storeChangelogReader]] link:kafka-streams-ChangelogReader.adoc[ChangelogReader]
+* [[time]] `Time`
+* [[log]] `Logger`

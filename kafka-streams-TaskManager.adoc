@@ -4,6 +4,9 @@
 
 `TaskManager` is <<creating-instance, created>> exclusively when `StreamThread` is link:kafka-streams-StreamThread.adoc#create[created].
 
+.TaskManager Being Created
+image::images/kafka-streams-TaskManager.png[align="center"]
+
 `TaskManager` uses Kafka's <<adminClient, AdminClient>> for <<maybePurgeCommitedRecords, maybePurgeCommitedRecords>> and for `StreamPartitionAssignor` to link:kafka-streams-StreamPartitionAssignor.adoc#configure[configure] itself (and create the internal link:kafka-streams-StreamPartitionAssignor.adoc#internalTopicManager[InternalTopicManager]).
 
 `TaskManager` manages tasks through <<active, AssignedStreamsTasks>> and <<standby, AssignedStandbyTasks>> collection of tasks.
@@ -171,8 +174,8 @@ NOTE: `activeTask` is used exclusively when `StreamThread` is requested to link:
 * [[logPrefix]] `logPrefix`
 * [[restoreConsumer]] Kafka https://kafka.apache.org/10/javadoc/org/apache/kafka/clients/consumer/KafkaConsumer.html[Consumer] (of keys and values as array of bytes)
 * [[streamsMetadataState]] `StreamsMetadataState`
-* [[taskCreator]] `StreamThread.AbstractTaskCreator<StreamTask>`
-* [[standbyTaskCreator]] `StreamThread.AbstractTaskCreator<StandbyTask>`
+* [[taskCreator]] link:kafka-streams-TaskCreator.adoc[StreamThread.AbstractTaskCreator<StreamTask>]
+* [[standbyTaskCreator]] link:kafka-streams-StandbyTaskCreator.adoc[StreamThread.AbstractTaskCreator<StandbyTask>]
 * [[adminClient]] Kafka https://kafka.apache.org/10/javadoc/org/apache/kafka/clients/admin/AdminClient.html[AdminClient]
 * [[active]] link:kafka-streams-AssignedStreamsTasks.adoc[AssignedStreamsTasks]
 * [[standby]] `AssignedStandbyTasks`

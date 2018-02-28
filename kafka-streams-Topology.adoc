@@ -2,8 +2,16 @@
 
 `Topology` is...FIXME
 
+`Topology` is <<creating-instance, created>> when `StreamsBuilder` is link:kafka-streams-StreamsBuilder.adoc#topology[created].
+
+[[creating-instance]]
+`Topology` takes no arguments when created.
+
 [[internalTopologyBuilder]]
-`Topology` owns a link:kafka-streams-InternalTopologyBuilder.adoc[InternalTopologyBuilder]. When created, `Topology` creates a link:kafka-streams-InternalTopologyBuilder.adoc#creating-instance[InternalTopologyBuilder] and...FIXME
+`Topology` manages a link:kafka-streams-InternalTopologyBuilder.adoc[InternalTopologyBuilder]. When `Topology` is created, it immediately creates a link:kafka-streams-InternalTopologyBuilder.adoc#creating-instance[InternalTopologyBuilder].
+
+.Topology and InternalTopologyBuilder
+image::images/kafka-streams-Topology-InternalTopologyBuilder.png[align="center"]
 
 === [[addSource]] `addSource` Method
 

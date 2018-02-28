@@ -1,13 +1,17 @@
 == [[StreamsBuilder]] StreamsBuilder
 
-[[topology]]
-`StreamsBuilder` is the *high-level stream processing DSL* in Kafka Streams to define transformations of a message stream that all together create a link:kafka-streams-Topology.adoc[topology].
+`StreamsBuilder` is the *high-level stream processing DSL* in Kafka Streams to <<build, build a topology>>.
 
 [source, scala]
 ----
 import org.apache.kafka.streams.StreamsBuilder
 val builder = new StreamsBuilder
 ----
+
+[[topology]]
+When created, `StreamsBuilder` creates a link:kafka-streams-Topology.adoc#creating-instance[Topology].
+
+NOTE: Technically, `StreamsBuilder` is simply a wrapper around link:kafka-streams-Topology.adoc[Topology] and whatever topology you could build using `StreamsBuilder` so could you with `Topology` directly.
 
 [[internalStreamsBuilder]]
 `StreamsBuilder` uses link:kafka-streams-InternalStreamsBuilder.adoc[InternalStreamsBuilder] for...FIXME
