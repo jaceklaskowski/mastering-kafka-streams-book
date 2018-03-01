@@ -94,9 +94,9 @@ Used when...FIXME
 Used when...FIXME
 
 | [[stateFactories]] `stateFactories`
-| link:kafka-streams-StateStoreFactory.adoc[StateStoreFactories] by name
+a| link:kafka-streams-StateStoreFactory.adoc[StateStoreFactories] by name
 
-Used when...FIXME
+* A new `StateStoreFactory` is added when `InternalTopologyBuilder` is requested to <<addStateStore, addStateStore>>
 
 | [[stateStoreNameToSourceRegex]] `stateStoreNameToSourceRegex`
 |
@@ -420,23 +420,7 @@ synchronized Pattern sourceTopicPattern()
 1. `TaskManager` is requested for link:kafka-streams-TaskManager.adoc#updateSubscriptionsFromAssignment[updateSubscriptionsFromAssignment] and link:kafka-streams-TaskManager.adoc#updateSubscriptionsFromMetadata[updateSubscriptionsFromMetadata]
 ====
 
-=== [[addStateStore]] `addStateStore` Method
-
-[source, java]
-----
-void addStateStore(
-  final org.apache.kafka.streams.processor.StateStoreSupplier supplier,
-  final String... processorNames)
-void addStateStore(
-  final StoreBuilder storeBuilder,
-  final String... processorNames)
-----
-
-`addStateStore`...FIXME
-
-NOTE: `addStateStore` is used when...FIXME
-
-=== [[connectProcessorAndStateStores]] `connectProcessorAndStateStores` Method
+=== [[connectProcessorAndStateStores]] Connecting State Store with Processor Nodes -- `connectProcessorAndStateStores` Method
 
 [source, java]
 ----
@@ -631,3 +615,22 @@ void connectStateStoreNameToSourceTopicsOrPattern(
 `connectStateStoreNameToSourceTopicsOrPattern`...FIXME
 
 NOTE: `connectStateStoreNameToSourceTopicsOrPattern` is used when...FIXME
+
+=== [[addStateStore]] Registering State Store -- `addStateStore` Method
+
+[source, java]
+----
+void addStateStore(
+  final StoreBuilder storeBuilder,
+  final String... processorNames)
+// Deprecated
+void addStateStore(
+  final org.apache.kafka.streams.processor.StateStoreSupplier supplier,
+  final String... processorNames)
+----
+
+`addStateStore` creates a link:kafka-streams-StoreBuilderFactory.adoc#creating-instance[StoreBuilderFactory] and adds it to <<stateFactories, stateFactories>>.
+
+`addStateStore` then <<connectProcessorAndStateStore, connects the state store with processor nodes>> (by the given `processorNames`).
+
+NOTE: `addStateStore` is used when...FIXME
