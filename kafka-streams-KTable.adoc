@@ -1,0 +1,28 @@
+== [[KTable]] KTable
+
+`KTable` is...FIXME
+
+[[operators]]
+.KTable Operators
+[cols="1,2",options="header",width="100%"]
+|===
+| Operator
+| Description
+
+| [[mapValues]] `mapValues`
+a| Stateful record-by-record value transformation
+
+[source, java]
+----
+<VR> KTable<K, VR> mapValues(
+  final ValueMapper<? super V, ? extends VR> mapper)
+<VR> KTable<K, VR> mapValues(
+  final ValueMapper<? super V, ? extends VR> mapper,
+  final Materialized<K, VR, KeyValueStore<Bytes, byte[]>> materialized)
+<VR> KTable<K, VR> mapValues(
+  final ValueMapperWithKey<? super K, ? super V, ? extends VR> mapper)
+<VR> KTable<K, VR> mapValues(
+  final ValueMapperWithKey<? super K, ? super V, ? extends VR> mapper,
+  final Materialized<K, VR, KeyValueStore<Bytes, byte[]>> materialized)
+----
+|===

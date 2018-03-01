@@ -633,4 +633,19 @@ void addStateStore(
 
 `addStateStore` then <<connectProcessorAndStateStore, connects the state store with processor nodes>> (by the given `processorNames`).
 
-NOTE: `addStateStore` is used when...FIXME
+[NOTE]
+====
+`addStateStore` is used when:
+
+* `Topology` is requested to link:kafka-streams-Topology.adoc#addStateStore[addStateStore]
+
+* `GroupedStreamAggregateBuilder` is requested to link:kafka-streams-GroupedStreamAggregateBuilder.adoc#build[build]
+
+* `InternalStreamsBuilder` is requested to link:kafka-streams-InternalStreamsBuilder.adoc#addStateStore[addStateStore] and link:kafka-streams-InternalStreamsBuilder.adoc#table[create a KTable for a topic]
+
+* `KGroupedTableImpl` is requested to link:kafka-streams-KGroupedTableImpl.adoc#doAggregate[doAggregate]
+
+* `KStreamImplJoin` is requested to link:kafka-streams-KStreamImplJoin.adoc#join[join]
+
+* `KTableImpl` is requested to link:kafka-streams-KTableImpl.adoc#doFilter[doFilter], link:kafka-streams-KTableImpl.adoc#doJoin[doJoin] and link:kafka-streams-KTableImpl.adoc#mapValues[mapValues]
+====

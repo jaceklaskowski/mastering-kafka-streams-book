@@ -1,0 +1,19 @@
+== [[KStreamImplJoin]] KStreamImplJoin
+
+`KStreamImplJoin` is...FIXME
+
+=== [[join]] `join` Method
+
+[source, java]
+----
+<K1, R, V1, V2> KStream<K1, R> join(
+  final KStream<K1, V1> lhs,
+  final KStream<K1, V2> other,
+  final ValueJoiner<? super V1, ? super V2, ? extends R> joiner,
+  final JoinWindows windows,
+  final Joined<K1, V1, V2> joined)
+----
+
+`join`...FIXME
+
+NOTE: `join` is used when...FIXME

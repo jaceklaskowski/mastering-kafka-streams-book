@@ -9,6 +9,7 @@
 . link:kafka-streams-KafkaStreams.adoc[KafkaStreams]
 . link:kafka-streams-StreamsBuilder.adoc[StreamsBuilder]
 . link:kafka-streams-KStream.adoc[KStream]
+. link:kafka-streams-KTable.adoc[KTable]
 . link:kafka-streams-Topology.adoc[Topology]
 . link:kafka-streams-Processor.adoc[Processor -- Contract for Stream Processors]
 . link:kafka-streams-ProcessorContext.adoc[ProcessorContext]
@@ -79,6 +80,7 @@
 .. link:kafka-streams-WindowedStreamPartitioner.adoc[WindowedStreamPartitioner]
 
 . link:kafka-streams-KStreamImpl.adoc[KStreamImpl]
+. link:kafka-streams-KStreamImplJoin.adoc[KStreamImplJoin]
 . link:kafka-streams-KTableImpl.adoc[KTableImpl]
 . link:kafka-streams-KGroupedTableImpl.adoc[KGroupedTableImpl]
 . link:kafka-streams-TimeWindowedKStreamImpl.adoc[TimeWindowedKStreamImpl]

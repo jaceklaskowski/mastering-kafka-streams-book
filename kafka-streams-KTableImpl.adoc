@@ -2,6 +2,28 @@
 
 `KTableImpl` is...FIXME
 
+=== [[mapValues]] `mapValues` Method
+
+[source, java]
+----
+<V1> KTable<K, V1> mapValues(
+  final ValueMapper<? super V, ? extends V1> mapper)
+<VR> KTable<K, VR> mapValues(
+  final ValueMapper<? super V, ? extends VR> mapper,
+  final Materialized<K, VR, KeyValueStore<Bytes, byte[]>> materialized)
+<VR> KTable<K, VR> mapValues(
+  final ValueMapperWithKey<? super K, ? super V, ? extends VR> mapper)
+<VR> KTable<K, VR> mapValues(
+  final ValueMapperWithKey<? super K, ? super V, ? extends VR> mapper,
+  final Materialized<K, VR, KeyValueStore<Bytes, byte[]>> materialized)
+----
+
+NOTE: `mapValues` is part of link:kafka-streams-KTable.adoc#mapValues[KTable Contract] to...FIXME.
+
+`mapValues`...FIXME
+
+NOTE: `mapValues` is used when...FIXME
+
 === [[buildJoin]] `buildJoin` Internal Method
 
 [source, java]
@@ -18,3 +40,33 @@
 `buildJoin`...FIXME
 
 NOTE: `buildJoin` is used when...FIXME
+
+=== [[doFilter]] `doFilter` Internal Method
+
+[source, java]
+----
+KTable<K, V> doFilter(
+  final Predicate<? super K, ? super V> predicate,
+  final MaterializedInternal<K, V, KeyValueStore<Bytes, byte[]>> materialized,
+  final boolean filterNot)
+----
+
+`doFilter`...FIXME
+
+NOTE: `doFilter` is used when...FIXME
+
+=== [[doJoin]] `doJoin` Internal Method
+
+[source, java]
+----
+<VO, VR> KTable<K, VR> doJoin(
+  final KTable<K, VO> other,
+  final ValueJoiner<? super V, ? super VO, ? extends VR> joiner,
+  final MaterializedInternal<K, VR, KeyValueStore<Bytes, byte[]>> materialized,
+  final boolean leftOuter,
+  final boolean rightOuter)
+----
+
+`doJoin`...FIXME
+
+NOTE: `doJoin` is used when...FIXME

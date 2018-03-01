@@ -13,6 +13,19 @@
 .Topology and InternalTopologyBuilder
 image::images/kafka-streams-Topology-InternalTopologyBuilder.png[align="center"]
 
+=== [[addStateStore]] `addStateStore` Method
+
+[source, java]
+----
+synchronized Topology addStateStore(
+  final StoreBuilder storeBuilder,
+  final String... processorNames)
+----
+
+`addStateStore`...FIXME
+
+NOTE: `addStateStore` is used when...FIXME
+
 === [[addSource]] `addSource` Method
 
 [source, scala]

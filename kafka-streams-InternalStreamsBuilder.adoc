@@ -5,6 +5,17 @@
 [[internalTopologyBuilder]]
 `InternalStreamsBuilder` uses a link:kafka-streams-InternalTopologyBuilder.adoc[InternalTopologyBuilder] for...FIXME
 
+=== [[addStateStore]] `addStateStore` Method
+
+[source, java]
+----
+synchronized void addStateStore(final StoreBuilder builder)
+----
+
+`addStateStore`...FIXME
+
+NOTE: `addStateStore` is used when...FIXME
+
 === [[stream]] Creating KStream -- `stream` Method
 
 [source, java]

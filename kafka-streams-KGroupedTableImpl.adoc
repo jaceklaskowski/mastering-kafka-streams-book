@@ -1,3 +1,17 @@
 == [[KGroupedTableImpl]] KGroupedTableImpl
 
 `KGroupedTableImpl` is...FIXME
+
+=== [[doAggregate]] `doAggregate` Internal Method
+
+[source, java]
+----
+<T> KTable<K, T> doAggregate(
+  final ProcessorSupplier<K, Change<V>> aggregateSupplier,
+  final String functionName,
+  final MaterializedInternal<K, T, KeyValueStore<Bytes, byte[]>> materialized)
+----
+
+`doAggregate`...FIXME
+
+NOTE: `doAggregate` is used when...FIXME

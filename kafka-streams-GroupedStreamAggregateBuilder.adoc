@@ -2,6 +2,21 @@
 
 `GroupedStreamAggregateBuilder` is...FIXME
 
+=== [[build]] `build` Internal Method
+
+[source, java]
+----
+<T> KTable<K, T> build(
+  final KStreamAggProcessorSupplier<K, ?, V, T> aggregateSupplier,
+  final String functionName,
+  final StoreBuilder storeBuilder,
+  final boolean isQueryable)
+----
+
+`build`...FIXME
+
+NOTE: `build` is used when...FIXME
+
 === [[repartitionIfRequired]] `repartitionIfRequired` Internal Method
 
 [source, java]
