@@ -65,9 +65,9 @@ a| Names of topics...FIXME
 |
 
 | [[nodeFactories]] `nodeFactories`
-| Collection of named link:kafka-streams-NodeFactory.adoc[NodeFactories]
+a| link:kafka-streams-NodeFactory.adoc[NodeFactories] by name
 
-Used when...FIXME
+* A new `NodeFactory` is added when `InternalTopologyBuilder` is requested to <<addGlobalStore, addGlobalStore>>, <<addProcessor, addProcessor>>, <<addSink, addSink>> and <<addSource, addSource>>
 
 | [[nodeGrouper]] `nodeGrouper`
 | `QuickUnion` of node names
