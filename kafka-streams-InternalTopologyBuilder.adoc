@@ -464,21 +464,6 @@ NOTE: `connectProcessorAndStateStores` (plural) is a public method that uses the
 * `Topology` is requested to link:kafka-streams-Topology.adoc#connectProcessorAndStateStores[connectProcessorAndStateStores]
 ====
 
-=== [[connectProcessorAndStateStore]] `connectProcessorAndStateStore` Internal Method
-
-[source, java]
-----
-void connectProcessorAndStateStore(
-  final String processorName,
-  final String stateStoreName)
-----
-
-`connectProcessorAndStateStore`...FIXME
-
-NOTE: `connectProcessorAndStateStore` (singular) is an internal method that is used by the public <<connectProcessorAndStateStores, connectProcessorAndStateStores>> (plural).
-
-NOTE: `connectProcessorAndStateStore` is used when `InternalTopologyBuilder` is requested to <<addStateStore, addStateStore>> and <<connectProcessorAndStateStores, connectProcessorAndStateStores>>
-
 === [[addGlobalStore]] Registering Global State Store -- `addGlobalStore` Method
 
 [source, java]
@@ -610,3 +595,39 @@ Source store [sourceStoreName] is already added.
 
 * *(deprecated)* `TopologyBuilder` is requested to `connectSourceStoreAndTopic`
 ====
+
+=== [[connectProcessorAndStateStore]] Connecting State Store with Processor Node -- `connectProcessorAndStateStore` Internal Method
+
+[source, java]
+----
+void connectProcessorAndStateStore(
+  final String processorName,
+  final String stateStoreName)
+----
+
+NOTE: `connectProcessorAndStateStore` (singular) is an internal method that is used by the public <<connectProcessorAndStateStores, connectProcessorAndStateStores>> (plural).
+
+`connectProcessorAndStateStore` gets the `StateStoreFactory` for the given `stateStoreName` (in <<stateFactories, stateFactories>>).
+
+`connectProcessorAndStateStore` then unites all link:kafka-streams-StateStoreFactory.adoc#users[users] of the `StateStoreFactory` with the given `processorName`. `connectProcessorAndStateStore` adds the `processorName` to the users.
+
+`connectProcessorAndStateStore` gets the `NodeFactory` for the given `processorName` (in <<nodeFactories, nodeFactories>>). Only when the `NodeFactory` is a `ProcessorNodeFactory`, `connectProcessorAndStateStore` link:kafka-streams-ProcessorNodeFactory.adoc#addStateStore[registers] the `stateStoreName` with the `ProcessorNodeFactory`.
+
+In the end, `connectProcessorAndStateStore` <<connectStateStoreNameToSourceTopicsOrPattern, connectStateStoreNameToSourceTopicsOrPattern>> (with the input `stateStoreName` and the ProcessorNodeFactory).
+
+`connectProcessorAndStateStore` reports a `TopologyException` when the input `stateStoreName` or `processorName` have not been registered yet or the `processorName` is the name of a source or sink node.
+
+NOTE: `connectProcessorAndStateStore` is used when `InternalTopologyBuilder` is requested to <<addStateStore, addStateStore>> and <<connectProcessorAndStateStores, connectProcessorAndStateStores>>
+
+=== [[connectStateStoreNameToSourceTopicsOrPattern]] `connectStateStoreNameToSourceTopicsOrPattern` Internal Method
+
+[source, scala]
+----
+void connectStateStoreNameToSourceTopicsOrPattern(
+  final String stateStoreName,
+  final ProcessorNodeFactory processorNodeFactory)
+----
+
+`connectStateStoreNameToSourceTopicsOrPattern`...FIXME
+
+NOTE: `connectStateStoreNameToSourceTopicsOrPattern` is used when...FIXME
