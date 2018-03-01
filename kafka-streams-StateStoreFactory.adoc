@@ -27,8 +27,27 @@ NOTE: `StateStoreFactory` is an internal interface of `InternalTopologyBuilder`.
 | Description
 
 | [[users]] `users`
-|
+| Names of the processors that are connected to a state store
+
+Used when `InternalTopologyBuilder` is requested to link:kafka-streams-InternalTopologyBuilder.adoc#connectProcessorAndStateStore[connect a state store with a processor node] and link:kafka-streams-InternalTopologyBuilder.adoc#topicGroups[topicGroups]
 
 | [[loggingEnabled]] `loggingEnabled`
+|
+|===
+
+[[implementations]]
+.StateStoreFactories
+[cols="1,2",options="header",width="100%"]
+|===
+| StateStoreFactory
+| Description
+
+| [[AbstractStateStoreFactory]] link:kafka-streams-AbstractStateStoreFactory.adoc[AbstractStateStoreFactory]
+|
+
+| [[StoreBuilderFactory]] link:kafka-streams-StoreBuilderFactory.adoc[StoreBuilderFactory]
+|
+
+| [[StateStoreSupplierFactory]] link:kafka-streams-StateStoreSupplierFactory.adoc[StateStoreSupplierFactory]
 |
 |===

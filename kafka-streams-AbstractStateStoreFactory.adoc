@@ -1,0 +1,34 @@
+== [[AbstractStateStoreFactory]] AbstractStateStoreFactory
+
+`AbstractStateStoreFactory` is an abstract link:kafka-streams-StateStoreFactory.adoc[StateStoreFactory] that...FIXME
+
+[[internal-registries]]
+[[users]]
+`AbstractStateStoreFactory` gives the `users` registry. A new processor name is added when `InternalTopologyBuilder` is requested to link:kafka-streams-InternalTopologyBuilder.adoc#connectProcessorAndStateStore[connect a state store with a processor node].
+
+`AbstractStateStoreFactory` is a Java abstract class and cannot be <<creating-instance, created>> directly. It is created indirectly when the <<implementations, concrete StateStoreFactories>> are.
+
+[[implementations]]
+.StateStoreFactories
+[cols="1,2",options="header",width="100%"]
+|===
+| StateStoreFactory
+| Description
+
+| [[StoreBuilderFactory]] link:kafka-streams-StoreBuilderFactory.adoc[StoreBuilderFactory]
+|
+
+| [[StateStoreSupplierFactory]] link:kafka-streams-StateStoreSupplierFactory.adoc[StateStoreSupplierFactory]
+|
+|===
+
+=== [[creating-instance]] Creating AbstractStateStoreFactory Instance
+
+`AbstractStateStoreFactory` takes the following when created:
+
+* [[name]] Name
+* [[loggingEnabled]] `loggingEnabled` flag
+* [[windowStore]] `windowStore` flag
+* [[logConfig]] `logConfig` as `Map<String, String>`
+
+`AbstractStateStoreFactory` initializes the <<internal-registries, internal registries and counters>>.
