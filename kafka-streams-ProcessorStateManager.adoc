@@ -4,6 +4,20 @@
 
 `ProcessorStateManager` is <<creating-instance, created>> exclusively when `AbstractTask` is link:kafka-streams-AbstractTask.adoc#creating-instance[created].
 
+[[STATE_CHANGELOG_TOPIC_SUFFIX]]
+`ProcessorStateManager` uses `-changelog` for the suffix of state changelog topic names.
+
+=== [[storeChangelogTopic]] `storeChangelogTopic` Method
+
+[source, java]
+----
+static String storeChangelogTopic(final String applicationId, final String storeName)
+----
+
+`storeChangelogTopic`...FIXME
+
+NOTE: `storeChangelogTopic` is used when...FIXME
+
 === [[checkpoint]] `checkpoint` Method
 
 [source, java]

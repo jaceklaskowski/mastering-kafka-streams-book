@@ -10,12 +10,36 @@ image::images/kafka-streams-InternalTopologyBuilder-Topology.png[align="center"]
 [[creating-instance]]
 When created, `InternalTopologyBuilder` simply initializes the <<internal-registries, internal registries and counters>>.
 
+[[applicationId]]
+`InternalTopologyBuilder` can have an *application id* that can be set using `setApplicationId` (and is really link:kafka-streams-properties.adoc#application.id[application.id] that `KafkaStreams` sets when link:kafka-streams-KafkaStreams.adoc#creating-instance[created]).
+
+[[setApplicationId]]
+[source, java]
+----
+synchronized final InternalTopologyBuilder setApplicationId(final String applicationId)
+----
+
+`InternalTopologyBuilder` uses the application id when:
+
+* <<buildProcessorNode, buildProcessorNode>> and <<topicGroups, topicGroups>> for the names of changelog topics (when a `StateStoreFactory` has link:kafka-streams-StateStoreFactory.adoc#loggingEnabled[logging enabled])
+
+* <<decorateTopic, decorateTopic>> to prefix internal topic names with the application id
+
 [[internal-registries]]
 .InternalTopologyBuilder's Internal Properties (e.g. Registries, Counters and Flags)
 [cols="1,2",options="header",width="100%"]
 |===
 | Name
 | Description
+
+| [[copartitionSourceGroups]] `copartitionSourceGroups`
+|
+
+| [[earliestResetPatterns]] `earliestResetPatterns`
+|
+
+| [[earliestResetTopics]] `earliestResetTopics`
+|
 
 | [[globalStateStores]] `globalStateStores`
 a| link:kafka-streams-StateStore.adoc[StateStores] by name
@@ -30,9 +54,15 @@ a| Names of global topics
 * Used when `InternalTopologyBuilder` <<isGlobalSource, isGlobalSource>>
 
 | [[internalTopicNames]] `internalTopicNames`
-a| Names of...FIXME
+a| Names of topics...FIXME
 
 * New element is added when `InternalTopologyBuilder` is requested to <<addInternalTopic, addInternalTopic>>
+
+| [[latestResetPatterns]] `latestResetPatterns`
+|
+
+| [[latestResetTopics]] `latestResetTopics`
+|
 
 | [[nodeFactories]] `nodeFactories`
 | Collection of named link:kafka-streams-NodeFactory.adoc[NodeFactories]
@@ -40,9 +70,18 @@ a| Names of...FIXME
 Used when...FIXME
 
 | [[nodeGrouper]] `nodeGrouper`
-| Names of...FIXME
+| `QuickUnion` of node names
 
 Used when...FIXME
+
+| [[nodeGroups]] `nodeGroups`
+|
+
+| [[nodeToSinkTopic]] `nodeToSinkTopic`
+|
+
+| [[nodeToSourcePatterns]] `nodeToSourcePatterns`
+|
 
 | [[nodeToSourceTopics]] `nodeToSourceTopics`
 | Names of source nodes and their topics
@@ -54,15 +93,32 @@ Used when...FIXME
 
 Used when...FIXME
 
+| [[stateFactories]] `stateFactories`
+| link:kafka-streams-StateStoreFactory.adoc[StateStoreFactories] by name
+
+Used when...FIXME
+
+| [[stateStoreNameToSourceRegex]] `stateStoreNameToSourceRegex`
+|
+
+| [[stateStoreNameToSourceTopics]] `stateStoreNameToSourceTopics`
+|
+
 | [[storeToChangelogTopic]] `storeToChangelogTopic`
 a| Topic names by the names of state stores
 
 * A new entry is added when `InternalTopologyBuilder` is requested to <<buildProcessorNode, buildProcessorNode>> and <<connectSourceStoreAndTopic, associate the names of a state store and a topic>>
 
+| [[subscriptionUpdates]] `subscriptionUpdates`
+|
+
 | [[topicPattern]] `topicPattern`
 a| Source topic pattern to subscribe to
 
 * Initialized the first time when `InternalTopologyBuilder` is requested for the <<sourceTopicPattern, source topic pattern>>
+
+| [[topicToPatterns]] `topicToPatterns`
+|
 |===
 
 [[logging]]
@@ -78,6 +134,95 @@ log4j.logger.org.apache.kafka.streams.processor.internals.InternalTopologyBuilde
 
 Refer to link:kafka-logging.adoc#log4j.properties[Application Logging Using log4j].
 ====
+
+=== [[decorateTopic]] `decorateTopic` Internal Method
+
+[source, java]
+----
+String decorateTopic(final String topic)
+----
+
+`decorateTopic`...FIXME
+
+[NOTE]
+====
+`decorateTopic` is used when:
+
+* `InternalTopologyBuilder` <<buildSinkNode, buildSinkNode>>, <<buildSourceNode, buildSourceNode>>, <<maybeDecorateInternalSourceTopics, maybeDecorateInternalSourceTopics>>, <<topicGroups, topicGroups>>
+
+* `SinkNodeFactory` is requested to link:kafka-streams-SinkNodeFactory.adoc#build[build a sink node]
+====
+
+=== [[buildSinkNode]] `buildSinkNode` Internal Method
+
+[source, java]
+----
+void buildSinkNode(
+  final Map<String, ProcessorNode> processorMap,
+  final Map<String, SinkNode> topicSinkMap,
+  final Set<String> repartitionTopics,
+  final SinkNodeFactory sinkNodeFactory,
+  final SinkNode node)
+----
+
+`buildSinkNode`...FIXME
+
+NOTE: `buildSinkNode` is used exclusively when `InternalTopologyBuilder` is requested to <<build, build a processor task topology>>.
+
+=== [[maybeDecorateInternalSourceTopics]] `maybeDecorateInternalSourceTopics` Internal Method
+
+[source, java]
+----
+List<String> maybeDecorateInternalSourceTopics(final Collection<String> sourceTopics)
+----
+
+`maybeDecorateInternalSourceTopics`...FIXME
+
+[NOTE]
+====
+`maybeDecorateInternalSourceTopics` is used when:
+
+* `InternalTopologyBuilder` is requested to <<copartitionGroups, copartitionGroups>>, <<resetTopicsPattern, resetTopicsPattern>>, <<sourceTopicPattern, sourceTopicPattern>> and <<stateStoreNameToSourceTopics, stateStoreNameToSourceTopics>>
+
+* `SourceNodeFactory` is requested to link:kafka-streams-SourceNodeFactory.adoc#build[build a source node]
+====
+
+=== [[topicGroups]] `topicGroups` Method
+
+[source, java]
+----
+synchronized Map<Integer, TopicsInfo> topicGroups()
+----
+
+`topicGroups`...FIXME
+
+NOTE: `topicGroups` is used exclusively when `StreamsPartitionAssignor` is requested to link:kafka-streams-StreamPartitionAssignor.adoc#assign[assign]
+
+=== [[resetTopicsPattern]] `resetTopicsPattern` Internal Method
+
+[source, java]
+----
+Pattern resetTopicsPattern(
+  final Set<String> resetTopics,
+  final Set<Pattern> resetPatterns,
+  final Set<String> otherResetTopics,
+  final Set<Pattern> otherResetPatterns)
+----
+
+`resetTopicsPattern`...FIXME
+
+NOTE: `resetTopicsPattern` is used when...FIXME
+
+=== [[copartitionGroups]] `copartitionGroups` Method
+
+[source, java]
+----
+synchronized Collection<Set<String>> copartitionGroups()
+----
+
+`copartitionGroups`...FIXME
+
+NOTE: `copartitionGroups` is used when...FIXME
 
 === [[addProcessor]] `addProcessor` Method
 
@@ -236,8 +381,8 @@ NOTE: `nodeGroup` can be either <<globalNodeGroups, global node groups>> (aka _g
 `build` is used internally when:
 
 * `InternalTopologyBuilder` is requested to <<buildGlobalStateTopology, build a global processor task topology>>
-* `StandbyTaskCreator` is requested to link:kafka-streams-StandbyTaskCreator.adoc#createTask[create a StandbyTask for a topic group]
-* `TaskCreator` is requested to link:kafka-streams-TaskCreator.adoc#createTask[create a StreamTask for a topic group]
+* `StandbyTaskCreator` is requested to link:kafka-streams-StandbyTaskCreator.adoc#createTask[create a standby task for a topic group]
+* `TaskCreator` is requested to link:kafka-streams-TaskCreator.adoc#createTask[create a stream task for a topic group]
 ====
 
 === [[buildGlobalStateTopology]] Building Global Processor Task Topology -- `buildGlobalStateTopology` Method

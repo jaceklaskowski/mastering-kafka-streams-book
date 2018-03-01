@@ -1,0 +1,34 @@
+== [[StateStoreFactory]] StateStoreFactory
+
+`StateStoreFactory` is the <<contract, contract>> for...FIXME
+
+[[contract]]
+[source, java]
+----
+package org.apache.kafka.streams.processor.internals;
+
+interface StateStoreFactory {
+  Set<String> users();
+  boolean loggingEnabled();
+  StateStore build();
+  String name();
+  boolean isWindowStore();
+  Map<String, String> logConfig();
+  long retentionPeriod();
+}
+----
+
+NOTE: `StateStoreFactory` is an internal interface of `InternalTopologyBuilder`.
+
+.StateStoreFactory Contract
+[cols="1,2",options="header",width="100%"]
+|===
+| Method
+| Description
+
+| [[users]] `users`
+|
+
+| [[loggingEnabled]] `loggingEnabled`
+|
+|===

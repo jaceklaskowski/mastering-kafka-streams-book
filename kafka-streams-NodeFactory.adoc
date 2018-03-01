@@ -26,7 +26,9 @@ NOTE: `NodeFactory` is a `private` and `static` contract in link:kafka-streams-I
 | Description
 
 | [[build]] `build`
-| Used exclusively when `InternalTopologyBuilder` is requested to link:kafka-streams-InternalTopologyBuilder.adoc#build[build a topology of processor tasks] (aka *processor topology*) for specified node groups.
+| Building a link:kafka-streams-ProcessorNode.adoc[processor node]
+
+Used exclusively when `InternalTopologyBuilder` is requested to link:kafka-streams-InternalTopologyBuilder.adoc#build[build a topology of processor tasks] (aka *processor topology*) for specified node groups.
 
 | [[describe]] `describe`
 | Used when...
