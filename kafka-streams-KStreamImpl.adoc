@@ -29,6 +29,22 @@
 
 NOTE: `doStreamTableJoin` is used when...FIXME
 
+=== [[doJoin]] `doJoin` Internal Method
+
+[source, java]
+----
+<V1, R> KStream<K, R> doJoin(
+  final KStream<K, V1> other,
+  final ValueJoiner<? super V, ? super V1, ? extends R> joiner,
+  final JoinWindows windows,
+  final Joined<K, V, V1> joined,
+  final KStreamImplJoin join)
+----
+
+`doJoin`...FIXME
+
+NOTE: `doJoin` is used when...FIXME
+
 === [[transformValues]] Transforming Values with State -- `transformValues` Method
 
 [source, java]

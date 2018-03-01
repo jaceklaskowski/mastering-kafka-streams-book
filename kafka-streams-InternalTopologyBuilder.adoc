@@ -187,17 +187,6 @@ List<String> maybeDecorateInternalSourceTopics(final Collection<String> sourceTo
 * `SourceNodeFactory` is requested to link:kafka-streams-SourceNodeFactory.adoc#build[build a source node]
 ====
 
-=== [[topicGroups]] `topicGroups` Method
-
-[source, java]
-----
-synchronized Map<Integer, TopicsInfo> topicGroups()
-----
-
-`topicGroups`...FIXME
-
-NOTE: `topicGroups` is used exclusively when `StreamsPartitionAssignor` is requested to link:kafka-streams-StreamPartitionAssignor.adoc#assign[assign]
-
 === [[resetTopicsPattern]] `resetTopicsPattern` Internal Method
 
 [source, java]
@@ -383,23 +372,6 @@ NOTE: `nodeGroup` can be either <<globalNodeGroups, global node groups>> (aka _g
 * `InternalTopologyBuilder` is requested to <<buildGlobalStateTopology, build a global processor task topology>>
 * `StandbyTaskCreator` is requested to link:kafka-streams-StandbyTaskCreator.adoc#createTask[create a standby task for a topic group]
 * `TaskCreator` is requested to link:kafka-streams-TaskCreator.adoc#createTask[create a stream task for a topic group]
-====
-
-=== [[buildGlobalStateTopology]] Building Global Processor Task Topology -- `buildGlobalStateTopology` Method
-
-[source, java]
-----
-synchronized ProcessorTopology buildGlobalStateTopology()
-----
-
-`buildGlobalStateTopology`...FIXME
-
-[NOTE]
-====
-`buildGlobalStateTopology` is used when:
-
-* `KafkaStreams` is link:kafka-streams-KafkaStreams.adoc#creating-instance[created]
-* `ProcessorTopology` is requested to `buildGlobalStateTopology`
 ====
 
 === [[sourceTopicPattern]] Getting Source Topic Pattern -- `sourceTopicPattern` Method
@@ -649,3 +621,74 @@ void addStateStore(
 
 * `KTableImpl` is requested to link:kafka-streams-KTableImpl.adoc#doFilter[doFilter], link:kafka-streams-KTableImpl.adoc#doJoin[doJoin] and link:kafka-streams-KTableImpl.adoc#mapValues[mapValues]
 ====
+
+=== [[topicGroups]] `topicGroups` Method
+
+[source, java]
+----
+synchronized Map<Integer, TopicsInfo> topicGroups()
+----
+
+`topicGroups`...FIXME
+
+NOTE: `topicGroups` is used exclusively when `StreamsPartitionAssignor` is requested to link:kafka-streams-StreamPartitionAssignor.adoc#assign[assign]
+
+=== [[describe]] `describe` Method
+
+[source, java]
+----
+TopologyDescription describe()
+----
+
+`describe`...FIXME
+
+NOTE: `describe` is used when...FIXME
+
+=== [[makeNodeGroups]] `makeNodeGroups` Internal Method
+
+[source, java]
+----
+Map<Integer, Set<String>> makeNodeGroups()
+----
+
+`makeNodeGroups`...FIXME
+
+NOTE: `makeNodeGroups` is used when `InternalTopologyBuilder` is requested to <<describe, describe>>, <<nodeGroups-accessor, nodeGroups>>
+
+=== [[nodeGroups-accessor]] `nodeGroups` Accessor Method
+
+[source, java]
+----
+synchronized Map<Integer, Set<String>> nodeGroups()
+----
+
+`nodeGroups`...FIXME
+
+[NOTE]
+====
+`nodeGroups` is used when `InternalTopologyBuilder` is requested to <<build, build a topology of processor tasks>>, <<globalNodeGroups, globalNodeGroups>>, <<topicGroups, topicGroups>>
+====
+
+=== [[globalNodeGroups]] `globalNodeGroups` Internal Method
+
+[source, java]
+----
+Set<String> globalNodeGroups()
+----
+
+`globalNodeGroups`...FIXME
+
+NOTE: `globalNodeGroups` is used when `InternalTopologyBuilder` is requested to build a <<build, processor task topology>> and <<buildGlobalStateTopology, global processor task topology>>.
+
+=== [[buildGlobalStateTopology]] Building Global Processor Task Topology -- `buildGlobalStateTopology` Method
+
+[source, java]
+----
+synchronized ProcessorTopology buildGlobalStateTopology()
+----
+
+`buildGlobalStateTopology` <<globalNodeGroups, globalNodeGroups>> and <<build, build>> with the global node groups.
+
+`buildGlobalStateTopology` returns `null` if <<globalNodeGroups, globalNodeGroups>> is empty.
+
+NOTE: `buildGlobalStateTopology` is used exclusively when `KafkaStreams` is link:kafka-streams-KafkaStreams.adoc#creating-instance[created].

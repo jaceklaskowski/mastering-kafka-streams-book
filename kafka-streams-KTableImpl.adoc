@@ -24,22 +24,62 @@ NOTE: `mapValues` is part of link:kafka-streams-KTable.adoc#mapValues[KTable Con
 
 NOTE: `mapValues` is used when...FIXME
 
-=== [[buildJoin]] `buildJoin` Internal Method
+=== [[join]] `join` Method
 
 [source, java]
 ----
-<V1, R> KTable<K, R> buildJoin(
-  final AbstractStream<K> other,
-  final ValueJoiner<? super V, ? super V1, ? extends R> joiner,
-  final boolean leftOuter,
-  final boolean rightOuter,
-  final String joinMergeName,
-  final String internalQueryableName)
+<V1, R> KTable<K, R> join(
+  final KTable<K, V1> other,
+  final ValueJoiner<? super V, ? super V1, ? extends R> joiner)
+<VO, VR> KTable<K, VR> join(
+  final KTable<K, VO> other,
+  final ValueJoiner<? super V, ? super VO, ? extends VR> joiner,
+  final Materialized<K, VR, KeyValueStore<Bytes, byte[]>> materialized)
 ----
 
-`buildJoin`...FIXME
+NOTE: `join` is part of link:kafka-streams-KTable.adoc#join[KTable Contract] to...FIXME.
 
-NOTE: `buildJoin` is used when...FIXME
+`join`...FIXME
+
+NOTE: `join` is used when...FIXME
+
+=== [[leftJoin]] `leftJoin` Method
+
+[source, java]
+----
+<V1, R> KTable<K, R> leftJoin(
+  final KTable<K, V1> other,
+  final ValueJoiner<? super V, ? super V1, ? extends R> joiner)
+<VO, VR> KTable<K, VR> leftJoin(
+  final KTable<K, VO> other,
+  final ValueJoiner<? super V, ? super VO, ? extends VR> joiner,
+  final Materialized<K, VR, KeyValueStore<Bytes, byte[]>> materialized)
+----
+
+NOTE: `leftJoin` is part of link:kafka-streams-KTable.adoc#leftJoin[KTable Contract] to...FIXME.
+
+`leftJoin`...FIXME
+
+NOTE: `leftJoin` is used when...FIXME
+
+=== [[outerJoin]] `outerJoin` Method
+
+[source, java]
+----
+<V1, R> KTable<K, R> outerJoin(
+  final KTable<K, V1> other,
+  final ValueJoiner<? super V, ? super V1, ? extends R> joiner)
+<VO, VR> KTable<K, VR> outerJoin(
+  final KTable<K, VO> other,
+  final ValueJoiner<? super V, ? super VO, ? extends VR> joiner,
+  final Materialized<K, VR, KeyValueStore<Bytes, byte[]>> materialized)
+----
+
+NOTE: `outerJoin` is part of link:kafka-streams-KTable.adoc#outerJoin[KTable Contract] to...FIXME.
+
+`outerJoin`...FIXME
+
+NOTE: `outerJoin` is used when...FIXME
 
 === [[doFilter]] `doFilter` Internal Method
 
@@ -55,6 +95,25 @@ KTable<K, V> doFilter(
 
 NOTE: `doFilter` is used when...FIXME
 
+=== [[buildJoin]] `buildJoin` Internal Method
+
+[source, java]
+----
+<V1, R> KTable<K, R> buildJoin(
+  final AbstractStream<K> other,
+  final ValueJoiner<? super V, ? super V1, ? extends R> joiner,
+  final boolean leftOuter,
+  final boolean rightOuter,
+  final String joinMergeName,
+  final String internalQueryableName)
+----
+
+`buildJoin` link:kafka-streams-AbstractStream.adoc#ensureJoinableWith[ensureJoinableWith] the `other` stream.
+
+`buildJoin`...FIXME
+
+NOTE: `buildJoin` is used exclusively when `KTableImpl` is requested to <<doJoin, doJoin>>.
+
 === [[doJoin]] `doJoin` Internal Method
 
 [source, java]
@@ -69,4 +128,4 @@ NOTE: `doFilter` is used when...FIXME
 
 `doJoin`...FIXME
 
-NOTE: `doJoin` is used when...FIXME
+NOTE: `doJoin` is used when `KTableImpl` is requested to <<join, join>>, <<leftJoin, leftJoin>> and <<outerJoin, outerJoin>>.

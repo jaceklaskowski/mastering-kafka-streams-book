@@ -4,7 +4,7 @@
 
 `StandbyTaskCreator` is <<creating-instance, created>> exclusively when `StreamThread` is link:kafka-streams-StreamThread.adoc#create[created] (and only to create a link:kafka-streams-TaskManager.adoc#taskCreator[TaskManager]).
 
-=== [[createTask]] Creating Standby Tasks -- `createTask` Factory Method
+=== [[createTask]] Creating Standby Task -- `createTask` Factory Method
 
 [source, java]
 ----

@@ -104,3 +104,21 @@ toInternalValueTransformerSupplier(final ValueTransformerWithKeySupplier<K, V, V
 `toInternalValueTransformerSupplier` reports an `NullPointerException` when `ValueTransformerSupplier` or `ValueTransformerWithKeySupplier` are `null`.
 
 NOTE: `toInternalValueTransformerSupplier` is used exclusively when `KStreamImpl` is requested for link:kafka-streams-KStreamImpl.adoc#transformValues[transforming values with state].
+
+=== [[ensureJoinableWith]] `ensureJoinableWith` Method
+
+[source, java]
+----
+Set<String> ensureJoinableWith(final AbstractStream<K> other)
+----
+
+`ensureJoinableWith`...FIXME
+
+[NOTE]
+====
+`ensureJoinableWith` is used when:
+
+* `KStreamImpl` is requested to link:kafka-streams-KStreamImpl.adoc#doJoin[doJoin] and link:kafka-streams-KStreamImpl.adoc#doStreamTableJoin[doStreamTableJoin]
+
+* `KTableImpl` is requested to link:kafka-streams-KTableImpl.adoc#buildJoin[buildJoin]
+====
