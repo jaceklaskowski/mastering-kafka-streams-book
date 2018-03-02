@@ -42,8 +42,11 @@ a| *New tasks* by their ids
 
 * Tasks are removed when `AssignedTasks` is requested to <<initializeNewTasks, initializeNewTasks>>, <<suspend, suspend>> or <<clear, clear>>
 
+| [[previousActiveTasks]] `previousActiveTasks`
+|
+
 | [[restoring]] `restoring`
-a| FIXME
+|
 
 | [[running]] `running`
 a| Running tasks by their ids
@@ -108,17 +111,6 @@ RuntimeException suspendTasks(final Collection<T> tasks)
 `suspendTasks`...FIXME
 
 NOTE: `suspendTasks` is used when...FIXME
-
-=== [[suspend]] Suspending All Active Tasks -- `suspend` Method
-
-[source, java]
-----
-RuntimeException suspend()
-----
-
-`suspend`...FIXME
-
-NOTE: `suspend` is used when...FIXME
 
 === [[hasRunningTasks]] Checking If There Is At Least One Running Task -- `hasRunningTasks` Method
 
@@ -355,3 +347,45 @@ Set<TopicPartition> uninitializedPartitions()
 NOTE: `uninitializedPartitions` gives an empty set of partitions if <<created, created>> is empty, i.e. has no tasks registered.
 
 NOTE: `uninitializedPartitions` is used exclusively when `TaskManager` is requested to link:kafka-streams-TaskManager.adoc#createTasks[create processor tasks for assigned topic partitions].
+
+=== [[closeNonRunningTasks]] `closeNonRunningTasks` Internal Method
+
+[source, java]
+----
+RuntimeException closeNonRunningTasks(final Collection<T> tasks)
+----
+
+`closeNonRunningTasks`...FIXME
+
+NOTE: `closeNonRunningTasks` is used when...FIXME
+
+=== [[suspend]] Suspending All Active Tasks -- `suspend` Method
+
+[source, java]
+----
+RuntimeException suspend()
+----
+
+`suspend` prints out the following TRACE message to the logs and <<suspendTasks, suspendTasks>> (from <<running, running>>).
+
+```
+Suspending running [taskTypeName] [runningTaskIds]
+```
+
+`suspend` prints out the following TRACE message to the logs and <<closeNonRunningTasks, closeNonRunningTasks>> (from <<restoring, restoring>>).
+
+```
+Close restoring [taskTypeName] [restoring]
+```
+
+`suspend` prints out the following TRACE message to the logs and <<closeNonRunningTasks, closeNonRunningTasks>> (from <<created, created>>).
+
+```
+Close created [taskTypeName] [created]
+```
+
+`suspend` removes all task ids from <<previousActiveTasks, previousActiveTasks>> and adds the task ids from <<running, running>>.
+
+In the end, `suspend` removes all entries from <<running, running>>, <<restoring, restoring>>, <<created, created>>, <<runningByPartition, runningByPartition>> and <<restoringByPartition, restoringByPartition>>.
+
+NOTE: `suspend` is used exclusively when `TaskManager` is requested to link:kafka-streams-TaskManager.adoc#suspendTasksAndState[suspend all active and standby stream tasks and state].
