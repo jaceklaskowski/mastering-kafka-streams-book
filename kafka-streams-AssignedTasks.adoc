@@ -348,17 +348,6 @@ NOTE: `uninitializedPartitions` gives an empty set of partitions if <<created, c
 
 NOTE: `uninitializedPartitions` is used exclusively when `TaskManager` is requested to link:kafka-streams-TaskManager.adoc#createTasks[create processor tasks for assigned topic partitions].
 
-=== [[closeNonRunningTasks]] `closeNonRunningTasks` Internal Method
-
-[source, java]
-----
-RuntimeException closeNonRunningTasks(final Collection<T> tasks)
-----
-
-`closeNonRunningTasks`...FIXME
-
-NOTE: `closeNonRunningTasks` is used when...FIXME
-
 === [[suspend]] Suspending All Active Tasks -- `suspend` Method
 
 [source, java]
@@ -389,3 +378,20 @@ Close created [taskTypeName] [created]
 In the end, `suspend` removes all entries from <<running, running>>, <<restoring, restoring>>, <<created, created>>, <<runningByPartition, runningByPartition>> and <<restoringByPartition, restoringByPartition>>.
 
 NOTE: `suspend` is used exclusively when `TaskManager` is requested to link:kafka-streams-TaskManager.adoc#suspendTasksAndState[suspend all active and standby stream tasks and state].
+
+=== [[closeNonRunningTasks]] `closeNonRunningTasks` Internal Method
+
+[source, java]
+----
+RuntimeException closeNonRunningTasks(final Collection<T> tasks)
+----
+
+`closeNonRunningTasks` link:kafka-streams-Task.adoc#close[closes] every task in the given `tasks` one by one (with `clean` and `isZombie` flags off).
+
+In case of a `RuntimeException`, `closeNonRunningTasks` prints out the following ERROR to the logs followed by the exception.
+
+```
+Failed to close [taskTypeName], [id]"
+```
+
+NOTE: `closeNonRunningTasks` is used exclusively when `AssignedTasks` is requested to <<suspend, suspend all active tasks>> (and the input tasks are <<restoring, restoring>> and <<created, created>>).
