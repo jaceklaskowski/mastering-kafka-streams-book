@@ -24,6 +24,9 @@ interface InternalProcessorContext extends ProcessorContext {
 | Method
 | Description
 
+| [[initialized]] `initialized`
+|
+
 | [[setRecordContext]] `setRecordContext`
-| Used when...FIXME
+|
 |===

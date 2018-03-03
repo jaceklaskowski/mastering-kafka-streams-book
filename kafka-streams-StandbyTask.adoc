@@ -65,3 +65,14 @@ With the input `clean` flag on, `close` <<commit, commit>> followed by link:kafk
 `close` returns immediately if the `StandbyTask` has not been link:kafka-streams-AbstractTask.adoc#taskInitialized[initialized] yet, i.e. when `StandbyTask` has not been requested to link:kafka-streams-StandbyTask.adoc#initializeStateStores[initializeStateStores] yet.
 
 NOTE: The input `isZombie` flag is ignored (and therefore never used) as `StandbyTask` can never be a zombie.
+
+=== [[initializeTopology]] `initializeTopology` Method
+
+[source, java]
+----
+void initializeTopology()
+----
+
+NOTE: `initializeTopology` is part of link:kafka-streams-Task.adoc#initializeTopology[Task Contract] to...FIXME.
+
+`initializeTopology` does nothing (and is simply a _noop_).

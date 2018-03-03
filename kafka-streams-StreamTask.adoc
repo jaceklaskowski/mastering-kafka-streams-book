@@ -27,17 +27,6 @@ log4j.logger.org.apache.kafka.streams.processor.internals.StreamTask=TRACE
 Refer to link:kafka-logging.adoc#log4j.properties[Application Logging Using log4j].
 ====
 
-=== [[initializeTopology]] `initializeTopology` Method
-
-[source, java]
-----
-void initializeTopology()
-----
-
-NOTE: `initializeTopology` is part of link:kafka-streams-Task.adoc#initializeTopology[Task Contract] to...FIXME.
-
-`initializeTopology`...FIXME
-
 === [[closeTopology]] `closeTopology` Internal Method
 
 [source, java]
@@ -105,3 +94,25 @@ int addRecords(
 `addRecords`...FIXME
 
 NOTE: `addRecords` is used exclusively when `StreamThread` is requested to link:kafka-streams-StreamThread.adoc#addRecordsToTasks[addRecordsToTasks].
+
+=== [[initTopology]] `initTopology` Internal Method
+
+[source, java]
+----
+void initTopology()
+----
+
+`initTopology`...FIXME
+
+NOTE: `initTopology` is used when...FIXME
+
+=== [[initializeTopology]] `initializeTopology` Method
+
+[source, java]
+----
+void initializeTopology()
+----
+
+NOTE: `initializeTopology` is part of link:kafka-streams-Task.adoc#initializeTopology[Task Contract] to...FIXME.
+
+`initializeTopology` <<initTopology, initTopology>>. It then requests link:kafka-streams-AbstractTask.adoc#processorContext[InternalProcessorContext] to link:kafka-streams-InternalProcessorContext.adoc#initialized[initialized] and in the end sets link:kafka-streams-AbstractTask.adoc#taskInitialized[taskInitialized] to `true`.
