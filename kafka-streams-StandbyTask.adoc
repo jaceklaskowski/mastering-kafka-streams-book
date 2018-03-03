@@ -1,3 +1,67 @@
 == [[StandbyTask]] StandbyTask
 
-`StandbyTask` is a concrete link:kafka-streams-AbstractTask.adoc[stream processor task] that...FIXME
+`StandbyTask` is a concrete link:kafka-streams-AbstractTask.adoc[processor task] that...FIXME
+
+[[logging]]
+[TIP]
+====
+Enable `DEBUG` logging level for `org.apache.kafka.streams.processor.internals.StandbyTask` logger to see what happens inside.
+
+Add the following line to `log4j.properties`:
+
+```
+log4j.logger.org.apache.kafka.streams.processor.internals.StandbyTask=DEBUG
+```
+
+Refer to link:kafka-logging.adoc#log4j.properties[Application Logging Using log4j].
+====
+
+=== [[closeSuspended]] `closeSuspended` Method
+
+[source, java]
+----
+void closeSuspended(
+  final boolean clean,
+  final boolean isZombie,
+  final RuntimeException e)
+----
+
+NOTE: `closeSuspended` is part of link:kafka-streams-Task.adoc#closeSuspended[Task Contract] to...FIXME.
+
+`closeSuspended`...FIXME
+
+=== [[initializeStateStores]] `initializeStateStores` Method
+
+[source, java]
+----
+boolean initializeStateStores()
+----
+
+NOTE: `initializeStateStores` is part of link:kafka-streams-Task.adoc#initializeStateStores[Task Contract] to...FIXME.
+
+`initializeStateStores`...FIXME
+
+=== [[close]] Closing Standby Task -- `close` Method
+
+[source, java]
+----
+void close(
+  final boolean clean,
+  final boolean isZombie)
+----
+
+NOTE: `close` is part of link:kafka-streams-Task.adoc#close[Task Contract] to...FIXME.
+
+`close` prints out the following DEBUG message to the logs:
+
+```
+Closing
+```
+
+With the input `clean` flag on, `close` <<commit, commit>> followed by link:kafka-streams-AbstractTask.adoc#closeStateManager[closeStateManager] (with `writeCheckpoint` flag on when `clean` was on and <<commit, commit>> was successful).
+
+`close` marks the `StandbyTask` as closed (i.e. sets link:kafka-streams-AbstractTask.adoc#taskClosed[taskClosed] to `true`).
+
+`close` returns immediately if the `StandbyTask` has not been link:kafka-streams-AbstractTask.adoc#taskInitialized[initialized] yet, i.e. when `StandbyTask` has not been requested to link:kafka-streams-StandbyTask.adoc#initializeStateStores[initializeStateStores] yet.
+
+NOTE: The input `isZombie` flag is ignored (and therefore never used) as `StandbyTask` can never be a zombie.

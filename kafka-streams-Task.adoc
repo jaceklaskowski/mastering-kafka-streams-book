@@ -49,6 +49,25 @@ public interface Task {
 | [[changelogPartitions]] `changelogPartitions`
 | Used when...
 
+| [[close]] `close`
+a|
+
+Used when:
+
+* `AssignedTasks` is requested to do the following:
+
+** link:kafka-streams-AssignedTasks.adoc#close[close]
+
+** link:kafka-streams-AssignedTasks.adoc#closeNonRunningTasks[closeNonRunningTasks]
+
+** link:kafka-streams-AssignedTasks.adoc#closeUnclean[closeUnclean]
+
+** link:kafka-streams-AssignedTasks.adoc#closeZombieTask[closeZombieTask]
+
+** link:kafka-streams-AssignedTasks.adoc#suspendTasks[suspendTasks] (and suspending a task has failed)
+
+* `StandbyTask` is requested to link:kafka-streams-StandbyTask.adoc#closeSuspended[closeSuspended]
+
 | [[closeSuspended]] `closeSuspended`
 | Used when...
 
@@ -79,18 +98,4 @@ Implemented exclusively in link:kafka-streams-AbstractTask.adoc#hasStateStores[A
 
 | [[toString]] `toString`
 | Used when...
-|===
-
-[[implementations]]
-.Concrete Stream Processor Tasks
-[cols="1,2",options="header",width="100%"]
-|===
-| Task
-| Description
-
-| link:kafka-streams-StreamTask.adoc[StreamTask]
-|
-
-| link:kafka-streams-StandbyTask.adoc[StandbyTask]
-|
 |===

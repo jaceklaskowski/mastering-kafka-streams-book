@@ -27,6 +27,41 @@ log4j.logger.org.apache.kafka.streams.processor.internals.StreamTask=TRACE
 Refer to link:kafka-logging.adoc#log4j.properties[Application Logging Using log4j].
 ====
 
+=== [[initializeTopology]] `initializeTopology` Method
+
+[source, java]
+----
+void initializeTopology()
+----
+
+NOTE: `initializeTopology` is part of link:kafka-streams-Task.adoc#initializeTopology[Task Contract] to...FIXME.
+
+`initializeTopology`...FIXME
+
+=== [[closeTopology]] `closeTopology` Internal Method
+
+[source, java]
+----
+void closeTopology()
+----
+
+`closeTopology`...FIXME
+
+NOTE: `process` is used when...FIXME
+
+=== [[close]] `close` Method
+
+[source, java]
+----
+void close(
+  final boolean clean,
+  final boolean isZombie)
+----
+
+NOTE: `close` is part of link:kafka-streams-Task.adoc#close[Task Contract] to...FIXME.
+
+`close`...FIXME
+
 === [[process]] Processing Single Record -- `process` Method
 
 [source, java]

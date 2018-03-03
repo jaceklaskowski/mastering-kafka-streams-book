@@ -9,6 +9,40 @@ NOTE: The number of `threads` is controlled using link:kafka-streams-properties.
 [[eosEnabled]]
 `AbstractTask` uses link:kafka-streams-properties.adoc#processing.guarantee[processing.guarantee] configuration property to enable link:kafka-streams-exactly-once-support-eos.adoc[Exactly-Once Support] for...FIXME
 
+[[taskInitialized]]
+`AbstractTask` has `taskInitialized` flag that is on (i.e. `true`) to mark when:
+
+* `StandbyTask` has finished link:kafka-streams-StandbyTask.adoc#initializeStateStores[initializeStateStores] successfully
+
+* `StreamTask` has finished link:kafka-streams-StreamTask.adoc#initializeTopology[initializeTopology]
+
+The `taskInitialized` flag is used by the <<implementations, concrete AbstractTasks>> as an optimization when:
+
+* `StandbyTask` is requested to link:kafka-streams-StandbyTask.adoc#close[close]
+
+* `StreamTask` is requested to link:kafka-streams-StreamTask.adoc#closeTopology[closeTopology]
+
+[[taskClosed]]
+`AbstractTask` has `taskClosed` flag that is on (i.e. `true`) to mark when:
+
+* `StandbyTask` was requested to link:kafka-streams-StandbyTask.adoc#close[close]
+
+* `StreamTask` was requested to link:kafka-streams-StreamTask.adoc#close[close]
+
+[[implementations]]
+.Concrete AbstractTasks
+[cols="1,2",options="header",width="100%"]
+|===
+| Task
+| Description
+
+| link:kafka-streams-StreamTask.adoc[StreamTask]
+|
+
+| link:kafka-streams-StandbyTask.adoc[StandbyTask]
+|
+|===
+
 === [[closeStateManager]] `closeStateManager` Method
 
 [source, java]
