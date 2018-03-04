@@ -2,6 +2,22 @@
 
 `KGroupedTableImpl` is...FIXME
 
+=== [[buildAggregate]] `buildAggregate` Internal Method
+
+[source, java]
+----
+void buildAggregate(
+  final ProcessorSupplier<K, Change<V>> aggregateSupplier,
+  final String topic,
+  final String funcName,
+  final String sourceName,
+  final String sinkName)
+----
+
+`buildAggregate`...FIXME
+
+NOTE: `buildAggregate` is used when...FIXME
+
 === [[doAggregate]] `doAggregate` Internal Method
 
 [source, java]

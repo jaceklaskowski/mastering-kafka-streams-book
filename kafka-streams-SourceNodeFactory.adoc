@@ -2,7 +2,9 @@
 
 `SourceNodeFactory` is a link:kafka-streams-NodeFactory.adoc[NodeFactory] that has no link:kafka-streams-NodeFactory.adoc#predecessors[predecessors].
 
-`SourceNodeFactory` is <<creating-instance, created>> when...FIXME
+`SourceNodeFactory` is <<creating-instance, created>> when `InternalTopologyBuilder` is requested to register a link:kafka-streams-InternalTopologyBuilder.adoc#addGlobalStore[global state store] or link:kafka-streams-InternalTopologyBuilder.adoc#addSource[source topic].
+
+NOTE: `SourceNodeFactory` is an internal `private` class of link:kafka-streams-InternalTopologyBuilder.adoc[InternalTopologyBuilder].
 
 === [[build]] Building SourceNode -- `build` Method
 
@@ -25,5 +27,3 @@ NOTE: `build` is part of link:kafka-streams-NodeFactory.adoc#build[NodeFactory C
 * [[timestampExtractor]] `TimestampExtractor`
 * [[keyDeserializer]] Key deserializer
 * [[valDeserializer]] Value deserializer
-
-`SourceNodeFactory` initializes the <<internal-registries, internal registries and counters>>.

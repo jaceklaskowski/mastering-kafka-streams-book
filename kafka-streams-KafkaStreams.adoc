@@ -31,8 +31,8 @@ ks.start()
 | Name
 | Description
 
-| [[globalStreamThread]] `globalStreamThread`
-a| link:kafka-streams-GlobalStreamThread.adoc[GlobalStreamThread]
+| `globalStreamThread`
+a| [[globalStreamThread]] link:kafka-streams-GlobalStreamThread.adoc[GlobalStreamThread]
 
 * Initialized exclusively when <<internalTopologyBuilder, InternalTopologyBuilder>> could link:kafka-streams-InternalTopologyBuilder.adoc#buildGlobalStateTopology[build a global ProcessorTopology]
 
