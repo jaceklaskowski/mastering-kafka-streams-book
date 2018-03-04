@@ -655,30 +655,18 @@ Map<Integer, Set<String>> makeNodeGroups()
 
 NOTE: `makeNodeGroups` is used when `InternalTopologyBuilder` is requested to <<describe, describe>>, <<nodeGroups-accessor, nodeGroups>>
 
-=== [[nodeGroups-accessor]] `nodeGroups` Accessor Method
+=== [[nodeGroups-accessor]] Node Groups by ID -- `nodeGroups` Accessor Method
 
 [source, java]
 ----
 synchronized Map<Integer, Set<String>> nodeGroups()
 ----
 
-`nodeGroups`...FIXME
+`nodeGroups` gives <<nodeGroups, nodes by id>>.
 
-[NOTE]
-====
-`nodeGroups` is used when `InternalTopologyBuilder` is requested to <<build, build a topology of processor tasks>>, <<globalNodeGroups, globalNodeGroups>>, <<topicGroups, topicGroups>>
-====
+If <<nodeGroups, nodeGroups>> is empty, `nodeGroups` <<makeNodeGroups, makeNodeGroups>> that become the current <<nodeGroups, nodeGroups>>.
 
-=== [[globalNodeGroups]] `globalNodeGroups` Internal Method
-
-[source, java]
-----
-Set<String> globalNodeGroups()
-----
-
-`globalNodeGroups`...FIXME
-
-NOTE: `globalNodeGroups` is used when `InternalTopologyBuilder` is requested to build a <<build, processor task topology>> and <<buildGlobalStateTopology, global processor task topology>>.
+NOTE: `nodeGroups` is used when `InternalTopologyBuilder` is requested to <<build, build a topology of processor tasks>>, <<globalNodeGroups, globalNodeGroups>>, <<topicGroups, topicGroups>>
 
 === [[buildGlobalStateTopology]] Building Global Processor Task Topology -- `buildGlobalStateTopology` Method
 
@@ -687,8 +675,54 @@ NOTE: `globalNodeGroups` is used when `InternalTopologyBuilder` is requested to 
 synchronized ProcessorTopology buildGlobalStateTopology()
 ----
 
-`buildGlobalStateTopology` <<globalNodeGroups, globalNodeGroups>> and <<build, build>> with the global node groups.
+`buildGlobalStateTopology` <<globalNodeGroups, globalNodeGroups>> and <<build, builds a topology>> with the global node groups.
 
 `buildGlobalStateTopology` returns `null` if <<globalNodeGroups, globalNodeGroups>> is empty.
 
-NOTE: `buildGlobalStateTopology` is used exclusively when `KafkaStreams` is link:kafka-streams-KafkaStreams.adoc#creating-instance[created].
+NOTE: `buildGlobalStateTopology` is used exclusively when `KafkaStreams` is link:kafka-streams-KafkaStreams.adoc#globalStreamThread[created].
+
+=== [[globalNodeGroups]] `globalNodeGroups` Internal Method
+
+[source, java]
+----
+Set<String> globalNodeGroups()
+----
+
+`globalNodeGroups` takes <<nodeGroups-accessor, node groups>> and <<isGlobalSource, filters out non-global node groups>>.
+
+NOTE: `globalNodeGroups` gives node groups with at least one global node group.
+
+NOTE: `globalNodeGroups` is used when `InternalTopologyBuilder` is requested to build a <<build, processor task topology>> and <<buildGlobalStateTopology, global processor task topology>>.
+
+=== [[isGlobalSource]] `isGlobalSource` Internal Method
+
+[source, java]
+----
+boolean isGlobalSource(final String nodeName)
+----
+
+`isGlobalSource`...FIXME
+
+NOTE: `isGlobalSource` is used when `InternalTopologyBuilder` is requested to <<describeGlobalStore, describeGlobalStore>>, <<globalNodeGroups, globalNodeGroups>> and <<nodeGroupContainsGlobalSourceNode, nodeGroupContainsGlobalSourceNode>>.
+
+=== [[describeGlobalStore]] `describeGlobalStore` Internal Method
+
+[source, java]
+----
+void describeGlobalStore(final TopologyDescription description, final Set<String> nodes, int id)
+----
+
+`describeGlobalStore`...FIXME
+
+NOTE: `describeGlobalStore` is used exclusively when `InternalTopologyBuilder` is requested to <<describe, describe>>.
+
+=== [[nodeGroupContainsGlobalSourceNode]] `nodeGroupContainsGlobalSourceNode` Internal Method
+
+[source, java]
+----
+void nodeGroupContainsGlobalSourceNode(final TopologyDescription description, final Set<String> nodes, int id)
+----
+
+`nodeGroupContainsGlobalSourceNode`...FIXME
+
+NOTE: `nodeGroupContainsGlobalSourceNode` is used exclusively when `InternalTopologyBuilder` is requested to <<describe, describe>>.

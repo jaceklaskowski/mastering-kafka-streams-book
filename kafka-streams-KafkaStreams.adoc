@@ -32,7 +32,13 @@ ks.start()
 | Description
 
 | [[globalStreamThread]] `globalStreamThread`
-| link:kafka-streams-GlobalStreamThread.adoc[GlobalStreamThread]
+a| link:kafka-streams-GlobalStreamThread.adoc[GlobalStreamThread]
+
+* Initialized exclusively when <<internalTopologyBuilder, InternalTopologyBuilder>> could link:kafka-streams-InternalTopologyBuilder.adoc#buildGlobalStateTopology[build a global ProcessorTopology]
+
+* Started when `KafkaStreams` is being <<start, started>>
+
+* Set to `null` while `KafkaStreams` is being <<close, closed>>
 
 | [[adminClient]] `adminClient`
 a| Administrative client for Kafka, i.e. https://kafka.apache.org/10/javadoc/org/apache/kafka/clients/admin/AdminClient.html[AdminClient], that supports managing and inspecting topics, brokers, configurations and ACLs.
@@ -43,6 +49,9 @@ a| Administrative client for Kafka, i.e. https://kafka.apache.org/10/javadoc/org
 
 | [[stateDirectory]] `stateDirectory`
 | link:kafka-streams-StateDirectory.adoc[StateDirectory]
+
+| [[stateLock]] `stateLock`
+| Object lock for...FIXME
 
 | [[threads]] `threads`
 a| Collection of link:kafka-streams-StreamThread.adoc[StreamThread] stream processor threads
@@ -95,42 +104,6 @@ boolean isRunning()
 `isRunning`...FIXME
 
 NOTE: `isRunning` is used when...FIXME
-
-=== [[start]] Starting KafkaStreams -- `start` Method
-
-[source, java]
-----
-public synchronized void start()
-  throws IllegalStateException, StreamsException
-----
-
-`start` starts the <<topology, Topology>> that starts consuming, processing, and producing records.
-
-Internally, `start` prints out the following DEBUG message to the logs:
-
-```
-Starting Streams client
-```
-
-`start` <<setRunningFromCreated, sets state to running>> (and notifies link:kafka-streams-StateListener.adoc[StateListeners]).
-
-`start` starts <<globalStreamThread, global stream thread>> if defined (which is when...FIXME)
-
-`start` starts <<threads, stream threads>>.
-
-`start` schedules a thread that requests <<stateDirectory, StateDirectory>> to link:kafka-streams-StateDirectory.adoc#cleanRemovedTasks[cleanRemovedTasks] every link:kafka-streams-properties.adoc#state.cleanup.delay.ms[state.cleanup.delay.ms] milliseconds.
-
-You should see the following DEBUG message in the logs:
-
-```
-Started Streams client
-```
-
-In case the <<setRunningFromCreated, changing state to running>> fails, `start` merely prints out the following ERROR message to the logs:
-
-```
-Already stopped, cannot re-start
-```
 
 === [[close]] Closing KafkaStreams -- `close` Method
 
@@ -225,3 +198,39 @@ String toString(final String indent)
 NOTE: `toString` with an indent is *deprecated* and should not be used. Use <<localThreadsMetadata, localThreadsMetadata>> instead.
 
 `toString`...FIXME
+
+=== [[start]] Starting KafkaStreams -- `start` Method
+
+[source, java]
+----
+synchronized void start()
+throws IllegalStateException, StreamsException
+----
+
+`start` starts the <<topology, Topology>> (that in turn starts consuming, processing, and producing records).
+
+Internally, `start` prints out the following DEBUG message to the logs:
+
+```
+Starting Streams client
+```
+
+`start` <<setRunningFromCreated, marks KafkaStreams as running>> (i.e. transitions from CREATED to RUNNING state and notifies link:kafka-streams-StateListener.adoc[StateListeners]).
+
+`start` starts <<globalStreamThread, global stream thread>> if defined (which is when...FIXME)
+
+`start` starts <<threads, stream threads>>.
+
+`start` schedules a thread that requests <<stateDirectory, StateDirectory>> to link:kafka-streams-StateDirectory.adoc#cleanRemovedTasks[cleanRemovedTasks] every link:kafka-streams-properties.adoc#state.cleanup.delay.ms[state.cleanup.delay.ms] milliseconds.
+
+You should see the following DEBUG message in the logs:
+
+```
+Started Streams client
+```
+
+In case the <<setRunningFromCreated, changing state to running>> fails, `start` merely prints out the following ERROR message to the logs:
+
+```
+Already stopped, cannot re-start
+```
