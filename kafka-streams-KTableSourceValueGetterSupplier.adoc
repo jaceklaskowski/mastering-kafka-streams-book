@@ -1,0 +1,9 @@
+== [[KTableSourceValueGetterSupplier]] KTableSourceValueGetterSupplier
+
+`KTableSourceValueGetterSupplier` is a link:kafka-streams-KTableValueGetterSupplier.adoc[KTableValueGetterSupplier] that...FIXME
+
+`KTableSourceValueGetterSupplier` is <<creating-instance, created>> when...FIXME
+
+[[storeName]]
+[[creating-instance]]
+`KTableSourceValueGetterSupplier` takes the store name when created.

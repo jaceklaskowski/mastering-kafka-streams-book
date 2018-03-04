@@ -85,20 +85,6 @@ KTable<K, V> createKTable(
 
 NOTE: `createKTable` is used exclusively when `InternalStreamsBuilder` is requested to <<table, create a KTable for a topic>>.
 
-=== [[globalTable]] `globalTable` Method
-
-[source, java]
-----
-<K, V> GlobalKTable<K, V> globalTable(
-  final String topic,
-  final ConsumedInternal<K, V> consumed,
-  final MaterializedInternal<K, V, KeyValueStore<Bytes, byte[]>> materialized)
-----
-
-`globalTable`...FIXME
-
-NOTE: `globalTable` is used when...FIXME
-
 === [[addGlobalStore]] `addGlobalStore` Method
 
 [source, java]
@@ -120,3 +106,31 @@ synchronized void addGlobalStore(
 `addGlobalStore`...FIXME
 
 NOTE: `addGlobalStore` is used when...FIXME
+
+=== [[globalTable]] Creating GlobalKTable -- `globalTable` Method
+
+[source, java]
+----
+<K, V> GlobalKTable<K, V> globalTable(
+  final String topic,
+  final ConsumedInternal<K, V> consumed,
+  final MaterializedInternal<K, V, KeyValueStore<Bytes, byte[]>> materialized)
+----
+
+`globalTable` creates a link:kafka-streams-GlobalKTableImpl.adoc#creating-instance[GlobalKTableImpl] per the inputs.
+
+Internally, `globalTable` requests `MaterializedInternal` to link:kafka-streams-Materialized.adoc#withLoggingDisabled[withLoggingDisabled].
+
+`globalTable` then creates a link:kafka-streams-KeyValueStoreMaterializer.adoc#creating-instance[KeyValueStoreMaterializer] (with the input `materialized`) and requests to link:kafka-streams-KeyValueStoreMaterializer.adoc#materialize[materialize] (i.e. create a link:kafka-streams-StoreBuilder.adoc[StoreBuilder]).
+
+`globalTable` creates a link:kafka-streams-KTableSource.adoc#creating-instance[KTableSource] (with the link:kafka-streams-StoreBuilder.adoc#name[name] of `StoreBuilder`).
+
+`globalTable` requests <<internalTopologyBuilder, InternalTopologyBuilder>> to link:kafka-streams-InternalTopologyBuilder.adoc#addGlobalStore[register a global state store] (with the source and processor names starting with `KSTREAM-SOURCE-` prefix).
+
+`globalTable` creates a link:kafka-streams-GlobalKTableImpl.adoc#creating-instance[GlobalKTableImpl] with the following:
+
+* link:kafka-streams-KTableSourceValueGetterSupplier.adoc#creating-instance[KTableSourceValueGetterSupplier] with the link:kafka-streams-StoreBuilder.adoc#name[name] of `StoreBuilder`
+
+* link:kafka-streams-GlobalKTableImpl.adoc#queryable[queryable] flag being link:kafka-streams-MaterializedInternal.adoc#queryable[that] of the input `MaterializedInternal`
+
+NOTE: `globalTable` is used exclusively when `StreamsBuilder` is requested to link:kafka-streams-StreamsBuilder.adoc#globalTable[create a GlobalKTable].

@@ -33,6 +33,41 @@ KTable<K, V> table(
 
 `table`...FIXME
 
+=== [[globalTable]] Creating GlobalKTable -- `globalTable` Method
+
+[source, java]
+----
+synchronized <K, V> GlobalKTable<K, V> globalTable(final String topic)
+synchronized <K, V> GlobalKTable<K, V> globalTable(
+  final String topic,
+  final Consumed<K, V> consumed)
+synchronized <K, V> GlobalKTable<K, V> globalTable(
+  final String topic,
+  final Consumed<K, V> consumed,
+  final Materialized<K, V, KeyValueStore<Bytes, byte[]>> materialized)
+synchronized <K, V> GlobalKTable<K, V> globalTable(
+  final String topic,
+  final Materialized<K, V, KeyValueStore<Bytes, byte[]>> materialized)
+----
+
+`globalTable`...FIXME
+
+[source, scala]
+----
+import org.apache.kafka.streams.StreamsBuilder
+val builder = new StreamsBuilder
+val globalTable = builder.globalTable[String, String]("global-table")
+val topology = builder.build
+scala> println(topology.describe)
+Topologies:
+   Sub-topology: 0 for global store (will not generate tasks)
+    Source: KSTREAM-SOURCE-0000000001 (topics: global-table)
+      --> KTABLE-SOURCE-0000000002
+    Processor: KTABLE-SOURCE-0000000002 (stores: [global-table-STATE-STORE-0000000000])
+      --> none
+      <-- KSTREAM-SOURCE-0000000001
+----
+
 === [[addGlobalStore]] `addGlobalStore` Method
 
 [source, java]

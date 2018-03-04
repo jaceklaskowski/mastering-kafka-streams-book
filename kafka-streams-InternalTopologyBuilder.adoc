@@ -46,8 +46,8 @@ a| link:kafka-streams-StateStore.adoc[StateStores] by name
 
 * A new global link:kafka-streams-StateStore.adoc[StateStore] is added exclusively when `InternalTopologyBuilder` <<addGlobalStore, addGlobalStore>>
 
-| [[globalTopics]] `globalTopics`
-a| Names of global topics
+| `globalTopics`
+a| [[globalTopics]] Names of global topics
 
 * A new name is added when `InternalTopologyBuilder` <<addGlobalStore, addGlobalStore>>
 
@@ -477,7 +477,7 @@ The private `addGlobalStore` creates a link:kafka-streams-ProcessorNodeFactory.a
 
 1. Adds the `sourceName` to <<nodeGrouper, QuickUnion>>
 
-1. link:kafka-streams-ProcessorNodeFactory.adoc#addStateStore[Adds] the `name` (of a state store) to the `ProcessorNodeFactory`
+1. Requests `ProcessorNodeFactory` to link:kafka-streams-ProcessorNodeFactory.adoc#addStateStore[add a state store] as `name`
 
 1. Associates the `processorName` with `nodeFactory` in <<nodeFactories, nodeFactories>>
 
@@ -726,15 +726,15 @@ NOTE: `nodeGroupContainsGlobalSourceNode` is used exclusively when `InternalTopo
 boolean isGlobalSource(final String nodeName)
 ----
 
-`isGlobalSource` takes the `NodeFactory` for the given `nodeName` (from <<nodeFactories, nodeFactories>>).
+`isGlobalSource` takes the link:kafka-streams-NodeFactory.adoc[NodeFactory] for the given `nodeName` (from <<nodeFactories, nodeFactories>> registry).
 
-`isGlobalSource` is positive (i.e. `true`) when all the following hold:
+`isGlobalSource` is positive (i.e. `true`) when the following conditions are all met:
 
 * `nodeName` is a link:kafka-streams-SourceNodeFactory.adoc[SourceNodeFactory]
 
-* `SourceNodeFactory` has exactly one topic in link:kafka-streams-SourceNodeFactory.adoc#topics[topics]
+* `SourceNodeFactory` has exactly one topic (in link:kafka-streams-SourceNodeFactory.adoc#topics[topics])
 
-* The topic is among <<globalTopics, globalTopics>>.
+* The topic is among <<globalTopics, globalTopics>>
 
 Otherwise, `isGlobalSource` is negative (i.e. `false`).
 

@@ -1,0 +1,6 @@
+== [[MaterializedInternal]] MaterializedInternal
+
+`MaterializedInternal` is a link:kafka-streams-Materialized.adoc[Materialized] with link:kafka-streams-StateStore.adoc[StateStore] that...FIXME
+
+[[queryable]]
+`MaterializedInternal` can be *queryable* which is...FIXME

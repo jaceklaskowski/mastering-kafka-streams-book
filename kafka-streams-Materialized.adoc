@@ -1,0 +1,14 @@
+== [[Materialized]] Materialized
+
+`Materialized` is...FIXME
+
+=== [[withLoggingDisabled]] `withLoggingDisabled` Method
+
+[source, java]
+----
+Materialized<K, V, S> withLoggingDisabled()
+----
+
+`withLoggingDisabled`...FIXME
+
+NOTE: `withLoggingDisabled` is used when...FIXME

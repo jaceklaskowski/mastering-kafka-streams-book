@@ -1,3 +1,29 @@
 == [[StoreBuilder]] StoreBuilder
 
-`StoreBuilder` is...FIXME
+`StoreBuilder` is a <<contract, contract>> for services that can <<build, build a StateStore>>.
+
+[[contract]]
+[source, java]
+----
+package org.apache.kafka.streams.state;
+
+interface StoreBuilder<T extends StateStore> {
+  StoreBuilder<T> withCachingEnabled();
+  StoreBuilder<T> withLoggingEnabled(final Map<String, String> config);
+  StoreBuilder<T> withLoggingDisabled();
+  T build();
+  Map<String, String> logConfig();
+  boolean loggingEnabled();
+  String name();
+}
+----
+
+.StoreBuilder Contract
+[cols="1,2",options="header",width="100%"]
+|===
+| Method
+| Description
+
+| [[name]] `name`
+|
+|===

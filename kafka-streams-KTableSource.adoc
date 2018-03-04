@@ -1,0 +1,9 @@
+== [[KTableSource]] KTableSource
+
+`KTableSource` is a link:kafka-streams-ProcessorSupplier.adoc[ProcessorSupplier] that...FIXME
+
+`KTableSource` is <<creating-instance, created>> when...FIXME
+
+[[storeName]]
+[[creating-instance]]
+`KTableSource` takes the store name when created.

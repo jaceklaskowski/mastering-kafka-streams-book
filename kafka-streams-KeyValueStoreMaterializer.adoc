@@ -1,0 +1,20 @@
+== [[KeyValueStoreMaterializer]] KeyValueStoreMaterializer
+
+`KeyValueStoreMaterializer` is...FIXME
+
+`KeyValueStoreMaterializer` is <<creating-instance, created>> when...FIXME
+
+[[materialized]]
+[[creating-instance]]
+`KeyValueStoreMaterializer` takes a `MaterializedInternal<K, V, KeyValueStore<Bytes, byte[]>>`.
+
+=== [[materialize]] `materialize` Method
+
+[source, java]
+----
+StoreBuilder<KeyValueStore<K, V>> materialize()
+----
+
+`materialize`...FIXME
+
+NOTE: `materialize` is used when...FIXME
