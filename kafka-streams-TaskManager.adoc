@@ -108,17 +108,6 @@ void suspendTasksAndState()
 
 NOTE: `suspendTasksAndState` is used exclusively when `RebalanceListener` handles link:kafka-streams-StreamThread-RebalanceListener.adoc#onPartitionsAssigned[onPartitionsAssigned].
 
-=== [[maybeCommitActiveTasks]] `maybeCommitActiveTasks` Method
-
-[source, java]
-----
-int maybeCommitActiveTasks()
-----
-
-`maybeCommitActiveTasks`...FIXME
-
-NOTE: `maybeCommitActiveTasks` is used exclusively when `StreamThread` is requested to link:kafka-streams-StreamThread.adoc#processAndMaybeCommit[processAndMaybeCommit].
-
 === [[updateNewAndRestoringTasks]] `updateNewAndRestoringTasks` Method
 
 [source, java]
@@ -335,3 +324,14 @@ int process()
 `process` simply requests <<active, AssignedStreamsTasks>> to link:kafka-streams-AssignedStreamsTasks.adoc#process[process].
 
 NOTE: `process` is used exclusively when `StreamThread` is requested to link:kafka-streams-StreamThread.adoc#processAndMaybeCommit[processAndMaybeCommit].
+
+=== [[maybeCommitActiveTasks]] `maybeCommitActiveTasks` Method
+
+[source, java]
+----
+int maybeCommitActiveTasks()
+----
+
+`maybeCommitActiveTasks` simply requests <<active, AssignedStreamsTasks>> to link:kafka-streams-AssignedStreamsTasks.adoc#maybeCommit[maybeCommit].
+
+NOTE: `maybeCommitActiveTasks` is used exclusively when `StreamThread` is requested to link:kafka-streams-StreamThread.adoc#processAndMaybeCommit[processAndMaybeCommit].

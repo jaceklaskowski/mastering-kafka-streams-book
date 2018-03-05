@@ -71,6 +71,9 @@ Used when:
 | [[closeSuspended]] `closeSuspended`
 | Used when...
 
+| [[commit]] `commit`
+|
+
 | [[hasStateStores]] `hasStateStores`
 a|
 

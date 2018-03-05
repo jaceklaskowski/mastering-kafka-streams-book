@@ -4,6 +4,30 @@
 
 It _appears_ that `AssignedStreamsTasks` simply operates on the running tasks (i.e. the tasks that are in link:kafka-streams-AssignedTasks.adoc#running[running] internal registry). When requested to <<process, process>> or <<punctuate, punctuate>> `AssignedStreamsTasks` simply walks over the `running` internal registry and triggers execution of every task.
 
+[[maybeCommitAction]]
+`AssignedStreamsTasks` uses a `TaskAction<StreamTask>` called *maybeCommit* that is used in <<maybeCommit, maybeCommit>>. The task action takes a link:kafka-streams-StreamTask.adoc[stream task] and checks if the task link:kafka-streams-StreamTask.adoc#commitNeeded[needs a commit]. If so, the action does the following:
+
+1. Increments <<committed, committed>> counter
+
+1. Requests the stream task to link:kafka-streams-StreamTask.adoc#commit[commit]
+
+1. Prints out the following DEBUG message to the logs:
++
+```
+Committed active task [id] per user request in
+```
+
+[[internal-registries]]
+.AssignedStreamsTasks's Internal Properties (e.g. Registries, Counters and Flags)
+[cols="1,2",options="header",width="100%"]
+|===
+| Name
+| Description
+
+| [[committed]] `committed`
+| Number of...FIXME
+|===
+
 [[logging]]
 [TIP]
 ====
@@ -63,3 +87,16 @@ Failed to process stream task [id] due to the following error:
 ```
 
 `process` re-throws the `RuntimeException`.
+
+=== [[maybeCommit]] `maybeCommit` Method
+
+[source, java]
+----
+int maybeCommit()
+----
+
+`maybeCommit` gives...FIXME
+
+`maybeCommit` sets <<committed, committed>> to 0 and link:kafka-streams-AssignedTasks.adoc#applyToRunningTasks[executes] the <<maybeCommitAction, maybeCommitAction>> task action.
+
+NOTE: `maybeCommit` is used exclusively when `TaskManager` is requested to link:kafka-streams-TaskManager.adoc#maybeCommitActiveTasks[maybeCommitActiveTasks].

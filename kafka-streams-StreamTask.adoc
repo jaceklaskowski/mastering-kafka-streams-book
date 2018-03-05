@@ -2,6 +2,11 @@
 
 `StreamTask` is a concrete link:kafka-streams-AbstractTask.adoc[stream processor task] that uses a <<partitionGroup, PartitionGroup>> for...FIXME
 
+[[commitNeeded]]
+[[commitRequested]]
+[[needCommit]]
+`StreamTask` may need a commit, i.e....FIXME
+
 [[internal-registries]]
 .StreamTask's Internal Properties (e.g. Registries, Counters and Flags)
 [cols="1,2",options="header",width="100%"]
@@ -36,7 +41,18 @@ void closeTopology()
 
 `closeTopology`...FIXME
 
-NOTE: `process` is used when...FIXME
+NOTE: `closeTopology` is used when...FIXME
+
+=== [[commit]] `commit` Method
+
+[source, java]
+----
+void commit()
+----
+
+NOTE: `commit` is part of link:kafka-streams-Task.adoc#commit[Task Contract] to...FIXME.
+
+`commit`...FIXME
 
 === [[close]] `close` Method
 

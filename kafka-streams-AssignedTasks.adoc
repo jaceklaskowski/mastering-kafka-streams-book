@@ -79,6 +79,17 @@ void close(final boolean clean)
 
 NOTE: `close` is used when...FIXME
 
+=== [[applyToRunningTasks]] Executing Task Action -- `applyToRunningTasks` Method
+
+[source, java]
+----
+void applyToRunningTasks(final TaskAction<T> action)
+----
+
+`applyToRunningTasks`...FIXME
+
+NOTE: `applyToRunningTasks` is used when...FIXME
+
 === [[closeZombieTask]] Closing Zombie Task -- `closeZombieTask` Method
 
 [source, java]
