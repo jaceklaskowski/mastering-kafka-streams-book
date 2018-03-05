@@ -79,17 +79,6 @@ void close(final boolean clean)
 
 NOTE: `close` is used when...FIXME
 
-=== [[applyToRunningTasks]] Executing Task Action -- `applyToRunningTasks` Method
-
-[source, java]
-----
-void applyToRunningTasks(final TaskAction<T> action)
-----
-
-`applyToRunningTasks`...FIXME
-
-NOTE: `applyToRunningTasks` is used when...FIXME
-
 === [[closeZombieTask]] Closing Zombie Task -- `closeZombieTask` Method
 
 [source, java]
@@ -406,3 +395,43 @@ Failed to close [taskTypeName], [id]"
 ```
 
 NOTE: `closeNonRunningTasks` is used exclusively when `AssignedTasks` is requested to <<suspend, suspend all active tasks>> (and the input tasks are <<restoring, restoring>> and <<created, created>>).
+
+=== [[applyToRunningTasks]] Executing Task Action with Every Running Task  -- `applyToRunningTasks` Method
+
+[source, java]
+----
+void applyToRunningTasks(final TaskAction<T> action)
+----
+
+`applyToRunningTasks` applies the input `action` to every <<running, running>> task.
+
+`applyToRunningTasks` throws the first `RuntimeException` if thrown.
+
+[NOTE]
+====
+`applyToRunningTasks` is used when:
+
+* `AssignedStreamsTasks` is requested to link:kafka-streams-AssignedStreamsTasks.adoc#maybeCommit[maybeCommit]
+
+* `AssignedTasks` is requested to <<commit, commit>>
+====
+
+==== [[applyToRunningTasks-TaskMigratedException]] `applyToRunningTasks` and TaskMigratedException
+
+In case of a `TaskMigratedException`, `applyToRunningTasks` prints out the following INFO message to the logs:
+
+```
+Failed to commit [taskTypeName] [taskId] since it got migrated to another thread already. Closing it as zombie before triggering a new rebalance.
+```
+
+`applyToRunningTasks` <<closeZombieTask, closeZombieTask>>. If it gives a `RuntimeException`, `applyToRunningTasks` re-throws it. Otherwise, `applyToRunningTasks` removes the task (from the iterator but what about <<running, running>>?) and re-throws the initial `TaskMigratedException`.
+
+==== [[applyToRunningTasks-RuntimeException]] `applyToRunningTasks` and RuntimeException
+
+In case of a `RuntimeException`, `applyToRunningTasks` prints out the following ERROR message to the logs followed by the exception.
+
+```
+Failed to [actionName] [taskTypeName] [taskId] due to the following error:
+```
+
+`applyToRunningTasks` records the `RuntimeException` for a later re-throwing.

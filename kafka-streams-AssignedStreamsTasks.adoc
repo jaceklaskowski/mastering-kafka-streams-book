@@ -88,15 +88,15 @@ Failed to process stream task [id] due to the following error:
 
 `process` re-throws the `RuntimeException`.
 
-=== [[maybeCommit]] `maybeCommit` Method
+=== [[maybeCommit]] Committing Running Stream Tasks that Requested It -- `maybeCommit` Method
 
 [source, java]
 ----
 int maybeCommit()
 ----
 
-`maybeCommit` gives...FIXME
+`maybeCommit` resets <<committed, committed>> to 0 and link:kafka-streams-AssignedTasks.adoc#applyToRunningTasks[executes] the <<maybeCommitAction, maybeCommitAction>> task action (that modifies <<committed, committed>>).
 
-`maybeCommit` sets <<committed, committed>> to 0 and link:kafka-streams-AssignedTasks.adoc#applyToRunningTasks[executes] the <<maybeCommitAction, maybeCommitAction>> task action.
+In the end, `maybeCommit` gives the number of running stream tasks that link:kafka-streams-StreamTask.adoc#commitNeeded[needed a commit].
 
 NOTE: `maybeCommit` is used exclusively when `TaskManager` is requested to link:kafka-streams-TaskManager.adoc#maybeCommitActiveTasks[maybeCommitActiveTasks].
