@@ -59,17 +59,6 @@ log4j.logger.org.apache.kafka.streams.processor.internals.StreamThread=TRACE
 Refer to link:kafka-logging.adoc#log4j.properties[Application Logging Using log4j].
 ====
 
-=== [[processAndMaybeCommit]] `processAndMaybeCommit` Internal Method
-
-[source, java]
-----
-long processAndMaybeCommit(final long recordsProcessedBeforeCommit)
-----
-
-`processAndMaybeCommit`...FIXME
-
-NOTE: `processAndMaybeCommit` is used exclusively when `StreamThread` is requested for <<runOnce, polling records once>> (and there have been records to be processed).
-
 === [[pollRequests]] Polling for Records -- `pollRequests` Internal Method
 
 [source, java]
@@ -191,17 +180,6 @@ void maybeUpdateStandbyTasks(final long now)
 `maybeUpdateStandbyTasks`...FIXME
 
 NOTE: `maybeUpdateStandbyTasks` is used exclusively when `StreamThread` is requested to <<runOnce, consume records once>>.
-
-=== [[maybeCommit]] `maybeCommit` Method
-
-[source, java]
-----
-void maybeCommit(final long now)
-----
-
-`maybeCommit`...FIXME
-
-NOTE: `maybeCommit` is used when...FIXME
 
 === [[punctuate]] `punctuate` Internal Method
 
@@ -367,3 +345,27 @@ FIXME toString in action
 ----
 
 NOTE: `toString` is used when `KafkaStreams` is requested to link:kafka-streams-KafkaStreams.adoc#toString[describe itself].
+
+=== [[maybeCommit]] `maybeCommit` Method
+
+[source, java]
+----
+void maybeCommit(final long now)
+----
+
+`maybeCommit`...FIXME
+
+NOTE: `maybeCommit` is used when `StreamThread` is requested to <<processAndMaybeCommit, processAndMaybeCommit>> and <<runOnce, poll records once>>.
+
+=== [[processAndMaybeCommit]] `processAndMaybeCommit` Internal Method
+
+[source, java]
+----
+long processAndMaybeCommit(final long recordsProcessedBeforeCommit)
+----
+
+`processAndMaybeCommit` requests <<taskManager, TaskManager>> to link:kafka-streams-TaskManager.adoc#process[process].
+
+`processAndMaybeCommit`...FIXME
+
+NOTE: `processAndMaybeCommit` is used exclusively when `StreamThread` is requested to <<runOnce, poll records once>> (and there have been records to be processed).

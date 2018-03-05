@@ -60,7 +60,7 @@ boolean process()
 
 `process`...FIXME
 
-NOTE: `process` is used exclusively when `AssignedStreamsTasks` does link:kafka-streams-AssignedStreamsTasks.adoc#process[process].
+NOTE: `process` is used exclusively when `AssignedStreamsTasks` is requested to link:kafka-streams-AssignedStreamsTasks.adoc#process[process].
 
 === [[creating-instance]] Creating StreamTask Instance
 

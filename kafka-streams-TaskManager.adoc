@@ -1,8 +1,6 @@
 == [[TaskManager]] TaskManager
 
-`TaskManager` is...FIXME
-
-`TaskManager` is <<creating-instance, created>> exclusively when `StreamThread` is link:kafka-streams-StreamThread.adoc#create[created].
+`TaskManager` is <<creating-instance, created>> when `StreamThread` is link:kafka-streams-StreamThread.adoc#create[created].
 
 .TaskManager Being Created
 image::images/kafka-streams-TaskManager.png[align="center"]
@@ -52,17 +50,6 @@ log4j.logger.org.apache.kafka.streams.processor.internals.TaskManager=TRACE
 
 Refer to link:kafka-logging.adoc#log4j.properties[Application Logging Using log4j].
 ====
-
-=== [[maybePurgeCommitedRecords]] `maybePurgeCommitedRecords` Method
-
-[source, java]
-----
-void maybePurgeCommitedRecords()
-----
-
-`maybePurgeCommitedRecords`...FIXME
-
-NOTE: `maybePurgeCommitedRecords` is used exclusively when...FIXME
 
 === [[setPartitionsByHostState]] Notifying StreamsMetadataState about Cluster Metadata Changes -- `setPartitionsByHostState` Method
 
@@ -121,17 +108,6 @@ void suspendTasksAndState()
 
 NOTE: `suspendTasksAndState` is used exclusively when `RebalanceListener` handles link:kafka-streams-StreamThread-RebalanceListener.adoc#onPartitionsAssigned[onPartitionsAssigned].
 
-=== [[process]] `process` Method
-
-[source, java]
-----
-int process()
-----
-
-`process`...FIXME
-
-NOTE: `process` is used exclusively when `StreamThread` is requested to link:kafka-streams-StreamThread.adoc#processAndMaybeCommit[processAndMaybeCommit].
-
 === [[maybeCommitActiveTasks]] `maybeCommitActiveTasks` Method
 
 [source, java]
@@ -169,16 +145,16 @@ NOTE: `activeTask` is used exclusively when `StreamThread` is requested to link:
 
 `TaskManager` takes the following when created:
 
-* [[changelogReader]] `ChangelogReader`
+* [[changelogReader]] link:kafka-streams-ChangelogReader.adoc[ChangelogReader]
 * [[processId]] `UUID`
 * [[logPrefix]] `logPrefix`
 * [[restoreConsumer]] Kafka https://kafka.apache.org/10/javadoc/org/apache/kafka/clients/consumer/KafkaConsumer.html[Consumer] (of keys and values as array of bytes)
-* [[streamsMetadataState]] `StreamsMetadataState`
+* [[streamsMetadataState]] link:kafka-streams-StreamsMetadataState.adoc[StreamsMetadataState]
 * [[taskCreator]] link:kafka-streams-TaskCreator.adoc[StreamThread.AbstractTaskCreator<StreamTask>]
 * [[standbyTaskCreator]] link:kafka-streams-StandbyTaskCreator.adoc[StreamThread.AbstractTaskCreator<StandbyTask>]
 * [[adminClient]] Kafka https://kafka.apache.org/10/javadoc/org/apache/kafka/clients/admin/AdminClient.html[AdminClient]
 * [[active]] link:kafka-streams-AssignedStreamsTasks.adoc[AssignedStreamsTasks]
-* [[standby]] `AssignedStandbyTasks`
+* [[standby]] link:kafka-streams-AssignedStandbyTasks.adoc[AssignedStandbyTasks]
 
 `TaskManager` initializes the <<internal-registries, internal registries and counters>>.
 
@@ -337,3 +313,25 @@ FIXME toString in action
 ----
 
 NOTE: `toString` is used exclusively when `StreamThread` is requested to link:kafka-streams-StreamThread.adoc#toString[describe itself].
+
+=== [[maybePurgeCommitedRecords]] `maybePurgeCommitedRecords` Method
+
+[source, java]
+----
+void maybePurgeCommitedRecords()
+----
+
+`maybePurgeCommitedRecords`...FIXME
+
+NOTE: `maybePurgeCommitedRecords` is used exclusively when `StreamThread` is requested to link:kafka-streams-StreamThread.adoc#maybeCommit[maybeCommit].
+
+=== [[process]] Requesting Active Stream Tasks to Process Single Record -- `process` Method
+
+[source, java]
+----
+int process()
+----
+
+`process` simply requests <<active, AssignedStreamsTasks>> to link:kafka-streams-AssignedStreamsTasks.adoc#process[process].
+
+NOTE: `process` is used exclusively when `StreamThread` is requested to link:kafka-streams-StreamThread.adoc#processAndMaybeCommit[processAndMaybeCommit].
