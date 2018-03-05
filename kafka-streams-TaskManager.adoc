@@ -325,7 +325,7 @@ void maybePurgeCommitedRecords()
 
 NOTE: `maybePurgeCommitedRecords` is used exclusively when `StreamThread` is requested to link:kafka-streams-StreamThread.adoc#maybeCommit[maybeCommit].
 
-=== [[process]] Requesting Active Stream Tasks to Process Single Record -- `process` Method
+=== [[process]] Processing Records by Active Stream Tasks -- `process` Method
 
 [source, java]
 ----

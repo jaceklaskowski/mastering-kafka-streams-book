@@ -1,0 +1,45 @@
+== [[StreamsMetricsThreadImpl]] StreamsMetricsThreadImpl
+
+`StreamsMetricsThreadImpl` is...FIXME
+
+`StreamsMetricsThreadImpl` is <<creating-instance, created>> when...FIXME
+
+[[internal-registries]]
+.StreamsMetricsThreadImpl's Internal Properties (e.g. Registries, Counters and Flags)
+[cols="1,2",options="header",width="100%"]
+|===
+| Name
+| Description
+
+| [[commitTimeSensor]] `commitTimeSensor`
+|
+
+| [[pollTimeSensor]] `pollTimeSensor`
+|
+
+| [[processTimeSensor]] `processTimeSensor`
+|
+
+| [[punctuateTimeSensor]] `punctuateTimeSensor`
+|
+
+| [[taskCreatedSensor]] `taskCreatedSensor`
+|
+
+| [[tasksClosedSensor]] `tasksClosedSensor`
+|
+
+| [[skippedRecordsSensor]] `skippedRecordsSensor`
+|
+|===
+
+=== [[creating-instance]] Creating StreamsMetricsThreadImpl Instance
+
+`StreamsMetricsThreadImpl` takes the following when created:
+
+* [[metrics]] `Metrics`
+* [[groupName]] `groupName`
+* [[prefix]] `prefix`
+* [[tags]] Tags (as `Map<String, String>`)
+
+`StreamsMetricsThreadImpl` initializes the <<internal-registries, internal registries and counters>>.

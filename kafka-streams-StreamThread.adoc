@@ -357,15 +357,39 @@ void maybeCommit(final long now)
 
 NOTE: `maybeCommit` is used when `StreamThread` is requested to <<processAndMaybeCommit, processAndMaybeCommit>> and <<runOnce, poll records once>>.
 
-=== [[processAndMaybeCommit]] `processAndMaybeCommit` Internal Method
+=== [[processAndMaybeCommit]] Processing Records (with Optional Commit) -- `processAndMaybeCommit` Internal Method
 
 [source, java]
 ----
 long processAndMaybeCommit(final long recordsProcessedBeforeCommit)
 ----
 
-`processAndMaybeCommit` requests <<taskManager, TaskManager>> to link:kafka-streams-TaskManager.adoc#process[process].
+`processAndMaybeCommit` repeats the following processing loop until the number of active stream tasks that processed records successfully is 0 (i.e. no record has been consumed and processed).
 
-`processAndMaybeCommit`...FIXME
+.StreamThread.processAndMaybeCommit, TaskManager and Sensors
+image::images/kafka-streams-StreamThread-processAndMaybeCommit.png[align="center"]
 
 NOTE: `processAndMaybeCommit` is used exclusively when `StreamThread` is requested to <<runOnce, poll records once>> (and there have been records to be processed).
+
+==== [[processAndMaybeCommit-processing-loop]] Processing Loop of `processAndMaybeCommit`
+
+`processAndMaybeCommit` requests <<taskManager, TaskManager>> to link:kafka-streams-TaskManager.adoc#process[process records] (by all active stream tasks).
+
+If the number of active stream tasks that processed records successfully is greater than 0, `processAndMaybeCommit` requests process time sensor to record processing time (as <<computeLatency, computeLatency>> by the number of stream tasks that processed records).
+
+NOTE: `processAndMaybeCommit` uses <<streamsMetrics, StreamsMetricsThreadImpl>> to access the link:kafka-streams-StreamsMetricsThreadImpl.adoc#processTimeSensor[process time sensor].
+
+`processAndMaybeCommit` increments the total number of processed records by the number of active stream tasks processed records.
+
+`processAndMaybeCommit` <<punctuate, punctuate>>.
+
+`processAndMaybeCommit` resets the total number of processed records followed by <<maybeCommit, maybeCommit>> when all the following conditions are met:
+
+1. The input `recordsProcessedBeforeCommit` is not `UNLIMITED_RECORDS`
+1. The total number of processed records is greater than the input `recordsProcessedBeforeCommit`
+
+`processAndMaybeCommit` requests <<taskManager, TaskManager>> to link:kafka-streams-TaskManager.adoc#maybeCommitActiveTasks[maybeCommitActiveTasks].
+
+If the number of active stream tasks that committed records is greater than 0, `processAndMaybeCommit` requests commit time sensor to record commit time (as <<computeLatency, computeLatency>> by the number of stream tasks that committed records).
+
+NOTE: `processAndMaybeCommit` uses <<streamsMetrics, StreamsMetricsThreadImpl>> to access the link:kafka-streams-StreamsMetricsThreadImpl.adoc#commitTimeSensor[commit time sensor].

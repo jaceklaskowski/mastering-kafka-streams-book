@@ -36,11 +36,11 @@ NOTE: `punctuate` is used when...FIXME
 int process()
 ----
 
-`process` gives the numbers of stream tasks that processed a single record successfully.
+`process` requests every stream task (from link:kafka-streams-AssignedTasks.adoc#running[running]) to link:kafka-streams-StreamTask.adoc#process[process a single record].
 
-Internally, `process` requests every stream task (in link:kafka-streams-AssignedTasks.adoc#running[running]) to link:kafka-streams-StreamTask.adoc#process[process a single record].
+In the end, `process` gives the number of stream tasks that processed a single record successfully.
 
-NOTE: `process` is used exclusively when `TaskManager` is requested to link:kafka-streams-TaskManager.adoc#process[process]...FIXME
+NOTE: `process` is used exclusively when `TaskManager` is requested to link:kafka-streams-TaskManager.adoc#process[process records].
 
 ==== [[process-TaskMigratedException]] process and TaskMigratedException
 

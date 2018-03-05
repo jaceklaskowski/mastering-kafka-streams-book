@@ -131,3 +131,4 @@
 . link:kafka-streams-ChangelogReader.adoc[ChangelogReader]
 . link:kafka-streams-AssignmentInfo.adoc[AssignmentInfo]
 . link:kafka-streams-StreamsMetadataState.adoc[StreamsMetadataState]
+. link:kafka-streams-StreamsMetricsThreadImpl.adoc[StreamsMetricsThreadImpl]
