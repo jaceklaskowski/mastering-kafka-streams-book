@@ -25,6 +25,9 @@ synchronized final InternalTopologyBuilder setApplicationId(final String applica
 
 * <<decorateTopic, decorateTopic>> to prefix internal topic names with the application id
 
+[[global-source-node]]
+*Global Source Node* is a node from a link:kafka-streams-SourceNodeFactory.adoc[SourceNodeFactory] with exactly one link:kafka-streams-SourceNodeFactory.adoc#topics[topic] and registered in <<globalTopics, globalTopics>>. You can use <<isGlobalSource, isGlobalSource>> to check if a name is of a global source node.
+
 [[internal-registries]]
 .InternalTopologyBuilder's Internal Properties (e.g. Registries, Counters and Flags)
 [cols="1,2",options="header",width="100%"]
@@ -75,7 +78,9 @@ a| link:kafka-streams-NodeFactory.adoc[NodeFactories] by node name
 Used when...FIXME
 
 | [[nodeGroups]] `nodeGroups`
-|
+a| Node groups by ID, i.e. groups of node names by the group ID
+
+* Initialized when `InternalTopologyBuilder` is requested for <<nodeGroups-accessor, node groups>> the very first time
 
 | [[nodeToSinkTopic]] `nodeToSinkTopic`
 |
@@ -647,17 +652,6 @@ TopologyDescription describe()
 
 NOTE: `describe` is used when...FIXME
 
-=== [[makeNodeGroups]] `makeNodeGroups` Internal Method
-
-[source, java]
-----
-Map<Integer, Set<String>> makeNodeGroups()
-----
-
-`makeNodeGroups`...FIXME
-
-NOTE: `makeNodeGroups` is used when `InternalTopologyBuilder` is requested to <<describe, describe>>, <<nodeGroups-accessor, nodeGroups>>
-
 === [[nodeGroups-accessor]] Node Groups by ID -- `nodeGroups` Accessor Method
 
 [source, java]
@@ -665,9 +659,9 @@ NOTE: `makeNodeGroups` is used when `InternalTopologyBuilder` is requested to <<
 synchronized Map<Integer, Set<String>> nodeGroups()
 ----
 
-`nodeGroups` gives <<nodeGroups, nodes by id>>.
+`nodeGroups` gives <<nodeGroups, node groups by id>>.
 
-If <<nodeGroups, nodeGroups>> is empty, `nodeGroups` <<makeNodeGroups, makeNodeGroups>> that become the current <<nodeGroups, nodeGroups>>.
+If <<nodeGroups, node groups by id>> has not been initialized yet, `nodeGroups` <<makeNodeGroups, makeNodeGroups>> that are the <<nodeGroups, node groups>> from now on.
 
 NOTE: `nodeGroups` is used when `InternalTopologyBuilder` is requested to <<build, build a topology of processor tasks>>, <<globalNodeGroups, globalNodeGroups>>, <<topicGroups, topicGroups>>
 
@@ -683,19 +677,6 @@ synchronized ProcessorTopology buildGlobalStateTopology()
 `buildGlobalStateTopology` returns `null` if <<globalNodeGroups, globalNodeGroups>> is empty.
 
 NOTE: `buildGlobalStateTopology` is used exclusively when `KafkaStreams` is link:kafka-streams-KafkaStreams.adoc#globalStreamThread[created].
-
-=== [[globalNodeGroups]] `globalNodeGroups` Internal Method
-
-[source, java]
-----
-Set<String> globalNodeGroups()
-----
-
-`globalNodeGroups` takes <<nodeGroups-accessor, node groups>> and <<isGlobalSource, filters out non-global node groups>> (that leaves global node groups only).
-
-NOTE: `globalNodeGroups` gives node groups with at least one global node group.
-
-NOTE: `globalNodeGroups` is used when `InternalTopologyBuilder` is requested to build a <<build, processor task topology>> and <<buildGlobalStateTopology, global processor task topology>>.
 
 === [[describeGlobalStore]] `describeGlobalStore` Internal Method
 
@@ -719,7 +700,7 @@ void nodeGroupContainsGlobalSourceNode(final TopologyDescription description, fi
 
 NOTE: `nodeGroupContainsGlobalSourceNode` is used exclusively when `InternalTopologyBuilder` is requested to <<describe, describe>>.
 
-=== [[isGlobalSource]] Checking If Node Name is of Global Source -- `isGlobalSource` Internal Method
+=== [[isGlobalSource]] Checking If Node Name Is Of Global Source Node -- `isGlobalSource` Internal Method
 
 [source, java]
 ----
@@ -728,14 +709,61 @@ boolean isGlobalSource(final String nodeName)
 
 `isGlobalSource` takes the link:kafka-streams-NodeFactory.adoc[NodeFactory] for the given `nodeName` (from <<nodeFactories, nodeFactories>> registry).
 
-`isGlobalSource` is positive (i.e. `true`) when the following conditions are all met:
+`isGlobalSource` is positive (i.e. `true`) when the following all hold:
 
-* `nodeName` is a link:kafka-streams-SourceNodeFactory.adoc[SourceNodeFactory]
-
-* `SourceNodeFactory` has exactly one topic (in link:kafka-streams-SourceNodeFactory.adoc#topics[topics])
+* `nodeName` is the name of a link:kafka-streams-SourceNodeFactory.adoc[SourceNodeFactory] with exactly one link:kafka-streams-SourceNodeFactory.adoc#topics[topic]
 
 * The topic is among <<globalTopics, globalTopics>>
 
 Otherwise, `isGlobalSource` is negative (i.e. `false`).
 
 NOTE: `isGlobalSource` is used when `InternalTopologyBuilder` is requested to <<describeGlobalStore, describeGlobalStore>>, <<globalNodeGroups, globalNodeGroups>> and <<nodeGroupContainsGlobalSourceNode, nodeGroupContainsGlobalSourceNode>>.
+
+=== [[globalNodeGroups]] Collecting Global Node Groups -- `globalNodeGroups` Internal Method
+
+[source, java]
+----
+Set<String> globalNodeGroups()
+----
+
+`globalNodeGroups` gives <<nodeGroups-accessor, node groups>> with at least one <<global-source-node, global source node>>.
+
+NOTE: `globalNodeGroups` is used when `InternalTopologyBuilder` is requested to build a <<build, processor task topology>> and <<buildGlobalStateTopology, global processor task topology>>.
+
+=== [[putNodeGroupName]] `putNodeGroupName` Internal Method
+
+[source, java]
+----
+int putNodeGroupName(
+  final String nodeName,
+  final int nodeGroupId,
+  final Map<Integer, Set<String>> nodeGroups,
+  final Map<String, Set<String>> rootToNodeGroup)
+----
+
+`putNodeGroupName`...FIXME
+
+NOTE: `putNodeGroupName` is used when...FIXME
+
+=== [[makeNodeGroups]] Initializing Node Groups -- `makeNodeGroups` Internal Method
+
+[source, java]
+----
+Map<Integer, Set<String>> makeNodeGroups()
+----
+
+`makeNodeGroups` starts with an empty node groups and the local counter of node group IDs as 0.
+
+`makeNodeGroups` takes the names of source nodes from <<nodeToSourceTopics, nodeToSourceTopics>> and <<nodeToSourcePatterns, nodeToSourcePatterns>> registries.
+
+`makeNodeGroups` sorts the names of the source nodes in ascending order according to the natural ordering.
+
+`makeNodeGroups` <<putNodeGroupName, putNodeGroupName>> for every name of the source nodes sorted (that may give a new group ID).
+
+`makeNodeGroups` takes the non-source node names from <<nodeFactories, nodeFactories>> registry that are not in <<nodeToSourceTopics, nodeToSourceTopics>> registry.
+
+`makeNodeGroups` sorts the names of the non-source nodes in ascending order according to the natural ordering.
+
+`makeNodeGroups` <<putNodeGroupName, putNodeGroupName>> for every name of the non-source nodes sorted (that may give a new group ID).
+
+NOTE: `makeNodeGroups` is used when `InternalTopologyBuilder` is requested to <<describe, describe a topology>> and <<nodeGroups-accessor, access node groups the very first time>>
