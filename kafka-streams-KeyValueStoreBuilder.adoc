@@ -1,0 +1,3 @@
+== [[KeyValueStoreBuilder]] KeyValueStoreBuilder
+
+`KeyValueStoreBuilder` is a link:kafka-streams-AbstractStoreBuilder.adoc[AbstractStoreBuilder] of link:kafka-streams-KeyValueStore.adoc[KeyValueStores].

@@ -1,6 +1,6 @@
-== [[StoreBuilder]] StoreBuilder
+== [[StoreBuilder]] StoreBuilder -- Contract for State Store Builders
 
-`StoreBuilder` is a <<contract, contract>> for services that can <<build, build a StateStore>>.
+`StoreBuilder` is the <<contract, contract>> for services that can <<build, build StateStores>> with a <<name, name>> and optional <<withCachingEnabled, caching>> and <<withLoggingEnabled, logging>>.
 
 [[contract]]
 [source, java]
@@ -25,5 +25,31 @@ interface StoreBuilder<T extends StateStore> {
 | Description
 
 | [[name]] `name`
+|
+
+| [[withCachingEnabled]] `withCachingEnabled`
+|
+
+| [[withLoggingEnabled]] `withLoggingEnabled`
+|
+|===
+
+[[implementations]]
+.StoreBuilders
+[cols="1,2",options="header",width="100%"]
+|===
+| StoreBuilder
+| Description
+
+| [[AbstractStoreBuilder]] link:kafka-streams-AbstractStoreBuilder.adoc[AbstractStoreBuilder]
+|
+
+| [[KeyValueStoreBuilder]] link:kafka-streams-KeyValueStoreBuilder.adoc[KeyValueStoreBuilder]
+|
+
+| [[SessionStoreBuilder]] link:kafka-streams-SessionStoreBuilder.adoc[SessionStoreBuilder]
+|
+
+| [[WindowStoreBuilder]] link:kafka-streams-WindowStoreBuilder.adoc[WindowStoreBuilder]
 |
 |===

@@ -16,7 +16,6 @@
 
 . link:kafka-streams-StateStore.adoc[StateStore]
 .. link:kafka-streams-Stores.adoc[Stores]
-.. (Deprecated) link:kafka-streams-StoreFactory.adoc[StoreFactory]
 
 . link:kafka-streams-Consumed.adoc[Consumed]
 . link:kafka-streams-Produced.adoc[Produced]
@@ -47,8 +46,13 @@
 . link:kafka-streams-StateStoreFactory.adoc[StateStoreFactory]
 . link:kafka-streams-AbstractStateStoreFactory.adoc[AbstractStateStoreFactory]
 . link:kafka-streams-StoreBuilderFactory.adoc[StoreBuilderFactory]
-. link:kafka-streams-StoreBuilder.adoc[StoreBuilder]
 . link:kafka-streams-StateStoreSupplierFactory.adoc[StateStoreSupplierFactory]
+
+. link:kafka-streams-StoreBuilder.adoc[StoreBuilder -- Contract for State Store Builders]
+.. link:kafka-streams-AbstractStoreBuilder.adoc[AbstractStoreBuilder -- Base State Store Builder]
+.. link:kafka-streams-KeyValueStoreBuilder.adoc[KeyValueStoreBuilder]
+.. link:kafka-streams-SessionStoreBuilder.adoc[SessionStoreBuilder]
+.. link:kafka-streams-WindowStoreBuilder.adoc[WindowStoreBuilder]
 
 . link:kafka-streams-Task.adoc[Task -- Contract for Stream Processor Tasks]
 .. link:kafka-streams-AbstractTask.adoc[AbstractTask -- Base Processor Task]
@@ -126,6 +130,8 @@
 . link:kafka-streams-KTableSourceValueGetterSupplier.adoc[KTableSourceValueGetterSupplier]
 . link:kafka-streams-KTableSource.adoc[KTableSource]
 . link:kafka-streams-KeyValueStoreMaterializer.adoc[KeyValueStoreMaterializer]
+. link:kafka-streams-KeyValueStore.adoc[KeyValueStore]
+. link:kafka-streams-ReadOnlyKeyValueStore.adoc[ReadOnlyKeyValueStore]
 . link:kafka-streams-Materialized.adoc[Materialized]
 . link:kafka-streams-MaterializedInternal.adoc[MaterializedInternal]
 . link:kafka-streams-ChangelogReader.adoc[ChangelogReader]
@@ -133,3 +139,7 @@
 . link:kafka-streams-StreamsMetadataState.adoc[StreamsMetadataState]
 . link:kafka-streams-StreamsMetricsThreadImpl.adoc[StreamsMetricsThreadImpl]
 . link:kafka-streams-QuickUnion.adoc[QuickUnion]
+
+== Deprecated
+
+. link:kafka-streams-StoreFactory.adoc[StoreFactory]

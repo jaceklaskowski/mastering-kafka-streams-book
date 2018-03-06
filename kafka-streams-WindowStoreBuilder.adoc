@@ -1,0 +1,3 @@
+== [[WindowStoreBuilder]] WindowStoreBuilder
+
+`WindowStoreBuilder` is...FIXME

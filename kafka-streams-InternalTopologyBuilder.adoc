@@ -776,8 +776,39 @@ TopologyDescription describe()
 
 [source, scala]
 ----
+// CAUTION: FIXME The example does NOT compile in Scala!
+
 import org.apache.kafka.streams.processor.internals.InternalTopologyBuilder
 val itb = new InternalTopologyBuilder()
+
+// Create a state store builder
+import org.apache.kafka.streams.state.Stores
+val lruMapSupplier = Stores.lruMap("input-stream", 5)
+import org.apache.kafka.common.serialization.Serdes
+val storeBuilder = Stores.keyValueStoreBuilder(
+  lruMapSupplier,
+  Serdes.Integer(),
+  Serdes.Integer())
+
+// Add the state store as a global state store
+import org.apache.kafka.streams.processor.TimestampExtractor
+val timestampExtractor: TimestampExtractor = null
+import org.apache.kafka.common.serialization.{Deserializer, IntegerDeserializer}
+val keyDeserializer: Deserializer[Integer] = new IntegerDeserializer
+val valueDeserializer: Deserializer[Integer] = new IntegerDeserializer
+import org.apache.kafka.streams.kstream.internals.KTableSource
+import org.apache.kafka.streams.processor.ProcessorSupplier
+val stateUpdateSupplier: ProcessorSupplier[Integer, Integer] = new KTableSource("global-store")
+itb.addGlobalStore(
+  storeBuilder,
+  "sourceName",
+  timestampExtractor,
+  keyDeserializer,
+  valueDeserializer,
+  "global-store-topic",
+  "processorName",
+  stateUpdateSupplier)
+
 import org.apache.kafka.streams.TopologyDescription
 val td: TopologyDescription = itb.describe
 scala> println(td)
