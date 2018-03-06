@@ -132,3 +132,4 @@
 . link:kafka-streams-AssignmentInfo.adoc[AssignmentInfo]
 . link:kafka-streams-StreamsMetadataState.adoc[StreamsMetadataState]
 . link:kafka-streams-StreamsMetricsThreadImpl.adoc[StreamsMetricsThreadImpl]
+. link:kafka-streams-QuickUnion.adoc[QuickUnion]

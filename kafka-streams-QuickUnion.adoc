@@ -1,0 +1,36 @@
+== [[QuickUnion]] QuickUnion
+
+`QuickUnion` (of elements of type `T`) is...FIXME
+
+=== [[root]] `root` Method
+
+[source, java]
+----
+T root(T id)
+----
+
+`root`...FIXME
+
+NOTE: `root` is used when...FIXME
+
+=== [[add]] `add` Method
+
+[source, java]
+----
+void add(T id)
+----
+
+`add`...FIXME
+
+NOTE: `add` is used when...FIXME
+
+=== [[unite]] `unite` Method
+
+[source, java]
+----
+void unite(T id1, T... idList)
+----
+
+`unite`...FIXME
+
+NOTE: `unite` is used when...FIXME

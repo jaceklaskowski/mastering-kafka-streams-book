@@ -26,7 +26,7 @@ synchronized final InternalTopologyBuilder setApplicationId(final String applica
 * <<decorateTopic, decorateTopic>> to prefix internal topic names with the application id
 
 [[global-source-node]]
-*Global Source Node* is a node from a link:kafka-streams-SourceNodeFactory.adoc[SourceNodeFactory] with exactly one link:kafka-streams-SourceNodeFactory.adoc#topics[topic] and registered in <<globalTopics, globalTopics>>. You can use <<isGlobalSource, isGlobalSource>> to check if a name is of a global source node.
+*Global Source Node* is a node from a link:kafka-streams-SourceNodeFactory.adoc[SourceNodeFactory] with exactly one link:kafka-streams-SourceNodeFactory.adoc#topics[topic] and registered in <<globalTopics, globalTopics>>. You can use <<isGlobalSource, isGlobalSource>> predicate to check if a name is of a global source node.
 
 [[internal-registries]]
 .InternalTopologyBuilder's Internal Properties (e.g. Registries, Counters and Flags)
@@ -47,14 +47,14 @@ synchronized final InternalTopologyBuilder setApplicationId(final String applica
 | [[globalStateStores]] `globalStateStores`
 a| link:kafka-streams-StateStore.adoc[StateStores] by name
 
-* A new global link:kafka-streams-StateStore.adoc[StateStore] is added exclusively when `InternalTopologyBuilder` <<addGlobalStore, addGlobalStore>>
+* A new global link:kafka-streams-StateStore.adoc[StateStore] is added exclusively when `InternalTopologyBuilder` is requested to <<addGlobalStore, add a global state store to a topology>>
 
 | `globalTopics`
 a| [[globalTopics]] Names of global topics
 
-* A new name is added when `InternalTopologyBuilder` <<addGlobalStore, addGlobalStore>>
+* A new name is added when `InternalTopologyBuilder` is requested to <<addGlobalStore, add a global state store to a topology>>
 
-* Used when `InternalTopologyBuilder` is requested to <<isGlobalSource, check if a node name is of a global source>>
+* Used when `InternalTopologyBuilder` is requested to <<isGlobalSource, check if a node name is of a global source node>>
 
 | [[internalTopicNames]] `internalTopicNames`
 a| Names of topics...FIXME
@@ -70,17 +70,17 @@ a| Names of topics...FIXME
 | [[nodeFactories]] `nodeFactories`
 a| link:kafka-streams-NodeFactory.adoc[NodeFactories] by node name
 
-* A new `NodeFactory` is added when `InternalTopologyBuilder` is requested to <<addGlobalStore, addGlobalStore>>, <<addProcessor, addProcessor>>, <<addSink, addSink>> and <<addSource, addSource>>
+* A new `NodeFactory` is added when `InternalTopologyBuilder` is requested to <<addGlobalStore, add a global state store to a topology>>, <<addProcessor, addProcessor>>, <<addSink, addSink>> and <<addSource, addSource>>
 
 | [[nodeGrouper]] `nodeGrouper`
-| `QuickUnion` of node names
+| link:kafka-streams-QuickUnion.adoc[QuickUnion] of the names of node groups
 
 Used when...FIXME
 
 | [[nodeGroups]] `nodeGroups`
 a| Node groups by ID, i.e. groups of node names by the group ID
 
-* Initialized when `InternalTopologyBuilder` is requested for <<nodeGroups-accessor, node groups>> the very first time
+* Initialized when `InternalTopologyBuilder` is requested for <<nodeGroups-accessor, node groups>> (the very first time)
 
 | [[nodeToSinkTopic]] `nodeToSinkTopic`
 |
@@ -319,7 +319,7 @@ For every topic name in the input `topics`, `addSource`:
 
 `addSource` registers `topics` under the `name` in <<nodeToSourceTopics, nodeToSourceTopics>> registry.
 
-`addSource` adds `name` to <<nodeGrouper, nodeGrouper>> registry.
+`addSource` requests <<nodeGrouper, QuickUnion of the names of node groups>> to link:kafka-streams-QuickUnion.adoc#add[add] the `name`.
 
 [NOTE]
 ====
@@ -428,7 +428,7 @@ NOTE: `connectProcessorAndStateStores` (plural) is a public method that uses the
 * `Topology` is requested to link:kafka-streams-Topology.adoc#connectProcessorAndStateStores[connectProcessorAndStateStores]
 ====
 
-=== [[addGlobalStore]] Registering Global State Store -- `addGlobalStore` Method
+=== [[addGlobalStore]] Adding Global State Store to Topology -- `addGlobalStore` Method
 
 [source, java]
 ----
@@ -480,15 +480,15 @@ The private `addGlobalStore` creates a link:kafka-streams-ProcessorNodeFactory.a
 
 1. Associates the `sourceName` with `topic` to <<nodeToSourceTopics, nodeToSourceTopics>>
 
-1. Adds the `sourceName` to <<nodeGrouper, QuickUnion>>
+1. Requests <<nodeGrouper, QuickUnion of the names of node groups>> to link:kafka-streams-QuickUnion.adoc#add[add] the `sourceName`
 
 1. Requests `ProcessorNodeFactory` to link:kafka-streams-ProcessorNodeFactory.adoc#addStateStore[add a state store] as `name`
 
 1. Associates the `processorName` with `nodeFactory` in <<nodeFactories, nodeFactories>>
 
-1. Adds the `processorName` to <<nodeGrouper, QuickUnion>>
+1. Requests <<nodeGrouper, QuickUnion of the names of node groups>> to link:kafka-streams-QuickUnion.adoc#add[add] the `processorName`
 
-1. Requests <<nodeGrouper, QuickUnion>> to unite the `processorName` and `predecessors`
+1. Requests <<nodeGrouper, QuickUnion of the names of node groups>> to link:kafka-streams-QuickUnion.adoc#unite[unite] the `processorName` and `predecessors`
 
 1. Associates the `name` with the `store` in <<globalStateStores, globalStateStores>>
 
@@ -516,7 +516,7 @@ void validateGlobalStoreArguments(
   final boolean loggingEnabled)
 ----
 
-`validateGlobalStoreArguments` validates the input parameters (before <<addGlobalStore, registering a global state store>>).
+`validateGlobalStoreArguments` validates the input parameters (before <<addGlobalStore, adding a global state store to a topology>>).
 
 `validateGlobalStoreArguments` throws a `NullPointerException` when `sourceName`, `topic`, `stateUpdateSupplier` or `processorName` are `null`.
 
@@ -530,7 +530,7 @@ void validateGlobalStoreArguments(
 
 * `sourceName` and `processorName` are equal
 
-NOTE: `validateGlobalStoreArguments` is used exclusively when `InternalTopologyBuilder` is requested to <<addGlobalStore, register a global state store>>.
+NOTE: `validateGlobalStoreArguments` is used exclusively when `InternalTopologyBuilder` is requested to <<addGlobalStore, add a global state store to a topology>>.
 
 === [[connectSourceStoreAndTopic]] Registering State Store with Topic (Associating Names) -- `connectSourceStoreAndTopic` Method
 
@@ -555,7 +555,7 @@ Source store [sourceStoreName] is already added.
 
 * `InternalStreamsBuilder` is requested to link:kafka-streams-InternalStreamsBuilder.adoc#table[create a KTable for a topic]
 
-* `InternalTopologyBuilder` is requested to <<addGlobalStore, addGlobalStore>>
+* `InternalTopologyBuilder` is requested to <<addGlobalStore, add a global state store to a topology>>
 
 * *(deprecated)* `TopologyBuilder` is requested to `connectSourceStoreAndTopic`
 ====
@@ -641,18 +641,7 @@ synchronized Map<Integer, TopicsInfo> topicGroups()
 
 NOTE: `topicGroups` is used exclusively when `StreamsPartitionAssignor` is requested to link:kafka-streams-StreamPartitionAssignor.adoc#assign[assign]
 
-=== [[describe]] `describe` Method
-
-[source, java]
-----
-TopologyDescription describe()
-----
-
-`describe`...FIXME
-
-NOTE: `describe` is used when...FIXME
-
-=== [[nodeGroups-accessor]] Node Groups by ID -- `nodeGroups` Accessor Method
+=== [[nodeGroups-accessor]] Getting Node Groups by ID -- `nodeGroups` Accessor Method
 
 [source, java]
 ----
@@ -661,7 +650,7 @@ synchronized Map<Integer, Set<String>> nodeGroups()
 
 `nodeGroups` gives <<nodeGroups, node groups by id>>.
 
-If <<nodeGroups, node groups by id>> has not been initialized yet, `nodeGroups` <<makeNodeGroups, makeNodeGroups>> that are the <<nodeGroups, node groups>> from now on.
+If <<nodeGroups, node groups by id>> registry has not been initialized yet, `nodeGroups` <<makeNodeGroups, creates the node groups>> that are the <<nodeGroups, node groups>> from now on.
 
 NOTE: `nodeGroups` is used when `InternalTopologyBuilder` is requested to <<build, build a topology of processor tasks>>, <<globalNodeGroups, globalNodeGroups>>, <<topicGroups, topicGroups>>
 
@@ -730,22 +719,7 @@ Set<String> globalNodeGroups()
 
 NOTE: `globalNodeGroups` is used when `InternalTopologyBuilder` is requested to build a <<build, processor task topology>> and <<buildGlobalStateTopology, global processor task topology>>.
 
-=== [[putNodeGroupName]] `putNodeGroupName` Internal Method
-
-[source, java]
-----
-int putNodeGroupName(
-  final String nodeName,
-  final int nodeGroupId,
-  final Map<Integer, Set<String>> nodeGroups,
-  final Map<String, Set<String>> rootToNodeGroup)
-----
-
-`putNodeGroupName`...FIXME
-
-NOTE: `putNodeGroupName` is used when...FIXME
-
-=== [[makeNodeGroups]] Initializing Node Groups -- `makeNodeGroups` Internal Method
+=== [[makeNodeGroups]] Creating Node Groups -- `makeNodeGroups` Internal Method
 
 [source, java]
 ----
@@ -766,4 +740,75 @@ Map<Integer, Set<String>> makeNodeGroups()
 
 `makeNodeGroups` <<putNodeGroupName, putNodeGroupName>> for every name of the non-source nodes sorted (that may give a new group ID).
 
-NOTE: `makeNodeGroups` is used when `InternalTopologyBuilder` is requested to <<describe, describe a topology>> and <<nodeGroups-accessor, access node groups the very first time>>
+NOTE: `makeNodeGroups` is used when `InternalTopologyBuilder` is requested to <<describe, describe a topology>> and <<nodeGroups-accessor, get node groups>> (the very first time).
+
+=== [[putNodeGroupName]] `putNodeGroupName` Internal Method
+
+[source, java]
+----
+int putNodeGroupName(
+  final String nodeName,
+  final int nodeGroupId,
+  final Map<Integer, Set<String>> nodeGroups,
+  final Map<String, Set<String>> rootToNodeGroup)
+----
+
+`putNodeGroupName` takes the name of a node, the current node group ID, the current node groups and the rootToNodeGroup.
+
+`putNodeGroupName` requests <<nodeGrouper, QuickUnion of the names of node groups>> for the link:kafka-streams-QuickUnion.adoc#root[root node] of the input `nodeName`.
+
+`putNodeGroupName` gets the node group for the root node from the input `rootToNodeGroup` and adds the input `nodeName` to it.
+
+If the root node was not found in the input `rootToNodeGroup`, `putNodeGroupName` registers the root node with an empty node group in `rootToNodeGroup`. `putNodeGroupName` then registers the empty node group with an incremented node group ID in `nodeGroups`.
+
+In the end, `putNodeGroupName` gives the input `nodeGroupId` or a new node group ID if the root node was not found in the input `rootToNodeGroup`.
+
+NOTE: `putNodeGroupName` is used exclusively when `InternalTopologyBuilder` is requested to <<makeNodeGroups, create the node groups>>.
+
+=== [[describe]] `describe` Method
+
+[source, java]
+----
+TopologyDescription describe()
+----
+
+`describe`...FIXME
+
+[source, scala]
+----
+import org.apache.kafka.streams.processor.internals.InternalTopologyBuilder
+val itb = new InternalTopologyBuilder()
+import org.apache.kafka.streams.TopologyDescription
+val td: TopologyDescription = itb.describe
+scala> println(td)
+Topologies:
+----
+
+NOTE: `describe` is used when...FIXME
+
+=== [[describeSubtopology]] `describeSubtopology` Internal Method
+
+[source, java]
+----
+void describeSubtopology(
+  final TopologyDescription description,
+  final Integer subtopologyId,
+  final Set<String> nodeNames)
+----
+
+`describeSubtopology`...FIXME
+
+NOTE: `describeSubtopology` is used exclusively when `InternalTopologyBuilder` is requested to <<describe, describe>>.
+
+=== [[describeGlobalStore]] `describeGlobalStore` Internal Method
+
+[source, java]
+----
+void describeGlobalStore(
+  final TopologyDescription description,
+  final Set<String> nodes, int id)
+----
+
+`describeGlobalStore`...FIXME
+
+NOTE: `describeGlobalStore` is used exclusively when `InternalTopologyBuilder` is requested to <<describe, describe>>.
