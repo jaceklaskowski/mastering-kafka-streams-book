@@ -1,13 +1,13 @@
 == [[TaskManager]] TaskManager
 
-`TaskManager` is <<creating-instance, created>> when `StreamThread` is link:kafka-streams-StreamThread.adoc#create[created].
+`TaskManager` manages <<active, active>> and <<standby, standby>> collections of tasks. `TaskManager` adds a new active task when `RebalanceListener` handles link:kafka-streams-StreamThread-RebalanceListener.adoc#onPartitionsAssigned[onPartitionsAssigned] (and requests to <<createTasks, create processor tasks for assigned topic partitions>> that in turn <<addStreamTasks, adds new stream tasks>>).
+
+`TaskManager` is <<creating-instance, created>> when `StreamThread` is link:kafka-streams-StreamThread.adoc#create[created] (with a new <<active, AssignedStreamsTasks>> and <<standby, AssignedStandbyTasks>> for <<active, active>> and <<standby, standby>> collections of tasks, respectively).
 
 .TaskManager Being Created
 image::images/kafka-streams-TaskManager.png[align="center"]
 
 `TaskManager` uses Kafka's <<adminClient, AdminClient>> for <<maybePurgeCommitedRecords, maybePurgeCommitedRecords>> and for `StreamsPartitionAssignor` to link:kafka-streams-StreamsPartitionAssignor.adoc#configure[configure] itself (and create the internal link:kafka-streams-StreamsPartitionAssignor.adoc#internalTopicManager[InternalTopicManager]).
-
-`TaskManager` manages tasks through <<active, AssignedStreamsTasks>> and <<standby, AssignedStandbyTasks>> collection of tasks.
 
 [[internal-registries]]
 .TaskManager's Internal Properties (e.g. Registries, Counters and Flags)
@@ -211,7 +211,7 @@ stream-thread [threadClientId] consumer has not been initialized while adding st
 
 NOTE: `createTasks` is used exclusively when `RebalanceListener` handles link:kafka-streams-StreamThread-RebalanceListener.adoc#onPartitionsAssigned[onPartitionsAssigned].
 
-=== [[addStreamTasks]] Registering New Stream Tasks -- `addStreamTasks` Internal Method
+=== [[addStreamTasks]] Adding New Stream Tasks -- `addStreamTasks` Internal Method
 
 [source, java]
 ----

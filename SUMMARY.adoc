@@ -136,6 +136,8 @@
 . link:kafka-streams-MaterializedInternal.adoc[MaterializedInternal]
 . link:kafka-streams-ChangelogReader.adoc[ChangelogReader]
 . link:kafka-streams-AssignmentInfo.adoc[AssignmentInfo]
+. link:kafka-streams-SubscriptionInfo.adoc[SubscriptionInfo]
+. link:kafka-streams-ClientMetadata.adoc[ClientMetadata]
 . link:kafka-streams-StreamsMetadataState.adoc[StreamsMetadataState]
 . link:kafka-streams-StreamsMetricsThreadImpl.adoc[StreamsMetricsThreadImpl]
 . link:kafka-streams-QuickUnion.adoc[QuickUnion]

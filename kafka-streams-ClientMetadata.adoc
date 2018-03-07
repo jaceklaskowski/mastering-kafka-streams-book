@@ -1,0 +1,16 @@
+== [[ClientMetadata]] ClientMetadata
+
+`ClientMetadata` is...FIXME
+
+=== [[addConsumer]] `addConsumer` Method
+
+[source, java]
+----
+void addConsumer(
+  final String consumerMemberId,
+  final SubscriptionInfo info)
+----
+
+`addConsumer`...FIXME
+
+NOTE: `addConsumer` is used when...FIXME

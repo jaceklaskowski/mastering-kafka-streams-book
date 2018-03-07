@@ -1,0 +1,14 @@
+== [[SubscriptionInfo]] SubscriptionInfo
+
+`SubscriptionInfo` is...FIXME
+
+=== [[decode]] `decode` Method
+
+[source, java]
+----
+SubscriptionInfo decode(final ByteBuffer data)
+----
+
+`decode`...FIXME
+
+NOTE: `decode` is used when...FIXME

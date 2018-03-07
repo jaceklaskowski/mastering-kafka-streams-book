@@ -165,7 +165,7 @@ NOTE: The input `readyPartitions` could really be an output.
 
 NOTE: `transitionToRunning` is used when `AssignedTasks` is requested to <<initializeNewTasks, initializeNewTasks>>, <<maybeResumeSuspendedTask, maybeResumeSuspendedTask>> and <<updateRestored, updateRestored>>.
 
-=== [[addNewTask]] Registering New Task -- `addNewTask` Method
+=== [[addNewTask]] Adding New Task -- `addNewTask` Method
 
 [source, java]
 ----

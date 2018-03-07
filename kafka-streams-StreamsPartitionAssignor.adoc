@@ -17,32 +17,12 @@ TIP: Read https://cwiki.apache.org/confluence/display/KAFKA/Kafka+Client-side+As
 | Description
 
 | [[internalTopicManager]] `internalTopicManager`
-| link:kafka-streams-InternalTopicManager.adoc[InternalTopicManager]
+a| link:kafka-streams-InternalTopicManager.adoc[InternalTopicManager]
 
-Used when...FIXME
+* Initialized exclusively when `StreamsPartitionAssignor` is requested to <<configure, configure>>
+
+* Used exclusively when `StreamsPartitionAssignor` is requested to <<prepareTopic, prepareTopic>>
 |===
-
-=== [[configure]] `configure` Method
-
-[source, scala]
-----
-void configure(final Map<String, ?> configs)
-----
-
-NOTE: `configure` is part of Kafka Consumer's `Configurable` contract for classes that are instantiated by reflection and need to take configuration parameters.
-
-`configure`...FIXME
-
-=== [[assign]] `assign` Method
-
-[source, java]
-----
-Map<String, Assignment> assign(Cluster metadata, Map<String, Subscription> subscriptions)
-----
-
-NOTE: `assign` is part of Kafka Consumer's `PartitionAssignor` contract to perform the group assignment given the member subscriptions and current cluster metadata.
-
-`assign`...FIXME
 
 === [[subscription]] `subscription` Method
 
@@ -92,4 +72,59 @@ In the end, `onAssignment` requests <<taskManager, TaskManager>> for the followi
 
 ```
 [logPrefix]Number of assigned partitions [partitions] is not equal to the number of active taskIds [activeTasks], assignmentInfo=[info]
+```
+
+=== [[configure]] Configuring Partition Assignor -- `configure` Method
+
+[source, scala]
+----
+void configure(final Map<String, ?> configs)
+----
+
+NOTE: `configure` is part of Kafka Consumer's `Configurable` contract for classes that are instantiated by reflection and need to take configuration parameters.
+
+`configure`...FIXME
+
+=== [[prepareTopic]] `prepareTopic` Internal Method
+
+[source, java]
+----
+void prepareTopic(final Map<String, InternalTopicMetadata> topicPartitions)
+----
+
+`prepareTopic`...FIXME
+
+NOTE: `prepareTopic` is used exclusively when `StreamsPartitionAssignor` is requested to <<assign, assign>>.
+
+=== [[assign]] `assign` Method
+
+[source, java]
+----
+Map<String, Assignment> assign(
+  Cluster metadata,
+  Map<String, Subscription> subscriptions)
+----
+
+NOTE: `assign` is part of Kafka Consumer's `PartitionAssignor` contract to perform the group assignment given the member subscriptions and current cluster metadata.
+
+`assign` takes consumer IDs with subscriptions (from `subscriptions`).
+
+`assign` requests `SubscriptionInfo` to link:kafka-streams-SubscriptionInfo.adoc#decode[decode] the user data of the subscription (aka _metadata_) and makes sure that the version is supported, i.e. up to 2 currently.
+
+`assign` finds the client metadata (by the process ID) and creates one if not available.
+
+`assign` requests the `ClientMetadata` to link:kafka-streams-ClientMetadata.adoc#addConsumer[addConsumer].
+
+`assign` prints out the following DEBUG message to the logs:
+
+```
+Constructed client metadata [clientsMetadata] from the member subscriptions.
+```
+
+CAUTION: FIXME
+
+`assign` reports a `IllegalStateException` when the subscription version is unsupported.
+
+```
+Unknown metadata version: [usedVersion]; latest supported version: " + SubscriptionInfo.LATEST_SUPPORTED_VERSION
 ```
