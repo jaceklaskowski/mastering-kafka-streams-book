@@ -53,14 +53,14 @@ int punctuate()
 
 NOTE: `punctuate` is used when...FIXME
 
-=== [[process]] Requesting Stream Tasks to Process Single Record -- `process` Method
+=== [[process]] Requesting Stream Tasks to Process Records -- `process` Method
 
 [source, java]
 ----
 int process()
 ----
 
-`process` requests every stream task (from link:kafka-streams-AssignedTasks.adoc#running[running]) to link:kafka-streams-StreamTask.adoc#process[process a single record].
+`process` requests every link:kafka-streams-AssignedTasks.adoc#running[running] stream task to link:kafka-streams-StreamTask.adoc#process[process a single record].
 
 In the end, `process` gives the number of stream tasks that processed a single record successfully.
 

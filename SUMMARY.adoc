@@ -139,6 +139,8 @@
 . link:kafka-streams-StreamsMetadataState.adoc[StreamsMetadataState]
 . link:kafka-streams-StreamsMetricsThreadImpl.adoc[StreamsMetricsThreadImpl]
 . link:kafka-streams-QuickUnion.adoc[QuickUnion]
+. link:kafka-streams-RecordInfo.adoc[RecordInfo]
+. link:kafka-streams-StampedRecord.adoc[StampedRecord]
 
 == Deprecated
 

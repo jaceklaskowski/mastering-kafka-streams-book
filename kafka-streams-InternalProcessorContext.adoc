@@ -27,6 +27,9 @@ interface InternalProcessorContext extends ProcessorContext {
 | [[initialized]] `initialized`
 |
 
+| [[setCurrentNode]] `setCurrentNode`
+|
+
 | [[setRecordContext]] `setRecordContext`
 |
 |===

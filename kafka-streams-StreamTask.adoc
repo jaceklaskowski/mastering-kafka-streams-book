@@ -2,10 +2,18 @@
 
 `StreamTask` is a concrete link:kafka-streams-AbstractTask.adoc[stream processor task] that uses a <<partitionGroup, PartitionGroup>> for...FIXME
 
+`StreamTask` is <<creating-instance, created>> when...FIXME
+
 [[commitNeeded]]
 [[commitRequested]]
 [[needCommit]]
 `StreamTask` may need a commit, i.e....FIXME
+
+[[commitOffsetNeeded]]
+`StreamTask` uses `commitOffsetNeeded` flag to...FIXME
+
+[[maxBufferedSize]]
+`StreamTask` uses link:kafka-streams-StreamsConfig.adoc#buffered.records.per.partition[buffered.records.per.partition] configuration property to control when to resume a partition (when <<process, processing a single record>>).
 
 [[internal-registries]]
 .StreamTask's Internal Properties (e.g. Registries, Counters and Flags)
@@ -16,6 +24,9 @@
 
 | [[partitionGroup]] `partitionGroup`
 | link:kafka-streams-PartitionGroup.adoc[PartitionGroup]
+
+| [[consumedOffsets]] `consumedOffsets`
+| Offsets by topic partitions, i.e. `Map<TopicPartition, Long>`, that `StreamTask` has <<process, processed>> successfully.
 |===
 
 [[logging]]
@@ -67,26 +78,15 @@ NOTE: `close` is part of link:kafka-streams-Task.adoc#close[Task Contract] to...
 
 `close`...FIXME
 
-=== [[process]] Processing Single Record -- `process` Method
-
-[source, java]
-----
-boolean process()
-----
-
-`process`...FIXME
-
-NOTE: `process` is used exclusively when `AssignedStreamsTasks` is requested to link:kafka-streams-AssignedStreamsTasks.adoc#process[process].
-
 === [[creating-instance]] Creating StreamTask Instance
 
 `StreamTask` takes the following when created:
 
 * [[id]] `TaskId`
-* [[partitions]] Collection of `TopicPartition`
-* [[topology]] `ProcessorTopology`
+* [[partitions]] Topic partitions (as Kafka's `TopicPartition`)
+* [[topology]] link:kafka-streams-ProcessorTopology.adoc[ProcessorTopology]
 * [[consumer]] Kafka https://kafka.apache.org/10/javadoc/org/apache/kafka/clients/consumer/KafkaConsumer.html[Consumer] (of keys and values as array of bytes)
-* [[changelogReader]] `ChangelogReader`
+* [[changelogReader]] link:kafka-streams-ChangelogReader.adoc[ChangelogReader]
 * [[config]] link:kafka-streams-StreamsConfig.adoc[StreamsConfig]
 * [[metrics]] `StreamsMetrics`
 * [[stateDirectory]] link:kafka-streams-StateDirectory.adoc[StateDirectory]
@@ -95,8 +95,6 @@ NOTE: `process` is used exclusively when `AssignedStreamsTasks` is requested to 
 * [[producer]] Kafka producer (of keys and values as array of bytes)
 
 `StreamTask` initializes the <<internal-registries, internal registries and counters>>.
-
-`StreamTask` is <<creating-instance, created>> when...FIXME
 
 === [[addRecords]] `addRecords` Method
 
@@ -132,3 +130,57 @@ void initializeTopology()
 NOTE: `initializeTopology` is part of link:kafka-streams-Task.adoc#initializeTopology[Task Contract] to...FIXME.
 
 `initializeTopology` <<initTopology, initTopology>>. It then requests link:kafka-streams-AbstractTask.adoc#processorContext[InternalProcessorContext] to link:kafka-streams-InternalProcessorContext.adoc#initialized[initialized] and in the end sets link:kafka-streams-AbstractTask.adoc#taskInitialized[taskInitialized] to `true`.
+
+=== [[updateProcessorContext]] `updateProcessorContext` Internal Method
+
+[source, java]
+----
+void updateProcessorContext(final StampedRecord record, final ProcessorNode currNode)
+----
+
+`updateProcessorContext`...FIXME
+
+NOTE: `updateProcessorContext` is used when...FIXME
+
+=== [[process]] Processing Single Record -- `process` Method
+
+[source, java]
+----
+boolean process()
+----
+
+`process` requests <<partitionGroup, PartitionGroup>> for link:kafka-streams-PartitionGroup.adoc#nextRecord[nextRecord] (with <<recordInfo, RecordInfo>>).
+
+`process` prints out the following TRACE message to the logs:
+
+```
+Start processing one record [record]
+```
+
+`process` requests <<recordInfo, RecordInfo>> for the link:kafka-streams-RecordInfo.adoc#node[source processor node].
+
+`process` <<updateProcessorContext, updateProcessorContext>> (with the current record and the source processor node).
+
+`process` requests the source processor node to link:kafka-streams-ProcessorNode.adoc#process[process] the key and the value of the record.
+
+`process` prints out the following TRACE message to the logs:
+
+```
+Completed processing one record [record]
+```
+
+`process` requests <<recordInfo, RecordInfo>> for the link:kafka-streams-RecordInfo.adoc#partition[topic partition] and stores the partition and the record's link:kafka-streams-StampedRecord.adoc#offset[offset] in <<consumedOffsets, consumedOffsets>>.
+
+`process` turns <<commitOffsetNeeded, commitOffsetNeeded>> flag on.
+
+`process` requests the <<consumer, Kafka consumer>> to resume the partition if the size of the link:kafka-streams-RecordInfo.adoc#queue[queue] of the <<recordInfo, RecordInfo>> is exactly <<maxBufferedSize, maxBufferedSize>>.
+
+`process` always requests link:kafka-streams-AbstractTask.adoc#processorContext[InternalProcessorContext] to link:kafka-streams-InternalProcessorContext.adoc#setCurrentNode[setCurrentNode] as `null`.
+
+In case of a `ProducerFencedException`, `process` reports a `TaskMigratedException`.
+
+In case of a `KafkaException`, `process` reports a `StreamsException`.
+
+In the end, `process` gives `true` when processing a single record was successful, and `false` when there were no records to process.
+
+NOTE: `process` is used exclusively when `AssignedStreamsTasks` is requested to link:kafka-streams-AssignedStreamsTasks.adoc#process[process].

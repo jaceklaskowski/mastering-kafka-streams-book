@@ -1,0 +1,36 @@
+== [[RecordInfo]] RecordInfo
+
+`RecordInfo` is...FIXME
+
+=== [[node]] Getting Processor Node -- `node` Method
+
+[source, java]
+----
+ProcessorNode node()
+----
+
+`node`...FIXME
+
+NOTE: `node` is used when...FIXME
+
+=== [[queue]] Getting RecordQueue -- `queue` Method
+
+[source, java]
+----
+RecordQueue queue()
+----
+
+`queue`...FIXME
+
+NOTE: `queue` is used when...FIXME
+
+=== [[partition]] Getting Topic Partition -- `partition` Method
+
+[source, java]
+----
+TopicPartition partition()
+----
+
+`partition`...FIXME
+
+NOTE: `partition` is used when...FIXME

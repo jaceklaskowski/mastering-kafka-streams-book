@@ -1,0 +1,8 @@
+== [[StampedRecord]] StampedRecord
+
+`StampedRecord` is...FIXME
+
+`StampedRecord` is made up of the following:
+
+* [[offset]] `offset`
+* ...FIXME
