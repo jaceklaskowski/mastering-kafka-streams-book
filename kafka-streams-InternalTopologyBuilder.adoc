@@ -776,8 +776,6 @@ TopologyDescription describe()
 
 [source, scala]
 ----
-// CAUTION: FIXME The example does NOT compile in Scala!
-
 import org.apache.kafka.streams.processor.internals.InternalTopologyBuilder
 val itb = new InternalTopologyBuilder()
 
@@ -785,22 +783,26 @@ val itb = new InternalTopologyBuilder()
 import org.apache.kafka.streams.state.Stores
 val lruMapSupplier = Stores.lruMap("input-stream", 5)
 import org.apache.kafka.common.serialization.Serdes
+import org.apache.kafka.streams.state.{KeyValueStore, StoreBuilder}
 val storeBuilder = Stores.keyValueStoreBuilder(
   lruMapSupplier,
-  Serdes.Integer(),
-  Serdes.Integer())
+  Serdes.Long(),
+  Serdes.Long()).
+  withLoggingDisabled
 
 // Add the state store as a global state store
 import org.apache.kafka.streams.processor.TimestampExtractor
 val timestampExtractor: TimestampExtractor = null
-import org.apache.kafka.common.serialization.{Deserializer, IntegerDeserializer}
-val keyDeserializer: Deserializer[Integer] = new IntegerDeserializer
-val valueDeserializer: Deserializer[Integer] = new IntegerDeserializer
+import org.apache.kafka.common.serialization.LongDeserializer
+val keyDeserializer = new LongDeserializer
+val valueDeserializer = new LongDeserializer
 import org.apache.kafka.streams.kstream.internals.KTableSource
 import org.apache.kafka.streams.processor.ProcessorSupplier
-val stateUpdateSupplier: ProcessorSupplier[Integer, Integer] = new KTableSource("global-store")
+import java.lang.{Long => JLong}
+val stateUpdateSupplier: ProcessorSupplier[JLong, JLong] = new KTableSource("global-store")
 itb.addGlobalStore(
-  storeBuilder,
+  // Required to make the code compile
+  storeBuilder.asInstanceOf[StoreBuilder[KeyValueStore[_, _]]],
   "sourceName",
   timestampExtractor,
   keyDeserializer,
@@ -813,6 +815,12 @@ import org.apache.kafka.streams.TopologyDescription
 val td: TopologyDescription = itb.describe
 scala> println(td)
 Topologies:
+   Sub-topology: 0 for global store (will not generate tasks)
+    Source: sourceName (topics: global-store-topic)
+      --> processorName
+    Processor: processorName (stores: [input-stream])
+      --> none
+      <-- sourceName
 ----
 
 NOTE: `describe` is used when...FIXME

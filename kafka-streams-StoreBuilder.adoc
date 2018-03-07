@@ -1,6 +1,6 @@
 == [[StoreBuilder]] StoreBuilder -- Contract for State Store Builders
 
-`StoreBuilder` is the <<contract, contract>> for services that can <<build, build StateStores>> with a <<name, name>> and optional <<withCachingEnabled, caching>> and <<withLoggingEnabled, logging>>.
+`StoreBuilder` is the <<contract, contract>> for services that can <<build, build a StateStore>> with a <<name, name>> and optional <<withCachingEnabled, caching>> and <<withLoggingEnabled, logging>>.
 
 [[contract]]
 [source, java]
