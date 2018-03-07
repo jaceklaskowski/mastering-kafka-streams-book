@@ -364,7 +364,7 @@ NOTE: `maybeCommit` is used when `StreamThread` is requested to <<processAndMayb
 long processAndMaybeCommit(final long recordsProcessedBeforeCommit)
 ----
 
-`processAndMaybeCommit` repeats the following processing loop until the number of active stream tasks that processed records successfully is 0 (i.e. no record has been consumed and processed).
+`processAndMaybeCommit` repeats the following processing loop until the number of active stream tasks that processed records successfully is 0 (i.e. no record has been processed).
 
 .StreamThread.processAndMaybeCommit, TaskManager and Sensors
 image::images/kafka-streams-StreamThread-processAndMaybeCommit.png[align="center"]

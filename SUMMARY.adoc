@@ -95,7 +95,7 @@
 
 . link:kafka-streams-AbstractStream.adoc[AbstractStream]
 
-. link:kafka-streams-StreamPartitionAssignor.adoc[StreamPartitionAssignor -- Partition Assignment Strategy]
+. link:kafka-streams-StreamsPartitionAssignor.adoc[StreamsPartitionAssignor -- Partition Assignment Strategy]
 
 . link:kafka-streams-InternalTopologyBuilder.adoc[InternalTopologyBuilder]
 . link:kafka-streams-InternalStreamsBuilder.adoc[InternalStreamsBuilder]

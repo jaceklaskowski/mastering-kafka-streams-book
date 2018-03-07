@@ -25,7 +25,7 @@ replication.factor -> 1
 num.standby.replicas -> 0
 max.poll.records -> 1000
 group.id -> groupId
-partition.assignment.strategy -> org.apache.kafka.streams.processor.internals.StreamPartitionAssignor
+partition.assignment.strategy -> org.apache.kafka.streams.processor.internals.StreamsPartitionAssignor
 bootstrap.servers -> localhost:8082
 enable.auto.commit -> false
 admin.retries -> 5

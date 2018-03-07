@@ -639,7 +639,7 @@ synchronized Map<Integer, TopicsInfo> topicGroups()
 
 `topicGroups`...FIXME
 
-NOTE: `topicGroups` is used exclusively when `StreamsPartitionAssignor` is requested to link:kafka-streams-StreamPartitionAssignor.adoc#assign[assign]
+NOTE: `topicGroups` is used exclusively when `StreamsPartitionAssignor` is requested to link:kafka-streams-StreamsPartitionAssignor.adoc#assign[assign].
 
 === [[nodeGroups-accessor]] Getting Node Groups by ID -- `nodeGroups` Accessor Method
 

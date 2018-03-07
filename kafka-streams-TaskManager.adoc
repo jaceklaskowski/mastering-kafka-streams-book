@@ -5,7 +5,7 @@
 .TaskManager Being Created
 image::images/kafka-streams-TaskManager.png[align="center"]
 
-`TaskManager` uses Kafka's <<adminClient, AdminClient>> for <<maybePurgeCommitedRecords, maybePurgeCommitedRecords>> and for `StreamPartitionAssignor` to link:kafka-streams-StreamPartitionAssignor.adoc#configure[configure] itself (and create the internal link:kafka-streams-StreamPartitionAssignor.adoc#internalTopicManager[InternalTopicManager]).
+`TaskManager` uses Kafka's <<adminClient, AdminClient>> for <<maybePurgeCommitedRecords, maybePurgeCommitedRecords>> and for `StreamsPartitionAssignor` to link:kafka-streams-StreamsPartitionAssignor.adoc#configure[configure] itself (and create the internal link:kafka-streams-StreamsPartitionAssignor.adoc#internalTopicManager[InternalTopicManager]).
 
 `TaskManager` manages tasks through <<active, AssignedStreamsTasks>> and <<standby, AssignedStandbyTasks>> collection of tasks.
 
@@ -28,7 +28,7 @@ a| Partitions (i.e. Kafka `TopicPartitions`) per task id
 a| *Cluster metadata*, i.e. Kafka https://kafka.apache.org/10/javadoc/org/apache/kafka/common/Cluster.html[Cluster] with topic partitions
 
 [[setClusterMetadata]]
-* Set when `StreamPartitionAssignor` does link:kafka-streams-StreamPartitionAssignor.adoc#assign[assign] and link:kafka-streams-StreamPartitionAssignor.adoc#onAssignment[onAssignment]
+* Set when `StreamsPartitionAssignor` does link:kafka-streams-StreamsPartitionAssignor.adoc#assign[assign] and link:kafka-streams-StreamsPartitionAssignor.adoc#onAssignment[onAssignment]
 
 | [[consumer]] `consumer`
 a| Kafka https://kafka.apache.org/10/javadoc/org/apache/kafka/clients/consumer/KafkaConsumer.html[Consumer] (of keys and values as array of bytes)
@@ -73,7 +73,7 @@ setAssignmentMetadata(
 
 `setAssignmentMetadata` simply sets <<assignedActiveTasks, assignedActiveTasks>> and <<assignedStandbyTasks, assignedStandbyTasks>> internal registries.
 
-NOTE: `setAssignmentMetadata` is used exclusively when `StreamPartitionAssignor` is requested to link:kafka-streams-StreamPartitionAssignor.adoc#onAssignment[handle assignment from the leader].
+NOTE: `setAssignmentMetadata` is used exclusively when `StreamsPartitionAssignor` is requested to link:kafka-streams-StreamsPartitionAssignor.adoc#onAssignment[handle assignment from the leader].
 
 === [[updateSubscriptionsFromAssignment]] `updateSubscriptionsFromAssignment` Method
 
@@ -84,7 +84,7 @@ void updateSubscriptionsFromAssignment(List<TopicPartition> partitions)
 
 `updateSubscriptionsFromAssignment`...FIXME
 
-NOTE: `updateSubscriptionsFromAssignment` is used exclusively when `StreamPartitionAssignor` is requested to link:kafka-streams-StreamPartitionAssignor.adoc#onAssignment[handle assignment from the leader]
+NOTE: `updateSubscriptionsFromAssignment` is used exclusively when `StreamsPartitionAssignor` is requested to link:kafka-streams-StreamsPartitionAssignor.adoc#onAssignment[handle assignment from the leader]
 
 === [[updateSubscriptionsFromMetadata]] `updateSubscriptionsFromMetadata` Method
 
@@ -95,7 +95,7 @@ void updateSubscriptionsFromMetadata(Set<String> topics)
 
 `updateSubscriptionsFromMetadata`...FIXME
 
-NOTE: `updateSubscriptionsFromMetadata` is used when `StreamPartitionAssignor` is requested to link:kafka-streams-StreamPartitionAssignor.adoc#subscription[subscription]
+NOTE: `updateSubscriptionsFromMetadata` is used when `StreamsPartitionAssignor` is requested to link:kafka-streams-StreamsPartitionAssignor.adoc#subscription[subscription]
 
 === [[suspendTasksAndState]] Suspending All (Active and Standby) Stream Tasks And State -- `suspendTasksAndState` Method
 
@@ -322,6 +322,8 @@ int process()
 ----
 
 `process` simply requests <<active, AssignedStreamsTasks>> to link:kafka-streams-AssignedStreamsTasks.adoc#process[process].
+
+In the end, `process` gives the number of stream tasks that processed a single record successfully.
 
 NOTE: `process` is used exclusively when `StreamThread` is requested to link:kafka-streams-StreamThread.adoc#processAndMaybeCommit[processAndMaybeCommit].
 
