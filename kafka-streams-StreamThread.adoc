@@ -2,7 +2,7 @@
 
 `StreamThread` is the *stream processor thread* in a Kafka Streams application.
 
-`StreamThread` is simply a <<run, thread of execution>> (i.e. Java's https://docs.oracle.com/javase/9/docs/api/java/lang/Thread.html[Thread]) that...FIXME
+`StreamThread` is a <<run, thread of execution>> (i.e. Java's https://docs.oracle.com/javase/9/docs/api/java/lang/Thread.html[Thread]) that...FIXME
 
 .StreamThread and Stream Processing
 image::images/kafka-streams-StreamThread.png[align="center"]

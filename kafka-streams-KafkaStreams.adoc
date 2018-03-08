@@ -53,10 +53,10 @@ a| Administrative client for Kafka, i.e. https://kafka.apache.org/10/javadoc/org
 | [[stateLock]] `stateLock`
 | Object lock for...FIXME
 
-| [[threads]] `threads`
-a| Collection of link:kafka-streams-StreamThread.adoc[StreamThread] stream processor threads
+| `threads`
+a| [[threads]] link:kafka-streams-StreamThread.adoc[Stream processor threads] (aka `StreamThread`)
 
-NOTE: The number of `threads` is controlled using link:kafka-streams-properties.adoc#num.stream.threads[num.stream.threads] configuration property with the default being 1 thread.
+NOTE: The number of stream processor threads per KafkaStreams instance is controlled by link:kafka-streams-properties.adoc#num.stream.threads[num.stream.threads] configuration property with the default being 1 thread.
 
 * Created when `KafkaStreams` is <<creating-instance, created>>
 * Started when `KafkaStreams` is <<start, started>>

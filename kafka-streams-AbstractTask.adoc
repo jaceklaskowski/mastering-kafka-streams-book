@@ -4,8 +4,6 @@
 
 `AbstractTask` is <<creating-instance, created>> when...FIXME
 
-NOTE: The number of `threads` is controlled using link:kafka-streams-properties.adoc#num.stream.threads[num.stream.threads] configuration property with the default being 1 thread.
-
 [[eosEnabled]]
 `AbstractTask` uses link:kafka-streams-properties.adoc#processing.guarantee[processing.guarantee] configuration property to enable link:kafka-streams-exactly-once-support-eos.adoc[Exactly-Once Support] for...FIXME
 
