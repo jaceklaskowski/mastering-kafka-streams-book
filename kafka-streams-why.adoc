@@ -1,0 +1,20 @@
+== Why Kafka Streams
+
+In this section you can find reasons that could make Kafka Streams a viable contender among the solutions for your stream processing project.
+
+1. <<KafkaAsDataStorage, Apache Kafka as the Data Storage>>
+1. <<ConsumerRebalanceListener, Writing Kafka ConsumerRebalanceListener Is Tricky>>
+
+=== [[KafkaAsDataStorage]] Apache Kafka as the Data Storage
+
+Kafka Streams is a library for developing applications for record stream processing where the data is in topics in Apache Kafka.
+
+NOTE: Kafka Streams supports consuming from and producing records to a single Apache Kafka cluster only (unless you use `foreach` operator for producing records to another Kafka cluster which means that you are in charge of managing a Kafka Producer to that cluster).
+
+=== [[ConsumerRebalanceListener]] Writing Kafka ConsumerRebalanceListener Is Tricky
+
+Quoting the documentation of https://kafka.apache.org/10/javadoc/org/apache/kafka/clients/consumer/ConsumerRebalanceListener.html[org.apache.kafka.clients.consumer.ConsumerRebalanceListener]:
+
+> *ConsumerRebalanceListener* is a callback interface that the user can implement to trigger custom actions when the set of partitions assigned to the consumer changes.
+
+> When Kafka is managing the group membership, a partition re-assignment will be triggered any time the members of the group change or the subscription of the members changes. This can occur when processes die, new process instances are added or old instances come back to life after failure. Rebalances can also be triggered by changes affecting the subscribed topics (e.g. when the number of partitions is administratively adjusted).

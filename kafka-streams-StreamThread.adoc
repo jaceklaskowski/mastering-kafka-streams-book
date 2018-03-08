@@ -1,6 +1,6 @@
 == [[StreamThread]] StreamThread -- Stream Processor Thread
 
-`StreamThread` is the *stream processor thread* in a KafkaStreams application.
+`StreamThread` is the *stream processor thread* in a Kafka Streams application.
 
 `StreamThread` is simply a <<run, thread of execution>> (i.e. Java's https://docs.oracle.com/javase/9/docs/api/java/lang/Thread.html[Thread]) that...FIXME
 
@@ -110,7 +110,7 @@ long runOnce(final long recordsProcessedBeforeCommit)
 
 [NOTE]
 ====
-`recordsProcessedBeforeCommit` starts as `UNLIMITED_RECORDS`, i.e. `-1` in <<runLoop, runLoop>> (where the record stream processing starts off), and is passed along to every invocation of `runOnce`.
+`recordsProcessedBeforeCommit` starts as `UNLIMITED_RECORDS` (i.e. `-1`) in <<runLoop, runLoop>> (where the record stream processing starts off), and is passed along to every invocation of `runOnce`.
 
 `runOnce` can <<adjustRecordsProcessedBeforeCommit, adjust>> `recordsProcessedBeforeCommit` (i.e. scale it down or up) given the current processing latency and commit time.
 
@@ -302,7 +302,7 @@ boolean setState(final State newState)
 
 NOTE: `setState` is used when...FIXME
 
-=== [[adjustRecordsProcessedBeforeCommit]] Scaling Up or Down (Per Current Processing Latency and Commit Time) -- `adjustRecordsProcessedBeforeCommit` Internal Method
+=== [[adjustRecordsProcessedBeforeCommit]] Adjusting Number Of Records Processed Before Commit (Per Current Processing and Commit Times) -- `adjustRecordsProcessedBeforeCommit` Internal Method
 
 [source, java]
 ----
@@ -312,7 +312,7 @@ long adjustRecordsProcessedBeforeCommit(
   final long processLatency, final long commitTime)
 ----
 
-`adjustRecordsProcessedBeforeCommit` scales (adjusts) the number of records (`recordsProcessedBeforeCommit`) up or down per current `processLatency` and `commitTime` times.
+`adjustRecordsProcessedBeforeCommit` adjusts (scales up or down) the <<recordsProcessedBeforeCommit, number of records process before commit>> per current `processLatency` and `commitTime` times.
 
 If `processLatency` is greater than `0` and `commitTime`, `adjustRecordsProcessedBeforeCommit` scales `recordsProcessedBeforeCommit` down and prints out the following DEBUG message to the logs:
 
@@ -393,3 +393,31 @@ NOTE: `processAndMaybeCommit` uses <<streamsMetrics, StreamsMetricsThreadImpl>> 
 If the number of active stream tasks that committed records is greater than 0, `processAndMaybeCommit` requests commit time sensor to record commit time (as <<computeLatency, computeLatency>> by the number of stream tasks that committed records).
 
 NOTE: `processAndMaybeCommit` uses <<streamsMetrics, StreamsMetricsThreadImpl>> to access the link:kafka-streams-StreamsMetricsThreadImpl.adoc#commitTimeSensor[commit time sensor].
+
+=== [[UNLIMITED_RECORDS]][[recordsProcessedBeforeCommit]] Tracking Number Of Records Processed Before Commit and `UNLIMITED_RECORDS` Marker
+
+`StreamThread` tracks the *number of records processed before commit* (aka `recordsProcessedBeforeCommit`).
+
+`StreamThread` uses `UNLIMITED_RECORDS` marker (i.e. `-1`) as the "zero" to say that no record has been processed yet.
+
+[source, java]
+----
+private final static int UNLIMITED_RECORDS = -1;
+----
+
+When `StreamThread` is <<run, started>> (and <<runLoop, runs the main event loop>>), the number of records processed before commit is `UNLIMITED_RECORDS` (which makes it clear that the `StreamThread` has just been started and there has been no way that any record could have been processed).
+
+The main event loop <<runOnce, polls records once>> and gives the number of records processed in this one-off poll that becomes the number of records processed before commit from the moment in time on.
+
+The number of records processed before commit may have changed but could still be `UNLIMITED_RECORDS` for the following:
+
+1. There were no records to be polled
+1. FIXME Anything else (that could have happened in <<runOnce, runOnce>>)?
+
+CAUTION: FIXME Review <<runOnce, runOnce>> yet again to focus on `UNLIMITED_RECORDS`.
+
+At some point `StreamThread` <<processAndMaybeCommit, may want to commit>> the records that have been processed so far that happens when the number of records processed before commit is no longer `UNLIMITED_RECORDS` and...FIXME
+
+When requested for <<adjustRecordsProcessedBeforeCommit, adjusting the number of records processed before commit>>, `StreamThread` uses `UNLIMITED_RECORDS` for a local `recordsProcessedBeforeCommit` that is then scaled up or down per the current processing and commit times.
+
+NOTE: <<adjustRecordsProcessedBeforeCommit, Adjusting the number of records processed before commit>> can only scale up when the current number of records processed before commit (while <<runOnce, polling records once>>) is not `UNLIMITED_RECORDS` (and the processing time is not greater than commit time).

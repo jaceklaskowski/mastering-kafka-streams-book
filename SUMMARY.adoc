@@ -3,6 +3,7 @@
 . link:book-intro.adoc[Introduction]
 
 . link:kafka-streams.adoc[Kafka Streams -- Stream Processing Library on Apache Kafka]
+. link:kafka-streams-why.adoc[Why Kafka Streams]
 
 == Developing Stream Processing Applications with Kafka Streams
 
@@ -34,25 +35,23 @@
 . link:kafka-streams-properties.adoc[Configuration Properties]
 . link:kafka-logging.adoc[Logging]
 
-== Internals of Kafka Streams
+== Monitoring Kafka Streams Applications
 
-. link:kafka-streams-ProcessorNode.adoc[ProcessorNode]
-. link:kafka-streams-ProcessorNodeFactory.adoc[ProcessorNodeFactory]
-. link:kafka-streams-SourceNodeFactory.adoc[SourceNodeFactory -- NodeFactory With No Predecessors]
-. link:kafka-streams-SinkNodeFactory.adoc[SinkNodeFactory]
-. link:kafka-streams-SourceNode.adoc[SourceNode]
-. link:kafka-streams-SinkNode.adoc[SinkNode]
-. link:kafka-streams-NodeFactory.adoc[NodeFactory]
-. link:kafka-streams-StateStoreFactory.adoc[StateStoreFactory]
-. link:kafka-streams-AbstractStateStoreFactory.adoc[AbstractStateStoreFactory]
-. link:kafka-streams-StoreBuilderFactory.adoc[StoreBuilderFactory]
-. link:kafka-streams-StateStoreSupplierFactory.adoc[StateStoreSupplierFactory]
+. link:kafka-streams-StateListener.adoc[StateListener -- KafkaStreams State Listener]
 
-. link:kafka-streams-StoreBuilder.adoc[StoreBuilder -- Contract for State Store Builders]
-.. link:kafka-streams-AbstractStoreBuilder.adoc[AbstractStoreBuilder -- Base State Store Builder]
-.. link:kafka-streams-KeyValueStoreBuilder.adoc[KeyValueStoreBuilder]
-.. link:kafka-streams-SessionStoreBuilder.adoc[SessionStoreBuilder]
-.. link:kafka-streams-WindowStoreBuilder.adoc[WindowStoreBuilder]
+== Testing
+
+. link:kafka-streams-TopologyTestDriver.adoc[TopologyTestDriver]
+. link:kafka-streams-ProcessorTopologyTestDriver.adoc[ProcessorTopologyTestDriver]
+
+== Internals of Kafka Streams Application
+
+=== Execution Environment
+
+. link:kafka-streams-StreamsPartitionAssignor.adoc[StreamsPartitionAssignor -- Partition Assignment Strategy]
+
+. link:kafka-streams-StreamThread.adoc[StreamThread -- Stream Processor Thread]
+. link:kafka-streams-StreamThread-RebalanceListener.adoc[RebalanceListener -- Kafka ConsumerRebalanceListener for Partition Assignment Among Processor Tasks]
 
 . link:kafka-streams-Task.adoc[Task -- Contract for Stream Processor Tasks]
 .. link:kafka-streams-AbstractTask.adoc[AbstractTask -- Base Processor Task]
@@ -68,17 +67,34 @@
 .. link:kafka-streams-AssignedStandbyTasks.adoc[AssignedStandbyTasks]
 .. link:kafka-streams-AssignedStreamsTasks.adoc[AssignedStreamsTasks]
 
-. link:kafka-streams-StateListener.adoc[StateListener -- KafkaStreams State Listener]
-
 . link:kafka-streams-ProcessorContextImpl.adoc[ProcessorContextImpl]
-
-. link:kafka-streams-StreamThread.adoc[StreamThread -- Stream Processor Thread]
-.. link:kafka-streams-StreamThread-RebalanceListener.adoc[RebalanceListener]
-
-. link:kafka-streams-ProcessorSupplier.adoc[ProcessorSupplier]
 
 . link:kafka-streams-GlobalStreamThread.adoc[GlobalStreamThread]
 .. link:kafka-streams-StateConsumer.adoc[StateConsumer]
+
+=== Logical Plan of Execution
+
+. link:kafka-streams-ProcessorNode.adoc[ProcessorNode]
+. link:kafka-streams-ProcessorNodeFactory.adoc[ProcessorNodeFactory]
+. link:kafka-streams-SourceNodeFactory.adoc[SourceNodeFactory -- NodeFactory With No Predecessors]
+. link:kafka-streams-SinkNodeFactory.adoc[SinkNodeFactory]
+. link:kafka-streams-SourceNode.adoc[SourceNode]
+. link:kafka-streams-SinkNode.adoc[SinkNode]
+. link:kafka-streams-NodeFactory.adoc[NodeFactory]
+. link:kafka-streams-StateStoreFactory.adoc[StateStoreFactory]
+. link:kafka-streams-AbstractStateStoreFactory.adoc[AbstractStateStoreFactory]
+. link:kafka-streams-StoreBuilderFactory.adoc[StoreBuilderFactory]
+. link:kafka-streams-StateStoreSupplierFactory.adoc[StateStoreSupplierFactory]
+
+. link:kafka-streams-ProcessorSupplier.adoc[ProcessorSupplier]
+
+=== Stateful Stream Processing
+
+. link:kafka-streams-StoreBuilder.adoc[StoreBuilder -- Contract for State Store Builders]
+.. link:kafka-streams-AbstractStoreBuilder.adoc[AbstractStoreBuilder -- Base State Store Builder]
+.. link:kafka-streams-KeyValueStoreBuilder.adoc[KeyValueStoreBuilder]
+.. link:kafka-streams-SessionStoreBuilder.adoc[SessionStoreBuilder]
+.. link:kafka-streams-WindowStoreBuilder.adoc[WindowStoreBuilder]
 
 . link:kafka-streams-PartitionGroup.adoc[PartitionGroup]
 
@@ -94,8 +110,6 @@
 . link:kafka-streams-KGroupedStreamImpl.adoc[KGroupedStreamImpl]
 
 . link:kafka-streams-AbstractStream.adoc[AbstractStream]
-
-. link:kafka-streams-StreamsPartitionAssignor.adoc[StreamsPartitionAssignor -- Partition Assignment Strategy]
 
 . link:kafka-streams-InternalTopologyBuilder.adoc[InternalTopologyBuilder]
 . link:kafka-streams-InternalStreamsBuilder.adoc[InternalStreamsBuilder]
@@ -121,9 +135,6 @@
 . link:kafka-streams-StateDirectory.adoc[StateDirectory]
 . link:kafka-streams-GroupedStreamAggregateBuilder.adoc[GroupedStreamAggregateBuilder]
 . link:kafka-streams-ProcessorTopology.adoc[ProcessorTopology]
-
-. link:kafka-streams-TopologyTestDriver.adoc[TopologyTestDriver]
-. link:kafka-streams-ProcessorTopologyTestDriver.adoc[ProcessorTopologyTestDriver]
 
 . link:kafka-streams-GlobalKTableImpl.adoc[GlobalKTableImpl]
 . link:kafka-streams-KTableValueGetterSupplier.adoc[KTableValueGetterSupplier]
