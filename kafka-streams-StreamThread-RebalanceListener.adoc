@@ -1,13 +1,13 @@
 == [[RebalanceListener]] RebalanceListener -- Kafka ConsumerRebalanceListener for Partition Assignment Among Processor Tasks
 
-`RebalanceListener` is a Apache Kafka https://kafka.apache.org/10/javadoc/org/apache/kafka/clients/consumer/ConsumerRebalanceListener.html[ConsumerRebalanceListener] that listens to changes to the partitions assigned to a single instance of a Kafka Streams application.
+`RebalanceListener` is a Apache Kafka https://kafka.apache.org/10/javadoc/org/apache/kafka/clients/consumer/ConsumerRebalanceListener.html[ConsumerRebalanceListener] callback interface that listens to changes to the partitions assigned to a single instance of a Kafka Streams application.
 
 .RebalanceListener, StreamThread and KafkaStreams
 image::images/kafka-streams-RebalanceListener.png[align="center"]
 
 From the documentation of https://kafka.apache.org/10/javadoc/org/apache/kafka/clients/consumer/ConsumerRebalanceListener.html[org.apache.kafka.clients.consumer.ConsumerRebalanceListener]:
 
-> A callback interface that the user can implement to trigger custom actions when the set of partitions assigned to the consumer changes.
+> `ConsumerRebalanceListener` is a callback interface that the user can implement to trigger custom actions when the set of partitions assigned to the consumer changes.
 
 > When Kafka is managing the group membership, a partition re-assignment will be triggered any time the members of the group change or the subscription of the members changes. This can occur when processes die, new process instances are added or old instances come back to life after failure. Rebalances can also be triggered by changes affecting the subscribed topics (e.g. when the number of partitions is administratively adjusted).
 
@@ -15,9 +15,20 @@ From the documentation of https://kafka.apache.org/10/javadoc/org/apache/kafka/c
 
 `RebalanceListener` is <<creating-instance, created>> exclusively when `StreamThread` is link:kafka-streams-StreamThread.adoc#rebalanceListener[created].
 
-At the completion of a successful partition re-assignment (i.e. <<onPartitionsAssigned, onPartitionsAssigned>> event) `RebalanceListener` requests <<taskManager, TaskManager>> for link:kafka-streams-TaskManager.adoc#createTasks[creating processor tasks for assigned topic partitions].
+.Creating RebalanceListener
+image::images/kafka-streams-RebalanceListener-creating-instance.png[align="center"]
 
-At the start of a rebalance operation (i.e. <<onPartitionsRevoked, onPartitionsRevoked>> event) `RebalanceListener` requests <<taskManager, TaskManager>> for link:kafka-streams-TaskManager.adoc#suspendTasksAndState[suspending all stream tasks and state].
+At the completion of a successful partition re-assignment (i.e. <<onPartitionsAssigned, onPartitionsAssigned>> event) `RebalanceListener` requests <<taskManager, TaskManager>> to link:kafka-streams-TaskManager.adoc#createTasks[creating processor tasks for assigned topic partitions].
+
+At the start of a rebalance operation (i.e. <<onPartitionsRevoked, onPartitionsRevoked>> event) `RebalanceListener` requests <<taskManager, TaskManager>> to link:kafka-streams-TaskManager.adoc#suspendTasksAndState[suspending all stream tasks and state].
+
+`RebalanceListener` uses <<streamThread, StreamThread>> for the following:
+
+1. Changing the state (of the stream processor thread) at <<onPartitionsAssigned, partition assignment>> and <<onPartitionsRevoked, partition revocation>>
+
+1. Clearing standby records at the end of <<onPartitionsRevoked, partition revocation>>
+
+1. Notifying about the error caught at <<onPartitionsAssigned, partition assignment>> and <<onPartitionsRevoked, partition revocation>>
 
 [[logging]]
 [TIP]
@@ -65,7 +76,7 @@ partition assignment took [duration] ms.
 
 `onPartitionsAssigned` does nothing (i.e. prints the messages to the logs) when the state transition was invalid.
 
-=== [[onPartitionsRevoked]] `onPartitionsRevoked` Handler Method
+=== [[onPartitionsRevoked]] Handling Partition Revocation -- `onPartitionsRevoked` Handler Method
 
 [source, java]
 ----

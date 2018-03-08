@@ -24,6 +24,11 @@ NOTE: `KafkaStreams` uses link:kafka-streams-KafkaStreams.adoc#threads[num.strea
 
 `StreamThread` closes the Kafka <<consumer, consumer>> while <<completeShutdown, shuting down>>.
 
+[[state]]
+`StreamThread` can be in one of the following states:
+
+1. FIXME
+
 [[internal-registries]]
 .StreamThread's Internal Properties (e.g. Registries, Counters and Flags)
 [cols="1,2",options="header",width="100%"]
@@ -301,6 +306,17 @@ boolean setState(final State newState)
 `setState`...FIXME
 
 NOTE: `setState` is used when...FIXME
+
+=== [[setRebalanceException]] `setRebalanceException` Method
+
+[source, java]
+----
+void setRebalanceException(final Throwable rebalanceException)
+----
+
+`setRebalanceException`...FIXME
+
+NOTE: `setRebalanceException` is used when...FIXME
 
 === [[adjustRecordsProcessedBeforeCommit]] Adjusting Number Of Records Processed Before Commit (Per Current Processing and Commit Times) -- `adjustRecordsProcessedBeforeCommit` Internal Method
 
