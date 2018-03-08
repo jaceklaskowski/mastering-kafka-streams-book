@@ -7,5 +7,8 @@
         "ga": {
             "token": "UA-86782445-5"
         }
+    },
+    "variables": {
+      "kafka_version": "1.2.0-SNAPSHOT"
     }
 }
