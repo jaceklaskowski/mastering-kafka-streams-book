@@ -24,11 +24,6 @@ NOTE: `KafkaStreams` uses link:kafka-streams-KafkaStreams.adoc#threads[num.strea
 
 `StreamThread` closes the Kafka <<consumer, consumer>> while <<completeShutdown, shuting down>>.
 
-[[state]]
-`StreamThread` can be in one of the following states:
-
-1. FIXME
-
 [[internal-registries]]
 .StreamThread's Internal Properties (e.g. Registries, Counters and Flags)
 [cols="1,2",options="header",width="100%"]
@@ -63,6 +58,50 @@ log4j.logger.org.apache.kafka.streams.processor.internals.StreamThread=TRACE
 
 Refer to link:kafka-logging.adoc#log4j.properties[Application Logging Using log4j].
 ====
+
+=== [[state]][[State]] Life Cycle of StreamThread -- StreamThread's States
+
+`StreamThread` can be in exactly one of the following *states* at any given point in time:
+
+[start=0]
+1. `CREATED` -- The initial state of `StreamThread` right after it was <<creating-instance, created>>
+1. `RUNNING`
+1. `PARTITIONS_REVOKED`
+1. `PARTITIONS_ASSIGNED`
+1. `PENDING_SHUTDOWN`
+1. `DEAD`
+
+.StreamThread's Life Cycle
+image::images/kafka-streams-StreamThread-lifecycle.png[align="center"]
+
+`StreamThread` can be transitioned to another state by executing <<setState, setState>>.
+
+NOTE: `StreamThread` defines a Java enumeration `State` with the states above ordered by ordinal. When created, they are assigned the state ordinals that could transition to. You can check whether a transition is valid or not using `State.isValidTransition`.
+
+[source, scala]
+----
+import org.apache.kafka.streams.processor.internals.StreamThread.State._
+
+scala> CREATED.ordinal
+res1: Int = 0
+
+scala> CREATED.isValidTransition(RUNNING)
+res2: Boolean = true
+
+scala> CREATED.isValidTransition(DEAD)
+res3: Boolean = false
+----
+
+=== [[setStateListener]] `setStateListener` Method
+
+[source, java]
+----
+void setStateListener(final StreamThread.StateListener listener)
+----
+
+`setStateListener`...FIXME
+
+NOTE: `setStateListener` is used when...FIXME
 
 === [[pollRequests]] Polling for Records -- `pollRequests` Internal Method
 
@@ -296,7 +335,7 @@ Encountered the following error during processing: [exception]
 
 NOTE: `run` is used when `KafkaStreams` is link:kafka-streams-KafkaStreams.adoc#start[started].
 
-=== [[setState]] Setting State -- `setState` Method
+=== [[setState]] Setting New State -- `setState` Method
 
 [source, java]
 ----
