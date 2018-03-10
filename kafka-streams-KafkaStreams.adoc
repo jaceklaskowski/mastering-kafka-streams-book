@@ -116,7 +116,7 @@ synchronized boolean close(final long timeout, final TimeUnit timeUnit)
 
 `close`...FIXME
 
-NOTE: `close` is used when...FIXME
+IMPORTANT: Always execute `close` on a `KafkaStreams` instance even if you never call <<start, start>> to avoid resource leaks.
 
 === [[localThreadsMetadata]] `localThreadsMetadata` Method
 

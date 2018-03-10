@@ -141,7 +141,18 @@ void completeShutdown(final boolean cleanRun)
 
 `completeShutdown`...FIXME
 
-NOTE: `completeShutdown` is used when...FIXME
+NOTE: `completeShutdown` is used when `StreamThread` is requested to <<run, run>> and <<shutdown, shutdown>>.
+
+=== [[shutdown]] `shutdown` Method
+
+[source, java]
+----
+void shutdown()
+----
+
+`shutdown`...FIXME
+
+NOTE: `shutdown` is used exclusively when `KafkaStreams` is requested to link:kafka-streams-KafkaStreams.adoc#close[close].
 
 === [[runOnce]] Polling Records Once -- `runOnce` Method
 
@@ -333,7 +344,7 @@ At the end, `run` <<completeShutdown, shuts down>> (per `cleanRun` flag that say
 Encountered the following error during processing: [exception]
 ```
 
-NOTE: `run` is used when `KafkaStreams` is link:kafka-streams-KafkaStreams.adoc#start[started].
+NOTE: `run` is used exclusively when `KafkaStreams` is requested to link:kafka-streams-KafkaStreams.adoc#start[start].
 
 === [[setState]] Setting New State -- `setState` Method
 
