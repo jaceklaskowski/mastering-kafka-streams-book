@@ -64,15 +64,15 @@ Refer to link:kafka-logging.adoc#log4j.properties[Application Logging Using log4
 `StreamThread` can be in exactly one of the following *states* at any given point in time:
 
 [start=0]
-1. `CREATED` - The initial state of `StreamThread` right after it was <<creating-instance, created>>
-1. `RUNNING` - `StreamThread` was requested for the following:
+1. [[CREATED]] `CREATED` - The initial state of `StreamThread` right after it was <<creating-instance, created>>
+1. [[RUNNING]] `RUNNING` - `StreamThread` was requested for the following:
 * <<run, run>>
 * <<runOnce, runOnce>> when `StreamThread` is in <<PARTITIONS_ASSIGNED, PARTITIONS_ASSIGNED>> state and <<taskManager, TaskManager>> was positive after link:kafka-streams-TaskManager.adoc#updateNewAndRestoringTasks[updateNewAndRestoringTasks]
 * <<runOnce, runOnce>> when `StreamThread` polled for records and happened to transition to <<PARTITIONS_ASSIGNED, PARTITIONS_ASSIGNED>> state, but (again) only when <<taskManager, TaskManager>> was positive after link:kafka-streams-TaskManager.adoc#updateNewAndRestoringTasks[updateNewAndRestoringTasks]
-1. `PARTITIONS_REVOKED` - `RebalanceListener` was requested to link:kafka-streams-StreamThread-RebalanceListener.adoc#onPartitionsRevoked[handle partition revocation]
+1. [[PARTITIONS_REVOKED]] `PARTITIONS_REVOKED` - `RebalanceListener` was requested to link:kafka-streams-StreamThread-RebalanceListener.adoc#onPartitionsRevoked[handle partition revocation]
 1. [[PARTITIONS_ASSIGNED]] `PARTITIONS_ASSIGNED` - `RebalanceListener` was requested to link:kafka-streams-StreamThread-RebalanceListener.adoc#onPartitionsAssigned[handle partition assignment]
-1. `PENDING_SHUTDOWN` - `StreamThread` was requested to <<shutdown, shutdown>> or <<completeShutdown, completeShutdown>>
-1. `DEAD` - `StreamThread` is requested to <<completeShutdown, completeShutdown>>
+1. [[PENDING_SHUTDOWN]] `PENDING_SHUTDOWN` - `StreamThread` was requested to <<shutdown, shutdown>> or <<completeShutdown, completeShutdown>>
+1. [[DEAD]] `DEAD` - `StreamThread` is requested to <<completeShutdown, completeShutdown>>
 
 .StreamThread's Life Cycle
 image::images/kafka-streams-StreamThread-lifecycle.png[align="center"]
@@ -309,17 +309,6 @@ Detected a task that got migrated to another thread. This implies that this thre
 
 NOTE: `runLoop` is used exclusively when `StreamThread` is <<run, started>>.
 
-=== [[isRunning]] `isRunning` Method
-
-[source, java]
-----
-boolean isRunning()
-----
-
-`isRunning`...FIXME
-
-NOTE: `isRunning` is used when...FIXME
-
 === [[run]] Starting Stream Processor Thread -- `run` Method
 
 [source, java]
@@ -490,3 +479,29 @@ At some point `StreamThread` <<processAndMaybeCommit, may want to commit>> the r
 When requested for <<adjustRecordsProcessedBeforeCommit, adjusting the number of records processed before commit>>, `StreamThread` uses `UNLIMITED_RECORDS` for a local `recordsProcessedBeforeCommit` that is then scaled up or down per the current processing and commit times.
 
 NOTE: <<adjustRecordsProcessedBeforeCommit, Adjusting the number of records processed before commit>> can only scale up when the current number of records processed before commit (while <<runOnce, polling records once>>) is not `UNLIMITED_RECORDS` (and the processing time is not greater than commit time).
+
+=== [[isRunning]] Checking If StreamThread Is Running -- `isRunning` Method
+
+[source, java]
+----
+boolean isRunning()
+----
+
+`isRunning` is `true` when `StreamThread` is in one of the following <<state, states>>:
+
+* <<RUNNING, RUNNING>>
+* <<PARTITIONS_REVOKED, PARTITIONS_REVOKED>>
+* <<PARTITIONS_ASSIGNED, PARTITIONS_ASSIGNED>>
+
+Otherwise, `isRunning` is `false`.
+
+NOTE: `isRunning` is simply a pass-through variant of <<State, State.isRunning>>.
+
+[NOTE]
+====
+`isRunning` is used when:
+
+* `StreamThread` is requested to <<runLoop, run the main event loop>>
+
+* `KafkaStreams` is requested to link:kafka-streams-KafkaStreams.adoc#close[close].
+====
