@@ -1,0 +1,14 @@
+== [[WallclockTimestampExtractor]] WallclockTimestampExtractor
+
+`WallclockTimestampExtractor` is a link:kafka-streams-TimestampExtractor.adoc[TimestampExtractor] that <<extract, uses the current wall clock time as timestamp>> when requested to extract a timestamp from a record.
+
+=== [[extract]] `extract` Method
+
+[source, java]
+----
+long extract(final ConsumerRecord<Object, Object> record, final long previousTimestamp)
+----
+
+NOTE: `extract` is part of link:kafka-streams-TimestampExtractor.adoc#extract[TimestampExtractor Contract] to extract a timestamp from a record.
+
+`extract` simply requests the Java https://docs.oracle.com/javase/8/docs/api/java/lang/System.html[System] for the link:++https://docs.oracle.com/javase/8/docs/api/java/lang/System.html#currentTimeMillis--++[current time in milliseconds].

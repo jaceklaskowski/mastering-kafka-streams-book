@@ -1,0 +1,58 @@
+== [[ExtractRecordMetadataTimestamp]] ExtractRecordMetadataTimestamp
+
+`ExtractRecordMetadataTimestamp` is the <<contract, base>> of <<implementations, TimestampExtractors>> that use an <<onInvalidTimestamp, onInvalidTimestamp error handler>> when a record has a negative (invalid) timestamp value (while <<extract, extracting>> embedded metadata timestamps from Kafka messages).
+
+[[contract]]
+[source, java]
+----
+package org.apache.kafka.streams.processor;
+
+abstract class ExtractRecordMetadataTimestamp implements TimestampExtractor {
+  // only required methods that have no implementation
+  // the others follow
+  abstract long onInvalidTimestamp(
+    final ConsumerRecord<Object, Object> record,
+    final long recordTimestamp,
+    final long previousTimestamp);
+}
+----
+
+NOTE: `ExtractRecordMetadataTimestamp` is an `Evolving` contract which means that compatibility may be broken at minor release.
+
+.ExtractRecordMetadataTimestamp Contract
+[cols="1,2",options="header",width="100%"]
+|===
+| Method
+| Description
+
+| `onInvalidTimestamp`
+| [[onInvalidTimestamp]] Used when...FIXME
+|===
+
+[[implementations]]
+.ExtractRecordMetadataTimestamps
+[cols="1,2",options="header",width="100%"]
+|===
+| ExtractRecordMetadataTimestamp
+| Description
+
+| [[FailOnInvalidTimestamp]]
+| `FailOnInvalidTimestamp`
+
+| [[UsePreviousTimeOnInvalidTimestamp]]
+| `UsePreviousTimeOnInvalidTimestamp`
+
+| [[LogAndSkipOnInvalidTimestamp]]
+| `LogAndSkipOnInvalidTimestamp`
+|===
+
+=== [[extract]] `extract` Method
+
+[source, java]
+----
+long extract(final ConsumerRecord<Object, Object> record, final long previousTimestamp)
+----
+
+NOTE: `extract` is part of link:kafka-streams-TimestampExtractor.adoc#extract[TimestampExtractor Contract] to extract a timestamp from a record.
+
+`extract`...FIXME

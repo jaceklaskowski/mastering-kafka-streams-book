@@ -1,0 +1,41 @@
+== [[TimestampExtractor]] TimestampExtractor
+
+`TimestampExtractor` is a <<contract, contract>> of <<implementations, timestamp extractors>> that <<extract, extract>> a timestamp from a record.
+
+[[contract]]
+[source, java]
+----
+package org.apache.kafka.streams.processor;
+
+interface TimestampExtractor {
+  // only required methods that have no implementation
+  // the others follow
+  long extract(ConsumerRecord<Object, Object> record, long previousTimestamp);
+}
+----
+
+NOTE: `TimestampExtractor` is an `Evolving` contract which means that compatibility may be broken at minor release.
+
+.TimestampExtractor Contract
+[cols="1,2",options="header",width="100%"]
+|===
+| Method
+| Description
+
+| `extract`
+| [[extract]] Used when...FIXME
+|===
+
+[[implementations]]
+.TimestampExtractors
+[cols="1,2",options="header",width="100%"]
+|===
+| TimestampExtractor
+| Description
+
+| link:kafka-streams-WallclockTimestampExtractor.adoc[WallclockTimestampExtractor]
+| [[WallclockTimestampExtractor]]
+
+| link:kafka-streams-ExtractRecordMetadataTimestamp.adoc[ExtractRecordMetadataTimestamp]
+| [[ExtractRecordMetadataTimestamp]]
+|===

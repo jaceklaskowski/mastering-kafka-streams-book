@@ -30,6 +30,10 @@
 
 . link:kafka-streams-Punctuator.adoc[Punctuator]
 
+. link:kafka-streams-TimestampExtractor.adoc[TimestampExtractor]
+.. link:kafka-streams-WallclockTimestampExtractor.adoc[WallclockTimestampExtractor]
+.. link:kafka-streams-ExtractRecordMetadataTimestamp.adoc[ExtractRecordMetadataTimestamp]
+
 . link:kafka-streams-exactly-once-support-eos.adoc[Exactly-Once Support (EOS)]
 
 . link:kafka-streams-properties.adoc[Configuration Properties]
