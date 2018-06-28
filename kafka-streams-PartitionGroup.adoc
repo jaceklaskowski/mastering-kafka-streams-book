@@ -23,3 +23,16 @@ StampedRecord nextRecord(final RecordInfo info)
 `nextRecord`...FIXME
 
 NOTE: `nextRecord` is used exclusively when `StreamTask` is link:kafka-streams-StreamTask.adoc#process[processing]...FIXME
+
+=== [[addRawRecords]] `addRawRecords` Method
+
+[source, scala]
+----
+int addRawRecords(
+  final TopicPartition partition,
+  final Iterable<ConsumerRecord<byte[], byte[]>> rawRecords)
+----
+
+`addRawRecords`...FIXME
+
+NOTE: `addRawRecords` is used when...FIXME

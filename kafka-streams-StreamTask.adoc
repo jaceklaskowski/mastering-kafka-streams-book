@@ -2,7 +2,7 @@
 
 `StreamTask` is a concrete link:kafka-streams-AbstractTask.adoc[stream processor task] that uses a <<partitionGroup, PartitionGroup>> for...FIXME
 
-`StreamTask` is <<creating-instance, created>> when...FIXME
+`StreamTask` is <<creating-instance, created>> exclusively when `TaskCreator` is requested to link:kafka-streams-TaskCreator.adoc#createTask[create a StreamTask].
 
 [[commitNeeded]]
 [[commitRequested]]
@@ -109,19 +109,6 @@ NOTE: `close` is part of link:kafka-streams-Task.adoc#close[Task Contract] to...
 * [[producer]] Kafka producer (of keys and values as array of bytes)
 
 `StreamTask` initializes the <<internal-registries, internal registries and counters>>.
-
-=== [[addRecords]] `addRecords` Method
-
-[source, java]
-----
-int addRecords(
-  final TopicPartition partition,
-  final Iterable<ConsumerRecord<byte[], byte[]>> records)
-----
-
-`addRecords`...FIXME
-
-NOTE: `addRecords` is used exclusively when `StreamThread` is requested to link:kafka-streams-StreamThread.adoc#addRecordsToTasks[addRecordsToTasks].
 
 === [[initTopology]] `initTopology` Internal Method
 
@@ -234,3 +221,26 @@ void closeSuspended(
 NOTE: `closeSuspended` is part of link:kafka-streams-Task.adoc#closeSuspended[Task Contract] to...FIXME.
 
 `closeSuspended`...FIXME
+
+=== [[addRecords]] `addRecords` Method
+
+[source, java]
+----
+int addRecords(
+  final TopicPartition partition,
+  final Iterable<ConsumerRecord<byte[], byte[]>> records)
+----
+
+`addRecords` requests <<partitionGroup, PartitionGroup>> to link:kafka-streams-PartitionGroup.adoc#addRawRecords[addRawRecords].
+
+You should see the following TRACE message in the logs:
+
+```
+Added records into the buffered queue of partition [partition], new queue size is [newQueueSize]"
+```
+
+`addRecords` requests the <<consumer, Kafka Consumer>> to pause the partition if the queue size of the partition exceeded <<maxBufferedSize, buffered.records.per.partition>> configuration property.
+
+In the end, `addRecords` returns the number of records added.
+
+NOTE: `addRecords` is used exclusively when `StreamThread` is requested to link:kafka-streams-StreamThread.adoc#addRecordsToTasks[addRecordsToTasks].
