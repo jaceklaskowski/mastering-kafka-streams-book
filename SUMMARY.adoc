@@ -76,6 +76,8 @@
 . link:kafka-streams-GlobalStreamThread.adoc[GlobalStreamThread]
 .. link:kafka-streams-StateConsumer.adoc[StateConsumer]
 
+. link:kafka-streams-RecordQueue.adoc[RecordQueue]
+
 === Logical Plan of Execution
 
 . link:kafka-streams-ProcessorNode.adoc[ProcessorNode]

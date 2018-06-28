@@ -1,0 +1,66 @@
+== [[RecordQueue]] RecordQueue
+
+`RecordQueue` is...FIXME
+
+`RecordQueue` is <<creating-instance, created>> along with a link:kafka-streams-StreamTask.adoc[StreamTask] exclusively.
+
+[[internal-registries]]
+.RecordQueue's Internal Properties (e.g. Registries, Counters and Flags)
+[cols="1,2",options="header",width="100%"]
+|===
+| Name
+| Description
+
+| `fifoQueue`
+| [[fifoQueue]] Java's https://docs.oracle.com/javase/8/docs/api/index.html?java/util/ArrayDeque.html[java.util.ArrayDeque]
+
+Used when...FIXME
+
+| `recordDeserializer`
+| [[recordDeserializer]] link:kafka-streams-RecordDeserializer.adoc[RecordDeserializer] (for the <<source, SourceNode>> and <<deserializationExceptionHandler, DeserializationExceptionHandler>>)
+
+Used when...FIXME
+
+| `timeTracker`
+| [[timeTracker]] `MinTimestampTracker`
+
+Used when...FIXME
+|===
+
+[[logging]]
+[TIP]
+====
+Enable `TRACE` logging level for `org.apache.kafka.streams.processor.internals.RecordQueue` logger to see what happens inside.
+
+Add the following line to `log4j.properties`:
+
+```
+log4j.logger.org.apache.kafka.streams.processor.internals.RecordQueue=TRACE
+```
+
+Refer to link:kafka-logging.adoc#log4j.properties[Application Logging Using log4j].
+====
+
+=== [[addRawRecords]] `addRawRecords` Method
+
+[source, java]
+----
+int addRawRecords(final Iterable<ConsumerRecord<byte[], byte[]>> rawRecords)
+----
+
+`addRawRecords`...FIXME
+
+NOTE: `addRawRecords` is used when...FIXME
+
+=== [[creating-instance]] Creating RecordQueue Instance
+
+`RecordQueue` takes the following when created:
+
+* [[partition]] Kafka `TopicPartition`
+* [[source]] link:kafka-streams-SourceNode.adoc[SourceNode]
+* [[timestampExtractor]] link:kafka-streams-TimestampExtractor.adoc[TimestampExtractor]
+* [[deserializationExceptionHandler]] `DeserializationExceptionHandler`
+* [[processorContext]] link:kafka-streams-ProcessorContext.adoc[ProcessorContext]
+* [[logContext]] `LogContext`
+
+`RecordQueue` initializes the <<internal-registries, internal registries and counters>>.

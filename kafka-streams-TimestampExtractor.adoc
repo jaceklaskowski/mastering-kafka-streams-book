@@ -23,7 +23,7 @@ NOTE: `TimestampExtractor` is an `Evolving` contract which means that compatibil
 | Description
 
 | `extract`
-| [[extract]] Used when...FIXME
+| [[extract]] Used exclusively when `RecordQueue` is requested to link:kafka-streams-RecordQueue.adoc#addRawRecords[addRawRecords].
 |===
 
 [[implementations]]

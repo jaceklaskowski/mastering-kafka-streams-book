@@ -22,11 +22,25 @@
 | Name
 | Description
 
-| [[partitionGroup]] `partitionGroup`
-| link:kafka-streams-PartitionGroup.adoc[PartitionGroup]
+| `partitionGroup`
+a| [[partitionGroup]] link:kafka-streams-PartitionGroup.adoc[PartitionGroup] (with a link:kafka-streams-RecordQueue.adoc[RecordQueue] per <<partitions, TopicPartition>>)
 
-| [[consumedOffsets]] `consumedOffsets`
-| Offsets by topic partitions, i.e. `Map<TopicPartition, Long>`, that `StreamTask` has <<process, processed>> successfully.
+Used when `StreamTask` is requested to do the following:
+
+* <<addRecords, addRecords>>
+
+* <<process, Process a single record>>
+
+* <<maybePunctuateStreamTime, maybePunctuateStreamTime>>
+
+* <<numBuffered, numBuffered>>
+
+* <<closeTopology, closeTopology>>
+
+* <<closeSuspended, closeSuspended>>
+
+| `consumedOffsets`
+| [[consumedOffsets]] Offsets by topic partitions, i.e. `Map<TopicPartition, Long>`, that `StreamTask` has <<process, processed>> successfully.
 |===
 
 [[logging]]
@@ -184,3 +198,39 @@ In case of a `KafkaException`, `process` reports a `StreamsException`.
 In the end, `process` gives `true` when processing a single record was successful, and `false` when there were no records to process.
 
 NOTE: `process` is used exclusively when `AssignedStreamsTasks` is requested to link:kafka-streams-AssignedStreamsTasks.adoc#process[process].
+
+=== [[maybePunctuateStreamTime]] `maybePunctuateStreamTime` Method
+
+[source, java]
+----
+boolean maybePunctuateStreamTime()
+----
+
+`maybePunctuateStreamTime`...FIXME
+
+NOTE: `maybePunctuateStreamTime` is used when...FIXME
+
+=== [[numBuffered]] `numBuffered` Method
+
+[source, java]
+----
+int numBuffered()
+----
+
+`numBuffered`...FIXME
+
+NOTE: `numBuffered` is used when...FIXME
+
+=== [[closeSuspended]] `closeSuspended` Method
+
+[source, java]
+----
+void closeSuspended(
+  boolean clean,
+  final boolean isZombie,
+  RuntimeException firstException)
+----
+
+NOTE: `closeSuspended` is part of link:kafka-streams-Task.adoc#closeSuspended[Task Contract] to...FIXME.
+
+`closeSuspended`...FIXME

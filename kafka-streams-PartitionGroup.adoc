@@ -10,7 +10,7 @@
 | Description
 
 | [[partitionQueues]] `partitionQueues`
-| Collection of `RecordQueues` per partition (i.e. `TopicPartition`)
+| link:kafka-streams-RecordQueue.adoc[RecordQueues] per partition (i.e. `TopicPartition`)
 |===
 
 === [[nextRecord]] `nextRecord` Method
