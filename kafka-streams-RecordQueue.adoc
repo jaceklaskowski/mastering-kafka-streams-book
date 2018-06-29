@@ -41,17 +41,6 @@ log4j.logger.org.apache.kafka.streams.processor.internals.RecordQueue=TRACE
 Refer to link:kafka-logging.adoc#log4j.properties[Application Logging Using log4j].
 ====
 
-=== [[addRawRecords]] `addRawRecords` Method
-
-[source, java]
-----
-int addRawRecords(final Iterable<ConsumerRecord<byte[], byte[]>> rawRecords)
-----
-
-`addRawRecords`...FIXME
-
-NOTE: `addRawRecords` is used when...FIXME
-
 === [[creating-instance]] Creating RecordQueue Instance
 
 `RecordQueue` takes the following when created:
@@ -64,3 +53,25 @@ NOTE: `addRawRecords` is used when...FIXME
 * [[logContext]] `LogContext`
 
 `RecordQueue` initializes the <<internal-registries, internal registries and counters>>.
+
+=== [[size]] `size` Method
+
+[source, java]
+----
+int size()
+----
+
+`size` simply returns the number of elements in the <<fifoQueue, fifoQueue>>.
+
+NOTE: `size` is used when...FIXME
+
+=== [[addRawRecords]] `addRawRecords` Method
+
+[source, java]
+----
+int addRawRecords(final Iterable<ConsumerRecord<byte[], byte[]>> rawRecords)
+----
+
+`addRawRecords`...FIXME
+
+NOTE: `addRawRecords` is used when...FIXME
