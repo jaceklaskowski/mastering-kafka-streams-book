@@ -4,6 +4,9 @@
 
 `RecordQueue` is <<creating-instance, created>> along with a link:kafka-streams-StreamTask.adoc[StreamTask] exclusively.
 
+.RecordQueue, StreamTask and TaskCreator
+image::images/kafka-streams-RecordQueue.png[align="center"]
+
 [[internal-registries]]
 .RecordQueue's Internal Properties (e.g. Registries, Counters and Flags)
 [cols="1,2",options="header",width="100%"]

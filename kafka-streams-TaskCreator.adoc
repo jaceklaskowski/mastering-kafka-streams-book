@@ -14,7 +14,7 @@ StreamTask createTask(
   final Set<TopicPartition> partitions)
 ----
 
-NOTE: `createTask` is part of link:kafka-streams-AbstractTaskCreator.adoc#createTask[AbstractTaskCreator Contract] to create concrete link:kafka-streams-AbstractTask.adoc[stream processor tasks].
+NOTE: `createTask` is part of link:kafka-streams-AbstractTaskCreator.adoc#createTask[AbstractTaskCreator Contract] to create a concrete link:kafka-streams-AbstractTask.adoc[stream processor task].
 
 `createTask`...FIXME
 
