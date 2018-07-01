@@ -272,7 +272,7 @@ NOTE: `create` is used exclusively when `KafkaStreams` is link:kafka-streams-Kaf
 * [[consumer]] Kafka https://kafka.apache.org/10/javadoc/org/apache/kafka/clients/consumer/KafkaConsumer.html[Consumer] (of keys and values as array of bytes)
 * [[originalReset]] `originalReset`
 * [[taskManager]] link:kafka-streams-TaskManager.adoc[TaskManager]
-* [[streamsMetrics]] `StreamsMetricsThreadImpl`
+* [[streamsMetrics]] link:kafka-streams-StreamsMetricsThreadImpl.adoc[StreamsMetricsThreadImpl]
 * [[builder]] link:kafka-streams-InternalTopologyBuilder.adoc[InternalTopologyBuilder]
 * [[threadClientId]] `threadClientId`
 * [[logContext]] `LogContext`

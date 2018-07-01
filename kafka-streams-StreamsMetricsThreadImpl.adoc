@@ -1,8 +1,6 @@
 == [[StreamsMetricsThreadImpl]] StreamsMetricsThreadImpl
 
-`StreamsMetricsThreadImpl` is...FIXME
-
-`StreamsMetricsThreadImpl` is <<creating-instance, created>> when...FIXME
+`StreamsMetricsThreadImpl` is a custom link:kafka-streams-StreamsMetricsImpl.adoc[StreamsMetricsImpl] that is <<creating-instance, created>> along with link:kafka-streams-StreamThread.adoc#create[StreamThread] (when `KafkaStreams` is link:kafka-streams-KafkaStreams.adoc#creating-instance[created]).
 
 [[internal-registries]]
 .StreamsMetricsThreadImpl's Internal Properties (e.g. Registries, Counters and Flags)
@@ -43,3 +41,25 @@
 * [[tags]] Tags (as `Map<String, String>`)
 
 `StreamsMetricsThreadImpl` initializes the <<internal-registries, internal registries and counters>>.
+
+=== [[createMeter]] `createMeter` Internal Method
+
+[source, java]
+----
+Meter createMeter(Metrics metrics, SampledStat stat, String baseName, String descriptiveName)
+----
+
+`createMeter`...FIXME
+
+NOTE: `createMeter` is used when...FIXME
+
+=== [[removeAllSensors]] `removeAllSensors` Method
+
+[source, java]
+----
+void removeAllSensors()
+----
+
+`removeAllSensors`...FIXME
+
+NOTE: `removeAllSensors` is used when...FIXME

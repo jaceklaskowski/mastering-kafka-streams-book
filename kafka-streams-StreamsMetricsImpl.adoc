@@ -1,0 +1,6 @@
+== [[StreamsMetricsImpl]] StreamsMetricsImpl
+
+`StreamsMetricsImpl` is a link:kafka-streams-StreamsMetrics.adoc[StreamsMetrics] that...FIXME
+
+[[implementations]]
+NOTE: link:kafka-streams-StreamsMetricsThreadImpl.adoc[StreamsMetricsThreadImpl] is a custom `StreamsMetricsImpl` that is used...FIXME...for efficiency.

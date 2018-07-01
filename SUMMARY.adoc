@@ -43,6 +43,10 @@
 
 . link:kafka-streams-StateListener.adoc[StateListener -- KafkaStreams State Listener]
 
+. link:kafka-streams-StreamsMetrics.adoc[StreamsMetrics]
+.. link:kafka-streams-StreamsMetricsImpl.adoc[StreamsMetricsImpl]
+.. link:kafka-streams-StreamsMetricsThreadImpl.adoc[StreamsMetricsThreadImpl]
+
 == Testing
 
 . link:kafka-streams-TopologyTestDriver.adoc[TopologyTestDriver]
@@ -156,7 +160,6 @@
 . link:kafka-streams-SubscriptionInfo.adoc[SubscriptionInfo]
 . link:kafka-streams-ClientMetadata.adoc[ClientMetadata]
 . link:kafka-streams-StreamsMetadataState.adoc[StreamsMetadataState]
-. link:kafka-streams-StreamsMetricsThreadImpl.adoc[StreamsMetricsThreadImpl]
 . link:kafka-streams-QuickUnion.adoc[QuickUnion]
 . link:kafka-streams-RecordInfo.adoc[RecordInfo]
 . link:kafka-streams-StampedRecord.adoc[StampedRecord]

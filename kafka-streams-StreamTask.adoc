@@ -102,7 +102,7 @@ NOTE: `close` is part of link:kafka-streams-Task.adoc#close[Task Contract] to...
 * [[consumer]] Kafka https://kafka.apache.org/10/javadoc/org/apache/kafka/clients/consumer/KafkaConsumer.html[Consumer] (of keys and values as array of bytes)
 * [[changelogReader]] link:kafka-streams-ChangelogReader.adoc[ChangelogReader]
 * [[config]] link:kafka-streams-StreamsConfig.adoc[StreamsConfig]
-* [[metrics]] `StreamsMetrics`
+* [[metrics]] link:kafka-streams-StreamsMetrics.adoc[StreamsMetrics]
 * [[stateDirectory]] link:kafka-streams-StateDirectory.adoc[StateDirectory]
 * [[cache]] `ThreadCache`
 * [[time]] `Time`

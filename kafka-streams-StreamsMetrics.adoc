@@ -1,0 +1,55 @@
+== [[StreamsMetrics]] StreamsMetrics
+
+`StreamsMetrics` is a <<contract, contract>> of <<implementations, streams metrics>> that <<FIXME, FIXME>>.
+
+[[contract]]
+[source, java]
+----
+package org.apache.kafka.streams;
+
+interface StreamsMetrics {
+  Map<MetricName, ? extends Metric> metrics();
+  Sensor addLatencyAndThroughputSensor(
+    final String scopeName,
+    final String entityName,
+    final String operationName,
+    final Sensor.RecordingLevel recordingLevel,
+    final String... tags);
+  void recordLatency(
+    final Sensor sensor,
+    final long startNs,
+    final long endNs);
+  Sensor addThroughputSensor(
+    final String scopeName,
+    final String entityName,
+    final String operationName,
+    final Sensor.RecordingLevel recordingLevel,
+    final String... tags);
+  void recordThroughput(
+    final Sensor sensor,
+    final long value);
+  Sensor addSensor(
+    final String name,
+    final Sensor.RecordingLevel recordingLevel);
+  Sensor addSensor(
+    final String name,
+    final Sensor.RecordingLevel recordingLevel,
+    final Sensor... parents);
+  void removeSensor(final Sensor sensor);
+}
+----
+
+NOTE: `StreamsMetrics` is an `Evolving` contract which means that compatibility may be broken at minor release.
+
+.StreamsMetrics Contract
+[cols="1,2",options="header",width="100%"]
+|===
+| Method
+| Description
+
+| `metrics`
+| [[metrics]] Used when...FIXME
+|===
+
+[[implementations]]
+NOTE: link:kafka-streams-StreamsMetricsImpl.adoc[StreamsMetricsImpl] is the one and only known direct implementation of <<contract, StreamsMetrics Contract>> in Kafka Streams.
