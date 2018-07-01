@@ -4,7 +4,7 @@
 
 `TaskManager` is <<creating-instance, created>> when `StreamThread` is link:kafka-streams-StreamThread.adoc#create[created] (with a new <<active, AssignedStreamsTasks>> and <<standby, AssignedStandbyTasks>> for <<active, active>> and <<standby, standby>> collections of tasks, respectively).
 
-.TaskManager Being Created
+.Creating TaskManager
 image::images/kafka-streams-TaskManager.png[align="center"]
 
 `TaskManager` uses Kafka's <<adminClient, AdminClient>> for <<maybePurgeCommitedRecords, maybePurgeCommitedRecords>> and for `StreamsPartitionAssignor` to link:kafka-streams-StreamsPartitionAssignor.adoc#configure[configure] itself (and create the internal link:kafka-streams-StreamsPartitionAssignor.adoc#internalTopicManager[InternalTopicManager]).

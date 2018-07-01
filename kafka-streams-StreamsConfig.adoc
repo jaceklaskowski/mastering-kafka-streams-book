@@ -8,6 +8,8 @@
 
 * <<getAdminConfigs, AdminClient>>
 
+* <<getRestoreConsumerConfigs, getRestoreConsumerConfigs>>
+
 [source, scala]
 ----
 import org.apache.kafka.streams.StreamsConfig
@@ -76,7 +78,7 @@ client.id -> clientId-consumer
 [[CONSUMER_PREFIX]]
 `StreamsConfig` uses `consumer` prefix for custom Kafka configurations of a Kafka consumer.
 
-=== [[getConsumerConfigs]] Getting Consumer Configuration -- `getConsumerConfigs` Method
+=== [[getConsumerConfigs]] Getting Kafka Consumer Configuration -- `getConsumerConfigs` Method
 
 [source, java]
 ----
@@ -197,3 +199,14 @@ void checkIfUnexpectedUserSpecifiedConsumerConfig(
 Internally, `checkIfUnexpectedUserSpecifiedConsumerConfig` iterates over `nonConfigurableConfigs`...FIXME
 
 NOTE: `checkIfUnexpectedUserSpecifiedConsumerConfig` is used when `StreamsConfig` is requested for <<getCommonConsumerConfigs, getCommonConsumerConfigs>> and <<getProducerConfigs, getProducerConfigs>>.
+
+=== [[getRestoreConsumerConfigs]] `getRestoreConsumerConfigs` Method
+
+[source, java]
+----
+Map<String, Object> getRestoreConsumerConfigs(final String clientId)
+----
+
+`getRestoreConsumerConfigs`...FIXME
+
+NOTE: `getRestoreConsumerConfigs` is used when...FIXME

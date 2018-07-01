@@ -14,6 +14,8 @@
 
 NOTE: Use <<toString, toString>> method to list the tasks by status.
 
+NOTE: `AssignedTasks` is an abstract class and cannot be <<creating-instance, created>> directly.
+
 [[implementations]]
 .Concrete AssignedTasks
 [cols="1,2",options="header",width="100%"]
@@ -35,21 +37,27 @@ NOTE: Use <<toString, toString>> method to list the tasks by status.
 | Name
 | Description
 
-| [[created]] `created`
-a| *New tasks* by their ids
+| `commitAction`
+| [[commitAction]]
+
+| `created`
+a| [[created]] *New tasks* by their ids
 
 * Tasks are added when `AssignedTasks` is requested to <<addNewTask, addNewTask>>
 
 * Tasks are removed when `AssignedTasks` is requested to <<initializeNewTasks, initializeNewTasks>>, <<suspend, suspend>> or <<clear, clear>>
 
-| [[previousActiveTasks]] `previousActiveTasks`
-|
+| `previousActiveTasks`
+| [[previousActiveTasks]]
 
-| [[restoring]] `restoring`
-|
+| `restoring`
+| [[restoring]]
 
-| [[running]] `running`
-a| Running tasks by their ids
+| `log`
+| [[log]]
+
+| `running`
+a| [[running]] Running tasks by their ids
 
 `running` is a https://docs.oracle.com/javase/9/docs/api/java/util/concurrent/ConcurrentHashMap.html[java.util.concurrent.ConcurrentHashMap], i.e. `ConcurrentHashMap<TaskId, Task>`.
 
@@ -61,11 +69,11 @@ Tasks IDs are added or removed as follows:
 
 * Removed when `AssignedTasks` is requested to <<suspend, suspend>> or <<clear, clear>>
 
-| [[runningByPartition]] `runningByPartition`
-| Kafka's `TopicPartitions` by the task
+| `runningByPartition`
+| [[runningByPartition]] Kafka's `TopicPartitions` by the task
 
-| [[suspended]] `suspended`
-a| FIXME
+| `suspended`
+a| [[suspended]]
 |===
 
 === [[close]] `close` Method
@@ -435,3 +443,12 @@ Failed to [actionName] [taskTypeName] [taskId] due to the following error:
 ```
 
 `applyToRunningTasks` records the `RuntimeException` for a later re-throwing.
+
+=== [[creating-instance]] Creating AssignedTasks Instance
+
+`AssignedTasks` takes the following when created:
+
+* [[logContext]] `LogContext`
+* [[taskTypeName]] `taskTypeName`
+
+`AssignedTasks` initializes the <<internal-registries, internal registries and counters>>.
