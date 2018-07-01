@@ -21,6 +21,18 @@ interface ChangelogReader {
 | Method
 | Description
 
-| [[reset]] `reset`
-| Used when...FIXME
+| `register`
+| [[register]] Used when...FIXME
+
+| `reset`
+| [[reset]] Used when...FIXME
+
+| `restore`
+| [[restore]] Used when...FIXME
+
+| `restoredOffsets`
+| [[restoredOffsets]] Used when...FIXME
 |===
+
+[[implementations]]
+NOTE: link:kafka-streams-StoreChangelogReader.adoc[StoreChangelogReader] is the one and only known direct implementation of <<contract, ChangelogReader Contract>> in Kafka Streams.

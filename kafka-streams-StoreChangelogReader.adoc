@@ -1,0 +1,90 @@
+== [[StoreChangelogReader]] StoreChangelogReader
+
+`StoreChangelogReader` is the one and only link:kafka-streams-ChangelogReader.adoc[ChangelogReader] in Kafka Streams.
+
+`StoreChangelogReader` is <<creating-instance, created>> along with a link:kafka-streams-StreamThread.adoc#create[StreamThread] (when `KafkaStreams` is link:kafka-streams-KafkaStreams.adoc#creating-instance[created]).
+
+NOTE: link:kafka-streams-StreamThread.adoc[StreamThread] uses a `StoreChangelogReader` to create a link:kafka-streams-TaskCreator.adoc#storeChangelogReader[TaskCreator], a link:kafka-streams-StandbyTaskCreator.adoc#storeChangelogReader[StandbyTaskCreator] and a link:kafka-streams-TaskManager.adoc#changelogReader[TaskManager] exclusively.
+
+.StoreChangelogReader
+image::images/kafka-streams-StoreChangelogReader.png[align="center"]
+
+[[internal-registries]]
+.StoreChangelogReader's Internal Properties (e.g. Registries, Counters and Flags)
+[cols="1,2",options="header",width="100%"]
+|===
+| Name
+| Description
+
+| `endOffsets`
+| [[endOffsets]]
+
+| `log`
+| [[log]]
+
+| `needsInitializing`
+| [[needsInitializing]]
+
+| `needsRestoring`
+| [[needsRestoring]]
+
+| `partitionInfo`
+| [[partitionInfo]]
+
+| `stateRestorers`
+| [[stateRestorers]]
+|===
+
+=== [[creating-instance]] Creating StoreChangelogReader Instance
+
+`StoreChangelogReader` takes the following when created:
+
+* [[restoreConsumer]] Kafka https://kafka.apache.org/11/javadoc/org/apache/kafka/clients/consumer/Consumer.html[Consumer] (of keys and values as array of bytes)
+* [[userStateRestoreListener]] `StateRestoreListener`
+* [[logContext]] `LogContext`
+
+`StoreChangelogReader` initializes the <<internal-registries, internal registries and counters>>.
+
+=== [[register]] `register` Method
+
+[source, java]
+----
+void register(final StateRestorer restorer)
+----
+
+NOTE: `register` is part of link:kafka-streams-ChangelogReader.adoc#register[ChangelogReader Contract] to...FIXME.
+
+`register`...FIXME
+
+=== [[reset]] `reset` Method
+
+[source, java]
+----
+void reset()
+----
+
+NOTE: `reset` is part of link:kafka-streams-ChangelogReader.adoc#reset[ChangelogReader Contract] to...FIXME.
+
+`reset`...FIXME
+
+=== [[restore]] `restore` Method
+
+[source, java]
+----
+Collection<TopicPartition> restore(final RestoringTasks active)
+----
+
+NOTE: `restore` is part of link:kafka-streams-ChangelogReader.adoc#restore[ChangelogReader Contract] to...FIXME.
+
+`restore`...FIXME
+
+=== [[restoredOffsets]] `restoredOffsets` Method
+
+[source, java]
+----
+Map<TopicPartition, Long> restoredOffsets()
+----
+
+NOTE: `restoredOffsets` is part of link:kafka-streams-ChangelogReader.adoc#restoredOffsets[ChangelogReader Contract] to...FIXME.
+
+`restoredOffsets`...FIXME

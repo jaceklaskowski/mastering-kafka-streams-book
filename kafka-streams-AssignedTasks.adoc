@@ -182,7 +182,7 @@ void addNewTask(final T task)
 
 `addNewTask` just adds the input `task` in <<created, created>> internal registry.
 
-.AssignedTasks.addNewTask
+.AssignedTasks and Adding New Task
 image::images/kafka-streams-AssignedTasks-addNewTask.png[align="center"]
 
 NOTE: `addNewTask` is used exclusively when `TaskManager` is requested to link:kafka-streams-TaskManager.adoc#createTasks[create processor tasks for assigned topic partitions] (that in turn triggers link:kafka-streams-TaskManager.adoc#addStandbyTasks[addStandbyTasks] and link:kafka-streams-TaskManager.adoc#addStreamTasks[addStreamTasks]).

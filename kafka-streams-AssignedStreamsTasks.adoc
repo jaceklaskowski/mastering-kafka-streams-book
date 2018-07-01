@@ -2,7 +2,7 @@
 
 `AssignedStreamsTasks` is a link:kafka-streams-AssignedTasks.adoc[AssignedTasks] for link:kafka-streams-StreamTask.adoc[StreamTasks] that...FIXME
 
-`AssignedStreamsTasks` is <<creating-instance, created>> along with a link:kafka-streams-StreamThread.adoc#create[StreamThread] (when...FIXME)
+`AssignedStreamsTasks` is <<creating-instance, created>> along with a link:kafka-streams-StreamThread.adoc#create[StreamThread] (when `KafkaStreams` is link:kafka-streams-KafkaStreams.adoc#creating-instance[created]).
 
 `AssignedStreamsTasks` is a `RestoringTasks` that...FIXME
 
