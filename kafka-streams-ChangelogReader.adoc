@@ -22,16 +22,16 @@ interface ChangelogReader {
 | Description
 
 | `register`
-| [[register]] Used when...FIXME
+| [[register]] Used exclusively when `ProcessorStateManager` is requested to link:kafka-streams-ProcessorStateManager.adoc#register[register a StateStore]
 
 | `reset`
-| [[reset]] Used when...FIXME
+| [[reset]] Used exclusively when `TaskManager` is requested to link:kafka-streams-TaskManager.adoc#createTasks[create processor tasks for assigned topic partitions]
 
 | `restore`
-| [[restore]] Used when...FIXME
+| [[restore]] Used exclusively when `TaskManager` is requested to link:kafka-streams-TaskManager.adoc#updateNewAndRestoringTasks[updateNewAndRestoringTasks]
 
 | `restoredOffsets`
-| [[restoredOffsets]] Used when...FIXME
+| [[restoredOffsets]] Used exclusively when `ProcessorStateManager` is requested to link:kafka-streams-ProcessorStateManager.adoc#checkpoint[checkpoint]
 |===
 
 [[implementations]]

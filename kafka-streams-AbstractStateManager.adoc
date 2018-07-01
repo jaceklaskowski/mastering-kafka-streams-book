@@ -18,11 +18,11 @@ NOTE: `AbstractStateManager` is an abstract class and cannot be <<creating-insta
 | AbstractStateManager
 | Description
 
-| [[GlobalStateManagerImpl]] link:kafka-streams-GlobalStateManagerImpl.adoc[GlobalStateManagerImpl]
-|
+| link:kafka-streams-GlobalStateManagerImpl.adoc[GlobalStateManagerImpl]
+| [[GlobalStateManagerImpl]]
 
-| [[ProcessorStateManager]] link:kafka-streams-ProcessorStateManager.adoc[ProcessorStateManager]
-|
+| link:kafka-streams-ProcessorStateManager.adoc[ProcessorStateManager]
+| [[ProcessorStateManager]]
 |===
 
 === [[reinitializeStateStoresForPartitions]] `reinitializeStateStoresForPartitions` Method

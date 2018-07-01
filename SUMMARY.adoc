@@ -133,14 +133,16 @@
 .. link:kafka-streams-GlobalStateUpdateTask.adoc[GlobalStateUpdateTask -- The Default GlobalStateMaintainer]
 
 . link:kafka-streams-StateManager.adoc[StateManager]
-. link:kafka-streams-GlobalStateManager.adoc[GlobalStateManager]
+.. link:kafka-streams-AbstractStateManager.adoc[AbstractStateManager]
+.. link:kafka-streams-ProcessorStateManager.adoc[ProcessorStateManager]
+.. link:kafka-streams-GlobalStateManager.adoc[GlobalStateManager]
+
 . link:kafka-streams-Checkpointable.adoc[Checkpointable]
+
 . link:kafka-streams-ProcessorRecordContext.adoc[ProcessorRecordContext]
 . link:kafka-streams-InternalProcessorContext.adoc[InternalProcessorContext]
 . link:kafka-streams-RecordDeserializer.adoc[RecordDeserializer]
 . link:kafka-streams-OffsetCheckpoint.adoc[OffsetCheckpoint]
-. link:kafka-streams-AbstractStateManager.adoc[AbstractStateManager]
-. link:kafka-streams-ProcessorStateManager.adoc[ProcessorStateManager]
 . link:kafka-streams-GlobalStateManagerImpl.adoc[GlobalStateManagerImpl]
 . link:kafka-streams-StateDirectory.adoc[StateDirectory]
 . link:kafka-streams-GroupedStreamAggregateBuilder.adoc[GroupedStreamAggregateBuilder]

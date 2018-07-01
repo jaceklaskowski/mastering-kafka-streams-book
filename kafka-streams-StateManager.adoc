@@ -2,6 +2,8 @@
 
 `StateManager` is the <<contract, contract>> for...FIXME
 
+`StateManager` is a link:kafka-streams-Checkpointable.adoc[Checkpointable] that...FIXME
+
 [[contract]]
 [source, java]
 ----
@@ -51,4 +53,18 @@ Used when:
 
 | [[reinitializeStateStoresForPartitions]] `reinitializeStateStoresForPartitions`
 | Used when...FIXME
+|===
+
+[[implementations]]
+.StateManagers
+[cols="1,2",options="header",width="100%"]
+|===
+| StateManager
+| Description
+
+| link:kafka-streams-AbstractStateManager.adoc[AbstractStateManager]
+| [[AbstractStateManager]]
+
+| link:kafka-streams-GlobalStateManager.adoc[GlobalStateManager]
+| [[GlobalStateManager]]
 |===

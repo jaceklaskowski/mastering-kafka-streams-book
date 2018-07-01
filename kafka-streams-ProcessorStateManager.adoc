@@ -34,12 +34,25 @@ NOTE: `checkpoint` is part of link:kafka-streams-Checkpointable.adoc#checkpoint[
 `ProcessorStateManager` takes the following when created:
 
 * [[taskId]] Task ID
-* [[sources]] Sources (by Kafka `TopicPartitions`)
+* [[sources]] Sources (as Kafka https://kafka.apache.org/11/javadoc/org/apache/kafka/common/TopicPartition.html[TopicPartitions])
 * [[isStandby]] `isStandby` Flag
 * [[stateDirectory]] link:kafka-streams-StateDirectory.adoc[StateDirectory]
 * [[storeToChangelogTopic]] `Map<String, String>`
-* [[changelogReader]] `ChangelogReader`
+* [[changelogReader]] link:kafka-streams-ChangelogReader.adoc[ChangelogReader]
 * [[eosEnabled]] `eosEnabled` Flag (that corresponds to link:kafka-streams-properties.adoc#processing.guarantee[processing.guarantee] configuration property)
 * [[logContext]] `LogContext`
 
 `ProcessorStateManager` initializes the <<internal-registries, internal registries and counters>>.
+
+=== [[register]] Registering StateStore (and StateRestoreCallback) -- `register` Method
+
+[source, java]
+----
+void register(
+  final StateStore store,
+  final StateRestoreCallback stateRestoreCallback)
+----
+
+NOTE: `register` is part of link:kafka-streams-StateManager.adoc#register[StateManager Contract] to...FIXME.
+
+`register`...FIXME

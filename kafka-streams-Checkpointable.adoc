@@ -8,8 +8,8 @@
 package org.apache.kafka.streams.processor.internals;
 
 interface Checkpointable {
-    void checkpoint(final Map<TopicPartition, Long> offsets);
-    Map<TopicPartition, Long> checkpointed();
+  void checkpoint(final Map<TopicPartition, Long> offsets);
+  Map<TopicPartition, Long> checkpointed();
 }
 ----
 
