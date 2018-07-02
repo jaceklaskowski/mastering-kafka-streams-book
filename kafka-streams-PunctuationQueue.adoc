@@ -1,0 +1,17 @@
+== [[PunctuationQueue]] PunctuationQueue
+
+`PunctuationQueue` is...FIXME
+
+=== [[mayPunctuate]] `mayPunctuate` Method
+
+[source, java]
+----
+boolean mayPunctuate(
+  final long timestamp,
+  final PunctuationType type,
+  final ProcessorNodePunctuator processorNodePunctuator)
+----
+
+`mayPunctuate`...FIXME
+
+NOTE: `mayPunctuate` is used when `StreamTask` is requested to link:kafka-streams-StreamTask.adoc#maybePunctuateStreamTime[maybePunctuateStreamTime] and link:kafka-streams-StreamTask.adoc#maybePunctuateSystemTime[maybePunctuateSystemTime].

@@ -1,0 +1,53 @@
+== [[NodeMetrics]] NodeMetrics
+
+`NodeMetrics` is...FIXME
+
+`NodeMetrics` is <<creating-instance, created>> exclusively when `ProcessorNode` is requested to link:kafka-streams-ProcessorNode.adoc#init[init].
+
+[[internal-registries]]
+.NodeMetrics's Internal Properties (e.g. Registries, Counters and Flags)
+[cols="1,2",options="header",width="100%"]
+|===
+| Name
+| Description
+
+| `nodeProcessTimeSensor`
+| [[nodeProcessTimeSensor]] Kafka `Sensor`
+
+Used when...FIXME
+
+| `nodePunctuateTimeSensor`
+| [[nodePunctuateTimeSensor]] Kafka `Sensor`
+
+Used when...FIXME
+
+| `sourceNodeForwardSensor`
+| [[sourceNodeForwardSensor]] Kafka `Sensor`
+
+Used when...FIXME
+
+| `sourceNodeSkippedDueToDeserializationError`
+| [[sourceNodeSkippedDueToDeserializationError]] Kafka `Sensor`
+
+Used when...FIXME
+
+| `nodeCreationSensor`
+| [[nodeCreationSensor]] Kafka `Sensor`
+
+Used when...FIXME
+
+| `nodeDestructionSensor`
+| [[nodeDestructionSensor]] Kafka `Sensor`
+
+Used when...FIXME
+|===
+
+=== [[creating-instance]] Creating NodeMetrics Instance
+
+`NodeMetrics` takes the following when created:
+
+* [[metrics]] link:kafka-streams-StreamsMetrics.adoc[StreamsMetrics]
+* [[name]] link:kafka-streams-ProcessorNode.adoc#name[Name] of a `ProcessorNode`
+* [[context]] link:kafka-streams-ProcessorContext.adoc[ProcessorContext]
+
+`NodeMetrics` initializes the <<internal-registries, internal registries and counters>>.

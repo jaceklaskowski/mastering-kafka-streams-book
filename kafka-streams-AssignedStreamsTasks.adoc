@@ -58,17 +58,6 @@ log4j.logger.org.apache.kafka.streams.processor.internals.AssignedStreamsTasks=T
 Refer to link:kafka-logging.adoc#log4j.properties[Application Logging Using log4j].
 ====
 
-=== [[punctuate]] `punctuate` Method
-
-[source, java]
-----
-int punctuate()
-----
-
-`punctuate`...FIXME
-
-NOTE: `punctuate` is used when...FIXME
-
 === [[process]] Requesting Stream Tasks to Process Records -- `process` Method
 
 [source, java]
@@ -128,3 +117,14 @@ NOTE: `maybeCommit` is used exclusively when `TaskManager` is requested to link:
 `AssignedStreamsTasks` is <<creating-instance, created>> when...MEFIXME
 
 `AssignedStreamsTasks` is <<creating-instance, created>> along with...MEFIXME
+
+=== [[punctuate]] `punctuate` Method
+
+[source, java]
+----
+int punctuate()
+----
+
+`punctuate`...FIXME
+
+NOTE: `punctuate` is used exclusively when `TaskManager` is requested to link:kafka-streams-TaskManager.adoc#punctuate[punctuate].

@@ -230,17 +230,6 @@ void maybeUpdateStandbyTasks(final long now)
 
 NOTE: `maybeUpdateStandbyTasks` is used exclusively when `StreamThread` is requested to <<runOnce, consume records once>>.
 
-=== [[punctuate]] `punctuate` Internal Method
-
-[source, java]
-----
-void punctuate()
-----
-
-`punctuate`...FIXME
-
-NOTE: `punctuate` is used when...FIXME
-
 === [[creating-instance]] Creating StreamThread Instance
 
 `StreamThread` takes the following when created:
@@ -566,3 +555,14 @@ Creating consumer client
 In the end, `create` creates a <<creating-instance, StreamThread>>.
 
 NOTE: `create` is used exclusively when `KafkaStreams` is link:kafka-streams-KafkaStreams.adoc#creating-instance[created].
+
+=== [[punctuate]] `punctuate` Internal Method
+
+[source, java]
+----
+void punctuate()
+----
+
+`punctuate`...FIXME
+
+NOTE: `punctuate` is used when `StreamThread` is requested to <<run, start>> (and <<runOnce, polls records once>> and <<processAndMaybeCommit, processes records (with optional commit)>>).

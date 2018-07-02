@@ -49,6 +49,11 @@ NOTE: `StreamsMetrics` is an `Evolving` contract which means that compatibility 
 
 | `metrics`
 | [[metrics]] Used when...FIXME
+
+| `recordLatency`
+| [[recordLatency]] Recording a latency with a Kafka `Sensor`
+
+Used when...FIXME
 |===
 
 [[implementations]]

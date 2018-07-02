@@ -39,7 +39,7 @@
 . link:kafka-streams-ValueTransformer.adoc[ValueTransformer -- Stateful Record-by-Record Value Transformation]
 . link:kafka-streams-ValueTransformerSupplier.adoc[ValueTransformerSupplier -- ValueTransformers Object Factory]
 
-. link:kafka-streams-Punctuator.adoc[Punctuator]
+. link:kafka-streams-Punctuator.adoc[Punctuator -- Contract for Scheduled Periodic Actions]
 
 . link:kafka-streams-TimestampExtractor.adoc[TimestampExtractor]
 .. link:kafka-streams-WallclockTimestampExtractor.adoc[WallclockTimestampExtractor]
@@ -96,11 +96,12 @@
 === Logical Plan of Execution
 
 . link:kafka-streams-ProcessorNode.adoc[ProcessorNode]
+.. link:kafka-streams-SinkNode.adoc[SinkNode]
+
 . link:kafka-streams-ProcessorNodeFactory.adoc[ProcessorNodeFactory]
 . link:kafka-streams-SourceNodeFactory.adoc[SourceNodeFactory -- NodeFactory With No Predecessors]
 . link:kafka-streams-SinkNodeFactory.adoc[SinkNodeFactory]
 . link:kafka-streams-SourceNode.adoc[SourceNode]
-. link:kafka-streams-SinkNode.adoc[SinkNode]
 . link:kafka-streams-NodeFactory.adoc[NodeFactory]
 . link:kafka-streams-StateStoreFactory.adoc[StateStoreFactory]
 . link:kafka-streams-AbstractStateStoreFactory.adoc[AbstractStateStoreFactory]
@@ -108,6 +109,10 @@
 . link:kafka-streams-StateStoreSupplierFactory.adoc[StateStoreSupplierFactory]
 
 . link:kafka-streams-ProcessorSupplier.adoc[ProcessorSupplier]
+
+. link:kafka-streams-ProcessorNodePunctuator.adoc[ProcessorNodePunctuator]
+. link:kafka-streams-PunctuationQueue.adoc[PunctuationQueue]
+. link:kafka-streams-NodeMetrics.adoc[NodeMetrics]
 
 === Stateful Stream Processing
 

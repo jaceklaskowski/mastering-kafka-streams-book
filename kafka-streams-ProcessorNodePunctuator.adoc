@@ -1,0 +1,32 @@
+== [[ProcessorNodePunctuator]] ProcessorNodePunctuator
+
+`ProcessorNodePunctuator` is the <<contract, contract>> of <<implementations, stream punctuator nodes>> that can <<punctuate, punctuate>>.
+
+[[contract]]
+[source, java]
+----
+package org.apache.kafka.streams.processor.internals;
+
+interface ProcessorNodePunctuator {
+  void punctuate(
+    ProcessorNode node,
+    long streamTime,
+    PunctuationType type,
+    Punctuator punctuator);
+}
+----
+
+.ProcessorNodePunctuator Contract
+[cols="1,2",options="header",width="100%"]
+|===
+| Method
+| Description
+
+| `punctuate`
+| [[punctuate]] Executing a scheduled periodic action
+
+Used exclusively when `PunctuationQueue` is requested to link:kafka-streams-PunctuationQueue.adoc#mayPunctuate[mayPunctuate] (when `StreamTask` is requested to link:kafka-streams-StreamTask.adoc#maybePunctuateStreamTime[maybePunctuateStreamTime] and link:kafka-streams-StreamTask.adoc#maybePunctuateSystemTime[maybePunctuateSystemTime]).
+|===
+
+[[implementations]]
+NOTE: link:kafka-streams-StreamTask.adoc[StreamTask] is the one and only known implementation of <<contract, ProcessorNodePunctuator Contract>> in Kafka Streams.

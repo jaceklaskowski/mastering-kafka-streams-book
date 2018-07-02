@@ -56,4 +56,7 @@ interface ProcessorContext {
 
 | [[forward]] `forward`
 | Used when...FIXME
+
+| [[schedule]] `schedule`
+| Used when...FIXME
 |===

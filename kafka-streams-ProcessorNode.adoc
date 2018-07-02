@@ -1,10 +1,14 @@
 == [[ProcessorNode]] ProcessorNode
 
-`ProcessorNode` is a <<process, processing node>> in a topology that is identified by a <<name, name>>. `ProcessorNode` can have zero or more <<children, child processor nodes>>.
+`ProcessorNode` is a <<process, processing node>> in a topology. `ProcessorNode` is identified by a <<name, name>> and can have zero or more <<children, child processor nodes>>.
 
-`ProcessorNode` is <<creating-instance, created>> exclusively when `ProcessorNodeFactory` is requested to link:kafka-streams-ProcessorNodeFactory.adoc#build[build] a processor node.
+`ProcessorNode` is <<creating-instance, created>> exclusively when `ProcessorNodeFactory` is requested to link:kafka-streams-ProcessorNodeFactory.adoc#build[build a processor node].
 
 `ProcessorNode` can be <<init, initialized>> (in a given link:kafka-streams-ProcessorContext.adoc[ProcessorContext]) and <<close, closed>>.
+
+`ProcessorNode` can be <<punctuate, punctuated>>.
+
+`ProcessorNode` has a <<toString, human-friendly / textual representation>> that is particularly helpful for debugging.
 
 [[internal-registries]]
 .ProcessorNode's Internal Properties (e.g. Registries, Counters and Flags)
@@ -15,6 +19,11 @@
 
 | `children`
 | [[children]] Child `ProcessorNodes`
+
+Used when...FIXME
+
+| `nodeMetrics`
+| [[nodeMetrics]] link:kafka-streams-NodeMetrics.adoc[NodeMetrics]
 
 Used when...FIXME
 
@@ -78,17 +87,6 @@ void close()
 
 NOTE: `close` is used when...FIXME
 
-=== [[punctuate]] `punctuate` Method
-
-[source, java]
-----
-void punctuate(final long timestamp, final Punctuator punctuator)
-----
-
-`punctuate`...FIXME
-
-NOTE: `punctuate` is used when...FIXME
-
 === [[toString]] Human-Friendly / Textual Representation of ProcessorNode -- `toString` Method
 
 [source, java]
@@ -101,3 +99,16 @@ String toString(String indent)
 NOTE: `toString` is part of Java's link:++https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html#toString--++[java.lang.Object Contract] to return a human-friendly / textual representation of an object.
 
 `toString`...FIXME
+
+=== [[punctuate]] Executing Punctuator (Scheduled Periodic Action) -- `punctuate` Method
+
+[source, java]
+----
+void punctuate(final long timestamp, final Punctuator punctuator)
+----
+
+`punctuate` creates a Java https://docs.oracle.com/javase/8/docs/api/java/lang/Runnable.html[Runnable] that simply requests the input `Punctuator` to link:kafka-streams-Punctuator.adoc#punctuate[punctuate] with the input `timestamp`.
+
+`punctuate` requests the <<nodeMetrics, NodeMetrics>> for the link:kafka-streams-NodeMetrics.adoc#metrics[StreamsMetricsImpl] that is requested to link:kafka-streams-StreamsMetricsImpl.adoc#measureLatencyNs[measureLatencyNs] (that records it with the link:kafka-streams-NodeMetrics.adoc#nodePunctuateTimeSensor[nodePunctuateTimeSensor] of the <<nodeMetrics, NodeMetrics>>).
+
+NOTE: `punctuate` is used exclusively when `StreamTask` is requested to link:kafka-streams-StreamTask.adoc#punctuate[execute a scheduled periodic action].

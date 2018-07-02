@@ -4,3 +4,25 @@
 
 [[implementations]]
 NOTE: link:kafka-streams-StreamsMetricsThreadImpl.adoc[StreamsMetricsThreadImpl] is a custom `StreamsMetricsImpl` that is used...FIXME...for efficiency.
+
+=== [[measureLatencyNs]] `measureLatencyNs` Method
+
+[source, java]
+----
+void measureLatencyNs(final Time time, final Runnable action, final Sensor sensor)
+----
+
+`measureLatencyNs`...FIXME
+
+NOTE: `measureLatencyNs` is used when...FIXME
+
+=== [[recordLatency]] Recording Latency with Sensor -- `recordLatency` Method
+
+[source, java]
+----
+void recordLatency(Sensor sensor, long startNs, long endNs)
+----
+
+NOTE: `recordLatency` is part of link:kafka-streams-StreamsMetrics.adoc#recordLatency[StreamsMetrics Contract] to record a latency with a Kafka `Sensor`.
+
+`recordLatency` simply requests the input Kafka `Sensor` to record the latency (i.e. the difference between the input `endNs` and `startNs` timestamps).
