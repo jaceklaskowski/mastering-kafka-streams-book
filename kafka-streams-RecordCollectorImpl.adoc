@@ -1,0 +1,21 @@
+== [[RecordCollectorImpl]] RecordCollectorImpl
+
+`RecordCollectorImpl` is...FIXME
+
+=== [[send]] `send` Method
+
+[source, java]
+----
+<K, V> void send(
+  final String topic,
+  final K key,
+  final V value,
+  final Long timestamp,
+  final Serializer<K> keySerializer,
+  final Serializer<V> valueSerializer,
+  final StreamPartitioner<? super K, ? super V> partitioner)
+----
+
+NOTE: `send` is part of link:kafka-streams-RecordCollector.adoc#send[RecordCollector Contract] to...FIXME.
+
+`send`...FIXME

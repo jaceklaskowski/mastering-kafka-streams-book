@@ -1,3 +1,14 @@
 == [[SinkNode]] SinkNode
 
 `SinkNode` is...FIXME
+
+=== [[process]] `process` Method
+
+[source, java]
+----
+void process(final K key, final V value)
+----
+
+NOTE: `process` is part of link:kafka-streams-ProcessorNode.adoc#process[ProcessorNode Contract] to...FIXME.
+
+`process`...FIXME

@@ -244,3 +244,25 @@ Added records into the buffered queue of partition [partition], new queue size i
 In the end, `addRecords` returns the number of records added.
 
 NOTE: `addRecords` is used exclusively when `StreamThread` is requested to link:kafka-streams-StreamThread.adoc#addRecordsToTasks[addRecordsToTasks].
+
+=== [[flushState]] `flushState` Method
+
+[source, java]
+----
+void flushState()
+----
+
+NOTE: `flushState` is part of link:kafka-streams-AbstractTask.adoc#flushState[AbstractTask Contract] to...FIXME.
+
+`flushState`...FIXME
+
+=== [[recordCollectorOffsets]] `recordCollectorOffsets` Method
+
+[source, java]
+----
+Map<TopicPartition, Long> recordCollectorOffsets()
+----
+
+NOTE: `recordCollectorOffsets` is part of link:kafka-streams-AbstractTask.adoc#recordCollectorOffsets[AbstractTask Contract] to...FIXME.
+
+`recordCollectorOffsets`...FIXME

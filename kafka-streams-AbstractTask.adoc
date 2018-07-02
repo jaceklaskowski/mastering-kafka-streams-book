@@ -1,8 +1,8 @@
 == [[AbstractTask]] AbstractTask -- Base Processor Task
 
-`AbstractTask` is a base link:kafka-streams-Task.adoc[stream processor task] that...FIXME
+`AbstractTask` is the base of <<implementations, stream processor tasks>> that <<FIXME, FIXME>>.
 
-`AbstractTask` is <<creating-instance, created>> when...FIXME
+NOTE: `AbstractTask` is a Java abstract class and cannot be <<creating-instance, created>> directly. It is created indirectly when the <<implementations, concrete AbstractTasks>> are.
 
 [[eosEnabled]]
 `AbstractTask` uses link:kafka-streams-properties.adoc#processing.guarantee[processing.guarantee] configuration property to enable link:kafka-streams-exactly-once-support-eos.adoc[Exactly-Once Support] for...FIXME
@@ -43,17 +43,17 @@ a| link:kafka-streams-InternalProcessorContext.adoc[InternalProcessorContext]:
 |===
 
 [[implementations]]
-.Concrete AbstractTasks
+.AbstractTasks
 [cols="1,2",options="header",width="100%"]
 |===
-| Task
+| AbstractTask
 | Description
 
 | link:kafka-streams-StreamTask.adoc[StreamTask]
-|
+| [[StreamTask]]
 
 | link:kafka-streams-StandbyTask.adoc[StandbyTask]
-|
+| [[StandbyTask]]
 |===
 
 === [[closeStateManager]] `closeStateManager` Method
@@ -71,10 +71,10 @@ NOTE: `closeStateManager` is used when...FIXME
 
 `AbstractTask` takes the following when created:
 
-* [[id]] Task ID
-* [[partitions]] Partitions (as Kafka `TopicPartitions`)
-* [[topology]] `ProcessorTopology`
-* [[consumer]] Kafka https://kafka.apache.org/10/javadoc/org/apache/kafka/clients/consumer/KafkaConsumer.html[Consumer] (of keys and values as array of bytes)
+* [[id]] `TaskId`
+* [[partitions]] Kafka https://kafka.apache.org/11/javadoc/org/apache/kafka/common/TopicPartition.html[TopicPartitions]
+* [[topology]] link:kafka-streams-ProcessorTopology.adoc[ProcessorTopology]
+* [[consumer]] Kafka https://kafka.apache.org/11/javadoc/org/apache/kafka/clients/consumer/KafkaConsumer.html[Consumer] (of keys and values as array of bytes, i.e. `byte[]`)
 * [[changelogReader]] link:kafka-streams-ChangelogReader.adoc[ChangelogReader]
 * [[isStandby]] `isStandby` Flag
 * [[stateDirectory]] link:kafka-streams-StateDirectory.adoc[StateDirectory]
@@ -92,3 +92,25 @@ boolean hasStateStores()
 NOTE: `hasStateStores` is part of link:kafka-streams-Task.adoc#hasStateStores[Task Contract] to...FIXME.
 
 `hasStateStores` is positive (and returns `true`) when <<topology, ProcessorTopology>> has at least one link:kafka-streams-ProcessorTopology.adoc#stateStores[local state store].
+
+=== [[flushState]] `flushState` Method
+
+[source, java]
+----
+void flushState()
+----
+
+`flushState` simply requests the <<stateMgr, ProcessorStateManager>> to link:kafka-streams-ProcessorStateManager.adoc#flush[flush].
+
+NOTE: `flushState` is used when...FIXME
+
+=== [[recordCollectorOffsets]] `recordCollectorOffsets` Method
+
+[source, java]
+----
+Map<TopicPartition, Long> recordCollectorOffsets()
+----
+
+`recordCollectorOffsets`...FIXME
+
+NOTE: `recordCollectorOffsets` is used when...FIXME

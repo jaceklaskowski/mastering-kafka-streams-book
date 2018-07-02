@@ -180,6 +180,8 @@
 . link:kafka-streams-StampedRecord.adoc[StampedRecord]
 
 . link:kafka-streams-StoreChangeLogger.adoc[StoreChangeLogger]
+. link:kafka-streams-RecordCollector.adoc[RecordCollector]
+.. link:kafka-streams-RecordCollectorImpl.adoc[RecordCollectorImpl]
 
 == Deprecated
 

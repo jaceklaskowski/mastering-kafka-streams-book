@@ -1,0 +1,72 @@
+== [[RecordCollector]] RecordCollector
+
+`RecordCollector` is the <<contract, contract>> of <<implementations, record collectors>> that <<FIXME, FIXME>>.
+
+[[contract]]
+[source, java]
+----
+package org.apache.kafka.streams.processor.internals;
+
+interface RecordCollector {
+  void close();
+  void flush();
+  Map<TopicPartition, Long> offsets();
+  <K, V> void send(
+    final String topic,
+    final K key,
+    final V value,
+    final Integer partition,
+    final Long timestamp,
+    final Serializer<K> keySerializer,
+    final Serializer<V> valueSerializer);
+  <K, V> void send(
+    final String topic,
+    final K key,
+    final V value,
+    final Long timestamp,
+    final Serializer<K> keySerializer,
+    final Serializer<V> valueSerializer,
+    final StreamPartitioner<? super K, ? super V> partitioner);
+}
+----
+
+.RecordCollector Contract
+[cols="1,2",options="header",width="100%"]
+|===
+| Method
+| Description
+
+| `close`
+| [[close]] Used exclusively when `StreamTask` is requested to link:kafka-streams-StreamTask.adoc#closeSuspended[closeSuspended]
+
+| `flush`
+| [[flush]] Used exclusively when `StreamTask` is requested to link:kafka-streams-StreamTask.adoc#flushState[flushState]
+
+| `offsets`
+| [[offsets]] Used exclusively when `StreamTask` is requested to link:kafka-streams-StreamTask.adoc#recordCollectorOffsets[recordCollectorOffsets]
+
+| `send`
+a| [[send]] Used when:
+
+* `RecordCollectorImpl` is requested to link:kafka-streams-RecordCollectorImpl.adoc#send[send]
+
+* `StoreChangeLogger` is requested to link:kafka-streams-StoreChangeLogger.adoc#logChange[logChange]
+
+* `SinkNode` is requested to link:kafka-streams-SinkNode.adoc#process[process]
+
+NOTE: There are two `send` methods with a partition ID or a link:kafka-streams-StreamPartitioner.adoc[StreamPartitioner].
+|===
+
+[[implementations]]
+.RecordCollectors
+[cols="1,2",options="header",width="100%"]
+|===
+| RecordCollector
+| Description
+
+| link:kafka-streams-RecordCollectorImpl.adoc[RecordCollectorImpl]
+| [[RecordCollectorImpl]]
+
+| `NO_OP_COLLECTOR`
+| [[NO_OP_COLLECTOR]]
+|===

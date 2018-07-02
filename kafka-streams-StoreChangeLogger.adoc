@@ -12,7 +12,7 @@
 | Description
 
 | `collector`
-| [[collector]] `RecordCollector`
+| [[collector]] link:kafka-streams-RecordCollector.adoc[RecordCollector]
 
 Used when...FIXME
 
