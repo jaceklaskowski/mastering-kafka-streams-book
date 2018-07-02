@@ -1,15 +1,37 @@
 == [[AbstractStateManager]] AbstractStateManager
 
-`AbstractStateManager` is a base link:kafka-streams-StateManager.adoc[StateManager]...FIXME
+`AbstractStateManager` is the <<contract, base>> of <<implementations, StateManagers>> that use an <<checkpoint, OffsetCheckpoint>> for...FIXME
 
 [[creating-instance]]
 [[baseDir]]
-`AbstractStateManager` only takes the directory that...FIXME
+`AbstractStateManager` only takes an base directory of a <<checkpoint, checkpoint>> offset file when created.
 
 NOTE: `AbstractStateManager` is an abstract class and cannot be <<creating-instance, created>> directly.
 
 [[CHECKPOINT_FILE_NAME]]
-`AbstractStateManager` uses *.checkpoint* for...FIXME
+`AbstractStateManager` uses `.checkpoint` for the name of the <<checkpoint, checkpoint>> offset file.
+
+[[internal-registries]]
+.AbstractStateManager's Internal Properties (e.g. Registries, Counters and Flags)
+[cols="1,2",options="header",width="100%"]
+|===
+| Name
+| Description
+
+| `checkpoint`
+| [[checkpoint]] link:kafka-streams-OffsetCheckpoint.adoc[OffsetCheckpoint] with the <<CHECKPOINT_FILE_NAME, offset checkpoint file>> in the <<baseDir, base directory>>.
+
+Used when...FIXME
+
+| `checkpointableOffsets`
+| [[checkpointableOffsets]]
+
+| `stores`
+| [[stores]]
+
+| `globalStores`
+| [[globalStores]]
+|===
 
 [[implementations]]
 .AbstractStateManagers
@@ -40,3 +62,14 @@ void reinitializeStateStoresForPartitions(
 `reinitializeStateStoresForPartitions`...FIXME
 
 NOTE: `reinitializeStateStoresForPartitions` is used when...FIXME
+
+=== [[inverseOneToOneMap]] `inverseOneToOneMap` Internal Method
+
+[source, java]
+----
+Map<String, String> inverseOneToOneMap(final Map<String, String> origin)
+----
+
+`inverseOneToOneMap`...FIXME
+
+NOTE: `inverseOneToOneMap` is used exclusively when `AbstractStateManager` is requested to <<reinitializeStateStoresForPartitions, reinitializeStateStoresForPartitions>>.
