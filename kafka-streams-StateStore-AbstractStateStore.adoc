@@ -1,0 +1,61 @@
+== [[AbstractStateStore]] AbstractStateStore
+
+`AbstractStateStore` is the base of <<implementations, WrappedStateStores>> that delegates all ``StateStore``-related operations to the <<innerState, inner StateStore>>.
+
+[[creating-instance]]
+[[innerState]]
+`AbstractStateStore` takes a link:kafka-streams-StateStore.adoc[StateStore] when created.
+
+NOTE: `AbstractStateStore` is a Java abstract class and cannot be <<creating-instance, created>> directly. It is created indirectly when the <<implementations, concrete AbstractStateStores>> are.
+
+[[implementations]]
+.AbstractStateStores
+[cols="1,2",options="header",width="100%"]
+|===
+| AbstractStateStore
+| Description
+
+| CachingKeyValueStore
+| [[CachingKeyValueStore]]
+
+| CachingSessionStore
+| [[CachingSessionStore]]
+
+| CachingWindowStore
+| [[CachingWindowStore]]
+
+| ChangeLoggingKeyValueBytesStore
+| [[ChangeLoggingKeyValueBytesStore]]
+
+| link:kafka-streams-StateStore-ChangeLoggingSessionBytesStore.adoc[ChangeLoggingSessionBytesStore]
+| [[ChangeLoggingSessionBytesStore]]
+
+| link:kafka-streams-StateStore-ChangeLoggingWindowBytesStore.adoc[ChangeLoggingWindowBytesStore]
+| [[ChangeLoggingWindowBytesStore]]
+
+| link:kafka-streams-StateStore-InMemoryKeyValueLoggedStore.adoc[InMemoryKeyValueLoggedStore]
+| [[InMemoryKeyValueLoggedStore]]
+
+| InnerMeteredKeyValueStore
+| [[InnerMeteredKeyValueStore]]
+
+| link:kafka-streams-StateStore-MeteredKeyValueBytesStore.adoc[MeteredKeyValueBytesStore]
+| [[MeteredKeyValueBytesStore]]
+
+| MeteredKeyValueStore
+| [[MeteredKeyValueStore]]
+
+| MeteredSessionStore
+| [[MeteredSessionStore]]
+
+| MeteredWindowStore
+| [[MeteredWindowStore]]
+
+| RocksDBSessionStore
+| [[RocksDBSessionStore]]
+
+| RocksDBWindowStore
+| [[RocksDBWindowStore]]
+|===
+
+NOTE: `AbstractStateStore` is an inner Java class of the link:kafka-streams-StateStore-WrappedStateStore.adoc[WrappedStateStore] interface.

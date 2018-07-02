@@ -6,7 +6,7 @@
 [[users]]
 `AbstractStateStoreFactory` gives the `users` registry. A new processor name is added when `InternalTopologyBuilder` is requested to link:kafka-streams-InternalTopologyBuilder.adoc#connectProcessorAndStateStore[connect a state store with a processor node].
 
-`AbstractStateStoreFactory` is a Java abstract class and cannot be <<creating-instance, created>> directly. It is created indirectly when the <<implementations, concrete StateStoreFactories>> are.
+NOTE: `AbstractStateStoreFactory` is a Java abstract class and cannot be <<creating-instance, created>> directly. It is created indirectly when the <<implementations, concrete AbstractStateStoreFactories>> are.
 
 [[implementations]]
 .StateStoreFactories

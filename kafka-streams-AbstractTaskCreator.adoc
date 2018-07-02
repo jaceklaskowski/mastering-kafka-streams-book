@@ -23,7 +23,7 @@ abstract class StreamThread.AbstractTaskCreator<T extends Task> {
 | Used exclusively when `AbstractTaskCreator` is requested to <<createTasks, create tasks>> for...FIXME
 |===
 
-`AbstractTaskCreator` is a Java abstract class and cannot be <<creating-instance, created>> directly. It is created indirectly when the <<implementations, concrete AbstractTaskCreators>> are.
+NOTE: `AbstractTaskCreator` is a Java abstract class and cannot be <<creating-instance, created>> directly. It is created indirectly when the <<implementations, concrete AbstractTaskCreators>> are.
 
 [[implementations]]
 .AbstractTaskCreators

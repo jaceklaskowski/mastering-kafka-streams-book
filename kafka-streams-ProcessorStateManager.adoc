@@ -5,18 +5,10 @@
 `ProcessorStateManager` is <<creating-instance, created>> exclusively when `AbstractTask` is link:kafka-streams-AbstractTask.adoc#creating-instance[created].
 
 [[STATE_CHANGELOG_TOPIC_SUFFIX]]
-`ProcessorStateManager` uses `-changelog` for the suffix of state changelog topic names.
+`ProcessorStateManager` uses the `-changelog` suffix for the name of <<storeChangelogTopic, storeChangelogTopic>>.
 
-=== [[storeChangelogTopic]] `storeChangelogTopic` Method
-
-[source, java]
-----
-static String storeChangelogTopic(final String applicationId, final String storeName)
-----
-
-`storeChangelogTopic`...FIXME
-
-NOTE: `storeChangelogTopic` is used when...FIXME
+[[baseDir]]
+`ProcessorStateManager` uses...FIXME...for the base directory.
 
 === [[checkpoint]] `checkpoint` Method
 
@@ -56,3 +48,80 @@ void register(
 NOTE: `register` is part of link:kafka-streams-StateManager.adoc#register[StateManager Contract] to...FIXME.
 
 `register`...FIXME
+
+=== [[close]] Closing ProcessorStateManager -- `close` Method
+
+[source, java]
+----
+void close(final Map<TopicPartition, Long> ackedOffsets) throws ProcessorStateException
+----
+
+NOTE: `close` is part of link:kafka-streams-StateManager.adoc#close[StateManager Contract] to...FIXME.
+
+`close`...FIXME
+
+=== [[flush]] Flushing ProcessorStateManager -- `flush` Method
+
+[source, java]
+----
+void flush()
+----
+
+NOTE: `flush` is part of link:kafka-streams-StateManager.adoc#flush[StateManager Contract] to...FIXME.
+
+`flush`...FIXME
+
+=== [[getGlobalStore]] Requesting Global StateStore By Name -- `getGlobalStore` Method
+
+[source, java]
+----
+StateStore getGlobalStore(final String name)
+----
+
+NOTE: `getGlobalStore` is part of link:kafka-streams-StateManager.adoc#getGlobalStore[StateManager Contract] to...FIXME.
+
+`getGlobalStore`...FIXME
+
+=== [[getStore]] Requesting StateStore By Name -- `getStore` Method
+
+[source, java]
+----
+StateStore getStore(final String name)
+----
+
+NOTE: `getStore` is part of link:kafka-streams-StateManager.adoc#getStore[StateManager Contract] to...FIXME.
+
+`getStore`...FIXME
+
+=== [[reinitializeStateStoresForPartitions]] `reinitializeStateStoresForPartitions` Method
+
+[source, java]
+----
+void reinitializeStateStoresForPartitions(
+  final Collection<TopicPartition> partitions,
+  final InternalProcessorContext processorContext)
+----
+
+NOTE: `reinitializeStateStoresForPartitions` is part of link:kafka-streams-StateManager.adoc#reinitializeStateStoresForPartitions[StateManager Contract] to...FIXME.
+
+`reinitializeStateStoresForPartitions`...FIXME
+
+=== [[storeChangelogTopic]] `storeChangelogTopic` Static Method
+
+[source, java]
+----
+static String storeChangelogTopic(final String applicationId, final String storeName)
+----
+
+`storeChangelogTopic` simply returns a `[applicationId]-[storeName][STATE_CHANGELOG_TOPIC_SUFFIX]`.
+
+[NOTE]
+====
+`storeChangelogTopic` is used when:
+
+* `InternalTopologyBuilder` is requested to link:kafka-streams-InternalTopologyBuilder.adoc#buildProcessorNode[buildProcessorNode] and link:kafka-streams-InternalTopologyBuilder.adoc#topicGroups[topicGroups]
+
+* `CachingSessionStore`, `ChangeLoggingKeyValueBytesStore`, link:kafka-streams-StateStore-ChangeLoggingSessionBytesStore.adoc#init[ChangeLoggingSessionBytesStore], link:kafka-streams-StateStore-ChangeLoggingWindowBytesStore.adoc#init[ChangeLoggingWindowBytesStore], link:kafka-streams-StateStore-InMemoryKeyValueLoggedStore.adoc#init[InMemoryKeyValueLoggedStore], `InMemoryKeyValueStore`, `MemoryLRUCache`, link:kafka-streams-StateStore-MeteredKeyValueBytesStore.adoc#init[MeteredKeyValueBytesStore], `MeteredSessionStore`, `MeteredWindowStore`, `RocksDBSegmentedBytesStore`, `RocksDBSessionStore`, `RocksDBWindowStore`, `CachingKeyValueStore` and `CachingWindowStore` are requested to `init`
+
+* `StoreChangeLogger` is link:kafka-streams-StoreChangeLogger.adoc[created]
+====

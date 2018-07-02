@@ -1,0 +1,61 @@
+== [[KeyValueStore]] KeyValueStore
+
+`KeyValueStore` is the <<contract, contract>> of <<implementations, state stores>> that...FIXME
+
+[[contract]]
+[source, java]
+----
+package org.apache.kafka.streams.state;
+
+interface KeyValueStore<K, V> extends StateStore, ReadOnlyKeyValueStore<K, V> {
+  void put(K key, V value);
+  V putIfAbsent(K key, V value);
+  void putAll(List<KeyValue<K, V>> entries);
+  V delete(K key);
+}
+----
+
+.KeyValueStore Contract
+[cols="1,2",options="header",width="100%"]
+|===
+| Method
+| Description
+
+| [[put]] `put`
+|
+|===
+
+[[implementations]]
+.KeyValueStores
+[cols="1,2",options="header",width="100%"]
+|===
+| KeyValueStore
+| Description
+
+| link:kafka-streams-StateStore-MeteredKeyValueBytesStore.adoc[MeteredKeyValueBytesStore]
+| [[MeteredKeyValueBytesStore]]
+
+| link:kafka-streams-StateStore-ChangeLoggingKeyValueBytesStore.adoc[ChangeLoggingKeyValueBytesStore]
+| [[ChangeLoggingKeyValueBytesStore]]
+
+| MemoryLRUCache
+| [[MemoryLRUCache]]
+
+| InMemoryKeyValueStore
+| [[InMemoryKeyValueStore]]
+
+| MeteredKeyValueStore
+| [[MeteredKeyValueStore]]
+
+| link:kafka-streams-StateStore-InMemoryKeyValueLoggedStore.adoc[InMemoryKeyValueLoggedStore]
+| [[InMemoryKeyValueLoggedStore]]
+
+| RocksDBStore
+| [[RocksDBStore]]
+
+| CachingKeyValueStore
+| [[CachingKeyValueStore]]
+
+| InnerMeteredKeyValueStore
+| [[InnerMeteredKeyValueStore]]
+|===

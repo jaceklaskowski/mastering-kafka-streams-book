@@ -1,6 +1,6 @@
 == [[StateStore]] StateStore
 
-`StateStore` is the <<contract, contract>> of a storage engine that manages the state maintained by a stream processor.
+`StateStore` is the <<contract, contract>> of <<extensions, state storage engines>> that manage a state (of a stream processor).
 
 [[contract]]
 [source, java]
@@ -42,25 +42,25 @@ interface StateStore {
 | Used when...FIXME
 |===
 
-[[implementations]]
+[[extensions]]
 .StateStores
 [cols="1,2",options="header",width="100%"]
 |===
 | StateStore
 | Description
 
-| [[SegmentedBytesStore]] `SegmentedBytesStore`
-|
+| link:kafka-streams-StateStore-SegmentedBytesStore.adoc[SegmentedBytesStore]
+| [[SegmentedBytesStore]]
 
-| [[KeyValueStore]] `KeyValueStore`
-|
+| link:kafka-streams-StateStore-KeyValueStore.adoc[KeyValueStore]
+| [[KeyValueStore]]
 
-| [[WrappedStateStore]] `WrappedStateStore`
-|
+| link:kafka-streams-StateStore-WrappedStateStore.adoc[WrappedStateStore]
+| [[WrappedStateStore]]
 
-| [[SessionStore]] `SessionStore`
-|
+| link:kafka-streams-StateStore-SessionStore.adoc[SessionStore]
+| [[SessionStore]]
 
-| [[WindowStore]] `WindowStore`
-|
+| link:kafka-streams-StateStore-WindowStore.adoc[WindowStore]
+| [[WindowStore]]
 |===

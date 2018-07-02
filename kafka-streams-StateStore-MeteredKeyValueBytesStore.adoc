@@ -1,0 +1,14 @@
+== [[MeteredKeyValueBytesStore]] MeteredKeyValueBytesStore
+
+`MeteredKeyValueBytesStore` is a concrete link:kafka-streams-StateStore-KeyValueStore.adoc[KeyValueStore] that...FIXME
+
+=== [[init]] `init` Method
+
+[source, java]
+----
+FIXME
+----
+
+NOTE: `init` is part of link:LINK#init[HERE Contract] to...FIXME.
+
+`init`...FIXME

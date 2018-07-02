@@ -1,0 +1,45 @@
+== [[StoreChangeLogger]] StoreChangeLogger
+
+`StoreChangeLogger` is...FIXME
+
+`StoreChangeLogger` is <<creating-instance, created>> when link:kafka-streams-StateStore-ChangeLoggingKeyValueBytesStore.adoc#init[ChangeLoggingKeyValueBytesStore], link:kafka-streams-StateStore-ChangeLoggingSessionBytesStore.adoc#init[ChangeLoggingSessionBytesStore], link:kafka-streams-StateStore-ChangeLoggingWindowBytesStore.adoc#init[ChangeLoggingWindowBytesStore] and link:kafka-streams-StateStore-InMemoryKeyValueLoggedStore.adoc#init[InMemoryKeyValueLoggedStore] are requested to init.
+
+[[internal-registries]]
+.StoreChangeLogger's Internal Properties (e.g. Registries, Counters and Flags)
+[cols="1,2",options="header",width="100%"]
+|===
+| Name
+| Description
+
+| `collector`
+| [[collector]] `RecordCollector`
+
+Used when...FIXME
+
+| `topic`
+| [[topic]] The name of the topic for...FIXME
+
+Used when...FIXME
+|===
+
+=== [[creating-instance]] Creating StoreChangeLogger Instance
+
+`StoreChangeLogger` takes the following when created:
+
+* [[storeName]] Store name
+* [[context]] link:kafka-streams-ProcessorContext.adoc[ProcessorContext]
+* [[partition]] Partition ID
+* [[serialization]] `StateSerdes<K, V>`
+
+`StoreChangeLogger` initializes the <<internal-registries, internal registries and counters>>.
+
+=== [[logChange]] `logChange` Method
+
+[source, java]
+----
+void logChange(final K key, final V value)
+----
+
+`logChange`...FIXME
+
+NOTE: `logChange` is used when...FIXME

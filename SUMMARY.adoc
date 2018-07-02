@@ -17,6 +17,17 @@
 
 . link:kafka-streams-StateStore.adoc[StateStore]
 .. link:kafka-streams-Stores.adoc[Stores]
+.. link:kafka-streams-StateStore-KeyValueStore.adoc[KeyValueStore]
+.. link:kafka-streams-StateStore-SegmentedBytesStore.adoc[SegmentedBytesStore]
+.. link:kafka-streams-StateStore-SessionStore.adoc[SessionStore]
+.. link:kafka-streams-StateStore-WindowStore.adoc[WindowStore]
+.. link:kafka-streams-StateStore-WrappedStateStore.adoc[WrappedStateStore]
+.. link:kafka-streams-StateStore-MeteredKeyValueBytesStore.adoc[MeteredKeyValueBytesStore]
+.. link:kafka-streams-StateStore-AbstractStateStore.adoc[AbstractStateStore]
+.. link:kafka-streams-StateStore-ChangeLoggingKeyValueBytesStore.adoc[ChangeLoggingKeyValueBytesStore]
+.. link:kafka-streams-StateStore-ChangeLoggingSessionBytesStore.adoc[ChangeLoggingSessionBytesStore]
+.. link:kafka-streams-StateStore-ChangeLoggingWindowBytesStore.adoc[ChangeLoggingWindowBytesStore]
+.. link:kafka-streams-StateStore-InMemoryKeyValueLoggedStore.adoc[InMemoryKeyValueLoggedStore]
 
 . link:kafka-streams-Consumed.adoc[Consumed]
 . link:kafka-streams-Produced.adoc[Produced]
@@ -153,7 +164,6 @@
 . link:kafka-streams-KTableSourceValueGetterSupplier.adoc[KTableSourceValueGetterSupplier]
 . link:kafka-streams-KTableSource.adoc[KTableSource]
 . link:kafka-streams-KeyValueStoreMaterializer.adoc[KeyValueStoreMaterializer]
-. link:kafka-streams-KeyValueStore.adoc[KeyValueStore]
 . link:kafka-streams-ReadOnlyKeyValueStore.adoc[ReadOnlyKeyValueStore]
 . link:kafka-streams-Materialized.adoc[Materialized]
 . link:kafka-streams-MaterializedInternal.adoc[MaterializedInternal]
@@ -168,6 +178,8 @@
 . link:kafka-streams-QuickUnion.adoc[QuickUnion]
 . link:kafka-streams-RecordInfo.adoc[RecordInfo]
 . link:kafka-streams-StampedRecord.adoc[StampedRecord]
+
+. link:kafka-streams-StoreChangeLogger.adoc[StoreChangeLogger]
 
 == Deprecated
 

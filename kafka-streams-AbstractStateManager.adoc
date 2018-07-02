@@ -1,12 +1,12 @@
 == [[AbstractStateManager]] AbstractStateManager
 
-`AbstractStateManager` is the <<contract, base>> of <<implementations, StateManagers>> that use an <<checkpoint, OffsetCheckpoint>> for...FIXME
+`AbstractStateManager` is an extension to the link:kafka-streams-StateManager.adoc#contract[StateManager Contract] for <<implementations, StateManagers>> that use an <<checkpoint, OffsetCheckpoint>> for...FIXME
 
 [[creating-instance]]
 [[baseDir]]
 `AbstractStateManager` only takes an base directory of a <<checkpoint, checkpoint>> offset file when created.
 
-NOTE: `AbstractStateManager` is an abstract class and cannot be <<creating-instance, created>> directly.
+NOTE: `AbstractStateManager` is a Java abstract class and cannot be <<creating-instance, created>> directly. It is created indirectly when the <<implementations, concrete AbstractStateManagers>> are.
 
 [[CHECKPOINT_FILE_NAME]]
 `AbstractStateManager` uses `.checkpoint` for the name of the <<checkpoint, checkpoint>> offset file.

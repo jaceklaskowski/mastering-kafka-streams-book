@@ -1,0 +1,3 @@
+== [[WrappedStateStore]] WrappedStateStore
+
+`WrappedStateStore` is...FIXME

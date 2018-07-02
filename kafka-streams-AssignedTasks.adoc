@@ -14,10 +14,10 @@
 
 NOTE: Use <<toString, toString>> method to list the tasks by status.
 
-NOTE: `AssignedTasks` is an abstract class and cannot be <<creating-instance, created>> directly.
+NOTE: `AssignedTasks` is a Java abstract class and cannot be <<creating-instance, created>> directly. It is created indirectly when the <<implementations, concrete AssignedTasks>> are.
 
 [[implementations]]
-.Concrete AssignedTasks
+.AssignedTasks
 [cols="1,2",options="header",width="100%"]
 |===
 | Task
