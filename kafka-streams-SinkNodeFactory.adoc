@@ -1,14 +1,40 @@
 == [[SinkNodeFactory]] SinkNodeFactory
 
-`SinkNodeFactory` is...FIXME
+`SinkNodeFactory` is a link:kafka-streams-NodeFactory.adoc[NodeFactory] that...FIXME
 
-=== [[build]] Building SinkNode -- `build` Method
+`SinkNodeFactory` is <<creating-instance, created>> exclusively when `InternalTopologyBuilder` is requested to link:kafka-streams-InternalTopologyBuilder.adoc#addSink[register a sink].
+
+=== [[build]] Building ProcessorNode -- `build` Method
 
 [source, java]
 ----
 ProcessorNode build()
 ----
 
-NOTE: `build` is part of link:kafka-streams-NodeFactory.adoc#build[NodeFactory Contract] to...FIXME.
+NOTE: `build` is part of link:kafka-streams-NodeFactory.adoc#build[NodeFactory Contract] to build a processor node.
 
-`build`...FIXME
+`build` simply creates a link:kafka-streams-SinkNode.adoc#creating-instance[SinkNode] (with the link:kafka-streams-NodeFactory.adoc#name[name], the <<keySerializer, key serializer>>, the <<valSerializer, value serializer>> and the <<partitioner, StreamPartitioner>>).
+
+NOTE: The link:kafka-streams-SinkNode.adoc#name[name of the topic] of the `SinkNode` is the <<topic, topic>> with link:kafka-streams-InternalTopologyBuilder.adoc#decorateTopic[application id] for an link:kafka-streams-InternalTopologyBuilder.adoc#internalTopicNames[internal topic].
+
+=== [[creating-instance]] Creating SinkNodeFactory Instance
+
+`SinkNodeFactory` takes the following when created:
+
+* [[name]] Node name
+* [[predecessors]] Names of the predecessors
+* [[topic]] Topic name
+* [[keySerializer]] Key `Serializer`
+* [[valSerializer]] Value `Serializer`
+* [[partitioner]] link:kafka-streams-StreamPartitioner.adoc[StreamPartitioner]
+
+=== [[describe]] `describe` Method
+
+[source, java]
+----
+Sink describe()
+----
+
+NOTE: `describe` is part of link:kafka-streams-NodeFactory.adoc#describe[NodeFactory Contract] to...FIXME.
+
+`describe`...FIXME

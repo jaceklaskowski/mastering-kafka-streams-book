@@ -57,7 +57,7 @@ a| [[globalTopics]] Names of global topics
 * Used when `InternalTopologyBuilder` is requested to <<isGlobalSource, check if a node name is of a global source node>>
 
 | [[internalTopicNames]] `internalTopicNames`
-a| Names of topics...FIXME
+a| Names of internal topics...FIXME
 
 * New element is added when `InternalTopologyBuilder` is requested to <<addInternalTopic, addInternalTopic>>
 
@@ -140,7 +140,7 @@ log4j.logger.org.apache.kafka.streams.processor.internals.InternalTopologyBuilde
 Refer to link:kafka-logging.adoc#log4j.properties[Application Logging Using log4j].
 ====
 
-=== [[decorateTopic]] `decorateTopic` Internal Method
+=== [[decorateTopic]] Adding Application ID to Topic (As Prefix) -- `decorateTopic` Internal Method
 
 [source, java]
 ----
@@ -279,23 +279,6 @@ void buildSourceNode(
 
 NOTE: `buildSourceNode` is used exclusively when `InternalTopologyBuilder` is requested to link:kafka-streams-InternalTopologyBuilder.adoc#build[build a topology of processor tasks] (aka *processor topology*).
 
-=== [[addSink]] `addSink` Method
-
-[source, java]
-----
-void addSink(
-  final String name,
-  final String topic,
-  final Serializer<K> keySerializer,
-  final Serializer<V> valSerializer,
-  final StreamPartitioner<? super K, ? super V> partitioner,
-  final String... predecessorNames)
-----
-
-`addSink`...FIXME
-
-NOTE: `addSink` is used when...FIXME
-
 === [[addSource]] Registering New Source Topic -- `addSource` Method
 
 [source, scala]
@@ -375,10 +358,12 @@ NOTE: `nodeGroup` can be either <<globalNodeGroups, global node groups>> (aka _g
 
 [NOTE]
 ====
-`build` is used internally when:
+`build` is used when:
 
 * `InternalTopologyBuilder` is requested to <<buildGlobalStateTopology, build a global processor task topology>>
+
 * `StandbyTaskCreator` is requested to link:kafka-streams-StandbyTaskCreator.adoc#createTask[create a standby task for a topic group]
+
 * `TaskCreator` is requested to link:kafka-streams-TaskCreator.adoc#createTask[create a stream task for a topic group]
 ====
 
@@ -823,7 +808,7 @@ Topologies:
       <-- sourceName
 ----
 
-NOTE: `describe` is used when...FIXME
+NOTE: `describe` is used exclusively when `Topology` is requested to link:kafka-streams-Topology.adoc#describe[describe].
 
 === [[describeSubtopology]] `describeSubtopology` Internal Method
 
@@ -851,3 +836,29 @@ void describeGlobalStore(
 `describeGlobalStore`...FIXME
 
 NOTE: `describeGlobalStore` is used exclusively when `InternalTopologyBuilder` is requested to <<describe, describe>>.
+
+=== [[addSink]] Registering Sink Node -- `addSink` Method
+
+[source, java]
+----
+void addSink(
+  final String name,
+  final String topic,
+  final Serializer<K> keySerializer,
+  final Serializer<V> valSerializer,
+  final StreamPartitioner<? super K, ? super V> partitioner,
+  final String... predecessorNames)
+----
+
+`addSink`...FIXME
+
+[NOTE]
+====
+`addSink` is used when:
+
+* `KGroupedTableImpl` is requested to link:kafka-streams-KGroupedTableImpl.adoc#buildAggregate[buildAggregate]
+
+* `KStreamImpl` is requested to link:kafka-streams-KStreamImpl.adoc#to[to] and link:kafka-streams-KStreamImpl.adoc#createReparitionedSource[createReparitionedSource]
+
+* `Topology` is requested to link:kafka-streams-Topology.adoc#addSink[add a sink]
+====

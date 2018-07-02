@@ -1,10 +1,28 @@
 == [[ProcessorNode]] ProcessorNode
 
-`ProcessorNode` is...FIXME
+`ProcessorNode` is a <<process, processing node>> in a topology that is identified by a <<name, name>>. `ProcessorNode` can have zero or more <<children, child processor nodes>>.
 
 `ProcessorNode` is <<creating-instance, created>> exclusively when `ProcessorNodeFactory` is requested to link:kafka-streams-ProcessorNodeFactory.adoc#build[build] a processor node.
 
-`ProcessorNode` can <<process, process>> a record.
+`ProcessorNode` can be <<init, initialized>> (in a given link:kafka-streams-ProcessorContext.adoc[ProcessorContext]) and <<close, closed>>.
+
+[[internal-registries]]
+.ProcessorNode's Internal Properties (e.g. Registries, Counters and Flags)
+[cols="1,2",options="header",width="100%"]
+|===
+| Name
+| Description
+
+| `children`
+| [[children]] Child `ProcessorNodes`
+
+Used when...FIXME
+
+| `time`
+| [[time]] `Time`
+
+Used when...FIXME
+|===
 
 === [[init]] `init` Method
 
@@ -33,7 +51,53 @@ NOTE: `process` is used when...FIXME
 `ProcessorNode` takes the following when created:
 
 * [[name]] Name
-* [[processor]] link:kafka-streams-Processor.adoc[Processor]
-* [[stateStores]] State stores
+* [[processor]] link:kafka-streams-Processor.adoc[Processor] (of `K` keys and `V` values)
+* [[stateStores]] Names of the associated state stores
 
 `ProcessorNode` initializes the <<internal-registries, internal registries and counters>>.
+
+=== [[addChild]] `addChild` Method
+
+[source, java]
+----
+void addChild(ProcessorNode<?, ?> child)
+----
+
+`addChild`...FIXME
+
+NOTE: `addChild` is used when...FIXME
+
+=== [[close]] `close` Method
+
+[source, java]
+----
+void close()
+----
+
+`close`...FIXME
+
+NOTE: `close` is used when...FIXME
+
+=== [[punctuate]] `punctuate` Method
+
+[source, java]
+----
+void punctuate(final long timestamp, final Punctuator punctuator)
+----
+
+`punctuate`...FIXME
+
+NOTE: `punctuate` is used when...FIXME
+
+=== [[toString]] Human-Friendly / Textual Representation of ProcessorNode -- `toString` Method
+
+[source, java]
+----
+String toString() // <1>
+String toString(String indent)
+----
+<1> Uses an empty `indent`
+
+NOTE: `toString` is part of Java's link:++https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html#toString--++[java.lang.Object Contract] to return a human-friendly / textual representation of an object.
+
+`toString`...FIXME
