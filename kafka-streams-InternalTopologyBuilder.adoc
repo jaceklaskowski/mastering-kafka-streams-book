@@ -2,7 +2,7 @@
 
 `InternalTopologyBuilder` is...FIXME
 
-`InternalTopologyBuilder` is <<creating-instance, created>> exclusively when `Topology` is link:kafka-streams-Topology.adoc#internalTopologyBuilder[created].
+`InternalTopologyBuilder` is <<creating-instance, created>> exclusively along with link:kafka-streams-Topology.adoc#internalTopologyBuilder[Topology].
 
 .InternalTopologyBuilder and Topology
 image::images/kafka-streams-InternalTopologyBuilder-Topology.png[align="center"]
@@ -19,7 +19,7 @@ When created, `InternalTopologyBuilder` simply initializes the <<internal-regist
 synchronized final InternalTopologyBuilder setApplicationId(final String applicationId)
 ----
 
-`InternalTopologyBuilder` uses the application id when:
+`InternalTopologyBuilder` uses the <<applicationId, application id>> when:
 
 * <<buildProcessorNode, buildProcessorNode>> and <<topicGroups, topicGroups>> for the names of changelog topics (when a `StateStoreFactory` has link:kafka-streams-StateStoreFactory.adoc#loggingEnabled[logging enabled])
 
@@ -850,7 +850,11 @@ void addSink(
   final String... predecessorNames)
 ----
 
-`addSink`...FIXME
+`addSink` creates a link:kafka-streams-SinkNodeFactory.adoc#creating-instance[SinkNodeFactory] (passing on all the inputs) and registers it in the <<nodeFactories, nodeFactories>> internal registry (under the input `name`).
+
+`addSink` registers the input `topic` with the input `name` in the <<nodeToSinkTopic, nodeToSinkTopic>> internal registry.
+
+`addSink` adds the input `name` to the <<nodeGrouper, nodeGrouper>> internal registry and requests it to link:kafka-streams-QuickUnion.adoc#unite[unite] the input `name` with the input `predecessorNames`.
 
 [NOTE]
 ====
