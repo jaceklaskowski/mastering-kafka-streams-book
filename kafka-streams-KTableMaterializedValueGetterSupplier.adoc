@@ -1,0 +1,3 @@
+== [[KTableMaterializedValueGetterSupplier]] KTableMaterializedValueGetterSupplier
+
+`KTableMaterializedValueGetterSupplier` is...FIXME

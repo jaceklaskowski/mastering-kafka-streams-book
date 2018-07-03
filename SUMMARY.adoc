@@ -171,7 +171,10 @@
 . link:kafka-streams-ProcessorTopology.adoc[ProcessorTopology]
 
 . link:kafka-streams-KTableValueGetterSupplier.adoc[KTableValueGetterSupplier]
-. link:kafka-streams-KTableSourceValueGetterSupplier.adoc[KTableSourceValueGetterSupplier]
+.. link:kafka-streams-KTableMaterializedValueGetterSupplier.adoc[KTableMaterializedValueGetterSupplier]
+.. link:kafka-streams-KTableSourceValueGetterSupplier.adoc[KTableSourceValueGetterSupplier]
+.. link:kafka-streams-KTableKTableAbstractJoinValueGetterSupplier.adoc[KTableKTableAbstractJoinValueGetterSupplier]
+
 . link:kafka-streams-KTableSource.adoc[KTableSource]
 . link:kafka-streams-KeyValueStoreMaterializer.adoc[KeyValueStoreMaterializer]
 . link:kafka-streams-ReadOnlyKeyValueStore.adoc[ReadOnlyKeyValueStore]

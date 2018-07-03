@@ -1,3 +1,44 @@
 == [[KTableValueGetterSupplier]] KTableValueGetterSupplier
 
-`KTableValueGetterSupplier` is...FIXME
+`KTableValueGetterSupplier` is the <<contract, contract>> of <<implementations, KTableValueGetterSuppliers>> that can <<get, get a KTableValueGetter>> for <<storeNames, storeNames>>.
+
+[[contract]]
+[source, java]
+----
+package org.apache.kafka.streams.kstream.internals;
+
+interface KTableValueGetterSupplier<K, V> {
+  KTableValueGetter<K, V> get();
+  String[] storeNames();
+}
+----
+
+.KTableValueGetterSupplier Contract
+[cols="1,2",options="header",width="100%"]
+|===
+| Method
+| Description
+
+| `get`
+| [[get]] Used when...FIXME
+
+| `storeNames`
+| [[storeNames]] Used when...FIXME
+|===
+
+[[implementations]]
+.KTableValueGetterSuppliers
+[cols="1,2",options="header",width="100%"]
+|===
+| KTableValueGetterSupplier
+| Description
+
+| link:kafka-streams-KTableMaterializedValueGetterSupplier.adoc[KTableMaterializedValueGetterSupplier]
+| [[KTableMaterializedValueGetterSupplier]]
+
+| link:kafka-streams-KTableSourceValueGetterSupplier.adoc[KTableSourceValueGetterSupplier]
+| [[KTableSourceValueGetterSupplier]]
+
+| link:kafka-streams-KTableKTableAbstractJoinValueGetterSupplier.adoc[KTableKTableAbstractJoinValueGetterSupplier]
+| [[KTableKTableAbstractJoinValueGetterSupplier]]
+|===
