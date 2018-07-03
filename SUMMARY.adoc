@@ -95,6 +95,8 @@
 
 . link:kafka-streams-RecordQueue.adoc[RecordQueue]
 
+. link:kafka-streams-GlobalKTableImpl.adoc[GlobalKTableImpl]
+
 === Logical Plan of Execution
 
 . link:kafka-streams-ProcessorNode.adoc[ProcessorNode]
@@ -168,7 +170,6 @@
 . link:kafka-streams-GroupedStreamAggregateBuilder.adoc[GroupedStreamAggregateBuilder]
 . link:kafka-streams-ProcessorTopology.adoc[ProcessorTopology]
 
-. link:kafka-streams-GlobalKTableImpl.adoc[GlobalKTableImpl]
 . link:kafka-streams-KTableValueGetterSupplier.adoc[KTableValueGetterSupplier]
 . link:kafka-streams-KTableSourceValueGetterSupplier.adoc[KTableSourceValueGetterSupplier]
 . link:kafka-streams-KTableSource.adoc[KTableSource]

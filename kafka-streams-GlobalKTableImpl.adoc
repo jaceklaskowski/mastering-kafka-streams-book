@@ -1,12 +1,39 @@
 == [[GlobalKTableImpl]] GlobalKTableImpl
 
-`GlobalKTableImpl` is a link:kafka-streams-GlobalKTable.adoc[GlobalKTable] that...FIXME
+`GlobalKTableImpl` is a link:kafka-streams-GlobalKTable.adoc[GlobalKTable] (of `K` primary keys and `V` value changes) that uses a <<valueGetterSupplier, KTableValueGetterSupplier>> for the <<queryableStoreName, queryableStoreName>> when <<queryable, queryable>>.
 
-`GlobalKTableImpl` is <<creating-instance, created>> when...FIXME
+`GlobalKTableImpl` is <<creating-instance, created>> exclusively when `InternalStreamsBuilder` is requested to link:kafka-streams-InternalStreamsBuilder.adoc#globalTable[create one] (exclusively when `StreamsBuilder` is requested to link:kafka-streams-StreamsBuilder.adoc#globalTable[create it]).
+
+[source, scala]
+----
+import org.apache.kafka.streams.StreamsBuilder
+val builder = new StreamsBuilder
+
+val globalTable = builder.globalTable("topic")
+
+import org.apache.kafka.streams.kstream.internals.GlobalKTableImpl
+val impl = globalTable.asInstanceOf[GlobalKTableImpl[_, _]]
+
+scala> println(impl.queryableStoreName)
+null
+----
 
 === [[creating-instance]] Creating GlobalKTableImpl Instance
 
 `GlobalKTableImpl` takes the following when created:
 
-* [[valueGetterSupplier]] link:kafka-streams-KTableValueGetterSupplier.adoc[KTableValueGetterSupplier<K, V>]
+* [[valueGetterSupplier]] link:kafka-streams-KTableValueGetterSupplier.adoc[KTableValueGetterSupplier] (of `K` primary keys and `V` value changes)
 * [[queryable]] `queryable` flag
+
+=== [[queryableStoreName]] `queryableStoreName` Method
+
+[source, java]
+----
+String queryableStoreName()
+----
+
+NOTE: `queryableStoreName` is part of link:kafka-streams-GlobalKTable.adoc#queryableStoreName[GlobalKTable Contract] to...FIXME.
+
+Only when <<queryable, queryable>> is enabled, `queryableStoreName` requests the <<valueGetterSupplier, KTableValueGetterSupplier>> for link:kafka-streams-KTableValueGetterSupplier.adoc#storeNames[storeNames] and takes the very first one.
+
+Otherwise, `queryableStoreName` returns `null`.
