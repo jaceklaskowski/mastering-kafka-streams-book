@@ -1,3 +1,30 @@
 == [[GlobalKTable]] GlobalKTable
 
-`GlobalKTable` is...FIXME
+`GlobalKTable` is the <<contract, contract>> of <<implementations, GlobalKTables>> that are connected to a <<queryableStoreName, queryableStoreName>>.
+
+[[contract]]
+[source, java]
+----
+package org.apache.kafka.streams.kstream;
+
+interface GlobalKTable<K, V> {
+  String queryableStoreName();
+}
+----
+
+NOTE: `GlobalKTable` is an `Evolving` contract which means that compatibility may be broken at a minor release.
+
+.GlobalKTable Contract
+[cols="1,2",options="header",width="100%"]
+|===
+| Method
+| Description
+
+| `queryableStoreName`
+a| [[queryableStoreName]]
+
+NOTE: `queryableStoreName` does not seem to be used.
+|===
+
+[[implementations]]
+NOTE: link:kafka-streams-GlobalKTableImpl.adoc[GlobalKTableImpl] is the one and only known direct implementation of <<contract, GlobalKTable Contract>> in Kafka Streams.

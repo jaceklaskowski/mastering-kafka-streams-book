@@ -39,7 +39,7 @@ interface StreamsMetrics {
 }
 ----
 
-NOTE: `StreamsMetrics` is an `Evolving` contract which means that compatibility may be broken at minor release.
+NOTE: `StreamsMetrics` is an `Evolving` contract which means that compatibility may be broken at a minor release.
 
 .StreamsMetrics Contract
 [cols="1,2",options="header",width="100%"]

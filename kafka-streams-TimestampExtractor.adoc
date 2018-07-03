@@ -14,7 +14,7 @@ interface TimestampExtractor {
 }
 ----
 
-NOTE: `TimestampExtractor` is an `Evolving` contract which means that compatibility may be broken at minor release.
+NOTE: `TimestampExtractor` is an `Evolving` contract which means that compatibility may be broken at a minor release.
 
 .TimestampExtractor Contract
 [cols="1,2",options="header",width="100%"]
