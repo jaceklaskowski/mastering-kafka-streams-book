@@ -44,6 +44,7 @@
 . link:kafka-streams-TimestampExtractor.adoc[TimestampExtractor]
 .. link:kafka-streams-WallclockTimestampExtractor.adoc[WallclockTimestampExtractor]
 .. link:kafka-streams-ExtractRecordMetadataTimestamp.adoc[ExtractRecordMetadataTimestamp]
+.. link:kafka-streams-FailOnInvalidTimestamp.adoc[FailOnInvalidTimestamp]
 
 . link:kafka-streams-exactly-once-support-eos.adoc[Exactly-Once Support (EOS)]
 
@@ -113,6 +114,8 @@
 . link:kafka-streams-ProcessorNodePunctuator.adoc[ProcessorNodePunctuator]
 . link:kafka-streams-PunctuationQueue.adoc[PunctuationQueue]
 . link:kafka-streams-NodeMetrics.adoc[NodeMetrics]
+
+. link:kafka-streams-InternalNameProvider.adoc[InternalNameProvider]
 
 === Stateful Stream Processing
 

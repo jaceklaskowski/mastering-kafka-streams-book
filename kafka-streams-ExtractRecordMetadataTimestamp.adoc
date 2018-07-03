@@ -36,14 +36,14 @@ NOTE: `ExtractRecordMetadataTimestamp` is an `Evolving` contract which means tha
 | ExtractRecordMetadataTimestamp
 | Description
 
+| link:kafka-streams-FailOnInvalidTimestamp.adoc[FailOnInvalidTimestamp]
 | [[FailOnInvalidTimestamp]]
-| `FailOnInvalidTimestamp`
 
-| [[UsePreviousTimeOnInvalidTimestamp]]
 | `UsePreviousTimeOnInvalidTimestamp`
+| [[UsePreviousTimeOnInvalidTimestamp]]
 
-| [[LogAndSkipOnInvalidTimestamp]]
 | `LogAndSkipOnInvalidTimestamp`
+| [[LogAndSkipOnInvalidTimestamp]]
 |===
 
 === [[extract]] `extract` Method

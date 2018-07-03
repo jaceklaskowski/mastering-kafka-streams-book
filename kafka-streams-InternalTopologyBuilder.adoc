@@ -57,9 +57,7 @@ a| [[globalTopics]] Names of global topics
 * Used when `InternalTopologyBuilder` is requested to <<isGlobalSource, check if a node name is of a global source node>>
 
 | [[internalTopicNames]] `internalTopicNames`
-a| Names of internal topics...FIXME
-
-* New element is added when `InternalTopologyBuilder` is requested to <<addInternalTopic, addInternalTopic>>
+a| Names of internal topics that were auto-created when `InternalTopologyBuilder` was requested to <<addInternalTopic, addInternalTopic>>
 
 | [[latestResetPatterns]] `latestResetPatterns`
 |
@@ -247,23 +245,6 @@ void buildProcessorNode(
 
 NOTE: `buildProcessorNode` is used when...FIXME
 
-=== [[addInternalTopic]] `addInternalTopic` Method
-
-[source, java]
-----
-final void addInternalTopic(final String topicName)
-----
-
-`addInternalTopic`...FIXME
-
-[NOTE]
-====
-`addInternalTopic` is used when:
-
-1. `KStreamImpl` is requested to link:kafka-streams-KStreamImpl.adoc#createReparitionedSource[createReparitionedSource]
-1. `KGroupedTableImpl` is requested to `buildAggregate`
-====
-
 === [[buildSourceNode]] `buildSourceNode` Internal Method
 
 [source, java]
@@ -279,7 +260,7 @@ void buildSourceNode(
 
 NOTE: `buildSourceNode` is used exclusively when `InternalTopologyBuilder` is requested to link:kafka-streams-InternalTopologyBuilder.adoc#build[build a topology of processor tasks] (aka *processor topology*).
 
-=== [[addSource]] Registering New Source Topic -- `addSource` Method
+=== [[addSource]] Registering Source Node -- `addSource` Method
 
 [source, scala]
 ----
@@ -862,7 +843,25 @@ void addSink(
 
 * `KGroupedTableImpl` is requested to link:kafka-streams-KGroupedTableImpl.adoc#buildAggregate[buildAggregate]
 
-* `KStreamImpl` is requested to link:kafka-streams-KStreamImpl.adoc#to[to] and link:kafka-streams-KStreamImpl.adoc#createReparitionedSource[createReparitionedSource]
+* `KStreamImpl` is requested to link:kafka-streams-KStreamImpl.adoc#to[register a sink node] and link:kafka-streams-KStreamImpl.adoc#createReparitionedSource[createReparitionedSource]
 
 * `Topology` is requested to link:kafka-streams-Topology.adoc#addSink[add a sink]
+====
+
+=== [[addInternalTopic]] `addInternalTopic` Method
+
+[source, java]
+----
+void addInternalTopic(final String topicName)
+----
+
+`addInternalTopic` simply adds the input `topicName` to the <<internalTopicNames, internalTopicNames>> internal registry.
+
+[NOTE]
+====
+`addInternalTopic` is used when:
+
+* `KStreamImpl` is requested to link:kafka-streams-KStreamImpl.adoc#createReparitionedSource[createReparitionedSource]
+
+* `KGroupedTableImpl` is requested to `buildAggregate`
 ====

@@ -2,8 +2,23 @@
 
 `InternalStreamsBuilder` is...FIXME
 
-[[internalTopologyBuilder]]
-`InternalStreamsBuilder` uses a link:kafka-streams-InternalTopologyBuilder.adoc[InternalTopologyBuilder] for...FIXME
+[[internal-registries]]
+.InternalStreamsBuilder's Internal Properties (e.g. Registries, Counters and Flags)
+[cols="1,2",options="header",width="100%"]
+|===
+| Name
+| Description
+
+| `index`
+| [[index]] FIXME
+
+Used when...FIXME
+
+| `internalTopologyBuilder`
+| [[internalTopologyBuilder]] link:kafka-streams-InternalTopologyBuilder.adoc[InternalTopologyBuilder]
+
+Used when...FIXME
+|===
 
 === [[addStateStore]] `addStateStore` Method
 
@@ -134,3 +149,19 @@ Internally, `globalTable` requests `MaterializedInternal` to link:kafka-streams-
 * link:kafka-streams-GlobalKTableImpl.adoc#queryable[queryable] flag being link:kafka-streams-MaterializedInternal.adoc#queryable[that] of the input `MaterializedInternal`
 
 NOTE: `globalTable` is used exclusively when `StreamsBuilder` is requested to link:kafka-streams-StreamsBuilder.adoc#globalTable[create a GlobalKTable].
+
+=== [[newProcessorName]] Requesting New Processor Name -- `newProcessorName` Method
+
+[source, java]
+----
+String newProcessorName(final String prefix)
+----
+
+NOTE: `newProcessorName` is part of link:kafka-streams-InternalNameProvider.adoc#newProcessorName[InternalNameProvider Contract] to...FIXME.
+
+`newProcessorName` simply takes the input `prefix` followed by the <<index, index>>.
+
+[source, scala]
+----
+// CAUTION: FIXME Example
+----
