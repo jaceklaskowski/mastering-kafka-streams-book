@@ -1,0 +1,3 @@
+== [[GlobalKTable]] GlobalKTable
+
+`GlobalKTable` is...FIXME

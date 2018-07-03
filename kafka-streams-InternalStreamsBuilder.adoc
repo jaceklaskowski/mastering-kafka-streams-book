@@ -2,6 +2,17 @@
 
 `InternalStreamsBuilder` is...FIXME
 
+`InternalStreamsBuilder` is <<creating-instance, created>> along with link:kafka-streams-StreamsBuilder.adoc#internalStreamsBuilder[StreamsBuilder].
+
+.Creating InternalStreamsBuilder
+image::images/kafka-streams-InternalStreamsBuilder.png[align="center"]
+
+[[creating-instance]]
+[[internalTopologyBuilder]]
+`InternalStreamsBuilder` takes a link:kafka-streams-InternalTopologyBuilder.adoc[InternalTopologyBuilder] only when created.
+
+`InternalStreamsBuilder` is an link:kafka-streams-InternalNameProvider.adoc[InternalNameProvider] and can be requested for a new name for a <<newProcessorName, processor>> or a <<newStoreName, store>>.
+
 [[internal-registries]]
 .InternalStreamsBuilder's Internal Properties (e.g. Registries, Counters and Flags)
 [cols="1,2",options="header",width="100%"]
@@ -11,11 +22,6 @@
 
 | `index`
 | [[index]] FIXME
-
-Used when...FIXME
-
-| `internalTopologyBuilder`
-| [[internalTopologyBuilder]] link:kafka-streams-InternalTopologyBuilder.adoc[InternalTopologyBuilder]
 
 Used when...FIXME
 |===
@@ -161,7 +167,39 @@ NOTE: `newProcessorName` is part of link:kafka-streams-InternalNameProvider.adoc
 
 `newProcessorName` simply takes the input `prefix` followed by the <<index, index>>.
 
+NOTE: The <<index, index>> counter is what makes it bound to a `InternalStreamsBuilder`.
+
 [source, scala]
 ----
-// CAUTION: FIXME Example
+import org.apache.kafka.streams.kstream.internals.InternalStreamsBuilder
+import org.apache.kafka.streams.processor.internals.InternalTopologyBuilder
+val newBuilder = new InternalStreamsBuilder(new InternalTopologyBuilder)
+
+val name = newBuilder.newProcessorName("PREFIX")
+scala> println(name)
+PREFIX0000000001
+----
+
+=== [[newStoreName]] Requesting New Store Name -- `newStoreName` Method
+
+[source, java]
+----
+String newStoreName(final String prefix)
+----
+
+NOTE: `newStoreName` is part of link:kafka-streams-InternalNameProvider.adoc#newStoreName[InternalNameProvider Contract] to...FIXME.
+
+`newStoreName` simply concatenates the input `prefix`, `STATE-STORE-` and the <<index, index>>.
+
+NOTE: The <<index, index>> counter is what makes it bound to a `InternalStreamsBuilder`.
+
+[source, scala]
+----
+import org.apache.kafka.streams.kstream.internals.InternalStreamsBuilder
+import org.apache.kafka.streams.processor.internals.InternalTopologyBuilder
+val newBuilder = new InternalStreamsBuilder(new InternalTopologyBuilder)
+
+val name = newBuilder.newStoreName("PREFIX")
+scala> println(name)
+PREFIXSTATE-STORE-0000000001
 ----

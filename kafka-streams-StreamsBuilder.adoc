@@ -1,6 +1,32 @@
 == [[StreamsBuilder]] StreamsBuilder
 
-`StreamsBuilder` is the *high-level stream processing DSL* in Kafka Streams to <<build, build a topology>>.
+`StreamsBuilder` provides the <<operators, high-level stream processing DSL>> in Kafka Streams to <<build, build a processor topology>> (with sources, processors, and sinks).
+
+[[operators]]
+.StreamsBuilder's Operators
+[cols="1,2",options="header",width="100%"]
+|===
+| Operator
+| Description
+
+| <<addGlobalStore, addGlobalStore>>
+| Adds a global link:kafka-streams-StateStore.adoc[StateStore] to the topology
+
+| <<addStateStore, addStateStore>>
+| Adds a link:kafka-streams-StateStore.adoc[StateStore] to the topology
+
+| <<globalTable, globalTable>>
+| Creates a link:kafka-streams-GlobalKTable.adoc[GlobalKTable] for a given topic
+
+| <<stream, stream>>
+| Creates a link:kafka-streams-KStream.adoc[KStream] from given topics
+
+| <<table, table>>
+| Create a link:kafka-streams-KTable.adoc[KTable] for a given topic
+|===
+
+[[creating-instance]]
+`StreamsBuilder` takes no arguments when created.
 
 [source, scala]
 ----
@@ -8,15 +34,34 @@ import org.apache.kafka.streams.StreamsBuilder
 val builder = new StreamsBuilder
 ----
 
-[[topology]]
-When created, `StreamsBuilder` creates a link:kafka-streams-Topology.adoc#creating-instance[Topology].
+A typical Kafka Streams application uses the <<operators, high-level stream processing DSL>> to add nodes to a processor topology as follows.
 
-NOTE: Technically, `StreamsBuilder` is simply a wrapper around link:kafka-streams-Topology.adoc[Topology] and whatever topology you could build using `StreamsBuilder` so could you with `Topology` directly.
+[source, scala]
+----
+// Add a GlobalKTable with a global store if needed
+builder
+  .addGlobalStore(...)
+  .globalTable(...)
+
+// Add a KStream if needed
+builder.stream(...)
+
+// Add a KTable if needed
+builder.table(...)
+
+// In the end, build a topology
+val topology = builder.build
+----
+
+[[topology]]
+When <<creating-instance, created>>, `StreamsBuilder` creates a link:kafka-streams-Topology.adoc#creating-instance[Topology] (that is further developed using the <<operators, operators>>). The `Topology` is requested for link:kafka-streams-Topology.adoc#internalTopologyBuilder[InternalTopologyBuilder] that is used to create the <<internalStreamsBuilder, InternalStreamsBuilder>>.
 
 [[internalStreamsBuilder]]
-`StreamsBuilder` uses link:kafka-streams-InternalStreamsBuilder.adoc[InternalStreamsBuilder] for...FIXME
+When <<creating-instance, created>>, `StreamsBuilder` creates an link:kafka-streams-InternalStreamsBuilder.adoc#creating-instance[InternalStreamsBuilder] that the <<operators, operators>> use to offer their services.
 
-=== [[table]] `table` Method
+NOTE: `StreamsBuilder` simply provides a more developer-friendly API for stream processing than using the link:kafka-streams-InternalStreamsBuilder.adoc[InternalStreamsBuilder] API directly. In other words, `StreamsBuilder` is a layer over `InternalStreamsBuilder`.
+
+=== [[table]] Creating KTable -- `table` Method
 
 [source, java]
 ----
@@ -81,7 +126,16 @@ synchronized StreamsBuilder addGlobalStore(
 
 `addGlobalStore`...FIXME
 
-=== [[stream]] Creating KStream of Records for Topics -- `stream` Factory Method
+=== [[addStateStore]] `addStateStore` Method
+
+[source, java]
+----
+StreamsBuilder addStateStore(final StoreBuilder builder)
+----
+
+`addStateStore`...FIXME
+
+=== [[stream]] Creating KStream (of Records from Topics) -- `stream` Method
 
 [source, java]
 ----

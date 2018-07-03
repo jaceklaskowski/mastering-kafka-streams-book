@@ -1,6 +1,6 @@
 == [[GlobalKTableImpl]] GlobalKTableImpl
 
-`GlobalKTableImpl` is...FIXME
+`GlobalKTableImpl` is a link:kafka-streams-GlobalKTable.adoc[GlobalKTable] that...FIXME
 
 `GlobalKTableImpl` is <<creating-instance, created>> when...FIXME
 

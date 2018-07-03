@@ -11,6 +11,7 @@
 . link:kafka-streams-StreamsBuilder.adoc[StreamsBuilder]
 . link:kafka-streams-KStream.adoc[KStream]
 . link:kafka-streams-KTable.adoc[KTable]
+. link:kafka-streams-GlobalKTable.adoc[GlobalKTable]
 . link:kafka-streams-Topology.adoc[Topology]
 . link:kafka-streams-Processor.adoc[Processor -- Contract for Stream Processors]
 . link:kafka-streams-ProcessorContext.adoc[ProcessorContext]
