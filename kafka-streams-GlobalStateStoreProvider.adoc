@@ -1,0 +1,20 @@
+== [[GlobalStateStoreProvider]] GlobalStateStoreProvider
+
+`GlobalStateStoreProvider` is a link:kafka-streams-StateStoreProvider.adoc[StateStoreProvider] that...FIXME
+
+`GlobalStateStoreProvider` is <<creating-instance, created>> along with link:kafka-streams-KafkaStreams.adoc#creating-instance[KafkaStreams] (when creating the link:kafka-streams-KafkaStreams.adoc#queryableStoreProvider[QueryableStoreProvider]).
+
+[[creating-instance]]
+[[globalStateStores]]
+`GlobalStateStoreProvider` takes a collection of link:kafka-streams-StateStore.adoc[StateStores] by their names when created.
+
+=== [[stores]] `stores` Method
+
+[source, java]
+----
+List<T> stores(final String storeName, final QueryableStoreType<T> queryableStoreType)
+----
+
+NOTE: `stores` is part of link:kafka-streams-StateStoreProvider.adoc#stores[StateStoreProvider Contract] to...FIXME.
+
+`stores`...FIXME

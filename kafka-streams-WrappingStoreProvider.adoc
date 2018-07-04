@@ -1,0 +1,3 @@
+== [[WrappingStoreProvider]] WrappingStoreProvider
+
+`WrappingStoreProvider` is...FIXME

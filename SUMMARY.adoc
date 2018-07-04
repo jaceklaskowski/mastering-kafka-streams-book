@@ -131,6 +131,12 @@
 
 . link:kafka-streams-GlobalKTableImpl.adoc[GlobalKTableImpl]
 
+. link:kafka-streams-QueryableStoreProvider.adoc[QueryableStoreProvider]
+. link:kafka-streams-StateStoreProvider.adoc[StateStoreProvider]
+.. link:kafka-streams-StreamThreadStateStoreProvider.adoc[StreamThreadStateStoreProvider]
+.. link:kafka-streams-GlobalStateStoreProvider.adoc[GlobalStateStoreProvider]
+.. link:kafka-streams-WrappingStoreProvider.adoc[WrappingStoreProvider]
+
 === Stateful Stream Processing
 
 . link:kafka-streams-StoreBuilder.adoc[StoreBuilder -- Contract for State Store Builders]

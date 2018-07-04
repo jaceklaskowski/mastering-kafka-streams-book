@@ -60,9 +60,20 @@ synchronized final InternalTopologyBuilder setApplicationId(final String applica
 |
 
 | [[globalStateStores]] `globalStateStores`
-a| link:kafka-streams-StateStore.adoc[StateStores] by name
+a| Global link:kafka-streams-StateStore.adoc[StateStores] by name
 
 * A new global link:kafka-streams-StateStore.adoc[StateStore] is added exclusively when `InternalTopologyBuilder` is requested to <<addGlobalStore, add a global state store to a topology>>
+
+NOTE: There are two types of link:kafka-streams-StateStore.adoc[StateStores], i.e. <<globalStateStores, global>> and <<stateFactories, regular>>. Use <<allStateStoreName, allStateStoreName>> to access them all.
+
+[NOTE]
+====
+`InternalTopologyBuilder` comes with `globalStateStores` method to access `globalStateStores` registry as an unmodifiable collection. It is used when:
+
+* `KafkaStreams` is link:kafka-streams-KafkaStreams.adoc#creating-instance[created] (and creates a link:kafka-streams-GlobalStateStoreProvider.adoc#creating-instance[GlobalStateStoreProvider] for the link:kafka-streams-KafkaStreams.adoc#queryableStoreProvider[QueryableStoreProvider])
+
+* `StreamsMetadataState` is link:kafka-streams-StreamsMetadataState.adoc#creating-instance[created]
+====
 
 | `globalTopics`
 a| [[globalTopics]] Names of global topics
@@ -433,23 +444,23 @@ The private `addGlobalStore` creates a link:kafka-streams-ProcessorNodeFactory.a
 
 `addGlobalStore` then does the following housekeeping tasks:
 
-1. Adds the `topic` to <<globalTopics, globalTopics>>
+. Adds the `topic` to <<globalTopics, globalTopics>>
 
-1. Creates a link:kafka-streams-SourceNodeFactory.adoc#creating-instance[SourceNodeFactory] and registers it in <<nodeFactories, nodeFactories>> as `sourceName`
+. Creates a link:kafka-streams-SourceNodeFactory.adoc#creating-instance[SourceNodeFactory] and registers it in <<nodeFactories, nodeFactories>> as `sourceName`
 
-1. Associates the `sourceName` with `topic` to <<nodeToSourceTopics, nodeToSourceTopics>>
+. Associates the `sourceName` with `topic` to <<nodeToSourceTopics, nodeToSourceTopics>>
 
-1. Requests <<nodeGrouper, QuickUnion of the names of node groups>> to link:kafka-streams-QuickUnion.adoc#add[add] the `sourceName`
+. Requests <<nodeGrouper, QuickUnion of the names of node groups>> to link:kafka-streams-QuickUnion.adoc#add[add] the `sourceName`
 
-1. Requests `ProcessorNodeFactory` to link:kafka-streams-ProcessorNodeFactory.adoc#addStateStore[add a state store] as `name`
+. Requests `ProcessorNodeFactory` to link:kafka-streams-ProcessorNodeFactory.adoc#addStateStore[add a state store] as `name`
 
-1. Associates the `processorName` with `nodeFactory` in <<nodeFactories, nodeFactories>>
+. Associates the `processorName` with `nodeFactory` in <<nodeFactories, nodeFactories>>
 
-1. Requests <<nodeGrouper, QuickUnion of the names of node groups>> to link:kafka-streams-QuickUnion.adoc#add[add] the `processorName`
+. Requests <<nodeGrouper, QuickUnion of the names of node groups>> to link:kafka-streams-QuickUnion.adoc#add[add] the `processorName`
 
-1. Requests <<nodeGrouper, QuickUnion of the names of node groups>> to link:kafka-streams-QuickUnion.adoc#unite[unite] the `processorName` and `predecessors`
+. Requests <<nodeGrouper, QuickUnion of the names of node groups>> to link:kafka-streams-QuickUnion.adoc#unite[unite] the `processorName` and `predecessors`
 
-1. Associates the `name` with the `store` in <<globalStateStores, globalStateStores>>
+. Associates the `name` with the `store` in <<globalStateStores, globalStateStores>>
 
 In the end, `addGlobalStore` <<connectSourceStoreAndTopic, associates the names of the state store and the topic>> (with the `name` and `topic`).
 
@@ -617,7 +628,7 @@ NOTE: `nodeGroups` is used when `InternalTopologyBuilder` is requested to <<buil
 
 [source, java]
 ----
-synchronized ProcessorTopology buildGlobalStateTopology()
+ProcessorTopology buildGlobalStateTopology()
 ----
 
 `buildGlobalStateTopology` <<globalNodeGroups, globalNodeGroups>> and <<build, builds a topology>> with the global node groups.
@@ -655,13 +666,13 @@ NOTE: `nodeGroupContainsGlobalSourceNode` is used exclusively when `InternalTopo
 boolean isGlobalSource(final String nodeName)
 ----
 
-`isGlobalSource` takes the link:kafka-streams-NodeFactory.adoc[NodeFactory] for the given `nodeName` (from <<nodeFactories, nodeFactories>> registry).
+`isGlobalSource` looks up a link:kafka-streams-NodeFactory.adoc[NodeFactory] by the input node name (in the <<nodeFactories, nodeFactories>> internal registry).
 
 `isGlobalSource` is positive (i.e. `true`) when the following all hold:
 
 * `nodeName` is the name of a link:kafka-streams-SourceNodeFactory.adoc[SourceNodeFactory] with exactly one link:kafka-streams-SourceNodeFactory.adoc#topics[topic]
 
-* The topic is among <<globalTopics, globalTopics>>
+* The single topic is among <<globalTopics, globalTopics>>
 
 Otherwise, `isGlobalSource` is negative (i.e. `false`).
 
@@ -674,7 +685,7 @@ NOTE: `isGlobalSource` is used when `InternalTopologyBuilder` is requested to <<
 Set<String> globalNodeGroups()
 ----
 
-`globalNodeGroups` gives <<nodeGroups-accessor, node groups>> with at least one <<global-source-node, global source node>>.
+`globalNodeGroups` gives <<nodeGroups-accessor, node groups>> with at least one <<isGlobalSource, global source node>>.
 
 NOTE: `globalNodeGroups` is used when `InternalTopologyBuilder` is requested to build a <<build, processor task topology>> and <<buildGlobalStateTopology, global processor task topology>>.
 
@@ -920,3 +931,14 @@ When the input `topicGroupId` is undefined (i.e. `null`), `build` takes the node
 
 * `TaskCreator` is requested to link:kafka-streams-TaskCreator.adoc#createTask[create a stream task for a given task ID]
 ====
+
+=== [[allStateStoreName]] `allStateStoreName` Method
+
+[source, java]
+----
+Set<String> allStateStoreName()
+----
+
+`allStateStoreName` simply returns the state store names (the keys) from the <<stateFactories, stateFactories>> and <<globalStateStores, globalStateStores>> internal registries.
+
+NOTE: `allStateStoreName` is used exclusively when `TopologyTestDriver` is requested to link:kafka-streams-TopologyTestDriver.adoc#getAllStateStores[getAllStateStores].

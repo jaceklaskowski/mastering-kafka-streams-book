@@ -15,6 +15,14 @@ It must be unique within the Kafka cluster as it is used as the default client-i
 
 Use `StreamsConfig.APPLICATION_ID_CONFIG` to reference the property.
 
+| [[application.server]] `application.server`
+| (empty)
+| A `host:port` pair pointing to an embedded user-defined endpoint (that can be used for discovering the locations of state stores in a single KafkaStreams application).
+
+Use `StreamsConfig.APPLICATION_SERVER_CONFIG` to reference the property.
+
+Used when `StreamPartitionAssignor` is requested to link:kafka-streams-StreamsPartitionAssignor.adoc#configure[configure itself].
+
 | [[commit.interval.ms]] `commit.interval.ms`
 a|
 

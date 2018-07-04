@@ -1,0 +1,40 @@
+== [[StateStoreProvider]] StateStoreProvider
+
+`StateStoreProvider` is the <<contract, contract>> of <<implementations, StateStoreProviders>> that <<stores, stores>>.
+
+[[contract]]
+[source, java]
+----
+package org.apache.kafka.streams.state.internals;
+
+interface StateStoreProvider {
+  <T> List<T> stores(String storeName, QueryableStoreType<T> queryableStoreType);
+}
+----
+
+.StateStoreProvider Contract
+[cols="1,2",options="header",width="100%"]
+|===
+| Method
+| Description
+
+| `stores`
+| [[stores]] Used when...FIXME
+|===
+
+[[implementations]]
+.StateStoreProviders
+[cols="1,2",options="header",width="100%"]
+|===
+| StateStoreProvider
+| Description
+
+| link:kafka-streams-GlobalStateStoreProvider.adoc[GlobalStateStoreProvider]
+| [[GlobalStateStoreProvider]]
+
+| link:kafka-streams-StreamThreadStateStoreProvider.adoc[StreamThreadStateStoreProvider]
+| [[StreamThreadStateStoreProvider]]
+
+| link:kafka-streams-WrappingStoreProvider.adoc[WrappingStoreProvider]
+| [[WrappingStoreProvider]]
+|===

@@ -16,12 +16,17 @@ TIP: Read https://cwiki.apache.org/confluence/display/KAFKA/Kafka+Client-side+As
 | Name
 | Description
 
-| [[internalTopicManager]] `internalTopicManager`
-a| link:kafka-streams-InternalTopicManager.adoc[InternalTopicManager]
+| `internalTopicManager`
+a| [[internalTopicManager]] link:kafka-streams-InternalTopicManager.adoc[InternalTopicManager]
 
 * Initialized exclusively when `StreamsPartitionAssignor` is requested to <<configure, configure>>
 
 * Used exclusively when `StreamsPartitionAssignor` is requested to <<prepareTopic, prepareTopic>>
+
+| `userEndPoint`
+| [[userEndPoint]] User-defined endpoint in the format of `host:port` as <<configure, configured>> by link:kafka-streams-properties.adoc#application.server[application.server] configuration property (default: empty).
+
+Used when `StreamsPartitionAssignor` is requested to <<subscription, subscription>> (and create a `SubscriptionInfo`)
 |===
 
 === [[subscription]] `subscription` Method

@@ -1,3 +1,38 @@
 == [[StreamsMetadataState]] StreamsMetadataState
 
 `StreamsMetadataState` is...FIXME
+
+`StreamsMetadataState` is <<creating-instance, created>> along with link:kafka-streams-KafkaStreams.adoc#streamsMetadataState[KafkaStreams].
+
+[[internal-registries]]
+.StreamsMetadataState's Internal Properties (e.g. Registries, Counters and Flags)
+[cols="1,2",options="header",width="100%"]
+|===
+| Name
+| Description
+
+| `globalStores`
+| [[globalStores]] Names of the global link:kafka-streams-StateStore.adoc[StateStores]
+
+Used when...FIXME
+|===
+
+=== [[creating-instance]] Creating StreamsMetadataState Instance
+
+`StreamsMetadataState` takes the following when created:
+
+* [[builder]] link:kafka-streams-InternalTopologyBuilder.adoc[InternalTopologyBuilder]
+* [[thisHost]] `HostInfo`
+
+`StreamsMetadataState` initializes the <<internal-registries, internal registries and counters>>.
+
+=== [[getAllMetadataForStore]] `getAllMetadataForStore` Method
+
+[source, java]
+----
+Collection<StreamsMetadata> getAllMetadataForStore(final String storeName)
+----
+
+`getAllMetadataForStore`...FIXME
+
+NOTE: `getAllMetadataForStore` is used exclusively when `KafkaStreams` is requested to link:kafka-streams-KafkaStreams.adoc#allMetadataForStore[allMetadataForStore].

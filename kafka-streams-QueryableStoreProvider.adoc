@@ -1,0 +1,21 @@
+== [[QueryableStoreProvider]] QueryableStoreProvider
+
+`QueryableStoreProvider` is <<creating-instance, created>> along with link:kafka-streams-KafkaStreams.adoc#queryableStoreProvider[KafkaStreams] to <<getStore, getStore>> when requested to link:kafka-streams-KafkaStreams.adoc#store[store].
+
+=== [[creating-instance]] Creating QueryableStoreProvider Instance
+
+`QueryableStoreProvider` takes the following when created:
+
+* [[storeProviders]] link:kafka-streams-StateStoreProvider.adoc[StateStoreProviders]
+* [[globalStateStoreProvider]] link:kafka-streams-GlobalStateStoreProvider.adoc[GlobalStateStoreProvider]
+
+=== [[getStore]] `getStore` Method
+
+[source, java]
+----
+<T> T getStore(final String storeName, final QueryableStoreType<T> queryableStoreType)
+----
+
+`getStore`...FIXME
+
+NOTE: `getStore` is used exclusively when `KafkaStreams` is requested to link:kafka-streams-KafkaStreams.adoc#store[store].
