@@ -324,30 +324,6 @@ void validateTopicNotAlreadyRegistered(final String topic)
 
 NOTE: `validateTopicNotAlreadyRegistered` is used when...FIXME
 
-=== [[build]] Building Processor Task Topology -- `build` Factory Method
-
-[source, java]
-----
-ProcessorTopology build()
-ProcessorTopology build(final Integer topicGroupId)
-ProcessorTopology build(final Set<String> nodeGroup)
-----
-
-`build`...FIXME
-
-NOTE: `nodeGroup` can be either <<globalNodeGroups, global node groups>> (aka _global state topology_) or a concrete or all <<nodeGroups, topic node group>>.
-
-[NOTE]
-====
-`build` is used when:
-
-* `InternalTopologyBuilder` is requested to <<buildGlobalStateTopology, build a global processor task topology>>
-
-* `StandbyTaskCreator` is requested to link:kafka-streams-StandbyTaskCreator.adoc#createTask[create a standby task for a topic group]
-
-* `TaskCreator` is requested to link:kafka-streams-TaskCreator.adoc#createTask[create a stream task for a topic group]
-====
-
 === [[sourceTopicPattern]] Getting Source Topic Pattern -- `sourceTopicPattern` Method
 
 [source, java]
@@ -864,4 +840,28 @@ void addInternalTopic(final String topicName)
 * `KStreamImpl` is requested to link:kafka-streams-KStreamImpl.adoc#createReparitionedSource[createReparitionedSource]
 
 * `KGroupedTableImpl` is requested to `buildAggregate`
+====
+
+=== [[build]] Building Processor Task Topology -- `build` Factory Method
+
+[source, java]
+----
+ProcessorTopology build()
+ProcessorTopology build(final Integer topicGroupId)
+ProcessorTopology build(final Set<String> nodeGroup)
+----
+
+`build`...FIXME
+
+NOTE: `nodeGroup` can be either <<globalNodeGroups, global node groups>> (aka _global state topology_) or a concrete or all <<nodeGroups, topic node group>>.
+
+[NOTE]
+====
+`build` is used when:
+
+* `InternalTopologyBuilder` is requested to <<buildGlobalStateTopology, build a global processor task topology>>
+
+* `StandbyTaskCreator` is requested to link:kafka-streams-StandbyTaskCreator.adoc#createTask[create a standby task for a topic group]
+
+* `TaskCreator` is requested to link:kafka-streams-TaskCreator.adoc#createTask[create a stream task for a topic group]
 ====
