@@ -1,11 +1,8 @@
 == [[KafkaStreams]] KafkaStreams
 
-`KafkaStreams` is the entry point for *continuous message processing* in Kafka Streams.
+`KafkaStreams` is the entry point for *continuous record stream processing* in Kafka Streams.
 
 `KafkaStreams` is "merely" a <<clientSupplier, Kafka client>> that consumes messages from one or many Kafka source topics (known as link:kafka-streams-SourceNode.adoc[SourceNodes]) and publishes the processing results to zero, one or more Kafka target topics (known as link:kafka-streams-SinkNode.adoc[SinkNodes]).
-
-[[topology]]
-`KafkaStreams` processes records through a topology.
 
 NOTE: A Kafka Streams developer defines the processing logic either using a link:kafka-streams-Topology.adoc[Topology] directly (and define a DAG topology of link:kafka-streams-Processor.adoc[Processors]) or indirectly through a link:kafka-streams-StreamsBuilder.adoc[StreamsBuilder] that provides the high-level DSL to define transformations.
 

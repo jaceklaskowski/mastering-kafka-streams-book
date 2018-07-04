@@ -68,6 +68,9 @@
 
 === Logical Plan of Execution
 
+. link:kafka-streams-ProcessorTopology.adoc[ProcessorTopology]
+. link:kafka-streams-TopologyDescription.adoc[TopologyDescription]
+
 . link:kafka-streams-InternalTopologyBuilder.adoc[InternalTopologyBuilder]
 
 . link:kafka-streams-ProcessorNode.adoc[ProcessorNode]
@@ -175,7 +178,6 @@
 . link:kafka-streams-GlobalStateManagerImpl.adoc[GlobalStateManagerImpl]
 . link:kafka-streams-StateDirectory.adoc[StateDirectory]
 . link:kafka-streams-GroupedStreamAggregateBuilder.adoc[GroupedStreamAggregateBuilder]
-. link:kafka-streams-ProcessorTopology.adoc[ProcessorTopology]
 
 . link:kafka-streams-KTableValueGetterSupplier.adoc[KTableValueGetterSupplier]
 .. link:kafka-streams-KTableMaterializedValueGetterSupplier.adoc[KTableMaterializedValueGetterSupplier]

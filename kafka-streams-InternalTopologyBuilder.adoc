@@ -1,6 +1,6 @@
 == [[InternalTopologyBuilder]] InternalTopologyBuilder
 
-`InternalTopologyBuilder` is...FIXME
+`InternalTopologyBuilder` is responsible for <<build, building a processor task topology>>.
 
 `InternalTopologyBuilder` is <<creating-instance, created>> exclusively along with link:kafka-streams-Topology.adoc#internalTopologyBuilder[Topology].
 
@@ -9,6 +9,21 @@ image::images/kafka-streams-InternalTopologyBuilder-Topology.png[align="center"]
 
 [[creating-instance]]
 When created, `InternalTopologyBuilder` simply initializes the <<internal-registries, internal registries and counters>>.
+
+`InternalTopologyBuilder` can be <<describe, described>> (using a link:kafka-streams-TopologyDescription.adoc[TopologyDescription]).
+
+[source, scala]
+----
+import org.apache.kafka.streams.processor.internals.InternalTopologyBuilder
+val builder = new InternalTopologyBuilder
+
+// add nodes and stores
+
+val description = builder.describe
+scala> println(description)
+Topologies:
+// ...
+----
 
 [[applicationId]]
 `InternalTopologyBuilder` can have an *application id* that can be set using `setApplicationId` (and is really link:kafka-streams-properties.adoc#application.id[application.id] that `KafkaStreams` sets when link:kafka-streams-KafkaStreams.adoc#creating-instance[created]).
@@ -76,9 +91,11 @@ a| link:kafka-streams-NodeFactory.adoc[NodeFactories] by node name
 Used when...FIXME
 
 | [[nodeGroups]] `nodeGroups`
-a| Node groups by ID, i.e. groups of node names by the group ID
+a| Node groups by ID, i.e. groups of node names that can be looked up by a group ID.
 
-* Initialized when `InternalTopologyBuilder` is requested for <<nodeGroups-accessor, node groups>> (the very first time)
+Initialized when `InternalTopologyBuilder` is requested for <<nodeGroups-accessor, node groups>> (the very first time as once <<makeNodeGroups, initialized>> it will never change)
+
+NOTE: <<nodeGroups-accessor, nodeGroups accessor>> is used to access `nodeGroups` registry.
 
 | [[nodeToSinkTopic]] `nodeToSinkTopic`
 |
@@ -151,7 +168,7 @@ String decorateTopic(final String topic)
 ====
 `decorateTopic` is used when:
 
-* `InternalTopologyBuilder` <<buildSinkNode, buildSinkNode>>, <<buildSourceNode, buildSourceNode>>, <<maybeDecorateInternalSourceTopics, maybeDecorateInternalSourceTopics>>, <<topicGroups, topicGroups>>
+* `InternalTopologyBuilder` <<buildSinkNode, buildSinkNode>>, <<buildSourceNode, buildSourceNode>>, <<maybeDecorateInternalSourceTopics, maybeDecorateInternalSourceTopics>> and <<topicGroups, topicGroups>>
 
 * `SinkNodeFactory` is requested to link:kafka-streams-SinkNodeFactory.adoc#build[build a sink node]
 ====
@@ -572,11 +589,11 @@ void addStateStore(
 * `KTableImpl` is requested to link:kafka-streams-KTableImpl.adoc#doFilter[doFilter], link:kafka-streams-KTableImpl.adoc#doJoin[doJoin] and link:kafka-streams-KTableImpl.adoc#mapValues[mapValues]
 ====
 
-=== [[topicGroups]] `topicGroups` Method
+=== [[topicGroups]] Requesting TopicsInfos By IDs -- `topicGroups` Method
 
 [source, java]
 ----
-synchronized Map<Integer, TopicsInfo> topicGroups()
+Map<Integer, TopicsInfo> topicGroups()
 ----
 
 `topicGroups`...FIXME
@@ -594,7 +611,7 @@ synchronized Map<Integer, Set<String>> nodeGroups()
 
 If <<nodeGroups, node groups by id>> registry has not been initialized yet, `nodeGroups` <<makeNodeGroups, creates the node groups>> that are the <<nodeGroups, node groups>> from now on.
 
-NOTE: `nodeGroups` is used when `InternalTopologyBuilder` is requested to <<build, build a topology of processor tasks>>, <<globalNodeGroups, globalNodeGroups>>, <<topicGroups, topicGroups>>
+NOTE: `nodeGroups` is used when `InternalTopologyBuilder` is requested to <<build, build a topology for a topic group ID>>, <<globalNodeGroups, globalNodeGroups>> and <<topicGroups, topicGroups>>
 
 === [[buildGlobalStateTopology]] Building Global Processor Task Topology -- `buildGlobalStateTopology` Method
 
@@ -668,21 +685,21 @@ NOTE: `globalNodeGroups` is used when `InternalTopologyBuilder` is requested to 
 Map<Integer, Set<String>> makeNodeGroups()
 ----
 
-`makeNodeGroups` starts with an empty node groups and the local counter of node group IDs as 0.
+`makeNodeGroups` starts with no node groups and the local counter of node group IDs as 0.
 
-`makeNodeGroups` takes the names of source nodes from <<nodeToSourceTopics, nodeToSourceTopics>> and <<nodeToSourcePatterns, nodeToSourcePatterns>> registries.
+`makeNodeGroups` takes the names of registered source nodes (from the <<nodeToSourceTopics, nodeToSourceTopics>> and <<nodeToSourcePatterns, nodeToSourcePatterns>> internal registries).
 
-`makeNodeGroups` sorts the names of the source nodes in ascending order according to the natural ordering.
+`makeNodeGroups` sorts the names of the source nodes in ascending order (per the natural ordering) and <<putNodeGroupName, putNodeGroupName>> for every source node name.
 
-`makeNodeGroups` <<putNodeGroupName, putNodeGroupName>> for every name of the source nodes sorted (that may give a new group ID).
+NOTE: While <<putNodeGroupName, putNodeGroupName>>, `makeNodeGroups` may end up with a new node group ID. After processing all source node names, the node group ID is the last group ID assigned.
 
-`makeNodeGroups` takes the non-source node names from <<nodeFactories, nodeFactories>> registry that are not in <<nodeToSourceTopics, nodeToSourceTopics>> registry.
+`makeNodeGroups` takes the non-source node names (from the <<nodeFactories, nodeFactories>> internal registry that are not in the <<nodeToSourceTopics, nodeToSourceTopics>> internal registry).
 
-`makeNodeGroups` sorts the names of the non-source nodes in ascending order according to the natural ordering.
+`makeNodeGroups` does the same group ID assignment as for the source node names, i.e. sorts the names in ascending order and <<putNodeGroupName, putNodeGroupName>> for every node name.
 
-`makeNodeGroups` <<putNodeGroupName, putNodeGroupName>> for every name of the non-source nodes sorted (that may give a new group ID).
+In the end, `makeNodeGroups` returns the node (names) groups by ID.
 
-NOTE: `makeNodeGroups` is used when `InternalTopologyBuilder` is requested to <<describe, describe a topology>> and <<nodeGroups-accessor, get node groups>> (the very first time).
+NOTE: `makeNodeGroups` is used when `InternalTopologyBuilder` is requested to <<describe, describe a topology>>, and <<nodeGroups-accessor, get node groups>>.
 
 === [[putNodeGroupName]] `putNodeGroupName` Internal Method
 
@@ -846,22 +863,60 @@ void addInternalTopic(final String topicName)
 
 [source, java]
 ----
-ProcessorTopology build()
+ProcessorTopology build() // <1>
+ProcessorTopology build(final Integer topicGroupId) // <2>
+// PRIVATE
+private ProcessorTopology build(final Set<String> nodeGroup)
+----
+<1> Uses <<build-topicGroupId, build>> with an undefined `topicGroupId` (i.e. `null`)
+<2> Uses `build` with `nodeGroup` being the node names for a given `topicGroupId`
+
+The private `build` takes the link:kafka-streams-NodeFactory.adoc[NodeFactories] (from the <<nodeFactories, nodeFactories>> internal registry).
+
+For every `NodeFactory` the private `build` checks if the node (by its link:kafka-streams-NodeFactory.adoc#name[name]) is included in the input `nodeGroup` (with the assumption that it is when the `nodeGroup` is `null` which can happen when a group ID could not be found in the <<nodeGroups, nodeGroups>> internal registry) and, if it is, does the following:
+
+. Requests the `NodeFactory` to link:kafka-streams-NodeFactory.adoc#build[build a processor node] (and adds it to a local `processorMap` of processors by their names)
+
+. For link:kafka-streams-ProcessorNodeFactory.adoc[ProcessorNodeFactories], `build` <<buildProcessorNode, buildProcessorNode>>
+
+. For link:kafka-streams-SourceNodeFactory.adoc[SourceNodeFactories], `build` <<buildSourceNode, buildSourceNode>>
+
+. For link:kafka-streams-SinkNodeFactory.adoc[SinkNodeFactories], `build` <<buildSinkNode, buildSinkNode>>
+
+In the end, `build` creates a link:kafka-streams-ProcessorTopology.adoc#creating-instance[ProcessorTopology].
+
+`build` throws a `TopologyException` for unknown `NodeFactories`.
+
+```
+Unknown definition class: [className]
+```
+
+NOTE: `nodeGroup` can be either <<globalNodeGroups, global node groups>> (aka _global state topology_), a single or all <<nodeGroups, node groups>>.
+
+NOTE: The private `build` is used when `InternalTopologyBuilder` is requested to <<build-topicGroupId, build a processor task topology>> (for a group ID) and <<buildGlobalStateTopology, build a global processor task topology>>.
+
+NOTE: The parameter-less `build` is used exclusively when `KafkaStreams` is link:kafka-streams-KafkaStreams.adoc#creating-instance[created] (as a sanity check to fail-fast in case a `ProcessorTopology` could not be built due to some exception).
+
+==== [[build-topicGroupId]] Building Processor Task Topology For Group ID -- `build` Factory Method
+
+[source, java]
+----
 ProcessorTopology build(final Integer topicGroupId)
-ProcessorTopology build(final Set<String> nodeGroup)
 ----
 
-`build`...FIXME
+This variant of `build` takes either a group ID or `null` (see the parameter-less <<build, build()>>).
 
-NOTE: `nodeGroup` can be either <<globalNodeGroups, global node groups>> (aka _global state topology_) or a concrete or all <<nodeGroups, topic node group>>.
+For the input `topicGroupId` specified (i.e. non-``null``), `build` looks up the group ID in the <<nodeGroups, nodeGroups>> internal registry and <<build, builds the topology>> (for the node names in the node group).
+
+When the input `topicGroupId` is undefined (i.e. `null`), `build` takes the node names (from the <<nodeGroups, nodeGroups>> internal registry) and removes <<globalNodeGroups, globalNodeGroups>>. In the end, `build` <<build, builds the topology>> (for the node names).
 
 [NOTE]
 ====
 `build` is used when:
 
-* `InternalTopologyBuilder` is requested to <<buildGlobalStateTopology, build a global processor task topology>>
+* `InternalTopologyBuilder` is requested to <<build, build a processor task topology>> (without specifying a group ID)
 
-* `StandbyTaskCreator` is requested to link:kafka-streams-StandbyTaskCreator.adoc#createTask[create a standby task for a topic group]
+* `StandbyTaskCreator` is requested to link:kafka-streams-StandbyTaskCreator.adoc#createTask[create a standby task for a given task ID]
 
-* `TaskCreator` is requested to link:kafka-streams-TaskCreator.adoc#createTask[create a stream task for a topic group]
+* `TaskCreator` is requested to link:kafka-streams-TaskCreator.adoc#createTask[create a stream task for a given task ID]
 ====

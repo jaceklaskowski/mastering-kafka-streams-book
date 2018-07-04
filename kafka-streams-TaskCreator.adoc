@@ -4,7 +4,7 @@
 
 `TaskCreator` is <<creating-instance, created>> exclusively when `StreamThread` is link:kafka-streams-StreamThread.adoc#create[created] (and only to create a link:kafka-streams-TaskManager.adoc#standbyTaskCreator[TaskManager]).
 
-=== [[createTask]] Creating Stream Tasks -- `createTask` Factory Method
+=== [[createTask]] Creating Stream Processor Task -- `createTask` Factory Method
 
 [source, java]
 ----
@@ -16,7 +16,9 @@ StreamTask createTask(
 
 NOTE: `createTask` is part of link:kafka-streams-AbstractTaskCreator.adoc#createTask[AbstractTaskCreator Contract] to create a concrete link:kafka-streams-AbstractTask.adoc[stream processor task].
 
-`createTask`...FIXME
+`createTask` requests the link:kafka-streams-AbstractTaskCreator.adoc#taskCreatedSensor[taskCreatedSensor] to record this execution.
+
+`createTask` then creates a link:kafka-streams-StreamTask.adoc#creating-instance[StreamTask] (for a given topic group ID and a <<createProducer, producer client for the task>>).
 
 === [[creating-instance]] Creating TaskCreator Instance
 
@@ -34,3 +36,14 @@ NOTE: `createTask` is part of link:kafka-streams-AbstractTaskCreator.adoc#create
 * [[threadProducer]] Kafka https://kafka.apache.org/10/javadoc/org/apache/kafka/clients/producer/Producer.html[Producer] (of keys and values as array of bytes)
 * [[threadClientId]] `threadClientId`
 * [[log]] `Logger`
+
+=== [[createProducer]] `createProducer` Internal Method
+
+[source, java]
+----
+Producer<byte[], byte[]> createProducer(final TaskId id)
+----
+
+`createProducer`...FIXME
+
+NOTE: `createProducer` is used exclusively when `TaskCreator` is requested to <<createTask, create a stream processor task>> (for a task ID).

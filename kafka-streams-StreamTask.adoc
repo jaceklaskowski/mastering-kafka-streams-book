@@ -106,7 +106,7 @@ NOTE: `close` is part of link:kafka-streams-Task.adoc#close[Task Contract] to...
 * [[stateDirectory]] link:kafka-streams-StateDirectory.adoc[StateDirectory]
 * [[cache]] `ThreadCache`
 * [[time]] `Time`
-* [[producer]] Kafka producer (of keys and values as array of bytes)
+* [[producer]] Kafka `Producer` (of keys and values as array of bytes)
 
 `StreamTask` initializes the <<internal-registries, internal registries and counters>>.
 

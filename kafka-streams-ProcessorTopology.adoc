@@ -2,7 +2,7 @@
 
 `ProcessorTopology` is...FIXME
 
-`ProcessorTopology` is <<creating-instance, created>> exclusively when `InternalTopologyBuilder` is requested to link:kafka-streams-InternalTopologyBuilder.adoc#build[build a topology].
+`ProcessorTopology` is <<creating-instance, created>> exclusively when `InternalTopologyBuilder` is requested to link:kafka-streams-InternalTopologyBuilder.adoc#build[build a processor task topology].
 
 [source, scala]
 ----
