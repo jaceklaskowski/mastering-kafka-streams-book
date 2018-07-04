@@ -2,7 +2,7 @@
 
 `SourceNode` is a link:kafka-streams-ProcessorNode.adoc[ProcessorNode] that...FIXME
 
-`SourceNode` is <<creating-instance, created>> exclusively when `SourceNodeFactory` is requested to link:kafka-streams-SourceNodeFactory.adoc#build[build] one.
+`SourceNode` is <<creating-instance, created>> exclusively when `SourceNodeFactory` is requested to link:kafka-streams-SourceNodeFactory.adoc#build[build a processor node] (when...FIXME)
 
 [[context]]
 `SourceNode` gets a link:kafka-streams-ProcessorContext.adoc[ProcessorContext] when <<init, initialized>>. It is later used when `SourceNode` <<process, processes a record>> (and simply forwards it downstream).

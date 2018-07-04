@@ -87,7 +87,7 @@ a| Node groups by ID, i.e. groups of node names by the group ID
 |
 
 | [[nodeToSourceTopics]] `nodeToSourceTopics`
-| Names of source nodes and their topics
+| Topic names by the source node name
 
 Used when...FIXME
 
@@ -328,8 +328,8 @@ NOTE: `validateTopicNotAlreadyRegistered` is used when...FIXME
 
 [source, java]
 ----
-synchronized ProcessorTopology build()
-synchronized ProcessorTopology build(final Integer topicGroupId)
+ProcessorTopology build()
+ProcessorTopology build(final Integer topicGroupId)
 ProcessorTopology build(final Set<String> nodeGroup)
 ----
 
