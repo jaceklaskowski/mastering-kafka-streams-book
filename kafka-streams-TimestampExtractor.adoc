@@ -8,13 +8,9 @@
 package org.apache.kafka.streams.processor;
 
 interface TimestampExtractor {
-  // only required methods that have no implementation
-  // the others follow
   long extract(ConsumerRecord<Object, Object> record, long previousTimestamp);
 }
 ----
-
-NOTE: `TimestampExtractor` is an `Evolving` contract which means that compatibility may be broken at a minor release.
 
 .TimestampExtractor Contract
 [cols="1,2",options="header",width="100%"]
@@ -39,3 +35,5 @@ NOTE: `TimestampExtractor` is an `Evolving` contract which means that compatibil
 | link:kafka-streams-ExtractRecordMetadataTimestamp.adoc[ExtractRecordMetadataTimestamp]
 | [[ExtractRecordMetadataTimestamp]]
 |===
+
+NOTE: `TimestampExtractor` is an `Evolving` contract which means that compatibility may be broken at a minor release.

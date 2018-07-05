@@ -129,13 +129,29 @@
 
 . link:kafka-streams-RecordQueue.adoc[RecordQueue]
 
+. link:kafka-streams-KStreamImpl.adoc[KStreamImpl]
+. link:kafka-streams-KStreamImplJoin.adoc[KStreamImplJoin]
+. link:kafka-streams-KTableImpl.adoc[KTableImpl]
 . link:kafka-streams-GlobalKTableImpl.adoc[GlobalKTableImpl]
+. link:kafka-streams-KGroupedTableImpl.adoc[KGroupedTableImpl]
+. link:kafka-streams-TimeWindowedKStreamImpl.adoc[TimeWindowedKStreamImpl]
+. link:kafka-streams-SessionWindowedKStreamImpl.adoc[SessionWindowedKStreamImpl]
+. link:kafka-streams-KGroupedStreamImpl.adoc[KGroupedStreamImpl]
 
 . link:kafka-streams-QueryableStoreProvider.adoc[QueryableStoreProvider]
 . link:kafka-streams-StateStoreProvider.adoc[StateStoreProvider]
 .. link:kafka-streams-StreamThreadStateStoreProvider.adoc[StreamThreadStateStoreProvider]
 .. link:kafka-streams-GlobalStateStoreProvider.adoc[GlobalStateStoreProvider]
 .. link:kafka-streams-WrappingStoreProvider.adoc[WrappingStoreProvider]
+
+=== State Management
+
+. link:kafka-streams-StateManager.adoc[StateManager]
+.. link:kafka-streams-AbstractStateManager.adoc[AbstractStateManager]
+
+. link:kafka-streams-ProcessorStateManager.adoc[ProcessorStateManager]
+. link:kafka-streams-GlobalStateManager.adoc[GlobalStateManager]
+.. link:kafka-streams-GlobalStateManagerImpl.adoc[GlobalStateManagerImpl]
 
 === Stateful Stream Processing
 
@@ -150,14 +166,6 @@
 . link:kafka-streams-StreamPartitioner.adoc[StreamPartitioner]
 .. link:kafka-streams-WindowedStreamPartitioner.adoc[WindowedStreamPartitioner]
 
-. link:kafka-streams-KStreamImpl.adoc[KStreamImpl]
-. link:kafka-streams-KStreamImplJoin.adoc[KStreamImplJoin]
-. link:kafka-streams-KTableImpl.adoc[KTableImpl]
-. link:kafka-streams-KGroupedTableImpl.adoc[KGroupedTableImpl]
-. link:kafka-streams-TimeWindowedKStreamImpl.adoc[TimeWindowedKStreamImpl]
-. link:kafka-streams-SessionWindowedKStreamImpl.adoc[SessionWindowedKStreamImpl]
-. link:kafka-streams-KGroupedStreamImpl.adoc[KGroupedStreamImpl]
-
 . link:kafka-streams-AbstractStream.adoc[AbstractStream]
 
 . link:kafka-streams-InternalStreamsBuilder.adoc[InternalStreamsBuilder]
@@ -170,18 +178,12 @@
 . link:kafka-streams-GlobalStateMaintainer.adoc[GlobalStateMaintainer]
 .. link:kafka-streams-GlobalStateUpdateTask.adoc[GlobalStateUpdateTask -- The Default GlobalStateMaintainer]
 
-. link:kafka-streams-StateManager.adoc[StateManager]
-.. link:kafka-streams-AbstractStateManager.adoc[AbstractStateManager]
-.. link:kafka-streams-ProcessorStateManager.adoc[ProcessorStateManager]
-.. link:kafka-streams-GlobalStateManager.adoc[GlobalStateManager]
-
 . link:kafka-streams-Checkpointable.adoc[Checkpointable]
 
 . link:kafka-streams-ProcessorRecordContext.adoc[ProcessorRecordContext]
 . link:kafka-streams-InternalProcessorContext.adoc[InternalProcessorContext]
 . link:kafka-streams-RecordDeserializer.adoc[RecordDeserializer]
 . link:kafka-streams-OffsetCheckpoint.adoc[OffsetCheckpoint]
-. link:kafka-streams-GlobalStateManagerImpl.adoc[GlobalStateManagerImpl]
 . link:kafka-streams-StateDirectory.adoc[StateDirectory]
 . link:kafka-streams-GroupedStreamAggregateBuilder.adoc[GroupedStreamAggregateBuilder]
 
