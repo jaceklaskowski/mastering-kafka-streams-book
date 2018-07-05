@@ -128,6 +128,8 @@
 .. link:kafka-streams-StateConsumer.adoc[StateConsumer]
 
 . link:kafka-streams-RecordQueue.adoc[RecordQueue]
+.. link:kafka-streams-Stamped.adoc[Stamped -- Orderable Value At Timestamp]
+.. link:kafka-streams-StampedRecord.adoc[StampedRecord]
 
 . link:kafka-streams-KStreamImpl.adoc[KStreamImpl]
 . link:kafka-streams-KStreamImplJoin.adoc[KStreamImplJoin]
@@ -207,7 +209,6 @@
 . link:kafka-streams-StreamsMetadataState.adoc[StreamsMetadataState]
 . link:kafka-streams-QuickUnion.adoc[QuickUnion]
 . link:kafka-streams-RecordInfo.adoc[RecordInfo]
-. link:kafka-streams-StampedRecord.adoc[StampedRecord]
 
 . link:kafka-streams-StoreChangeLogger.adoc[StoreChangeLogger]
 . link:kafka-streams-RecordCollector.adoc[RecordCollector]

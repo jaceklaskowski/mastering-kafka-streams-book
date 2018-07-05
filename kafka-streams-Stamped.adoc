@@ -1,0 +1,30 @@
+== [[Stamped]] Stamped -- Orderable Value At Timestamp
+
+`Stamped` represents a <<value, value>> at a given <<timestamp, timestamp>>.
+
+[[creating-instance]]
+`Stamped` takes the following when created:
+
+* [[value]] Value (of type V)
+* [[timestamp]] Timestamp
+
+[[compareTo]]
+`Stamped` values can be compared (and hence ordered) by <<timestamp, timestamp>> (in ascending order).
+
+[source, scala]
+----
+import org.apache.kafka.streams.processor.internals.Stamped
+
+// three stampeds in ascending order
+val s1 = new Stamped("a", 0)
+val s2 = new Stamped("b", 1)
+val s3 = new Stamped("c", 2)
+
+// Adding the stampeds in a random order
+// TreeSet is a concrete SortedSet
+import java.util.TreeSet
+import collection.JavaConverters._
+val stampeds = new TreeSet(Seq(s3, s1, s2).asJava)
+
+assert(stampeds.asScala == Set(s1, s2, s3))
+----
