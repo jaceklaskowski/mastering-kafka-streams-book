@@ -1,0 +1,31 @@
+== [[PunctuationSchedule]] PunctuationSchedule -- Orderable ProcessorNodes At Timestamp
+
+`PunctuationSchedule` is a link:kafka-streams-Stamped.adoc[Stamped] with <<record, ProcessorNodes>> (as link:kafka-streams-Stamped.adoc#value[values]).
+
+In other words, `PunctuationSchedule` represents a <<record, ProcessorNode>> at a given <<time, timestamp>> and can be ordered in ascending order.
+
+`PunctuationSchedule` is <<creating-instance, created>> when:
+
+* `StreamTask` is requested to link:kafka-streams-StreamTask.adoc#schedule[schedule]
+
+* `PunctuationSchedule` is requested for the <<next, next PunctuationSchedule>>
+
+[[creating-instance]]
+`PunctuationSchedule` takes the following when created:
+
+* [[node]] link:kafka-streams-ProcessorNode.adoc[ProcessorNode]
+* [[time]] Timestamp
+* [[interval]] Interval
+* [[punctuator]] link:kafka-streams-Punctuator.adoc[Punctuator]
+* [[cancellable]] `RepointableCancellable`
+
+=== [[next]] `next` Method
+
+[source, java]
+----
+PunctuationSchedule next(final long currTimestamp)
+----
+
+`next`...FIXME
+
+NOTE: `next` is used exclusively when `PunctuationQueue` is requested to link:kafka-streams-PunctuationQueue.adoc#mayPunctuate[mayPunctuate].

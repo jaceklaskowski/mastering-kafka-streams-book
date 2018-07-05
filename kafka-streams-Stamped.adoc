@@ -5,7 +5,7 @@
 [[creating-instance]]
 `Stamped` takes the following when created:
 
-* [[value]] Value (of type V)
+* [[value]] Value (of type `V`)
 * [[timestamp]] Timestamp
 
 [[compareTo]]
@@ -28,3 +28,17 @@ val stampeds = new TreeSet(Seq(s3, s1, s2).asJava)
 
 assert(stampeds.asScala == Set(s1, s2, s3))
 ----
+
+[[extensions]]
+.Stampeds
+[cols="1,2",options="header",width="100%"]
+|===
+| Stamped
+| Description
+
+| link:kafka-streams-StampedRecord.adoc[StampedRecord]
+| [[StampedRecord]] Uses Kafka `ConsumerRecords` for <<value, values>>
+
+| link:kafka-streams-PunctuationSchedule.adoc[PunctuationSchedule]
+| [[PunctuationSchedule]] Uses link:kafka-streams-ProcessorNode.adoc[ProcessorNodes] for <<value, values>>
+|===

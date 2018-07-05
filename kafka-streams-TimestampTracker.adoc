@@ -1,0 +1,30 @@
+== [[TimestampTracker]] TimestampTracker
+
+`TimestampTracker` is the <<contract, contract>> of <<implementations, timestamp trackers>> that manage link:kafka-streams-Stamped.adoc[Stamped values].
+
+[[contract]]
+[source, java]
+----
+package org.apache.kafka.streams.processor.internals;
+
+interface TimestampTracker<E> {
+  void addElement(Stamped<E> elem);
+  void removeElement(Stamped<E> elem);
+  long get();
+  int size();
+  void clear();
+}
+----
+
+.TimestampTracker Contract
+[cols="1,2",options="header",width="100%"]
+|===
+| Method
+| Description
+
+| `get`
+| [[get]] Returns the currently-tracked timestamp
+|===
+
+[[implementations]]
+NOTE: link:kafka-streams-MinTimestampTracker.adoc[MinTimestampTracker] is the one and only known direct implementation of <<contract, TimestampTracker Contract>> in Kafka Streams.

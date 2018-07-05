@@ -46,11 +46,11 @@ public interface Task {
 | Method
 | Description
 
-| [[changelogPartitions]] `changelogPartitions`
-| Used when...
+| `changelogPartitions`
+| [[changelogPartitions]] Used when...
 
-| [[close]] `close`
-a|
+| `close`
+a| [[close]]
 
 Used when:
 
@@ -68,14 +68,14 @@ Used when:
 
 * `StandbyTask` is requested to link:kafka-streams-StandbyTask.adoc#closeSuspended[closeSuspended]
 
-| [[closeSuspended]] `closeSuspended`
-| Used when...
+| `closeSuspended`
+| [[closeSuspended]] Used when...
 
-| [[commit]] `commit`
-|
+| `commit`
+| [[commit]]
 
-| [[hasStateStores]] `hasStateStores`
-a|
+| `hasStateStores`
+a| [[hasStateStores]]
 
 Used when `AssignedTasks` is requested to:
 
@@ -87,18 +87,21 @@ Used when `AssignedTasks` is requested to:
 
 Implemented exclusively in link:kafka-streams-AbstractTask.adoc#hasStateStores[AbstractTask].
 
-| [[initializeStateStores]] `initializeStateStores`
-| Used when...
+| `initializeStateStores`
+| [[initializeStateStores]] Used when...
 
-| [[initializeTopology]] `initializeTopology`
-| Used exclusively when `AssignedTasks` is requested to link:kafka-streams-AssignedTasks.adoc#transitionToRunning[schedule a task for execution]
+| `initializeTopology`
+| [[initializeTopology]] Used exclusively when `AssignedTasks` is requested to link:kafka-streams-AssignedTasks.adoc#transitionToRunning[schedule a task for execution]
 
-| [[partitions]] `partitions`
-| Used when...
+| `partitions`
+| [[partitions]] Used when...
 
-| [[resume]] `resume`
-| Used when...
+| `resume`
+| [[resume]] Used when...
 
-| [[toString]] `toString`
-| Used when...
+| `suspend`
+| [[suspend]] Used when...
+
+| `toString`
+| [[toString]] Used when...
 |===

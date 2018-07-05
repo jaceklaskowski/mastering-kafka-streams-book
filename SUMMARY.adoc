@@ -12,8 +12,8 @@
 . link:kafka-streams-KStream.adoc[KStream]
 . link:kafka-streams-KTable.adoc[KTable]
 . link:kafka-streams-GlobalKTable.adoc[GlobalKTable]
-. link:kafka-streams-Topology.adoc[Topology]
 . link:kafka-streams-ProcessorContext.adoc[ProcessorContext]
+. link:kafka-streams-Topology.adoc[Topology]
 
 . link:kafka-streams-StateStore.adoc[StateStore]
 .. link:kafka-streams-Stores.adoc[Stores]
@@ -94,7 +94,6 @@
 . link:kafka-streams-Processor.adoc[Processor -- Contract for Stream Processors]
 
 . link:kafka-streams-ProcessorNodePunctuator.adoc[ProcessorNodePunctuator]
-. link:kafka-streams-PunctuationQueue.adoc[PunctuationQueue]
 . link:kafka-streams-NodeMetrics.adoc[NodeMetrics]
 
 . link:kafka-streams-InternalNameProvider.adoc[InternalNameProvider]
@@ -127,9 +126,15 @@
 . link:kafka-streams-GlobalStreamThread.adoc[GlobalStreamThread]
 .. link:kafka-streams-StateConsumer.adoc[StateConsumer]
 
+. link:kafka-streams-Stamped.adoc[Stamped -- Orderable Value At Timestamp]
+. link:kafka-streams-TimestampTracker.adoc[TimestampTracker]
+.. link:kafka-streams-MinTimestampTracker.adoc[MinTimestampTracker]
+
 . link:kafka-streams-RecordQueue.adoc[RecordQueue]
-.. link:kafka-streams-Stamped.adoc[Stamped -- Orderable Value At Timestamp]
 .. link:kafka-streams-StampedRecord.adoc[StampedRecord -- Orderable Kafka ConsumerRecords At Timestamp]
+
+. link:kafka-streams-PunctuationQueue.adoc[PunctuationQueue]
+.. link:kafka-streams-PunctuationSchedule.adoc[PunctuationSchedule -- Orderable ProcessorNodes At Timestamp]
 
 . link:kafka-streams-KStreamImpl.adoc[KStreamImpl]
 . link:kafka-streams-KStreamImplJoin.adoc[KStreamImplJoin]
@@ -145,6 +150,8 @@
 .. link:kafka-streams-StreamThreadStateStoreProvider.adoc[StreamThreadStateStoreProvider]
 .. link:kafka-streams-GlobalStateStoreProvider.adoc[GlobalStateStoreProvider]
 .. link:kafka-streams-WrappingStoreProvider.adoc[WrappingStoreProvider]
+
+. link:kafka-streams-RecordDeserializer.adoc[RecordDeserializer]
 
 === State Management
 
@@ -184,7 +191,6 @@
 
 . link:kafka-streams-ProcessorRecordContext.adoc[ProcessorRecordContext]
 . link:kafka-streams-InternalProcessorContext.adoc[InternalProcessorContext]
-. link:kafka-streams-RecordDeserializer.adoc[RecordDeserializer]
 . link:kafka-streams-OffsetCheckpoint.adoc[OffsetCheckpoint]
 . link:kafka-streams-StateDirectory.adoc[StateDirectory]
 . link:kafka-streams-GroupedStreamAggregateBuilder.adoc[GroupedStreamAggregateBuilder]

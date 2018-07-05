@@ -4,6 +4,12 @@
 
 In other words, `StampedRecord` represents a <<record, Kafka ConsumerRecord>> at a given <<timestamp, timestamp>> and can be ordered in ascending order.
 
+`StampedRecord` is <<creating-instance, created>> when:
+
+* `RecordQueue` is requested to link:kafka-streams-RecordQueue.adoc#addRawRecords[add Kafka ConsumerRecords (as StampedRecords)]
+
+* `StreamTask` is requested to link:kafka-streams-StreamTask.adoc#punctuate[punctuate]
+
 [[creating-instance]]
 `StampedRecord` takes the following when created:
 

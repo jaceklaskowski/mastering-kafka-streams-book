@@ -33,7 +33,7 @@ StampedRecord nextRecord(final RecordInfo info)
 
 NOTE: `nextRecord` is used exclusively when `StreamTask` is link:kafka-streams-StreamTask.adoc#process[processing]...FIXME
 
-=== [[addRawRecords]] Adding Records to RecordQueue (For Kafka TopicPartition) -- `addRawRecords` Method
+=== [[addRawRecords]] Adding Records to RecordQueue (For Kafka Partition) -- `addRawRecords` Method
 
 [source, scala]
 ----
@@ -42,9 +42,9 @@ int addRawRecords(
   final Iterable<ConsumerRecord<byte[], byte[]>> rawRecords)
 ----
 
-`addRawRecords` finds a link:kafka-streams-RecordQueue.adoc[RecordQueue] in <<partitionQueues, partitionQueues>> by the input Kafka link:https://kafka.apache.org/11/javadoc/org/apache/kafka/common/TopicPartition.html[TopicPartition].
+`addRawRecords` finds a link:kafka-streams-RecordQueue.adoc[RecordQueue] in the <<partitionQueues, partitionQueues>> by the input Kafka link:https://kafka.apache.org/11/javadoc/org/apache/kafka/common/TopicPartition.html[TopicPartition].
 
-`addRawRecords` requests the `RecordQueue` for the link:kafka-streams-RecordQueue.adoc#size[size] and to link:kafka-streams-RecordQueue.adoc#addRawRecords[addRawRecords].
+`addRawRecords` requests the `RecordQueue` for the link:kafka-streams-RecordQueue.adoc#size[size] and to link:kafka-streams-RecordQueue.adoc#addRawRecords[add Kafka ConsumerRecords (as StampedRecords)].
 
 `addRawRecords` inserts the `RecordQueue` into the <<queuesByTime, queuesByTime>> priority queue only if the `RecordQueue` was empty before.
 
@@ -53,3 +53,25 @@ int addRawRecords(
 `addRawRecords` returns the current (new) size of the `RecordQueue`.
 
 NOTE: `addRawRecords` is used exclusively when `StreamTask` is requested to link:kafka-streams-StreamTask.adoc#addRecords[addRecords].
+
+=== [[clear]] `clear` Method
+
+[source, java]
+----
+void clear()
+----
+
+`clear` removes all of the elements from the <<queuesByTime, queuesByTime>> and requests every link:kafka-streams-RecordQueue.adoc[RecordQueue] (in the internal <<partitionQueues, partitionQueues>> registry) to link:kafka-streams-RecordQueue.adoc#clear[clear itself].
+
+NOTE: `clear` is used exclusively when `StreamTask` is requested to link:kafka-streams-StreamTask.adoc#closeTopology[closeTopology].
+
+=== [[numBuffered]] `numBuffered` Method
+
+[source, java]
+----
+int numBuffered(final TopicPartition partition)
+----
+
+`numBuffered`...FIXME
+
+NOTE: `numBuffered` is used when...FIXME

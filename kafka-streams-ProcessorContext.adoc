@@ -58,5 +58,5 @@ interface ProcessorContext {
 | Used when...FIXME
 
 | [[schedule]] `schedule`
-| Used when...FIXME
+| Used when `KStreamTransformValuesProcessor` is requested to `schedule`.
 |===

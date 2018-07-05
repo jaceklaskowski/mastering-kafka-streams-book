@@ -12,3 +12,14 @@ StateStore getStateStore(final String name)
 NOTE: `getStateStore` is part of link:kafka-streams-ProcessorContext.adoc#getStateStore[ProcessorContext Contract] to get the state store per name.
 
 `getStateStore`...FIXME
+
+=== [[schedule]] `schedule` Method
+
+[source, java]
+----
+Cancellable schedule(final long interval, final PunctuationType type, final Punctuator callback)
+----
+
+NOTE: `schedule` is part of link:kafka-streams-ProcessorContext.adoc#schedule[ProcessorContext Contract] to...FIXME.
+
+`schedule`...FIXME

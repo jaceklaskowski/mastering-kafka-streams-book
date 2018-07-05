@@ -66,7 +66,24 @@ void closeTopology()
 
 `closeTopology`...FIXME
 
-NOTE: `closeTopology` is used when...FIXME
+NOTE: `closeTopology` is used exclusively when `StreamTask` is requested to <<suspend, suspend>>.
+
+=== [[suspend]] `suspend` Method
+
+[source, java]
+----
+void suspend()  // <1>
+
+// PRIVATE API
+void suspend(final boolean clean)
+----
+<1> Uses `clean` flag enabled, i.e. `true`
+
+NOTE: `suspend` is part of link:kafka-streams-Task.adoc#suspend[Task Contract] to...FIXME.
+
+`suspend`...FIXME
+
+NOTE: The private `suspend` is used exclusively when `StreamTask` is requested to <<close, close>>.
 
 === [[commit]] `commit` Method
 
@@ -220,7 +237,7 @@ int addRecords(
   final Iterable<ConsumerRecord<byte[], byte[]>> records)
 ----
 
-`addRecords` requests <<partitionGroup, PartitionGroup>> to link:kafka-streams-PartitionGroup.adoc#addRawRecords[addRawRecords].
+`addRecords` requests <<partitionGroup, PartitionGroup>> to link:kafka-streams-PartitionGroup.adoc#addRawRecords[add records to a RecordQueue for a Kafka partition].
 
 You should see the following TRACE message in the logs:
 
@@ -232,7 +249,7 @@ Added records into the buffered queue of partition [partition], new queue size i
 
 In the end, `addRecords` returns the number of records added.
 
-NOTE: `addRecords` is used exclusively when `StreamThread` is requested to link:kafka-streams-StreamThread.adoc#addRecordsToTasks[addRecordsToTasks].
+NOTE: `addRecords` is used exclusively when `StreamThread` is requested to link:kafka-streams-StreamThread.adoc#addRecordsToTasks[add records to active stream tasks (and report skipped records)].
 
 === [[flushState]] `flushState` Method
 
@@ -292,3 +309,24 @@ boolean maybePunctuateSystemTime()
 `maybePunctuateSystemTime`...FIXME
 
 NOTE: `maybePunctuateSystemTime` is used exclusively when `AssignedStreamsTasks` is requested to link:kafka-streams-AssignedStreamsTasks.adoc#punctuate[punctuate].
+
+=== [[schedule]] `schedule` Method
+
+[source, scala]
+----
+// PUBLIC API
+Cancellable schedule(
+  final long interval,
+  final PunctuationType type,
+  final Punctuator punctuator)
+// PACKAGE PROTECTED
+Cancellable schedule(
+  final long startTime,
+  final long interval,
+  final PunctuationType type,
+  final Punctuator punctuator)
+----
+
+`schedule`...FIXME
+
+NOTE: `schedule` is used exclusively when `ProcessorContextImpl` is requested to link:kafka-streams-ProcessorContextImpl.adoc#schedule[schedule].

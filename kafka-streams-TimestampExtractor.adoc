@@ -19,7 +19,7 @@ interface TimestampExtractor {
 | Description
 
 | `extract`
-| [[extract]] Used exclusively when `RecordQueue` is requested to link:kafka-streams-RecordQueue.adoc#addRawRecords[addRawRecords].
+| [[extract]] Used exclusively when `RecordQueue` is requested to link:kafka-streams-RecordQueue.adoc#addRawRecords[add Kafka ConsumerRecords (as StampedRecords)].
 |===
 
 [[implementations]]
