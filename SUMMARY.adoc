@@ -129,7 +129,7 @@
 
 . link:kafka-streams-RecordQueue.adoc[RecordQueue]
 .. link:kafka-streams-Stamped.adoc[Stamped -- Orderable Value At Timestamp]
-.. link:kafka-streams-StampedRecord.adoc[StampedRecord]
+.. link:kafka-streams-StampedRecord.adoc[StampedRecord -- Orderable Kafka ConsumerRecords At Timestamp]
 
 . link:kafka-streams-KStreamImpl.adoc[KStreamImpl]
 . link:kafka-streams-KStreamImplJoin.adoc[KStreamImplJoin]
