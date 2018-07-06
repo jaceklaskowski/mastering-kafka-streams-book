@@ -1,3 +1,30 @@
 == [[Printed]] Printed
 
 `Printed` is...FIXME
+
+[[operators]]
+.Printed Operators
+[cols="1,2",options="header",width="100%"]
+|===
+| Operator
+| Description
+
+| <<withKeyValueMapper, withKeyValueMapper>>
+a|
+
+[source, java]
+----
+Printed<K, V> withKeyValueMapper(final KeyValueMapper<? super K, ? super V, String> mapper)
+----
+|===
+
+=== [[withKeyValueMapper]] `withKeyValueMapper` Method
+
+[source, java]
+----
+Printed<K, V> withKeyValueMapper(final KeyValueMapper<? super K, ? super V, String> mapper)
+----
+
+`withKeyValueMapper`...FIXME
+
+NOTE: `withKeyValueMapper` is used when...FIXME

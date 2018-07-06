@@ -9,15 +9,27 @@
 | Operator
 | Description
 
+| [[groupBy]] `groupBy`
+a|
+
+[source, java]
+----
+KGroupedTable<KR, VR> groupBy(
+  final KeyValueMapper<? super K, ? super V, KeyValue<KR, VR>> selector);
+KGroupedTable<KR, VR> groupBy(
+  final KeyValueMapper<? super K, ? super V, KeyValue<KR, VR>> selector,
+  final Serialized<KR, VR> serialized);
+----
+
 | [[join]] `join`
 a|
 
 [source, java]
 ----
-<VO, VR> KTable<K, VR> join(
+KTable<K, VR> join(
   final KTable<K, VO> other,
   final ValueJoiner<? super V, ? super VO, ? extends VR> joiner)
-<VO, VR> KTable<K, VR> join(
+KTable<K, VR> join(
   final KTable<K, VO> other,
   final ValueJoiner<? super V, ? super VO, ? extends VR> joiner,
   final Materialized<K, VR, KeyValueStore<Bytes, byte[]>> materialized)
@@ -28,10 +40,10 @@ a|
 
 [source, java]
 ----
-<VO, VR> KTable<K, VR> leftJoin(
+KTable<K, VR> leftJoin(
   final KTable<K, VO> other,
   final ValueJoiner<? super V, ? super VO, ? extends VR> joiner)
-<VO, VR> KTable<K, VR> leftJoin(
+KTable<K, VR> leftJoin(
   final KTable<K, VO> other,
   final ValueJoiner<? super V, ? super VO, ? extends VR> joiner,
   final Materialized<K, VR, KeyValueStore<Bytes, byte[]>> materialized)
@@ -42,10 +54,10 @@ a|
 
 [source, java]
 ----
-<VO, VR> KTable<K, VR> outerJoin(
+KTable<K, VR> outerJoin(
   final KTable<K, VO> other,
   final ValueJoiner<? super V, ? super VO, ? extends VR> joiner)
-<VO, VR> KTable<K, VR> outerJoin(
+KTable<K, VR> outerJoin(
   final KTable<K, VO> other,
   final ValueJoiner<? super V, ? super VO, ? extends VR> joiner,
   final Materialized<K, VR, KeyValueStore<Bytes, byte[]>> materialized)
@@ -56,15 +68,24 @@ a| Stateful record-by-record value transformation
 
 [source, java]
 ----
-<VR> KTable<K, VR> mapValues(
+KTable<K, VR> mapValues(
   final ValueMapper<? super V, ? extends VR> mapper)
-<VR> KTable<K, VR> mapValues(
+KTable<K, VR> mapValues(
   final ValueMapper<? super V, ? extends VR> mapper,
   final Materialized<K, VR, KeyValueStore<Bytes, byte[]>> materialized)
-<VR> KTable<K, VR> mapValues(
+KTable<K, VR> mapValues(
   final ValueMapperWithKey<? super K, ? super V, ? extends VR> mapper)
-<VR> KTable<K, VR> mapValues(
+KTable<K, VR> mapValues(
   final ValueMapperWithKey<? super K, ? super V, ? extends VR> mapper,
   final Materialized<K, VR, KeyValueStore<Bytes, byte[]>> materialized)
+----
+
+| [[toStream]] `toStream`
+a|
+
+[source, java]
+----
+KStream<K, V> toStream();
+KStream<KR, V> toStream(final KeyValueMapper<? super K, ? super V, ? extends KR> mapper);
 ----
 |===

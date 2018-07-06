@@ -26,6 +26,81 @@ NOTE: link:kafka-streams-KStreamImpl.adoc[KStreamImpl] is the one and only imple
 | Operator
 | Description
 
+| [[flatMap]] `flatMap`
+a|
+
+[source, java]
+----
+KStream<KR, VR> flatMap(
+  KeyValueMapper<? super K, ? super V, ? extends Iterable<? extends KeyValue<? extends KR, ? extends VR>>> mapper);
+----
+
+| [[groupBy]] `groupBy`
+a|
+
+[source, java]
+----
+KGroupedStream<KR, V> groupBy(
+  final KeyValueMapper<? super K, ? super V, KR> selector);
+KGroupedStream<KR, V> groupBy(
+  final KeyValueMapper<? super K, ? super V, KR> selector,
+  final Serialized<KR, V> serialized);
+----
+
+| [[join]] `join`
+a|
+
+[source, java]
+----
+KStream<K, RV> join(
+  final GlobalKTable<GK, GV> globalKTable,
+  final KeyValueMapper<? super K, ? super V, ? extends GK> keyValueMapper,
+  final ValueJoiner<? super V, ? super GV, ? extends RV> joiner);
+KStream<K, VR> join(
+  final KStream<K, VO> otherStream,
+  final ValueJoiner<? super V, ? super VO, ? extends VR> joiner,
+  final JoinWindows windows);
+KStream<K, VR> join(
+  final KStream<K, VO> otherStream,
+  final ValueJoiner<? super V, ? super VO, ? extends VR> joiner,
+  final JoinWindows windows,
+  final Joined<K, V, VO> joined);
+KStream<K, VR> join(
+  final KTable<K, VT> table,
+  final ValueJoiner<? super V, ? super VT, ? extends VR> joiner);
+KStream<K, VR> join(
+  final KTable<K, VT> table,
+  final ValueJoiner<? super V, ? super VT, ? extends VR> joiner,
+  final Joined<K, V, VT> joined);
+----
+
+| [[leftJoin]] `leftJoin`
+a|
+
+[source, java]
+----
+KStream<K, RV> leftJoin(
+  final GlobalKTable<GK, GV> globalKTable,
+  final KeyValueMapper<? super K, ? super V, ? extends GK> keyValueMapper,
+  final ValueJoiner<? super V, ? super GV, ? extends RV> valueJoiner);
+KStream<K, VR> leftJoin(
+  final KStream<K, VO> otherStream,
+  final ValueJoiner<? super V, ? super VO, ? extends VR> joiner,
+  final JoinWindows windows);
+KStream<K, VR> leftJoin(
+  final KStream<K, VO> otherStream,
+  final ValueJoiner<? super V, ? super VO, ? extends VR> joiner,
+  final JoinWindows windows,
+  final Joined<K, V, VO> joined);
+KStream<K, VR> leftJoin(
+  final KTable<K, VT> table,
+  final ValueJoiner<? super V, ? super VT, ? extends VR> joiner);
+KStream<K, VR> leftJoin(
+  final KTable<K, VT> table,
+  final ValueJoiner<? super V, ? super VT, ? extends VR> joiner,
+  final Joined<K, V, VT> joined);
+----
+
 | [[transformValues]] `transformValues`
 a| Stateful record-by-record value transformation
 
@@ -41,12 +116,21 @@ KStream<K, VR> transformValues(
 
 `transformValues` uses link:kafka-streams-ValueTransformerSupplier.adoc[ValueTransformerSupplier] to create a link:kafka-streams-ValueTransformer.adoc[ValueTransformer] that is used for a stateful transformation of record values in a stream.
 
+| [[map]] `map`
+a|
+
+[source, java]
+----
+KStream<KR, VR> map(KeyValueMapper<? super K, ? super V, ? extends KeyValue<? extends KR, ? extends VR>> mapper);
+----
+
 | [[mapValues]] `mapValues`
 a|
 
 [source, java]
 ----
-<VR> KStream<K, VR> mapValues(ValueMapper<? super V, ? extends VR> mapper);
+KStream<K, VR> mapValues(ValueMapper<? super V, ? extends VR> mapper);
+KStream<K, VR> mapValues(final ValueMapperWithKey<? super K, ? super V, ? extends VR> mapper);
 ----
 
 | [[print]] `print`
@@ -55,6 +139,14 @@ a|
 [source, java]
 ----
 void print(final Printed<K, V> printed);
+----
+
+| [[selectKey]] `selectKey`
+a|
+
+[source, java]
+----
+KStream<KR, V> selectKey(KeyValueMapper<? super K, ? super V, ? extends KR> mapper);
 ----
 
 | [[through]] `through`

@@ -19,9 +19,8 @@
 
 . link:kafka-streams-ProcessorContext.adoc[ProcessorContext]
 
-. link:kafka-streams-Topology.adoc[Topology]
-
 . link:kafka-streams-KeyValueMapper.adoc[KeyValueMapper]
+
 . link:kafka-streams-StreamsConfig.adoc[StreamsConfig -- Configuration Properties for Kafka Clients]
 
 . link:kafka-streams-ValueTransformer.adoc[ValueTransformer -- Stateful Record-by-Record Value Transformation]
@@ -74,6 +73,8 @@
 . link:kafka-streams-ProcessorNode.adoc[ProcessorNode]
 .. link:kafka-streams-SourceNode.adoc[SourceNode]
 .. link:kafka-streams-SinkNode.adoc[SinkNode]
+
+. link:kafka-streams-Topology.adoc[Topology]
 
 . link:kafka-streams-ProcessorTopology.adoc[ProcessorTopology]
 . link:kafka-streams-TopologyDescription.adoc[TopologyDescription]

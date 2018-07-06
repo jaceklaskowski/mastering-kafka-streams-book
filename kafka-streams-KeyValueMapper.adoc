@@ -1,3 +1,37 @@
 == [[KeyValueMapper]] KeyValueMapper
 
-`KeyValueMapper` is...FIXME
+`KeyValueMapper` is the <<contract, contract>> of *key-value mappers* that <<apply, map a record to a new value>>.
+
+`KeyValueMapper` is the input argument of the following operators:
+
+* link:kafka-streams-KStream.adoc#selectKey[KStream.selectKey]
+* link:kafka-streams-KStream.adoc#map[KStream.map]
+* link:kafka-streams-KStream.adoc#flatMap[KStream.flatMap]
+* link:kafka-streams-KStream.adoc#groupBy[KStream.groupBy]
+* link:kafka-streams-KStream.adoc#join[KStream.join]
+* link:kafka-streams-KStream.adoc#leftJoin[KStream.leftJoin]
+
+* link:kafka-streams-KTable.adoc#toStream[KTable.toStream]
+* link:kafka-streams-KTable.adoc#groupBy[KTable.groupBy]
+
+* link:kafka-streams-Printed.adoc#withKeyValueMapper[Printed.withKeyValueMapper]
+
+[[contract]]
+[source, java]
+----
+package org.apache.kafka.streams.kstream;
+
+interface KeyValueMapper<K, V, VR> {
+  VR apply(final K key, final V value);
+}
+----
+
+.KeyValueMapper Contract
+[cols="1,2",options="header",width="100%"]
+|===
+| Method
+| Description
+
+| `apply`
+| [[apply]] Used when...FIXME
+|===

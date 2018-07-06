@@ -12,7 +12,7 @@
 | Description
 
 | [[defaultKeyValueMapper]] `defaultKeyValueMapper`
-| link:kafka-streams-KeyValueMapper.adoc[KeyValueMapper]
+| link:kafka-streams-KeyValueMapper.adoc[KeyValueMapper] that simply concatenates the key and the value of a record when link:kafka-streams-KeyValueMapper.adoc#apply[executed] (i.e. applied to a record stream)
 |===
 
 === [[doStreamTableJoin]] `doStreamTableJoin` Internal Method
@@ -192,7 +192,7 @@ NOTE: `repartitionForJoin` is used when...FIXME
 `KStreamImpl` takes the following when created:
 
 * [[builder]] link:kafka-streams-InternalStreamsBuilder.adoc[InternalStreamsBuilder] that created the `KStreamImpl`
-* [[name]] Name of the stream processor node
+* [[name]] Name of the source processor node
 * [[sourceNodes]] Source nodes
 * [[repartitionRequired]] Flag whether repartitioning is required or not
 
