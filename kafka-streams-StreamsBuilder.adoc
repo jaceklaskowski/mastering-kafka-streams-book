@@ -54,12 +54,12 @@ val topology = builder.build
 ----
 
 [[topology]]
-When <<creating-instance, created>>, `StreamsBuilder` creates a link:kafka-streams-Topology.adoc#creating-instance[Topology] (that is further developed using the <<operators, operators>>). The `Topology` is requested for link:kafka-streams-Topology.adoc#internalTopologyBuilder[InternalTopologyBuilder] that is used to create the <<internalStreamsBuilder, InternalStreamsBuilder>>.
+When <<creating-instance, created>>, `StreamsBuilder` creates a link:kafka-streams-Topology.adoc#creating-instance[Topology] (that is further developed using the <<operators, operators>>). The `Topology` is then requested for the link:kafka-streams-Topology.adoc#internalTopologyBuilder[InternalTopologyBuilder] that is used to create the <<internalStreamsBuilder, InternalStreamsBuilder>>.
 
 [[internalStreamsBuilder]]
 When <<creating-instance, created>>, `StreamsBuilder` creates an link:kafka-streams-InternalStreamsBuilder.adoc#creating-instance[InternalStreamsBuilder] that the <<operators, operators>> use to offer their services.
 
-NOTE: `StreamsBuilder` simply provides a more developer-friendly API for stream processing than using the link:kafka-streams-InternalStreamsBuilder.adoc[InternalStreamsBuilder] API directly. In other words, `StreamsBuilder` is a layer over `InternalStreamsBuilder`.
+NOTE: `StreamsBuilder` simply provides a more developer-friendly API for stream processing than using the link:kafka-streams-InternalStreamsBuilder.adoc[InternalStreamsBuilder] API directly. In other words, `StreamsBuilder` is a façade of `InternalStreamsBuilder`.
 
 === [[table]] Creating KTable -- `table` Method
 
@@ -135,7 +135,7 @@ StreamsBuilder addStateStore(final StoreBuilder builder)
 
 `addStateStore`...FIXME
 
-=== [[stream]] Creating KStream (of Records from Topics) -- `stream` Method
+=== [[stream]] Creating KStream (of Records from One or Many Topics) -- `stream` Method
 
 [source, java]
 ----
@@ -164,12 +164,12 @@ synchronized <K, V> KStream<K, V> stream(
 scala> :type builder
 org.apache.kafka.streams.StreamsBuilder
 
+// Create a KStream to read records from the input topic
+// Keys and values of the records are of String type
 val input = builder.stream[String, String]("input")
 
 scala> :type input
 org.apache.kafka.streams.kstream.KStream[String,String]
 ----
 
-Internally, `stream` creates a link:kafka-streams-ConsumedInternal.adoc#creating-instance[ConsumedInternal] (for the input link:kafka-streams-Consumed.adoc[Consumed]).
-
-`stream` then requests <<internalStreamsBuilder, InternalStreamsBuilder>> to link:kafka-streams-InternalStreamsBuilder.adoc#stream[create a KStream] for the input `topics` and the `ConsumedInternal`.
+Internally, `stream` creates a link:kafka-streams-ConsumedInternal.adoc#creating-instance[ConsumedInternal] (for the input link:kafka-streams-Consumed.adoc[Consumed]) and requests the <<internalStreamsBuilder, InternalStreamsBuilder>> to link:kafka-streams-InternalStreamsBuilder.adoc#stream[create a KStream] (for the input `topics` and the `ConsumedInternal`).

@@ -1,6 +1,8 @@
 == [[ProcessorNode]] ProcessorNode
 
-`ProcessorNode` is a <<process, processing node>> in a topology. `ProcessorNode` is identified by a <<name, name>> and can have zero or more <<children, child processor nodes>>.
+`ProcessorNode` is a <<process, processing node>> in a topology that is identified by a <<name, name>> and have zero or more <<children, child processor nodes>>.
+
+NOTE: link:kafka-streams-SourceNode.adoc[SourceNode] and link:kafka-streams-SinkNode.adoc[SinkNode] are specialized `ProcessorNodes`.
 
 `ProcessorNode` is <<creating-instance, created>> exclusively when `ProcessorNodeFactory` is requested to link:kafka-streams-ProcessorNodeFactory.adoc#build[build a processor node].
 

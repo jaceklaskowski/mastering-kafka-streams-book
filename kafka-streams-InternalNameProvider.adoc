@@ -1,3 +1,34 @@
 == [[InternalNameProvider]] InternalNameProvider
 
-`InternalNameProvider` is...FIXME
+`InternalNameProvider` is the <<contract, contract>> of <<implementations, internal name providers>> that give a new name for a <<newProcessorName, processor>> or a <<newStoreName, store>>.
+
+[[contract]]
+[source, java]
+----
+package org.apache.kafka.streams.kstream.internals;
+
+interface InternalNameProvider {
+  String newProcessorName(String prefix);
+  String newStoreName(String prefix);
+}
+----
+
+.InternalNameProvider Contract
+[cols="1,2",options="header",width="100%"]
+|===
+| Method
+| Description
+
+| `newProcessorName`
+| [[newProcessorName]] Gives a new name for a link:kafka-streams-ProcessorNode.adoc[processor]
+
+Used when...FIXME
+
+| `newStoreName`
+| [[newStoreName]] Gives a new name for a link:kafka-streams-StateStore.adoc[state store]
+
+Used when...FIXME
+|===
+
+[[implementations]]
+NOTE: link:kafka-streams-InternalStreamsBuilder.adoc[InternalStreamsBuilder] is the one and only known implementation of <<contract, InternalStreamsBuilder Contract>> in Kafka Streams.

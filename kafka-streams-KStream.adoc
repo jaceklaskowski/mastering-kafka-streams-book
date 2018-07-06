@@ -1,8 +1,8 @@
 == [[KStream]] KStream
 
-`KStream` is an abstraction of a *record stream* of key-value pairs (where each record represents an independent entity or event in the real world).
+`KStream` is an abstraction of a *record stream* of key-value pairs (where each record is an independent entity or event in the real world).
 
-`KStream` is created directly from one or many Kafka topics (using link:kafka-streams-StreamsBuilder.adoc[StreamsBuilder.stream]) or through `KStream` transformations.
+`KStream` can be created directly from one or many Kafka topics (using link:kafka-streams-StreamsBuilder.adoc#stream[StreamsBuilder.stream] operator) or as a result of <<operators, transformations>> on an existing `KStream`.
 
 [source, scala]
 ----

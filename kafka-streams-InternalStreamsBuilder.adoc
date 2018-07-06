@@ -1,6 +1,6 @@
 == [[InternalStreamsBuilder]] InternalStreamsBuilder
 
-`InternalStreamsBuilder` is...FIXME
+`InternalStreamsBuilder` is a façade of <<internalTopologyBuilder, InternalTopologyBuilder>> (to add sources and state stores to a topology) and link:kafka-streams-KTableImpl.adoc[KTableImpl] for <<table, table>>, link:kafka-streams-GlobalKTableImpl.adoc[GlobalKTableImpl] for <<globalTable, globalTable>>, and link:kafka-streams-KStreamImpl.adoc[KStreamImpl] for <<stream, stream>> operators.
 
 `InternalStreamsBuilder` is <<creating-instance, created>> along with link:kafka-streams-StreamsBuilder.adoc#internalStreamsBuilder[StreamsBuilder].
 
@@ -9,22 +9,12 @@ image::images/kafka-streams-InternalStreamsBuilder.png[align="center"]
 
 [[creating-instance]]
 [[internalTopologyBuilder]]
-`InternalStreamsBuilder` takes a link:kafka-streams-InternalTopologyBuilder.adoc[InternalTopologyBuilder] only when created.
+`InternalStreamsBuilder` takes a link:kafka-streams-InternalTopologyBuilder.adoc[InternalTopologyBuilder] when created (that all the methods are based on).
 
-`InternalStreamsBuilder` is an link:kafka-streams-InternalNameProvider.adoc[InternalNameProvider] and can be requested for a new name for a <<newProcessorName, processor>> or a <<newStoreName, store>>.
+`InternalStreamsBuilder` is an link:kafka-streams-InternalNameProvider.adoc[InternalNameProvider] and so can be requested for a new name for a <<newProcessorName, processor>> or a <<newStoreName, store>>.
 
-[[internal-registries]]
-.InternalStreamsBuilder's Internal Properties (e.g. Registries, Counters and Flags)
-[cols="1,2",options="header",width="100%"]
-|===
-| Name
-| Description
-
-| `index`
-| [[index]] FIXME
-
-Used when...FIXME
-|===
+[[index]]
+`InternalStreamsBuilder` uses `index` counter that starts at `0` and is incremented every time a new name for a <<newProcessorName, processor>> or a <<newStoreName, store>> is requested. That makes all names unique and sources and stores uniquely identified by name.
 
 === [[addStateStore]] `addStateStore` Method
 
@@ -49,9 +39,9 @@ KStream<K, V> stream(
   final ConsumedInternal<K, V> consumed)
 ----
 
-`stream` creates a new processor name (with *KSTREAM-SOURCE* prefix) and requests <<internalTopologyBuilder, InternalTopologyBuilder>> to link:kafka-streams-InternalTopologyBuilder.adoc#addSource[register a new source topic].
+`stream` <<newProcessorName, creates a new processor name>> (with *KSTREAM-SOURCE-* prefix) and requests the <<internalTopologyBuilder, InternalTopologyBuilder>> to link:kafka-streams-InternalTopologyBuilder.adoc#addSource[register a new source processor] (under the new processor name and with the input `topics` or `topicPattern`).
 
-In the end, `stream` gives a new instance of link:kafka-streams-KStreamImpl.adoc#creating-instance[KStreamImpl].
+In the end, `stream` returns a new instance of link:kafka-streams-KStreamImpl.adoc#creating-instance[KStreamImpl] (with the new processor name that is also used as the name of the single source node and the `repartitionRequired` flag disabled).
 
 [source, scala]
 ----
@@ -163,7 +153,7 @@ NOTE: `globalTable` is used exclusively when `StreamsBuilder` is requested to li
 String newProcessorName(final String prefix)
 ----
 
-NOTE: `newProcessorName` is part of link:kafka-streams-InternalNameProvider.adoc#newProcessorName[InternalNameProvider Contract] to...FIXME.
+NOTE: `newProcessorName` is part of link:kafka-streams-InternalNameProvider.adoc#newProcessorName[InternalNameProvider Contract] to give a new name for a link:kafka-streams-ProcessorNode.adoc[processor].
 
 `newProcessorName` simply takes the input `prefix` followed by the <<index, index>>.
 
@@ -187,7 +177,7 @@ PREFIX0000000001
 String newStoreName(final String prefix)
 ----
 
-NOTE: `newStoreName` is part of link:kafka-streams-InternalNameProvider.adoc#newStoreName[InternalNameProvider Contract] to...FIXME.
+NOTE: `newStoreName` is part of link:kafka-streams-InternalNameProvider.adoc#newStoreName[InternalNameProvider Contract] to give a new name for a link:kafka-streams-StateStore.adoc[state store].
 
 `newStoreName` simply concatenates the input `prefix`, `STATE-STORE-` and the <<index, index>>.
 
