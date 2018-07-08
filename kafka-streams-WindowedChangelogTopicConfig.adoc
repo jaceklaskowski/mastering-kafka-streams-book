@@ -1,0 +1,29 @@
+== [[WindowedChangelogTopicConfig]] WindowedChangelogTopicConfig
+
+`WindowedChangelogTopicConfig` is an link:kafka-streams-InternalTopicConfig.adoc[InternalTopicConfig] that...FIXME
+
+`WindowedChangelogTopicConfig` is <<creating-instance, created>> exclusively when `InternalTopologyBuilder` is requested for link:kafka-streams-InternalTopologyBuilder.adoc#createChangelogTopicConfig[create an InternalTopicConfig (for a given name and StateStoreFactory)].
+
+[[internal-registries]]
+[[WINDOWED_STORE_CHANGELOG_TOPIC_DEFAULT_OVERRIDES]]
+When <<creating-instance, created>>, `WindowedChangelogTopicConfig` creates a `WINDOWED_STORE_CHANGELOG_TOPIC_DEFAULT_OVERRIDES` configuration properties that...FIXME
+
+=== [[creating-instance]] Creating WindowedChangelogTopicConfig Instance
+
+`WindowedChangelogTopicConfig` takes the following when created:
+
+* [[name]] Name
+* [[topicConfigs]] Topic configs (as `Map<String, String>`)
+
+`WindowedChangelogTopicConfig` initializes the <<internal-registries, internal registries and counters>>.
+
+=== [[setRetentionMs]] `setRetentionMs` Method
+
+[source, java]
+----
+void setRetentionMs(final long retentionMs)
+----
+
+`setRetentionMs`...FIXME
+
+NOTE: `setRetentionMs` is used when...FIXME

@@ -2,6 +2,8 @@
 
 `StateStoreFactory` is the <<contract, contract>> for...FIXME
 
+NOTE: `StateStoreFactory` is an internal interface of link:kafka-streams-InternalTopologyBuilder.adoc[InternalTopologyBuilder].
+
 [[contract]]
 [source, java]
 ----
@@ -18,21 +20,28 @@ interface StateStoreFactory {
 }
 ----
 
-NOTE: `StateStoreFactory` is an internal interface of `InternalTopologyBuilder`.
-
 .StateStoreFactory Contract
 [cols="1,2",options="header",width="100%"]
 |===
 | Method
 | Description
 
-| [[users]] `users`
-| Names of the processors that are connected to a state store
+| `isWindowStore`
+| [[isWindowStore]]
+
+| `logConfig`
+| [[logConfig]]
+
+| `loggingEnabled`
+| [[loggingEnabled]]
+
+| `retentionPeriod`
+| [[retentionPeriod]] Used exclusively when `InternalTopologyBuilder` is requested to link:kafka-streams-InternalTopologyBuilder.adoc#createChangelogTopicConfig[createChangelogTopicConfig].
+
+| `users`
+| [[users]] Names of the processors that are connected to a state store
 
 Used when `InternalTopologyBuilder` is requested to link:kafka-streams-InternalTopologyBuilder.adoc#connectProcessorAndStateStore[connect a state store with a processor node] and link:kafka-streams-InternalTopologyBuilder.adoc#topicGroups[topicGroups]
-
-| [[loggingEnabled]] `loggingEnabled`
-|
 |===
 
 [[implementations]]

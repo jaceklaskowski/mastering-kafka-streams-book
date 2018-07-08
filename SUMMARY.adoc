@@ -104,6 +104,10 @@
 
 . link:kafka-streams-AbstractNode.adoc[AbstractNode]
 
+. link:kafka-streams-InternalTopicConfig.adoc[InternalTopicConfig]
+.. link:kafka-streams-WindowedChangelogTopicConfig.adoc[WindowedChangelogTopicConfig]
+.. link:kafka-streams-UnwindowedChangelogTopicConfig.adoc[UnwindowedChangelogTopicConfig]
+
 === Execution Environment
 
 . link:kafka-streams-StreamsPartitionAssignor.adoc[StreamsPartitionAssignor -- Partition Assignment Strategy]
