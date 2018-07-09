@@ -61,3 +61,28 @@ KTable<Windowed<K>, VR> doAggregate(
 `doAggregate`...FIXME
 
 NOTE: `doAggregate` is used when `SessionWindowedKStreamImpl` is requested to <<count, count>>, <<aggregate, aggregate>> and <<reduce, reduce>>.
+
+=== [[materialize]] `materialize` Internal Method
+
+[source, java]
+----
+StoreBuilder<SessionStore<K, VR>> materialize(
+  final MaterializedInternal<K, VR, SessionStore<Bytes, byte[]>> materialized)
+----
+
+`materialize`...FIXME
+
+NOTE: `materialize` is used exclusively when `SessionWindowedKStreamImpl` is requested to <<aggregate, aggregate>>.
+
+=== [[storeBuilder]] `storeBuilder` Internal Method
+
+[source, java]
+----
+StoreBuilder<SessionStore<K, VR>> storeBuilder(
+  final String storeName,
+  final Serde<VR> aggValueSerde)
+----
+
+`storeBuilder`...FIXME
+
+NOTE: `storeBuilder` is used exclusively when `SessionWindowedKStreamImpl` is requested to <<doAggregate, doAggregate>> (when requested to <<count, count>>, <<aggregate, aggregate>> and <<reduce, reduce>>).

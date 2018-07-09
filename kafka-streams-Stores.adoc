@@ -25,8 +25,8 @@ StoreBuilder<SessionStore<K, V>> sessionStoreBuilder(
   final Serde<V> valueSerde)
 ----
 
-`sessionStoreBuilder` simply creates a link:kafka-streams-SessionStoreBuilder.adoc#creating-instance[SessionStoreBuilder] (for the input arguments and `Time.SYSTEM`).
+`sessionStoreBuilder` simply returns a new link:kafka-streams-SessionStoreBuilder.adoc#creating-instance[SessionStoreBuilder] (for the input arguments and `Time.SYSTEM`).
 
-`sessionStoreBuilder` throws a `NullPointerException` when the input link:kafka-streams-SessionBytesStoreSupplier.adoc[SessionBytesStoreSupplier] is undefined (`null`).
+In case the input link:kafka-streams-SessionBytesStoreSupplier.adoc[SessionBytesStoreSupplier] is undefined (`null`), `sessionStoreBuilder` throws a `NullPointerException`.
 
-NOTE: `sessionStoreBuilder` is used when...FIXME
+NOTE: `sessionStoreBuilder` is used when `SessionWindowedKStreamImpl` is requested to link:kafka-streams-SessionWindowedKStreamImpl.adoc#materialize[materialize] and link:kafka-streams-SessionWindowedKStreamImpl.adoc#storeBuilder[storeBuilder].
