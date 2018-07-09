@@ -27,4 +27,4 @@ NOTE: `queryableStoreName` does not seem to be used.
 |===
 
 [[implementations]]
-NOTE: link:kafka-streams-GlobalKTableImpl.adoc[GlobalKTableImpl] is the one and only known direct implementation of <<contract, GlobalKTable Contract>> in Kafka Streams.
+NOTE: link:kafka-streams-GlobalKTableImpl.adoc[GlobalKTableImpl] is the one and only known direct implementation of <<contract, GlobalKTable Contract>> in Kafka Streams {{ book.kafka_version }}.

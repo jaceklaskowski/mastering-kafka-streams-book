@@ -1,6 +1,6 @@
 == [[KStreamImpl]] KStreamImpl
 
-`KStreamImpl` is a concrete link:kafka-streams-KStream.adoc[KStream] (and the one and only in Kafka Streams).
+`KStreamImpl` is the one and only link:kafka-streams-KStream.adoc[KStream] in Kafka Streams {{ book.kafka_version }}.
 
 `KStreamImpl` is <<creating-instance, created>> every time a transformation is executed and when...FIXME
 

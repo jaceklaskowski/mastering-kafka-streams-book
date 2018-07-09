@@ -1,6 +1,6 @@
 == [[StoreChangelogReader]] StoreChangelogReader
 
-`StoreChangelogReader` is the one and only link:kafka-streams-ChangelogReader.adoc[ChangelogReader] in Kafka Streams.
+`StoreChangelogReader` is the one and only link:kafka-streams-ChangelogReader.adoc[ChangelogReader] in Kafka Streams {{ book.kafka_version }}.
 
 `StoreChangelogReader` is <<creating-instance, created>> along with a link:kafka-streams-StreamThread.adoc#create[StreamThread] (when `KafkaStreams` is link:kafka-streams-KafkaStreams.adoc#creating-instance[created]).
 

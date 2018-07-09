@@ -35,4 +35,4 @@ interface ChangelogReader {
 |===
 
 [[implementations]]
-NOTE: link:kafka-streams-StoreChangelogReader.adoc[StoreChangelogReader] is the one and only known direct implementation of <<contract, ChangelogReader Contract>> in Kafka Streams.
+NOTE: link:kafka-streams-StoreChangelogReader.adoc[StoreChangelogReader] is the one and only known direct implementation of <<contract, ChangelogReader Contract>> in Kafka Streams {{ book.kafka_version }}.

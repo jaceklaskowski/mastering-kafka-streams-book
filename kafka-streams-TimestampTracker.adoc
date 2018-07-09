@@ -27,4 +27,4 @@ interface TimestampTracker<E> {
 |===
 
 [[implementations]]
-NOTE: link:kafka-streams-MinTimestampTracker.adoc[MinTimestampTracker] is the one and only known direct implementation of <<contract, TimestampTracker Contract>> in Kafka Streams.
+NOTE: link:kafka-streams-MinTimestampTracker.adoc[MinTimestampTracker] is the one and only known direct implementation of <<contract, TimestampTracker Contract>> in Kafka Streams {{ book.kafka_version }}.

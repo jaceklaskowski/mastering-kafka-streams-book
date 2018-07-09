@@ -29,4 +29,4 @@ Used exclusively when `PunctuationQueue` is requested to link:kafka-streams-Punc
 |===
 
 [[implementations]]
-NOTE: link:kafka-streams-StreamTask.adoc[StreamTask] is the one and only known implementation of <<contract, ProcessorNodePunctuator Contract>> in Kafka Streams.
+NOTE: link:kafka-streams-StreamTask.adoc[StreamTask] is the one and only known implementation of <<contract, ProcessorNodePunctuator Contract>> in Kafka Streams {{ book.kafka_version }}.
