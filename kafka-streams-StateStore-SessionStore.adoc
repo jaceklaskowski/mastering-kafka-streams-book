@@ -1,3 +1,55 @@
 == [[SessionStore]] SessionStore
 
-`SessionStore` is...FIXME
+`SessionStore` is the <<contract, contract>> of <<implementations, state stores>> that <<FIXME, FIXME>>.
+
+[[contract]]
+[source, java]
+----
+package org.apache.kafka.streams.state;
+
+interface SessionStore<K, AGG> extends StateStore, ReadOnlySessionStore<K, AGG> {
+  KeyValueIterator<Windowed<K>, AGG> findSessions(final K key, long earliestSessionEndTime, final long latestSessionStartTime);
+  KeyValueIterator<Windowed<K>, AGG> findSessions(final K keyFrom, final K keyTo, long earliestSessionEndTime, final long latestSessionStartTime);
+  void put(final Windowed<K> sessionKey, final AGG aggregate);
+  void remove(final Windowed<K> sessionKey);
+}
+----
+
+.SessionStore Contract
+[cols="1,2",options="header",width="100%"]
+|===
+| Method
+| Description
+
+| `findSessions`
+| [[findSessions]] Used when...FIXME
+
+| `put`
+| [[put]] Used when...FIXME
+
+| `remove`
+| [[remove]] Used when...FIXME
+|===
+
+[[implementations]]
+.SessionStores
+[cols="1,2",options="header",width="100%"]
+|===
+| SessionStore
+| Description
+
+| link:kafka-streams-StateStore-CachingSessionStore.adoc[CachingSessionStore]
+| [[CachingSessionStore]]
+
+| link:kafka-streams-StateStore-RocksDBSessionStore.adoc[RocksDBSessionStore]
+| [[RocksDBSessionStore]]
+
+| link:kafka-streams-StateStore-RocksDBSessionBytesStore.adoc[RocksDBSessionBytesStore]
+| [[RocksDBSessionBytesStore]]
+
+| link:kafka-streams-StateStore-ChangeLoggingSessionBytesStore.adoc[ChangeLoggingSessionBytesStore]
+| [[ChangeLoggingSessionBytesStore]]
+
+| link:kafka-streams-StateStore-MeteredSessionStore.adoc[MeteredSessionStore]
+| [[MeteredSessionStore]]
+|===

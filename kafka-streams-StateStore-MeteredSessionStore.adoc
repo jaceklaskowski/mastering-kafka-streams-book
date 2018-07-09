@@ -1,0 +1,14 @@
+== [[MeteredSessionStore]] MeteredSessionStore
+
+`MeteredSessionStore` is...FIXME
+
+=== [[init]] `init` Method
+
+[source, java]
+----
+void init(final ProcessorContext context, final StateStore root)
+----
+
+NOTE: `init` is part of link:kafka-streams-StateStore-AbstractStateStore.adoc#init[AbstractStateStore Contract] to...FIXME.
+
+`init`...FIXME
