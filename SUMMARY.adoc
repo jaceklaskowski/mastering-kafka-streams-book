@@ -103,6 +103,7 @@
 .. link:kafka-streams-KStreamTransformValues.adoc[KStreamTransformValues]
 
 . link:kafka-streams-Processor.adoc[Processor -- Contract for Stream Processors]
+.. link:kafka-streams-AbstractProcessor.adoc[AbstractProcessor -- Base for Stream Processors]
 .. link:kafka-streams-KStreamTransformValuesProcessor.adoc[KStreamTransformValuesProcessor]
 
 . link:kafka-streams-ProcessorNodePunctuator.adoc[ProcessorNodePunctuator]

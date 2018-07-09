@@ -39,16 +39,16 @@ NOTE: `Processor` is an `Evolving` contract which means that compatibility may b
 
 The lifecycle of a `Processor` starts at <<init, init>> when....FIXME
 
-TIP: Use <<AbstractProcessor, AbstractProcessor>> when you want to create a `Processor`.
+TIP: Use <<AbstractProcessor, AbstractProcessor>> when you want to develop a custom `Processor`.
 
 [[implementations]]
-.Processors
+.(Direct) Processors
 [cols="1,2",options="header",width="100%"]
 |===
 | Processor
 | Description
 
-| `AbstractProcessor`
+| link:kafka-streams-AbstractProcessor.adoc[AbstractProcessor]
 | [[AbstractProcessor]] Abstract Processor that manages the `ProcessorContext` instance and provides default no-op implementations
 
 | link:kafka-streams-KStreamTransformValuesProcessor.adoc[KStreamTransformValuesProcessor]

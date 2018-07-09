@@ -1,0 +1,134 @@
+== [[AbstractProcessor]] AbstractProcessor -- Base for Stream Processors
+
+`AbstractProcessor` is the base of <<extensions, stream processors>> that manages a <<context, ProcessorContext>> and provides default no-op implementations of <<close, close>> and <<punctuate, punctuate>>.
+
+[[context]]
+`AbstractProcessor` manages a link:kafka-streams-ProcessorContext.adoc[ProcessorContext] that is assigned when an `AbstractProcessor` is requested to <<init, initialize>>.
+
+[[extensions]]
+.AbstractProcessors
+[cols="1,2",options="header",width="100%"]
+|===
+| AbstractProcessor
+| Description
+
+| `KStreamWindowReduceProcessor`
+| [[KStreamWindowReduceProcessor]]
+
+| `KStreamFilterProcessor`
+| [[KStreamFilterProcessor]]
+
+| `KStreamMapProcessor`
+| [[KStreamMapProcessor]]
+
+| `KTableKTableLeftJoinProcessor`
+| [[KTableKTableLeftJoinProcessor]]
+
+| `KStreamPassThroughProcessor`
+| [[KStreamPassThroughProcessor]]
+
+| `KTableKTableOuterJoinProcessor`
+| [[KTableKTableOuterJoinProcessor]]
+
+| `KStreamPeekProcessor`
+| [[KStreamPeekProcessor]]
+
+| `KStreamAggregateProcessor`
+| [[KStreamAggregateProcessor]]
+
+| `KTableFilterProcessor`
+| [[KTableFilterProcessor]]
+
+| `KTableMapValuesProcessor`
+| [[KTableMapValuesProcessor]]
+
+| `KStreamKTableJoinProcessor`
+| [[KStreamKTableJoinProcessor]]
+
+| `KTableKTableJoinMergeProcessor`
+| [[KTableKTableJoinMergeProcessor]]
+
+| `KStreamTransformProcessor`
+| [[KStreamTransformProcessor]]
+
+| `KStreamWindowAggregateProcessor`
+| [[KStreamWindowAggregateProcessor]]
+
+| `KTableKTableRightJoinProcessor`
+| [[KTableKTableRightJoinProcessor]]
+
+| `KTableAggregateProcessor`
+| [[KTableAggregateProcessor]]
+
+| `KStreamMapProcessor`
+| [[KStreamMapProcessor]]
+
+| `KStreamFlatMapValuesProcessor`
+| [[KStreamFlatMapValuesProcessor]]
+
+| `KTableSourceProcessor`
+| [[KTableSourceProcessor]]
+
+| `KTableMapProcessor`
+| [[KTableMapProcessor]]
+
+| `KTableKTableJoinProcessor`
+| [[KTableKTableJoinProcessor]]
+
+| `KStreamBranchProcessor`
+| [[KStreamBranchProcessor]]
+
+| `KStreamSessionWindowAggregateProcessor`
+| [[KStreamSessionWindowAggregateProcessor]]
+
+| `KStreamPrintProcessor`
+| [[KStreamPrintProcessor]]
+
+| `KTableReduceProcessor`
+| [[KTableReduceProcessor]]
+
+| `KStreamFlatMapProcessor`
+| [[KStreamFlatMapProcessor]]
+
+| `KStreamKStreamJoinProcessor`
+| [[KStreamKStreamJoinProcessor]]
+
+| `KStreamJoinWindowProcessor`
+| [[KStreamJoinWindowProcessor]]
+
+| `KStreamReduceProcessor`
+| [[KStreamReduceProcessor]]
+|===
+
+=== [[init]] `init` Method
+
+[source, java]
+----
+void init(ProcessorContext context)
+----
+
+NOTE: `init` is part of link:kafka-streams-Processor.adoc#init[Processor Contract] to...FIXME.
+
+`init`...FIXME
+
+=== [[close]] `close` Method
+
+[source, java]
+----
+void close()
+----
+
+NOTE: `close` is part of link:kafka-streams-Processor.adoc#close[Processor Contract] to...FIXME.
+
+`close`...FIXME
+
+=== [[punctuate]] `punctuate` Method
+
+[source, java]
+----
+void punctuate(long timestamp)
+----
+
+NOTE: `punctuate` is part of link:kafka-streams-Processor.adoc#punctuate[Processor Contract] to...FIXME.
+
+`punctuate`...FIXME
