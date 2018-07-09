@@ -1,4 +1,4 @@
-== Mastering Kafka Streams ({{ book.kafka_version }})
+== Mastering Kafka Streams (Apache Kafka {{ book.kafka_version }})
 
 Welcome to *Mastering Kafka Streams* gitbook! I'm very excited to have you here and hope you will enjoy exploring the internals of Kafka Streams as much as I have.
 
