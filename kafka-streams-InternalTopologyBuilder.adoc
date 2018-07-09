@@ -954,7 +954,7 @@ InternalTopicConfig createChangelogTopicConfig(
 
 `createChangelogTopicConfig` requests the input link:kafka-streams-StateStoreFactory.adoc[StateStoreFactory] for link:kafka-streams-StateStoreFactory.adoc#isWindowStore[isWindowStore] flag.
 
-CAUTION: FIXME When is the flag enabled and disabled?
+NOTE: `isWindowStore` flag is enabled when a `StateStoreFactory` is created for a link:kafka-streams-WindowStoreBuilder.adoc[WindowStoreBuilder].
 
 If `isWindowStore` flag is enabled (`true`), `createChangelogTopicConfig` does the following:
 

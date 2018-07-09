@@ -32,3 +32,5 @@ NOTE: `AbstractStateStoreFactory` is a Java abstract class and cannot be <<creat
 * [[logConfig]] `logConfig` as `Map<String, String>`
 
 `AbstractStateStoreFactory` initializes the <<internal-registries, internal registries and counters>>.
+
+NOTE: `AbstractStateStoreFactory` is a Java abstract class and cannot be <<creating-instance, created>> directly. It is created indirectly when the <<implementations, concrete AbstractStateStoreFactories>> are.
