@@ -12,6 +12,8 @@
 . link:kafka-streams-KStream.adoc[KStream]
 . link:kafka-streams-KTable.adoc[KTable]
 . link:kafka-streams-GlobalKTable.adoc[GlobalKTable]
+. link:kafka-streams-KGroupedStream.adoc[KGroupedStream]
+. link:kafka-streams-SessionWindowedKStream.adoc[SessionWindowedKStream]
 
 . link:kafka-streams-Consumed.adoc[Consumed]
 . link:kafka-streams-Produced.adoc[Produced]
@@ -100,10 +102,13 @@
 .. link:kafka-streams-AbstractStateStoreFactory.adoc[AbstractStateStoreFactory]
 
 . link:kafka-streams-ProcessorSupplier.adoc[ProcessorSupplier]
+.. link:kafka-streams-KStreamSessionWindowAggregate.adoc[KStreamSessionWindowAggregate]
+.. link:kafka-streams-KStreamAggProcessorSupplier.adoc[KStreamAggProcessorSupplier]
 .. link:kafka-streams-KStreamTransformValues.adoc[KStreamTransformValues]
 
 . link:kafka-streams-Processor.adoc[Processor -- Contract for Stream Processors]
 .. link:kafka-streams-AbstractProcessor.adoc[AbstractProcessor -- Base for Stream Processors]
+.. link:kafka-streams-KStreamSessionWindowAggregateProcessor.adoc[KStreamSessionWindowAggregateProcessor]
 .. link:kafka-streams-KStreamTransformValuesProcessor.adoc[KStreamTransformValuesProcessor]
 
 . link:kafka-streams-ProcessorNodePunctuator.adoc[ProcessorNodePunctuator]
@@ -155,14 +160,17 @@
 . link:kafka-streams-PunctuationQueue.adoc[PunctuationQueue]
 .. link:kafka-streams-PunctuationSchedule.adoc[PunctuationSchedule -- Orderable ProcessorNodes At Timestamp]
 
-. link:kafka-streams-KStreamImpl.adoc[KStreamImpl]
-. link:kafka-streams-KStreamImplJoin.adoc[KStreamImplJoin]
-. link:kafka-streams-KTableImpl.adoc[KTableImpl]
-. link:kafka-streams-GlobalKTableImpl.adoc[GlobalKTableImpl]
-. link:kafka-streams-KGroupedTableImpl.adoc[KGroupedTableImpl]
-. link:kafka-streams-TimeWindowedKStreamImpl.adoc[TimeWindowedKStreamImpl]
-. link:kafka-streams-SessionWindowedKStreamImpl.adoc[SessionWindowedKStreamImpl]
-. link:kafka-streams-KGroupedStreamImpl.adoc[KGroupedStreamImpl]
+. link:kafka-streams-AbstractStream.adoc[AbstractStream]
+.. link:kafka-streams-KGroupedStreamImpl.adoc[KGroupedStreamImpl]
+.. link:kafka-streams-KGroupedTableImpl.adoc[KGroupedTableImpl]
+.. link:kafka-streams-KStreamImpl.adoc[KStreamImpl]
+.. link:kafka-streams-KTableImpl.adoc[KTableImpl]
+.. link:kafka-streams-SessionWindowedKStreamImpl.adoc[SessionWindowedKStreamImpl]
+.. link:kafka-streams-TimeWindowedKStreamImpl.adoc[TimeWindowedKStreamImpl]
+
+.. link:kafka-streams-GlobalKTableImpl.adoc[GlobalKTableImpl]
+
+.. link:kafka-streams-KStreamImplJoin.adoc[KStreamImplJoin]
 
 . link:kafka-streams-QueryableStoreProvider.adoc[QueryableStoreProvider]
 . link:kafka-streams-StateStoreProvider.adoc[StateStoreProvider]
@@ -195,8 +203,6 @@
 
 . link:kafka-streams-StreamPartitioner.adoc[StreamPartitioner]
 .. link:kafka-streams-WindowedStreamPartitioner.adoc[WindowedStreamPartitioner]
-
-. link:kafka-streams-AbstractStream.adoc[AbstractStream]
 
 . link:kafka-streams-KafkaClientSupplier.adoc[KafkaClientSupplier]
 .. link:kafka-streams-DefaultKafkaClientSupplier.adoc[DefaultKafkaClientSupplier]

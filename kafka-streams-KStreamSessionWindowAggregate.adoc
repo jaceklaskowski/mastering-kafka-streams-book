@@ -1,0 +1,44 @@
+== [[KStreamSessionWindowAggregate]] KStreamSessionWindowAggregate
+
+`KStreamSessionWindowAggregate` is a link:kafka-streams-KStreamAggProcessorSupplier.adoc[KStreamAggProcessorSupplier] that...FIXME
+
+`KStreamSessionWindowAggregate` is <<creating-instance, created>> when:
+
+* `KGroupedStreamImpl` is requested to link:kafka-streams-KGroupedStreamImpl.adoc#aggregate[aggregate]
+
+* `SessionWindowedKStreamImpl` is requested to link:kafka-streams-SessionWindowedKStreamImpl.adoc#aggregate[aggregate] and link:kafka-streams-SessionWindowedKStreamImpl.adoc#doAggregate[doAggregate]
+
+[[sendOldValues]]
+`KStreamSessionWindowAggregate` uses `sendOldValues` flag that is disabled (`false`) by default and can be <<enableSendingOldValues, enabled>>.
+
+=== [[get]] `get` Method
+
+[source, java]
+----
+Processor<K, V> get()
+----
+
+NOTE: `get` is part of link:kafka-streams-ProcessorSupplier.adoc#get[ProcessorSupplier Contract] to supply a stream processor.
+
+`get`...FIXME
+
+=== [[creating-instance]] Creating KStreamSessionWindowAggregate Instance
+
+`KStreamSessionWindowAggregate` takes the following when created:
+
+* [[windows]] `SessionWindows`
+* [[storeName]] Store name
+* [[initializer]] `Initializer<T>`
+* [[aggregator]] `Aggregator<? super K, ? super V, T>`
+* [[sessionMerger]] `Merger<? super K, T>`
+
+=== [[enableSendingOldValues]] `enableSendingOldValues` Method
+
+[source, java]
+----
+void enableSendingOldValues()
+----
+
+NOTE: `enableSendingOldValues` is part of link:kafka-streams-KStreamAggProcessorSupplier.adoc#enableSendingOldValues[KStreamAggProcessorSupplier Contract] to...FIXME.
+
+`enableSendingOldValues` simply turns the <<sendOldValues, sendOldValues>> flag on.

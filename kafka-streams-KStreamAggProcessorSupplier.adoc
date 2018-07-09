@@ -1,0 +1,50 @@
+== [[KStreamAggProcessorSupplier]] KStreamAggProcessorSupplier
+
+`KStreamAggProcessorSupplier` is the <<contract, extension contract>> of link:kafka-streams-ProcessorSupplier.adoc[ProcessorSuppliers] that allows <<implementations, implementations>> for <<view, views>> and to <<enableSendingOldValues, turn sendingOldValues flag on>>.
+
+[[contract]]
+[source, java]
+----
+package org.apache.kafka.streams.kstream.internals;
+
+interface KStreamAggProcessorSupplier<K, RK, V, T> extends ProcessorSupplier<K, V> {
+  void enableSendingOldValues();
+  KTableValueGetterSupplier<RK, T> view();
+}
+----
+
+.KStreamAggProcessorSupplier Contract
+[cols="1,2",options="header",width="100%"]
+|===
+| Method
+| Description
+
+| `enableSendingOldValues`
+| [[enableSendingOldValues]] Used when...FIXME
+
+| `view`
+| [[view]] Used when...FIXME
+|===
+
+[[implementations]]
+.KStreamAggProcessorSuppliers
+[cols="1,2",options="header",width="100%"]
+|===
+| KStreamAggProcessorSupplier
+| Description
+
+| `KStreamWindowReduce`
+| [[KStreamWindowReduce]]
+
+| `KStreamAggregate`
+| [[KStreamAggregate]]
+
+| link:kafka-streams-KStreamSessionWindowAggregate.adoc[KStreamSessionWindowAggregate]
+| [[KStreamSessionWindowAggregate]]
+
+| `KStreamReduce`
+| [[KStreamReduce]]
+
+| `KStreamWindowAggregate`
+| [[KStreamWindowAggregate]]
+|===

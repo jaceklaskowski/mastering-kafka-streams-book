@@ -1,0 +1,51 @@
+== [[KStreamSessionWindowAggregateProcessor]] KStreamSessionWindowAggregateProcessor
+
+`KStreamSessionWindowAggregateProcessor` is a concrete link:kafka-streams-AbstractProcessor.adoc[stream processor] that...FIXME
+
+`KStreamSessionWindowAggregateProcessor` is created exclusively when `KStreamSessionWindowAggregate` is requested to link:kafka-streams-KStreamSessionWindowAggregate.adoc#get[supply a stream processor].
+
+NOTE: `KStreamSessionWindowAggregateProcessor` is a `private` class of link:kafka-streams-KStreamSessionWindowAggregate.adoc[KStreamSessionWindowAggregate].
+
+[[internal-registries]]
+.KStreamSessionWindowAggregateProcessor's Internal Properties (e.g. Registries, Counters and Flags)
+[cols="1,2",options="header",width="100%"]
+|===
+| Name
+| Description
+
+| `store`
+| [[store]] link:kafka-streams-StateStore-SessionStore.adoc[SessionStore]
+
+Used when...FIXME
+
+| `tupleForwarder`
+| [[tupleForwarder]] `TupleForwarder` of `Windowed` keys
+
+Used when...FIXME
+|===
+
+=== [[process]] `process` Method
+
+[source, java]
+----
+void process(final K key, final V value)
+----
+
+NOTE: `process` is part of link:kafka-streams-Processor.adoc#process[Processor Contract] to...FIXME.
+
+`process`...FIXME
+
+=== [[init]] Initializing Stream Processor -- `init` Method
+
+[source, java]
+----
+void init(ProcessorContext context)
+----
+
+NOTE: `init` is part of link:kafka-streams-Processor.adoc#init[Processor Contract] to initialize a stream processor.
+
+`init` requests the input `ProcessorContext` for the link:kafka-streams-ProcessorContext.adoc#getStateStore[SessionStore] (by the link:kafka-streams-KStreamSessionWindowAggregate.adoc#storeName[storeName] of the owning `KStreamSessionWindowAggregate`) and sets it as the current <<store, SessionStore>>.
+
+`init` creates a `ForwardingCacheFlushListener` (with the link:kafka-streams-KStreamSessionWindowAggregate.adoc#sendOldValues[sendOldValues] flag of the owning `KStreamSessionWindowAggregate`).
+
+In the end, `init` creates a `TupleForwarder` (with the <<store, SessionStore>>, the `ForwardingCacheFlushListener` and the link:kafka-streams-KStreamSessionWindowAggregate.adoc#sendOldValues[sendOldValues] flag of the owning `KStreamSessionWindowAggregate`).

@@ -1,6 +1,6 @@
 == [[KGroupedStreamImpl]] KGroupedStreamImpl
 
-`KGroupedStreamImpl` is...FIXME
+`KGroupedStreamImpl` is a concrete link:kafka-streams-AbstractStream.adoc[AbstractStream] and a link:kafka-streams-KGroupedStream.adoc[KGroupedStream].
 
 === [[repartitionIfRequired]] `repartitionIfRequired` Internal Method
 
@@ -17,16 +17,17 @@ NOTE: `repartitionIfRequired` is used when...FIXME
 
 [source, java]
 ----
-KTable<Windowed<K>, T> aggregate(
-  final Initializer<T> initializer,
-  final Aggregator<? super K, ? super V, T> aggregator,
-  final Merger<? super K, T> sessionMerger,
-  final SessionWindows sessionWindows,
-  final Serde<T> aggValueSerde,
-  final String queryableStoreName)
+KTable<K, VR> aggregate(
+  final Initializer<VR> initializer,
+  final Aggregator<? super K, ? super V, VR> aggregator)
+KTable<K, VR> aggregate(
+  final Initializer<VR> initializer,
+  final Aggregator<? super K, ? super V, VR> aggregator,
+  final Materialized<K, VR, KeyValueStore<Bytes, byte[]>> materialized)
+// DEPRECATED ARE NOT LISTED HERE
 ----
 
-NOTE: `aggregate` is part of link:LINK#aggregate[HERE Contract] to...FIXME.
+NOTE: `aggregate` is part of link:kafka-streams-KGroupedStream.adoc#aggregate[KGroupedStream Contract] to...FIXME.
 
 `aggregate`...FIXME
 
@@ -34,12 +35,13 @@ NOTE: `aggregate` is part of link:LINK#aggregate[HERE Contract] to...FIXME.
 
 [source, java]
 ----
-KTable<Windowed<K>, V> reduce(
+KTable<K, V> reduce(final Reducer<V> reducer)
+KTable<K, V> reduce(
   final Reducer<V> reducer,
-  final SessionWindows sessionWindows,
-  final String queryableStoreName)
+  final Materialized<K, V, KeyValueStore<Bytes, byte[]>> materialized)
+// DEPRECATED ARE NOT LISTED HERE
 ----
 
-NOTE: `reduce` is part of link:LINK#reduce[HERE Contract] to...FIXME.
+NOTE: `reduce` is part of link:kafka-streams-KGroupedStream.adoc#reduce[KGroupedStream Contract] to...FIXME.
 
 `reduce`...FIXME

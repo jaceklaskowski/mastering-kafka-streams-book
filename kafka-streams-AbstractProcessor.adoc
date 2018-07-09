@@ -78,7 +78,7 @@
 | `KStreamBranchProcessor`
 | [[KStreamBranchProcessor]]
 
-| `KStreamSessionWindowAggregateProcessor`
+| link:kafka-streams-KStreamSessionWindowAggregateProcessor.adoc[KStreamSessionWindowAggregateProcessor]
 | [[KStreamSessionWindowAggregateProcessor]]
 
 | `KStreamPrintProcessor`

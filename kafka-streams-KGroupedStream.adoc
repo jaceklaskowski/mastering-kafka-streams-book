@@ -1,0 +1,3 @@
+== [[KGroupedStream]] KGroupedStream
+
+`KGroupedStream` is...FIXME
