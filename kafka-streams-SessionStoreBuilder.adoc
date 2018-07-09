@@ -1,3 +1,47 @@
 == [[SessionStoreBuilder]] SessionStoreBuilder
 
-`SessionStoreBuilder` is...FIXME
+`SessionStoreBuilder` is an link:kafka-streams-AbstractStoreBuilder.adoc[AbstractStoreBuilder] that <<build, builds a MeteredSessionStore>> (possibly with <<maybeWrapCaching, caching>> and <<maybeWrapLogging, logging>>).
+
+`SessionStoreBuilder` is <<creating-instance, created>> exclusively when `Stores` is requested to link:kafka-streams-Stores.adoc#sessionStoreBuilder[create one] (with `Time.SYSTEM` <<time, time>>).
+
+=== [[creating-instance]] Creating SessionStoreBuilder Instance
+
+`SessionStoreBuilder` takes the following when created:
+
+* [[storeSupplier]] link:kafka-streams-SessionBytesStoreSupplier.adoc[SessionBytesStoreSupplier]
+* [[keySerde]] `Serde` for keys
+* [[valueSerde]] `Serde` for values
+* [[time]] `Time`
+
+=== [[build]] Building MeteredSessionStore (with Optional Caching and Logging) -- `build` Method
+
+[source, java]
+----
+SessionStore<K, V> build()
+----
+
+NOTE: `build` is part of link:kafka-streams-StoreBuilder.adoc#build[StoreBuilder Contract] to build a link:kafka-streams-StateStore.adoc[StateStore].
+
+`build`...FIXME
+
+=== [[maybeWrapCaching]] `maybeWrapCaching` Internal Method
+
+[source, java]
+----
+SessionStore<Bytes, byte[]> maybeWrapCaching(final SessionStore<Bytes, byte[]> inner)
+----
+
+`maybeWrapCaching`...FIXME
+
+NOTE: `maybeWrapCaching` is used when...FIXME
+
+=== [[maybeWrapLogging]] `maybeWrapLogging` Internal Method
+
+[source, java]
+----
+SessionStore<Bytes, byte[]> maybeWrapLogging(final SessionStore<Bytes, byte[]> inner)
+----
+
+`maybeWrapLogging`...FIXME
+
+NOTE: `maybeWrapLogging` is used when...FIXME

@@ -14,3 +14,19 @@ NOTE: `create` is a deprecated method and may disappear at any major release of 
 `create`...FIXME
 
 NOTE: `create` is used when...FIXME
+
+=== [[sessionStoreBuilder]] `sessionStoreBuilder` Static Method
+
+[source, java]
+----
+StoreBuilder<SessionStore<K, V>> sessionStoreBuilder(
+  final SessionBytesStoreSupplier supplier,
+  final Serde<K> keySerde,
+  final Serde<V> valueSerde)
+----
+
+`sessionStoreBuilder` simply creates a link:kafka-streams-SessionStoreBuilder.adoc#creating-instance[SessionStoreBuilder] (for the input arguments and `Time.SYSTEM`).
+
+`sessionStoreBuilder` throws a `NullPointerException` when the input link:kafka-streams-SessionBytesStoreSupplier.adoc[SessionBytesStoreSupplier] is undefined (`null`).
+
+NOTE: `sessionStoreBuilder` is used when...FIXME

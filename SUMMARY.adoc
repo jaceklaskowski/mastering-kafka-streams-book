@@ -178,6 +178,8 @@
 .. link:kafka-streams-SessionStoreBuilder.adoc[SessionStoreBuilder]
 .. link:kafka-streams-WindowStoreBuilder.adoc[WindowStoreBuilder]
 
+. link:kafka-streams-SessionBytesStoreSupplier.adoc[SessionBytesStoreSupplier]
+
 . link:kafka-streams-PartitionGroup.adoc[PartitionGroup]
 
 . link:kafka-streams-StreamPartitioner.adoc[StreamPartitioner]

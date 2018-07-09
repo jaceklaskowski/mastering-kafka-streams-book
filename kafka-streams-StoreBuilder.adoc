@@ -8,13 +8,13 @@
 package org.apache.kafka.streams.state;
 
 interface StoreBuilder<T extends StateStore> {
-  StoreBuilder<T> withCachingEnabled();
-  StoreBuilder<T> withLoggingEnabled(final Map<String, String> config);
-  StoreBuilder<T> withLoggingDisabled();
   T build();
   Map<String, String> logConfig();
   boolean loggingEnabled();
   String name();
+  StoreBuilder<T> withCachingEnabled();
+  StoreBuilder<T> withLoggingEnabled(final Map<String, String> config);
+  StoreBuilder<T> withLoggingDisabled();
 }
 ----
 
@@ -24,14 +24,17 @@ interface StoreBuilder<T extends StateStore> {
 | Method
 | Description
 
-| [[name]] `name`
-|
+| `build`
+| [[build]] Building a link:kafka-streams-StateStore.adoc[StateStore]
 
-| [[withCachingEnabled]] `withCachingEnabled`
-|
+| `name`
+| [[name]]
 
-| [[withLoggingEnabled]] `withLoggingEnabled`
-|
+| `withCachingEnabled`
+| [[withCachingEnabled]]
+
+| `withLoggingEnabled`
+| [[withLoggingEnabled]]
 |===
 
 [[implementations]]
