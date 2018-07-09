@@ -1,6 +1,6 @@
 == [[Processor]] Processor -- Contract for Stream Processors
 
-`Processor` is the <<contract, contract>> in Kafka Streams for *stream processors* that work with key-value pair records.
+`Processor` is the <<contract, contract>> in Kafka Streams for *stream processors* that <<process, process key-value pair records>>.
 
 `Processor` is an integral part of link:kafka-streams-ProcessorNode.adoc#processor[ProcessorNode].
 
@@ -10,14 +10,13 @@
 package org.apache.kafka.streams.processor;
 
 interface Processor<K, V> {
+  void close();
   void init(ProcessorContext context);
   void process(K key, V value);
-  void close();
-
-  @Deprecated
-  void punctuate(long timestamp);
 }
 ----
+
+NOTE: `Processor` is an `Evolving` contract which means that compatibility may be broken at a minor release.
 
 .Processor Contract
 [cols="1,2",options="header",width="100%"]
@@ -25,17 +24,17 @@ interface Processor<K, V> {
 | Method
 | Description
 
-| [[init]] `init`
-|
+| `close`
+| [[close]]
 
-| [[process]] `process`
-|
+| `init`
+| [[init]] Initializing a stream processor
 
-| [[close]] `close`
-|
+| `process`
+| [[process]]
 
-| [[punctuate]] `punctuate`
-| *DEPRECATED*
+| `punctuate`
+| [[punctuate]] *DEPRECATED*
 |===
 
 The lifecycle of a `Processor` starts at <<init, init>> when....FIXME
@@ -49,9 +48,9 @@ TIP: Use <<AbstractProcessor, AbstractProcessor>> when you want to create a `Pro
 | Processor
 | Description
 
-| [[AbstractProcessor]] `AbstractProcessor`
-| Abstract Processor that manages the `ProcessorContext` instance and provides default no-op implementations
+| `AbstractProcessor`
+| [[AbstractProcessor]] Abstract Processor that manages the `ProcessorContext` instance and provides default no-op implementations
 
-| [[KStreamTransformValuesProcessor]] `KStreamTransformValuesProcessor`
-|
+| link:kafka-streams-KStreamTransformValuesProcessor.adoc[KStreamTransformValuesProcessor]
+| [[KStreamTransformValuesProcessor]]
 |===

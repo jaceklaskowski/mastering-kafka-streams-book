@@ -100,7 +100,10 @@
 .. link:kafka-streams-AbstractStateStoreFactory.adoc[AbstractStateStoreFactory]
 
 . link:kafka-streams-ProcessorSupplier.adoc[ProcessorSupplier]
+.. link:kafka-streams-KStreamTransformValues.adoc[KStreamTransformValues]
+
 . link:kafka-streams-Processor.adoc[Processor -- Contract for Stream Processors]
+.. link:kafka-streams-KStreamTransformValuesProcessor.adoc[KStreamTransformValuesProcessor]
 
 . link:kafka-streams-ProcessorNodePunctuator.adoc[ProcessorNodePunctuator]
 . link:kafka-streams-NodeMetrics.adoc[NodeMetrics]

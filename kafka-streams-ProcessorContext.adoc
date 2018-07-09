@@ -51,12 +51,12 @@ interface ProcessorContext {
 | Method
 | Description
 
-| [[getStateStore]] `getStateStore`
-| Used when...FIXME
+| `getStateStore`
+| [[getStateStore]] Used when...FIXME
 
-| [[forward]] `forward`
-| Used when...FIXME
+| `forward`
+| [[forward]] Used when...FIXME
 
-| [[schedule]] `schedule`
-| Used when `KStreamTransformValuesProcessor` is requested to `schedule`.
+| `schedule`
+| [[schedule]] Used exclusively when `KStreamTransformValuesProcessor` is requested to link:kafka-streams-KStreamTransformValuesProcessor.adoc#init[initialize]
 |===

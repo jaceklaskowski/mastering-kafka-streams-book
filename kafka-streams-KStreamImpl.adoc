@@ -45,7 +45,7 @@ NOTE: `doStreamTableJoin` is used when...FIXME
 
 NOTE: `doJoin` is used when...FIXME
 
-=== [[transformValues]] Transforming Values with State -- `transformValues` Method
+=== [[transformValues]] Transforming Values with Optional State -- `transformValues` Method
 
 [source, java]
 ----
@@ -198,7 +198,7 @@ NOTE: `repartitionForJoin` is used when...FIXME
 
 `KStreamImpl` initializes the <<internal-registries, internal registries and counters>>.
 
-=== [[transformValues-private]] Transforming Values with State -- `transformValues` Internal Method
+==== [[transformValues-private]] Transforming Values with State -- `transformValues` Internal Method
 
 [source, java]
 ----
@@ -209,7 +209,7 @@ private <VR> KStream<K, VR> transformValues(
 
 `transformValues` requests <<builder, InternalStreamsBuilder>> for a new processor name with *KSTREAM-TRANSFORMVALUES* prefix.
 
-`transformValues` then creates a new `KStreamTransformValues` (for the input `internalValueTransformerWithKeySupplier`) and requests `InternalTopologyBuilder` to link:kafka-streams-InternalTopologyBuilder.adoc#addProcessor[register] a new processor supplier under the name.
+`transformValues` then creates a new link:kafka-streams-KStreamTransformValues.adoc#creating-instance[KStreamTransformValues] (for the input `internalValueTransformerWithKeySupplier`) and requests `InternalTopologyBuilder` to link:kafka-streams-InternalTopologyBuilder.adoc#addProcessor[register] a new processor supplier under the name.
 
 NOTE: `transformValues` uses <<builder, InternalStreamsBuilder>> to access the current link:kafka-streams-InternalStreamsBuilder.adoc#internalTopologyBuilder[InternalTopologyBuilder].
 
@@ -217,7 +217,7 @@ NOTE: `transformValues` uses <<builder, InternalStreamsBuilder>> to access the c
 
 In the end, `transformValues` creates a new <<creating-instance, KStreamImpl>> for the processor name.
 
-NOTE: `transformValues` is used when `KStreamImpl` is requested to <<transformValues, transformValues>>.
+NOTE: `transformValues` is used exclusively when `KStreamImpl` is requested to <<transformValues, transformValues>>.
 
 === [[createReparitionedSource]] `createReparitionedSource` Static Method
 

@@ -1,6 +1,6 @@
 == [[ProcessorSupplier]] ProcessorSupplier
 
-`ProcessorSupplier` is the <<contract, contract>> for factory objects for link:kafka-streams-Processor.adoc[Processors], i.e. objects that can <<get, create>> (aka _supply_) processors.
+`ProcessorSupplier` is the <<contract, contract>> for factory objects for link:kafka-streams-Processor.adoc[Processors], i.e. objects that can <<get, create>> (aka _supply_) stream processors.
 
 [[contract]]
 [source, java]
@@ -13,6 +13,6 @@ interface ProcessorSupplier<K, V> {
 ----
 
 [[get]]
-`ProcessorSupplier` has a single `get` method that link:kafka-streams-Processor.adoc#creating-instance[creates a Processor].
+`ProcessorSupplier` has a single `get` method that link:kafka-streams-Processor.adoc#creating-instance[creates a stream processor].
 
 CAUTION: FIXME Could `get` give the same processor every time it is called?

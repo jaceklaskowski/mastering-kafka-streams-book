@@ -1,0 +1,22 @@
+== [[KStreamTransformValuesProcessor]] KStreamTransformValuesProcessor
+
+`KStreamTransformValuesProcessor` is a link:kafka-streams-Processor.adoc[stream processor] that...FIXME
+
+`KStreamTransformValuesProcessor` is <<creating-instance, created>> exclusively when `KStreamTransformValues` is requested to link:kafka-streams-KStreamTransformValues.adoc#get[supply a stream processor].
+
+[[creating-instance]]
+[[valueTransformer]]
+`KStreamTransformValuesProcessor` takes a `InternalValueTransformerWithKey` when created.
+
+NOTE: `KStreamTransformValuesProcessor` is `public static` class of a link:kafka-streams-KStreamTransformValues.adoc[KStreamTransformValues] processor supplier.
+
+=== [[init]] Initializing Processor Node (Given ProcessorContext) -- `init` Method
+
+[source, java]
+----
+void init(final ProcessorContext context)
+----
+
+NOTE: `init` is part of link:kafka-streams-Processor.adoc#init[Processor Contract] to initialize a stream processor.
+
+`init`...FIXME

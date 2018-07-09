@@ -1,0 +1,20 @@
+== [[KStreamTransformValues]] KStreamTransformValues -- Supplier of KStreamTransformValuesProcessors
+
+`KStreamTransformValues` is a link:kafka-streams-ProcessorSupplier.adoc[ProcessorSupplier] that <<get, supplies KStreamTransformValuesProcessors>>.
+
+`KStreamTransformValues` is <<creating-instance, created>> exclusively when `KStreamImpl` is requested to link:kafka-streams-KStreamImpl.adoc#transformValues[transform values with optional state] (aka _stateful record-by-record value transformation_).
+
+[[creating-instance]]
+[[valueTransformerSupplier]]
+`KStreamTransformValues` takes a `InternalValueTransformerWithKeySupplier` when created.
+
+=== [[get]] `get` Method
+
+[source, java]
+----
+Processor<K, V> get()
+----
+
+NOTE: `get` is part of link:kafka-streams-ProcessorSupplier.adoc#get[ProcessorSupplier Contract] to supply a stream processor.
+
+`get`...FIXME
