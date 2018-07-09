@@ -1,0 +1,14 @@
+== [[SessionKeySerde]] SessionKeySerde
+
+`SessionKeySerde` is...FIXME
+
+=== [[bytesToBinary]] `bytesToBinary` Static Method
+
+[source, java]
+----
+Bytes bytesToBinary(final Windowed<Bytes> sessionKey)
+----
+
+`bytesToBinary`...FIXME
+
+NOTE: `bytesToBinary` is used when...FIXME

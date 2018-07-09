@@ -53,6 +53,8 @@
 .. link:kafka-streams-StateStore-RocksDBSessionStore.adoc[RocksDBSessionStore]
 .. link:kafka-streams-StateStore-RocksDBSessionBytesStore.adoc[RocksDBSessionBytesStore]
 
+. link:kafka-streams-SessionKeySerde.adoc[SessionKeySerde]
+
 . link:kafka-streams-exactly-once-support-eos.adoc[Exactly-Once Support (EOS)]
 
 . link:kafka-streams-properties.adoc[Configuration Properties]

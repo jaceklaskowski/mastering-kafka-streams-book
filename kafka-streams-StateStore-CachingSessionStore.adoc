@@ -12,3 +12,25 @@ void init(final ProcessorContext context, final StateStore root)
 NOTE: `init` is part of link:kafka-streams-StateStore-AbstractStateStore.adoc#init[AbstractStateStore Contract] to...FIXME.
 
 `init`...FIXME
+
+=== [[remove]] `remove` Method
+
+[source, java]
+----
+void remove(final Windowed<Bytes> sessionKey)
+----
+
+NOTE: `remove` is part of link:kafka-streams-StateStore-SessionStore.adoc#remove[SessionStore Contract] to...FIXME.
+
+`remove`...FIXME
+
+=== [[putAndMaybeForward]] `putAndMaybeForward` Internal Method
+
+[source, java]
+----
+void putAndMaybeForward(final ThreadCache.DirtyEntry entry, final InternalProcessorContext context)
+----
+
+`putAndMaybeForward`...FIXME
+
+NOTE: `putAndMaybeForward` is used when...FIXME

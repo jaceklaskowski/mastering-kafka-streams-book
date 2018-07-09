@@ -12,3 +12,14 @@ void init(final ProcessorContext context, final StateStore root)
 NOTE: `init` is part of link:kafka-streams-StateStore-AbstractStateStore.adoc#init[AbstractStateStore Contract] to...FIXME.
 
 `init`...FIXME
+
+=== [[put]] Storing Aggregated Value for Session Key -- `put` Method
+
+[source, java]
+----
+void put(final Windowed<K> sessionKey, final V aggregate)
+----
+
+NOTE: `put` is part of link:kafka-streams-StateStore-SessionStore.adoc#put[SessionStore Contract] to store an aggregated value for a session key.
+
+`put`...FIXME

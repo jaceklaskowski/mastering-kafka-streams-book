@@ -25,7 +25,17 @@ interface SessionStore<K, AGG> extends StateStore, ReadOnlySessionStore<K, AGG> 
 | [[findSessions]] Used when...FIXME
 
 | `put`
-| [[put]] Used when...FIXME
+a| [[put]] Storing an aggregated value for a session key
+
+Used when:
+
+* `KStreamSessionWindowAggregateProcessor` is requested to `process`
+
+* `CachingSessionStore` is requested to link:kafka-streams-StateStore-CachingSessionStore.adoc#remove[remove a session key] and link:kafka-streams-StateStore-CachingSessionStore.adoc#putAndMaybeForward[putAndMaybeForward]
+
+* `ChangeLoggingSessionBytesStore` is requested to link:kafka-streams-StateStore-ChangeLoggingSessionBytesStore.adoc#put[store an aggregated value for a session key]
+
+* `MeteredSessionStore` is requested to link:kafka-streams-StateStore-MeteredSessionStore.adoc#put[store an aggregated value for a session key]
 
 | `remove`
 | [[remove]] Used when...FIXME

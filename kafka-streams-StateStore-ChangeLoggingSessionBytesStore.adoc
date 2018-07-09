@@ -1,6 +1,30 @@
 == [[ChangeLoggingSessionBytesStore]] ChangeLoggingSessionBytesStore
 
-`ChangeLoggingSessionBytesStore` is...FIXME
+`ChangeLoggingSessionBytesStore` is a link:kafka-streams-StateStore-SessionStore.adoc[SessionStore] that uses Kafka `Bytes` (immutable byte arrays) for keys.
+
+`ChangeLoggingSessionBytesStore` is <<creating-instance, created>> exclusively when `SessionStoreBuilder` is requested to link:kafka-streams-SessionStoreBuilder.adoc#build[build a MeteredSessionStore] (with link:kafka-streams-SessionStoreBuilder.adoc#maybeWrapLogging[logging enabled]).
+
+[[creating-instance]]
+[[bytesStore]]
+`ChangeLoggingSessionBytesStore` takes a link:kafka-streams-StateStore-SessionStore.adoc[SessionStore] when created.
+
+[[internal-registries]]
+.ChangeLoggingSessionBytesStore's Internal Properties (e.g. Registries, Counters and Flags)
+[cols="1,2",options="header",width="100%"]
+|===
+| Name
+| Description
+
+| `changeLogger`
+| [[changeLogger]] link:kafka-streams-StoreChangeLogger.adoc[StoreChangeLogger]
+
+Used when...FIXME
+
+| `innerStateSerde`
+| [[innerStateSerde]] `StateSerdes`
+
+Used when...FIXME
+|===
 
 === [[init]] `init` Method
 
@@ -12,3 +36,16 @@ void init(final ProcessorContext context, final StateStore root)
 NOTE: `init` is part of link:kafka-streams-StateStore-AbstractStateStore.adoc#init[AbstractStateStore Contract] to...FIXME.
 
 `init`...FIXME
+
+=== [[put]] Storing Aggregated Value for Session Key -- `put` Method
+
+[source, java]
+----
+void put(final Windowed<Bytes> sessionKey, final byte[] aggregate)
+----
+
+NOTE: `put` is part of link:kafka-streams-StateStore-SessionStore.adoc#put[SessionStore Contract] to store an aggregated value for a session key.
+
+`put` requests the <<bytesStore, SessionStore>> to link:kafka-streams-StateStore-SessionStore.adoc#put[store the aggregated value for the given session key].
+
+In the end, `put` uses the `SessionKeySerde` to link:kafka-streams-SessionKeySerde.adoc#bytesToBinary[convert the session key to binary] and requests the <<changeLogger, StoreChangeLogger>> to link:kafka-streams-StoreChangeLogger.adoc#logChange[logChange] (with the binary key and the aggregated value).
