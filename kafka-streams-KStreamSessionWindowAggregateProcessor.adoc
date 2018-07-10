@@ -24,7 +24,7 @@ Used when...FIXME
 Used when...FIXME
 |===
 
-=== [[process]] `process` Method
+=== [[process]] Processing Single Record -- `process` Method
 
 [source, java]
 ----

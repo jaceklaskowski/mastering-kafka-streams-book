@@ -1,0 +1,79 @@
+== [[Window]] Window
+
+`Window` is the <<contract, base>> of <<extensions, single window instances>> that are described by the <<startMs, start>> and <<endMs, end>> timestamps and can be checked if they <<overlap, overlap>>.
+
+[[contract]]
+[source, java]
+----
+package org.apache.kafka.streams.kstream;
+
+abstract class Window {
+  // only required methods that have no implementation
+  // the others follow
+  public abstract boolean overlap(final Window other);
+}
+----
+
+.(Subset of) Window Contract
+[cols="1,2",options="header",width="100%"]
+|===
+| Method
+| Description
+
+| `overlap`
+| [[overlap]] Checks whether a window overlaps with another.
+|===
+
+[[start]]
+Use `start` method to access the <<startMs, start timestamp>> of a window.
+
+[source, java]
+----
+long start()
+----
+
+[[end]]
+Use `end` method to access the <<endMs, end timestamp>> of a window.
+
+[source, java]
+----
+long end()
+----
+
+`Window` has the following text representation:
+
+```
+Window{start=[startMs], end=[endMs]}
+```
+
+[[extensions]]
+.Windows
+[cols="1,2",options="header",width="100%"]
+|===
+| Window
+| Description
+
+| link:kafka-streams-SessionWindow.adoc[SessionWindow]
+| [[SessionWindow]]
+
+| `TimeWindow`
+| [[TimeWindow]]
+
+| `UnlimitedWindow`
+| [[UnlimitedWindow]]
+|===
+
+=== [[creating-instance]] Creating Window Instance
+
+`Window` takes the following when created:
+
+* [[startMs]] The start timestamp of the window (in milliseconds)
+* [[endMs]] The end timestamp of the window (in milliseconds)
+
+`Window` initializes the <<internal-registries, internal registries and counters>>.
+
+`Window` is <<creating-instance, created>> when...MEFIXME
+
+`Window` is <<creating-instance, created>> along with...MEFIXME
+
+NOTE: `Window` is a Java/Scala abstract class and cannot be <<creating-instance, created>> directly. It is created indirectly when the <<extensions, concrete FIXMEs>> are.

@@ -42,3 +42,14 @@ void enableSendingOldValues()
 NOTE: `enableSendingOldValues` is part of link:kafka-streams-KStreamAggProcessorSupplier.adoc#enableSendingOldValues[KStreamAggProcessorSupplier Contract] to...FIXME.
 
 `enableSendingOldValues` simply turns the <<sendOldValues, sendOldValues>> flag on.
+
+=== [[mergeSessionWindow]] `mergeSessionWindow` Internal Method
+
+[source, java]
+----
+SessionWindow mergeSessionWindow(final SessionWindow one, final SessionWindow two)
+----
+
+`mergeSessionWindow`...FIXME
+
+NOTE: `mergeSessionWindow` is used when...FIXME

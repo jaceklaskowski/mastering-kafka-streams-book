@@ -31,7 +31,7 @@ NOTE: `Processor` is an `Evolving` contract which means that compatibility may b
 | [[init]] Initializing a stream processor
 
 | `process`
-| [[process]]
+| [[process]] Processing a single record
 
 | `punctuate`
 | [[punctuate]] *DEPRECATED*

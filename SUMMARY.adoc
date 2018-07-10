@@ -35,10 +35,7 @@
 .. link:kafka-streams-ExtractRecordMetadataTimestamp.adoc[ExtractRecordMetadataTimestamp]
 .. link:kafka-streams-FailOnInvalidTimestamp.adoc[FailOnInvalidTimestamp]
 
-. link:kafka-streams-Windows.adoc[Windows -- Window Specifications]
-
 . link:kafka-streams-Stores.adoc[Stores]
-
 . link:kafka-streams-StateStore.adoc[StateStore]
 .. link:kafka-streams-StateStore-KeyValueStore.adoc[KeyValueStore]
 .. link:kafka-streams-StateStore-SegmentedBytesStore.adoc[SegmentedBytesStore]
@@ -49,6 +46,10 @@
 .. link:kafka-streams-StateStore-ChangeLoggingKeyValueBytesStore.adoc[ChangeLoggingKeyValueBytesStore]
 .. link:kafka-streams-StateStore-ChangeLoggingWindowBytesStore.adoc[ChangeLoggingWindowBytesStore]
 .. link:kafka-streams-StateStore-InMemoryKeyValueLoggedStore.adoc[InMemoryKeyValueLoggedStore]
+
+. link:kafka-streams-Windows.adoc[Windows -- Window Specifications]
+. link:kafka-streams-Window.adoc[Window]
+.. link:kafka-streams-SessionWindow.adoc[SessionWindow]
 
 . link:kafka-streams-StateStore-SessionStore.adoc[SessionStore]
 .. link:kafka-streams-StateStore-CachingSessionStore.adoc[CachingSessionStore]

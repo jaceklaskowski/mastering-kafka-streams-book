@@ -12,3 +12,14 @@ Bytes bytesToBinary(final Windowed<Bytes> sessionKey)
 `bytesToBinary`...FIXME
 
 NOTE: `bytesToBinary` is used when...FIXME
+
+=== [[extractWindow]] `extractWindow` Static Method
+
+[source, java]
+----
+Window extractWindow(final byte[] binaryKey)
+----
+
+`extractWindow`...FIXME
+
+NOTE: `extractWindow` is used when...FIXME

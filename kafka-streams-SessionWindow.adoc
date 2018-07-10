@@ -1,0 +1,37 @@
+== [[SessionWindow]] SessionWindow
+
+`SessionWindow` is a concrete link:kafka-streams-Window.adoc[Window] with a custom <<overlap, overlap>>.
+
+`SessionWindow` is <<creating-instance, created>> when:
+
+* `KStreamSessionWindowAggregate` is requested to link:kafka-streams-KStreamSessionWindowAggregate.adoc#mergeSessionWindow[mergeSessionWindow]
+
+* `KStreamSessionWindowAggregateProcessor` is requested to link:kafka-streams-KStreamSessionWindowAggregateProcessor.adoc#process[process a single record]
+
+* `SessionKeySerde` is requested to link:kafka-streams-SessionKeySerde.adoc#extractWindow[extractWindow] and link:kafka-streams-SessionKeySerde.adoc#fromBytes[fromBytes]
+
+* `SessionKeySchema` is requested to `upperRangeFixedSize` and `lowerRangeFixedSize`
+
+=== [[creating-instance]] Creating SessionWindow Instance
+
+`SessionWindow` takes the following when created:
+
+* [[startMs]] The start timestamp of the window (in milliseconds)
+* [[endMs]] The end timestamp of the window (in milliseconds)
+
+=== [[overlap]] Checking If Two Windows Overlap -- `overlap` Method
+
+[source, java]
+----
+boolean overlap(final Window other) throws IllegalArgumentException
+----
+
+NOTE: `overlap` is part of link:kafka-streams-Window.adoc#overlap[Window Contract] to check whether a window overlaps with another.
+
+`overlap` compares the start and end timestampes and is positive (`true`) when link:kafka-streams-Window.adoc#endMs[end] timestamp of either window is exactly or greater than the link:kafka-streams-Window.adoc#startMs[start] timestamp of the other window.
+
+`overlap` throws a `IllegalArgumentException` when the `other` window is not a `SessionWindow`.
+
+```
+Cannot compare windows of different type. Other window has type [className].
+```
