@@ -35,6 +35,8 @@
 .. link:kafka-streams-ExtractRecordMetadataTimestamp.adoc[ExtractRecordMetadataTimestamp]
 .. link:kafka-streams-FailOnInvalidTimestamp.adoc[FailOnInvalidTimestamp]
 
+. link:kafka-streams-Windows.adoc[Windows -- Window Specifications]
+
 . link:kafka-streams-Stores.adoc[Stores]
 
 . link:kafka-streams-StateStore.adoc[StateStore]

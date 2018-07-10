@@ -1,3 +1,27 @@
 == [[TimeWindowedKStreamImpl]] TimeWindowedKStreamImpl
 
 `TimeWindowedKStreamImpl` is...FIXME
+
+=== [[materialize]] `materialize` Internal Method
+
+[source, java]
+----
+<VR> StoreBuilder<WindowStore<K, VR>> materialize(
+  final MaterializedInternal<K, VR, WindowStore<Bytes, byte[]>> materialized)
+----
+
+`materialize`...FIXME
+
+NOTE: `materialize` is used when...FIXME
+
+=== [[windowStoreBuilder]] `windowStoreBuilder` Internal Method
+
+[source, java]
+----
+<VR> StoreBuilder<WindowStore<K, VR>> windowStoreBuilder(
+  final String storeName, final Serde<VR> aggValueSerde)
+----
+
+`windowStoreBuilder`...FIXME
+
+NOTE: `windowStoreBuilder` is used when...FIXME

@@ -258,3 +258,18 @@ In the end, `createReparitionedSource` returns the source name.
 
 * `KStreamImpl` is requested to <<repartitionForJoin, repartitionForJoin>>
 ====
+
+=== [[createWindowedStateStore]] `createWindowedStateStore` Internal Static Method
+
+[source, java]
+----
+<K, V> StoreBuilder<WindowStore<K, V>> createWindowedStateStore(
+  final JoinWindows windows,
+  final Serde<K> keySerde,
+  final Serde<V> valueSerde,
+  final String storeName)
+----
+
+`createWindowedStateStore`...FIXME
+
+NOTE: `createWindowedStateStore` is used when...FIXME

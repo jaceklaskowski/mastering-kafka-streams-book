@@ -1,0 +1,117 @@
+== [[Windows]] Windows -- Window Specifications
+
+`Windows` is the <<contract, base>> of <<extensions, window specifications>> that <<FIXME, FIXME>>.
+
+[[contract]]
+[source, java]
+----
+package org.apache.kafka.streams.kstream;
+
+abstract class Windows<W extends Window> {
+  // only required methods that have no implementation
+  // the others follow
+  public abstract long size();
+  public abstract Map<Long, W> windowsFor(final long timestamp);
+}
+----
+
+.(Subset of) Windows Contract
+[cols="1,2",options="header",width="100%"]
+|===
+| Method
+| Description
+
+| `size`
+| [[size]] Used when...FIXME
+
+| `windowsFor`
+| [[windowsFor]] Used when...FIXME
+|===
+
+[[maintainMs]]
+[[DEFAULT_MAINTAIN_DURATION_MS]]
+[[window-maintain-duration]]
+`Windows` defines a *window maintain duration* (aka *retention time*) in milliseconds. The default window maintain duration is `1 day`. You can access the current window maintain duration using `maintainMs` method.
+
+[source, java]
+----
+long maintainMs()
+----
+
+[[DEFAULT_NUM_SEGMENTS]]
+`Windows` defaults to `3` for the <<segments, number of segments>>.
+
+[[extensions]]
+.Windows
+[cols="1,2",options="header",width="100%"]
+|===
+| Windows
+| Description
+
+| `JoinWindows`
+| [[JoinWindows]]
+
+| `TimeWindows`
+| [[TimeWindows]]
+
+| `UnlimitedWindows`
+| [[UnlimitedWindows]]
+|===
+
+[[creating-instance]]
+`Windows` takes no arguments when created and simply initializes the <<internal-registries, internal registries and counters>>.
+
+NOTE: `Windows` is a Java abstract class and cannot be <<creating-instance, created>> directly. It is created indirectly when the <<extensions, concrete Windows>> are.
+
+[[internal-registries]]
+.Windows's Internal Properties (e.g. Registries, Counters and Flags)
+[cols="1,1,2",options="header",width="100%"]
+|===
+| Name
+| Default Value
+| Description
+
+| `maintainDurationMs`
+| <<DEFAULT_MAINTAIN_DURATION_MS, 1 day>>
+| [[maintainDurationMs]] <<window-maintain-duration, Window maintain duration>> (aka *retention time*) in milliseconds
+
+Can be changed using <<until, until>> method.
+
+Use <<maintainMs, maintainMs>> accessor to get the current value.
+
+| `segments`
+| <<DEFAULT_NUM_SEGMENTS, 3>>
+a| [[segments]] Number of segments
+
+Can be changed using <<segments, segments>> method.
+
+Used when:
+
+* `AbstractStream` is requested for link:kafka-streams-AbstractStream.adoc#windowedStore[windowedStore]
+
+* `KStreamImpl` is requested to link:kafka-streams-KStreamImpl.adoc#createWindowedStateStore[createWindowedStateStore]
+
+* `TimeWindowedKStreamImpl` is requested to link:kafka-streams-TimeWindowedKStreamImpl.adoc#materialize[materialize] and link:kafka-streams-TimeWindowedKStreamImpl.adoc#windowStoreBuilder[windowStoreBuilder]
+|===
+
+=== [[segments]] `segments` Method
+
+[source, java]
+----
+Windows<W> segments(final int segments) throws IllegalArgumentException
+----
+
+`segments`...FIXME
+
+NOTE: `segments` is used when...FIXME
+
+=== [[until]] `until` Method
+
+[source, java]
+----
+Windows<W> until(final long durationMs) throws IllegalArgumentException
+----
+
+`until`...FIXME
+
+NOTE: `until` is used when...FIXME
