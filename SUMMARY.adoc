@@ -165,7 +165,7 @@
 .. link:kafka-streams-KGroupedTableImpl.adoc[KGroupedTableImpl]
 .. link:kafka-streams-KStreamImpl.adoc[KStreamImpl]
 .. link:kafka-streams-KTableImpl.adoc[KTableImpl]
-.. link:kafka-streams-SessionWindowedKStreamImpl.adoc[SessionWindowedKStreamImpl]
+.. link:kafka-streams-SessionWindowedKStreamImpl.adoc[SessionWindowedKStreamImpl -- Default SessionWindowedKStream]
 .. link:kafka-streams-TimeWindowedKStreamImpl.adoc[TimeWindowedKStreamImpl]
 
 .. link:kafka-streams-GlobalKTableImpl.adoc[GlobalKTableImpl]

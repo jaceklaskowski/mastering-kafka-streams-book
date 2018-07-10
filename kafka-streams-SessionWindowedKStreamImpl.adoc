@@ -1,6 +1,26 @@
-== [[SessionWindowedKStreamImpl]] SessionWindowedKStreamImpl
+== [[SessionWindowedKStreamImpl]] SessionWindowedKStreamImpl -- Default SessionWindowedKStream
 
-`SessionWindowedKStreamImpl` is...FIXME
+`SessionWindowedKStreamImpl` is a concrete link:kafka-streams-AbstractStream.adoc[AbstractStream] and a link:kafka-streams-SessionWindowedKStream.adoc[SessionWindowedKStream] (with the default implementation of <<aggregate, aggregate>>, <<count, count>> and <<reduce, reduce>> operators).
+
+`SessionWindowedKStreamImpl` is <<creating-instance, created>> exclusively when `KGroupedStreamImpl` is requested to link:kafka-streams-KGroupedStreamImpl.adoc#windowedBy[windowedBy].
+
+[[internal-registries]]
+.SessionWindowedKStreamImpl's Internal Properties (e.g. Registries, Counters and Flags)
+[cols="1,2",options="header",width="100%"]
+|===
+| Name
+| Description
+
+| `countMerger`
+| [[countMerger]] `Merger` of `K` keys and `Long` values that simply adds two values together.
+
+Used as the merger in <<count, count>>
+
+| `reduceInitializer`
+| [[reduceInitializer]] `Initializer<V>` that simply returns `null` when executed.
+
+Used as the initializer in <<reduce, reduce>>
+|===
 
 === [[aggregate]] `aggregate` Method
 
@@ -47,6 +67,20 @@ NOTE: `reduce` is part of link:kafka-streams-SessionWindowedKStream.adoc#reduce[
 
 `reduce`...FIXME
 
+=== [[creating-instance]] Creating SessionWindowedKStreamImpl Instance
+
+`SessionWindowedKStreamImpl` takes the following when created:
+
+* [[windows]] `SessionWindows`
+* [[builder]] link:kafka-streams-InternalStreamsBuilder.adoc[InternalStreamsBuilder]
+* [[sourceNodes]] Names of the source nodes
+* [[name]] Name
+* [[keySerde]] Key Serde (`Serde<K>`)
+* [[valSerde]] Value Serde (`Serde<V>`)
+* [[aggregateBuilder]] link:kafka-streams-GroupedStreamAggregateBuilder.adoc[GroupedStreamAggregateBuilder<K, V>]
+
+`SessionWindowedKStreamImpl` initializes the <<internal-registries, internal registries and counters>>.
+
 === [[doAggregate]] `doAggregate` Internal Method
 
 [source, java]
@@ -86,3 +120,25 @@ StoreBuilder<SessionStore<K, VR>> storeBuilder(
 `storeBuilder`...FIXME
 
 NOTE: `storeBuilder` is used exclusively when `SessionWindowedKStreamImpl` is requested to <<doAggregate, doAggregate>> (when requested to <<count, count>>, <<aggregate, aggregate>> and <<reduce, reduce>>).
+
+=== [[aggregatorForReducer]] `aggregatorForReducer` Internal Method
+
+[source, java]
+----
+Aggregator<K, V, V> aggregatorForReducer(final Reducer<V> reducer)
+----
+
+`aggregatorForReducer`...FIXME
+
+NOTE: `aggregatorForReducer` is used when...FIXME
+
+=== [[mergerForAggregator]] `mergerForAggregator` Internal Method
+
+[source, java]
+----
+Merger<K, V> mergerForAggregator(final Aggregator<K, V, V> aggregator)
+----
+
+`mergerForAggregator`...FIXME
+
+NOTE: `mergerForAggregator` is used when...FIXME

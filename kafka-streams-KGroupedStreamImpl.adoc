@@ -45,3 +45,15 @@ KTable<K, V> reduce(
 NOTE: `reduce` is part of link:kafka-streams-KGroupedStream.adoc#reduce[KGroupedStream Contract] to...FIXME.
 
 `reduce`...FIXME
+
+=== [[windowedBy]] `windowedBy` Method
+
+[source, java]
+----
+SessionWindowedKStream<K, V> windowedBy(final SessionWindows windows)
+<W extends Window> TimeWindowedKStream<K, V> windowedBy(final Windows<W> windows)
+----
+
+NOTE: `windowedBy` is part of link:kafka-streams-KGroupedStream.adoc#windowedBy[KGroupedStream Contract] to...FIXME.
+
+`windowedBy`...FIXME
