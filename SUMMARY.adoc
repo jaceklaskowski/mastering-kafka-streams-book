@@ -12,7 +12,7 @@
 . link:kafka-streams-KStream.adoc[KStream]
 . link:kafka-streams-KTable.adoc[KTable]
 . link:kafka-streams-GlobalKTable.adoc[GlobalKTable]
-. link:kafka-streams-KGroupedStream.adoc[KGroupedStream]
+. link:kafka-streams-KGroupedStream.adoc[KGroupedStream -- Basic Aggregations]
 . link:kafka-streams-SessionWindowedKStream.adoc[SessionWindowedKStream -- Session-Windowed Aggregations]
 
 . link:kafka-streams-Consumed.adoc[Consumed]

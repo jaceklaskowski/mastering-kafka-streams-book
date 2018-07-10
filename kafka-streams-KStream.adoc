@@ -17,8 +17,10 @@ val input: KStream[String, String] = builder.stream("input")
 
 `KStream` comes with a rich set of <<operators, operators>> (aka _KStream API_) that allow for building topologies to consume, process and produce key-value records.
 
-NOTE: link:kafka-streams-KStreamImpl.adoc[KStreamImpl] is the one and only implementation of `KStream`.
+[[implementations]]
+NOTE: link:kafka-streams-KStreamImpl.adoc[KStreamImpl] is the one and only known implementation of <<contract, KStream Contract>> in Kafka Streams {{ book.kafka_version }}.
 
+[[contract]]
 [[operators]]
 .KStream Operators
 [cols="1,2",options="header",width="100%"]
@@ -45,6 +47,15 @@ KGroupedStream<KR, V> groupBy(
 KGroupedStream<KR, V> groupBy(
   final KeyValueMapper<? super K, ? super V, KR> selector,
   final Serialized<KR, V> serialized);
+----
+
+| [[groupByKey]] `groupByKey`
+a|
+
+[source, java]
+----
+KGroupedStream<K, V> groupByKey();
+KGroupedStream<K, V> groupByKey(final Serialized<K, V> serialized);
 ----
 
 | [[join]] `join`
