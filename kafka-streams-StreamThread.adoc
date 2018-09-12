@@ -12,7 +12,10 @@ image::images/kafka-streams-StreamThread.png[align="center"]
 NOTE: `KafkaStreams` uses link:kafka-streams-KafkaStreams.adoc#threads[num.stream.threads] configuration property for the number of `StreamThreads` to create.
 
 [[pollTimeMs]]
-`StreamThread` uses link:kafka-streams-properties.adoc#poll.ms[poll.ms] configuration property as the *polling interval* for <<pollRequests, polling the topics for records>>.
+`StreamThread` uses the link:kafka-streams-properties.adoc#poll.ms[poll.ms] configuration property as the *polling interval* for <<pollRequests, polling the topics for records>>.
+
+[[commitTimeMs]]
+`StreamThread` uses the <<kafka-streams-properties.adoc#commit.interval.ms, commit.interval.ms>> configuration property as the *flush interval* for persisting the position of a processor (when <<runOnce, runOnce>> and <<maybeCommit, maybeCommit>>).
 
 `StreamThread` uses the Kafka <<consumer, consumer>> to:
 

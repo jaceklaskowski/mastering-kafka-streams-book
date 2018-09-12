@@ -23,13 +23,13 @@ Use `StreamsConfig.APPLICATION_SERVER_CONFIG` to reference the property.
 
 Used when `StreamPartitionAssignor` is requested to link:kafka-streams-StreamsPartitionAssignor.adoc#configure[configure itself].
 
-| [[commit.interval.ms]] `commit.interval.ms`
+| `commit.interval.ms`
 a|
 
 * `100L` when <<processing.guarantee, processing.guarantee>> is <<exactly_once, exactly_once>> (which is not by default)
 * `30000L` otherwise
 
-a| *Flush interval* (in milliseconds), i.e. the time between persisting the position of a processor.
+a| [[commit.interval.ms]] Desired *flush interval* or *commit interval* (in millis), i.e. the time between persisting the position of a processor.
 
 Use `StreamsConfig.COMMIT_INTERVAL_MS_CONFIG` to reference the property.
 
@@ -69,9 +69,9 @@ Use `StreamsConfig.PROCESSING_GUARANTEE_CONFIG` to reference the property.
 | 10 * 60 * 1000
 | The amount of time (in milliseconds) to wait before deleting state when a partition has migrated. Only state directories that have not been modified for at least `state.cleanup.delay.ms` will be removed.
 
-| [[state.dir]] `state.dir`
+| `state.dir`
 | `/tmp/kafka-streams`
-a| Path to the base directory for a state storage
+a| [[state.dir]] Path to the base directory for a state storage
 
 * Used when `StateDirectory` is link:kafka-streams-StateDirectory.adoc#creating-instance[created]
 
