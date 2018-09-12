@@ -37,7 +37,7 @@
 
 . link:kafka-streams-Punctuator.adoc[Punctuator -- Contract for Scheduled Periodic Actions]
 
-. link:kafka-streams-TimestampExtractor.adoc[TimestampExtractor]
+. link:kafka-streams-TimestampExtractor.adoc[TimestampExtractor Contract]
 .. link:kafka-streams-WallclockTimestampExtractor.adoc[WallclockTimestampExtractor]
 .. link:kafka-streams-ExtractRecordMetadataTimestamp.adoc[ExtractRecordMetadataTimestamp]
 .. link:kafka-streams-FailOnInvalidTimestamp.adoc[FailOnInvalidTimestamp]

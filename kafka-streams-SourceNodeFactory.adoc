@@ -13,7 +13,7 @@ NOTE: `SourceNodeFactory` is an internal `private` class of link:kafka-streams-I
 * [[name]] Node name
 * [[topics]] Topic names
 * [[pattern]] Topic pattern
-* [[timestampExtractor]] `TimestampExtractor`
+* [[timestampExtractor]] <<kafka-streams-TimestampExtractor.adoc#, TimestampExtractor>>
 * [[keyDeserializer]] Key deserializer
 * [[valDeserializer]] Value deserializer
 

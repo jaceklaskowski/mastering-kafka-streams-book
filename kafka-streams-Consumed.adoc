@@ -1,3 +1,29 @@
 == [[Consumed]] Consumed
 
 `Consumed` is...FIXME
+
+=== [[with]] `with` Static Method
+
+[source, java]
+----
+static <K, V> Consumed<K, V> with(
+  final Serde<K> keySerde,
+  final Serde<V> valueSerde,
+  final TimestampExtractor timestampExtractor,
+  final Topology.AutoOffsetReset resetPolicy)
+----
+
+`with`...FIXME
+
+NOTE: `with` is used when...FIXME
+
+=== [[withTimestampExtractor]] `withTimestampExtractor` Method
+
+[source, java]
+----
+Consumed<K, V> withTimestampExtractor(final TimestampExtractor timestampExtractor)
+----
+
+`withTimestampExtractor`...FIXME
+
+NOTE: `withTimestampExtractor` is used when...FIXME

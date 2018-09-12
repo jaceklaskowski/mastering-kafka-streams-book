@@ -50,7 +50,7 @@ Refer to link:kafka-logging.adoc#log4j.properties[Application Logging Using log4
 
 * [[partition]] Kafka https://kafka.apache.org/11/javadoc/org/apache/kafka/common/TopicPartition.html[TopicPartition]
 * [[source]] link:kafka-streams-SourceNode.adoc[SourceNode]
-* [[timestampExtractor]] link:kafka-streams-TimestampExtractor.adoc[TimestampExtractor]
+* [[timestampExtractor]] <<kafka-streams-TimestampExtractor.adoc#, TimestampExtractor>>
 * [[deserializationExceptionHandler]] `DeserializationExceptionHandler`
 * [[processorContext]] link:kafka-streams-ProcessorContext.adoc[ProcessorContext]
 * [[logContext]] `LogContext`
@@ -68,7 +68,7 @@ For every Kafka https://kafka.apache.org/11/javadoc/org/apache/kafka/clients/con
 
 . Requests the <<recordDeserializer, RecordDeserializer>> to link:kafka-streams-RecordDeserializer.adoc#deserialize[deserialize the record] (with the <<processorContext, ProcessorContext>>)
 
-. Requests the <<timeTracker, TimestampTracker>> for the link:kafka-streams-TimestampTracker.adoc#get[currently-tracked timestamp] and uses it to request the <<timestampExtractor, TimestampExtractor>> to link:kafka-streams-TimestampExtractor.adoc#extract[extract the timestamp of the record]
+. Requests the <<timeTracker, TimestampTracker>> for the link:kafka-streams-TimestampTracker.adoc#get[currently-tracked timestamp] and uses it to request the <<timestampExtractor, TimestampExtractor>> to link:kafka-streams-TimestampExtractor.adoc#extract[extract the timestamp from the record]
 
 . Creates a link:kafka-streams-StampedRecord.adoc#creating-instance[StampedRecord] for the record and the record timestamp
 
@@ -88,11 +88,11 @@ In the end, `addRawRecords` returns the <<size, number of ConsumerRecords in the
 
 [NOTE]
 ====
-`addRawRecords` skips (drops) Kafka `ConsumerRecords` when one of the following conditions holds:
+`addRawRecords` skips (drops) Kafka `ConsumerRecords` when either condition holds:
 
 * <<recordDeserializer, RecordDeserializer>> could not link:kafka-streams-RecordDeserializer.adoc#deserialize[deserialize] and the `DeserializationExceptionHandler` is not set to fail upon a deserialization error
 
-* Timestamp is negative (and hence invalid)
+* Extracted timestamp is negative (and hence invalid)
 ====
 
 NOTE: `addRawRecords` is used exclusively when `PartitionGroup` is requested to link:kafka-streams-PartitionGroup.adoc#addRawRecords[add records to a RecordQueue for a Kafka partition].

@@ -135,7 +135,7 @@ StreamsBuilder addStateStore(final StoreBuilder builder)
 
 `addStateStore`...FIXME
 
-=== [[stream]] Creating KStream (of Records from One or Many Topics) -- `stream` Method
+=== [[stream]] Reading Topic (Creating KStream of Records from One or Many Topics) -- `stream` Method
 
 [source, java]
 ----

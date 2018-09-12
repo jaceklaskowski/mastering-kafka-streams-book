@@ -1,6 +1,21 @@
 == [[StreamsConfig]] StreamsConfig -- Configuration Properties for Kafka Clients
 
-`StreamsConfig` is Apache Kafka's https://kafka.apache.org/10/javadoc/org/apache/kafka/common/config/AbstractConfig.html[AbstractConfig] for the configuration properties for the following Kafka clients (that Kafka Streams uses under the covers):
+`StreamsConfig` is Apache Kafka's https://kafka.apache.org/20/javadoc/org/apache/kafka/common/config/AbstractConfig.html[AbstractConfig] for the <<properties, configuration properties>> for Kafka Streams applications.
+
+[[properties]]
+.Configuration Properties
+[cols="1m,1m,1",options="header",width="100%"]
+|===
+| Name
+| Property
+| Type
+
+| DEFAULT_TIMESTAMP_EXTRACTOR_CLASS_CONFIG
+| default.timestamp.extractor
+| [[default.timestamp.extractor]][[DEFAULT_TIMESTAMP_EXTRACTOR_CLASS_CONFIG]] Default timestamp extractor class that implements the <<kafka-streams-TimestampExtractor.adoc#, org.apache.kafka.streams.processor.TimestampExtractor>> interface.
+|===
+
+`StreamsConfig` is also used for the following Kafka clients (that Kafka Streams uses under the covers):
 
 * <<getConsumerConfigs, Consumer>>
 
