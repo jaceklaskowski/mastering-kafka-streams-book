@@ -13,7 +13,14 @@
 . link:kafka-streams-KTable.adoc[KTable]
 . link:kafka-streams-GlobalKTable.adoc[GlobalKTable]
 . link:kafka-streams-KGroupedStream.adoc[KGroupedStream -- Basic Aggregations]
-. link:kafka-streams-SessionWindowedKStream.adoc[SessionWindowedKStream -- Session-Windowed Aggregations]
+. link:kafka-streams-KGroupedTable.adoc[KGroupedTable]
+. link:kafka-streams-TimeWindowedKStream.adoc[TimeWindowedKStream -- Time-Windowed Stream Aggregations]
+. link:kafka-streams-SessionWindowedKStream.adoc[SessionWindowedKStream -- Session-Windowed Stream Aggregations]
+
+. link:kafka-streams-scala.adoc[Scala API for Kafka Streams]
+.. link:kafka-streams-scala-Serdes.adoc[Serdes]
+.. link:kafka-streams-scala-ImplicitConversions.adoc[ImplicitConversions]
+.. link:kafka-streams-scala-FunctionConversions.adoc[FunctionConversions]
 
 . link:kafka-streams-Consumed.adoc[Consumed]
 . link:kafka-streams-Produced.adoc[Produced]

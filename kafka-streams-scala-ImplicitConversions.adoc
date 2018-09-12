@@ -1,0 +1,54 @@
+== [[ImplicitConversions]] ImplicitConversions
+
+`ImplicitConversions` is a Scala object that contains the <<implicits, implicit conversions>> between the Scala wrapper objects and the underlying Java objects.
+
+You should import `ImplicitConversions` to use the implicit conversions in a Scala application that uses the Kafka Streams library.
+
+[source, scala]
+----
+import org.apache.kafka.streams.scala.ImplicitConversions._
+----
+
+[[implicits]]
+.Implicit Conversions
+[cols="1m,2",options="header",width="100%"]
+|===
+| Name
+| Type
+
+| wrapKStream
+| [[wrapKStream]] KStream[K, V]
+
+| wrapKGroupedStream
+| [[wrapKGroupedStream]] KGroupedStream[K, V]
+
+| wrapSessionWindowedKStream
+| [[wrapSessionWindowedKStream]] SessionWindowedKStream[K, V]
+
+| wrapTimeWindowedKStream
+| [[wrapTimeWindowedKStream]] TimeWindowedKStream[K, V]
+
+| wrapKTable
+| [[wrapKTable]] KTable[K, V]
+
+| wrapKGroupedTable
+| [[wrapKGroupedTable]] KGroupedTable[K, V]
+
+| tuple2ToKeyValue
+| [[tuple2ToKeyValue]] KeyValue[K, V]
+
+| serializedFromSerde
+| [[serializedFromSerde]] Serialized[K, V]
+
+| consumedFromSerde
+| [[consumedFromSerde]] Consumed[K, V]
+
+| producedFromSerde
+| [[producedFromSerde]] Produced[K, V]
+
+| materializedFromSerde
+| [[materializedFromSerde]] Materialized[K, V, S]
+
+| joinedFromKeyValueOtherSerde
+| [[joinedFromKeyValueOtherSerde]] Joined[K, V, VO]
+|===

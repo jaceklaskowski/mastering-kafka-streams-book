@@ -1,4 +1,4 @@
-== [[SessionWindowedKStream]] SessionWindowedKStream -- Session-Windowed Aggregations
+== [[SessionWindowedKStream]] SessionWindowedKStream -- Session-Windowed Stream Aggregations
 
 `SessionWindowedKStream` is the <<contract, contract>> of <<implementations, KStreams>> that allows Kafka Streams developers for <<aggregate, aggregate>>, <<count, count>> and <<reduce, reduce>> aggregations over a session-windowed record stream.
 

@@ -1,0 +1,107 @@
+== [[FunctionConversions]] FunctionConversions
+
+`FunctionConversions` is a Scala object that contains the <<implicits, implicit conversions>> of Scala function literals to SAM (Single Abstract Method) objects in Java using `as` extension methods.
+
+You should import `FunctionConversions` to use the implicit conversions in a Scala application that uses the Kafka Streams library.
+
+[source, scala]
+----
+import org.apache.kafka.streams.scala.FunctionConversions._
+----
+
+[[implicits]]
+.Implicit Function Conversions
+[cols="1m,2",options="header",width="100%"]
+|===
+| Function
+| Methods
+
+| p: (K, V) => Boolean
+a| [[PredicateFromFunction]]
+
+[source, scala]
+----
+asPredicate: Predicate[K, V]
+----
+
+| f: (T,U) => VR
+a| [[MapperFromFunction]]
+
+[source, scala]
+----
+asKeyValueMapper: KeyValueMapper[T, U, VR]
+asValueJoiner: ValueJoiner[T, U, VR]
+----
+
+| f: (K,V) => (KR, VR)
+a| [[KeyValueMapperFromFunction]]
+
+[source, scala]
+----
+asKeyValueMapper: KeyValueMapper[K, V, KeyValue[KR, VR]]
+----
+
+| f: V => VR
+a| [[ValueMapperFromFunction]]
+
+[source, scala]
+----
+asValueMapper: ValueMapper[V, VR]
+----
+
+| f: V => Iterable[VR]
+a| [[FlatValueMapperFromFunction]]
+
+[source, scala]
+----
+asValueMapper: ValueMapper[V, JIterable[VR]]
+----
+
+| f: (K, V) => VR
+a| [[ValueMapperWithKeyFromFunction]]
+
+[source, scala]
+----
+asValueMapperWithKey: ValueMapperWithKey[K, V, VR]
+----
+
+| f: (K, V) => Iterable[VR]
+a| [[FlatValueMapperWithKeyFromFunction]]
+
+[source, scala]
+----
+asValueMapperWithKey: ValueMapperWithKey[K, V, JIterable[VR]]
+----
+
+| f: (K, V, VA) => VA
+a| [[AggregatorFromFunction]]
+
+[source, scala]
+----
+asAggregator: Aggregator[K, V, VA]
+----
+
+| f: (K, VR, VR) => VR
+a| [[MergerFromFunction]]
+
+[source, scala]
+----
+asMerger: Merger[K, VR]
+----
+
+| f: (V, V) => V
+a| [[ReducerFromFunction]]
+
+[source, scala]
+----
+asReducer: Reducer[V]
+----
+
+| f: () => VA
+a| [[InitializerFromFunction]]
+
+[source, scala]
+----
+asInitializer: Initializer[VA]
+----
+|===

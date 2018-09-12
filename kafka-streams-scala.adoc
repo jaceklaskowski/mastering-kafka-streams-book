@@ -1,0 +1,44 @@
+== Scala API for Kafka Streams
+
+*Scala API for Kafka Streams* is a separate Kafka Streams module (a Scala library) that acts as a wrapper over the existing Java API for Kafka Streams.
+
+NOTE: Scala API for Kafka Streams was added in Kafka Streams 2.0.0 as link:++https://issues.apache.org/jira/browse/KAFKA-6670++[KAFKA-6670
+Implement a Scala wrapper library for Kafka Streams].
+
+As a separate Scala library you have to define the dependency in `build.sbt`.
+
+[source, scala]
+----
+libraryDependencies += "org.apache.kafka" %% "kafka-streams-scala" % "2.0.0"
+----
+
+[[types]]
+The Scala API for Kafka Streams defines Scala-friendly types that wrap the corresponding Kafka Streams types and simply delegate all method calls to the underlying Java object with the purpose of making it much more expressive, with less boilerplate and more succinct.
+
+* <<kafka-streams-StreamsBuilder.adoc#, StreamsBuilder>>
+* <<kafka-streams-KGroupedStream.adoc#, KGroupedStream>>
+* <<kafka-streams-KGroupedTable.adoc#, KGroupedTable>>
+* <<kafka-streams-KStream.adoc#, KStream>>
+* <<kafka-streams-KTable.adoc#, KTable>>
+* <<kafka-streams-SessionWindowedKStream.adoc#, SessionWindowedKStream>>
+* <<kafka-streams-TimeWindowedKStream.adoc#, TimeWindowedKStream>>
+
+Beside the Scala-friendly types, the Scala API for Kafka Streams defines implicit conversions, i.e. <<kafka-streams-scala-Serdes.adoc#, Serdes>>, <<kafka-streams-scala-ImplicitConversions.adoc#, ImplicitConversions>> and <<kafka-streams-scala-FunctionConversions.adoc#, FunctionConversions>>.
+
+The Scala API is available in `org.apache.kafka.streams.scala` package.
+
+[source, scala]
+----
+import org.apache.kafka.streams.scala._
+import FunctionConversions._
+import ImplicitConversions._
+import Serdes._
+----
+
+You could also use `Serdes` when defining `StreamsConfig.DEFAULT_KEY_SERDE_CLASS_CONFIG` and `StreamsConfig.DEFAULT_VALUE_SERDE_CLASS_CONFIG`.
+
+[source, scala]
+----
+import org.apache.kafka.streams.scala.Serdes._
+Serdes.String.getClass.getName
+----

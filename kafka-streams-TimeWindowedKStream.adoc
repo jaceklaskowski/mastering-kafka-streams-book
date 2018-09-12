@@ -1,0 +1,3 @@
+== [[TimeWindowedKStream]] TimeWindowedKStream -- Time-Windowed Stream Aggregations
+
+`TimeWindowedKStream` is...FIXME

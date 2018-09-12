@@ -1,0 +1,81 @@
+== [[Serdes]] Serdes
+
+`Serdes` is a Scala object that contains the <<implicits, implicit conversions>> with serializers and deserializers for known Scala and Java types and <<fromFn, fromFn>> to create a new `Serde[T]` (from `T` or `(String, T)`).
+
+You should import `Serdes` to use the implicit conversions in a Scala application that uses the Kafka Streams library.
+
+[source, scala]
+----
+import org.apache.kafka.streams.scala.Serdes._
+----
+
+You should also use `Serdes` when defining `StreamsConfig.DEFAULT_KEY_SERDE_CLASS_CONFIG` and `StreamsConfig.DEFAULT_VALUE_SERDE_CLASS_CONFIG`.
+
+[source, scala]
+----
+import org.apache.kafka.streams.scala.Serdes._
+Serdes.String.getClass.getName
+----
+
+[[implicits]]
+.Implicit Conversions
+[cols="1m,2",options="header",width="100%"]
+|===
+| Name
+| Serde
+
+| ByteArray
+| [[ByteArray]] Serde[Array[Byte]]
+
+| Bytes
+| [[Bytes]] Serde[org.apache.kafka.common.utils.Bytes]
+
+| Double
+| [[Double]] Serde[Double]
+
+| Float
+| [[Float]] Serde[Float]
+
+| Integer
+| [[Integer]] Serde[Int]
+
+| JavaDouble
+| [[JavaDouble]] Serde[java.lang.Double]
+
+| JavaFloat
+| [[JavaFloat]] Serde[java.lang.Float]
+
+| JavaInteger
+| [[JavaInteger]] Serde[java.lang.Integer]
+
+| JavaLong
+| [[JavaLong]] Serde[java.lang.Long]
+
+| Long
+| [[Long]] Serde[Long]
+
+| String
+| [[String]] Serde[String]
+
+| sessionWindowedSerde[T]
+| [[sessionWindowedSerde]] WindowedSerdes.SessionWindowedSerde[T]
+
+| timeWindowedSerde[T]
+| [[timeWindowedSerde]] WindowedSerdes.TimeWindowedSerde[T]
+|===
+
+=== [[fromFn]] `fromFn` Method
+
+[source, scala]
+----
+fromFn[T >: Null](
+  serializer: T => Array[Byte],
+  deserializer: Array[Byte] => Option[T]): Serde[T]
+fromFn[T >: Null](
+  serializer: (String, T) => Array[Byte],
+  deserializer: (String, Array[Byte]) => Option[T]): Serde[T]
+----
+
+`fromFn`...FIXME
+
+NOTE: `fromFn` is used when...FIXME
