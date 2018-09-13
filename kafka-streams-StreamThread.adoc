@@ -1,6 +1,6 @@
 == [[StreamThread]] StreamThread -- Stream Processor Thread
 
-`StreamThread` is the <<run, stream processor thread>> (a Java https://docs.oracle.com/javase/9/docs/api/java/lang/Thread.html[Thread]) in a Kafka Streams application that <<runLoop, runs the main event processing loop>> (using the <<consumer, Kafka Consumer>> to subscribe to the <<kafka-streams-InternalTopologyBuilder.adoc#sourceTopicPattern, source topics>> of the <<builder, InternalTopologyBuilder>>).
+`StreamThread` is the <<run, stream processor thread>> (a Java https://docs.oracle.com/javase/9/docs/api/java/lang/Thread.html[Thread]) in a Kafka Streams application that <<runLoop, runs the main event processing loop>> (using the <<consumer, Kafka Consumer>> that subscribes to the <<kafka-streams-InternalTopologyBuilder.adoc#sourceTopicPattern, source topics>> of the <<builder, InternalTopologyBuilder>>).
 
 .StreamThread and Stream Processing
 image::images/kafka-streams-StreamThread.png[align="center"]
@@ -15,7 +15,7 @@ NOTE: `KafkaStreams` uses link:kafka-streams-KafkaStreams.adoc#threads[num.strea
 [[commitTimeMs]]
 `StreamThread` uses the <<kafka-streams-properties.adoc#commit.interval.ms, commit.interval.ms>> configuration property as the *flush interval* for persisting the position of a processor (when <<runOnce, runOnce>> and <<maybeCommit, maybeCommit>>).
 
-`StreamThread` uses the Kafka <<consumer, consumer>> to:
+`StreamThread` uses the <<consumer, Kafka Consumer>> to:
 
 * Subscribe to topics (with <<rebalanceListener, RebalanceListener>>) right after `StreamThread` has been requested to <<runLoop, run the main event loop>>
 
@@ -26,6 +26,14 @@ NOTE: `KafkaStreams` uses link:kafka-streams-KafkaStreams.adoc#threads[num.strea
 `StreamThread` closes the Kafka <<consumer, consumer>> while <<completeShutdown, shuting down>>.
 
 `StreamThread` uses `stream-thread [[clientId]-StreamThread-[STREAM_THREAD_ID]]` logging prefix.
+
+`StreamThread` requires an <<builder, InternalTopologyBuilder>> to be <<create, created>> and uses it for the following:
+
+* Creating a <<kafka-streams-TaskCreator.adoc#, TaskCreator>> and a <<kafka-streams-StandbyTaskCreator.adoc#, StandbyTaskCreator>>
+
+* <<runLoop, Running the main processing loop>> (and subscribing to the <<kafka-streams-InternalTopologyBuilder.adoc#sourceTopicPattern, source topics>>)
+
+* <<resetInvalidOffsets, resetInvalidOffsets>>
 
 [[internal-registries]]
 .StreamThread's Internal Properties (e.g. Registries, Counters and Flags)
