@@ -25,6 +25,7 @@
 . link:kafka-streams-Consumed.adoc[Consumed]
 . link:kafka-streams-Produced.adoc[Produced]
 . link:kafka-streams-Printed.adoc[Printed]
+. link:kafka-streams-KafkaClientSupplier.adoc[KafkaClientSupplier]
 
 . link:kafka-streams-ProcessorContext.adoc[ProcessorContext]
 
@@ -93,7 +94,7 @@
 .. link:kafka-streams-SourceNode.adoc[SourceNode]
 .. link:kafka-streams-SinkNode.adoc[SinkNode]
 
-. link:kafka-streams-Topology.adoc[Topology]
+. link:kafka-streams-Topology.adoc[Topology -- Graph of Stream Processing Nodes]
 
 . link:kafka-streams-ProcessorTopology.adoc[ProcessorTopology]
 . link:kafka-streams-TopologyDescription.adoc[TopologyDescription]
@@ -116,7 +117,7 @@
 .. link:kafka-streams-KStreamAggProcessorSupplier.adoc[KStreamAggProcessorSupplier]
 .. link:kafka-streams-KStreamTransformValues.adoc[KStreamTransformValues]
 
-. link:kafka-streams-Processor.adoc[Processor -- Contract for Stream Processors]
+. link:kafka-streams-Processor.adoc[Processor Contract -- Stream Processing Nodes]
 .. link:kafka-streams-AbstractProcessor.adoc[AbstractProcessor -- Base for Stream Processors]
 .. link:kafka-streams-KStreamSessionWindowAggregateProcessor.adoc[KStreamSessionWindowAggregateProcessor]
 .. link:kafka-streams-KStreamTransformValuesProcessor.adoc[KStreamTransformValuesProcessor]
@@ -141,7 +142,7 @@
 . link:kafka-streams-StreamThread.adoc[StreamThread -- Stream Processor Thread]
 . link:kafka-streams-StreamThread-RebalanceListener.adoc[RebalanceListener -- Kafka ConsumerRebalanceListener for Partition Assignment Among Processor Tasks]
 
-. link:kafka-streams-Task.adoc[Task -- Contract for Stream Processor Tasks]
+. link:kafka-streams-Task.adoc[Task Contract -- Stream Processor Tasks]
 .. link:kafka-streams-AbstractTask.adoc[AbstractTask -- Base Processor Task]
 .. link:kafka-streams-StreamTask.adoc[StreamTask]
 .. link:kafka-streams-StandbyTask.adoc[StandbyTask]
@@ -214,8 +215,7 @@
 . link:kafka-streams-StreamPartitioner.adoc[StreamPartitioner]
 .. link:kafka-streams-WindowedStreamPartitioner.adoc[WindowedStreamPartitioner]
 
-. link:kafka-streams-KafkaClientSupplier.adoc[KafkaClientSupplier]
-.. link:kafka-streams-DefaultKafkaClientSupplier.adoc[DefaultKafkaClientSupplier]
+. link:kafka-streams-DefaultKafkaClientSupplier.adoc[DefaultKafkaClientSupplier]
 . link:kafka-streams-ConsumedInternal.adoc[ConsumedInternal]
 . link:kafka-streams-InternalTopicManager.adoc[InternalTopicManager]
 

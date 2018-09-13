@@ -1,4 +1,4 @@
-== [[Processor]] Processor -- Contract for Stream Processors
+== [[Processor]] Processor Contract -- Stream Processing Nodes
 
 `Processor` is the <<contract, contract>> in Kafka Streams for *stream processors* that <<process, process key-value pair records>>.
 

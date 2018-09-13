@@ -1,4 +1,4 @@
-== [[KafkaClientSupplier]] KafkaClientSupplier
+== [[KafkaClientSupplier]] KafkaClientSupplier Contract
 
 `KafkaClientSupplier` is the <<contract, contract>> for objects that can provide (_supply_) Kafka clients, i.e. <<getAdminClient, AdminClient>>, <<getProducer, Producer>>, <<getConsumer, Consumer>> and <<getRestoreConsumer, restore Consumer>>.
 

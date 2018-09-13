@@ -4,15 +4,19 @@
 
 [[properties]]
 .Configuration Properties
-[cols="1m,1m,1",options="header",width="100%"]
+[cols="1m,1",options="header",width="100%"]
 |===
 | Name
 | Property
-| Type
 
-| DEFAULT_TIMESTAMP_EXTRACTOR_CLASS_CONFIG
-| default.timestamp.extractor
-| [[default.timestamp.extractor]][[DEFAULT_TIMESTAMP_EXTRACTOR_CLASS_CONFIG]] Default timestamp extractor class that implements the <<kafka-streams-TimestampExtractor.adoc#, org.apache.kafka.streams.processor.TimestampExtractor>> interface.
+| [[DEFAULT_TIMESTAMP_EXTRACTOR_CLASS_CONFIG]] DEFAULT_TIMESTAMP_EXTRACTOR_CLASS_CONFIG
+| <<kafka-streams-properties.adoc#default.timestamp.extractor, default.timestamp.extractor>>
+
+| [[NUM_STREAM_THREADS_CONFIG]] NUM_STREAM_THREADS_CONFIG
+| <<kafka-streams-properties.adoc#num.stream.threads, num.stream.threads>>
+
+| [[POLL_MS_CONFIG]] POLL_MS_CONFIG
+| <<kafka-streams-properties.adoc#poll.ms, poll.ms>>
 |===
 
 `StreamsConfig` is also used for the following Kafka clients (that Kafka Streams uses under the covers):

@@ -1,4 +1,4 @@
-== [[Task]] Task -- Contract for Stream Processor Tasks
+== [[Task]] Task Contract -- Stream Processor Tasks
 
 `Task` is the <<contract, contract>> in Kafka Streams for *stream processor tasks* that are identified by <<id, id>> and...FIXME
 

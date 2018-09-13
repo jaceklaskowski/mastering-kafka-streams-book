@@ -1,8 +1,8 @@
 == [[StreamTask]] StreamTask
 
-`StreamTask` is a concrete link:kafka-streams-AbstractTask.adoc[stream processor task] that uses a <<partitionGroup, PartitionGroup>> for...FIXME
+`StreamTask` is a concrete link:kafka-streams-AbstractTask.adoc[stream processor task] that manages a <<partitions, collection of Kafka TopicPartitions>> as a <<partitionGroup, PartitionGroup>>.
 
-`StreamTask` is <<creating-instance, created>> exclusively when `TaskCreator` is requested to link:kafka-streams-TaskCreator.adoc#createTask[create a StreamTask].
+`StreamTask` is <<creating-instance, created>> exclusively when `TaskCreator` is requested to <<kafka-streams-TaskCreator.adoc#createTask, create one>>.
 
 [[commitNeeded]]
 [[commitRequested]]
@@ -17,29 +17,29 @@
 
 [[internal-registries]]
 .StreamTask's Internal Properties (e.g. Registries, Counters and Flags)
-[cols="1,2",options="header",width="100%"]
+[cols="1m,2",options="header",width="100%"]
 |===
 | Name
 | Description
 
-| `partitionGroup`
-a| [[partitionGroup]] link:kafka-streams-PartitionGroup.adoc[PartitionGroup] (with a link:kafka-streams-RecordQueue.adoc[RecordQueue] per <<partitions, TopicPartition>>)
+| partitionGroup
+a| [[partitionGroup]] <<kafka-streams-PartitionGroup.adoc#, PartitionGroup>> (with a <<kafka-streams-RecordQueue.adoc#, RecordQueue>> for every assigned Kafka <<partitions, TopicPartition>>)
 
-Used when `StreamTask` is requested to do the following:
+Used when `StreamTask` is requested for the following:
 
 * <<addRecords, addRecords>>
 
-* <<process, Process a single record>>
+* <<closeSuspended, closeSuspended>>
+
+* <<closeTopology, closeTopology>>
 
 * <<maybePunctuateStreamTime, maybePunctuateStreamTime>>
 
 * <<numBuffered, numBuffered>>
 
-* <<closeTopology, closeTopology>>
+* <<process, Process a single record>>
 
-* <<closeSuspended, closeSuspended>>
-
-| `consumedOffsets`
+| consumedOffsets
 | [[consumedOffsets]] Offsets by topic partitions, i.e. `Map<TopicPartition, Long>`, that `StreamTask` has <<process, processed>> successfully.
 |===
 

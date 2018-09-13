@@ -1,6 +1,6 @@
-== [[Topology]] Topology
+== [[Topology]] Topology -- Graph of Stream Processing Nodes
 
-`Topology` is...FIXME
+`Topology` is a *graph of stream processing nodes* (simply processors).
 
 `Topology` is <<creating-instance, created>> when `StreamsBuilder` is link:kafka-streams-StreamsBuilder.adoc#topology[created].
 

@@ -352,7 +352,7 @@ void validateTopicNotAlreadyRegistered(final String topic)
 
 NOTE: `validateTopicNotAlreadyRegistered` is used when...FIXME
 
-=== [[sourceTopicPattern]] Getting Source Topic Pattern -- `sourceTopicPattern` Method
+=== [[sourceTopicPattern]] Source Topics Pattern -- `sourceTopicPattern` Method
 
 [source, java]
 ----

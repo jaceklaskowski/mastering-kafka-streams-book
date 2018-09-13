@@ -1,8 +1,8 @@
 == [[TaskManager]] TaskManager
 
-`TaskManager` manages <<active, active>> and <<standby, standby>> collections of tasks. `TaskManager` adds a new active task when `RebalanceListener` handles link:kafka-streams-StreamThread-RebalanceListener.adoc#onPartitionsAssigned[onPartitionsAssigned] (and requests to <<createTasks, create processor tasks for assigned topic partitions>> that in turn <<addStreamTasks, adds new stream tasks>>).
+`TaskManager` manages <<active, active>> and <<standby, standby>> tasks. `TaskManager` <<createTasks, creates new tasks>> when `RebalanceListener` handles link:kafka-streams-StreamThread-RebalanceListener.adoc#onPartitionsAssigned[onPartitionsAssigned] (and requests to <<createTasks, create processor tasks for assigned topic partitions>> that in turn <<addStreamTasks, adds new stream tasks>>).
 
-`TaskManager` is <<creating-instance, created>> when `StreamThread` is link:kafka-streams-StreamThread.adoc#create[created] (with a new <<active, AssignedStreamsTasks>> and <<standby, AssignedStandbyTasks>> for <<active, active>> and <<standby, standby>> collections of tasks, respectively).
+`TaskManager` is <<creating-instance, created>> when `StreamThread` is link:kafka-streams-StreamThread.adoc#create[created] (with a new <<active, AssignedStreamsTasks>> and <<standby, AssignedStandbyTasks>> for <<active, active>> and <<standby, standby>> tasks, respectively).
 
 .Creating TaskManager
 image::images/kafka-streams-TaskManager.png[align="center"]
@@ -185,9 +185,9 @@ void createTasks(final Collection<TopicPartition> assignment)
 .TaskManager.createTasks
 image::images/kafka-streams-TaskManager-createTasks.png[align="center"]
 
-`createTasks` requests <<changelogReader, ChangelogReader>> to link:kafka-streams-ChangelogReader.adoc#reset[reset].
+`createTasks` requests the <<changelogReader, ChangelogReader>> to link:kafka-streams-ChangelogReader.adoc#reset[reset].
 
-`createTasks` requests <<standby, AssignedStandbyTasks>> and <<active, AssignedStreamsTasks>> to link:kafka-streams-AssignedTasks.adoc#closeNonAssignedSuspendedTasks[closeNonAssignedSuspendedTasks] (with <<assignedStandbyTasks, assignedStandbyTasks>> and <<assignedActiveTasks, assignedActiveTasks>>, respectively).
+`createTasks` requests the <<standby, AssignedStandbyTasks>> and <<active, AssignedStreamsTasks>> to link:kafka-streams-AssignedTasks.adoc#closeNonAssignedSuspendedTasks[closeNonAssignedSuspendedTasks] (with <<assignedStandbyTasks, assignedStandbyTasks>> and <<assignedActiveTasks, assignedActiveTasks>>, respectively).
 
 `createTasks` <<addStreamTasks, addStreamTasks>> for the input `assignment` partitions.
 

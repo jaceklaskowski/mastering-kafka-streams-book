@@ -25,21 +25,23 @@ Used when `StreamPartitionAssignor` is requested to link:kafka-streams-StreamsPa
 
 | `commit.interval.ms`
 a|
-
 * `100L` when <<processing.guarantee, processing.guarantee>> is <<exactly_once, exactly_once>> (which is not by default)
 * `30000L` otherwise
-
 a| [[commit.interval.ms]] Desired *flush interval* or *commit interval* (in millis), i.e. the time between persisting the position of a processor.
 
 Use `StreamsConfig.COMMIT_INTERVAL_MS_CONFIG` to reference the property.
 
-| [[num.stream.threads]] `num.stream.threads`
-| 1
-| The number of link:kafka-streams-KafkaStreams.adoc#threads[threads to execute stream processing].
+| `num.stream.threads`
+| `1`
+| [[num.stream.threads]] The number of link:kafka-streams-KafkaStreams.adoc#threads[stream processor threads].
 
-| [[poll.ms]] `poll.ms`
+| `default.timestamp.extractor`
+| <<kafka-streams-FailOnInvalidTimestamp.adoc#, FailOnInvalidTimestamp>>
+| [[default.timestamp.extractor]] Default timestamp extractor class that implements the <<kafka-streams-TimestampExtractor.adoc#, org.apache.kafka.streams.processor.TimestampExtractor>> interface.
+
+| `poll.ms`
 | `100`
-a| *Polling interval* (in milliseconds), i.e. the time spent waiting in `Consumer.poll` (unless data is available in the buffer). If `0`, returns immediately with any records that are available currently in the buffer, else returns empty. Must not be negative.
+a| [[poll.ms]] *Polling interval* (in milliseconds), i.e. the time spent waiting in `Consumer.poll` (unless data is available in the buffer). If `0`, returns immediately with any records that are available currently in the buffer, else returns empty. Must not be negative.
 
 * Used when `GlobalStreamThread` is requested to link:kafka-streams-GlobalStreamThread.adoc#initialize[initialize] (which is right after `KafkaStreams` has been link:kafka-streams-KafkaStreams.adoc#start[started]) and creates a link:kafka-streams-StateConsumer.adoc#pollMs[StateConsumer]
 

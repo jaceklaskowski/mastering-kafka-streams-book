@@ -1,13 +1,11 @@
 == [[StreamThread]] StreamThread -- Stream Processor Thread
 
-`StreamThread` is the *stream processor thread* in a Kafka Streams application.
-
-`StreamThread` is a <<run, thread of execution>> (i.e. Java's https://docs.oracle.com/javase/9/docs/api/java/lang/Thread.html[Thread]) that...FIXME
+`StreamThread` is the <<run, stream processor thread>> (a Java https://docs.oracle.com/javase/9/docs/api/java/lang/Thread.html[Thread]) in a Kafka Streams application that <<runLoop, runs the main event processing loop>> (using the <<consumer, Kafka Consumer>> to subscribe to the <<kafka-streams-InternalTopologyBuilder.adoc#sourceTopicPattern, source topics>> of the <<builder, InternalTopologyBuilder>>).
 
 .StreamThread and Stream Processing
 image::images/kafka-streams-StreamThread.png[align="center"]
 
-`StreamThread` is <<create, created>> exclusively when `KafkaStreams` is link:kafka-streams-KafkaStreams.adoc#creating-instance[created].
+`StreamThread` is <<create, created>> exclusively when `KafkaStreams` is <<kafka-streams-KafkaStreams.adoc#creating-instance, created>>.
 
 NOTE: `KafkaStreams` uses link:kafka-streams-KafkaStreams.adoc#threads[num.stream.threads] configuration property for the number of `StreamThreads` to create.
 
@@ -240,7 +238,7 @@ NOTE: `maybeUpdateStandbyTasks` is used exclusively when `StreamThread` is reque
 * [[time]] `Time`
 * [[config]] link:kafka-streams-StreamsConfig.adoc[StreamsConfig]
 * [[restoreConsumer]] Restore Kafka consumer (of keys and values as array of bytes)
-* [[consumer]] Kafka https://kafka.apache.org/10/javadoc/org/apache/kafka/clients/consumer/KafkaConsumer.html[Consumer] (of keys and values as array of bytes)
+* [[consumer]] Kafka https://kafka.apache.org/20/javadoc/org/apache/kafka/clients/consumer/KafkaConsumer.html[Consumer] (of keys and values as array of bytes)
 * [[originalReset]] `originalReset`
 * [[taskManager]] link:kafka-streams-TaskManager.adoc[TaskManager]
 * [[streamsMetrics]] link:kafka-streams-StreamsMetricsThreadImpl.adoc[StreamsMetricsThreadImpl]
@@ -250,14 +248,14 @@ NOTE: `maybeUpdateStandbyTasks` is used exclusively when `StreamThread` is reque
 
 `StreamThread` initializes the <<internal-registries, internal registries and counters>>.
 
-=== [[runLoop]] Running Main Event Loop -- `runLoop` Internal Method
+=== [[runLoop]] Running Main Event Processing Loop -- `runLoop` Internal Method
 
 [source, java]
 ----
 void runLoop()
 ----
 
-`runLoop` requests <<consumer, Consumer>> to subscribe to the link:kafka-streams-InternalTopologyBuilder.adoc#sourceTopicPattern[source topics] (from <<builder, InternalTopologyBuilder>>) with <<rebalanceListener, ConsumerRebalanceListener>>.
+`runLoop` requests the <<consumer, Consumer>> to subscribe to the link:kafka-streams-InternalTopologyBuilder.adoc#sourceTopicPattern[source topics] (from <<builder, InternalTopologyBuilder>>) with <<rebalanceListener, ConsumerRebalanceListener>>.
 
 `runLoop` <<runOnce, runs once>> in a loop (as long as <<isRunning, isRunning>> flag is turned on).
 
@@ -518,7 +516,7 @@ Creating restore consumer client
 
 `create` requests the input `KafkaClientSupplier` for link:kafka-streams-KafkaClientSupplier.adoc#getRestoreConsumer[getRestoreConsumer] for the `restoreConsumerConfigs`.
 
-`create` creates a `StoreChangelogReader` (with the `restoreConsumer` and the input `StateRestoreListener`).
+`create` creates a <<kafka-streams-StoreChangelogReader.adoc#, StoreChangelogReader>> (with the `restoreConsumer`, the input `StateRestoreListener` and the configured <<kafka-streams-properties.adoc#poll.ms, poll.ms>>).
 
 (Only with eos enabled) `create`...FIXME
 
@@ -531,11 +529,7 @@ Creating restore consumer client
 
 `create` creates a `ThreadCache` (with `cacheSizeBytes` (for the `maxCacheSizeBytes`) and the `StreamsMetricsThreadImpl`).
 
-`create` creates a link:kafka-streams-TaskCreator.adoc#creating-instance[TaskCreator].
-
-`create` creates a link:kafka-streams-StandbyTaskCreator.adoc#creating-instance[StandbyTaskCreator].
-
-`creates` creates a link:kafka-streams-TaskManager.adoc#creating-instance[TaskManager] (with a new link:kafka-streams-AssignedStreamsTasks.adoc#creating-instance[AssignedStreamsTasks] and link:kafka-streams-AssignedStandbyTasks.adoc#creating-instance[AssignedStandbyTasks]).
+`create` creates a link:kafka-streams-TaskCreator.adoc#creating-instance[TaskCreator] and a link:kafka-streams-StandbyTaskCreator.adoc#creating-instance[StandbyTaskCreator] that are used exclusively to create a link:kafka-streams-TaskManager.adoc#creating-instance[TaskManager] (with a new link:kafka-streams-AssignedStreamsTasks.adoc#creating-instance[AssignedStreamsTasks] and link:kafka-streams-AssignedStandbyTasks.adoc#creating-instance[AssignedStandbyTasks]).
 
 `create` prints out the following INFO message to the logs:
 
