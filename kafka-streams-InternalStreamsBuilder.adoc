@@ -100,17 +100,10 @@ NOTE: `createKTable` is used exclusively when `InternalStreamsBuilder` is reques
 
 [source, java]
 ----
-synchronized void addGlobalStore(
+void addGlobalStore(
   final StoreBuilder<KeyValueStore> storeBuilder,
   final String topic,
   final ConsumedInternal consumed,
-  final ProcessorSupplier stateUpdateSupplier)
-synchronized void addGlobalStore(
-  final StoreBuilder<KeyValueStore> storeBuilder,
-  final String sourceName,
-  final String topic,
-  final ConsumedInternal consumed,
-  final String processorName,
   final ProcessorSupplier stateUpdateSupplier)
 ----
 

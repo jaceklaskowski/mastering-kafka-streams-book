@@ -114,10 +114,14 @@ NOTE: <<nodeGroups-accessor, nodeGroups accessor>> is used to access `nodeGroups
 | [[nodeToSourcePatterns]] `nodeToSourcePatterns`
 |
 
-| [[nodeToSourceTopics]] `nodeToSourceTopics`
-| Topic names by the source node name
+| `nodeToSourceTopics`
+a| [[nodeToSourceTopics]] Topic names by the source processor node name (without the <<applicationId, application ID>> prefix for internal topics)
 
-Used when...FIXME
+New entries are added when `InternalTopologyBuilder` is requested for the following:
+
+* <<addSource, addSource>> and <<addGlobalStore, addGlobalStore>>
+
+* <<setRegexMatchedTopicsToSourceNodes, setRegexMatchedTopicsToSourceNodes>>
 
 | [[sourceTopicNames]] `sourceTopicNames`
 | Collection of <<addSource, registered>> topic names
@@ -143,10 +147,10 @@ a| Topic names by the names of state stores
 | [[subscriptionUpdates]] `subscriptionUpdates`
 |
 
-| [[topicPattern]] `topicPattern`
-a| Source topic pattern to subscribe to
+| `topicPattern`
+a| [[topicPattern]] Source topics pattern (to subscribe to)
 
-* Initialized the first time when `InternalTopologyBuilder` is requested for the <<sourceTopicPattern, source topic pattern>>
+* Initialized the first time when `InternalTopologyBuilder` is requested for the <<sourceTopicPattern, source topics pattern>>
 
 | [[topicToPatterns]] `topicToPatterns`
 |
@@ -298,6 +302,13 @@ void addSource(
   final TimestampExtractor timestampExtractor,
   final Deserializer keyDeserializer,
   final Deserializer valDeserializer,
+  final Pattern topicPattern)
+void addSource(
+  final Topology.AutoOffsetReset offsetReset,
+  final String name,
+  final TimestampExtractor timestampExtractor,
+  final Deserializer keyDeserializer,
+  final Deserializer valDeserializer,
   final String... topics)
 ----
 
@@ -352,24 +363,6 @@ void validateTopicNotAlreadyRegistered(final String topic)
 
 NOTE: `validateTopicNotAlreadyRegistered` is used when...FIXME
 
-=== [[sourceTopicPattern]] Source Topics Pattern -- `sourceTopicPattern` Method
-
-[source, java]
-----
-synchronized Pattern sourceTopicPattern()
-----
-
-`sourceTopicPattern`...FIXME
-
-[NOTE]
-====
-`sourceTopicPattern` is used when:
-
-1. `StreamThread` is started (and requested to link:kafka-streams-StreamThread.adoc#runLoop[run the main event loop])
-
-1. `TaskManager` is requested for link:kafka-streams-TaskManager.adoc#updateSubscriptionsFromAssignment[updateSubscriptionsFromAssignment] and link:kafka-streams-TaskManager.adoc#updateSubscriptionsFromMetadata[updateSubscriptionsFromMetadata]
-====
-
 === [[connectProcessorAndStateStores]] Connecting State Store with Processor Nodes -- `connectProcessorAndStateStores` Method
 
 [source, java]
@@ -411,17 +404,8 @@ void addGlobalStore(
   final String topic,
   final String processorName,
   final ProcessorSupplier stateUpdateSupplier)  // <1>
-// StateStoreSupplier is @Deprecated so the following addGlobalStore should not be used either
-void addGlobalStore(
-  final org.apache.kafka.streams.processor.StateStoreSupplier<KeyValueStore> storeSupplier,
-  final String sourceName,
-  final TimestampExtractor timestampExtractor,
-  final Deserializer keyDeserializer,
-  final Deserializer valueDeserializer,
-  final String topic,
-  final String processorName,
-  final ProcessorSupplier stateUpdateSupplier)  // <2>
-// private
+
+// Private API
 private void addGlobalStore(
   final String sourceName,
   final TimestampExtractor timestampExtractor,
@@ -431,10 +415,9 @@ private void addGlobalStore(
   final String processorName,
   final ProcessorSupplier stateUpdateSupplier,
   final String name,
-  final KeyValueStore store)  // <3>
+  final KeyValueStore store)
 ----
 <1> Calls the private `addGlobalStore` after validating arguments
-<2> Calls the private `addGlobalStore` after validating arguments
 
 The public `addGlobalStore` <<validateGlobalStoreArguments, validateGlobalStoreArguments>>, <<validateTopicNotAlreadyRegistered, validateTopicNotAlreadyRegistered>> and calls the private `addGlobalStore`.
 
@@ -965,3 +948,73 @@ If `isWindowStore` flag is enabled (`true`), `createChangelogTopicConfig` does t
 If `isWindowStore` flag is disabled (`false`), `createChangelogTopicConfig` requests the input `StateStoreFactory` for link:kafka-streams-StateStoreFactory.adoc#logConfig[logConfig] and uses it to create a link:kafka-streams-UnwindowedChangelogTopicConfig.adoc#creating-instance[UnwindowedChangelogTopicConfig] (for the input `name`).
 
 NOTE: `createChangelogTopicConfig` is used exclusively when `InternalTopologyBuilder` is requested for <<topicGroups, topic groups>>.
+
+=== [[sourceTopicPattern]] Source Topics -- `sourceTopicPattern` Method
+
+[source, java]
+----
+Pattern sourceTopicPattern()
+----
+
+`sourceTopicPattern` returns the cached <<topicPattern, source topics pattern>> if available.
+
+If not, `sourceTopicPattern` takes the subscribed topics from the <<nodeToSourceTopics, nodeToSourceTopics>> internal registry and sorts them into ascending order (using natural ordering).
+
+Before returning the <<topicPattern, source topics pattern>>, `sourceTopicPattern` <<buildPatternForOffsetResetTopics, buildPatternForOffsetResetTopics>> and saves the result in the <<topicPattern, topicPattern>> internal registry.
+
+[NOTE]
+====
+`sourceTopicPattern` is used when:
+
+* `StreamThread` is requested to <<kafka-streams-StreamThread.adoc#runLoop, run the main event processing loop>> and <<kafka-streams-StreamThread.adoc#enforceRebalance, enforceRebalance>>
+
+* `TaskManager` is requested to <<kafka-streams-TaskManager.adoc#updateSubscriptionsFromAssignment, updateSubscriptionsFromAssignment>> and <<kafka-streams-TaskManager.adoc#updateSubscriptionsFromMetadata, updateSubscriptionsFromMetadata>>
+====
+
+=== [[buildPatternForOffsetResetTopics]] `buildPatternForOffsetResetTopics` Internal Method
+
+[source, java]
+----
+Pattern buildPatternForOffsetResetTopics(
+  final Collection<String> sourceTopics,
+  final Collection<Pattern> sourcePatterns)
+----
+
+`buildPatternForOffsetResetTopics`...FIXME
+
+NOTE: `buildPatternForOffsetResetTopics` is used when...FIXME
+
+=== [[setRegexMatchedTopicsToSourceNodes]] `setRegexMatchedTopicsToSourceNodes` Internal Method
+
+[source, java]
+----
+void setRegexMatchedTopicsToSourceNodes()
+----
+
+`setRegexMatchedTopicsToSourceNodes`...FIXME
+
+NOTE: `setRegexMatchedTopicsToSourceNodes` is used exclusively when `InternalTopologyBuilder` is requested to <<updateSubscriptions, updateSubscriptions>>.
+
+=== [[updateSubscriptions]] `updateSubscriptions` Method
+
+[source, java]
+----
+void updateSubscriptions(
+  final SubscriptionUpdates subscriptionUpdates,
+  final String logPrefix)
+----
+
+`updateSubscriptions`...FIXME
+
+NOTE: `updateSubscriptions` is used exclusively when `InternalTopologyBuilder` is requested to <<updateSubscribedTopics, updateSubscribedTopics>>.
+
+=== [[updateSubscribedTopics]] `updateSubscribedTopics` Method
+
+[source, java]
+----
+void updateSubscribedTopics(final Set<String> topics, final String logPrefix)
+----
+
+`updateSubscribedTopics`...FIXME
+
+NOTE: `updateSubscribedTopics` is used exclusively when `TaskManager` is requested to <<kafka-streams-TaskManager.adoc#updateSubscriptionsFromAssignment, updateSubscriptionsFromAssignment>> and <<kafka-streams-TaskManager.adoc#updateSubscriptionsFromMetadata, updateSubscriptionsFromMetadata>>.

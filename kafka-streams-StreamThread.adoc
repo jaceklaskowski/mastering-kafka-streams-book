@@ -571,3 +571,14 @@ void punctuate()
 `punctuate`...FIXME
 
 NOTE: `punctuate` is used when `StreamThread` is requested to <<run, start>> (and <<runOnce, polls records once>> and <<processAndMaybeCommit, processes records (with optional commit)>>).
+
+=== [[enforceRebalance]] `enforceRebalance` Internal Method
+
+[source, java]
+----
+void enforceRebalance()
+----
+
+`enforceRebalance`...FIXME
+
+NOTE: `enforceRebalance` is used when...FIXME
