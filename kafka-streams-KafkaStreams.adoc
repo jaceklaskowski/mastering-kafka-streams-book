@@ -25,6 +25,12 @@ Once <<creating-instance, created>>, `KafkaStreams` is <<start, started up>> to 
 ks.start
 ----
 
+`KafkaStreams` uses a <<internalTopologyBuilder, InternalTopologyBuilder>> for the following:
+
+* Creating a <<streamsMetadataState, StreamsMetadataState>>, <<threads, StreamThreads>> and <<queryableStoreProvider, QueryableStoreProvider>>
+
+* Requesting a <<kafka-streams-InternalTopologyBuilder.adoc#buildGlobalStateTopology, global processor topology>> (for a <<globalStreamThread, GlobalStreamThread>>)
+
 [[internal-registries]]
 .KafkaStreams's Internal Properties (e.g. Registries, Counters and Flags)
 [cols="1,2",options="header",width="100%"]
