@@ -7,13 +7,13 @@
 | Default Value
 | Description
 
-| [[application.id]] `application.id`
-|
-| *Application ID*, i.e. the identifier of a stream processing application.
+| `application.id`
+| (empty)
+| [[application.id]] Required *application ID*, i.e. the identifier of a Kafka Streams application.
 
-It must be unique within the Kafka cluster as it is used as the default client-id prefix, the group-id for membership management, and the changelog topic prefix.
+It must be unique within the Kafka cluster as it is used as a namespace for the default client-id prefix, the group-id for membership management, and the internal topic prefix.
 
-Use `StreamsConfig.APPLICATION_ID_CONFIG` to reference the property.
+Use <<kafka-streams-StreamsConfig.adoc#APPLICATION_ID_CONFIG, StreamsConfig.APPLICATION_ID_CONFIG>> to reference the property.
 
 | [[application.server]] `application.server`
 | (empty)

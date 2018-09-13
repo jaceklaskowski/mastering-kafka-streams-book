@@ -26,19 +26,19 @@ Topologies:
 ----
 
 [[applicationId]]
-`InternalTopologyBuilder` can have an *application id* that can be set using `setApplicationId` (and is really link:kafka-streams-properties.adoc#application.id[application.id] that `KafkaStreams` sets when link:kafka-streams-KafkaStreams.adoc#creating-instance[created]).
+`InternalTopologyBuilder` uses an *application ID* as a namespace for the internal topics (so they do not clash across Kafka Streams applications). The application ID is set using <<setApplicationId, setApplicationId>> (and is actually the <<kafka-streams-StreamsConfig.adoc#APPLICATION_ID_CONFIG, APPLICATION_ID_CONFIG>> required configuration property that `KafkaStreams` sets when link:kafka-streams-KafkaStreams.adoc#creating-instance[created]).
 
 [[setApplicationId]]
 [source, java]
 ----
-synchronized final InternalTopologyBuilder setApplicationId(final String applicationId)
+InternalTopologyBuilder setApplicationId(final String applicationId)
 ----
 
 `InternalTopologyBuilder` uses the <<applicationId, application id>> when:
 
 * <<buildProcessorNode, buildProcessorNode>> and <<topicGroups, topicGroups>> for the names of changelog topics (when a `StateStoreFactory` has link:kafka-streams-StateStoreFactory.adoc#loggingEnabled[logging enabled])
 
-* <<decorateTopic, decorateTopic>> to prefix internal topic names with the application id
+* <<decorateTopic, decorateTopic>> to prefix (_decorate_) internal topic names
 
 [[global-source-node]]
 *Global Source Node* is a node from a link:kafka-streams-SourceNodeFactory.adoc[SourceNodeFactory] with exactly one link:kafka-streams-SourceNodeFactory.adoc#topics[topic] and registered in <<globalTopics, globalTopics>>. You can use <<isGlobalSource, isGlobalSource>> predicate to check if a name is of a global source node.

@@ -9,6 +9,9 @@
 | Name
 | Property
 
+| [[APPLICATION_ID_CONFIG]] APPLICATION_ID_CONFIG
+| <<kafka-streams-properties.adoc#application.id, application.id>>
+
 | [[DEFAULT_TIMESTAMP_EXTRACTOR_CLASS_CONFIG]] DEFAULT_TIMESTAMP_EXTRACTOR_CLASS_CONFIG
 | <<kafka-streams-properties.adoc#default.timestamp.extractor, default.timestamp.extractor>>
 
