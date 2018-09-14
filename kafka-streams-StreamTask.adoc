@@ -330,3 +330,22 @@ Cancellable schedule(
 `schedule`...FIXME
 
 NOTE: `schedule` is used exclusively when `ProcessorContextImpl` is requested to link:kafka-streams-ProcessorContextImpl.adoc#schedule[schedule].
+
+=== [[initializeStateStores]] Initializing State Stores -- `initializeStateStores` Method
+
+[source, java]
+----
+boolean initializeStateStores()
+----
+
+NOTE: `initializeStateStores` is part of <<kafka-streams-Task.adoc#initializeStateStores, Task Contract>> to initialize <<kafka-streams-StateStore.adoc#, state stores>>.
+
+`initializeStateStores` prints out the following TRACE message to the logs:
+
+```
+Initializing state stores
+```
+
+`initializeStateStores` <<kafka-streams-AbstractTask.adoc#registerStateStores, registerStateStores>>.
+
+In the end, `initializeStateStores` returns `true` if the <<kafka-streams-Task.adoc#changelogPartitions, task has any changelog partitions>>. Otherwise, `initializeStateStores` returns `false`.

@@ -2,13 +2,36 @@
 
 `ProcessorStateManager` is a concrete link:kafka-streams-AbstractStateManager.adoc[AbstractStateManager] that...FIXME
 
-`ProcessorStateManager` is <<creating-instance, created>> exclusively when `AbstractTask` is link:kafka-streams-AbstractTask.adoc#creating-instance[created].
+`ProcessorStateManager` is <<creating-instance, created>> exclusively when `AbstractTask` is <<kafka-streams-AbstractTask.adoc#stateMgr, created>>.
 
 [[STATE_CHANGELOG_TOPIC_SUFFIX]]
-`ProcessorStateManager` uses the `-changelog` suffix for the name of <<storeChangelogTopic, storeChangelogTopic>>.
+`ProcessorStateManager` uses the *-changelog* suffix for the name of <<storeChangelogTopic, storeChangelogTopic>>.
 
 [[baseDir]]
 `ProcessorStateManager` uses...FIXME...for the base directory.
+
+[[changelogPartitions]]
+`ProcessorStateManager` tracks *changelog partitions* that are the Kafka https://kafka.apache.org/20/javadoc/org/apache/kafka/common/TopicPartition.html[TopicPartitions] of the <<register, registered StateStores>>.
+
+[[internal-registries]]
+.ProcessorStateManager's Internal Properties (e.g. Registries, Counters and Flags)
+[cols="1m,2",options="header",width="100%"]
+|===
+| Name
+| Description
+
+| restoreCallbacks
+| [[restoreCallbacks]] `StateRestoreCallback` by changelog topic name (`Map<String, StateRestoreCallback>`)
+
+Used when...FIXME
+
+| partitionForTopic
+| [[partitionForTopic]] Kafka https://kafka.apache.org/20/javadoc/org/apache/kafka/common/TopicPartition.html[TopicPartitions] by changelog topic name (`Map<String, TopicPartition>`)
+
+Initialized and filled in when `ProcessorStateManager` is <<sources, created>>
+
+Used exclusively when `ProcessorStateManager` is requested to <<getPartition, find the partition ID for a topic (name)>>.
+|===
 
 === [[checkpoint]] `checkpoint` Method
 
@@ -26,7 +49,7 @@ NOTE: `checkpoint` is part of link:kafka-streams-Checkpointable.adoc#checkpoint[
 `ProcessorStateManager` takes the following when created:
 
 * [[taskId]] Task ID
-* [[sources]] Sources (as Kafka https://kafka.apache.org/11/javadoc/org/apache/kafka/common/TopicPartition.html[TopicPartitions])
+* [[sources]] Source Kafka https://kafka.apache.org/20/javadoc/org/apache/kafka/common/TopicPartition.html[TopicPartitions]
 * [[isStandby]] `isStandby` Flag
 * [[stateDirectory]] link:kafka-streams-StateDirectory.adoc[StateDirectory]
 * [[storeToChangelogTopic]] `Map<String, String>`
@@ -45,9 +68,43 @@ void register(
   final StateRestoreCallback stateRestoreCallback)
 ----
 
-NOTE: `register` is part of link:kafka-streams-StateManager.adoc#register[StateManager Contract] to...FIXME.
+NOTE: `register` is part of link:kafka-streams-StateManager.adoc#register[StateManager Contract] to register a <<kafka-streams-StateStore.adoc#, StateStore>> and the associated `StateRestoreCallback`.
 
-`register`...FIXME
+`register` prints out the following DEBUG message to the logs:
+
+```
+Registering state store [storeName] to its state manager
+```
+
+`register` finds the <<kafka-streams-StateStore.adoc#, StateStore>> in the <<storeToChangelogTopic, storeToChangelogTopic>> internal registry. If not found, `register` registers the `StateStore` (in the <<kafka-streams-AbstractStateManager.adoc#stores, stores>> registry) and returns.
+
+If found however, `register` uses the topic to create a Kafka `TopicPartition` (with the <<getPartition, partition>>).
+
+If the `ProcessorStateManager` is in <<isStandby, standby>> mode, `register` prints out the following TRACE message to the logs and registers the topic and the input `StateRestoreCallback` (in the <<restoreCallbacks, restoreCallbacks>> registry).
+
+```
+Preparing standby replica of persistent state store [storeName] with changelog topic [topic]
+```
+
+If the `ProcessorStateManager` is not in <<isStandby, standby>> mode, `register` prints out the following TRACE message to the logs, creates a `StateRestorer` and requests the <<changelogReader, ChangelogReader>> to <<kafka-streams-ChangelogReader.adoc#register, register>> it.
+
+```
+Restoring state store [storeName] from changelog topic [topic]
+```
+
+`register` adds the (store) partition to the <<changelogPartitions, changelogPartitions>> and registers the `StateStore` (in the <<kafka-streams-AbstractStateManager.adoc#stores, stores>> registry).
+
+`register` throws an `IllegalArgumentException` if the name of the <<kafka-streams-StateStore.adoc#, StateStore>> is *.checkpoint*.
+
+```
+Illegal store name: .checkpoint
+```
+
+`register` throws an `IllegalArgumentException` if the <<kafka-streams-StateStore.adoc#, StateStore>> is already registered (in the <<kafka-streams-AbstractStateManager.adoc#stores, stores>> registry).
+
+```
+Store [storeName] has already been registered.
+```
 
 === [[close]] Closing ProcessorStateManager -- `close` Method
 
@@ -125,3 +182,40 @@ static String storeChangelogTopic(final String applicationId, final String store
 
 * `StoreChangeLogger` is link:kafka-streams-StoreChangeLogger.adoc[created]
 ====
+
+=== [[getPartition]] Finding Partition ID For Topic (Name) -- `getPartition` Internal Method
+
+[source, java]
+----
+int getPartition(final String topic)
+----
+
+`getPartition` tries to find the https://kafka.apache.org/20/javadoc/org/apache/kafka/common/TopicPartition.html[TopicPartition] for the input `topic` name (in the <<partitionForTopic, partitionForTopic>> internal registry).
+
+If found, `getPartition` returns the link:++https://kafka.apache.org/20/javadoc/org/apache/kafka/common/TopicPartition.html#partition--++[partition] of the https://kafka.apache.org/20/javadoc/org/apache/kafka/common/TopicPartition.html[TopicPartition].
+
+Otherwise, `getPartition` returns the partition of the <<taskId, TaskId>>.
+
+NOTE: `getPartition` is used when `ProcessorStateManager` is requested to <<register, register a StateStore>>, <<checkpointed, checkpointed>> and <<checkpoint, checkpoint>>.
+
+=== [[checkpointed]] `checkpointed` Method
+
+[source, java]
+----
+Map<TopicPartition, Long> checkpointed()
+----
+
+NOTE: `checkpointed` is part of the <<kafka-streams-Checkpointable.adoc#checkpointed, Checkpointable Contract>> to...FIXME.
+
+`checkpointed`...FIXME
+
+=== [[checkpoint]] `checkpoint` Method
+
+[source, java]
+----
+void checkpoint(final Map<TopicPartition, Long> checkpointableOffsets)
+----
+
+NOTE: `checkpoint` is part of the <<kafka-streams-Checkpointable.adoc#checkpoint, Checkpointable Contract>> to...FIXME.
+
+`checkpoint`...FIXME

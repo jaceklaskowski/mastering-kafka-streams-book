@@ -452,3 +452,16 @@ Failed to [actionName] [taskTypeName] [taskId] due to the following error:
 * [[taskTypeName]] `taskTypeName`
 
 `AssignedTasks` initializes the <<internal-registries, internal registries and counters>>.
+
+=== [[addToRestoring]] Registering Task for (State Store) Restoring -- `addToRestoring` Internal Method
+
+[source, java]
+----
+void addToRestoring(final T task)
+----
+
+`addToRestoring` records the input <<kafka-streams-Task.adoc#, task>> in the <<restoring, restoring>> internal registry.
+
+`addToRestoring` records the task's <<kafka-streams-Task.adoc#partitions, partitions>> and <<kafka-streams-Task.adoc#changelogPartitions, changelogPartitions>> in the <<restoringByPartition, restoringByPartition>> internal registry.
+
+NOTE: `addToRestoring` is used exclusively when `AssignedTasks` is requested to <<initializeNewTasks, initialize new tasks>> (and the task is a <<kafka-streams-StreamTask.adoc#, StreamTask>> and <<kafka-streams-Task.adoc#initializeStateStores, has state stores that need restoring>>).

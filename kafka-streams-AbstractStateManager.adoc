@@ -13,23 +13,23 @@ NOTE: `AbstractStateManager` is a Java abstract class and cannot be <<creating-i
 
 [[internal-registries]]
 .AbstractStateManager's Internal Properties (e.g. Registries, Counters and Flags)
-[cols="1,2",options="header",width="100%"]
+[cols="1m,2",options="header",width="100%"]
 |===
 | Name
 | Description
 
-| `checkpoint`
+| checkpoint
 | [[checkpoint]] link:kafka-streams-OffsetCheckpoint.adoc[OffsetCheckpoint] with the <<CHECKPOINT_FILE_NAME, offset checkpoint file>> in the <<baseDir, base directory>>.
 
 Used when...FIXME
 
-| `checkpointableOffsets`
+| checkpointableOffsets
 | [[checkpointableOffsets]]
 
-| `stores`
-| [[stores]]
+| stores
+| [[stores]] Names of the <<kafka-streams-StateStore.adoc#, StateStores>> that...FIXME
 
-| `globalStores`
+| globalStores
 | [[globalStores]]
 |===
 

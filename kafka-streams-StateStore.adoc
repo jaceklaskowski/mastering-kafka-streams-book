@@ -1,6 +1,6 @@
 == [[StateStore]] StateStore
 
-`StateStore` is the <<contract, contract>> of <<extensions, state storage engines>> that manage a state (of a stream processor).
+`StateStore` is the <<contract, contract>> of <<implementations, state store engines>> that manage a state (of a stream processor).
 
 [[contract]]
 [source, java]
@@ -18,32 +18,36 @@ interface StateStore {
 ----
 
 .StateStore Contract
-[cols="1,2",options="header",width="100%"]
+[cols="1m,2",options="header",width="100%"]
 |===
 | Method
 | Description
 
-| [[close]] `close`
-| Used when...FIXME
+| close
+| [[close]] Used when...FIXME
 
-| [[flush]] `flush`
-| Used when...FIXME
+| flush
+| [[flush]] Used when...FIXME
 
-| [[init]] `init`
-| Used when...FIXME
+| init
+| [[init]] Initializes the state store
 
-| [[isOpen]] `isOpen`
-| Used when...FIXME
+Used when...FIXME
 
-| [[name]] `name`
-| Used when...FIXME
+| isOpen
+| [[isOpen]] Used when...FIXME
 
-| [[persistent]] `persistent`
-| Used when...FIXME
+| name
+| [[name]] Name of the state store
+
+Used mostly for identification purposes
+
+| persistent
+| [[persistent]] Used when...FIXME
 |===
 
-[[extensions]]
-.StateStores
+[[implementations]]
+.StateStores (Direct Extensions)
 [cols="1,2",options="header",width="100%"]
 |===
 | StateStore

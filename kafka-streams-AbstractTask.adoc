@@ -29,17 +29,22 @@ The `taskInitialized` flag is used by the <<implementations, concrete AbstractTa
 
 [[internal-registries]]
 .AbstractTask's Internal Properties (e.g. Registries, Counters and Flags)
-[cols="1,2",options="header",width="100%"]
+[cols="1m,2",options="header",width="100%"]
 |===
 | Name
 | Description
 
-| [[processorContext]] `processorContext`
-a| link:kafka-streams-InternalProcessorContext.adoc[InternalProcessorContext]:
+| processorContext
+a| [[processorContext]] link:kafka-streams-InternalProcessorContext.adoc[InternalProcessorContext]:
 
 * `StandbyContextImpl` for `StandbyTask`
 
 * link:kafka-streams-ProcessorContextImpl.adoc[ProcessorContextImpl] for `StreamTask`
+
+| stateMgr
+a| [[stateMgr]] <<kafka-streams-ProcessorStateManager.adoc#, ProcessorStateManager>>
+
+<<kafka-streams-ProcessorStateManager.adoc#creating-instance, Created>> when `AbstractTask` is <<creating-instance, created>>
 |===
 
 [[implementations]]
@@ -114,3 +119,25 @@ Map<TopicPartition, Long> recordCollectorOffsets()
 `recordCollectorOffsets`...FIXME
 
 NOTE: `recordCollectorOffsets` is used when...FIXME
+
+=== [[registerStateStores]] `registerStateStores` Method
+
+[source, java]
+----
+void registerStateStores()
+----
+
+`registerStateStores`...FIXME
+
+NOTE: `registerStateStores` is used when <<kafka-streams-StandbyTask.adoc#initializeStateStores, StandbyTask>> and <<kafka-streams-StreamTask.adoc#initializeStateStores, StreamTask>> are requested to `initializeStateStores`.
+
+=== [[changelogPartitions]] `changelogPartitions` Method
+
+[source, java]
+----
+Collection<TopicPartition> changelogPartitions()
+----
+
+NOTE: `changelogPartitions` is part of <<kafka-streams-Task.adoc#changelogPartitions, Task Contract>> to return changelog partitions associated with the task.
+
+`changelogPartitions` simply requests the <<stateMgr, ProcessorStateManager>> to give the <<kafka-streams-ProcessorStateManager.adoc#changelogPartitions, changelogPartitions>> and returns them.

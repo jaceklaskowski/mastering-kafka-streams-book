@@ -30,14 +30,14 @@ NOTE: `closeSuspended` is part of link:kafka-streams-Task.adoc#closeSuspended[Ta
 
 `closeSuspended`...FIXME
 
-=== [[initializeStateStores]] `initializeStateStores` Method
+=== [[initializeStateStores]] Initializing State Stores -- `initializeStateStores` Method
 
 [source, java]
 ----
 boolean initializeStateStores()
 ----
 
-NOTE: `initializeStateStores` is part of link:kafka-streams-Task.adoc#initializeStateStores[Task Contract] to...FIXME.
+NOTE: `initializeStateStores` is part of <<kafka-streams-Task.adoc#initializeStateStores, Task Contract>> to initialize <<kafka-streams-StateStore.adoc#, state stores>>.
 
 `initializeStateStores`...FIXME
 

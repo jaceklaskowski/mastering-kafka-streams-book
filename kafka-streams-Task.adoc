@@ -47,7 +47,13 @@ public interface Task {
 | Description
 
 | `changelogPartitions`
-| [[changelogPartitions]] Used when...
+a| [[changelogPartitions]] Changelog partitions associated with the task
+
+Used when:
+
+* `AssignedTasks` is requested to <<kafka-streams-AssignedTasks.adoc#updateRestored, updateRestored>>, <<kafka-streams-AssignedTasks.adoc#addToRestoring, addToRestoring>> and <<kafka-streams-AssignedTasks.adoc#transitionToRunning, transitionToRunning>>
+
+* `StreamTask` is requested to <<kafka-streams-StreamTask.adoc#initializeStateStores, initialize state stores>>.
 
 | `close`
 a| [[close]]
@@ -88,7 +94,13 @@ Used when `AssignedTasks` is requested to:
 Implemented exclusively in link:kafka-streams-AbstractTask.adoc#hasStateStores[AbstractTask].
 
 | `initializeStateStores`
-| [[initializeStateStores]] Used when...
+a| [[initializeStateStores]] Initializing <<kafka-streams-StateStore.adoc#, state stores>>
+
+Enabled (`true`) if the task has no state stores that need restoring.
+
+* `StandbyTask` always returns <<kafka-streams-StandbyTask.adoc#initializeStateStores, true>>
+
+Used exclusively when `AssignedTasks` is requested to <<kafka-streams-AssignedTasks.adoc#initializeNewTasks, initializeNewTasks>>.
 
 | `initializeTopology`
 | [[initializeTopology]] Used exclusively when `AssignedTasks` is requested to link:kafka-streams-AssignedTasks.adoc#transitionToRunning[schedule a task for execution]

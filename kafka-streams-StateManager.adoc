@@ -49,7 +49,9 @@ Used when:
 | Used when...FIXME
 
 | [[register]] `register`
-| Used when...FIXME
+| Registering a <<kafka-streams-StateStore.adoc#, StateStore>> and the associated `StateRestoreCallback`
+
+Used when...FIXME
 
 | [[reinitializeStateStoresForPartitions]] `reinitializeStateStoresForPartitions`
 | Used when...FIXME
