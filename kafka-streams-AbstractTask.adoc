@@ -2,7 +2,7 @@
 
 `AbstractTask` is the base of <<implementations, stream processor tasks>> that <<FIXME, FIXME>>.
 
-NOTE: `AbstractTask` is a Java abstract class and cannot be <<creating-instance, created>> directly. It is created indirectly when the <<implementations, concrete AbstractTasks>> are.
+NOTE: `AbstractTask` is a Java abstract class and cannot be <<creating-instance, created>> directly. It is created indirectly as part of the <<implementations, concrete AbstractTasks>>.
 
 [[eosEnabled]]
 `AbstractTask` uses link:kafka-streams-properties.adoc#processing.guarantee[processing.guarantee] configuration property to enable link:kafka-streams-exactly-once-support-eos.adoc[Exactly-Once Support] for...FIXME
@@ -44,7 +44,15 @@ a| [[processorContext]] link:kafka-streams-InternalProcessorContext.adoc[Interna
 | stateMgr
 a| [[stateMgr]] <<kafka-streams-ProcessorStateManager.adoc#, ProcessorStateManager>>
 
-<<kafka-streams-ProcessorStateManager.adoc#creating-instance, Created>> when `AbstractTask` is <<creating-instance, created>>
+<<kafka-streams-ProcessorStateManager.adoc#creating-instance, Initialized>> when `AbstractTask` is <<creating-instance, created>>
+
+Used when:
+
+* `AbstractTask` is requested to <<getStore, getStore>>, <<updateOffsetLimits, updateOffsetLimits>>, <<flushState, flushState>>, <<reinitializeStateStoresForPartitions, reinitializeStateStoresForPartitions>>, <<closeStateManager, closeStateManager>> and <<changelogPartitions, changelogPartitions>>
+
+* `StandbyTask` is <<kafka-streams-StandbyTask.adoc#creating-instance, created>> (and creates the <<processorContext, InternalProcessorContext>>), and is requested to <<kafka-streams-StandbyTask.adoc#initializeStateStores, initializeStateStores>>, <<kafka-streams-StandbyTask.adoc#flushAndCheckpointState, flushAndCheckpointState>> and <<kafka-streams-StandbyTask.adoc#update, update>>
+
+* `StreamTask` is <<kafka-streams-StreamTask.adoc#creating-instance, created>> (and creates the <<processorContext, InternalProcessorContext>>), and is requested to <<kafka-streams-StreamTask.adoc#commit, commit>> and <<kafka-streams-StreamTask.adoc#commitOffsets, commitOffsets>>
 |===
 
 [[implementations]]
@@ -77,13 +85,13 @@ NOTE: `closeStateManager` is used when...FIXME
 `AbstractTask` takes the following when created:
 
 * [[id]] `TaskId`
-* [[partitions]] Kafka https://kafka.apache.org/11/javadoc/org/apache/kafka/common/TopicPartition.html[TopicPartitions]
-* [[topology]] link:kafka-streams-ProcessorTopology.adoc[ProcessorTopology]
-* [[consumer]] Kafka https://kafka.apache.org/11/javadoc/org/apache/kafka/clients/consumer/KafkaConsumer.html[Consumer] (of keys and values as array of bytes, i.e. `byte[]`)
-* [[changelogReader]] link:kafka-streams-ChangelogReader.adoc[ChangelogReader]
-* [[isStandby]] `isStandby` Flag
-* [[stateDirectory]] link:kafka-streams-StateDirectory.adoc[StateDirectory]
-* [[config]] link:kafka-streams-StreamsConfig.adoc[StreamsConfig]
+* [[partitions]] Assigned Kafka https://kafka.apache.org/20/javadoc/org/apache/kafka/common/TopicPartition.html[TopicPartitions]
+* [[topology]] <<kafka-streams-ProcessorTopology.adoc#, ProcessorTopology>>
+* [[consumer]] Kafka https://kafka.apache.org/20/javadoc/org/apache/kafka/clients/consumer/KafkaConsumer.html[Consumer] (of keys and values as array of bytes, i.e. `byte[]`)
+* [[changelogReader]] <<kafka-streams-ChangelogReader.adoc#, ChangelogReader>>
+* [[isStandby]] `isStandby` flag
+* [[stateDirectory]] <<kafka-streams-StateDirectory.adoc#, StateDirectory>>
+* [[config]] <<kafka-streams-StreamsConfig.adoc#, StreamsConfig>>
 
 `AbstractTask` initializes the <<internal-registries, internal registries and counters>>.
 
@@ -141,3 +149,52 @@ Collection<TopicPartition> changelogPartitions()
 NOTE: `changelogPartitions` is part of <<kafka-streams-Task.adoc#changelogPartitions, Task Contract>> to return changelog partitions associated with the task.
 
 `changelogPartitions` simply requests the <<stateMgr, ProcessorStateManager>> to give the <<kafka-streams-ProcessorStateManager.adoc#changelogPartitions, changelogPartitions>> and returns them.
+
+=== [[getStore]] `getStore` Method
+
+[source, java]
+----
+StateStore getStore(final String name)
+----
+
+NOTE: `getStore` is part of the <<kafka-streams-Task.adoc#getStore, Task Contract>> to...FIXME.
+
+`getStore` simply requests the <<stateMgr, ProcessorStateManager>> for the <<kafka-streams-ProcessorStateManager.adoc#getStore, StateStore by name>>.
+
+=== [[updateOffsetLimits]] `updateOffsetLimits` Method
+
+[source, java]
+----
+void updateOffsetLimits()
+----
+
+`updateOffsetLimits`...FIXME
+
+[NOTE]
+====
+`updateOffsetLimits` is used when:
+
+* `AbstractTask` is requested to <<registerStateStores, registerStateStores>>
+
+* `StandbyTask` is requested to <<kafka-streams-StandbyTask.adoc#resume, resume>>
+
+* `StandbyTask` is requested to <<kafka-streams-StandbyTask.adoc#commit, commit>>
+====
+
+=== [[reinitializeStateStoresForPartitions]] `reinitializeStateStoresForPartitions` Method
+
+[source, java]
+----
+void reinitializeStateStoresForPartitions(final Collection<TopicPartition> partitions)
+----
+
+`reinitializeStateStoresForPartitions` simply requests the <<stateMgr, ProcessorStateManager>> to <<kafka-streams-ProcessorStateManager.adoc#reinitializeStateStoresForPartitions, reinitializeStateStores>> for the input `partitions` and the <<processorContext, InternalProcessorContext>>.
+
+[NOTE]
+====
+`reinitializeStateStoresForPartitions` is used when:
+
+* `StoreChangelogReader` is requested to <<kafka-streams-StoreChangelogReader.adoc#restore, restore>>
+
+* `StreamThread` is requested to <<kafka-streams-StreamThread.adoc#maybeUpdateStandbyTasks, maybeUpdateStandbyTasks>>
+====

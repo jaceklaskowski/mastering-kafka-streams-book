@@ -79,7 +79,7 @@ void suspend(final boolean clean)
 ----
 <1> Uses `clean` flag enabled, i.e. `true`
 
-NOTE: `suspend` is part of link:kafka-streams-Task.adoc#suspend[Task Contract] to...FIXME.
+NOTE: `suspend` is part of <<kafka-streams-Task.adoc#suspend, Task Contract>> to...FIXME
 
 `suspend`...FIXME
 
@@ -89,10 +89,12 @@ NOTE: The private `suspend` is used exclusively when `StreamTask` is requested t
 
 [source, java]
 ----
-void commit()
+void commit() // <1>
+void commit(final boolean startNewTransaction)
 ----
+<1> Calls `commit` with `startNewTransaction` flag on
 
-NOTE: `commit` is part of link:kafka-streams-Task.adoc#commit[Task Contract] to...FIXME.
+NOTE: `commit` is part of <<kafka-streams-Task.adoc#commit, Task Contract>> to...FIXME.
 
 `commit`...FIXME
 
@@ -349,3 +351,14 @@ Initializing state stores
 `initializeStateStores` <<kafka-streams-AbstractTask.adoc#registerStateStores, registerStateStores>>.
 
 In the end, `initializeStateStores` returns `true` if the <<kafka-streams-Task.adoc#changelogPartitions, task has any changelog partitions>>. Otherwise, `initializeStateStores` returns `false`.
+
+=== [[commitOffsets]] `commitOffsets` Internal Method
+
+[source, java]
+----
+void commitOffsets(final boolean startNewTransaction)
+----
+
+`commitOffsets`...FIXME
+
+NOTE: `commitOffsets` is used exclusively when `StreamTask` is requested to <<commit, commit>>.

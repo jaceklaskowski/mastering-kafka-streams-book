@@ -67,7 +67,7 @@ NOTE: `reset` is part of link:kafka-streams-ChangelogReader.adoc#reset[Changelog
 
 `reset`...FIXME
 
-=== [[restore]] `restore` Method
+=== [[restore]] Restoring -- `restore` Method
 
 [source, java]
 ----
