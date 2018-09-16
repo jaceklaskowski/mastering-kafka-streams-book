@@ -1,13 +1,15 @@
 == [[StreamThread]] StreamThread -- Stream Processor Thread
 
-`StreamThread` is the <<run, stream processor thread>> (a Java https://docs.oracle.com/javase/9/docs/api/java/lang/Thread.html[Thread]) in a Kafka Streams application that <<runLoop, runs the main event processing loop>> (using the <<consumer, Kafka Consumer>> that subscribes to the <<kafka-streams-InternalTopologyBuilder.adoc#sourceTopicPattern, source topics>> of the <<builder, InternalTopologyBuilder>>).
+`StreamThread` is the <<run, stream processor thread>> (a Java https://docs.oracle.com/javase/9/docs/api/java/lang/Thread.html[Thread]) in a Kafka Streams application that <<runLoop, runs the main event processing loop>>.
 
 .StreamThread and Stream Processing
 image::images/kafka-streams-StreamThread.png[align="center"]
 
+`StreamThread` uses a <<consumer, Kafka Consumer>> to subscribe to the <<kafka-streams-InternalTopologyBuilder.adoc#sourceTopicPattern, source topics>> (of the <<builder, InternalTopologyBuilder>>).
+
 `StreamThread` is <<create, created>> exclusively when `KafkaStreams` is <<kafka-streams-KafkaStreams.adoc#creating-instance, created>>.
 
-NOTE: `KafkaStreams` uses link:kafka-streams-KafkaStreams.adoc#threads[num.stream.threads] configuration property for the number of `StreamThreads` to create.
+NOTE: `KafkaStreams` uses <<kafka-streams-KafkaStreams.adoc#threads, num.stream.threads>> configuration property for the number of `StreamThreads` to create (default: `1` processing thread).
 
 [[pollTimeMs]]
 `StreamThread` uses the link:kafka-streams-properties.adoc#poll.ms[poll.ms] configuration property as the *polling interval* for <<pollRequests, polling the topics for records>>.
@@ -246,7 +248,7 @@ NOTE: `maybeUpdateStandbyTasks` is used exclusively when `StreamThread` is reque
 * [[time]] `Time`
 * [[config]] link:kafka-streams-StreamsConfig.adoc[StreamsConfig]
 * [[restoreConsumer]] Restore Kafka consumer (of keys and values as array of bytes)
-* [[consumer]] Kafka https://kafka.apache.org/20/javadoc/org/apache/kafka/clients/consumer/KafkaConsumer.html[Consumer] (of keys and values as array of bytes)
+* [[consumer]] Kafka https://kafka.apache.org/20/javadoc/org/apache/kafka/clients/consumer/KafkaConsumer.html[Consumer] (`Consumer<byte[], byte[]>`)
 * [[originalReset]] `originalReset`
 * [[taskManager]] link:kafka-streams-TaskManager.adoc[TaskManager]
 * [[streamsMetrics]] link:kafka-streams-StreamsMetricsThreadImpl.adoc[StreamsMetricsThreadImpl]
@@ -256,7 +258,7 @@ NOTE: `maybeUpdateStandbyTasks` is used exclusively when `StreamThread` is reque
 
 `StreamThread` initializes the <<internal-registries, internal registries and counters>>.
 
-=== [[runLoop]] Running Main Event Processing Loop -- `runLoop` Internal Method
+=== [[runLoop]] Running Main Record Processing Loop -- `runLoop` Internal Method
 
 [source, java]
 ----
@@ -282,9 +284,9 @@ NOTE: `runLoop` is used exclusively when `StreamThread` is <<run, started>>.
 void run()
 ----
 
-NOTE: `run` is part of Java's https://docs.oracle.com/javase/9/docs/api/java/lang/Thread.html#run--[Thread Contract] to be executed by a JVM thread.
+NOTE: `run` is part of Java's https://docs.oracle.com/javase/10/docs/api/java/lang/Thread.html#run--[Thread Contract] to be executed by a JVM thread.
 
-Internally, `run` prints out the following INFO message to the logs.
+`run` prints out the following INFO message to the logs.
 
 ```
 Starting

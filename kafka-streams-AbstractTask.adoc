@@ -44,7 +44,7 @@ a| [[processorContext]] link:kafka-streams-InternalProcessorContext.adoc[Interna
 | stateMgr
 a| [[stateMgr]] <<kafka-streams-ProcessorStateManager.adoc#, ProcessorStateManager>>
 
-<<kafka-streams-ProcessorStateManager.adoc#creating-instance, Initialized>> when `AbstractTask` is <<creating-instance, created>>
+<<kafka-streams-ProcessorStateManager.adoc#creating-instance, Created>> when `AbstractTask` is <<creating-instance, created>>
 
 Used when:
 

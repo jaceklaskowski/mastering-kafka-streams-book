@@ -18,7 +18,7 @@ val config: StreamsConfig = ...
 val ks = new KafkaStreams(topology, config)
 ----
 
-Once <<creating-instance, created>>, `KafkaStreams` is <<start, started up>> to start consuming, processing, and producing records (described as a <<topology, Topology>>).
+Once <<creating-instance, created>>, `KafkaStreams` is <<start, started up>> to start consuming, processing, and producing records (as described by a <<topology, Topology>>).
 
 [source, scala]
 ----
@@ -183,6 +183,8 @@ KafkaStreams(
 * [[time]] `Time`
 
 `KafkaStreams` initializes the <<internal-registries, internal registries and counters>>.
+
+While being created, `KafkaStreams`...FIXME
 
 === [[setRunningFromCreated]] `setRunningFromCreated` Internal Method
 

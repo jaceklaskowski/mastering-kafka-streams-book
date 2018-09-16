@@ -2,7 +2,7 @@
 
 `AssignmentInfo` is...FIXME
 
-=== [[decode]] `decode` Method
+=== [[decode]] Decoding User Data -- `decode` Static Method
 
 [source, java]
 ----
@@ -11,4 +11,17 @@ static AssignmentInfo decode(ByteBuffer data)
 
 `decode`...FIXME
 
-NOTE: `decode` is used when...FIXME
+NOTE: `decode` is used exclusively when `StreamsPartitionAssignor` is requested to <<kafka-streams-StreamsPartitionAssignor.adoc#onAssignment, handle partition assignment from the group leader>>.
+
+=== [[decodeVersionOneData]] `decodeVersionOneData` Internal Static Method
+
+[source, java]
+----
+static void decodeVersionOneData(
+  final AssignmentInfo assignmentInfo,
+  final DataInputStream in) throws IOException
+----
+
+`decodeVersionOneData`...FIXME
+
+NOTE: `decodeVersionOneData` is used exclusively when `AssignmentInfo` is requested to <<decode, decode the user data>>.

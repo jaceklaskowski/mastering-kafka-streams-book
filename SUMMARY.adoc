@@ -88,7 +88,7 @@
 
 == Internals of Kafka Streams Application
 
-=== Logical Plan of Execution
+=== Topology -- Logical Plan of Execution
 
 . link:kafka-streams-ProcessorNode.adoc[ProcessorNode]
 .. link:kafka-streams-SourceNode.adoc[SourceNode]

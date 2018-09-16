@@ -17,9 +17,9 @@ image::images/kafka-streams-TaskManager.png[align="center"]
 | Description
 
 | [[assignedActiveTasks]] `assignedActiveTasks`
-a| Partitions (i.e. Kafka `TopicPartitions`) per task id
+a| Kafka https://kafka.apache.org/20/javadoc/org/apache/kafka/common/TopicPartition.html[TopicPartitions] per task id
 
-* Set when...FIXME
+* Set when `TaskManager` is requested to <<setAssignmentMetadata, setAssignmentMetadata>>
 
 | [[assignedStandbyTasks]] `assignedStandbyTasks`
 |
@@ -71,9 +71,9 @@ setAssignmentMetadata(
   final Map<TaskId, Set<TopicPartition>> standbyTasks)
 ----
 
-`setAssignmentMetadata` simply sets <<assignedActiveTasks, assignedActiveTasks>> and <<assignedStandbyTasks, assignedStandbyTasks>> internal registries.
+`setAssignmentMetadata` simply sets the <<assignedActiveTasks, assignedActiveTasks>> and <<assignedStandbyTasks, assignedStandbyTasks>> internal registries with the input `activeTasks` and `standbyTasks`, respectively.
 
-NOTE: `setAssignmentMetadata` is used exclusively when `StreamsPartitionAssignor` is requested to link:kafka-streams-StreamsPartitionAssignor.adoc#onAssignment[handle assignment from the leader].
+NOTE: `setAssignmentMetadata` is used exclusively when `StreamsPartitionAssignor` is requested to <<kafka-streams-StreamsPartitionAssignor.adoc#onAssignment, handle assignment from the leader>>.
 
 === [[updateSubscriptionsFromAssignment]] `updateSubscriptionsFromAssignment` Method
 
