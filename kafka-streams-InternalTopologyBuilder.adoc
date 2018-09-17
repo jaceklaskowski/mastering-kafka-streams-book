@@ -45,22 +45,22 @@ InternalTopologyBuilder setApplicationId(final String applicationId)
 
 [[internal-registries]]
 .InternalTopologyBuilder's Internal Properties (e.g. Registries, Counters and Flags)
-[cols="1,2",options="header",width="100%"]
+[cols="1m,2",options="header",width="100%"]
 |===
 | Name
 | Description
 
-| [[copartitionSourceGroups]] `copartitionSourceGroups`
-|
+| copartitionSourceGroups
+| [[copartitionSourceGroups]]
 
-| [[earliestResetPatterns]] `earliestResetPatterns`
-|
+| earliestResetPatterns
+| [[earliestResetPatterns]]
 
-| [[earliestResetTopics]] `earliestResetTopics`
-|
+| earliestResetTopics
+| [[earliestResetTopics]]
 
-| [[globalStateStores]] `globalStateStores`
-a| Global link:kafka-streams-StateStore.adoc[StateStores] by name
+| globalStateStores
+a| [[globalStateStores]] Global link:kafka-streams-StateStore.adoc[StateStores] by name
 
 * A new global link:kafka-streams-StateStore.adoc[StateStore] is added exclusively when `InternalTopologyBuilder` is requested to <<addGlobalStore, add a global state store to a topology>>
 
@@ -75,46 +75,48 @@ NOTE: There are two types of link:kafka-streams-StateStore.adoc[StateStores], i.
 * `StreamsMetadataState` is link:kafka-streams-StreamsMetadataState.adoc#creating-instance[created]
 ====
 
-| `globalTopics`
+| globalTopics
 a| [[globalTopics]] Names of global topics
 
 * A new name is added when `InternalTopologyBuilder` is requested to <<addGlobalStore, add a global state store to a topology>>
 
 * Used when `InternalTopologyBuilder` is requested to <<isGlobalSource, check if a node name is of a global source node>>
 
-| [[internalTopicNames]] `internalTopicNames`
-a| Names of internal topics that were auto-created when `InternalTopologyBuilder` was requested to <<addInternalTopic, addInternalTopic>>
+| internalTopicNames
+a| [[internalTopicNames]] Names of the internal topics that were auto-created when `InternalTopologyBuilder` was requested to <<addInternalTopic, addInternalTopic>>
 
-| [[latestResetPatterns]] `latestResetPatterns`
-|
+A new topic name is added when `InternalTopologyBuilder` is requested to <<addInternalTopic, addInternalTopic>>
 
-| [[latestResetTopics]] `latestResetTopics`
-|
+| latestResetPatterns
+| [[latestResetPatterns]]
 
-| [[nodeFactories]] `nodeFactories`
-a| link:kafka-streams-NodeFactory.adoc[NodeFactories] by node name
+| latestResetTopics
+| [[latestResetTopics]]
+
+| nodeFactories
+a| [[nodeFactories]] link:kafka-streams-NodeFactory.adoc[NodeFactories] by node name
 
 * A new `NodeFactory` is added when `InternalTopologyBuilder` is requested to <<addGlobalStore, add a global state store to a topology>>, <<addProcessor, addProcessor>>, <<addSink, addSink>> and <<addSource, addSource>>
 
-| [[nodeGrouper]] `nodeGrouper`
-| link:kafka-streams-QuickUnion.adoc[QuickUnion] of the names of node groups
+| nodeGrouper
+| [[nodeGrouper]] link:kafka-streams-QuickUnion.adoc[QuickUnion] of the names of node groups
 
 Used when...FIXME
 
-| [[nodeGroups]] `nodeGroups`
-a| Node groups by ID, i.e. groups of node names that can be looked up by a group ID.
+| nodeGroups
+a| [[nodeGroups]] Node groups by ID, i.e. groups of node names that can be looked up by a group ID.
 
 Initialized when `InternalTopologyBuilder` is requested for <<nodeGroups-accessor, node groups>> (the very first time as once <<makeNodeGroups, initialized>> it will never change)
 
 NOTE: <<nodeGroups-accessor, nodeGroups accessor>> is used to access `nodeGroups` registry.
 
-| [[nodeToSinkTopic]] `nodeToSinkTopic`
-|
+| nodeToSinkTopic
+| [[nodeToSinkTopic]]
 
-| [[nodeToSourcePatterns]] `nodeToSourcePatterns`
-|
+| nodeToSourcePatterns
+| [[nodeToSourcePatterns]]
 
-| `nodeToSourceTopics`
+| nodeToSourceTopics
 a| [[nodeToSourceTopics]] Topic names by the source processor node name (without the <<applicationId, application ID>> prefix for internal topics)
 
 New entries are added when `InternalTopologyBuilder` is requested for the following:
@@ -123,37 +125,37 @@ New entries are added when `InternalTopologyBuilder` is requested for the follow
 
 * <<setRegexMatchedTopicsToSourceNodes, setRegexMatchedTopicsToSourceNodes>>
 
-| [[sourceTopicNames]] `sourceTopicNames`
-| Collection of <<addSource, registered>> topic names
+| sourceTopicNames
+| [[sourceTopicNames]] Collection of <<addSource, registered>> topic names
 
 Used when...FIXME
 
-| [[stateFactories]] `stateFactories`
-a| link:kafka-streams-StateStoreFactory.adoc[StateStoreFactories] by name
+| stateFactories
+a| [[stateFactories]] link:kafka-streams-StateStoreFactory.adoc[StateStoreFactories] by name
 
 * A new `StateStoreFactory` is added when `InternalTopologyBuilder` is requested to <<addStateStore, addStateStore>>
 
-| [[stateStoreNameToSourceRegex]] `stateStoreNameToSourceRegex`
-|
+| stateStoreNameToSourceRegex
+| [[stateStoreNameToSourceRegex]]
 
-| [[stateStoreNameToSourceTopics]] `stateStoreNameToSourceTopics`
-|
+| stateStoreNameToSourceTopics
+| [[stateStoreNameToSourceTopics]]
 
-| [[storeToChangelogTopic]] `storeToChangelogTopic`
-a| Topic names by the names of state stores
+| storeToChangelogTopic
+a| [[storeToChangelogTopic]] Topic names by the names of state stores
 
 * A new entry is added when `InternalTopologyBuilder` is requested to <<buildProcessorNode, buildProcessorNode>> and <<connectSourceStoreAndTopic, associate the names of a state store and a topic>>
 
-| [[subscriptionUpdates]] `subscriptionUpdates`
-|
+| subscriptionUpdates
+| [[subscriptionUpdates]]
 
-| `topicPattern`
+| topicPattern
 a| [[topicPattern]] Source topics pattern (to subscribe to)
 
 * Initialized the first time when `InternalTopologyBuilder` is requested for the <<sourceTopicPattern, source topics pattern>>
 
-| [[topicToPatterns]] `topicToPatterns`
-|
+| topicToPatterns
+| [[topicToPatterns]]
 |===
 
 [[logging]]
@@ -835,22 +837,22 @@ void addSink(
 * `Topology` is requested to link:kafka-streams-Topology.adoc#addSink[add a sink]
 ====
 
-=== [[addInternalTopic]] `addInternalTopic` Method
+=== [[addInternalTopic]] Registering Internal Topic Name -- `addInternalTopic` Method
 
 [source, java]
 ----
 void addInternalTopic(final String topicName)
 ----
 
-`addInternalTopic` simply adds the input `topicName` to the <<internalTopicNames, internalTopicNames>> internal registry.
+`addInternalTopic` simply registers the input `topicName` (in the <<internalTopicNames, internalTopicNames>> internal registry).
 
 [NOTE]
 ====
 `addInternalTopic` is used when:
 
-* `KStreamImpl` is requested to link:kafka-streams-KStreamImpl.adoc#createReparitionedSource[createReparitionedSource]
+* `KStreamImpl` is requested to <<kafka-streams-KStreamImpl.adoc#createReparitionedSource, createReparitionedSource>>
 
-* `KGroupedTableImpl` is requested to `buildAggregate`
+* `KGroupedTableImpl` is requested to <<kafka-streams-KGroupedTableImpl.adoc#buildAggregate, buildAggregate>> (for <<kafka-streams-KGroupedTableImpl.adoc#reduce, reduce>>, <<kafka-streams-KGroupedTableImpl.adoc#count, count>> and <<kafka-streams-KGroupedTableImpl.adoc#aggregate, aggregate>> operators)
 ====
 
 === [[build]] Building Processor Task Topology -- `build` Factory Method

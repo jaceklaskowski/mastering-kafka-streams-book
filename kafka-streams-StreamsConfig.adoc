@@ -131,7 +131,7 @@ Map<String, Object> getProducerConfigs(final String clientId)
 
 NOTE: `getProducerConfigs` is used when...FIXME
 
-=== [[getAdminConfigs]] `getAdminConfigs` Method
+=== [[getAdminConfigs]] Configuration for Kafka AdminClient -- `getAdminConfigs` Method
 
 [source, java]
 ----
@@ -215,7 +215,7 @@ Map<String, Object> getRestoreConsumerConfigs(final String clientId)
 
 NOTE: `getRestoreConsumerConfigs` is used when...FIXME
 
-=== [[getMainConsumerConfigs]] Getting Configuration for Kafka Consumer -- `getMainConsumerConfigs` Method
+=== [[getMainConsumerConfigs]] Configuration for Kafka Consumer -- `getMainConsumerConfigs` Method
 
 [source, java]
 ----

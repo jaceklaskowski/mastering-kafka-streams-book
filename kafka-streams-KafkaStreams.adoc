@@ -33,12 +33,15 @@ ks.start
 
 [[internal-registries]]
 .KafkaStreams's Internal Properties (e.g. Registries, Counters and Flags)
-[cols="1,2",options="header",width="100%"]
+[cols="1m,2",options="header",width="100%"]
 |===
 | Name
 | Description
 
-| `globalStreamThread`
+| clientId
+| [[clientId]]
+
+| globalStreamThread
 a| [[globalStreamThread]] link:kafka-streams-GlobalStreamThread.adoc[GlobalStreamThread]
 
 * Initialized exclusively when <<internalTopologyBuilder, InternalTopologyBuilder>> could link:kafka-streams-InternalTopologyBuilder.adoc#buildGlobalStateTopology[build a global ProcessorTopology]
@@ -47,27 +50,27 @@ a| [[globalStreamThread]] link:kafka-streams-GlobalStreamThread.adoc[GlobalStrea
 
 * Set to `null` while `KafkaStreams` is being <<close, closed>>
 
-| `adminClient`
-a| [[adminClient]] Kafka https://kafka.apache.org/20/javadoc/org/apache/kafka/clients/admin/AdminClient.html[AdminClient] for managing and inspecting topics, brokers, configurations and ACLs.
+| adminClient
+a| [[adminClient]] Kafka https://kafka.apache.org/20/javadoc/org/apache/kafka/clients/admin/AdminClient.html[AdminClient] (that allows for managing and inspecting topics, brokers, configurations and ACLs)
 
-* Created while `KafkaStreams` is being <<creating-instance, created>> for the only purpose of link:kafka-streams-StreamThread.adoc#create[creating a StreamThread] (which is actually passed along to a link:kafka-streams-TaskManager.adoc#adminClient[TaskManager])
+* Initialized when `KafkaStreams` is <<creating-instance-adminClient, created>> for the only purpose of link:kafka-streams-StreamThread.adoc#create[creating StreamThreads] (that simply use it to <<kafka-streams-TaskManager.adoc#adminClient, create a TaskManager>>)
 
-* Closed while `KafkaStreams` is being <<close, closed>>
+* Closed when `KafkaStreams` is <<close, closed>>
 
-| `queryableStoreProvider`
+| queryableStoreProvider
 | [[queryableStoreProvider]] link:kafka-streams-QueryableStoreProvider.adoc[QueryableStoreProvider]
 
-| `stateDirectory`
+| stateDirectory
 | [[stateDirectory]] link:kafka-streams-StateDirectory.adoc[StateDirectory]
 
-| `stateLock`
+| stateLock
 | [[stateLock]] Object lock for...FIXME
 
-| `streamsMetadataState`
+| streamsMetadataState
 | [[streamsMetadataState]] link:kafka-streams-StreamsMetadataState.adoc[StreamsMetadataState] (for the <<internalTopologyBuilder, InternalTopologyBuilder>> and link:kafka-streams-properties.adoc#application.server[application.server] configuration property)
 
-| `threads`
-a| [[threads]] <<kafka-streams-StreamThread.adoc#, Stream processor threads>> (aka `StreamThread`)
+| threads
+a| [[threads]] <<kafka-streams-StreamThread.adoc#, Stream processor threads>>
 
 NOTE: The number of stream processor threads per KafkaStreams instance is controlled by <<kafka-streams-properties.adoc#num.stream.threads, num.stream.threads>> configuration property (default: `1` processing thread).
 
@@ -185,6 +188,9 @@ KafkaStreams(
 `KafkaStreams` initializes the <<internal-registries, internal registries and counters>>.
 
 While being created, `KafkaStreams`...FIXME
+
+[[creating-instance-adminClient]]
+`KafkaStreams` requests the input <<kafka-streams-KafkaClientSupplier.adoc#, KafkaClientSupplier>> for a <<kafka-streams-KafkaClientSupplier.adoc#getAdminClient, Kafka AdminClient>> (given the <<kafka-streams-StreamsConfig.adoc#getAdminConfigs, AdminClient configuration>> for the <<clientId, clientId>>).
 
 === [[setRunningFromCreated]] `setRunningFromCreated` Internal Method
 

@@ -142,3 +142,14 @@ Merger<K, V> mergerForAggregator(final Aggregator<K, V, V> aggregator)
 `mergerForAggregator`...FIXME
 
 NOTE: `mergerForAggregator` is used when...FIXME
+
+=== [[doCount]] `doCount` Internal Method
+
+[source, java]
+----
+KTable<Windowed<K>, Long> doCount(final Materialized<K, Long, SessionStore<Bytes, byte[]>> materialized)
+----
+
+`doCount`...FIXME
+
+NOTE: `doCount` is used exclusively when `SessionWindowedKStreamImpl` is requested to <<count, count>>.

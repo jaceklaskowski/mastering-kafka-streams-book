@@ -2,17 +2,6 @@
 
 `KGroupedStreamImpl` is a concrete link:kafka-streams-AbstractStream.adoc[AbstractStream] and a link:kafka-streams-KGroupedStream.adoc[KGroupedStream].
 
-=== [[repartitionIfRequired]] `repartitionIfRequired` Internal Method
-
-[source, java]
-----
-String repartitionIfRequired(final String queryableStoreName)
-----
-
-`repartitionIfRequired`...FIXME
-
-NOTE: `repartitionIfRequired` is used when...FIXME
-
 === [[aggregate]] `aggregate` Method
 
 [source, java]
@@ -24,7 +13,6 @@ KTable<K, VR> aggregate(
   final Initializer<VR> initializer,
   final Aggregator<? super K, ? super V, VR> aggregator,
   final Materialized<K, VR, KeyValueStore<Bytes, byte[]>> materialized)
-// DEPRECATED ARE NOT LISTED HERE
 ----
 
 NOTE: `aggregate` is part of link:kafka-streams-KGroupedStream.adoc#aggregate[KGroupedStream Contract] to...FIXME.
@@ -39,7 +27,6 @@ KTable<K, V> reduce(final Reducer<V> reducer)
 KTable<K, V> reduce(
   final Reducer<V> reducer,
   final Materialized<K, V, KeyValueStore<Bytes, byte[]>> materialized)
-// DEPRECATED ARE NOT LISTED HERE
 ----
 
 NOTE: `reduce` is part of link:kafka-streams-KGroupedStream.adoc#reduce[KGroupedStream Contract] to...FIXME.
@@ -51,9 +38,46 @@ NOTE: `reduce` is part of link:kafka-streams-KGroupedStream.adoc#reduce[KGrouped
 [source, java]
 ----
 SessionWindowedKStream<K, V> windowedBy(final SessionWindows windows)
-<W extends Window> TimeWindowedKStream<K, V> windowedBy(final Windows<W> windows)
+TimeWindowedKStream<K, V> windowedBy(final Windows<W> windows)
 ----
 
 NOTE: `windowedBy` is part of link:kafka-streams-KGroupedStream.adoc#windowedBy[KGroupedStream Contract] to...FIXME.
 
 `windowedBy`...FIXME
+
+=== [[doAggregate]] `doAggregate` Internal Method
+
+[source, java]
+----
+KTable<K, T> doAggregate(
+  final KStreamAggProcessorSupplier<K, ?, V, T> aggregateSupplier,
+  final String functionName,
+  final MaterializedInternal<K, T, KeyValueStore<Bytes, byte[]>> materializedInternal)
+----
+
+`doAggregate`...FIXME
+
+NOTE: `doAggregate` is used when `KGroupedStreamImpl` is requested to <<reduce, reduce>>, <<aggregate, aggregate>> and <<doCount, doCount>>.
+
+=== [[doCount]] `doCount` Internal Method
+
+[source, java]
+----
+KTable<K, Long> doCount(final Materialized<K, Long, KeyValueStore<Bytes, byte[]>> materialized)
+----
+
+`doCount`...FIXME
+
+NOTE: `doCount` is used exclusively when `KGroupedStreamImpl` is requested to <<count, count>>.
+
+=== [[count]] `count` Method
+
+[source, java]
+----
+KTable<K, Long> count()
+KTable<K, Long> count(final Materialized<K, Long, KeyValueStore<Bytes, byte[]>> materialized)
+----
+
+NOTE: `count` is part of the <<kafka-streams-KGroupedStream.adoc#count, KGroupedStream Contract>> to...FIXME.
+
+`count`...FIXME

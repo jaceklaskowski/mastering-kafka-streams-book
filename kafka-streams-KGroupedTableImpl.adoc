@@ -16,7 +16,7 @@ void buildAggregate(
 
 `buildAggregate`...FIXME
 
-NOTE: `buildAggregate` is used when...FIXME
+NOTE: `buildAggregate` is used exclusively when `KGroupedTableImpl` is requested to <<doAggregate, doAggregate>>.
 
 === [[doAggregate]] `doAggregate` Internal Method
 
@@ -30,4 +30,44 @@ NOTE: `buildAggregate` is used when...FIXME
 
 `doAggregate`...FIXME
 
-NOTE: `doAggregate` is used when...FIXME
+NOTE: `doAggregate` is used when `KGroupedTableImpl` is requested to <<reduce, reduce>>, <<count, count>> and <<aggregate, aggregate>>.
+
+=== [[reduce]] `reduce` Method
+
+[source, java]
+----
+KTable<K, V> reduce(
+  final Reducer<V> adder,
+  final Reducer<V> subtractor,
+  final Materialized<K, V, KeyValueStore<Bytes, byte[]>> materialized)
+----
+
+NOTE: `reduce` is part of the <<kafka-streams-KGroupedTable.adoc#reduce, KGroupedTable Contract>> to...FIXME.
+
+`reduce`...FIXME
+
+=== [[count]] `count` Method
+
+[source, java]
+----
+KTable<K, Long> count(final Materialized<K, Long, KeyValueStore<Bytes, byte[]>> materialized)
+----
+
+NOTE: `count` is part of the <<kafka-streams-KGroupedTable.adoc#count, KGroupedTable Contract>> to...FIXME.
+
+`count`...FIXME
+
+=== [[aggregate]] `aggregate` Method
+
+[source, java]
+----
+KTable<K, VR> aggregate(
+  final Initializer<VR> initializer,
+  final Aggregator<? super K, ? super V, VR> adder,
+  final Aggregator<? super K, ? super V, VR> subtractor,
+  final Materialized<K, VR, KeyValueStore<Bytes, byte[]>> materialized)
+----
+
+NOTE: `aggregate` is part of the <<kafka-streams-KGroupedTable.adoc#aggregate, KGroupedTable Contract>> to...FIXME.
+
+`aggregate`...FIXME

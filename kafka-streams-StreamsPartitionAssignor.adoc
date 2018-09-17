@@ -17,17 +17,31 @@ TIP: Read https://cwiki.apache.org/confluence/display/KAFKA/Kafka+Client-side+As
 | Description
 
 | internalTopicManager
-a| [[internalTopicManager]] link:kafka-streams-InternalTopicManager.adoc[InternalTopicManager]
+| [[internalTopicManager]] link:kafka-streams-InternalTopicManager.adoc[InternalTopicManager]
 
-* Initialized exclusively when `StreamsPartitionAssignor` is requested to <<configure, configure>>
+Initialized when `StreamsPartitionAssignor` is requested to <<configure, configure>> itself
 
-* Used exclusively when `StreamsPartitionAssignor` is requested to <<prepareTopic, prepareTopic>>
+Used exclusively when `StreamsPartitionAssignor` is requested to <<prepareTopic, prepareTopic>>
 
 | userEndPoint
 | [[userEndPoint]] User-defined endpoint in the format of `host:port` as <<configure, configured>> by link:kafka-streams-properties.adoc#application.server[application.server] configuration property (default: empty).
 
 Used when `StreamsPartitionAssignor` is requested to <<subscription, subscription>> (and create a `SubscriptionInfo`)
 |===
+
+[[logging]]
+[TIP]
+====
+Enable `DEBUG` logging level for `org.apache.kafka.clients.consumer.internals.ConsumerCoordinator` logger to see what happens inside.
+
+Add the following line to `log4j.properties`:
+
+```
+log4j.logger.org.apache.kafka.clients.consumer.internals.ConsumerCoordinator=DEBUG
+```
+
+Refer to link:kafka-logging.adoc#log4j.properties[Application Logging Using log4j].
+====
 
 === [[subscription]] `subscription` Method
 
@@ -99,9 +113,9 @@ void prepareTopic(final Map<String, InternalTopicMetadata> topicPartitions)
 
 `prepareTopic`...FIXME
 
-NOTE: `prepareTopic` is used exclusively when `StreamsPartitionAssignor` is requested to <<assign, assign>>.
+NOTE: `prepareTopic` is used exclusively when `StreamsPartitionAssignor` is requested to <<assign, perform group assignment>>.
 
-=== [[assign]] `assign` Method
+=== [[assign]] Performing Group Assignment -- `assign` Method
 
 [source, java]
 ----

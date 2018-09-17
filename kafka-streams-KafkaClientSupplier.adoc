@@ -17,9 +17,9 @@ a| [[getAdminClient]]
 AdminClient getAdminClient(final Map<String, Object> config);
 ----
 
-A Kafka http://kafka.apache.org/20/javadoc/org/apache/kafka/clients/admin/AdminClient.html[AdminClient] (for <<kafka-streams-KafkaStreams.adoc#adminClient, KafkaStreams>>)
+A Kafka https://kafka.apache.org/20/javadoc/org/apache/kafka/clients/admin/AdminClient.html[AdminClient] (for <<kafka-streams-KafkaStreams.adoc#adminClient, KafkaStreams>>)
 
-Used exclusively when `KafkaStreams` is <<kafka-streams-KafkaStreams.adoc#creating-instance, created>>
+Used exclusively when `KafkaStreams` is <<kafka-streams-KafkaStreams.adoc#creating-instance-adminClient, created>>
 
 | getConsumer
 a| [[getConsumer]]
