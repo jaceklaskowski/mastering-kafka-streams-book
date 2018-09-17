@@ -55,7 +55,7 @@ NOTE: `initialize` is used exclusively when `GlobalStreamThread` is requested to
 `StateConsumer` takes the following when created:
 
 * [[logContext]] `LogContext`
-* [[globalConsumer]] (Global) Kafka https://kafka.apache.org/10/javadoc/org/apache/kafka/clients/consumer/KafkaConsumer.html[Consumer] (of keys and values as array of bytes)
+* [[globalConsumer]] (Global) Kafka https://kafka.apache.org/20/javadoc/org/apache/kafka/clients/consumer/KafkaConsumer.html[Consumer] (`Consumer<byte[], byte[]>`)
 * [[stateMaintainer]] link:kafka-streams-GlobalStateMaintainer.adoc[GlobalStateMaintainer]
 * [[time]] `Time`
 * [[pollMs]] Polling interval (in milliseconds)

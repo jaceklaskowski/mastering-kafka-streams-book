@@ -39,7 +39,7 @@ image::images/kafka-streams-StoreChangelogReader.png[align="center"]
 
 `StoreChangelogReader` takes the following when created:
 
-* [[restoreConsumer]] Kafka https://kafka.apache.org/20/javadoc/org/apache/kafka/clients/consumer/Consumer.html[Consumer] (of keys and values as array of bytes)
+* [[restoreConsumer]] Kafka https://kafka.apache.org/20/javadoc/org/apache/kafka/clients/consumer/KafkaConsumer.html[Consumer] (`Consumer<byte[], byte[]>`)
 * [[userStateRestoreListener]] `StateRestoreListener`
 * [[logContext]] `LogContext`
 

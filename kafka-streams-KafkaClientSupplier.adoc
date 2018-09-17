@@ -1,38 +1,79 @@
 == [[KafkaClientSupplier]] KafkaClientSupplier Contract
 
-`KafkaClientSupplier` is the <<contract, contract>> for objects that can provide (_supply_) Kafka clients, i.e. <<getAdminClient, AdminClient>>, <<getProducer, Producer>>, <<getConsumer, Consumer>> and <<getRestoreConsumer, restore Consumer>>.
+`KafkaClientSupplier` is the <<contract, contract>> of <<implementations, Kafka client suppliers>> that provide (_supply_) Kafka clients, i.e. <<getAdminClient, AdminClient>>, Consumers (<<getConsumer, getConsumer>>, <<getGlobalConsumer, getGlobalConsumer>> and <<getRestoreConsumer, getRestoreConsumer>>) and a <<getProducer, Producer>>.
 
-NOTE: link:kafka-streams-DefaultKafkaClientSupplier.adoc[DefaultKafkaClientSupplier] is the default `KafkaClientSupplier`.
-
-=== [[contract]] KafkaClientSupplier Contract
-
-[source, java]
-----
-package org.apache.kafka.streams;
-
-interface KafkaClientSupplier {
-  AdminClient getAdminClient(final Map<String, Object> config);
-  Producer<byte[], byte[]> getProducer(final Map<String, Object> config);
-  Consumer<byte[], byte[]> getConsumer(final Map<String, Object> config);
-  Consumer<byte[], byte[]> getRestoreConsumer(final Map<String, Object> config);
-}
-----
-
+[[contract]]
 .KafkaClientSupplier Contract
-[cols="1,2",options="header",width="100%"]
+[cols="1m,2",options="header",width="100%"]
 |===
 | Method
 | Description
 
-| [[getAdminClient]] `getAdminClient`
-| Used exclusively when `KafkaStreams` is link:kafka-streams-KafkaStreams.adoc#creating-instance[created] (and creates the link:kafka-streams-KafkaStreams.adoc#adminClient[AdminClient])
+| getAdminClient
+a| [[getAdminClient]]
 
-| [[getProducer]] `getProducer`
-| Used when...
+[source, java]
+----
+AdminClient getAdminClient(final Map<String, Object> config);
+----
 
-| [[getConsumer]] `getConsumer`
-| Used when...
+A Kafka http://kafka.apache.org/20/javadoc/org/apache/kafka/clients/admin/AdminClient.html[AdminClient] (for <<kafka-streams-KafkaStreams.adoc#adminClient, KafkaStreams>>)
 
-| [[getRestoreConsumer]] `getRestoreConsumer`
-| Used when...
+Used exclusively when `KafkaStreams` is <<kafka-streams-KafkaStreams.adoc#creating-instance, created>>
+
+| getConsumer
+a| [[getConsumer]]
+
+[source, java]
+----
+Consumer<byte[], byte[]> getConsumer(final Map<String, Object> config);
+----
+
+A Kafka https://kafka.apache.org/20/javadoc/org/apache/kafka/clients/consumer/KafkaConsumer.html[Consumer] (for <<kafka-streams-TaskManager.adoc#consumer, TaskManager>> and <<kafka-streams-StreamThread.adoc#consumer, StreamThread>>)
+
+Used exclusively when `StreamThread` is <<kafka-streams-StreamThread.adoc#create, created>> (that also <<kafka-streams-TaskManager.adoc#setConsumer, sets the Kafka Consumer>> for the <<kafka-streams-TaskManager.adoc#taskManager, TaskManager>>)
+
+| getGlobalConsumer
+a| [[getGlobalConsumer]]
+
+[source, java]
+----
+Consumer<byte[], byte[]> getGlobalConsumer(final Map<String, Object> config);
+----
+
+A Kafka https://kafka.apache.org/20/javadoc/org/apache/kafka/clients/consumer/KafkaConsumer.html[Consumer] (for <<kafka-streams-GlobalStreamThread.adoc#globalConsumer, GlobalStreamThread>>)
+
+Used exclusively when `KafkaStreams` is <<kafka-streams-KafkaStreams.adoc#creating-instance, created>> (for the only purpose of creating a <<kafka-streams-KafkaStreams.adoc#globalStreamThread, GlobalStreamThread>>)
+
+| getProducer
+a| [[getProducer]]
+
+[source, java]
+----
+Producer<byte[], byte[]> getProducer(final Map<String, Object> config);
+----
+
+A Kafka http://kafka.apache.org/20/javadoc/org/apache/kafka/clients/producer/KafkaProducer.html[Producer] (for <<kafka-streams-StreamThread.adoc#producer, StreamThreads>> and <<kafka-streams-TaskCreator.adoc#threadProducer, TaskCreator>>)
+
+Used when:
+
+* `StreamThread` is <<kafka-streams-StreamThread.adoc#create, created>> (with <<kafka-streams-properties.adoc#processing.guarantee, processing.guarantee>> as <<kafka-streams-properties.adoc#at_least_once, at_least_once>>)
+
+* `TaskCreator` is requested to <<kafka-streams-TaskCreator.adoc#createProducer, createProducer>> (with <<kafka-streams-properties.adoc#processing.guarantee, processing.guarantee>> as <<kafka-streams-properties.adoc#exactly-once, exactly-once>>)
+
+| getRestoreConsumer
+a| [[getRestoreConsumer]]
+
+[source, java]
+----
+Consumer<byte[], byte[]> getRestoreConsumer(final Map<String, Object> config);
+----
+
+A Kafka https://kafka.apache.org/20/javadoc/org/apache/kafka/clients/consumer/KafkaConsumer.html[Consumer] (for <<kafka-streams-StoreChangelogReader.adoc#restoreConsumer, StoreChangelogReader>>, <<kafka-streams-TaskManager.adoc#restoreConsumer, TaskManager>> and <<kafka-streams-StreamThread.adoc#restoreConsumer, StreamThread>>)
+
+Used exclusively when `StreamThread` is <<kafka-streams-StreamThread.adoc#create, created>>
+
 |===
+
+[[implementations]]
+NOTE: <<kafka-streams-DefaultKafkaClientSupplier.adoc#, DefaultKafkaClientSupplier>> is the one and only known implementation of the <<contract, KafkaClientSupplier Contract>>.

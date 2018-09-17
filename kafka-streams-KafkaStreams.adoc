@@ -48,7 +48,7 @@ a| [[globalStreamThread]] link:kafka-streams-GlobalStreamThread.adoc[GlobalStrea
 * Set to `null` while `KafkaStreams` is being <<close, closed>>
 
 | `adminClient`
-a| [[adminClient]] Administrative client for Kafka, i.e. https://kafka.apache.org/10/javadoc/org/apache/kafka/clients/admin/AdminClient.html[AdminClient], that supports managing and inspecting topics, brokers, configurations and ACLs.
+a| [[adminClient]] Kafka https://kafka.apache.org/20/javadoc/org/apache/kafka/clients/admin/AdminClient.html[AdminClient] for managing and inspecting topics, brokers, configurations and ACLs.
 
 * Created while `KafkaStreams` is being <<creating-instance, created>> for the only purpose of link:kafka-streams-StreamThread.adoc#create[creating a StreamThread] (which is actually passed along to a link:kafka-streams-TaskManager.adoc#adminClient[TaskManager])
 

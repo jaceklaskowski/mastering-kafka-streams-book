@@ -1,13 +1,13 @@
 == Configuration Properties
 
 .Configuration Properties
-[cols="1,1,2",options="header",width="100%"]
+[cols="1m,1,2",options="header",width="100%"]
 |===
 | Name
 | Default Value
 | Description
 
-| `application.id`
+| application.id
 | (empty)
 | [[application.id]] Required *application ID*, i.e. the identifier of a Kafka Streams application.
 
@@ -15,31 +15,31 @@ It must be unique within the Kafka cluster as it is used as a namespace for the 
 
 Use <<kafka-streams-StreamsConfig.adoc#APPLICATION_ID_CONFIG, StreamsConfig.APPLICATION_ID_CONFIG>> to reference the property.
 
-| [[application.server]] `application.server`
+| application.server
 | (empty)
-| A `host:port` pair pointing to an embedded user-defined endpoint (that can be used for discovering the locations of state stores in a single KafkaStreams application).
-
-Use `StreamsConfig.APPLICATION_SERVER_CONFIG` to reference the property.
+| [[application.server]] A `host:port` pair pointing to an embedded user-defined endpoint (that can be used for discovering the locations of state stores in a single KafkaStreams application).
 
 Used when `StreamPartitionAssignor` is requested to link:kafka-streams-StreamsPartitionAssignor.adoc#configure[configure itself].
 
-| `commit.interval.ms`
+Use <<kafka-streams-StreamsConfig.adoc#APPLICATION_SERVER_CONFIG, StreamsConfig.APPLICATION_SERVER_CONFIG>> to reference the property.
+
+| commit.interval.ms
 a|
 * `100L` when <<processing.guarantee, processing.guarantee>> is <<exactly_once, exactly_once>> (which is not by default)
 * `30000L` otherwise
 a| [[commit.interval.ms]] Desired *flush interval* or *commit interval* (in millis), i.e. the time between persisting the position of a processor.
 
-Use `StreamsConfig.COMMIT_INTERVAL_MS_CONFIG` to reference the property.
+Use <<kafka-streams-StreamsConfig.adoc#COMMIT_INTERVAL_MS_CONFIG, StreamsConfig.COMMIT_INTERVAL_MS_CONFIG>> to reference the property.
 
-| `num.stream.threads`
+| num.stream.threads
 | `1`
 | [[num.stream.threads]] The number of link:kafka-streams-KafkaStreams.adoc#threads[stream processor threads].
 
-| `default.timestamp.extractor`
+| default.timestamp.extractor
 | <<kafka-streams-FailOnInvalidTimestamp.adoc#, FailOnInvalidTimestamp>>
 | [[default.timestamp.extractor]] Default timestamp extractor class that implements the <<kafka-streams-TimestampExtractor.adoc#, org.apache.kafka.streams.processor.TimestampExtractor>> interface.
 
-| `poll.ms`
+| poll.ms
 | `100`
 a| [[poll.ms]] *Polling interval* (in milliseconds), i.e. the time spent waiting in `Consumer.poll` (unless data is available in the buffer). If `0`, returns immediately with any records that are available currently in the buffer, else returns empty. Must not be negative.
 
@@ -47,11 +47,11 @@ a| [[poll.ms]] *Polling interval* (in milliseconds), i.e. the time spent waiting
 
 * Used when `StreamThread` is link:kafka-streams-StreamThread.adoc#pollTimeMs[created]
 
-Use `StreamsConfig.POLL_MS_CONFIG` to reference the property.
+Use <<kafka-streams-StreamsConfig.adoc#POLL_MS_CONFIG, StreamsConfig.POLL_MS_CONFIG>> to reference the property.
 
-| [[processing.guarantee]] `processing.guarantee`
+| processing.guarantee
 | `at_least_once`
-a| *Processing guarantee* (aka _Exactly-Once Support_ or _EOS support_)
+a| [[processing.guarantee]] *Processing guarantee* (aka _Exactly-Once Support_ or _EOS support_)
 
 Possible values are:
 
@@ -65,18 +65,18 @@ Possible values are:
 For development you can change this by adjusting broker setting `transaction.state.log.replication.factor`.
 ====
 
-Use `StreamsConfig.PROCESSING_GUARANTEE_CONFIG` to reference the property.
+Use <<kafka-streams-StreamsConfig.adoc#PROCESSING_GUARANTEE_CONFIG, StreamsConfig.PROCESSING_GUARANTEE_CONFIG>> to reference the property.
 
-| [[state.cleanup.delay.ms]] `state.cleanup.delay.ms`
-| 10 * 60 * 1000
-| The amount of time (in milliseconds) to wait before deleting state when a partition has migrated. Only state directories that have not been modified for at least `state.cleanup.delay.ms` will be removed.
+| state.cleanup.delay.ms
+| `10` mins (`10 * 60 * 1000`)
+| [[state.cleanup.delay.ms]] The amount of time (in milliseconds) to wait before deleting state when a partition has migrated. Only state directories that have not been modified for at least `state.cleanup.delay.ms` will be removed.
 
-| `state.dir`
+| state.dir
 | `/tmp/kafka-streams`
 a| [[state.dir]] Path to the base directory for a state storage
 
 * Used when `StateDirectory` is link:kafka-streams-StateDirectory.adoc#creating-instance[created]
 
-Use `StreamsConfig.STATE_DIR_CONFIG` to reference the property.
+Use <<kafka-streams-StreamsConfig.adoc#STATE_DIR_CONFIG, StreamsConfig.STATE_DIR_CONFIG>> to reference the property.
 
 |===

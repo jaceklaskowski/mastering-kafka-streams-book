@@ -31,7 +31,7 @@ a| *Cluster metadata*, i.e. Kafka https://kafka.apache.org/10/javadoc/org/apache
 * Set when `StreamsPartitionAssignor` does link:kafka-streams-StreamsPartitionAssignor.adoc#assign[assign] and link:kafka-streams-StreamsPartitionAssignor.adoc#onAssignment[onAssignment]
 
 | [[consumer]] `consumer`
-a| Kafka https://kafka.apache.org/10/javadoc/org/apache/kafka/clients/consumer/KafkaConsumer.html[Consumer] (of keys and values as array of bytes)
+a| Kafka https://kafka.apache.org/20/javadoc/org/apache/kafka/clients/consumer/KafkaConsumer.html[Consumer] (`Consumer<byte[], byte[]>`)
 
 [[setConsumer]]
 Assigned right when `StreamThread` is link:kafka-streams-StreamThread.adoc#create[created] (and corresponds to the link:kafka-streams-StreamThread.adoc#consumer[Kafka consumer] from the link:kafka-streams-KafkaClientSupplier.adoc#getConsumer[KafkaClientSupplier] that was used to create the link:kafka-streams-KafkaStreams.adoc#creating-instance[KafkaStreams])
@@ -137,7 +137,7 @@ NOTE: `activeTask` is used exclusively when `StreamThread` is requested to link:
 * [[changelogReader]] link:kafka-streams-ChangelogReader.adoc[ChangelogReader]
 * [[processId]] `UUID`
 * [[logPrefix]] `logPrefix`
-* [[restoreConsumer]] Kafka https://kafka.apache.org/10/javadoc/org/apache/kafka/clients/consumer/KafkaConsumer.html[Consumer] (of keys and values as array of bytes)
+* [[restoreConsumer]] Kafka https://kafka.apache.org/20/javadoc/org/apache/kafka/clients/consumer/KafkaConsumer.html[Consumer] (`Consumer<byte[], byte[]>`)
 * [[streamsMetadataState]] link:kafka-streams-StreamsMetadataState.adoc[StreamsMetadataState]
 * [[taskCreator]] link:kafka-streams-TaskCreator.adoc[StreamThread.AbstractTaskCreator<StreamTask>]
 * [[standbyTaskCreator]] link:kafka-streams-StandbyTaskCreator.adoc[StreamThread.AbstractTaskCreator<StandbyTask>]

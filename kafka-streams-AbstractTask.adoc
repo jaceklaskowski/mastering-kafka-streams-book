@@ -87,7 +87,7 @@ NOTE: `closeStateManager` is used when...FIXME
 * [[id]] `TaskId`
 * [[partitions]] Assigned Kafka https://kafka.apache.org/20/javadoc/org/apache/kafka/common/TopicPartition.html[TopicPartitions]
 * [[topology]] <<kafka-streams-ProcessorTopology.adoc#, ProcessorTopology>>
-* [[consumer]] Kafka https://kafka.apache.org/20/javadoc/org/apache/kafka/clients/consumer/KafkaConsumer.html[Consumer] (of keys and values as array of bytes, i.e. `byte[]`)
+* [[consumer]] Kafka https://kafka.apache.org/20/javadoc/org/apache/kafka/clients/consumer/KafkaConsumer.html[Consumer] (`Consumer<byte[], byte[]>`)
 * [[changelogReader]] <<kafka-streams-ChangelogReader.adoc#, ChangelogReader>>
 * [[isStandby]] `isStandby` flag
 * [[stateDirectory]] <<kafka-streams-StateDirectory.adoc#, StateDirectory>>

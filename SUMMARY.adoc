@@ -25,7 +25,7 @@
 . link:kafka-streams-Consumed.adoc[Consumed]
 . link:kafka-streams-Produced.adoc[Produced]
 . link:kafka-streams-Printed.adoc[Printed]
-. link:kafka-streams-KafkaClientSupplier.adoc[KafkaClientSupplier]
+. link:kafka-streams-KafkaClientSupplier.adoc[KafkaClientSupplier Contract]
 
 . link:kafka-streams-ProcessorContext.adoc[ProcessorContext]
 

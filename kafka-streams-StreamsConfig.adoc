@@ -1,6 +1,16 @@
 == [[StreamsConfig]] StreamsConfig -- Configuration Properties for Kafka Clients
 
-`StreamsConfig` is Apache Kafka's https://kafka.apache.org/20/javadoc/org/apache/kafka/common/config/AbstractConfig.html[AbstractConfig] for the <<properties, configuration properties>> for Kafka Streams applications.
+`StreamsConfig` is a Apache Kafka https://kafka.apache.org/20/javadoc/org/apache/kafka/common/config/AbstractConfig.html[AbstractConfig] for the <<properties, configuration properties>> for Kafka Streams applications.
+
+[source, scala]
+----
+import org.apache.kafka.streams.StreamsConfig
+val props = new java.util.Properties()
+props.put(StreamsConfig.APPLICATION_ID_CONFIG, "appId")
+import org.apache.kafka.clients.consumer.ConsumerConfig
+props.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, "localhost:8082")
+val conf = new StreamsConfig(props)
+----
 
 [[properties]]
 .Configuration Properties
@@ -12,37 +22,47 @@
 | [[APPLICATION_ID_CONFIG]] APPLICATION_ID_CONFIG
 | <<kafka-streams-properties.adoc#application.id, application.id>>
 
+| [[APPLICATION_SERVER_CONFIG]] APPLICATION_SERVER_CONFIG
+| <<kafka-streams-properties.adoc#application.server, application.server>>
+
 | [[DEFAULT_TIMESTAMP_EXTRACTOR_CLASS_CONFIG]] DEFAULT_TIMESTAMP_EXTRACTOR_CLASS_CONFIG
 | <<kafka-streams-properties.adoc#default.timestamp.extractor, default.timestamp.extractor>>
+
+| [[COMMIT_INTERVAL_MS_CONFIG]] COMMIT_INTERVAL_MS_CONFIG
+| <<kafka-streams-properties.adoc#commit.interval.ms, commit.interval.ms>>
 
 | [[NUM_STREAM_THREADS_CONFIG]] NUM_STREAM_THREADS_CONFIG
 | <<kafka-streams-properties.adoc#num.stream.threads, num.stream.threads>>
 
 | [[POLL_MS_CONFIG]] POLL_MS_CONFIG
 | <<kafka-streams-properties.adoc#poll.ms, poll.ms>>
+
+| [[PROCESSING_GUARANTEE_CONFIG]] PROCESSING_GUARANTEE_CONFIG
+| <<kafka-streams-properties.adoc#processing.guarantee, processing.guarantee>>
+
+| [[STATE_DIR_CONFIG]] STATE_DIR_CONFIG
+| <<kafka-streams-properties.adoc#state.dir, state.dir>>
 |===
 
-`StreamsConfig` is also used for the following Kafka clients (that Kafka Streams uses under the covers):
+`StreamsConfig` is also used the configuration for the following Kafka clients (that Kafka Streams uses under the covers):
 
-* <<getConsumerConfigs, Consumer>>
+* <<getMainConsumerConfigs, Consumer>>
 
 * <<getProducerConfigs, Producer>>
 
 * <<getAdminConfigs, AdminClient>>
 
-* <<getRestoreConsumerConfigs, getRestoreConsumerConfigs>>
+* <<getRestoreConsumerConfigs, Restore Consumer>>
 
 [source, scala]
 ----
 import org.apache.kafka.streams.StreamsConfig
 val props = new java.util.Properties()
-props.put(StreamsConfig.APPLICATION_ID_CONFIG, "appId")
-import org.apache.kafka.clients.consumer.ConsumerConfig
-props.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, "localhost:8082")
+// ...
 val conf = new StreamsConfig(props)
 
 // Consumer Properties
-val consumerConfigs = conf.getConsumerConfigs("groupId", "clientId")
+val consumerConfigs = conf.getMainConsumerConfigs("groupId", "clientId")
 import collection.JavaConverters._
 scala> consumerConfigs.asScala.map { case (key, value) => s"$key -> $value" }.foreach(println)
 replication.factor -> 1
@@ -66,77 +86,39 @@ client.id -> clientId-consumer
 
 [[CONSUMER_DEFAULT_OVERRIDES]]
 .Kafka Consumer Non-Overridable Configurations
-[cols="1,1,2",options="header",width="100%"]
+[cols="1m,1m,2",options="header",width="100%"]
 |===
 | Name
 | Value
 | Description
 
-| [[max.poll.records]] `max.poll.records`
-| `1000`
-|
+| max.poll.records
+| 1000
+| [[max.poll.records]]
 
-| [[auto.offset.reset]] `auto.offset.reset`
-| `earliest`
-|
+| auto.offset.reset
+| earliest
+| [[auto.offset.reset]]
 
-| [[buffered.records.per.partition]] `buffered.records.per.partition`
-| `1000`
-| The maximum number of records to buffer per partition
+| buffered.records.per.partition
+| 1000
+| [[buffered.records.per.partition]] The maximum number of records to buffer per partition
 
-| [[enable.auto.commit]] `enable.auto.commit`
-| `false`
-|
+| enable.auto.commit
+| false
+| [[enable.auto.commit]]
 
-| [[internal.leave.group.on.close]] `internal.leave.group.on.close`
-| `false`
-|
+| internal.leave.group.on.close
+| false
+| [[internal.leave.group.on.close]]
 
-| [[max.poll.interval.ms]] `max.poll.interval.ms`
-| `Integer.MAX_VALUE`
-|
+| max.poll.interval.ms
+| Integer.MAX_VALUE
+| [[max.poll.interval.ms]]
 |===
 
 [[CONSUMER_PREFIX]]
 `StreamsConfig` uses `consumer` prefix for custom Kafka configurations of a Kafka consumer.
-
-=== [[getConsumerConfigs]] Getting Kafka Consumer Configuration -- `getConsumerConfigs` Method
-
-[source, java]
-----
-Map<String, Object> getConsumerConfigs(
-  final String groupId,
-  final String clientId)
-----
-
-`getConsumerConfigs` <<getCommonConsumerConfigs, gets the common consumer configuration>> first.
-
-`getConsumerConfigs` then adds the <<getConsumerConfigs-properties, additional consumer configuration properties>>.
-
-[[getConsumerConfigs-properties]]
-.Kafka Consumer Configuration Properties
-[cols="1,1,2",options="header",width="100%"]
-|===
-| Name
-| Value
-| Description
-
-| [[application.id]] `application.id`
-| `groupId`
-|
-
-| [[group.id]] `group.id`
-| `groupId`
-|
-
-| [[client.id]] `client.id`
-| `[clientId]-consumer`
-|
-|===
-
-CAUTION: FIXME
-
-NOTE: `getConsumerConfigs` is used exclusively when `StreamThread` is link:kafka-streams-StreamThread.adoc#create[created].
 
 === [[getProducerConfigs]] `getProducerConfigs` Method
 
@@ -190,7 +172,7 @@ Internally, `getClientPropsWithPrefix` <<clientProps, collects the configuration
 
 NOTE: `getClientPropsWithPrefix` uses link:++https://kafka.apache.org/10/javadoc/org/apache/kafka/common/config/AbstractConfig.html#originals--++[AbstractConfig.originals] to get the original values of Kafka properties as passed in by the user.
 
-NOTE: `getClientPropsWithPrefix` is used when `StreamsConfig` is requested for <<getAdminConfigs, getAdminConfigs>>, <<getCommonConsumerConfigs, getCommonConsumerConfigs>>, <<getConsumerConfigs, getConsumerConfigs>> and <<getProducerConfigs, getProducerConfigs>>.
+NOTE: `getClientPropsWithPrefix` is used when `StreamsConfig` is requested for <<getAdminConfigs, getAdminConfigs>>, <<getCommonConsumerConfigs, getCommonConsumerConfigs>>, <<getMainConsumerConfigs, getMainConsumerConfigs>> and <<getProducerConfigs, getProducerConfigs>>.
 
 === [[getCommonConsumerConfigs]] Getting Common Consumer Configuration -- `getCommonConsumerConfigs` Internal Method
 
@@ -205,7 +187,7 @@ NOTE: `getCommonConsumerConfigs` uses https://kafka.apache.org/10/javadoc/org/ap
 
 CAUTION: FIXME
 
-NOTE: `getCommonConsumerConfigs` is used when `StreamsConfig` is requested for <<getConsumerConfigs, getConsumerConfigs>> and <<getRestoreConsumerConfigs, getRestoreConsumerConfigs>>.
+NOTE: `getCommonConsumerConfigs` is used when `StreamsConfig` is requested for <<getMainConsumerConfigs, getMainConsumerConfigs>> and <<getRestoreConsumerConfigs, getRestoreConsumerConfigs>>.
 
 === [[checkIfUnexpectedUserSpecifiedConsumerConfig]] Removing "Illegal" User-Defined Configuration Properties -- `checkIfUnexpectedUserSpecifiedConsumerConfig` Internal Method
 
@@ -232,3 +214,18 @@ Map<String, Object> getRestoreConsumerConfigs(final String clientId)
 `getRestoreConsumerConfigs`...FIXME
 
 NOTE: `getRestoreConsumerConfigs` is used when...FIXME
+
+=== [[getMainConsumerConfigs]] Getting Configuration for Kafka Consumer -- `getMainConsumerConfigs` Method
+
+[source, java]
+----
+Map<String, Object> getMainConsumerConfigs(
+  final String groupId,
+  final String clientId)
+----
+
+`getMainConsumerConfigs` <<getCommonConsumerConfigs, gets the base configuration for a Kafka Consumer>> first.
+
+`getMainConsumerConfigs` then...FIXME
+
+NOTE: `getMainConsumerConfigs` is used exclusively when `StreamThread` is requested to <<kafka-streams-StreamThread.adoc#create, create a StreamThread instance>> (and requests the `KafkaClientSupplier` for a <<kafka-streams-KafkaClientSupplier.adoc#getConsumer, Kafka Consumer>>).

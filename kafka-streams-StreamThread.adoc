@@ -246,15 +246,17 @@ NOTE: `maybeUpdateStandbyTasks` is used exclusively when `StreamThread` is reque
 `StreamThread` takes the following when created:
 
 * [[time]] `Time`
-* [[config]] link:kafka-streams-StreamsConfig.adoc[StreamsConfig]
-* [[restoreConsumer]] Restore Kafka consumer (of keys and values as array of bytes)
+* [[config]] <<kafka-streams-StreamsConfig.adoc#, StreamsConfig>>
+* [[producer]] Kafka http://kafka.apache.org/20/javadoc/org/apache/kafka/clients/producer/KafkaProducer.html[Producer] (`Producer<byte[], byte[]>`)
+* [[restoreConsumer]] Kafka https://kafka.apache.org/20/javadoc/org/apache/kafka/clients/consumer/KafkaConsumer.html[Consumer] (`Consumer<byte[], byte[]>`)
 * [[consumer]] Kafka https://kafka.apache.org/20/javadoc/org/apache/kafka/clients/consumer/KafkaConsumer.html[Consumer] (`Consumer<byte[], byte[]>`)
 * [[originalReset]] `originalReset`
-* [[taskManager]] link:kafka-streams-TaskManager.adoc[TaskManager]
-* [[streamsMetrics]] link:kafka-streams-StreamsMetricsThreadImpl.adoc[StreamsMetricsThreadImpl]
-* [[builder]] link:kafka-streams-InternalTopologyBuilder.adoc[InternalTopologyBuilder]
+* [[taskManager]] <<kafka-streams-TaskManager.adoc#, TaskManager>>
+* [[streamsMetrics]] <<kafka-streams-StreamsMetricsThreadImpl.adoc#, StreamsMetricsThreadImpl>>
+* [[builder]] <<kafka-streams-InternalTopologyBuilder.adoc#, InternalTopologyBuilder>>
 * [[threadClientId]] `threadClientId`
 * [[logContext]] `LogContext`
+* [[versionProbingFlag]] `versionProbingFlag` flag
 
 `StreamThread` initializes the <<internal-registries, internal registries and counters>>.
 
@@ -494,7 +496,7 @@ NOTE: https://kafka.apache.org/11/javadoc/org/apache/kafka/clients/consumer/Cons
 
 NOTE: `addRecordsToTasks` is used exclusively when `StreamThread` is requested to <<runOnce, consume records once>>.
 
-=== [[create]] Creating StreamThread -- `create` Factory Method
+=== [[create]] Creating StreamThread Instance -- `create` Factory Method
 
 [source, java]
 ----
@@ -549,7 +551,7 @@ Creating consumer client
 
 `create` requests the input `StreamsConfig` for link:kafka-streams-properties.adoc#application.id[application.id] configuration property.
 
-`create` requests the input `StreamsConfig` for a link:kafka-streams-StreamsConfig.adoc#getConsumerConfigs[Kafka Consumer configuration] for the application ID and the `threadClientId` (of the format `[clientId]-StreamThread-[STREAM_THREAD_ID]`).
+`create` requests the input `StreamsConfig` for the link:kafka-streams-StreamsConfig.adoc#getMainConsumerConfigs[configuration of a Kafka Consumer] for the application ID and the `threadClientId` (of the format `[clientId]-StreamThread-[STREAM_THREAD_ID]`).
 
 `create` adds `++__task.manager.instance__++` configuration key that points to the `TaskManager`.
 

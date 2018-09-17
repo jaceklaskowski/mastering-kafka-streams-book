@@ -5,7 +5,7 @@
 [[creating-instance]]
 `StreamsPartitionAssignor` is a Kafka `Configurable` that is instantiated by reflection and <<configure, takes configuration parameters>>.
 
-`StreamsPartitionAssignor` is registered when `StreamsConfig` is requested for link:kafka-streams-StreamsConfig.adoc#getConsumerConfigs[Kafka Consumer configuration] with `partition.assignment.strategy` (`ConsumerConfig.PARTITION_ASSIGNMENT_STRATEGY_CONFIG`) property.
+`StreamsPartitionAssignor` is registered when `StreamsConfig` is requested for the link:kafka-streams-StreamsConfig.adoc#getMainConsumerConfigs[configuration for a Kafka Consumer] with `partition.assignment.strategy` (`ConsumerConfig.PARTITION_ASSIGNMENT_STRATEGY_CONFIG`) property.
 
 TIP: Read https://cwiki.apache.org/confluence/display/KAFKA/Kafka+Client-side+Assignment+Proposal[Kafka Client-side Assignment Proposal] on the group management in Apache Kafka's Consumer API.
 

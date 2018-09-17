@@ -33,7 +33,7 @@ NOTE: `createTask` is part of link:kafka-streams-AbstractTaskCreator.adoc#create
 * [[cache]] `ThreadCache`
 * [[time]] `Time`
 * [[clientSupplier]] link:kafka-streams-KafkaClientSupplier.adoc[KafkaClientSupplier]
-* [[threadProducer]] Kafka https://kafka.apache.org/10/javadoc/org/apache/kafka/clients/producer/Producer.html[Producer] (of keys and values as array of bytes)
+* [[threadProducer]] Kafka https://kafka.apache.org/20/javadoc/org/apache/kafka/clients/producer/Producer.html[Producer] (`Producer<byte[], byte[]>`)
 * [[threadClientId]] `threadClientId`
 * [[log]] `Logger`
 
