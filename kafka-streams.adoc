@@ -67,15 +67,17 @@ object KafkaStreamsApp extends App {
 }
 ----
 
-A typical Kafka Streams application creates two main objects to describe event processing, i.e. <<kafka-streams-Topology.adoc#, Topology>> and <<kafka-streams-KafkaStreams.adoc#, KafkaStreams>> (aka _streams client_).
+On the outside, a typical Kafka Streams application is made up of two main objects, i.e. <<kafka-streams-Topology.adoc#, Topology>> and <<kafka-streams-KafkaStreams.adoc#, KafkaStreams>> (aka _streams client_).
 
-While <<kafka-streams-KafkaStreams.adoc#creating-instance, being created>>, the `KafkaStreams` object creates a <<kafka-streams-StateDirectory.adoc#, StateDirectory>>, a `Metric` (with a `JmxReporter`), a <<kafka-streams-StreamsMetadataState.adoc#, StreamsMetadataState>>, a <<kafka-streams-GlobalStreamThread.adoc#, GlobalStreamThread>> and one or more <<kafka-streams-StreamThread.adoc#, StreamThreads>>.
+On the inside, the `KafkaStreams` object creates a <<kafka-streams-StateDirectory.adoc#, StateDirectory>>, a `Metric` (with a `JmxReporter`), a <<kafka-streams-StreamsMetadataState.adoc#, StreamsMetadataState>>, a <<kafka-streams-GlobalStreamThread.adoc#, GlobalStreamThread>> and one or more <<kafka-streams-StreamThread.adoc#, StreamThreads>>.
 
 `KafkaStreams` uses <<kafka-streams-properties.adoc#num.stream.threads, num.stream.threads>> configuration property for the number of `StreamThreads` to create (default: `1` processing thread).
 
-While <<kafka-streams-StreamThread.adoc#create, being created>>, a `StreamThread` creates a restore Kafka Consumer (`restoreConsumer`), a <<kafka-streams-StoreChangelogReader.adoc#, StoreChangelogReader>>, a <<kafka-streams-StreamsMetricsThreadImpl.adoc#, StreamsMetricsThreadImpl>>, a `ThreadCache`, a <<kafka-streams-TaskCreator.adoc#, TaskCreator>> (for <<kafka-streams-StreamTask.adoc#, StreamTasks>>), a <<kafka-streams-StandbyTaskCreator.adoc#, StandbyTaskCreator>> (for <<kafka-streams-StandbyTask.adoc#, StandbyTasks>>) and the <<kafka-streams-TaskManager.adoc#, TaskManager>>.
+A single `StreamThread` creates a restore Kafka Consumer (`restoreConsumer`), a <<kafka-streams-StoreChangelogReader.adoc#, StoreChangelogReader>>, a <<kafka-streams-StreamsMetricsThreadImpl.adoc#, StreamsMetricsThreadImpl>>, a `ThreadCache`, a <<kafka-streams-TaskCreator.adoc#, TaskCreator>> (for <<kafka-streams-StreamTask.adoc#, StreamTasks>>), a <<kafka-streams-StandbyTaskCreator.adoc#, StandbyTaskCreator>> (for <<kafka-streams-StandbyTask.adoc#, StandbyTasks>>) and the <<kafka-streams-TaskManager.adoc#, TaskManager>>.
 
-When <<kafka-streams-StreamThread.adoc#creating-instance, created>>, a `StreamThread` creates also a <<kafka-streams-StreamThread-RebalanceListener.adoc#, RebalanceListener>> for...FIXME
+It is through the <<kafka-streams-TaskManager.adoc#, TaskManager>> that a `StreamThread` manages the <<kafka-streams-TaskManager.adoc#active, active stream tasks>> and <<kafka-streams-TaskManager.adoc#process, processes records>>.
+
+A `StreamThread` creates also a <<kafka-streams-StreamThread-RebalanceListener.adoc#, RebalanceListener>> for...FIXME
 
 Eventually, `KafkaStreams` is <<kafka-streams-KafkaStreams.adoc#start, started>> and the Kafka Streams application starts consuming, processing, and producing records (as described by the <<kafka-streams-Topology.adoc#, Topology>>).
 

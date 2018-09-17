@@ -40,7 +40,7 @@ Used when `StreamTask` is requested for the following:
 * <<process, Process a single record>>
 
 | consumedOffsets
-| [[consumedOffsets]] Offsets by topic partitions, i.e. `Map<TopicPartition, Long>`, that `StreamTask` has <<process, processed>> successfully.
+| [[consumedOffsets]] Offsets by https://kafka.apache.org/20/javadoc/org/apache/kafka/common/TopicPartition.html[TopicPartitions] (`Map<TopicPartition, Long>`) that `StreamTask` has <<process, processed>> successfully
 |===
 
 [[logging]]

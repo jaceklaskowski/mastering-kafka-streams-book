@@ -384,7 +384,7 @@ void maybeCommit(final long now)
 
 `maybeCommit`...FIXME
 
-NOTE: `maybeCommit` is used when `StreamThread` is requested to <<processAndMaybeCommit, processAndMaybeCommit>> and <<runOnce, poll records once>>.
+NOTE: `maybeCommit` is used when `StreamThread` is requested to <<runOnce, poll records once>> (directly and indirectly in <<processAndMaybeCommit, processAndMaybeCommit>>).
 
 === [[processAndMaybeCommit]] Processing Records (with Optional Commit) -- `processAndMaybeCommit` Internal Method
 

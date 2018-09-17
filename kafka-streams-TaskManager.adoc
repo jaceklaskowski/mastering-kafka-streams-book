@@ -9,9 +9,9 @@ image::images/kafka-streams-TaskManager.png[align="center"]
 
 When <<creating-instance, created>>, `TaskManager` is given a Kafka <<adminClient, AdminClient>> that is used for the following:
 
-* `TaskManager` is requested to <<maybePurgeCommitedRecords, maybePurgeCommitedRecords>>
+* `TaskManager` is requested to <<maybePurgeCommitedRecords, maybePurgeCommitedRecords>> (and deletes records)
 
-* `StreamsPartitionAssignor` is requested to <<kafka-streams-StreamsPartitionAssignor.adoc#configure, configure>> (and creates an <<kafka-streams-StreamsPartitionAssignor.adoc#internalTopicManager, InternalTopicManager>>).
+* `StreamsPartitionAssignor` is requested to <<kafka-streams-StreamsPartitionAssignor.adoc#configure, configure>> (and creates an <<kafka-streams-StreamsPartitionAssignor.adoc#internalTopicManager, InternalTopicManager>>)
 
 [[internal-registries]]
 .TaskManager's Internal Properties (e.g. Registries, Counters and Flags)
@@ -316,7 +316,7 @@ void maybePurgeCommitedRecords()
 
 `maybePurgeCommitedRecords`...FIXME
 
-NOTE: `maybePurgeCommitedRecords` is used exclusively when `StreamThread` is requested to link:kafka-streams-StreamThread.adoc#maybeCommit[maybeCommit].
+NOTE: `maybePurgeCommitedRecords` is used exclusively when `StreamThread` is requested to <<kafka-streams-StreamThread.adoc#maybeCommit, maybeCommit>> (when `StreamThread` is requested to <<kafka-streams-StreamThread.adoc#runOnce, poll records once>> in the <<kafka-streams-StreamThread.adoc#runLoop, main event loop>>).
 
 === [[process]] Processing Records by Active Stream Tasks -- `process` Method
 
