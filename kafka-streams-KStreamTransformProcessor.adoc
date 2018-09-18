@@ -1,0 +1,36 @@
+== [[KStreamTransformProcessor]] KStreamTransformProcessor
+
+`KStreamTransformProcessor` is...FIXME
+
+=== [[close]] Closing Processor -- `close` Method
+
+[source, java]
+----
+void close()
+----
+
+NOTE: `close` is part of the <<kafka-streams-Processor.adoc#close, Processor Contract>> to close the <<kafka-streams-Processor.adoc#, processor>>.
+
+`close`...FIXME
+
+=== [[init]] Initializing Processor -- `init` Method
+
+[source, java]
+----
+void init(ProcessorContext context)
+----
+
+NOTE: `init` is part of the <<kafka-streams-Processor.adoc#init, Processor Contract>> to initialize the <<kafka-streams-Processor.adoc#, processor>>.
+
+`init`...FIXME
+
+=== [[process]] Processing Record -- `process` Method
+
+[source, java]
+----
+void process(K1 key, V1 value)
+----
+
+NOTE: `process` is part of the <<kafka-streams-Processor.adoc#process, Processor Contract>> to process a single record.
+
+`process`...FIXME

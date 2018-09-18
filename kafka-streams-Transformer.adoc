@@ -1,3 +1,59 @@
-== [[Transformer]] Transformer
+== [[Transformer]] Transformer -- Record-by-Record Stateful Transformation
 
-`Transformer` is...FIXME
+`Transformer` is the <<contract, contract>> that allows for a <<transform, stateful transformation>> of every record in the input stream into zero or more output records (both key and value type can be altered arbitrarily).
+
+In order to use a state, a state store has to be registered beforehand (using `addStateStore` or `addGlobalStore`) before they can be connected to the `Transformer`.
+
+You can access a state store using the <<kafka-streams-ProcessorContext.adoc#, ProcessorContext>> that is given when a transformer is <<init, initialized>>.
+
+[source, scala]
+----
+// FIXME: Demo
+----
+
+`Transformer` is created (_supplied_) using a corresponding <<kafka-streams-TransformerSupplier.adoc#, TransformerSupplier>>.
+
+[[contract]]
+[cols="1m,2",options="header",width="100%"]
+|===
+| Property
+| Description
+
+| close
+a| [[close]]
+
+[source, java]
+----
+void close()
+----
+
+Closes the transformer
+
+Used exclusively when `KStreamTransformProcessor` is requested to <<kafka-streams-KStreamTransformProcessor.adoc#close, close>>
+
+| init
+a| [[init]]
+
+[source, java]
+----
+void init(final ProcessorContext context)
+----
+
+Initializes the transformer in the given <<kafka-streams-ProcessorContext.adoc#, ProcessorContext>>
+
+Used exclusively when `KStreamTransformProcessor` is requested to <<kafka-streams-KStreamTransformProcessor.adoc#init, initialize itself>>
+
+| transform
+a| [[transform]]
+
+[source, java]
+----
+R transform(final K key, final V value)
+----
+
+Transforms a single record (into a `KeyValue` object)
+
+Used exclusively when `KStreamTransformProcessor` is requested to <<kafka-streams-KStreamTransformProcessor.adoc#process, process a record>>
+|===
+
+`Transformer` is used to create a <<kafka-streams-KStreamTransformProcessor.adoc#, KStreamTransformProcessor>>.

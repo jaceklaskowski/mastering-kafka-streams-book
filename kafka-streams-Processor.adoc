@@ -5,36 +5,41 @@
 `Processor` is an integral part of link:kafka-streams-ProcessorNode.adoc#processor[ProcessorNode].
 
 [[contract]]
-[source, java]
-----
-package org.apache.kafka.streams.processor;
-
-interface Processor<K, V> {
-  void close();
-  void init(ProcessorContext context);
-  void process(K key, V value);
-}
-----
-
-NOTE: `Processor` is an `Evolving` contract which means that compatibility may be broken at a minor release.
-
 .Processor Contract
-[cols="1,2",options="header",width="100%"]
+[cols="1m,2",options="header",width="100%"]
 |===
 | Method
 | Description
 
-| `close`
-| [[close]]
+| close
+a| [[close]]
 
-| `init`
-| [[init]] Initializing a stream processor
+[source, java]
+----
+void close()
+----
 
-| `process`
-| [[process]] Processing a single record
+Closes the processor
 
-| `punctuate`
-| [[punctuate]] *DEPRECATED*
+| init
+a| [[init]]
+
+[source, java]
+----
+void init(ProcessorContext context)
+----
+
+Initializes the processor
+
+| process
+a| [[process]]
+
+[source, java]
+----
+void process(K key, V value)
+----
+
+Processes a single record
 |===
 
 The lifecycle of a `Processor` starts at <<init, init>> when....FIXME

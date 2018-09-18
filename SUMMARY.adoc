@@ -36,7 +36,8 @@
 .. link:kafka-streams-StateRestoreCallback.adoc[StateRestoreCallback]
 .. link:kafka-streams-To.adoc[To]
 
-. link:kafka-streams-Transformer.adoc[Transformer]
+. link:kafka-streams-Transformer.adoc[Transformer -- Record-by-Record Stateful Transformation]
+.. link:kafka-streams-TransformerSupplier.adoc[TransformerSupplier]
 
 . link:kafka-streams-ValueTransformer.adoc[ValueTransformer -- Stateful Record-by-Record Value Transformation]
 .. link:kafka-streams-ValueTransformerSupplier.adoc[ValueTransformerSupplier -- ValueTransformers Object Factory]
@@ -136,6 +137,7 @@
 . link:kafka-streams-Processor.adoc[Processor Contract -- Stream Processing Nodes]
 .. link:kafka-streams-AbstractProcessor.adoc[AbstractProcessor -- Base for Stream Processors]
 .. link:kafka-streams-KStreamSessionWindowAggregateProcessor.adoc[KStreamSessionWindowAggregateProcessor]
+.. link:kafka-streams-KStreamTransformProcessor.adoc[KStreamTransformProcessor]
 .. link:kafka-streams-KStreamTransformValuesProcessor.adoc[KStreamTransformValuesProcessor]
 
 . link:kafka-streams-ProcessorNodePunctuator.adoc[ProcessorNodePunctuator]
