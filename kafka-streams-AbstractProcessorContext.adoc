@@ -1,6 +1,23 @@
-== [[AbstractProcessorContext]] AbstractProcessorContext
+== [[AbstractProcessorContext]] AbstractProcessorContext -- Base Of Internal Processor Contexts
 
-`AbstractProcessorContext` is...FIXME
+`AbstractProcessorContext` is the base of <<extensions, internal processor contexts>> that <<FIXME, FIXME>>.
+
+[[extensions]]
+.AbstractProcessorContexts
+[cols="1,2",options="header",width="100%"]
+|===
+| AbstractProcessorContext
+| Description
+
+| <<kafka-streams-GlobalProcessorContextImpl.adoc#, GlobalProcessorContextImpl>>
+| [[GlobalProcessorContextImpl]]
+
+| <<kafka-streams-ProcessorContextImpl.adoc#, ProcessorContextImpl>>
+| [[ProcessorContextImpl]]
+
+| <<kafka-streams-StandbyContextImpl.adoc#, StandbyContextImpl>>
+| [[StandbyContextImpl]]
+|===
 
 === [[stateDir]] `stateDir` Method
 

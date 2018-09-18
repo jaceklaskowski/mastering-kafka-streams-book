@@ -1,6 +1,6 @@
 == [[InternalProcessorContext]] InternalProcessorContext
 
-`InternalProcessorContext` is the <<contract, contract>> of link:kafka-streams-ProcessorContext.adoc[ProcessorContexts] that...FIXME
+`InternalProcessorContext` is the <<contract, extension>> of the <<kafka-streams-ProcessorContext.adoc#, ProcessorContext contract>> for <<extensions, processor contexts>> that <<FIXME, FIXME>>.
 
 [[contract]]
 [source, java]
@@ -33,3 +33,6 @@ interface InternalProcessorContext extends ProcessorContext {
 | [[setRecordContext]] `setRecordContext`
 |
 |===
+
+[[extensions]]
+NOTE: <<kafka-streams-AbstractProcessorContext.adoc#, AbstractProcessorContext>> is the one and only base of the <<contract, InternalProcessorContext Contract>>.

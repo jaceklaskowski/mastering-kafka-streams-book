@@ -1,55 +1,64 @@
-== [[ProcessorContext]] ProcessorContext
+== [[ProcessorContext]] ProcessorContext Contract
 
-`ProcessorContext` is a <<contract, contract>> of...FIXME
+`ProcessorContext` is the <<contract, contract>> of <<implementations, processor contexts>> that allow to access <<kafka-streams-Processor.adoc#, processor>>-specific information.
+
+`ProcessorContext` is used when:
+
+* <<kafka-streams-Processor.adoc#init, Processor>>, <<kafka-streams-StateStore.adoc#init, StateStore>>, <<kafka-streams-Transformer.adoc#init, Transformer>>, <<kafka-streams-ValueTransformer.adoc#init, ValueTransformer>>, <<kafka-streams-ValueTransformerWithKey.adoc#init, ValueTransformerWithKey>> and <<kafka-streams-KTableValueGetter.adoc#init, KTableValueGetter>> are requested to initialize
+
+* `Task` is requested for the <<kafka-streams-Task.adoc#context, ProcessorContext>>
+
+* `StoreChangeLogger` is <<kafka-streams-StoreChangeLogger.adoc#context, created>>
+
+TIP: Use <<kafka-streams-AbstractProcessor.adoc#, AbstractProcessor>> to manage the `ProcessorContext` of a custom <<kafka-streams-Processor.adoc#, Processor>>.
 
 [[contract]]
-[source, java]
-----
-package org.apache.kafka.streams.processor;
-
-interface ProcessorContext {
-  String applicationId();
-
-  void commit();
-
-  <K, V> void forward(K key, V value);
-  <K, V> void forward(K key, V value, int childIndex);
-  <K, V> void forward(K key, V value, String childName);
-
-  TaskId taskId();
-
-  Serde<?> keySerde();
-  Serde<?> valueSerde();
-
-  void register(
-    StateStore store,
-    boolean loggingEnabledIsDeprecatedAndIgnored,
-    StateRestoreCallback stateRestoreCallback);
-  StateStore getStateStore(String name);
-
-  Cancellable schedule(long intervalMs, PunctuationType type, Punctuator callback);
-  // @Deprecated
-  void schedule(long interval);
-
-  File stateDir();
-
-  String topic();
-  int partition();
-  long offset();
-  long timestamp();
-
-  Map<String, Object> appConfigs();
-  Map<String, Object> appConfigsWithPrefix(String prefix);
-
-  StreamsMetrics metrics();
-}
-----
-
 .ProcessorContext Contract
 [cols="1m,2",options="header",width="100%"]
 |===
 | Method
 | Description
+
+| appConfigs
+a| [[appConfigs]]
+
+[source, java]
+----
+Map<String, Object> appConfigs()
+----
+
+| appConfigsWithPrefix
+a| [[appConfigsWithPrefix]]
+
+[source, java]
+----
+Map<String, Object> appConfigsWithPrefix(final String prefix)
+----
+
+| applicationId
+a| [[applicationId]]
+
+[source, java]
+----
+String applicationId()
+----
+
+| commit
+a| [[commit]]
+
+[source, java]
+----
+void commit()
+----
+
+| forward
+a| [[forward]]
+
+[source, java]
+----
+void forward(final K key, final V value)
+void forward(final K key, final V value, final To to)
+----
 
 | getStateStore
 a| [[getStateStore]]
@@ -63,8 +72,45 @@ Gets the <<kafka-streams-StateStore.adoc#, state store>> by name
 
 Used when...FIXME
 
-| forward
-| [[forward]] Used when...FIXME
+| headers
+a| [[headers]]
+
+[source, java]
+----
+Headers headers()
+----
+
+| keySerde
+a| [[keySerde]]
+
+[source, java]
+----
+Serde<?> keySerde()
+----
+
+| metrics
+a| [[metrics]]
+
+[source, java]
+----
+StreamsMetrics metrics()
+----
+
+| offset
+a| [[offset]]
+
+[source, java]
+----
+long offset()
+----
+
+| partition
+a| [[partition]]
+
+[source, java]
+----
+int partition()
+----
 
 | register
 a| [[register]]
@@ -81,5 +127,58 @@ Registers a <<kafka-streams-StateStore.adoc#, state store>>
 Used when <<kafka-streams-StateStore-InMemoryKeyValueStore.adoc#init, InMemoryKeyValueStore>>, <<kafka-streams-StateStore-MemoryLRUCache.adoc#init, MemoryLRUCache>>, <<kafka-streams-StateStore-RocksDBSegmentedBytesStore.adoc#init, RocksDBSegmentedBytesStore>> and <<kafka-streams-StateStore-RocksDBStore.adoc#init, RocksDBStore>> are requested to initialize itself
 
 | schedule
-| [[schedule]] Used exclusively when `KStreamTransformValuesProcessor` is requested to link:kafka-streams-KStreamTransformValuesProcessor.adoc#init[initialize]
+a| [[schedule]]
+
+[source, java]
+----
+Cancellable schedule(
+  final long intervalMs,
+  final PunctuationType type,
+  final Punctuator callback)
+----
+
+Used exclusively when `KStreamTransformValuesProcessor` is requested to link:kafka-streams-KStreamTransformValuesProcessor.adoc#init[initialize]
+
+| stateDir
+a| [[stateDir]]
+
+[source, java]
+----
+File stateDir()
+----
+
+| taskId
+a| [[taskId]]
+
+[source, java]
+----
+TaskId taskId()
+----
+
+| timestamp
+a| [[timestamp]]
+
+[source, java]
+----
+long timestamp()
+----
+
+| topic
+a| [[topic]]
+
+[source, java]
+----
+String topic()
+----
+
+| valueSerde
+a| [[valueSerde]]
+
+[source, java]
+----
+Serde<?> valueSerde()
+----
 |===
+
+[[implementations]]
+NOTE: <<kafka-streams-InternalProcessorContext.adoc#, InternalProcessorContext>> is the one and only extension contract of the <<contract, ProcessorContext Contract>>.

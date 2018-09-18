@@ -1,4 +1,4 @@
-== [[StateManager]] StateManager Contract -- State Storage Engine Managers
+== [[StateManager]] StateManager Contract -- State Store Managers
 
 `StateManager` is the <<contract, contract>> of <<implementations, state store managers>> that manage one or more <<kafka-streams-StateStore.adoc#, state stores>>.
 
@@ -86,7 +86,9 @@ a| [[register]]
 
 [source, java]
 ----
-void register(final StateStore store, final StateRestoreCallback stateRestoreCallback)
+void register(
+  final StateStore store,
+  final StateRestoreCallback stateRestoreCallback)
 ----
 
 Registering a <<kafka-streams-StateStore.adoc#, state store>> with a `StateRestoreCallback`

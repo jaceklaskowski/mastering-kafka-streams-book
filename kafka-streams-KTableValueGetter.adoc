@@ -1,0 +1,3 @@
+== [[KTableValueGetter]] KTableValueGetter
+
+`KTableValueGetter` is...FIXME
