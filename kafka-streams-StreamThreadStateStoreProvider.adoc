@@ -1,3 +1,16 @@
 == [[StreamThreadStateStoreProvider]] StreamThreadStateStoreProvider
 
 `StreamThreadStateStoreProvider` is...FIXME
+
+=== [[stores]] `stores` Method
+
+[source, java]
+----
+List<T> stores(
+  final String storeName,
+  final QueryableStoreType<T> queryableStoreType)
+----
+
+NOTE: `stores` is part of <<kafka-streams-StateStoreProvider.adoc#stores, StateStoreProvider Contract>> to...FIXME.
+
+`stores`...FIXME

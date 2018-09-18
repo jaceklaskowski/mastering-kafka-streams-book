@@ -1,6 +1,6 @@
-== [[CachingSessionStore]] CachingSessionStore
+== [[RocksDBSegmentedBytesStore]] RocksDBSegmentedBytesStore
 
-`CachingSessionStore` is...FIXME
+`RocksDBSegmentedBytesStore` is...FIXME
 
 === [[init]] Initialize State Store -- `init` Method
 

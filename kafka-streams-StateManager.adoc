@@ -2,59 +2,95 @@
 
 `StateManager` is the <<contract, contract>> for...FIXME
 
-`StateManager` is a link:kafka-streams-Checkpointable.adoc[Checkpointable] that...FIXME
+`StateManager` is a <<kafka-streams-Checkpointable.adoc#, Checkpointable>> that...FIXME
 
 [[contract]]
-[source, java]
-----
-package org.apache.kafka.streams.processor.internals;
-
-interface StateManager extends Checkpointable {
-  File baseDir();
-  void close(final Map<TopicPartition, Long> offsets) throws IOException;
-  void flush();
-  StateStore getGlobalStore(final String name);
-  StateStore getStore(final String name);
-  void register(final StateStore store, final StateRestoreCallback stateRestoreCallback);
-  void reinitializeStateStoresForPartitions(
-    final Collection<TopicPartition> partitions,
-    final InternalProcessorContext processorContext);
-}
-----
-
 .StateManager Contract
-[cols="1,2",options="header",width="100%"]
+[cols="1a,2",options="header",width="100%"]
 |===
 | Method
 | Description
 
-| [[baseDir]] `baseDir`
-| Used when...FIXME
+| baseDir
+a| [[baseDir]]
 
-| [[close]] `close`
-a| Closes a state manager
+[source, java]
+----
+File baseDir()
+----
+
+Used when...FIXME
+
+| close
+a| [[close]]
+
+[source, java]
+----
+void close(final Map<TopicPartition, Long> offsets) throws IOException
+----
+
+Closes a state manager
 
 Used when:
 
 * `AbstractTask` is requested to link:kafka-streams-AbstractTask.adoc#closeStateManager[closeStateManager]
 * `GlobalStateUpdateTask` is requested to link:kafka-streams-GlobalStateUpdateTask.adoc#close[close]
 
-| [[flush]] `flush`
-| Used when...FIXME
+| flush
+a| [[flush]]
 
-| [[getGlobalStore]] `getGlobalStore`
-| Used when...FIXME
+[source, java]
+----
+void flush()
+----
 
-| [[getStore]] `getStore`
-| Used when...FIXME
-
-| [[register]] `register`
-| Registering a <<kafka-streams-StateStore.adoc#, StateStore>> and the associated `StateRestoreCallback`
+Flushes all <<kafka-streams-StateStore.adoc#, state stores>> registered with the state manager
 
 Used when...FIXME
 
-| [[reinitializeStateStoresForPartitions]] `reinitializeStateStoresForPartitions`
-| Used when...FIXME
+| getGlobalStore
+a| [[getGlobalStore]]
+
+[source, java]
+----
+StateStore getGlobalStore(final String name)
+----
+
+Used when...FIXME
+
+| getStore
+a| [[getStore]]
+
+[source, java]
+----
+StateStore getStore(final String name)
+----
+
+Used when...FIXME
+
+| register
+a| [[register]]
+
+[source, java]
+----
+void register(final StateStore store, final StateRestoreCallback stateRestoreCallback)
+----
+
+Registering a <<kafka-streams-StateStore.adoc#, StateStore>> and the associated `StateRestoreCallback`
+
+Used when...FIXME
+
+| reinitializeStateStoresForPartitions
+a| [[reinitializeStateStoresForPartitions]]
+
+[source, java]
+----
+void reinitializeStateStoresForPartitions(
+  final Collection<TopicPartition> partitions,
+  final InternalProcessorContext processorContext)
+----
+
+Used when...FIXME
 |===
 
 [[implementations]]

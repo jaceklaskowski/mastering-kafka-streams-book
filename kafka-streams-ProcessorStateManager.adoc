@@ -33,17 +33,6 @@ Initialized and filled in when `ProcessorStateManager` is <<sources, created>>
 Used exclusively when `ProcessorStateManager` is requested to <<getPartition, find the partition ID for a topic (name)>>.
 |===
 
-=== [[checkpoint]] `checkpoint` Method
-
-[source, java]
-----
-void checkpoint(final Map<TopicPartition, Long> ackedOffsets)
-----
-
-NOTE: `checkpoint` is part of link:kafka-streams-Checkpointable.adoc#checkpoint[Checkpointable Contract] to...FIXME.
-
-`checkpoint`...FIXME
-
 === [[creating-instance]] Creating ProcessorStateManager Instance
 
 `ProcessorStateManager` takes the following when created:
@@ -68,7 +57,7 @@ void register(
   final StateRestoreCallback stateRestoreCallback)
 ----
 
-NOTE: `register` is part of link:kafka-streams-StateManager.adoc#register[StateManager Contract] to register a <<kafka-streams-StateStore.adoc#, StateStore>> and the associated `StateRestoreCallback`.
+NOTE: `register` is part of link:kafka-streams-StateManager.adoc#register[StateManager Contract] to register a <<kafka-streams-StateStore.adoc#, state store>> and the associated `StateRestoreCallback`.
 
 `register` prints out the following DEBUG message to the logs:
 
@@ -117,14 +106,14 @@ NOTE: `close` is part of link:kafka-streams-StateManager.adoc#close[StateManager
 
 `close`...FIXME
 
-=== [[flush]] Flushing ProcessorStateManager -- `flush` Method
+=== [[flush]] Flushing All State Stores -- `flush` Method
 
 [source, java]
 ----
 void flush()
 ----
 
-NOTE: `flush` is part of link:kafka-streams-StateManager.adoc#flush[StateManager Contract] to...FIXME.
+NOTE: `flush` is part of the <<kafka-streams-StateManager.adoc#flush, StateManager Contract>> to flush all <<kafka-streams-StateStore.adoc#, state stores>> registered with the state manager.
 
 `flush`...FIXME
 
@@ -159,7 +148,7 @@ void reinitializeStateStoresForPartitions(
   final InternalProcessorContext processorContext)
 ----
 
-NOTE: `reinitializeStateStoresForPartitions` is part of link:kafka-streams-StateManager.adoc#reinitializeStateStoresForPartitions[StateManager Contract] to...FIXME.
+NOTE: `reinitializeStateStoresForPartitions` is part of <<kafka-streams-StateManager.adoc#reinitializeStateStoresForPartitions, StateManager Contract>> to...FIXME.
 
 `reinitializeStateStoresForPartitions`...FIXME
 

@@ -31,10 +31,34 @@ NOTE: `checkpoint` is part of link:kafka-streams-Checkpointable.adoc#checkpoint[
 `GlobalStateManagerImpl` takes the following when created:
 
 * [[logContext]] `LogContext`
-* [[topology]] `ProcessorTopology`
+* [[topology]] <<kafka-streams-ProcessorTopology.adoc#, ProcessorTopology>>
 * [[globalConsumer]] (Global) Kafka https://kafka.apache.org/20/javadoc/org/apache/kafka/clients/consumer/KafkaConsumer.html[Consumer] (`Consumer<byte[], byte[]>`)
-* [[stateDirectory]] link:kafka-streams-StateDirectory.adoc[StateDirectory]
+* [[stateDirectory]] <<kafka-streams-StateDirectory.adoc#, StateDirectory>>
 * [[stateRestoreListener]] `StateRestoreListener`
-* [[config]] link:kafka-streams-StreamsConfig.adoc[StreamsConfig]
+* [[config]] <<kafka-streams-StreamsConfig.adoc#, StreamsConfig>>
 
 `GlobalStateManagerImpl` initializes the <<internal-registries, internal registries and counters>>.
+
+=== [[reinitializeStateStoresForPartitions]] `reinitializeStateStoresForPartitions` Method
+
+[source, java]
+----
+void reinitializeStateStoresForPartitions(
+  final Collection<TopicPartition> partitions,
+  final InternalProcessorContext processorContext)
+----
+
+NOTE: `reinitializeStateStoresForPartitions` is part of <<kafka-streams-StateManager.adoc#reinitializeStateStoresForPartitions, StateManager Contract>> to...FIXME.
+
+`reinitializeStateStoresForPartitions`...FIXME
+
+=== [[flush]] Flushing All State Stores -- `flush` Method
+
+[source, java]
+----
+void flush()
+----
+
+NOTE: `flush` is part of the <<kafka-streams-StateManager.adoc#flush, StateManager Contract>> to flush all <<kafka-streams-StateStore.adoc#, state stores>> registered with the state manager.
+
+`flush`...FIXME

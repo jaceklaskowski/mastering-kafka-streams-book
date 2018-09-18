@@ -2,13 +2,13 @@
 
 `ChangeLoggingKeyValueBytesStore` is...FIXME
 
-=== [[init]] `init` Method
+=== [[init]] Initialize State Store -- `init` Method
 
 [source, java]
 ----
 void init(final ProcessorContext context, final StateStore root)
 ----
 
-NOTE: `init` is part of link:kafka-streams-StateStore-AbstractStateStore.adoc#init[AbstractStateStore Contract] to...FIXME.
+NOTE: `init` is part of <<kafka-streams-StateStore-AbstractStateStore.adoc#init, AbstractStateStore Contract>> to initialize the <<kafka-streams-StateStore.adoc#, state store>>.
 
 `init`...FIXME

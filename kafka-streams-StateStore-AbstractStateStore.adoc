@@ -59,3 +59,14 @@ NOTE: `AbstractStateStore` is a Java abstract class and cannot be <<creating-ins
 |===
 
 NOTE: `AbstractStateStore` is an inner Java class of the link:kafka-streams-StateStore-WrappedStateStore.adoc[WrappedStateStore] interface.
+
+=== [[validateStoreOpen]] `validateStoreOpen` Method
+
+[source, java]
+----
+void validateStoreOpen()
+----
+
+`validateStoreOpen`...FIXME
+
+NOTE: `validateStoreOpen` is used when...FIXME

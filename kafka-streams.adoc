@@ -1,6 +1,6 @@
 == Kafka Streams -- Stream Processing Library on Apache Kafka
 
-*Kafka Streams* is a library for developing distributed applications for processing records from topics in Apache Kafka.
+*Kafka Streams* is a library for developing applications for processing records from topics in Apache Kafka.
 
 Kafka Streams applications process records through *topologies*. A Kafka Streams developer defines the processing logic using either the lower-level link:kafka-streams-Topology.adoc[Topology] API directly (and defines a DAG topology of link:kafka-streams-Processor.adoc[Processors]) or indirectly through link:kafka-streams-StreamsBuilder.adoc[StreamsBuilder] that provides the high-level DSL to define transformations.
 

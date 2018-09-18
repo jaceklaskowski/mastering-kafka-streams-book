@@ -61,7 +61,14 @@ void reinitializeStateStoresForPartitions(
 
 `reinitializeStateStoresForPartitions`...FIXME
 
-NOTE: `reinitializeStateStoresForPartitions` is used when...FIXME
+[NOTE]
+====
+`reinitializeStateStoresForPartitions` is used when:
+
+* `GlobalStateManagerImpl` is requested to <<kafka-streams-GlobalStateManagerImpl.adoc#reinitializeStateStoresForPartitions, reinitializeStateStoresForPartitions>>
+
+* `ProcessorStateManager` is requested to <<kafka-streams-ProcessorStateManager.adoc#reinitializeStateStoresForPartitions, reinitializeStateStoresForPartitions>>
+====
 
 === [[inverseOneToOneMap]] `inverseOneToOneMap` Internal Method
 

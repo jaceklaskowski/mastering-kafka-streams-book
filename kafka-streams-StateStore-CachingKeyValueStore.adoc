@@ -1,6 +1,6 @@
-== [[CachingSessionStore]] CachingSessionStore
+== [[CachingKeyValueStore]] CachingKeyValueStore
 
-`CachingSessionStore` is...FIXME
+`CachingKeyValueStore` is...FIXME
 
 === [[init]] Initialize State Store -- `init` Method
 

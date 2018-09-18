@@ -44,7 +44,8 @@
 .. link:kafka-streams-FailOnInvalidTimestamp.adoc[FailOnInvalidTimestamp]
 
 . link:kafka-streams-Stores.adoc[Stores]
-. link:kafka-streams-StateStore.adoc[StateStore]
+
+. link:kafka-streams-StateStore.adoc[StateStore Contract -- State Storage Engines]
 .. link:kafka-streams-StateStore-KeyValueStore.adoc[KeyValueStore]
 .. link:kafka-streams-StateStore-SegmentedBytesStore.adoc[SegmentedBytesStore]
 .. link:kafka-streams-StateStore-WindowStore.adoc[WindowStore]
@@ -60,9 +61,12 @@
 .. link:kafka-streams-SessionWindow.adoc[SessionWindow]
 
 . link:kafka-streams-StateStore-SessionStore.adoc[SessionStore]
+.. link:kafka-streams-StateStore-CachingKeyValueStore.adoc[CachingKeyValueStore]
 .. link:kafka-streams-StateStore-CachingSessionStore.adoc[CachingSessionStore]
+.. link:kafka-streams-StateStore-CachingWindowStore.adoc[CachingWindowStore]
 .. link:kafka-streams-StateStore-MeteredSessionStore.adoc[MeteredSessionStore]
 .. link:kafka-streams-StateStore-ChangeLoggingSessionBytesStore.adoc[ChangeLoggingSessionBytesStore]
+.. link:kafka-streams-StateStore-RocksDBSegmentedBytesStore.adoc[RocksDBSegmentedBytesStore]
 .. link:kafka-streams-StateStore-RocksDBSessionStore.adoc[RocksDBSessionStore]
 .. link:kafka-streams-StateStore-RocksDBSessionBytesStore.adoc[RocksDBSessionBytesStore]
 

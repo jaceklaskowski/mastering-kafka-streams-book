@@ -1,49 +1,115 @@
-== [[StateStore]] StateStore
+== [[StateStore]] StateStore Contract -- State Storage Engines
 
-`StateStore` is the <<contract, contract>> of <<implementations, state store engines>> that manage a state (of a stream processor).
+`StateStore` is the <<contract, contract>> of <<implementations, state storage engines>> that manage a state.
 
 [[contract]]
-[source, java]
-----
-package org.apache.kafka.streams.processor;
-
-interface StateStore {
-  void close();
-  void flush();
-  void init(ProcessorContext context, StateStore root);
-  boolean isOpen();
-  String name();
-  boolean persistent();
-}
-----
-
 .StateStore Contract
-[cols="1m,2",options="header",width="100%"]
+[cols="1m,3",options="header",width="100%"]
 |===
 | Method
 | Description
 
 | close
-| [[close]] Used when...FIXME
+a| [[close]]
+
+[source, java]
+----
+void close()
+----
+
+Closing the state store
+
+Used when:
+
+* `AbstractStateManager` is requested to <<kafka-streams-AbstractStateManager.adoc#reinitializeStateStoresForPartitions, reinitializeStateStoresForPartitions>>
+
+* <<kafka-streams-GlobalStateManagerImpl.adoc#close, GlobalStateManagerImpl>> and <<kafka-streams-ProcessorStateManager.adoc#close, ProcessorStateManager>> are requested to close
+
+* `RocksDBStore` is requested to `toggleDbForBulkLoading`
+
+* `Segments` is requested to close and cleanup
 
 | flush
-| [[flush]] Used when...FIXME
+a| [[flush]]
+
+[source, java]
+----
+void flush()
+----
+
+Flushes cached data
+
+Used when:
+
+* <<kafka-streams-GlobalStateManagerImpl.adoc#flush, GlobalStateManagerImpl>> and <<kafka-streams-ProcessorStateManager.adoc#flush, ProcessorStateManager>> are requested to flush their state stores
+
+* <<kafka-streams-StateStore-CachingKeyValueStore.adoc#close, CachingKeyValueStore>>, <<kafka-streams-StateStore-CachingSessionStore.adoc#close, CachingSessionStore>> and <<kafka-streams-StateStore-CachingWindowStore.adoc#close, CachingWindowStore>> are requested to close state stores
+
+* `RocksDBSegmentedBytesStore` is requested to <<kafka-streams-StateStore-RocksDBSegmentedBytesStore.adoc#init, initialize the state store>>
+
+* `Segments` is requested to `flush`
 
 | init
-| [[init]] Initializes the state store
+a| [[init]]
 
-Used when...FIXME
+[source, java]
+----
+void init(ProcessorContext context, StateStore root)
+----
+
+Initializes the state store
+
+Used when:
+
+* `AbstractStateManager` is requested to <<kafka-streams-AbstractStateManager.adoc#reinitializeStateStoresForPartitions, reinitializeStateStoresForPartitions>>
+
+* `AbstractTask` is requested to <<kafka-streams-AbstractTask.adoc#registerStateStores, registerStateStores>>
+
+* `GlobalStateManagerImpl` is requested to <<kafka-streams-GlobalStateManagerImpl.adoc#initialize, initialize>>
 
 | isOpen
-| [[isOpen]] Used when...FIXME
+a| [[isOpen]]
+
+[source, java]
+----
+boolean isOpen()
+----
+
+Used when:
+
+* <<kafka-streams-GlobalStateStoreProvider.adoc#stores, GlobalStateStoreProvider>> and <<kafka-streams-StreamThreadStateStoreProvider.adoc#stores, StreamThreadStateStoreProvider>> are requested to `stores`
+
+* `SegmentIterator` is requested to `hasNext`
+
+* `Segments` is requested to `segments` and `allSegments`
+
+* `AbstractStateStore` is requested to <<kafka-streams-StateStore-AbstractStateStore.adoc#validateStoreOpen, validateStoreOpen>>
 
 | name
-| [[name]] Name of the state store
+a| [[name]]
 
-Used mostly for identification purposes
+[source, java]
+----
+String name()
+----
+
+Name of the state store (for identification purposes)
 
 | persistent
-| [[persistent]] Used when...FIXME
+a| [[persistent]]
+
+[source, java]
+----
+boolean persistent()
+----
+
+Indicates whether the state store is persistent (`true`) or not (`false`)
+
+Used when:
+
+* `GlobalStateManagerImpl` is <<kafka-streams-GlobalStateManagerImpl.adoc#creating-instance, created>>
+
+* `ProcessorStateManager` is requested to <<kafka-streams-ProcessorStateManager.adoc#register, register a state store>> and <<kafka-streams-ProcessorStateManager.adoc#checkpoint, checkpoint>>
 |===
 
 [[implementations]]
@@ -53,18 +119,18 @@ Used mostly for identification purposes
 | StateStore
 | Description
 
-| link:kafka-streams-StateStore-SegmentedBytesStore.adoc[SegmentedBytesStore]
-| [[SegmentedBytesStore]]
-
-| link:kafka-streams-StateStore-KeyValueStore.adoc[KeyValueStore]
+| <<kafka-streams-StateStore-KeyValueStore.adoc#, KeyValueStore>>
 | [[KeyValueStore]]
 
-| link:kafka-streams-StateStore-WrappedStateStore.adoc[WrappedStateStore]
-| [[WrappedStateStore]]
+| <<kafka-streams-StateStore-SegmentedBytesStore.adoc#, SegmentedBytesStore>>
+| [[SegmentedBytesStore]]
 
-| link:kafka-streams-StateStore-SessionStore.adoc[SessionStore]
+| <<kafka-streams-StateStore-SessionStore.adoc#, SessionStore>>
 | [[SessionStore]]
 
-| link:kafka-streams-StateStore-WindowStore.adoc[WindowStore]
+| <<kafka-streams-StateStore-WindowStore.adoc#, WindowStore>>
 | [[WindowStore]]
+
+| <<kafka-streams-StateStore-WrappedStateStore.adoc#, WrappedStateStore>>
+| [[WrappedStateStore]]
 |===
