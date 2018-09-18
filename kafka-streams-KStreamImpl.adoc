@@ -76,7 +76,7 @@ NOTE: `process` is part of link:kafka-streams-KStream.adoc#process[KStream Contr
 
 `process`...FIXME
 
-=== [[transform]] Stateful Record Transformation -- `transform` Operator
+=== [[transform]] Transforming Record Into Zero or More Output Records with State (Stateful Transformation) -- `transform` Operator
 
 [source, java]
 ----
@@ -85,7 +85,7 @@ KStream<K1, V1> transform(
   final String... stateStoreNames)
 ----
 
-NOTE: `transform` is part of link:kafka-streams-KStream.adoc#transform[KStream Contract] to...FIXME.
+NOTE: `transform` is part of <<kafka-streams-KStream.adoc#transform, KStream API>> to transform a record into zero or more output records with state.
 
 `transform` requests <<builder, InternalStreamsBuilder>> for a new processor name with *KSTREAM-TRANSFORM* prefix.
 

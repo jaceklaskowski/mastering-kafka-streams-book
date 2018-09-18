@@ -2,9 +2,13 @@
 
 `Transformer` is the <<contract, contract>> that allows for a <<transform, stateful transformation>> of every record in the input stream into zero or more output records (both key and value type can be altered arbitrarily).
 
+In order to emit (produce) no record, <<transform, transform>> should simply return `null`.
+
 In order to use a state, a state store has to be registered beforehand (using `addStateStore` or `addGlobalStore`) before they can be connected to the `Transformer`.
 
 You can access a state store using the <<kafka-streams-ProcessorContext.adoc#, ProcessorContext>> that is given when a transformer is <<init, initialized>>.
+
+TIP: You could emit more output records for a single record using the `ProcessorContext` and its <<kafka-streams-ProcessorContext.adoc#forward, forward>> method.
 
 [source, scala]
 ----
@@ -52,6 +56,8 @@ R transform(final K key, final V value)
 ----
 
 Transforms a single record (into a `KeyValue` object)
+
+In order to emit (produce) no record, `transform` should return `null`.
 
 Used exclusively when `KStreamTransformProcessor` is requested to <<kafka-streams-KStreamTransformProcessor.adoc#process, process a record>>
 |===

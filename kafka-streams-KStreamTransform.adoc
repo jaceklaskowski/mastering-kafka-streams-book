@@ -1,0 +1,12 @@
+== [[KStreamTransform]] KStreamTransform -- Supplier of KStreamTransformProcessors
+
+`KStreamTransform` is a <<kafka-streams-ProcessorSupplier.adoc#, ProcessorSupplier>> of <<get, KStreamTransformProcessors>>.
+
+`KStreamTransform` is <<creating-instance, created>> exclusively when `KStreamImpl` is requested to <<kafka-streams-KStreamImpl.adoc#transform, transform>>.
+
+[[transformerSupplier]]
+[[creating-instance]]
+`KStreamTransform` takes a single <<kafka-streams-TransformerSupplier.adoc#, TransformerSupplier>> when created.
+
+[[get]]
+When <<kafka-streams-ProcessorSupplier.adoc#get, requested for a processor>>, `KStreamTransform` creates a new <<kafka-streams-KStreamTransformProcessor.adoc#creating-instance, KStreamTransformProcessor>> with a new <<kafka-streams-Transformer.adoc#, Transformer>> (after <<kafka-streams-TransformerSupplier.adoc#get, requesting one>> from the <<transformerSupplier, TransformerSupplier>>).

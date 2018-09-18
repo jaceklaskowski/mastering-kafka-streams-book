@@ -23,13 +23,13 @@ NOTE: link:kafka-streams-KStreamImpl.adoc[KStreamImpl] is the one and only known
 [[contract]]
 [[operators]]
 .KStream Operators
-[cols="1,2",options="header",width="100%"]
+[cols="1m,2",options="header",width="100%"]
 |===
 | Operator
 | Description
 
-| [[flatMap]] `flatMap`
-a|
+| flatMap
+a| [[flatMap]]
 
 [source, java]
 ----
@@ -37,8 +37,8 @@ KStream<KR, VR> flatMap(
   KeyValueMapper<? super K, ? super V, ? extends Iterable<? extends KeyValue<? extends KR, ? extends VR>>> mapper);
 ----
 
-| [[groupBy]] `groupBy`
-a|
+| groupBy
+a| [[groupBy]]
 
 [source, java]
 ----
@@ -49,8 +49,8 @@ KGroupedStream<KR, V> groupBy(
   final Serialized<KR, V> serialized);
 ----
 
-| [[groupByKey]] `groupByKey`
-a|
+| groupByKey
+a| [[groupByKey]]
 
 [source, java]
 ----
@@ -58,8 +58,8 @@ KGroupedStream<K, V> groupByKey();
 KGroupedStream<K, V> groupByKey(final Serialized<K, V> serialized);
 ----
 
-| [[join]] `join`
-a|
+| join
+a| [[join]]
 
 [source, java]
 ----
@@ -85,8 +85,8 @@ KStream<K, VR> join(
   final Joined<K, V, VT> joined);
 ----
 
-| [[leftJoin]] `leftJoin`
-a|
+| leftJoin
+a| [[leftJoin]]
 
 [source, java]
 ----
@@ -112,8 +112,8 @@ KStream<K, VR> leftJoin(
   final Joined<K, V, VT> joined);
 ----
 
-| [[transformValues]] `transformValues`
-a| Stateful record-by-record value transformation
+| transformValues
+a| [[transformValues]]
 
 [source, java]
 ----
@@ -125,18 +125,20 @@ KStream<K, VR> transformValues(
   final String... stateStoreNames)
 ----
 
+Stateful record-by-record value transformation
+
 `transformValues` uses link:kafka-streams-ValueTransformerSupplier.adoc[ValueTransformerSupplier] to create a link:kafka-streams-ValueTransformer.adoc[ValueTransformer] that is used for a stateful transformation of record values in a stream.
 
-| [[map]] `map`
-a|
+| map
+a| [[map]]
 
 [source, java]
 ----
 KStream<KR, VR> map(KeyValueMapper<? super K, ? super V, ? extends KeyValue<? extends KR, ? extends VR>> mapper);
 ----
 
-| [[mapValues]] `mapValues`
-a|
+| mapValues
+a| [[mapValues]]
 
 [source, java]
 ----
@@ -144,24 +146,24 @@ KStream<K, VR> mapValues(ValueMapper<? super V, ? extends VR> mapper);
 KStream<K, VR> mapValues(final ValueMapperWithKey<? super K, ? super V, ? extends VR> mapper);
 ----
 
-| [[print]] `print`
-a|
+| print
+a| [[print]]
 
 [source, java]
 ----
 void print(final Printed<K, V> printed);
 ----
 
-| [[selectKey]] `selectKey`
-a|
+| selectKey
+a| [[selectKey]]
 
 [source, java]
 ----
 KStream<KR, V> selectKey(KeyValueMapper<? super K, ? super V, ? extends KR> mapper);
 ----
 
-| [[through]] `through`
-a|
+| through
+a| [[through]]
 
 [source, java]
 ----
@@ -169,8 +171,8 @@ KStream<K, V> through(final String topic);
 KStream<K, V> through(final String topic, final Produced<K, V> produced);
 ----
 
-| [[transform]] `transform`
-a| Stateful record transformation
+| transform
+a| [[transform]]
 
 [source, java]
 ----
@@ -179,8 +181,10 @@ KStream<K1, V1> transform(
   final String... stateStoreNames)
 ----
 
-| [[to]] `to`
-a|
+Stateful record transformation
+
+| to
+a| [[to]]
 
 [source, java]
 ----

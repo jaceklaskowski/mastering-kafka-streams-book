@@ -132,6 +132,7 @@
 . link:kafka-streams-ProcessorSupplier.adoc[ProcessorSupplier]
 .. link:kafka-streams-KStreamSessionWindowAggregate.adoc[KStreamSessionWindowAggregate]
 .. link:kafka-streams-KStreamAggProcessorSupplier.adoc[KStreamAggProcessorSupplier]
+.. link:kafka-streams-KStreamTransform.adoc[KStreamTransform -- Supplier of KStreamTransformProcessors]
 .. link:kafka-streams-KStreamTransformValues.adoc[KStreamTransformValues]
 
 . link:kafka-streams-Processor.adoc[Processor Contract -- Stream Processing Nodes]

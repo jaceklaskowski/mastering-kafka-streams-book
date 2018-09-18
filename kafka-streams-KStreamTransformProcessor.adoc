@@ -1,6 +1,12 @@
 == [[KStreamTransformProcessor]] KStreamTransformProcessor
 
-`KStreamTransformProcessor` is...FIXME
+`KStreamTransformProcessor` is a <<kafka-streams-AbstractProcessor.adoc#, processor>> that is used for <<kafka-streams-KStream.adoc#transform, KStream.transform>> stateful operator.
+
+`KStreamTransformProcessor` is <<creating-instance, created>> when `KStreamTransform` is requested for a <<kafka-streams-KStreamTransform.adoc#get, processor>>.
+
+[[transformer]]
+[[creating-instance]]
+`KStreamTransformProcessor` takes a single <<kafka-streams-Transformer.adoc#, Transformer>> when created.
 
 === [[close]] Closing Processor -- `close` Method
 

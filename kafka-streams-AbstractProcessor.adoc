@@ -48,7 +48,7 @@
 | `KTableKTableJoinMergeProcessor`
 | [[KTableKTableJoinMergeProcessor]]
 
-| `KStreamTransformProcessor`
+| <<kafka-streams-KStreamTransformProcessor.adoc#, KStreamTransformProcessor>>
 | [[KStreamTransformProcessor]]
 
 | `KStreamWindowAggregateProcessor`
