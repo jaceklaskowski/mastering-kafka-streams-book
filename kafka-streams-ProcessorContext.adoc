@@ -46,17 +46,40 @@ interface ProcessorContext {
 ----
 
 .ProcessorContext Contract
-[cols="1,2",options="header",width="100%"]
+[cols="1m,2",options="header",width="100%"]
 |===
 | Method
 | Description
 
-| `getStateStore`
-| [[getStateStore]] Used when...FIXME
+| getStateStore
+a| [[getStateStore]]
 
-| `forward`
+[source, java]
+----
+StateStore getStateStore(final String name)
+----
+
+Gets the <<kafka-streams-StateStore.adoc#, state store>> by name
+
+Used when...FIXME
+
+| forward
 | [[forward]] Used when...FIXME
 
-| `schedule`
+| register
+a| [[register]]
+
+[source, java]
+----
+void register(
+  final StateStore store,
+  final StateRestoreCallback stateRestoreCallback)
+----
+
+Registers a <<kafka-streams-StateStore.adoc#, state store>>
+
+Used when <<kafka-streams-StateStore-InMemoryKeyValueStore.adoc#init, InMemoryKeyValueStore>>, <<kafka-streams-StateStore-MemoryLRUCache.adoc#init, MemoryLRUCache>>, <<kafka-streams-StateStore-RocksDBSegmentedBytesStore.adoc#init, RocksDBSegmentedBytesStore>> and <<kafka-streams-StateStore-RocksDBStore.adoc#init, RocksDBStore>> are requested to initialize itself
+
+| schedule
 | [[schedule]] Used exclusively when `KStreamTransformValuesProcessor` is requested to link:kafka-streams-KStreamTransformValuesProcessor.adoc#init[initialize]
 |===

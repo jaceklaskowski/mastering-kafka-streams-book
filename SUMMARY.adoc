@@ -47,6 +47,9 @@
 
 . link:kafka-streams-StateStore.adoc[StateStore Contract -- State Storage Engines]
 .. link:kafka-streams-StateStore-KeyValueStore.adoc[KeyValueStore]
+.. link:kafka-streams-StateStore-InMemoryKeyValueStore.adoc[InMemoryKeyValueStore]
+.. link:kafka-streams-StateStore-MemoryLRUCache.adoc[MemoryLRUCache]
+.. link:kafka-streams-StateStore-RocksDBStore.adoc[RocksDBStore]
 .. link:kafka-streams-StateStore-SegmentedBytesStore.adoc[SegmentedBytesStore]
 .. link:kafka-streams-StateStore-WindowStore.adoc[WindowStore]
 .. link:kafka-streams-StateStore-WrappedStateStore.adoc[WrappedStateStore]
@@ -160,7 +163,9 @@
 .. link:kafka-streams-AssignedStandbyTasks.adoc[AssignedStandbyTasks -- AssignedTasks For StandbyTasks]
 .. link:kafka-streams-AssignedStreamsTasks.adoc[AssignedStreamsTasks -- AssignedTasks For StreamTasks]
 
-. link:kafka-streams-ProcessorContextImpl.adoc[ProcessorContextImpl]
+. link:kafka-streams-AbstractProcessorContext.adoc[AbstractProcessorContext]
+.. link:kafka-streams-ProcessorContextImpl.adoc[ProcessorContextImpl]
+.. link:kafka-streams-GlobalProcessorContextImpl.adoc[GlobalProcessorContextImpl]
 
 . link:kafka-streams-GlobalStreamThread.adoc[GlobalStreamThread]
 .. link:kafka-streams-StateConsumer.adoc[StateConsumer]
@@ -195,9 +200,9 @@
 
 . link:kafka-streams-RecordDeserializer.adoc[RecordDeserializer]
 
-=== State Management
+=== State (Store) Management
 
-. link:kafka-streams-StateManager.adoc[StateManager]
+. link:kafka-streams-StateManager.adoc[StateManager Contract -- State Storage Engine Managers]
 .. link:kafka-streams-AbstractStateManager.adoc[AbstractStateManager]
 
 . link:kafka-streams-ProcessorStateManager.adoc[ProcessorStateManager]

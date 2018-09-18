@@ -41,12 +41,12 @@ public interface Task {
 ----
 
 .Task Contract
-[cols="1,2",options="header",width="100%"]
+[cols="1m,2",options="header",width="100%"]
 |===
 | Method
 | Description
 
-| `changelogPartitions`
+| changelogPartitions
 a| [[changelogPartitions]] Changelog partitions associated with the task
 
 Used when:
@@ -55,7 +55,7 @@ Used when:
 
 * `StreamTask` is requested to <<kafka-streams-StreamTask.adoc#initializeStateStores, initialize state stores>>.
 
-| `close`
+| close
 a| [[close]]
 
 Used when:
@@ -74,13 +74,23 @@ Used when:
 
 * `StandbyTask` is requested to link:kafka-streams-StandbyTask.adoc#closeSuspended[closeSuspended]
 
-| `closeSuspended`
+| closeSuspended
 | [[closeSuspended]] Used when...
 
-| `commit`
+| commit
 | [[commit]]
 
-| `hasStateStores`
+| getStore
+a| [[getStore]]
+
+[source, java]
+----
+StateStore getStore(final String name)
+----
+
+Gets the <<kafka-streams-StateStore.adoc#, state store>> by name
+
+| hasStateStores
 a| [[hasStateStores]]
 
 Used when `AssignedTasks` is requested to:
@@ -93,7 +103,7 @@ Used when `AssignedTasks` is requested to:
 
 Implemented exclusively in link:kafka-streams-AbstractTask.adoc#hasStateStores[AbstractTask].
 
-| `initializeStateStores`
+| initializeStateStores
 a| [[initializeStateStores]] Initializing <<kafka-streams-StateStore.adoc#, state stores>>
 
 Enabled (`true`) if the task has no state stores that need restoring.
@@ -102,18 +112,18 @@ Enabled (`true`) if the task has no state stores that need restoring.
 
 Used exclusively when `AssignedTasks` is requested to <<kafka-streams-AssignedTasks.adoc#initializeNewTasks, initializeNewTasks>>.
 
-| `initializeTopology`
+| initializeTopology
 | [[initializeTopology]] Used exclusively when `AssignedTasks` is requested to link:kafka-streams-AssignedTasks.adoc#transitionToRunning[schedule a task for execution]
 
-| `partitions`
+| partitions
 | [[partitions]] Used when...
 
-| `resume`
+| resume
 | [[resume]] Used when...
 
-| `suspend`
+| suspend
 | [[suspend]] Used when...
 
-| `toString`
+| toString
 | [[toString]] Used when...
 |===

@@ -1,0 +1,14 @@
+== [[GlobalProcessorContextImpl]] GlobalProcessorContextImpl
+
+`GlobalProcessorContextImpl` is a concrete <<kafka-streams-AbstractProcessorContext.adoc#, AbstractProcessorContext>> that...FIXME
+
+=== [[getStateStore]] `getStateStore` Method
+
+[source, java]
+----
+FIXME
+----
+
+NOTE: `getStateStore` is part of the <<kafka-streams-ProcessorContext.adoc#getStateStore, ProcessorContext Contract>> to...FIXME.
+
+`getStateStore`...FIXME

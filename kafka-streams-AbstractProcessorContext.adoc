@@ -1,0 +1,27 @@
+== [[AbstractProcessorContext]] AbstractProcessorContext
+
+`AbstractProcessorContext` is...FIXME
+
+=== [[stateDir]] `stateDir` Method
+
+[source, java]
+----
+File stateDir()
+----
+
+NOTE: `stateDir` is part of the <<kafka-streams-ProcessorContext.adoc#stateDir, ProcessorContext Contract>> to...FIXME.
+
+`stateDir`...FIXME
+
+=== [[register]] Registering State Store -- `register` Method
+
+[source, java]
+----
+void register(
+  final StateStore store,
+  final StateRestoreCallback stateRestoreCallback)
+----
+
+NOTE: `register` is part of the <<kafka-streams-ProcessorContext.adoc#register, ProcessorContext Contract>> to register a <<kafka-streams-StateStore.adoc#, state store>>.
+
+`register`...FIXME

@@ -69,7 +69,7 @@ Used when:
 | [[StandbyTask]]
 |===
 
-=== [[closeStateManager]] `closeStateManager` Method
+=== [[closeStateManager]] Closing State Manager -- `closeStateManager` Method
 
 [source, java]
 ----
@@ -106,7 +106,7 @@ NOTE: `hasStateStores` is part of link:kafka-streams-Task.adoc#hasStateStores[Ta
 
 `hasStateStores` is positive (and returns `true`) when <<topology, ProcessorTopology>> has at least one link:kafka-streams-ProcessorTopology.adoc#stateStores[local state store].
 
-=== [[flushState]] `flushState` Method
+=== [[flushState]] Flushing All State Stores -- `flushState` Method
 
 [source, java]
 ----
@@ -150,14 +150,14 @@ NOTE: `changelogPartitions` is part of <<kafka-streams-Task.adoc#changelogPartit
 
 `changelogPartitions` simply requests the <<stateMgr, ProcessorStateManager>> to give the <<kafka-streams-ProcessorStateManager.adoc#changelogPartitions, changelogPartitions>> and returns them.
 
-=== [[getStore]] `getStore` Method
+=== [[getStore]] Accessing State Store by Name -- `getStore` Method
 
 [source, java]
 ----
 StateStore getStore(final String name)
 ----
 
-NOTE: `getStore` is part of the <<kafka-streams-Task.adoc#getStore, Task Contract>> to...FIXME.
+NOTE: `getStore` is part of the <<kafka-streams-Task.adoc#getStore, Task Contract>> to access the <<kafka-streams-StateStore.adoc#, state store>> by name.
 
 `getStore` simply requests the <<stateMgr, ProcessorStateManager>> for the <<kafka-streams-ProcessorStateManager.adoc#getStore, StateStore by name>>.
 

@@ -62,3 +62,31 @@ void flush()
 NOTE: `flush` is part of the <<kafka-streams-StateManager.adoc#flush, StateManager Contract>> to flush all <<kafka-streams-StateStore.adoc#, state stores>> registered with the state manager.
 
 `flush`...FIXME
+
+=== [[restoreState]] `restoreState` Internal Method
+
+[source, java]
+----
+void restoreState(
+  final StateRestoreCallback stateRestoreCallback,
+  final List<TopicPartition> topicPartitions,
+  final Map<TopicPartition, Long> highWatermarks,
+  final String storeName)
+----
+
+`restoreState`...FIXME
+
+NOTE: `restoreState` is used exclusively when `GlobalStateManagerImpl` is requested to <<register, register a state store>>.
+
+=== [[register]] Registering State Store -- `register` Method
+
+[source, scala]
+----
+void register(
+  final StateStore store,
+  final StateRestoreCallback stateRestoreCallback)
+----
+
+NOTE: `register` is part of the <<kafka-streams-StateManager.adoc#register, StateManager Contract>> to register a state store.
+
+`register`...FIXME

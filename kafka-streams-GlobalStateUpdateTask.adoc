@@ -48,7 +48,7 @@ When the record has been successfully deserialized, `update` does the following:
 
 In the end, `update` saves the topic and the partition of the record with the offset in the <<offsets, offsets>> internal registry.
 
-=== [[flushState]] `flushState` Method
+=== [[flushState]] Flushing State Stores -- `flushState` Method
 
 [source, java]
 ----
@@ -59,7 +59,7 @@ NOTE: `flushState` is part of link:kafka-streams-GlobalStateMaintainer.adoc#flus
 
 `flushState` requests <<stateMgr, GlobalStateManager>> to link:kafka-streams-StateManager.adoc#flush[flush] followed by link:kafka-streams-Checkpointable.adoc#checkpoint[checkpointing] the <<offsets, offsets>>.
 
-=== [[close]] `close` Method
+=== [[close]] Closing State Manager -- `close` Method
 
 [source, java]
 ----

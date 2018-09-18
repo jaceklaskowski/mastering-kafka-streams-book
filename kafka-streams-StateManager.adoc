@@ -1,12 +1,12 @@
-== [[StateManager]] StateManager
+== [[StateManager]] StateManager Contract -- State Storage Engine Managers
 
-`StateManager` is the <<contract, contract>> for...FIXME
+`StateManager` is the <<contract, contract>> of <<implementations, state store managers>> that manage one or more <<kafka-streams-StateStore.adoc#, state stores>>.
 
 `StateManager` is a <<kafka-streams-Checkpointable.adoc#, Checkpointable>> that...FIXME
 
 [[contract]]
 .StateManager Contract
-[cols="1a,2",options="header",width="100%"]
+[cols="1m,2",options="header",width="100%"]
 |===
 | Method
 | Description
@@ -19,7 +19,7 @@ a| [[baseDir]]
 File baseDir()
 ----
 
-Used when...FIXME
+Used exclusively when `AbstractProcessorContext` is requested for <<kafka-streams-AbstractProcessorContext.adoc#stateDir, stateDir>>
 
 | close
 a| [[close]]
@@ -33,8 +33,9 @@ Closes a state manager
 
 Used when:
 
-* `AbstractTask` is requested to link:kafka-streams-AbstractTask.adoc#closeStateManager[closeStateManager]
-* `GlobalStateUpdateTask` is requested to link:kafka-streams-GlobalStateUpdateTask.adoc#close[close]
+* `AbstractTask` is requested to <<kafka-streams-AbstractTask.adoc#closeStateManager, close the state manager>>
+
+* `GlobalStateUpdateTask` is requested to <<kafka-streams-GlobalStateUpdateTask.adoc#close, close the state manager>>
 
 | flush
 a| [[flush]]
@@ -46,7 +47,11 @@ void flush()
 
 Flushes all <<kafka-streams-StateStore.adoc#, state stores>> registered with the state manager
 
-Used when...FIXME
+Used when:
+
+* <<kafka-streams-AbstractTask.adoc#flushState, AbstractTask>> and <<kafka-streams-GlobalStateUpdateTask.adoc#flushState, GlobalStateUpdateTask>> are requested to flush state stores
+
+* `StandbyTask` is requested to <<kafka-streams-StandbyTask.adoc#flushAndCheckpointState, flush and checkpoint state stores>>
 
 | getGlobalStore
 a| [[getGlobalStore]]
@@ -56,7 +61,13 @@ a| [[getGlobalStore]]
 StateStore getGlobalStore(final String name)
 ----
 
-Used when...FIXME
+Accessing the global <<kafka-streams-StateStore.adoc#, state store>> by name
+
+Used when:
+
+* <<kafka-streams-GlobalProcessorContextImpl.adoc#getStateStore, GlobalProcessorContextImpl>> and <<kafka-streams-ProcessorContextImpl.adoc#getStateStore, ProcessorContextImpl>> are requested to get the global <<kafka-streams-StateStore.adoc#, state store>> by name
+
+* `GlobalStateManagerImpl` is requested to <<kafka-streams-GlobalStateManagerImpl.adoc#getStore, get state store by name>>
 
 | getStore
 a| [[getStore]]
@@ -66,7 +77,9 @@ a| [[getStore]]
 StateStore getStore(final String name)
 ----
 
-Used when...FIXME
+Accessing the <<kafka-streams-StateStore.adoc#, state store>> by name
+
+Used when <<kafka-streams-AbstractTask.adoc#getStore, AbstractTask>> and <<kafka-streams-ProcessorContextImpl.adoc#getStateStore, ProcessorContextImpl>> are requested to get the state store by name
 
 | register
 a| [[register]]
@@ -76,9 +89,9 @@ a| [[register]]
 void register(final StateStore store, final StateRestoreCallback stateRestoreCallback)
 ----
 
-Registering a <<kafka-streams-StateStore.adoc#, StateStore>> and the associated `StateRestoreCallback`
+Registering a <<kafka-streams-StateStore.adoc#, state store>> with a `StateRestoreCallback`
 
-Used when...FIXME
+Used exclusively when `AbstractProcessorContext` is requested to <<kafka-streams-AbstractProcessorContext.adoc#register, register a state store>>
 
 | reinitializeStateStoresForPartitions
 a| [[reinitializeStateStoresForPartitions]]
@@ -90,19 +103,24 @@ void reinitializeStateStoresForPartitions(
   final InternalProcessorContext processorContext)
 ----
 
-Used when...FIXME
+Used when:
+
+* `AbstractTask` is requested to <<kafka-streams-AbstractTask.adoc#reinitializeStateStoresForPartitions, reinitializeStateStoresForPartitions>>
+
+* `GlobalStateManagerImpl` is requested to <<kafka-streams-GlobalStateManagerImpl.adoc#restoreState, restoreState>>
+
 |===
 
 [[implementations]]
-.StateManagers
+.StateManagers (Direct Extensions)
 [cols="1,2",options="header",width="100%"]
 |===
 | StateManager
 | Description
 
-| link:kafka-streams-AbstractStateManager.adoc[AbstractStateManager]
+| <<kafka-streams-AbstractStateManager.adoc#, AbstractStateManager>>
 | [[AbstractStateManager]]
 
-| link:kafka-streams-GlobalStateManager.adoc[GlobalStateManager]
+| <<kafka-streams-GlobalStateManager.adoc#, GlobalStateManager>>
 | [[GlobalStateManager]]
 |===

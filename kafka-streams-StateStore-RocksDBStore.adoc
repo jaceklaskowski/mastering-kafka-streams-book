@@ -1,0 +1,14 @@
+== [[RocksDBStore]] RocksDBStore
+
+`RocksDBStore` is...FIXME
+
+=== [[init]] Initialize State Store -- `init` Method
+
+[source, java]
+----
+void init(final ProcessorContext context, final StateStore root)
+----
+
+NOTE: `init` is part of <<kafka-streams-StateStore.adoc#init, StateStore Contract>> to initialize the <<kafka-streams-StateStore.adoc#, state store>>.
+
+`init`...FIXME

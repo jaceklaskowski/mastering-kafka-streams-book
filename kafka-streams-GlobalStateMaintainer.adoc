@@ -15,22 +15,29 @@ interface GlobalStateMaintainer {
 ----
 
 .GlobalStateMaintainer Contract
-[cols="1,2",options="header",width="100%"]
+[cols="1m,2",options="header",width="100%"]
 |===
 | Method
 | Description
 
-| [[close]] `close`
-| Used when...FIXME
+| close
+a| [[close]]
 
-| [[flushState]] `flushState`
-| Used when...FIXME
+[source, java]
+----
+void close() throws IOException
+----
 
-| [[initialize]] `initialize`
-| Used when...FIXME
+Used when...FIXME
 
-| [[update]] `update`
-| Used when...FIXME
+| flushState
+| [[flushState]] Used when...FIXME
+
+| initialize
+| [[initialize]] Used when...FIXME
+
+| update
+| [[update]] Used when...FIXME
 |===
 
 NOTE: link:kafka-streams-GlobalStateUpdateTask.adoc[GlobalStateUpdateTask] is the one and only `GlobalStateMaintainer`.

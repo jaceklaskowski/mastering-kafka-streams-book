@@ -2,14 +2,14 @@
 
 `ProcessorContextImpl` is a `AbstractProcessorContext` that...FIXME
 
-=== [[getStateStore]] `getStateStore` Method
+=== [[getStateStore]] Accessing State Store by Name -- `getStateStore` Method
 
 [source, scala]
 ----
 StateStore getStateStore(final String name)
 ----
 
-NOTE: `getStateStore` is part of link:kafka-streams-ProcessorContext.adoc#getStateStore[ProcessorContext Contract] to get the state store per name.
+NOTE: `getStateStore` is part of link:kafka-streams-ProcessorContext.adoc#getStateStore[ProcessorContext Contract] to access the <<kafka-streams-StateStore.adoc#, state store>> by name.
 
 `getStateStore`...FIXME
 
