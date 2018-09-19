@@ -45,7 +45,7 @@ NOTE: `windowedBy` is part of link:kafka-streams-KGroupedStream.adoc#windowedBy[
 
 `windowedBy`...FIXME
 
-=== [[doAggregate]] `doAggregate` Internal Method
+=== [[doAggregate]] Building KTable -- `doAggregate` Internal Method
 
 [source, java]
 ----

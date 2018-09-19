@@ -557,16 +557,17 @@ NOTE: `connectStateStoreNameToSourceTopicsOrPattern` is used when...FIXME
 ----
 void addStateStore(
   final StoreBuilder storeBuilder,
-  final String... processorNames)
-// Deprecated
+  final String... processorNames) // <1>
 void addStateStore(
-  final org.apache.kafka.streams.processor.StateStoreSupplier supplier,
+  final StoreBuilder storeBuilder,
+  final boolean allowOverride,
   final String... processorNames)
 ----
+<1> Does not allow overrides (`allowOverride` flag is `false`)
 
-`addStateStore` creates a link:kafka-streams-StoreBuilderFactory.adoc#creating-instance[StoreBuilderFactory] and adds it to <<stateFactories, stateFactories>>.
+`addStateStore` creates a <<kafka-streams-StoreBuilderFactory.adoc#creating-instance, StoreBuilderFactory>> and adds it to the <<stateFactories, stateFactories>> internal registry.
 
-`addStateStore` then <<connectProcessorAndStateStore, connects the state store with processor nodes>> (by the given `processorNames`).
+`addStateStore` then <<connectProcessorAndStateStore, connects the state store with processors>> (using the <<kafka-streams-StoreBuilder.adoc#name, name>> of the input `StoreBuilder`).
 
 [NOTE]
 ====
@@ -937,7 +938,9 @@ InternalTopicConfig createChangelogTopicConfig(
   final String name)
 ----
 
-`createChangelogTopicConfig` requests the input link:kafka-streams-StateStoreFactory.adoc[StateStoreFactory] for link:kafka-streams-StateStoreFactory.adoc#isWindowStore[isWindowStore] flag.
+`createChangelogTopicConfig` creates a <<kafka-streams-UnwindowedChangelogTopicConfig.adoc#, UnwindowedChangelogTopicConfig>> or a <<kafka-streams-WindowedChangelogTopicConfig.adoc#, WindowedChangelogTopicConfig>> per the <<kafka-streams-StateStoreFactory.adoc#isWindowStore, isWindowStore>> flag of the input `StateStoreFactory`.
+
+Internally, `createChangelogTopicConfig` requests the input link:kafka-streams-StateStoreFactory.adoc[StateStoreFactory] for link:kafka-streams-StateStoreFactory.adoc#isWindowStore[isWindowStore] flag.
 
 NOTE: `isWindowStore` flag is enabled when a `StateStoreFactory` is created for a link:kafka-streams-WindowStoreBuilder.adoc[WindowStoreBuilder].
 

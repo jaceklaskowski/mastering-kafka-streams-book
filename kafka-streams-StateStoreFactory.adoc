@@ -21,16 +21,16 @@ interface StateStoreFactory {
 ----
 
 .StateStoreFactory Contract
-[cols="1,2",options="header",width="100%"]
+[cols="1m,2",options="header",width="100%"]
 |===
 | Method
 | Description
 
-| `build`
+| build
 | [[build]]
 
-| `isWindowStore`
-a| [[isWindowStore]] Flag to control whether a `StateStoreFactory` is created for a link:kafka-streams-WindowStoreBuilder.adoc[WindowStoreBuilder] (`true`) or not (`false`)
+| isWindowStore
+a| [[isWindowStore]] Indicates whether a `StateStoreFactory` was created for a link:kafka-streams-WindowStoreBuilder.adoc[WindowStoreBuilder] (`true`) or not (`false`)
 
 Used exclusively when `InternalTopologyBuilder` is requested to link:kafka-streams-InternalTopologyBuilder.adoc#createChangelogTopicConfig[create an InternalTopicConfig (for a given name and StateStoreFactory)]
 
@@ -41,24 +41,32 @@ Used exclusively when `InternalTopologyBuilder` is requested to link:kafka-strea
 In a nutshell, The flag is enabled only when the `StateStoreFactory` is created for a link:kafka-streams-WindowStoreBuilder.adoc[WindowStoreBuilder].
 ====
 
-| `logConfig`
-| [[logConfig]]
+| logConfig
+a| [[logConfig]]
 
-| `loggingEnabled`
+[source, java]
+----
+Map<String, String> logConfig()
+----
+
+Used exclusively when `InternalTopologyBuilder` is requested to <<kafka-streams-InternalTopologyBuilder.adoc#createChangelogTopicConfig, createChangelogTopicConfig>>
+
+| loggingEnabled
 | [[loggingEnabled]]
 
-| `name`
+| name
 | [[name]]
 
-| `retentionPeriod`
+| retentionPeriod
 | [[retentionPeriod]] Window retention period (in milliseconds)
 
 Used exclusively when `InternalTopologyBuilder` is requested to link:kafka-streams-InternalTopologyBuilder.adoc#createChangelogTopicConfig[create an InternalTopicConfig (for a given name and StateStoreFactory)]
 
-| `users`
+| users
 | [[users]] Names of the processors that are connected to a state store
 
 Used when `InternalTopologyBuilder` is requested to link:kafka-streams-InternalTopologyBuilder.adoc#connectProcessorAndStateStore[connect a state store with a processor node] and link:kafka-streams-InternalTopologyBuilder.adoc#topicGroups[topic groups]
+
 |===
 
 [[implementations]]

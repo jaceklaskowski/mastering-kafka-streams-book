@@ -1,13 +1,9 @@
 == [[StoreBuilderFactory]] StoreBuilderFactory
 
-`StoreBuilderFactory` is an `AbstractStateStoreFactory` that...FIXME
+`StoreBuilderFactory` is a concrete <<kafka-streams-StateStoreFactory.adoc#, StateStoreFactory>> (indirectly as a <<kafka-streams-AbstractStateStoreFactory.adoc#, AbstractStateStoreFactory>>) that is used for...FIXME
 
 `StoreBuilderFactory` is <<creating-instance, created>> when...FIXME
 
-=== [[creating-instance]] Creating StoreBuilderFactory Instance
-
-`StoreBuilderFactory` takes the following when created:
-
-* [[builder]] link:kafka-streams-StoreBuilder.adoc[StoreBuilder]
-
-`StoreBuilderFactory` initializes the <<internal-registries, internal registries and counters>>.
+[[builder]]
+[[creating-instance]]
+`StoreBuilderFactory` takes a single <<kafka-streams-StoreBuilder.adoc#, StoreBuilder>> when created.

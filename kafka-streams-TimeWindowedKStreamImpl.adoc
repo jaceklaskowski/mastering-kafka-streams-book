@@ -7,7 +7,7 @@
 [[aggregateBuilder]]
 `TimeWindowedKStreamImpl` uses a <<kafka-streams-GroupedStreamAggregateBuilder.adoc#, GroupedStreamAggregateBuilder>> for...FIXME
 
-=== [[materialize]] `materialize` Internal Method
+=== [[materialize]] Creating StoreBuilder (of WindowStores) -- `materialize` Internal Method
 
 [source, java]
 ----

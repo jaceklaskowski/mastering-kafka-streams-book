@@ -96,7 +96,7 @@ KTable<Windowed<K>, VR> doAggregate(
 
 NOTE: `doAggregate` is used when `SessionWindowedKStreamImpl` is requested to <<count, count>>, <<aggregate, aggregate>> and <<reduce, reduce>>.
 
-=== [[materialize]] `materialize` Internal Method
+=== [[materialize]] Creating StoreBuilder (of SessionStores) -- `materialize` Internal Method
 
 [source, java]
 ----

@@ -1,58 +1,99 @@
 == [[StoreBuilder]] StoreBuilder Contract -- State Store Builders
 
-`StoreBuilder` is the <<contract, contract>> for services that can <<build, build a StateStore>> with a <<name, name>> and optional <<withCachingEnabled, caching>> and <<withLoggingEnabled, logging>>.
+`StoreBuilder` is the <<contract, contract>> of <<implementations, state store builders>> that can <<build, build a state store>> (with optional <<withCachingEnabled, caching>> and <<withLoggingEnabled, logging>>).
+
+`StoreBuilder` is used to add a local or global <<kafka-streams-StateStore.adoc#, state store>> to a topology using the following APIs:
+
+* <<kafka-streams-StreamsBuilder.adoc#, StreamsBuilder>> (i.e. <<kafka-streams-StreamsBuilder.adoc#addStateStore, StreamsBuilder.addStateStore>> and <<kafka-streams-StreamsBuilder.adoc#addGlobalStore, StreamsBuilder.addGlobalStore>>)
+
+* <<kafka-streams-Topology.adoc#, Topology>> (i.e. <<kafka-streams-Topology.adoc#addStateStore, Topology.addStateStore>> and <<kafka-streams-Topology.adoc#addGlobalStore, Topology.addGlobalStore>>).
 
 [[contract]]
-[source, java]
-----
-package org.apache.kafka.streams.state;
-
-interface StoreBuilder<T extends StateStore> {
-  T build();
-  Map<String, String> logConfig();
-  boolean loggingEnabled();
-  String name();
-  StoreBuilder<T> withCachingEnabled();
-  StoreBuilder<T> withLoggingEnabled(final Map<String, String> config);
-  StoreBuilder<T> withLoggingDisabled();
-}
-----
-
 .StoreBuilder Contract
-[cols="1,2",options="header",width="100%"]
+[cols="1m,2",options="header",width="100%"]
 |===
 | Method
 | Description
 
-| `build`
-| [[build]] Building a link:kafka-streams-StateStore.adoc[StateStore]
+| build
+a| [[build]]
 
-| `name`
-| [[name]]
+[source, java]
+----
+T build()
+----
 
-| `withCachingEnabled`
-| [[withCachingEnabled]]
+Builds the <<kafka-streams-StateStore.adoc#, state store>>
 
-| `withLoggingEnabled`
-| [[withLoggingEnabled]]
+| logConfig
+a| [[logConfig]]
+
+[source, java]
+----
+Map<String, String> logConfig()
+----
+
+Configuration of the changelog for a <<kafka-streams-StateStore.adoc#, state store>>
+
+Used exclusively when `StoreBuilderFactory` is <<kafka-streams-StoreBuilderFactory.adoc#, created>>
+
+| loggingEnabled
+a| [[loggingEnabled]]
+
+[source, java]
+----
+boolean loggingEnabled()
+----
+
+Indicates whether logging should be enabled (`true`) or not (`false`) on the <<kafka-streams-StateStore.adoc#, state store>>
+
+Used when:
+
+* `InternalTopologyBuilder` is requested to <<kafka-streams-InternalTopologyBuilder.adoc#addGlobalStore, addGlobalStore>>
+
+* `StoreBuilderFactory` is <<kafka-streams-StoreBuilderFactory.adoc#, created>>
+
+| name
+a| [[name]]
+
+[source, java]
+----
+String name()
+----
+
+Name of the <<kafka-streams-StateStore.adoc#, state store>> (for identification purposes)
+
+| withCachingEnabled
+a| [[withCachingEnabled]]
+
+[source, java]
+----
+StoreBuilder<T> withCachingEnabled()
+----
+
+Enables caching on the <<kafka-streams-StateStore.adoc#, state store>>
+
+| withLoggingDisabled
+a| [[withLoggingDisabled]]
+
+[source, java]
+----
+StoreBuilder<T> withLoggingDisabled()
+----
+
+Disables logging on the <<kafka-streams-StateStore.adoc#, state store>>
+
+| withLoggingEnabled
+a| [[withLoggingEnabled]]
+
+[source, java]
+----
+StoreBuilder<T> withLoggingEnabled(final Map<String, String> config)
+----
+
+Enables logging on the <<kafka-streams-StateStore.adoc#, state store>>
+
 |===
 
 [[implementations]]
-.StoreBuilders
-[cols="1,2",options="header",width="100%"]
-|===
-| StoreBuilder
-| Description
-
-| [[AbstractStoreBuilder]] link:kafka-streams-AbstractStoreBuilder.adoc[AbstractStoreBuilder]
-|
-
-| [[KeyValueStoreBuilder]] link:kafka-streams-KeyValueStoreBuilder.adoc[KeyValueStoreBuilder]
-|
-
-| [[SessionStoreBuilder]] link:kafka-streams-SessionStoreBuilder.adoc[SessionStoreBuilder]
-|
-
-| [[WindowStoreBuilder]] link:kafka-streams-WindowStoreBuilder.adoc[WindowStoreBuilder]
-|
-|===
+NOTE: <<kafka-streams-AbstractStoreBuilder.adoc#, AbstractStoreBuilder>> is the one and only known base implementation of the <<contract, StoreBuilder Contract>>.

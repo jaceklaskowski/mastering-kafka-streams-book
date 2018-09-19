@@ -8,7 +8,7 @@
 [[creating-instance]]
 `KeyValueStoreMaterializer` takes a `MaterializedInternal<K, V, KeyValueStore<Bytes, byte[]>>`.
 
-=== [[materialize]] `materialize` Method
+=== [[materialize]] Creating StoreBuilder (of KeyValueStores) -- `materialize` Method
 
 [source, java]
 ----

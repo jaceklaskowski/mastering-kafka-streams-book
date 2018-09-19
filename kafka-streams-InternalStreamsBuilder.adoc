@@ -61,7 +61,7 @@ import org.apache.kafka.streams.kstream.internals.KStreamImpl
 val kstreamImpl = kstream.asInstanceOf[KStreamImpl[String, String]]
 ----
 
-=== [[table]] Creating KTable for Topic -- `table` Method
+=== [[table]] Adding KTable to Topology -- `table` Method
 
 [source, java]
 ----
@@ -111,7 +111,7 @@ void addGlobalStore(
 
 NOTE: `addGlobalStore` is used when...FIXME
 
-=== [[globalTable]] Creating GlobalKTable -- `globalTable` Method
+=== [[globalTable]] Adding GlobalKTable to Topology -- `globalTable` Method
 
 [source, java]
 ----

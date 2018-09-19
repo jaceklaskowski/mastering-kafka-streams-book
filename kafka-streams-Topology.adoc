@@ -1,6 +1,6 @@
-== [[Topology]] Topology -- Graph of Stream Processing Nodes
+== [[Topology]] Topology -- Acyclic Graph of Stream Processing Nodes
 
-`Topology` is a *graph of stream processing nodes* (_DAG of processors_).
+`Topology` is an *acyclic graph of stream processing nodes* (_DAG of processors_).
 
 `Topology` is <<creating-instance, created>> together with <<kafka-streams-StreamsBuilder.adoc#topology, StreamsBuilder>>.
 
@@ -15,7 +15,7 @@ image::images/kafka-streams-Topology-InternalTopologyBuilder.png[align="center"]
 
 `Topology` can be <<describe, described>>, i.e. FIXME + EXAMPLE
 
-=== [[addStateStore]] `addStateStore` Method
+=== [[addStateStore]] Adding State Store to Topology -- `addStateStore` Method
 
 [source, java]
 ----
@@ -72,7 +72,7 @@ synchronized Topology addSource(
 
 NOTE: `addSource` is used when...FIXME
 
-=== [[addGlobalStore]] `addGlobalStore` Method
+=== [[addGlobalStore]] Adding Global State Store to Topology -- `addGlobalStore` Method
 
 [source, java]
 ----
