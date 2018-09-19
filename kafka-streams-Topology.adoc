@@ -1,11 +1,27 @@
-== [[Topology]] Topology -- Acyclic Graph of Stream Processing Nodes
+== [[Topology]] Topology -- Processor API / Acyclic Graph of Stream Processing Nodes
 
-`Topology` is an *acyclic graph of stream processing nodes* (_DAG of processors_).
+`Topology` represents an *acyclic graph of stream processing nodes* (_DAG of processors_).
 
-`Topology` is <<creating-instance, created>> together with <<kafka-streams-StreamsBuilder.adoc#topology, StreamsBuilder>>.
+NOTE: `Topology` is also known as *Processor API*.
+
+`Topology` can be <<creating-instance, created>> directly or used indirectly using <<kafka-streams-StreamsBuilder.adoc#, StreamsBuilder>> API.
 
 [[creating-instance]]
 `Topology` takes no arguments when created.
+
+[source, scala]
+----
+// Used directly
+import org.apache.kafka.streams.Topology
+val topology = new Topology
+
+// Used through StreamsBuilder API
+import org.apache.kafka.streams.StreamsBuilder
+val builder = new StreamsBuilder
+val topology = builder.build
+scala> :type topology
+org.apache.kafka.streams.Topology
+----
 
 [[internalTopologyBuilder]]
 `Topology` manages an link:kafka-streams-InternalTopologyBuilder.adoc[InternalTopologyBuilder]. When <<creating-instance, created>>, `Topology` immediately creates a link:kafka-streams-InternalTopologyBuilder.adoc#creating-instance[InternalTopologyBuilder] for...FIXME

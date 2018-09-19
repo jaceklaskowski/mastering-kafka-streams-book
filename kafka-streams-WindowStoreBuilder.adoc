@@ -1,3 +1,42 @@
 == [[WindowStoreBuilder]] WindowStoreBuilder
 
-`WindowStoreBuilder` is...FIXME
+`WindowStoreBuilder` is a <<kafka-streams-StoreBuilder.adoc#, StoreBuilder>> (indirectly as an <<kafka-streams-AbstractStoreBuilder.adoc#, AbstractStoreBuilder>>) that allows for <<build, building WindowStores>>.
+
+`WindowStoreBuilder` can be <<creating-instance, created>> using <<kafka-streams-Stores.adoc#windowStoreBuilder, Stores.windowStoreBuilder>>.
+
+[source, scala]
+----
+import org.apache.kafka.streams.state.Stores
+// Using Scala API for Kafka Streams
+import org.apache.kafka.streams.scala.Serdes
+val storeBuilder = Stores.windowStoreBuilder(
+  Stores.persistentWindowStore(
+    "queryable-store-name",
+    1000L,
+    2,
+    500L,
+    false),
+  Serdes.Integer,
+  Serdes.Long)
+scala> :type storeBuilder
+org.apache.kafka.streams.state.StoreBuilder[org.apache.kafka.streams.state.WindowStore[Int,Long]]
+
+import org.apache.kafka.streams.state.internals.WindowStoreBuilder
+assert(storeBuilder.isInstanceOf[WindowStoreBuilder[Int, Long]])
+----
+
+[[build]]
+When requested for a <<kafka-streams-StoreBuilder.adoc#build, state store>>, `WindowStoreBuilder` simply creates a new `MeteredWindowStore` (with the state store from the <<storeSupplier, WindowBytesStoreSupplier>>).
+
+With <<kafka-streams-StoreBuilder.adoc#withCachingEnabled, caching enabled>>, `build` creates a <<kafka-streams-StateStore-CachingWindowStore.adoc#, CachingWindowStore>>.
+
+With <<kafka-streams-StoreBuilder.adoc#withLoggingEnabled, logging enabled>>, `build` creates a <<kafka-streams-StateStore-ChangeLoggingWindowBytesStore.adoc#, ChangeLoggingWindowBytesStore>>.
+
+=== [[creating-instance]] Creating WindowStoreBuilder Instance
+
+`WindowStoreBuilder` takes the following when created:
+
+* [[storeSupplier]] `WindowBytesStoreSupplier`
+* [[keySerde]] `Serde<K>` for keys
+* [[valueSerde]] `Serde<V>` for values
+* [[time]] `Time`

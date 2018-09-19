@@ -1,3 +1,20 @@
-== [[AbstractStoreBuilder]] AbstractStoreBuilder -- Base State Store Builder
+== [[AbstractStoreBuilder]] AbstractStoreBuilder -- Fluent API for State Store Builders
 
-`AbstractStoreBuilder` is...FIXME
+`AbstractStoreBuilder` is the base implementation of the <<kafka-streams-StoreBuilder.adoc#, StoreBuilder contract>> that offers a fluent API to <<kafka-streams-StoreBuilder.adoc#build, build state stores>> using the <<extensions, state store builders>>.
+
+[[extensions]]
+.AbstractStoreBuilders
+[cols="1,2",options="header",width="100%"]
+|===
+| AbstractStoreBuilder
+| Description
+
+| <<kafka-streams-KeyValueStoreBuilder.adoc#, KeyValueStoreBuilder>>
+| [[KeyValueStoreBuilder]] Builds <<kafka-streams-StateStore-KeyValueStore.adoc#, KeyValueStores>>
+
+| <<kafka-streams-SessionStoreBuilder.adoc#, SessionStoreBuilder>>
+| [[SessionStoreBuilder]] Builds <<kafka-streams-StateStore-SessionStore.adoc#, SessionStores>>
+
+| <<kafka-streams-WindowStoreBuilder.adoc#, WindowStoreBuilder>>
+| [[WindowStoreBuilder]] Builds <<kafka-streams-StateStore-WindowStore.adoc#, WindowStores>>
+|===

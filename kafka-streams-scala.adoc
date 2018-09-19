@@ -9,6 +9,7 @@ As a separate Scala library you have to define the dependency in `build.sbt`.
 
 [source, scala]
 ----
+// Note two percent signs (%%) to encode Scala version
 libraryDependencies += "org.apache.kafka" %% "kafka-streams-scala" % "2.0.0"
 ----
 

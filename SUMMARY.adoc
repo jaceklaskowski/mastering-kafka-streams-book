@@ -93,10 +93,10 @@
 .. link:kafka-streams-StateStore-InMemoryKeyValueLoggedStore.adoc[InMemoryKeyValueLoggedStore]
 
 . link:kafka-streams-StoreBuilder.adoc[StoreBuilder]
-.. link:kafka-streams-AbstractStoreBuilder.adoc[AbstractStoreBuilder]
 .. link:kafka-streams-KeyValueStoreBuilder.adoc[KeyValueStoreBuilder]
 .. link:kafka-streams-SessionStoreBuilder.adoc[SessionStoreBuilder]
 .. link:kafka-streams-WindowStoreBuilder.adoc[WindowStoreBuilder]
+.. link:kafka-streams-AbstractStoreBuilder.adoc[AbstractStoreBuilder]
 
 . link:kafka-streams-Stores.adoc[Stores]
 
