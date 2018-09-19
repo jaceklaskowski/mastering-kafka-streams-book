@@ -1,4 +1,4 @@
-== [[StoreBuilder]] StoreBuilder -- Contract for State Store Builders
+== [[StoreBuilder]] StoreBuilder Contract -- State Store Builders
 
 `StoreBuilder` is the <<contract, contract>> for services that can <<build, build a StateStore>> with a <<name, name>> and optional <<withCachingEnabled, caching>> and <<withLoggingEnabled, logging>>.
 

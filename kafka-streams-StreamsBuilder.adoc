@@ -1,6 +1,10 @@
-== [[StreamsBuilder]] StreamsBuilder
+== [[StreamsBuilder]] StreamsBuilder -- High-Level Stream Processing DSL
 
-`StreamsBuilder` provides the <<operators, high-level stream processing DSL>> in Kafka Streams to <<build, build a processor topology>> (with sources, processors, and sinks).
+`StreamsBuilder` is one of the very first entities that you will be working with as a Kafka Streams developer.
+
+`StreamsBuilder` provides the <<operators, high-level stream processing DSL>> to <<build, build a processor topology>> (with sources, processors, sinks and state stores).
+
+TIP: Consider <<kafka-streams-scala.adoc#, Scala API for Kafka Streams>> to make your Kafka Streams development more pleasant if Scala is your programming language.
 
 [[operators]]
 .StreamsBuilder's Operators
@@ -9,20 +13,101 @@
 | Operator
 | Description
 
-| <<addGlobalStore, addGlobalStore>>
-| Adds a global link:kafka-streams-StateStore.adoc[StateStore] to the topology
+| <<addGlobalStore-detailed, addGlobalStore>>
+a| [[addGlobalStore]]
 
-| <<addStateStore, addStateStore>>
-| Adds a link:kafka-streams-StateStore.adoc[StateStore] to the topology
+[source, java]
+----
+StreamsBuilder addGlobalStore(
+  final StoreBuilder storeBuilder,
+  final String topic,
+  final Consumed consumed,
+  final ProcessorSupplier stateUpdateSupplier)
+----
 
-| <<globalTable, globalTable>>
-| Creates a link:kafka-streams-GlobalKTable.adoc[GlobalKTable] for a given topic
+Adds a global <<kafka-streams-StateStore.adoc#, StateStore>> to the topology
 
-| <<stream, stream>>
-| Creates a link:kafka-streams-KStream.adoc[KStream] from given topics
+| <<addStateStore-detailed, addStateStore>>
+a| [[addStateStore]]
 
-| <<table, table>>
-| Create a link:kafka-streams-KTable.adoc[KTable] for a given topic
+[source, java]
+----
+StreamsBuilder addStateStore(final StoreBuilder builder)
+----
+
+Adds a <<kafka-streams-StateStore.adoc#, StateStore>> to the topology
+
+| <<build-detailed, build>>
+a| [[build]]
+
+[source, java]
+----
+Topology build()
+----
+
+Returns the <<kafka-streams-Topology.adoc#, Topology>>
+
+| <<globalTable-detailed, globalTable>>
+a| [[globalTable]]
+
+[source, java]
+----
+GlobalKTable<K, V> globalTable(final String topic)
+GlobalKTable<K, V> globalTable(
+  final String topic,
+  final Consumed<K, V> consumed)
+GlobalKTable<K, V> globalTable(
+  final String topic,
+  final Materialized<K, V, KeyValueStore<Bytes, byte[]>> materialized)
+GlobalKTable<K, V> globalTable(
+  final String topic,
+  final Consumed<K, V> consumed,
+  final Materialized<K, V, KeyValueStore<Bytes, byte[]>> materialized)
+----
+
+Creates a <<kafka-streams-GlobalKTable.adoc#, GlobalKTable>>
+
+| <<stream-detailed, stream>>
+a| [[stream]]
+
+[source, java]
+----
+KStream<K, V> stream(final Collection<String> topics)
+KStream<K, V> stream(
+  final Collection<String> topics,
+  final Consumed<K, V> consumed)
+KStream<K, V> stream(final Pattern topicPattern)
+KStream<K, V> stream(
+  final Pattern topicPattern,
+  final Consumed<K, V> consumed)
+KStream<K, V> stream(final String topic)
+KStream<K, V> stream(
+  final String topic,
+  final Consumed<K, V> consumed)
+----
+
+Creates a <<kafka-streams-KStream.adoc#, KStream>>
+
+| <<table-detailed, table>>
+a| [[table]]
+
+[source, java]
+----
+KTable<K, V> table(final String topic)
+KTable<K, V> table(
+  final String topic,
+  final Consumed<K, V> consumed)
+KTable<K, V> table(
+  final String topic,
+  final Materialized<K, V, KeyValueStore<Bytes, byte[]>> materialized)
+KTable<K, V> table(
+  final String topic,
+  final Consumed<K, V> consumed,
+  final Materialized<K, V, KeyValueStore<Bytes, byte[]>> materialized)
+----
+
+Creates a <<kafka-streams-KTable.adoc#, KTable>>
+
 |===
 
 [[creating-instance]]
@@ -34,10 +119,13 @@ import org.apache.kafka.streams.StreamsBuilder
 val builder = new StreamsBuilder
 ----
 
-A typical Kafka Streams application uses the <<operators, high-level stream processing DSL>> to add nodes to a processor topology as follows.
+A typical Kafka Streams application looks as follows:
 
 [source, scala]
 ----
+import org.apache.kafka.streams.StreamsBuilder
+val builder = new StreamsBuilder
+
 // Add a GlobalKTable with a global store if needed
 builder
   .addGlobalStore(...)
@@ -54,25 +142,25 @@ val topology = builder.build
 ----
 
 [[topology]]
-When <<creating-instance, created>>, `StreamsBuilder` creates a link:kafka-streams-Topology.adoc#creating-instance[Topology] (that is further developed using the <<operators, operators>>). The `Topology` is then requested for the link:kafka-streams-Topology.adoc#internalTopologyBuilder[InternalTopologyBuilder] that is used to create the <<internalStreamsBuilder, InternalStreamsBuilder>>.
-
 [[internalStreamsBuilder]]
-When <<creating-instance, created>>, `StreamsBuilder` creates an link:kafka-streams-InternalStreamsBuilder.adoc#creating-instance[InternalStreamsBuilder] that the <<operators, operators>> use to offer their services.
+When <<creating-instance, created>>, `StreamsBuilder` creates an empty <<kafka-streams-Topology.adoc#, topology>> (that you enrich using the <<operators, operators>>). The topology is then requested for the <<kafka-streams-Topology.adoc#internalTopologyBuilder, InternalTopologyBuilder>> that is in turn used to create an <<kafka-streams-InternalStreamsBuilder.adoc#, InternalStreamsBuilder>>.
 
-NOTE: `StreamsBuilder` simply provides a more developer-friendly API for stream processing than using the link:kafka-streams-InternalStreamsBuilder.adoc[InternalStreamsBuilder] API directly. In other words, `StreamsBuilder` is a façade of `InternalStreamsBuilder`.
+In other words, `StreamsBuilder` offers a more <<operators, developer-friendly API>> for developing Kafka Streams applications as compared to the <<kafka-streams-InternalStreamsBuilder.adoc#, InternalStreamsBuilder>> API (and is a façade of `InternalStreamsBuilder`).
 
 === [[table]] Creating KTable -- `table` Method
 
 [source, java]
 ----
 KTable<K, V> table(final String topic)
-KTable<K, V> table(final String topic, final Consumed<K, V> consumed)
 KTable<K, V> table(
   final String topic,
-  final Consumed<K, V> consumed,
+  final Consumed<K, V> consumed)
+KTable<K, V> table(
+  final String topic,
   final Materialized<K, V, KeyValueStore<Bytes, byte[]>> materialized)
 KTable<K, V> table(
   final String topic,
+  final Consumed<K, V> consumed,
   final Materialized<K, V, KeyValueStore<Bytes, byte[]>> materialized)
 ----
 
@@ -82,16 +170,16 @@ KTable<K, V> table(
 
 [source, java]
 ----
-synchronized <K, V> GlobalKTable<K, V> globalTable(final String topic)
-synchronized <K, V> GlobalKTable<K, V> globalTable(
+GlobalKTable<K, V> globalTable(final String topic)
+GlobalKTable<K, V> globalTable(
   final String topic,
   final Consumed<K, V> consumed)
-synchronized <K, V> GlobalKTable<K, V> globalTable(
+GlobalKTable<K, V> globalTable(
+  final String topic,
+  final Materialized<K, V, KeyValueStore<Bytes, byte[]>> materialized)
+GlobalKTable<K, V> globalTable(
   final String topic,
   final Consumed<K, V> consumed,
-  final Materialized<K, V, KeyValueStore<Bytes, byte[]>> materialized)
-synchronized <K, V> GlobalKTable<K, V> globalTable(
-  final String topic,
   final Materialized<K, V, KeyValueStore<Bytes, byte[]>> materialized)
 ----
 
@@ -113,11 +201,11 @@ Topologies:
       <-- KSTREAM-SOURCE-0000000001
 ----
 
-=== [[addGlobalStore]] `addGlobalStore` Method
+=== [[addGlobalStore-detailed]] Registering Global State Store (in Topology) -- `addGlobalStore` Method
 
 [source, java]
 ----
-synchronized StreamsBuilder addGlobalStore(
+StreamsBuilder addGlobalStore(
   final StoreBuilder storeBuilder,
   final String topic,
   final Consumed consumed,
@@ -126,7 +214,7 @@ synchronized StreamsBuilder addGlobalStore(
 
 `addGlobalStore`...FIXME
 
-=== [[addStateStore]] `addStateStore` Method
+=== [[addStateStore-detailed]] `addStateStore` Method
 
 [source, java]
 ----
@@ -135,27 +223,23 @@ StreamsBuilder addStateStore(final StoreBuilder builder)
 
 `addStateStore`...FIXME
 
-=== [[stream]] Reading Topic (Creating KStream of Records from One or Many Topics) -- `stream` Method
+=== [[stream]] Creating KStream (of Records from One or Many Topics) -- `stream` Method
 
 [source, java]
 ----
-synchronized <K, V> KStream<K, V> stream(final String topic)  // <1>
-synchronized <K, V> KStream<K, V> stream(final Pattern topicPattern) // <2>
-synchronized <K, V> KStream<K, V> stream(final Collection<String> topics) // <3>
-// All three above have their Consumed-based variant
-synchronized <K, V> KStream<K, V> stream(
-  final String topic,
-  final Consumed<K, V> consumed)
-synchronized <K, V> KStream<K, V> stream(
-  final Pattern topicPattern,
-  final Consumed<K, V> consumed)
-synchronized <K, V> KStream<K, V> stream(
+KStream<K, V> stream(final Collection<String> topics)
+KStream<K, V> stream(
   final Collection<String> topics,
   final Consumed<K, V> consumed)
+KStream<K, V> stream(final Pattern topicPattern)
+KStream<K, V> stream(
+  final Pattern topicPattern,
+  final Consumed<K, V> consumed)
+KStream<K, V> stream(final String topic)
+KStream<K, V> stream(
+  final String topic,
+  final Consumed<K, V> consumed)
 ----
-<1> Calls `stream(final Collection<String> topics)`
-<2> Calls `stream(final Pattern topicPattern, final Consumed<K, V> consumed)` with `Consumed` with all fields `null`
-<3> Calls `stream(final Collection<String> topics, final Consumed<K, V> consumed)` with `Consumed` with all fields `null`
 
 `stream` creates a link:kafka-streams-KStream.adoc[KStream] (of keys of type `K` and values of type `V`) for the defined topic(s) and the parameters in the input link:kafka-streams-Consumed.adoc[Consumed].
 
@@ -173,3 +257,12 @@ org.apache.kafka.streams.kstream.KStream[String,String]
 ----
 
 Internally, `stream` creates a link:kafka-streams-ConsumedInternal.adoc#creating-instance[ConsumedInternal] (for the input link:kafka-streams-Consumed.adoc[Consumed]) and requests the <<internalStreamsBuilder, InternalStreamsBuilder>> to link:kafka-streams-InternalStreamsBuilder.adoc#stream[create a KStream] (for the input `topics` and the `ConsumedInternal`).
+
+=== [[build-detailed]] Building Topology -- `build` Method
+
+[source, java]
+----
+Topology build()
+----
+
+`build` simply returns the underlying <<topology, topology>>.

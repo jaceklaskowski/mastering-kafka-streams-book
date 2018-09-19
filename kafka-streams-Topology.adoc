@@ -1,8 +1,8 @@
 == [[Topology]] Topology -- Graph of Stream Processing Nodes
 
-`Topology` is a *graph of stream processing nodes* (simply processors).
+`Topology` is a *graph of stream processing nodes* (_DAG of processors_).
 
-`Topology` is <<creating-instance, created>> when `StreamsBuilder` is link:kafka-streams-StreamsBuilder.adoc#topology[created].
+`Topology` is <<creating-instance, created>> together with <<kafka-streams-StreamsBuilder.adoc#topology, StreamsBuilder>>.
 
 [[creating-instance]]
 `Topology` takes no arguments when created.
