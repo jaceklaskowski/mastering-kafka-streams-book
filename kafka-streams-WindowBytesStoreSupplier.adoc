@@ -1,0 +1,3 @@
+== [[WindowBytesStoreSupplier]] WindowBytesStoreSupplier
+
+`WindowBytesStoreSupplier` is...FIXME

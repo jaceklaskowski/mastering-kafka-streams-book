@@ -1,6 +1,6 @@
 == [[Stores]] Stores -- Factory of State Stores
 
-`Stores` is a <<methods, factory for creating state stores>> (using `StoreSuppliers` or <<kafka-streams-StoreBuilder.adoc#, StoreBuilders>>).
+`Stores` is a <<methods, factory for creating state stores>> (using <<kafka-streams-StoreSupplier.adoc#, StoreSuppliers>> for <<kafka-streams-StreamsBuilder.adoc#, StreamsBuilder>> or <<kafka-streams-StoreBuilder.adoc#, StoreBuilders>> for <<kafka-streams-Topology.adoc#, Topology>>).
 
 [[methods]]
 .Stores API (Static Methods)
@@ -18,8 +18,6 @@ KeyValueBytesStoreSupplier inMemoryKeyValueStore(final String name)
 ----
 
 Creates a `KeyValueBytesStoreSupplier` that creates <<kafka-streams-StateStore-KeyValueStore.adoc#, KeyValueStores>>
-
-NOTE: Use <<keyValueStoreBuilder, keyValueStoreBuilder>> instead.
 
 | keyValueStoreBuilder
 a| [[keyValueStoreBuilder]]

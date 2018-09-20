@@ -7,8 +7,8 @@
 
 == Developing Stream Processing Applications with Kafka Streams
 
-. link:kafka-streams-StreamsBuilder.adoc[StreamsBuilder]
-. link:kafka-streams-Topology.adoc[Topology]
+. link:kafka-streams-StreamsBuilder.adoc[StreamsBuilder -- High-Level Stream Processing DSL]
+. link:kafka-streams-Topology.adoc[Topology -- Processor API]
 . link:kafka-streams-KStream.adoc[KStream]
 . link:kafka-streams-KTable.adoc[KTable]
 . link:kafka-streams-GlobalKTable.adoc[GlobalKTable]
@@ -24,7 +24,6 @@
 
 . link:kafka-streams-Consumed.adoc[Consumed]
 . link:kafka-streams-Produced.adoc[Produced]
-. link:kafka-streams-Materialized.adoc[Materialized]
 . link:kafka-streams-Printed.adoc[Printed]
 . link:kafka-streams-KafkaClientSupplier.adoc[KafkaClientSupplier Contract]
 
@@ -59,16 +58,6 @@
 . link:kafka-streams-Window.adoc[Window]
 .. link:kafka-streams-SessionWindow.adoc[SessionWindow]
 
-. link:kafka-streams-StateStore-SessionStore.adoc[SessionStore]
-.. link:kafka-streams-StateStore-CachingKeyValueStore.adoc[CachingKeyValueStore]
-.. link:kafka-streams-StateStore-CachingSessionStore.adoc[CachingSessionStore]
-.. link:kafka-streams-StateStore-CachingWindowStore.adoc[CachingWindowStore]
-.. link:kafka-streams-StateStore-MeteredSessionStore.adoc[MeteredSessionStore]
-.. link:kafka-streams-StateStore-ChangeLoggingSessionBytesStore.adoc[ChangeLoggingSessionBytesStore]
-.. link:kafka-streams-StateStore-RocksDBSegmentedBytesStore.adoc[RocksDBSegmentedBytesStore]
-.. link:kafka-streams-StateStore-RocksDBSessionStore.adoc[RocksDBSessionStore]
-.. link:kafka-streams-StateStore-RocksDBSessionBytesStore.adoc[RocksDBSessionBytesStore]
-
 . link:kafka-streams-SessionKeySerde.adoc[SessionKeySerde]
 
 . link:kafka-streams-exactly-once-support-eos.adoc[Exactly-Once Support (EOS)]
@@ -78,19 +67,34 @@
 
 === Stateful Stream Processing
 
-. link:kafka-streams-StateStore.adoc[StateStore Contract -- State Storage Engines]
+. link:kafka-streams-StateStore.adoc[StateStore]
+.. link:kafka-streams-StateStore-AbstractStateStore.adoc[AbstractStateStore]
 .. link:kafka-streams-StateStore-KeyValueStore.adoc[KeyValueStore]
 .. link:kafka-streams-StateStore-InMemoryKeyValueStore.adoc[InMemoryKeyValueStore]
+.. link:kafka-streams-StateStore-InMemoryKeyValueLoggedStore.adoc[InMemoryKeyValueLoggedStore]
 .. link:kafka-streams-StateStore-MemoryLRUCache.adoc[MemoryLRUCache]
-.. link:kafka-streams-StateStore-RocksDBStore.adoc[RocksDBStore]
 .. link:kafka-streams-StateStore-SegmentedBytesStore.adoc[SegmentedBytesStore]
 .. link:kafka-streams-StateStore-WindowStore.adoc[WindowStore]
 .. link:kafka-streams-StateStore-WrappedStateStore.adoc[WrappedStateStore]
-.. link:kafka-streams-StateStore-MeteredKeyValueBytesStore.adoc[MeteredKeyValueBytesStore]
-.. link:kafka-streams-StateStore-AbstractStateStore.adoc[AbstractStateStore]
+.. link:kafka-streams-StateStore-CachingKeyValueStore.adoc[CachingKeyValueStore]
+.. link:kafka-streams-StateStore-CachingSessionStore.adoc[CachingSessionStore]
+.. link:kafka-streams-StateStore-CachingWindowStore.adoc[CachingWindowStore]
 .. link:kafka-streams-StateStore-ChangeLoggingKeyValueBytesStore.adoc[ChangeLoggingKeyValueBytesStore]
+.. link:kafka-streams-StateStore-ChangeLoggingSessionBytesStore.adoc[ChangeLoggingSessionBytesStore]
 .. link:kafka-streams-StateStore-ChangeLoggingWindowBytesStore.adoc[ChangeLoggingWindowBytesStore]
-.. link:kafka-streams-StateStore-InMemoryKeyValueLoggedStore.adoc[InMemoryKeyValueLoggedStore]
+.. link:kafka-streams-StateStore-SessionStore.adoc[SessionStore]
+.. link:kafka-streams-StateStore-MeteredKeyValueBytesStore.adoc[MeteredKeyValueBytesStore]
+.. link:kafka-streams-StateStore-MeteredSessionStore.adoc[MeteredSessionStore]
+.. link:kafka-streams-StateStore-MeteredWindowStore.adoc[MeteredWindowStore]
+.. link:kafka-streams-StateStore-RocksDBStore.adoc[RocksDBStore]
+.. link:kafka-streams-StateStore-RocksDBSegmentedBytesStore.adoc[RocksDBSegmentedBytesStore]
+.. link:kafka-streams-StateStore-RocksDBSessionStore.adoc[RocksDBSessionStore]
+.. link:kafka-streams-StateStore-RocksDBSessionBytesStore.adoc[RocksDBSessionBytesStore]
+
+. link:kafka-streams-StoreSupplier.adoc[StoreSupplier]
+.. link:kafka-streams-KeyValueBytesStoreSupplier.adoc[KeyValueBytesStoreSupplier]
+.. link:kafka-streams-SessionBytesStoreSupplier.adoc[SessionBytesStoreSupplier]
+.. link:kafka-streams-WindowBytesStoreSupplier.adoc[WindowBytesStoreSupplier]
 
 . link:kafka-streams-StoreBuilder.adoc[StoreBuilder]
 .. link:kafka-streams-KeyValueStoreBuilder.adoc[KeyValueStoreBuilder]
@@ -99,8 +103,7 @@
 .. link:kafka-streams-AbstractStoreBuilder.adoc[AbstractStoreBuilder]
 
 . link:kafka-streams-Stores.adoc[Stores -- Factory of State Stores]
-
-. link:kafka-streams-SessionBytesStoreSupplier.adoc[SessionBytesStoreSupplier]
+. link:kafka-streams-Materialized.adoc[Materialized]
 
 . link:kafka-streams-PartitionGroup.adoc[PartitionGroup]
 

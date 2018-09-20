@@ -31,7 +31,7 @@ With <<kafka-streams-StoreBuilder.adoc#withLoggingEnabled, logging enabled>>, `b
 
 `KeyValueStoreBuilder` takes the following when created:
 
-* [[storeSupplier]] `KeyValueBytesStoreSupplier`
+* [[storeSupplier]] <<kafka-streams-KeyValueBytesStoreSupplier.adoc#, KeyValueBytesStoreSupplier>>
 * [[keySerde]] `Serde<K>` for keys
 * [[valueSerde]] `Serde<V>` for values
 * [[time]] `Time`

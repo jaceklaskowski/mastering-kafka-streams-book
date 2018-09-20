@@ -2,9 +2,7 @@
 
 `Topology` represents an *acyclic graph of stream processing nodes* (_DAG of processors_).
 
-NOTE: `Topology` is also known as *Processor API*.
-
-`Topology` can be <<creating-instance, created>> directly or used indirectly using <<kafka-streams-StreamsBuilder.adoc#, StreamsBuilder>> API.
+`Topology` can be <<creating-instance, created>> directly (as the *Processor API*) or used indirectly using <<kafka-streams-StreamsBuilder.adoc#, StreamsBuilder>> API.
 
 [[creating-instance]]
 `Topology` takes no arguments when created.

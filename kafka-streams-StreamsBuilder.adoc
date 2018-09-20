@@ -1,8 +1,8 @@
 == [[StreamsBuilder]] StreamsBuilder -- High-Level Stream Processing DSL
 
-`StreamsBuilder` is one of the very first entities that you will be working with as a Kafka Streams developer.
+`StreamsBuilder` provides the <<operators, operators>> for *high-level stream processing DSL* to <<build, build a processor topology>> (with sources, processors, sinks and state stores).
 
-`StreamsBuilder` provides the <<operators, high-level stream processing DSL>> to <<build, build a processor topology>> (with sources, processors, sinks and state stores).
+`StreamsBuilder` is one of the very first entities that you will be working with as a Kafka Streams developer.
 
 TIP: Consider <<kafka-streams-scala.adoc#, Scala API for Kafka Streams>> to make your Kafka Streams development more pleasant if Scala is your programming language.
 

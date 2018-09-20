@@ -1,0 +1,3 @@
+== [[MeteredWindowStore]] MeteredWindowStore
+
+`MeteredWindowStore` is...FIXME

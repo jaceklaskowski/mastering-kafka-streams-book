@@ -2,7 +2,7 @@
 
 `StoreBuilder` is the <<contract, contract>> of <<implementations, state store builders>> that can <<build, build a state store>> (with optional <<withCachingEnabled, caching>> and <<withLoggingEnabled, logging>>).
 
-`StoreBuilder` is used to add a local or global <<kafka-streams-StateStore.adoc#, state store>> to a topology using the following APIs:
+`StoreBuilder` is used to add a local or global <<kafka-streams-StateStore.adoc#, state store>> to a topology using the following:
 
 * <<kafka-streams-StreamsBuilder.adoc#, StreamsBuilder>> (i.e. <<kafka-streams-StreamsBuilder.adoc#addStateStore, StreamsBuilder.addStateStore>> and <<kafka-streams-StreamsBuilder.adoc#addGlobalStore, StreamsBuilder.addGlobalStore>>)
 
@@ -23,7 +23,7 @@ a| [[build]]
 T build()
 ----
 
-Builds the <<kafka-streams-StateStore.adoc#, state store>>
+Builds a <<kafka-streams-StateStore.adoc#, state store>>
 
 | logConfig
 a| [[logConfig]]
