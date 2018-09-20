@@ -1,21 +1,90 @@
-== [[Stores]] Stores
+== [[Stores]] Stores -- Factory of State Stores
 
-`Stores` is...FIXME
+`Stores` is a <<methods, factory for creating state stores>> (using `StoreSuppliers` or <<kafka-streams-StoreBuilder.adoc#, StoreBuilders>>).
 
-=== [[create]] Creating StoreFactory -- `create` Method
+[[methods]]
+.Stores API (Static Methods)
+[cols="1m,2",options="header",width="100%"]
+|===
+| Method
+| Description
+
+| inMemoryKeyValueStore
+a| [[inMemoryKeyValueStore]]
 
 [source, java]
 ----
-static StoreFactory create(final String name)
+KeyValueBytesStoreSupplier inMemoryKeyValueStore(final String name)
 ----
 
-NOTE: `create` is a deprecated method and may disappear at any major release of Kafka Streams. You should use...FIXME...instead.
+Creates a `KeyValueBytesStoreSupplier` that creates <<kafka-streams-StateStore-KeyValueStore.adoc#, KeyValueStores>>
 
-`create`...FIXME
+NOTE: Use <<keyValueStoreBuilder, keyValueStoreBuilder>> instead.
 
-NOTE: `create` is used when...FIXME
+| keyValueStoreBuilder
+a| [[keyValueStoreBuilder]]
 
-=== [[sessionStoreBuilder]] `sessionStoreBuilder` Static Method
+[source, java]
+----
+StoreBuilder<KeyValueStore<K, V>> keyValueStoreBuilder(
+  final KeyValueBytesStoreSupplier supplier,
+  final Serde<K> keySerde,
+  final Serde<V> valueSerde)
+----
+
+Creates a <<kafka-streams-KeyValueStoreBuilder.adoc#, KeyValueStoreBuilder>> that creates <<kafka-streams-StateStore-KeyValueStore.adoc#, KeyValueStores>>
+
+| lruMap
+a| [[lruMap]]
+
+[source, java]
+----
+KeyValueBytesStoreSupplier lruMap(
+  final String name,
+  final int maxCacheSize)
+----
+
+Creates a `KeyValueBytesStoreSupplier` that creates `MemoryNavigableLRUCaches` (with `maxCacheSize`)
+
+| persistentKeyValueStore
+a| [[persistentKeyValueStore]]
+
+[source, java]
+----
+KeyValueBytesStoreSupplier persistentKeyValueStore(final String name)
+----
+
+Creates a `RocksDbKeyValueBytesStoreSupplier`
+
+| persistentSessionStore
+a| [[persistentSessionStore]]
+
+[source, java]
+----
+SessionBytesStoreSupplier persistentSessionStore(
+  final String name,
+  final long retentionPeriod)
+----
+
+Creates a `RocksDbSessionBytesStoreSupplier` (with `retentionPeriod`)
+
+| persistentWindowStore
+a| [[persistentWindowStore]]
+
+[source, java]
+----
+WindowBytesStoreSupplier persistentWindowStore(
+  final String name,
+  final long retentionPeriod,
+  final int numSegments,
+  final long windowSize,
+  final boolean retainDuplicates)
+----
+
+Creates a `RocksDbWindowBytesStoreSupplier`
+
+| sessionStoreBuilder
+a| [[sessionStoreBuilder]]
 
 [source, java]
 ----
@@ -25,13 +94,10 @@ StoreBuilder<SessionStore<K, V>> sessionStoreBuilder(
   final Serde<V> valueSerde)
 ----
 
-`sessionStoreBuilder` simply returns a new link:kafka-streams-SessionStoreBuilder.adoc#creating-instance[SessionStoreBuilder] (for the input arguments and `Time.SYSTEM`).
+Creates a <<kafka-streams-SessionStoreBuilder.adoc#, SessionStoreBuilder>>
 
-In case the input link:kafka-streams-SessionBytesStoreSupplier.adoc[SessionBytesStoreSupplier] is undefined (`null`), `sessionStoreBuilder` throws a `NullPointerException`.
-
-NOTE: `sessionStoreBuilder` is used when `SessionWindowedKStreamImpl` is requested to link:kafka-streams-SessionWindowedKStreamImpl.adoc#materialize[materialize] and link:kafka-streams-SessionWindowedKStreamImpl.adoc#storeBuilder[storeBuilder].
-
-=== [[windowStoreBuilder]] `windowStoreBuilder` Static Method
+| windowStoreBuilder
+a| [[windowStoreBuilder]]
 
 [source, java]
 ----
@@ -41,13 +107,5 @@ StoreBuilder<WindowStore<K, V>> windowStoreBuilder(
   final Serde<V> valueSerde)
 ----
 
-`windowStoreBuilder`...FIXME
-
-[NOTE]
-====
-`windowStoreBuilder` is used when:
-
-* `KStreamImpl` is requested to <<kafka-streams-KStreamImpl.adoc#createWindowedStateStore, createWindowedStateStore>>
-
-* `TimeWindowedKStreamImpl` is requested to <<kafka-streams-TimeWindowedKStreamImpl.adoc#materialize, create a StoreBuilder (of WindowStores)>>
-====
+Creates a <<kafka-streams-WindowStoreBuilder.adoc#, WindowStoreBuilder>>
+|===

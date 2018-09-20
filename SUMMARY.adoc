@@ -98,7 +98,7 @@
 .. link:kafka-streams-WindowStoreBuilder.adoc[WindowStoreBuilder]
 .. link:kafka-streams-AbstractStoreBuilder.adoc[AbstractStoreBuilder]
 
-. link:kafka-streams-Stores.adoc[Stores]
+. link:kafka-streams-Stores.adoc[Stores -- Factory of State Stores]
 
 . link:kafka-streams-SessionBytesStoreSupplier.adoc[SessionBytesStoreSupplier]
 
