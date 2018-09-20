@@ -25,6 +25,12 @@ T build()
 
 Builds a <<kafka-streams-StateStore.adoc#, state store>>
 
+Used when:
+
+* `InternalTopologyBuilder` is requested to <<kafka-streams-InternalTopologyBuilder.adoc#addGlobalStore, add a global state store>>
+
+* `StoreBuilderFactory` is requested to <<kafka-streams-StoreBuilderFactory.adoc#build, build a state store>> (when `InternalTopologyBuilder` is requested to <<kafka-streams-InternalTopologyBuilder.adoc#addStateStore, add a state store>>)
+
 | logConfig
 a| [[logConfig]]
 

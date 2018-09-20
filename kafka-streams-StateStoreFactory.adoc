@@ -29,6 +29,8 @@ interface StateStoreFactory {
 | build
 | [[build]]
 
+Builds a <<kafka-streams-StateStore.adoc#, state store>>
+
 | isWindowStore
 a| [[isWindowStore]] Indicates whether a `StateStoreFactory` was created for a link:kafka-streams-WindowStoreBuilder.adoc[WindowStoreBuilder] (`true`) or not (`false`)
 

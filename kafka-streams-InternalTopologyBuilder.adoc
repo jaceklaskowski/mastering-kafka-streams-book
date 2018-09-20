@@ -399,7 +399,7 @@ NOTE: `connectProcessorAndStateStores` (plural) is a public method that uses the
 * `Topology` is requested to link:kafka-streams-Topology.adoc#connectProcessorAndStateStores[connectProcessorAndStateStores]
 ====
 
-=== [[addGlobalStore]] Adding Global State Store to Topology -- `addGlobalStore` Method
+=== [[addGlobalStore]] Adding Global State Store (to Topology) -- `addGlobalStore` Method
 
 [source, java]
 ----

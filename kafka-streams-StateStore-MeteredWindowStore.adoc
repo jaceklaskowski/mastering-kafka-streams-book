@@ -1,3 +1,62 @@
-== [[MeteredWindowStore]] MeteredWindowStore
+== [[MeteredWindowStore]] MeteredWindowStore -- State Store of WindowStoreBuilder
 
-`MeteredWindowStore` is...FIXME
+`MeteredWindowStore` is a custom <<kafka-streams-StateStore-WindowStore.adoc#, WindowStore>> that registers the <<metrics, metric sensors>> (when <<init, initialized>>).
+
+`MeteredWindowStore` is <<creating-instance, created>> exclusively when `WindowStoreBuilder` is requested for a <<kafka-streams-WindowStoreBuilder.adoc#build, state store>>.
+
+[[metrics]]
+.MeteredWindowStore's (Latency and Throughput) Metric Sensors
+[cols="1m,1m,1m,2",options="header",width="100%"]
+|===
+| Metric Sensor
+| Name
+| RecordingLevel
+| Description
+
+| putTime
+| put
+| DEBUG
+| [[putTime]]
+
+| fetchTime
+| fetch
+| DEBUG
+| [[fetchTime]]
+
+| flushTime
+| flush
+| DEBUG
+| [[flushTime]]
+
+| restoreTime
+| restore
+| DEBUG
+| [[restoreTime]]
+|===
+
+=== [[creating-instance]] Creating MeteredWindowStore Instance
+
+`MeteredWindowStore` takes the following when created:
+
+* [[inner]] <<kafka-streams-StateStore-WindowStore.adoc#, WindowStore>>
+* [[metricScope]] Scope name for the <<metrics, metrics>> (aka _metric scope_)
+* [[time]] `Time`
+* [[keySerde]] `Serde<K>` for keys
+* [[valueSerde]] `Serde<V>` for values
+
+`MeteredWindowStore` initializes the <<internal-registries, internal registries and counters>>.
+
+=== [[init]] Initializing State Store -- `init` Method
+
+[source, java]
+----
+void init(final ProcessorContext context, final StateStore root)
+----
+
+NOTE: `init` is part of the <<kafka-streams-StateStore.adoc#init, StateStore Contract>> to initializes the state store.
+
+`init`...FIXME
+
+`init` requests the `ProcessorContext` for the <<kafka-streams-ProcessorContext.adoc#metrics, StreamsMetrics>> and registers the <<metrics, metric sensors>>.
+
+`init`...FIXME
