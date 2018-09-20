@@ -1,0 +1,14 @@
+== [[RocksDbWindowBytesStoreSupplier]] RocksDbWindowBytesStoreSupplier
+
+`RocksDbWindowBytesStoreSupplier` is...FIXME
+
+=== [[get]] Getting State Store -- `get` Method
+
+[source, java]
+----
+WindowStore<Bytes, byte[]> get()
+----
+
+NOTE: `get` is part of the <<kafka-streams-StoreSupplier.adoc#get, StoreSupplier Contract>> to get a <<kafka-streams-StateStore.adoc#, state store>>.
+
+`get`...FIXME

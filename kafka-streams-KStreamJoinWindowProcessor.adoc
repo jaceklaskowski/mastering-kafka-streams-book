@@ -1,0 +1,32 @@
+== [[KStreamJoinWindowProcessor]] KStreamJoinWindowProcessor
+
+`KStreamJoinWindowProcessor` is a <<kafka-streams-AbstractProcessor.adoc#, processor>> that is used for
+
+??? <<kafka-streams-KStream.adoc#transform, KStream.transform>> stateful operator.
+
+`KStreamJoinWindowProcessor` is <<creating-instance, created>> when...FIXME
+
+[[creating-instance]]
+`KStreamJoinWindowProcessor` takes no arguments when created.
+
+=== [[init]] Initializing Processor -- `init` Method
+
+[source, java]
+----
+void init(ProcessorContext context)
+----
+
+NOTE: `init` is part of the <<kafka-streams-Processor.adoc#init, Processor Contract>> to initialize the <<kafka-streams-Processor.adoc#, processor>>.
+
+`init`...FIXME
+
+=== [[process]] Processing Record -- `process` Method
+
+[source, java]
+----
+void process(K key, V value)
+----
+
+NOTE: `process` is part of the <<kafka-streams-Processor.adoc#process, Processor Contract>> to process a single record.
+
+`process`...FIXME

@@ -1,0 +1,28 @@
+== [[RocksDBWindowStore]] RocksDBWindowStore
+
+`RocksDBWindowStore` is a custom <<kafka-streams-StateStore-WindowStore.adoc#, WindowStore>> that uses the <<bytesStore, SegmentedBytesStore>> (as the underlying <<kafka-streams-StateStore.adoc#, state store>>).
+
+`RocksDBWindowStore` is <<creating-instance, created>> exclusively when `RocksDbWindowBytesStoreSupplier` is requested for a <<kafka-streams-RocksDbWindowBytesStoreSupplier.adoc#get, state store>> (and gives a `RocksDBWindowStore` with a <<kafka-streams-StateStore-RocksDBSegmentedBytesStore.adoc#, RocksDBSegmentedBytesStore>>).
+
+=== [[creating-instance]] Creating RocksDBWindowStore Instance
+
+`RocksDBWindowStore` takes the following when created:
+
+* [[bytesStore]] <<kafka-streams-StateStore-SegmentedBytesStore.adoc#, SegmentedBytesStore>>
+* [[keySerde]] `Serde<K>` for keys
+* [[valueSerde]] `Serde<V>` for values
+* [[retainDuplicates]] `retainDuplicates` flag
+* [[windowSize]] `windowSize`
+
+`RocksDBWindowStore` initializes the <<internal-registries, internal registries and counters>>.
+
+=== [[init]] `init` Method
+
+[source, java]
+----
+void init(final ProcessorContext context, final StateStore root)
+----
+
+NOTE: `init` is part of the <<kafka-streams-StateStore.adoc#init, StateStore Contract>> to initialize the state store.
+
+`init`...FIXME

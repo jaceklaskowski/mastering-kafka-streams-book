@@ -54,7 +54,7 @@ NOTE: `AbstractStateStore` is a Java abstract class and cannot be <<creating-ins
 | RocksDBSessionStore
 | [[RocksDBSessionStore]]
 
-| RocksDBWindowStore
+| <<kafka-streams-StateStore-RocksDBWindowStore.adoc#, RocksDBWindowStore>>
 | [[RocksDBWindowStore]]
 |===
 

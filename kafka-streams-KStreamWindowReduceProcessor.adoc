@@ -1,0 +1,30 @@
+== [[KStreamWindowReduceProcessor]] KStreamWindowReduceProcessor
+
+`KStreamWindowReduceProcessor` is a <<kafka-streams-AbstractProcessor.adoc#, processor>> that is used for...FIXME
+
+`KStreamWindowReduceProcessor` is <<creating-instance, created>> when...FIXME
+
+[[creating-instance]]
+`KStreamWindowReduceProcessor` takes no arguments when created.
+
+=== [[init]] Initializing Processor -- `init` Method
+
+[source, java]
+----
+void init(final ProcessorContext context)
+----
+
+NOTE: `init` is part of the <<kafka-streams-Processor.adoc#init, Processor Contract>> to initialize the <<kafka-streams-Processor.adoc#, processor>>.
+
+`init`...FIXME
+
+=== [[process]] Processing Record -- `process` Method
+
+[source, java]
+----
+void process(final K key, final V value)
+----
+
+NOTE: `process` is part of the <<kafka-streams-Processor.adoc#process, Processor Contract>> to process a single record.
+
+`process`...FIXME

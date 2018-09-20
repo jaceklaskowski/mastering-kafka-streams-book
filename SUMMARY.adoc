@@ -90,9 +90,11 @@
 .. link:kafka-streams-StateStore-RocksDBSegmentedBytesStore.adoc[RocksDBSegmentedBytesStore]
 .. link:kafka-streams-StateStore-RocksDBSessionStore.adoc[RocksDBSessionStore]
 .. link:kafka-streams-StateStore-RocksDBSessionBytesStore.adoc[RocksDBSessionBytesStore]
+.. link:kafka-streams-StateStore-RocksDBWindowStore.adoc[RocksDBWindowStore]
 
 . link:kafka-streams-StoreSupplier.adoc[StoreSupplier]
 .. link:kafka-streams-KeyValueBytesStoreSupplier.adoc[KeyValueBytesStoreSupplier]
+.. link:kafka-streams-RocksDbWindowBytesStoreSupplier.adoc[RocksDbWindowBytesStoreSupplier]
 .. link:kafka-streams-SessionBytesStoreSupplier.adoc[SessionBytesStoreSupplier]
 .. link:kafka-streams-WindowBytesStoreSupplier.adoc[WindowBytesStoreSupplier]
 
@@ -197,9 +199,12 @@
 
 . link:kafka-streams-Processor.adoc[Processor Contract -- Stream Processing Nodes]
 .. link:kafka-streams-AbstractProcessor.adoc[AbstractProcessor -- Base for Stream Processors]
+.. link:kafka-streams-KStreamJoinWindowProcessor.adoc[KStreamJoinWindowProcessor]
 .. link:kafka-streams-KStreamSessionWindowAggregateProcessor.adoc[KStreamSessionWindowAggregateProcessor]
 .. link:kafka-streams-KStreamTransformProcessor.adoc[KStreamTransformProcessor]
 .. link:kafka-streams-KStreamTransformValuesProcessor.adoc[KStreamTransformValuesProcessor]
+.. link:kafka-streams-KStreamWindowAggregateProcessor.adoc[KStreamWindowAggregateProcessor]
+.. link:kafka-streams-KStreamWindowReduceProcessor.adoc[KStreamWindowReduceProcessor]
 
 . link:kafka-streams-ProcessorNodePunctuator.adoc[ProcessorNodePunctuator]
 . link:kafka-streams-NodeMetrics.adoc[NodeMetrics]

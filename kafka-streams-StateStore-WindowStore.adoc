@@ -1,3 +1,45 @@
 == [[WindowStore]] WindowStore
 
-`WindowStore` is...FIXME
+`WindowStore` is the <<contract, extension>> of the <<kafka-streams-StateStore.adoc#, StateStore contract>> for <<implementations, state stores>> that are `ReadOnlyWindowStores` and can <<put, put>> a record with an optional timestamp.
+
+[[contract]]
+.WindowStore Contract
+[cols="1m,2",options="header",width="100%"]
+|===
+| Method
+| Description
+
+| put
+a| [[put]]
+
+[source, java]
+----
+void put(K key, V value) // <1>
+void put(K key, V value, long timestamp)
+----
+<1> Uses the current wall-clock time as the timestamp
+
+Used when <<kafka-streams-KStreamJoinWindowProcessor.adoc#process, KStreamJoinWindowProcessor>>, <<kafka-streams-KStreamWindowReduceProcessor.adoc#process, KStreamWindowReduceProcessor>> and <<kafka-streams-KStreamWindowAggregateProcessor.adoc#process, KStreamWindowAggregateProcessor>> are requested to process a record
+
+|===
+
+[[implementations]]
+.WindowStores
+[cols="1,2",options="header",width="100%"]
+|===
+| WindowStore
+| Description
+
+| <<kafka-streams-StateStore-CachingWindowStore.adoc#, CachingWindowStore>>
+| [[CachingWindowStore]]
+
+| <<kafka-streams-StateStore-ChangeLoggingWindowBytesStore.adoc#, ChangeLoggingWindowBytesStore>>
+| [[ChangeLoggingWindowBytesStore]]
+
+| <<kafka-streams-StateStore-MeteredWindowStore.adoc#, MeteredWindowStore>>
+| [[MeteredWindowStore]]
+
+| <<kafka-streams-StateStore-RocksDBWindowStore.adoc#, RocksDBWindowStore>>
+| [[RocksDBWindowStore]]
+
+|===
