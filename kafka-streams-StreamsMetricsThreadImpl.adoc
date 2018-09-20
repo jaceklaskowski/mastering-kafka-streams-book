@@ -1,6 +1,8 @@
 == [[StreamsMetricsThreadImpl]] StreamsMetricsThreadImpl
 
-`StreamsMetricsThreadImpl` is a custom link:kafka-streams-StreamsMetricsImpl.adoc[StreamsMetricsImpl] that is <<creating-instance, created>> along with link:kafka-streams-StreamThread.adoc#create[StreamThread] (when `KafkaStreams` is link:kafka-streams-KafkaStreams.adoc#creating-instance[created]).
+`StreamsMetricsThreadImpl` is a custom link:kafka-streams-StreamsMetricsImpl.adoc[StreamsMetricsImpl].
+
+`StreamsMetricsThreadImpl` is <<creating-instance, created>> for a link:kafka-streams-StreamThread.adoc#create[StreamThread] (when `KafkaStreams` is link:kafka-streams-KafkaStreams.adoc#creating-instance[created]).
 
 [[internal-registries]]
 .StreamsMetricsThreadImpl's Internal Properties (e.g. Registries, Counters and Flags)

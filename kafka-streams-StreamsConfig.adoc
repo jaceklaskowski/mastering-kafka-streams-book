@@ -25,11 +25,14 @@ val conf = new StreamsConfig(props)
 | [[APPLICATION_SERVER_CONFIG]] APPLICATION_SERVER_CONFIG
 | <<kafka-streams-properties.adoc#application.server, application.server>>
 
+| [[COMMIT_INTERVAL_MS_CONFIG]] COMMIT_INTERVAL_MS_CONFIG
+| <<kafka-streams-properties.adoc#commit.interval.ms, commit.interval.ms>>
+
 | [[DEFAULT_TIMESTAMP_EXTRACTOR_CLASS_CONFIG]] DEFAULT_TIMESTAMP_EXTRACTOR_CLASS_CONFIG
 | <<kafka-streams-properties.adoc#default.timestamp.extractor, default.timestamp.extractor>>
 
-| [[COMMIT_INTERVAL_MS_CONFIG]] COMMIT_INTERVAL_MS_CONFIG
-| <<kafka-streams-properties.adoc#commit.interval.ms, commit.interval.ms>>
+| [[METRICS_RECORDING_LEVEL_CONFIG]] METRICS_RECORDING_LEVEL_CONFIG
+| <<kafka-streams-properties.adoc#metrics.recording.level, metrics.recording.level>>
 
 | [[NUM_STREAM_THREADS_CONFIG]] NUM_STREAM_THREADS_CONFIG
 | <<kafka-streams-properties.adoc#num.stream.threads, num.stream.threads>>

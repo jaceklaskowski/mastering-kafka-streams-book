@@ -31,13 +31,22 @@ a| [[commit.interval.ms]] Desired *flush interval* or *commit interval* (in mill
 
 Use <<kafka-streams-StreamsConfig.adoc#COMMIT_INTERVAL_MS_CONFIG, StreamsConfig.COMMIT_INTERVAL_MS_CONFIG>> to reference the property.
 
-| num.stream.threads
-| `1`
-| [[num.stream.threads]] The number of link:kafka-streams-KafkaStreams.adoc#threads[stream processor threads].
-
 | default.timestamp.extractor
 | <<kafka-streams-FailOnInvalidTimestamp.adoc#, FailOnInvalidTimestamp>>
 | [[default.timestamp.extractor]] Default timestamp extractor class that implements the <<kafka-streams-TimestampExtractor.adoc#, org.apache.kafka.streams.processor.TimestampExtractor>> interface.
+
+| metrics.recording.level
+| `INFO`
+a| [[metrics.recording.level]] The highest recording level for <<kafka-streams-StreamsMetrics.adoc#, metrics>>
+
+Possible values are:
+
+* [[INFO]] `INFO` (default)
+* [[DEBUG]] `DEBUG`
+
+| num.stream.threads
+| `1`
+| [[num.stream.threads]] The number of link:kafka-streams-KafkaStreams.adoc#threads[stream processor threads].
 
 | poll.ms
 | `100`
