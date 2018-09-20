@@ -22,7 +22,7 @@ scala> :type storeBuilder
 org.apache.kafka.streams.state.StoreBuilder[org.apache.kafka.streams.state.WindowStore[Int,Long]]
 
 import org.apache.kafka.streams.state.internals.WindowStoreBuilder
-assert(storeBuilder.isInstanceOf[WindowStoreBuilder[Int, Long]])
+assert(storeBuilder.isInstanceOf[WindowStoreBuilder[_, _]])
 ----
 
 [[build]]

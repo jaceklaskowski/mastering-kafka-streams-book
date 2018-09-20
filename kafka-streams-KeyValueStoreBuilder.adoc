@@ -1,3 +1,37 @@
 == [[KeyValueStoreBuilder]] KeyValueStoreBuilder
 
-`KeyValueStoreBuilder` is a link:kafka-streams-AbstractStoreBuilder.adoc[AbstractStoreBuilder] of link:kafka-streams-StateStore-KeyValueStore.adoc[KeyValueStores].
+`KeyValueStoreBuilder` is a <<kafka-streams-StoreBuilder.adoc#, StoreBuilder>> (indirectly as a <<kafka-streams-AbstractStoreBuilder.adoc#, AbstractStoreBuilder>>) that allows for <<build, building KeyValueStores>>.
+
+`KeyValueStoreBuilder` can be <<creating-instance, created>> using <<kafka-streams-Stores.adoc#keyValueStoreBuilder, Stores.keyValueStoreBuilder>>.
+
+[source, scala]
+----
+import org.apache.kafka.streams.state.Stores
+// Using Scala API for Kafka Streams
+import org.apache.kafka.streams.scala.Serdes
+val storeBuilder = Stores.keyValueStoreBuilder(
+  Stores.inMemoryKeyValueStore("store-name"),
+  Serdes.Integer,
+  Serdes.Long)
+scala> :type storeBuilder
+org.apache.kafka.streams.state.StoreBuilder[org.apache.kafka.streams.state.KeyValueStore[Int,Long]]
+
+import org.apache.kafka.streams.state.internals.KeyValueStoreBuilder
+assert(storeBuilder.isInstanceOf[KeyValueStoreBuilder[_, _]])
+----
+
+[[build]]
+When requested for a <<kafka-streams-StoreBuilder.adoc#build, state store>>, `KeyValueStoreBuilder` simply creates a new <<kafka-streams-StateStore-MeteredKeyValueBytesStore.adoc#, MeteredKeyValueBytesStore>> (with the state store from the <<storeSupplier, KeyValueBytesStoreSupplier>>).
+
+With <<kafka-streams-StoreBuilder.adoc#withCachingEnabled, caching enabled>>, `build` creates a <<kafka-streams-StateStore-CachingKeyValueStore.adoc#, CachingKeyValueStore>>.
+
+With <<kafka-streams-StoreBuilder.adoc#withLoggingEnabled, logging enabled>>, `build` creates a <<kafka-streams-StateStore-ChangeLoggingKeyValueBytesStore.adoc#, ChangeLoggingKeyValueBytesStore>>.
+
+=== [[creating-instance]] Creating KeyValueStoreBuilder Instance
+
+`KeyValueStoreBuilder` takes the following when created:
+
+* [[storeSupplier]] `KeyValueBytesStoreSupplier`
+* [[keySerde]] `Serde<K>` for keys
+* [[valueSerde]] `Serde<V>` for values
+* [[time]] `Time`
