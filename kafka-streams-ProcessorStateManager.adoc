@@ -13,6 +13,20 @@
 [[changelogPartitions]]
 `ProcessorStateManager` tracks *changelog partitions* that are the Kafka https://kafka.apache.org/20/javadoc/org/apache/kafka/common/TopicPartition.html[TopicPartitions] of the <<register, registered StateStores>>.
 
+[[logging]]
+[TIP]
+====
+Enable `ERROR`, `WARN`, `DEBUG` or `TRACE` logging levels for `org.apache.kafka.streams.processor.internals.ProcessorStateManager` logger to see what happens inside.
+
+Add the following line to `log4j.properties`:
+
+```
+log4j.logger.org.apache.kafka.streams.processor.internals.ProcessorStateManager=TRACE
+```
+
+Refer to link:kafka-logging.adoc#log4j.properties[Application Logging Using log4j].
+====
+
 [[internal-registries]]
 .ProcessorStateManager's Internal Properties (e.g. Registries, Counters and Flags)
 [cols="1m,2",options="header",width="100%"]

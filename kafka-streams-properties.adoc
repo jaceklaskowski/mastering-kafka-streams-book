@@ -41,8 +41,10 @@ a| [[metrics.recording.level]] The highest recording level for <<kafka-streams-S
 
 Possible values are:
 
-* [[INFO]] `INFO` (default)
-* [[DEBUG]] `DEBUG`
+* [[metrics.recording.level-INFO]] `INFO` (default)
+* [[metrics.recording.level-DEBUG]] `DEBUG`
+
+Use <<kafka-streams-StreamsConfig.adoc#METRICS_RECORDING_LEVEL_CONFIG, StreamsConfig.METRICS_RECORDING_LEVEL_CONFIG>> to reference the property.
 
 | num.stream.threads
 | `1`

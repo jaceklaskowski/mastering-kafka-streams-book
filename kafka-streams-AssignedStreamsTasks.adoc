@@ -39,9 +39,6 @@ Committed active task [id] per user request in
 
 | `log`
 | [[log]]
-
-| `maybeCommitAction`
-| [[maybeCommitAction]]
 |===
 
 [[logging]]

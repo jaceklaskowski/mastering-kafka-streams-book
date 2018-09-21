@@ -113,9 +113,9 @@ NOTE: `hasStateStores` is part of link:kafka-streams-Task.adoc#hasStateStores[Ta
 void flushState()
 ----
 
-`flushState` simply requests the <<stateMgr, ProcessorStateManager>> to link:kafka-streams-ProcessorStateManager.adoc#flush[flush].
+`flushState` simply requests the <<stateMgr, ProcessorStateManager>> to <<kafka-streams-ProcessorStateManager.adoc#flush, flush>>.
 
-NOTE: `flushState` is used when...FIXME
+NOTE: `flushState` is used when `StreamTask` is requested to <<kafka-streams-StreamTask.adoc#commit, commit>> (and <<kafka-streams-StreamTask.adoc#flushState, flushState>>).
 
 === [[recordCollectorOffsets]] `recordCollectorOffsets` Method
 

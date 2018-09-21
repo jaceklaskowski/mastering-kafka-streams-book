@@ -16,23 +16,25 @@
 | putTime
 | put
 | DEBUG
-| [[putTime]]
+| [[putTime]] Latency of <<put, put>>
 
 | fetchTime
 | fetch
 | DEBUG
-| [[fetchTime]]
+| [[fetchTime]] Latency of <<fetch, fetch>>, <<all, all>> and <<fetchAll, fetchAll>>
 
 | flushTime
 | flush
 | DEBUG
-| [[flushTime]]
+| [[flushTime]] Latency of <<flush, flush>>
 
 | restoreTime
 | restore
 | DEBUG
-| [[restoreTime]]
+| [[restoreTime]] Latency of <<init, init>>
 |===
+
+NOTE: All the <<metrics, metric sensors>> are at `DEBUG` recording level so you have to turn them on using <<kafka-streams-properties.adoc#metrics.recording.level, metrics.recording.level>> streams property.
 
 === [[creating-instance]] Creating MeteredWindowStore Instance
 

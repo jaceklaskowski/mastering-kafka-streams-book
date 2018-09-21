@@ -58,7 +58,7 @@ NOTE: `initializeStateStores` is part of <<kafka-streams-Task.adoc#initializeSta
 
 `initializeStateStores`...FIXME
 
-=== [[close]] Closing Standby Task -- `close` Method
+=== [[close]] Closing Task -- `close` Method
 
 [source, java]
 ----
@@ -67,7 +67,7 @@ void close(
   final boolean isZombie)
 ----
 
-NOTE: `close` is part of link:kafka-streams-Task.adoc#close[Task Contract] to...FIXME.
+NOTE: `close` is part of link:kafka-streams-Task.adoc#close[Task Contract] to close the task.
 
 `close` prints out the following DEBUG message to the logs:
 

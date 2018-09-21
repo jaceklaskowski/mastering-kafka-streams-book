@@ -45,7 +45,7 @@ a| [[flush]]
 void flush()
 ----
 
-Flushes all <<kafka-streams-StateStore.adoc#, state stores>> registered with the state manager
+Flushes all <<kafka-streams-StateStore.adoc#, state stores>> registered (in the state manager)
 
 Used when:
 
