@@ -27,7 +27,7 @@ Use <<kafka-streams-StreamsConfig.adoc#APPLICATION_SERVER_CONFIG, StreamsConfig.
 a|
 * `100L` when <<processing.guarantee, processing.guarantee>> is <<exactly_once, exactly_once>> (which is not by default)
 * `30000L` otherwise
-a| [[commit.interval.ms]] Desired *flush interval* or *commit interval* (in millis), i.e. the time between persisting the position of a processor.
+a| [[commit.interval.ms]] *Flush interval* or *commit interval* (in millis), i.e. how often `StreamThread` <<kafka-streams-StreamThread.adoc#maybeCommit, tries to commit>> the position of processors and _flush_ state stores
 
 Use <<kafka-streams-StreamsConfig.adoc#COMMIT_INTERVAL_MS_CONFIG, StreamsConfig.COMMIT_INTERVAL_MS_CONFIG>> to reference the property.
 

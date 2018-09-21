@@ -354,3 +354,14 @@ int punctuate()
 `punctuate` simply requests <<active, AssignedStreamsTasks>> to link:kafka-streams-AssignedStreamsTasks.adoc#punctuate[punctuate].
 
 NOTE: `punctuate` is used exclusively when `StreamThread` is requested to link:kafka-streams-StreamThread.adoc#punctuate[punctuate].
+
+=== [[commitAll]] Committing Active and Standby Tasks -- `commitAll` Method
+
+[source, java]
+----
+int commitAll()
+----
+
+`commitAll`...FIXME
+
+NOTE: `commitAll` is used exclusively when `StreamThread` is requested to <<kafka-streams-StreamThread.adoc#maybeCommit, maybeCommit>>.

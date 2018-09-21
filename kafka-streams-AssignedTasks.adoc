@@ -32,31 +32,31 @@ NOTE: `AssignedTasks` is a Java abstract class and cannot be <<creating-instance
 
 [[internal-registries]]
 .AssignedTasks's Internal Properties (e.g. Registries, Counters and Flags)
-[cols="1,2",options="header",width="100%"]
+[cols="1m,2",options="header",width="100%"]
 |===
 | Name
 | Description
 
-| `commitAction`
-| [[commitAction]]
+| commitAction
+| [[commitAction]] `TaskAction` that requests <<running, running tasks>> to <<kafka-streams-Task.adoc#commit, commit>> at <<commit, commit>>
 
-| `created`
+| created
 a| [[created]] *New tasks* by their ids
 
 * Tasks are added when `AssignedTasks` is requested to <<addNewTask, addNewTask>>
 
 * Tasks are removed when `AssignedTasks` is requested to <<initializeNewTasks, initializeNewTasks>>, <<suspend, suspend>> or <<clear, clear>>
 
-| `previousActiveTasks`
+| previousActiveTasks
 | [[previousActiveTasks]]
 
-| `restoring`
+| restoring
 | [[restoring]]
 
-| `log`
+| log
 | [[log]]
 
-| `running`
+| running
 a| [[running]] Running tasks by their ids
 
 `running` is a https://docs.oracle.com/javase/9/docs/api/java/util/concurrent/ConcurrentHashMap.html[java.util.concurrent.ConcurrentHashMap], i.e. `ConcurrentHashMap<TaskId, Task>`.
@@ -69,10 +69,10 @@ Tasks IDs are added or removed as follows:
 
 * Removed when `AssignedTasks` is requested to <<suspend, suspend>> or <<clear, clear>>
 
-| `runningByPartition`
+| runningByPartition
 | [[runningByPartition]] Kafka's `TopicPartitions` by the task
 
-| `suspended`
+| suspended
 a| [[suspended]]
 |===
 
@@ -465,3 +465,14 @@ void addToRestoring(final T task)
 `addToRestoring` records the task's <<kafka-streams-Task.adoc#partitions, partitions>> and <<kafka-streams-Task.adoc#changelogPartitions, changelogPartitions>> in the <<restoringByPartition, restoringByPartition>> internal registry.
 
 NOTE: `addToRestoring` is used exclusively when `AssignedTasks` is requested to <<initializeNewTasks, initialize new tasks>> (and the task is a <<kafka-streams-StreamTask.adoc#, StreamTask>> and <<kafka-streams-Task.adoc#initializeStateStores, has state stores that need restoring>>).
+
+=== [[commit]] Committing Running Tasks -- `commit` Method
+
+[source, java]
+----
+int commit()
+----
+
+`commit`...FIXME
+
+NOTE: `commit` is used exclusively when `TaskManager` is requested to <<kafka-streams-TaskManager.adoc#commitAll, commitAll>>.
