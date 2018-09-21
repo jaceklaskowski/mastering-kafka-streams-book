@@ -2,6 +2,15 @@
 
 `Stores` is a <<methods, factory for creating state stores>> (using <<kafka-streams-StoreSupplier.adoc#, StoreSuppliers>> for <<kafka-streams-StreamsBuilder.adoc#, StreamsBuilder>> or <<kafka-streams-StoreBuilder.adoc#, StoreBuilders>> for <<kafka-streams-Topology.adoc#, Topology>>).
 
+[source, scala]
+----
+import org.apache.kafka.streams.state.Stores
+val kvStore = Stores.inMemoryKeyValueStore("store-name")
+
+scala> :type kvStore
+org.apache.kafka.streams.state.KeyValueBytesStoreSupplier
+----
+
 [[methods]]
 .Stores API (Static Methods)
 [cols="1m,2",options="header",width="100%"]
@@ -17,7 +26,7 @@ a| [[inMemoryKeyValueStore]]
 KeyValueBytesStoreSupplier inMemoryKeyValueStore(final String name)
 ----
 
-Creates a `KeyValueBytesStoreSupplier` that creates <<kafka-streams-StateStore-KeyValueStore.adoc#, KeyValueStores>>
+Creates a <<kafka-streams-KeyValueBytesStoreSupplier.adoc#, KeyValueBytesStoreSupplier>> that creates <<kafka-streams-StateStore-KeyValueStore.adoc#, KeyValueStores>>
 
 | keyValueStoreBuilder
 a| [[keyValueStoreBuilder]]
@@ -42,7 +51,7 @@ KeyValueBytesStoreSupplier lruMap(
   final int maxCacheSize)
 ----
 
-Creates a `KeyValueBytesStoreSupplier` that creates `MemoryNavigableLRUCaches` (with `maxCacheSize`)
+Creates a <<kafka-streams-KeyValueBytesStoreSupplier.adoc#, KeyValueBytesStoreSupplier>> that creates `MemoryNavigableLRUCaches` (with `maxCacheSize`)
 
 | persistentKeyValueStore
 a| [[persistentKeyValueStore]]
@@ -79,7 +88,7 @@ WindowBytesStoreSupplier persistentWindowStore(
   final boolean retainDuplicates)
 ----
 
-Creates a `RocksDbWindowBytesStoreSupplier`
+Creates a <<kafka-streams-RocksDbWindowBytesStoreSupplier.adoc#, RocksDbWindowBytesStoreSupplier>>
 
 | sessionStoreBuilder
 a| [[sessionStoreBuilder]]

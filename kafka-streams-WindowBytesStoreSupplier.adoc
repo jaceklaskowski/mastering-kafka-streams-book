@@ -1,3 +1,55 @@
 == [[WindowBytesStoreSupplier]] WindowBytesStoreSupplier
 
-`WindowBytesStoreSupplier` is...FIXME
+[[get]]
+`WindowBytesStoreSupplier` is the <<contract, extension>> of the <<kafka-streams-StoreSupplier.adoc#, StoreSupplier contract>> for <<implementations, state store suppliers>> that <<kafka-streams-StoreSupplier.adoc#get, supply WindowStores>>.
+
+[[implementations]]
+NOTE: <<kafka-streams-RocksDbWindowBytesStoreSupplier.adoc#, RocksDbWindowBytesStoreSupplier>> is the one and only known implementation of the <<contract, WindowBytesStoreSupplier Contract>>.
+
+[[contract]]
+.WindowBytesStoreSupplier Contract
+[cols="1m,2",options="header",width="100%"]
+|===
+| Property
+| Description
+
+| retainDuplicates
+a| [[retainDuplicates]]
+
+[source, java]
+----
+boolean retainDuplicates()
+----
+
+Used when...FIXME
+
+| retentionPeriod
+a| [[retentionPeriod]]
+
+[source, java]
+----
+long retentionPeriod()
+----
+
+Used when...FIXME
+
+| segments
+a| [[segments]]
+
+[source, java]
+----
+int segments()
+----
+
+Used when...FIXME
+
+| windowSize
+a| [[windowSize]]
+
+[source, java]
+----
+long windowSize()
+----
+
+Used when...FIXME
+|===

@@ -1,6 +1,25 @@
 == [[RocksDbWindowBytesStoreSupplier]] RocksDbWindowBytesStoreSupplier
 
-`RocksDbWindowBytesStoreSupplier` is...FIXME
+`RocksDbWindowBytesStoreSupplier` is a concrete <<kafka-streams-WindowBytesStoreSupplier.adoc#, WindowBytesStoreSupplier>> that <<get, supplies RocksDBWindowStores over RocksDBSegmentedBytesStores>>.
+
+In fact, `RocksDbWindowBytesStoreSupplier` is the one and only known <<kafka-streams-WindowBytesStoreSupplier.adoc#, WindowBytesStoreSupplier>>.
+
+[[metricsScope]]
+`RocksDbWindowBytesStoreSupplier` uses *rocksdb-window-state* as the <<kafka-streams-StoreSupplier.adoc#metricsScope, metrics scope>>.
+
+`RocksDbWindowBytesStoreSupplier` is <<creating-instance, created>> when `Stores` factory is requested to <<kafka-streams-Stores.adoc#persistentWindowStore, persistentWindowStore>>.
+
+[source, scala]
+----
+import org.apache.kafka.streams.state.Stores
+val windowStore = Stores.persistentWindowStore("window-store-name", 1000, 2, 1000, true)
+
+scala> :type windowStore
+org.apache.kafka.streams.state.WindowBytesStoreSupplier
+
+import org.apache.kafka.streams.state.internals.RocksDbWindowBytesStoreSupplier
+assert(windowStore.isInstanceOf[RocksDbWindowBytesStoreSupplier])
+----
 
 === [[get]] Getting State Store -- `get` Method
 
@@ -11,4 +30,16 @@ WindowStore<Bytes, byte[]> get()
 
 NOTE: `get` is part of the <<kafka-streams-StoreSupplier.adoc#get, StoreSupplier Contract>> to get a <<kafka-streams-StateStore.adoc#, state store>>.
 
-`get`...FIXME
+`get` creates a <<kafka-streams-StateStore-RocksDBSegmentedBytesStore.adoc#, RocksDBSegmentedBytesStore>> (with the <<name, name>>, the <<retentionPeriod, retentionPeriod>> and the <<segments, segments>>).
+
+`get` then returns a new <<kafka-streams-StateStore-RocksDBWindowStore.adoc#, RocksDBWindowStore>> (with the `RocksDBSegmentedBytesStore` and the <<retainDuplicates, retainDuplicates>> and the <<windowSize, windowSize>>).
+
+=== [[creating-instance]] Creating RocksDbWindowBytesStoreSupplier Instance
+
+`RocksDbWindowBytesStoreSupplier` takes the following when created:
+
+* [[name]] Name
+* [[retentionPeriod]] `retentionPeriod`
+* [[segments]] Number of segments (must be `2` or higher)
+* [[windowSize]] `windowSize`
+* [[retainDuplicates]] `retainDuplicates` flag

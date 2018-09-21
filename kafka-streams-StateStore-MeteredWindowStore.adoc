@@ -1,6 +1,6 @@
 == [[MeteredWindowStore]] MeteredWindowStore -- State Store of WindowStoreBuilder
 
-`MeteredWindowStore` is a custom <<kafka-streams-StateStore-WindowStore.adoc#, WindowStore>> that registers the <<metrics, metric sensors>> (when <<init, initialized>>).
+`MeteredWindowStore` is a concrete <<kafka-streams-StateStore-WindowStore.adoc#, WindowStore>> that registers the <<metrics, metric sensors>> (when <<init, initialized>>).
 
 `MeteredWindowStore` is <<creating-instance, created>> exclusively when `WindowStoreBuilder` is requested for a <<kafka-streams-WindowStoreBuilder.adoc#build, state store>>.
 
