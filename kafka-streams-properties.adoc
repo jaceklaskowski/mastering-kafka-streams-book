@@ -48,7 +48,7 @@ Use <<kafka-streams-StreamsConfig.adoc#METRICS_RECORDING_LEVEL_CONFIG, StreamsCo
 
 | num.stream.threads
 | `1`
-| [[num.stream.threads]] The number of link:kafka-streams-KafkaStreams.adoc#threads[stream processor threads].
+| [[num.stream.threads]] The number of <<kafka-streams-StreamThread.adoc#, stream processor threads>> (that <<kafka-streams-KafkaStreams.adoc#threads, KafkaStreams>> uses for stream processing).
 
 | poll.ms
 | `100`

@@ -1,21 +1,21 @@
 == [[AssignedStreamsTasks]] AssignedStreamsTasks -- AssignedTasks For StreamTasks
 
-`AssignedStreamsTasks` is a link:kafka-streams-AssignedTasks.adoc[AssignedTasks] for link:kafka-streams-StreamTask.adoc[StreamTasks] that...FIXME
+`AssignedStreamsTasks` is a concrete <<kafka-streams-AssignedTasks.adoc#, AssignedTasks>> of <<kafka-streams-StreamTask.adoc#, StreamTasks>> that...FIXME
 
-`AssignedStreamsTasks` is <<creating-instance, created>> along with a link:kafka-streams-StreamThread.adoc#create[StreamThread] (when `KafkaStreams` is link:kafka-streams-KafkaStreams.adoc#creating-instance[created]).
+`AssignedStreamsTasks` is <<creating-instance, created>> for a <<kafka-streams-StreamThread.adoc#create, StreamThread>> (when `KafkaStreams` is <<kafka-streams-KafkaStreams.adoc#creating-instance, created>>).
 
 `AssignedStreamsTasks` is a `RestoringTasks` that...FIXME
 
 It _appears_ that `AssignedStreamsTasks` simply operates on the running tasks (i.e. the tasks that are in link:kafka-streams-AssignedTasks.adoc#running[running] internal registry). When requested to <<process, process>> or <<punctuate, punctuate>> `AssignedStreamsTasks` simply walks over the `running` internal registry and triggers execution of every task.
 
 [[maybeCommitAction]]
-`AssignedStreamsTasks` uses a `TaskAction<StreamTask>` called *maybeCommit* that is used in <<maybeCommit, maybeCommit>>. The task action takes a link:kafka-streams-StreamTask.adoc[stream task] and checks if the task link:kafka-streams-StreamTask.adoc#commitNeeded[needs a commit]. If so, the action does the following:
+`AssignedStreamsTasks` uses the *maybeCommit* task action (`TaskAction<StreamTask>`) that is used in <<maybeCommit, maybeCommit>>. The task action takes a <<kafka-streams-StreamTask.adoc#, stream task>> and checks if the task link:kafka-streams-StreamTask.adoc#commitNeeded[needs a commit]. If so, the action does the following:
 
-1. Increments <<committed, committed>> counter
+. Increments the <<committed, committed>> internal counter
 
-1. Requests the stream task to link:kafka-streams-StreamTask.adoc#commit[commit]
+. Requests the stream task to link:kafka-streams-StreamTask.adoc#commit[commit]
 
-1. Prints out the following DEBUG message to the logs:
+. Prints out the following DEBUG message to the logs:
 +
 ```
 Committed active task [id] per user request in
@@ -97,23 +97,11 @@ Failed to process stream task [id] due to the following error:
 int maybeCommit()
 ----
 
-`maybeCommit` resets <<committed, committed>> to 0 and link:kafka-streams-AssignedTasks.adoc#applyToRunningTasks[executes] the <<maybeCommitAction, maybeCommitAction>> task action (that modifies <<committed, committed>>).
+`maybeCommit` resets the <<committed, committed>> internal counter (to `0`) and <<kafka-streams-AssignedTasks.adoc#applyToRunningTasks, executes>> the <<maybeCommitAction, maybeCommitAction>> task action to every <<kafka-streams-AssignedTasks.adoc#running, running task>> (that modifies <<committed, committed>>).
 
-In the end, `maybeCommit` gives the number of running stream tasks that link:kafka-streams-StreamTask.adoc#commitNeeded[needed a commit].
+In the end, `maybeCommit` gives the number of running stream tasks that <<kafka-streams-StreamTask.adoc#commitNeeded, needed a commit>>.
 
 NOTE: `maybeCommit` is used exclusively when `TaskManager` is requested to link:kafka-streams-TaskManager.adoc#maybeCommitActiveTasks[maybeCommitActiveTasks].
-
-=== [[creating-instance]] Creating AssignedStreamsTasks Instance
-
-`AssignedStreamsTasks` takes the following when created:
-
-* AssignedStreamsTasks
-
-`AssignedStreamsTasks` initializes the <<internal-registries, internal registries and counters>>.
-
-`AssignedStreamsTasks` is <<creating-instance, created>> when...MEFIXME
-
-`AssignedStreamsTasks` is <<creating-instance, created>> along with...MEFIXME
 
 === [[punctuate]] `punctuate` Method
 

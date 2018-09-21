@@ -35,7 +35,7 @@ At the start of a rebalance operation (i.e. <<onPartitionsRevoked, onPartitionsR
 [[logging]]
 [TIP]
 ====
-`RebalanceListener` uses `org.apache.kafka.streams.processor.internals.StreamThread` <<log, logger>> for logging.
+`RebalanceListener` uses the <<log, logger>> from the owning <<kafka-streams-StreamThread.adoc#, StreamThread>> for logging.
 
 Enable `DEBUG` logging level for `org.apache.kafka.streams.processor.internals.StreamThread` logger to see what happens inside.
 

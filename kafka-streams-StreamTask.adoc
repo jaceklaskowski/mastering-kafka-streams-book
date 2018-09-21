@@ -7,7 +7,7 @@
 [[commitNeeded]]
 [[commitRequested]]
 [[needCommit]]
-`StreamTask` may need a commit, i.e....FIXME
+`StreamTask` may need a commit (after `ProcessorContextImpl` is requested to <<kafka-streams-ProcessorContextImpl.adoc#commit, commit>>).
 
 [[commitOffsetNeeded]]
 `StreamTask` uses `commitOffsetNeeded` flag to...FIXME
