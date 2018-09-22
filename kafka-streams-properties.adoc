@@ -31,6 +31,8 @@ a| [[commit.interval.ms]] *Flush interval* or *commit interval* (in millis), i.e
 
 Use <<kafka-streams-StreamsConfig.adoc#COMMIT_INTERVAL_MS_CONFIG, StreamsConfig.COMMIT_INTERVAL_MS_CONFIG>> to reference the property.
 
+If the commit interval is negative, `StreamThread` will never <<kafka-streams-StreamThread.adoc#maybeCommit, commit tasks>>.
+
 | default.timestamp.extractor
 | <<kafka-streams-FailOnInvalidTimestamp.adoc#, FailOnInvalidTimestamp>>
 | [[default.timestamp.extractor]] Default timestamp extractor class that implements the <<kafka-streams-TimestampExtractor.adoc#, org.apache.kafka.streams.processor.TimestampExtractor>> interface.

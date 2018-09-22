@@ -1,6 +1,6 @@
 == [[StreamThread]] StreamThread -- Stream Processor Thread
 
-`StreamThread` is the <<run, stream processor thread>> (a Java https://docs.oracle.com/javase/9/docs/api/java/lang/Thread.html[Thread]) in a Kafka Streams application that <<runLoop, runs the main event processing loop>>.
+`StreamThread` is the <<run, stream processor thread>> (a Java https://docs.oracle.com/javase/9/docs/api/java/lang/Thread.html[Thread]) in a Kafka Streams application that <<runLoop, runs the main record processing loop>>.
 
 .StreamThread and Stream Processing
 image::images/kafka-streams-StreamThread.png[align="center"]
@@ -19,7 +19,7 @@ NOTE: `KafkaStreams` uses <<kafka-streams-KafkaStreams.adoc#threads, num.stream.
 
 `StreamThread` uses the <<consumer, Kafka Consumer>> to:
 
-* Subscribe to topics (with <<rebalanceListener, RebalanceListener>>) right after `StreamThread` has been requested to <<runLoop, run the main event loop>>
+* Subscribe to topics (with <<rebalanceListener, RebalanceListener>>) right after `StreamThread` has been requested to <<runLoop, run the main record processing loop>>
 
 * Poll the topics subscribed (and fetch records if available) right after `StreamThread` has been requested to <<pollRequests, get the next batch of records by polling>>
 
@@ -33,7 +33,7 @@ NOTE: `KafkaStreams` uses <<kafka-streams-KafkaStreams.adoc#threads, num.stream.
 
 * Creating a <<kafka-streams-TaskCreator.adoc#, TaskCreator>> and a <<kafka-streams-StandbyTaskCreator.adoc#, StandbyTaskCreator>>
 
-* <<runLoop, Running the main processing loop>> (and subscribing to the <<kafka-streams-InternalTopologyBuilder.adoc#sourceTopicPattern, source topics>>)
+* <<runLoop, Running the main record processing loop>> (and subscribing to the <<kafka-streams-InternalTopologyBuilder.adoc#sourceTopicPattern, source topics>>)
 
 * <<resetInvalidOffsets, resetInvalidOffsets>>
 
@@ -43,23 +43,29 @@ NOTE: `KafkaStreams` uses <<kafka-streams-KafkaStreams.adoc#threads, num.stream.
 
 [[internal-registries]]
 .StreamThread's Internal Properties (e.g. Registries, Counters and Flags)
-[cols="1,2",options="header",width="100%"]
+[cols="1m,2",options="header",width="100%"]
 |===
 | Name
 | Description
 
-| [[builder]] `builder`
-| link:kafka-streams-InternalTopologyBuilder.adoc[InternalTopologyBuilder]
+| builder
+| [[builder]] link:kafka-streams-InternalTopologyBuilder.adoc[InternalTopologyBuilder]
 
-| [[rebalanceListener]] `rebalanceListener`
-a| link:kafka-streams-StreamThread-RebalanceListener.adoc[RebalanceListener]
+| rebalanceListener
+a| [[rebalanceListener]] link:kafka-streams-StreamThread-RebalanceListener.adoc[RebalanceListener]
 
-* Used exclusively when `StreamThread` is requested to <<runLoop, run the main event loop>> (and requests the Kafka <<consumer, Consumer>> to subscribe to get dynamically assigned partitions of topics matching specified pattern)
+* Used exclusively when `StreamThread` is requested to <<runLoop, run the main record processing loop>> (and requests the Kafka <<consumer, Consumer>> to subscribe to get dynamically assigned partitions of topics matching specified pattern)
 
 NOTE: `StreamThread` requests <<builder, InternalTopologyBuilder>> for the link:kafka-streams-InternalTopologyBuilder.adoc#sourceTopicPattern[source topic pattern] to subscribe to.
 
-| [[timerStartedMs]] `timerStartedMs`
-| The timestamp when the timer has started
+| lastCommitMs
+| [[lastCommitMs]] Time of the last <<maybeCommit, commit>>
+
+| processStandbyRecords
+| [[processStandbyRecords]] Flag to control whether to <<maybeUpdateStandbyTasks, maybeUpdateStandbyTasks>> after <<maybeCommit, maybeCommit>> was executed
+
+| timerStartedMs
+| [[timerStartedMs]] The timestamp when the timer has started
 |===
 
 [[logging]]
@@ -185,7 +191,7 @@ long runOnce(final long recordsProcessedBeforeCommit)
 
 [NOTE]
 ====
-`recordsProcessedBeforeCommit` starts as `UNLIMITED_RECORDS` (i.e. `-1`) in <<runLoop, runLoop>> (where the record stream processing starts off), and is passed along to every invocation of `runOnce`.
+`recordsProcessedBeforeCommit` starts as `UNLIMITED_RECORDS` (i.e. `-1`) in the <<runLoop, main record processing loop>> (where the record stream processing starts off), and is passed along to every invocation of `runOnce`.
 
 `runOnce` can <<adjustRecordsProcessedBeforeCommit, adjust>> `recordsProcessedBeforeCommit` (i.e. scale it down or up) given the current processing latency and commit time.
 
@@ -232,7 +238,7 @@ CAUTION: FIXME How would you name the block above with the records polled and `t
 
 `runOnce` <<maybeUpdateStandbyTasks, maybeUpdateStandbyTasks>> (with <<timerStartedMs, timerStartedMs>>)
 
-NOTE: `runOnce` is used exclusively when `StreamThread` is requested to <<runLoop, run main event loop>>.
+NOTE: `runOnce` is used exclusively when `StreamThread` is requested to <<runLoop, run the main record processing loop>>.
 
 === [[maybeUpdateStandbyTasks]] `maybeUpdateStandbyTasks` Internal Method
 
@@ -298,9 +304,9 @@ NOTE: `run` is part of Java's https://docs.oracle.com/javase/10/docs/api/java/la
 Starting
 ```
 
-`run` <<setState, sets the state>> to `RUNNING` and <<runLoop, runs the processing loop>>.
+`run` <<setState, sets the state>> to `RUNNING` and <<runLoop, runs the main record processing loop>>.
 
-At the end, `run` <<completeShutdown, shuts down>> (per `cleanRun` flag that says whether <<runLoop, running the loop>> stopped cleanly or not).
+At the end, `run` <<completeShutdown, shuts down>> (per `cleanRun` flag that says whether <<runLoop, running the main loop>> stopped cleanly or not).
 
 `run` re-throws any `KafkaException`.
 
@@ -379,17 +385,6 @@ FIXME toString in action
 
 NOTE: `toString` is used when `KafkaStreams` is requested to link:kafka-streams-KafkaStreams.adoc#toString[describe itself].
 
-=== [[maybeCommit]] `maybeCommit` Method
-
-[source, java]
-----
-void maybeCommit(final long now)
-----
-
-`maybeCommit`...FIXME
-
-NOTE: `maybeCommit` is used when `StreamThread` is requested to <<runOnce, poll records once>> (directly and indirectly in <<processAndMaybeCommit, processAndMaybeCommit>>).
-
 === [[processAndMaybeCommit]] Processing Records (with Optional Commit) -- `processAndMaybeCommit` Internal Method
 
 [source, java]
@@ -438,7 +433,7 @@ NOTE: `processAndMaybeCommit` uses <<streamsMetrics, StreamsMetricsThreadImpl>> 
 private final static int UNLIMITED_RECORDS = -1;
 ----
 
-When `StreamThread` is <<run, started>> (and <<runLoop, runs the main event loop>>), the number of records processed before commit is `UNLIMITED_RECORDS` (which makes it clear that the `StreamThread` has just been started and there has been no way that any record could have been processed).
+When `StreamThread` is <<run, started>> (and <<runLoop, runs the main record processing loop>>), the number of records processed before commit is `UNLIMITED_RECORDS` (which makes it clear that the `StreamThread` has just been started and there has been no way that any record could have been processed).
 
 The main event loop <<runOnce, polls records once>> and gives the number of records processed in this one-off poll that becomes the number of records processed before commit from the moment in time on.
 
@@ -476,7 +471,7 @@ NOTE: `isRunning` is simply a pass-through variant of <<State, State.isRunning>>
 ====
 `isRunning` is used when:
 
-* `StreamThread` is requested to <<runLoop, run the main event loop>>
+* `StreamThread` is requested to <<runLoop, run the main record processing loop>>
 
 * `KafkaStreams` is requested to link:kafka-streams-KafkaStreams.adoc#close[close].
 ====
@@ -590,3 +585,38 @@ void enforceRebalance()
 `enforceRebalance`...FIXME
 
 NOTE: `enforceRebalance` is used when...FIXME
+
+=== [[maybeCommit]] Committing All Tasks (When Commit Interval Elapsed) -- `maybeCommit` Method
+
+[source, java]
+----
+void maybeCommit(final long now)
+----
+
+`maybeCommit` commits all tasks (owned by this <<taskManager, TaskManager>>) if the <<commitTimeMs, commit interval>> has elapsed (i.e. the commit interval is non-negative and the time since the <<lastCommitMs, last commit>> is long gone).
+
+`maybeCommit` prints out the following TRACE message to the logs:
+
+```
+Committing all active tasks [activeTaskIds] and standby tasks [standbyTaskIds] since [time]ms has elapsed (commit interval is [commitTimeMs]ms)
+```
+
+`maybeCommit` requests the <<taskManager, TaskManager>> to <<kafka-streams-TaskManager.adoc#commitAll, commitAll>>.
+
+Only if there are still running active and standby tasks, `maybeCommit` does the following:
+
+. Requests the <<streamsMetrics, StreamsMetricsThreadImpl>> for <<kafka-streams-StreamsMetricsThreadImpl.adoc#commitTimeSensor, commitTimeSensor>> and records the commit time (as the latency of committing all the tasks by their number)
+
+. Requests the <<taskManager, TaskManager>> to <<kafka-streams-TaskManager.adoc#maybePurgeCommitedRecords, maybePurgeCommitedRecords>>
+
+`maybeCommit` prints out the following DEBUG message to the logs:
+
+```
+Committed all active tasks [activeTaskIds] and standby tasks [standbyTaskIds] in [duration]ms
+```
+
+`maybeCommit` updates the <<lastCommitMs, lastCommitMs>> internal counter with the input `now` time.
+
+`maybeCommit` turns the <<processStandbyRecords, processStandbyRecords>> flag on.
+
+NOTE: `maybeCommit` is used when `StreamThread` is requested to <<runOnce, poll records once>> (directly and indirectly in <<processAndMaybeCommit, processAndMaybeCommit>>).

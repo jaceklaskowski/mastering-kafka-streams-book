@@ -316,7 +316,7 @@ void maybePurgeCommitedRecords()
 
 `maybePurgeCommitedRecords`...FIXME
 
-NOTE: `maybePurgeCommitedRecords` is used exclusively when `StreamThread` is requested to <<kafka-streams-StreamThread.adoc#maybeCommit, maybeCommit>> (when `StreamThread` is requested to <<kafka-streams-StreamThread.adoc#runOnce, poll records once>> in the <<kafka-streams-StreamThread.adoc#runLoop, main event loop>>).
+NOTE: `maybePurgeCommitedRecords` is used exclusively when `StreamThread` is requested to <<kafka-streams-StreamThread.adoc#maybeCommit, maybeCommit>> (when `StreamThread` is requested to <<kafka-streams-StreamThread.adoc#runOnce, poll records once>> in the <<kafka-streams-StreamThread.adoc#runLoop, main record processing loop>>).
 
 === [[process]] Processing Records by Active Stream Tasks -- `process` Method
 
@@ -364,4 +364,26 @@ int commitAll()
 
 `commitAll`...FIXME
 
-NOTE: `commitAll` is used exclusively when `StreamThread` is requested to <<kafka-streams-StreamThread.adoc#maybeCommit, maybeCommit>>.
+NOTE: `commitAll` is used exclusively when `StreamThread` is requested to <<kafka-streams-StreamThread.adoc#maybeCommit, commit all tasks (when commit interval elapsed)>>.
+
+=== [[activeTaskIds]] `activeTaskIds` Method
+
+[source, java]
+----
+Set<TaskId> activeTaskIds()
+----
+
+`activeTaskIds`...FIXME
+
+NOTE: `activeTaskIds` is used when...FIXME
+
+=== [[standbyTaskIds]] `standbyTaskIds` Method
+
+[source, java]
+----
+Set<TaskId> standbyTaskIds()
+----
+
+`standbyTaskIds`...FIXME
+
+NOTE: `standbyTaskIds` is used when...FIXME
