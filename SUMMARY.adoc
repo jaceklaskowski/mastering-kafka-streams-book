@@ -162,6 +162,8 @@
 .. link:kafka-streams-StreamsMetricsImpl.adoc[StreamsMetricsImpl]
 .. link:kafka-streams-StreamsMetricsThreadImpl.adoc[StreamsMetricsThreadImpl]
 
+. link:kafka-streams-StreamTask-TaskMetrics.adoc[TaskMetrics]
+
 == Testing
 
 . link:kafka-streams-TopologyTestDriver.adoc[TopologyTestDriver]

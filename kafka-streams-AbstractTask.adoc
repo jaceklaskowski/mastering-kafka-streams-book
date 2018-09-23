@@ -198,3 +198,12 @@ void reinitializeStateStoresForPartitions(final Collection<TopicPartition> parti
 
 * `StreamThread` is requested to <<kafka-streams-StreamThread.adoc#maybeUpdateStandbyTasks, maybeUpdateStandbyTasks>>
 ====
+
+=== [[activeTaskCheckpointableOffsets]] Checkpointable Offsets -- `activeTaskCheckpointableOffsets` Method
+
+[source, java]
+----
+Map<TopicPartition, Long> activeTaskCheckpointableOffsets()
+----
+
+`activeTaskCheckpointableOffsets` simply returns an empty collection (of checkpointable offsets).

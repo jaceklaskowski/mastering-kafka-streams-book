@@ -115,6 +115,8 @@ a| [[commit]]
 void commit()
 ----
 
+Commits the task
+
 Used when:
 
 * `AssignedStreamsTasks` is requested to execute the <<kafka-streams-AssignedStreamsTasks.adoc#maybeCommitAction, maybeCommitAction>> action

@@ -41,6 +41,9 @@ Used when `StreamTask` is requested for the following:
 
 | consumedOffsets
 | [[consumedOffsets]] Offsets by https://kafka.apache.org/20/javadoc/org/apache/kafka/common/TopicPartition.html[TopicPartitions] (`Map<TopicPartition, Long>`) that `StreamTask` has <<process, processed>> successfully
+
+| taskMetrics
+| [[taskMetrics]] <<kafka-streams-StreamTask-TaskMetrics.adoc#, TaskMetrics>>
 |===
 
 [[logging]]
@@ -84,19 +87,6 @@ NOTE: `suspend` is part of <<kafka-streams-Task.adoc#suspend, Task Contract>> to
 `suspend`...FIXME
 
 NOTE: The private `suspend` is used exclusively when `StreamTask` is requested to <<close, close>>.
-
-=== [[commit]] `commit` Method
-
-[source, java]
-----
-void commit() // <1>
-void commit(final boolean startNewTransaction)
-----
-<1> Calls `commit` with `startNewTransaction` flag on
-
-NOTE: `commit` is part of <<kafka-streams-Task.adoc#commit, Task Contract>> to...FIXME.
-
-`commit`...FIXME
 
 === [[close]] `close` Method
 
@@ -362,3 +352,50 @@ void commitOffsets(final boolean startNewTransaction)
 `commitOffsets`...FIXME
 
 NOTE: `commitOffsets` is used exclusively when `StreamTask` is requested to <<commit, commit>>.
+
+=== [[commit]] Committing Task -- `commit` Method
+
+[source, java]
+----
+void commit()
+----
+
+NOTE: `commit` is part of <<kafka-streams-Task.adoc#commit, Task Contract>> to commit the task.
+
+`commit` simply <<commit-startNewTransaction, commits>> with the `startNewTransaction` flag on.
+
+=== [[commit-startNewTransaction]] `commit` Internal Method
+
+[source, java]
+----
+void commit(final boolean startNewTransaction)
+----
+
+`commit` prints out the following DEBUG message to the logs:
+
+```
+Committing
+```
+
+`commit` <<flushState, flushState>>.
+
+(only when <<kafka-streams-AbstractTask.adoc#eosEnabled, exactly-once support>> is disabled) `commit` requests the <<stateMgr, ProcessorStateManager>> to <<kafka-streams-ProcessorStateManager.adoc#checkpoint, checkpoint>> with the <<activeTaskCheckpointableOffsets, checkpointable offsets>>.
+
+`commit` <<commitOffsets, commitOffsets>> with the input `startNewTransaction` flag.
+
+`commit` turns the <<commitRequested, commitRequested>> internal flag off.
+
+In the end, `commit` requests the <<taskMetrics, TaskMetrics>> for the <<taskCommitTimeSensor, taskCommitTimeSensor>> and records the duration (i.e. the time since `commit` was executed).
+
+NOTE: `commit` is used when `StreamTask` is requested to <<commit, commit>> (that turns the input `startNewTransaction` flag on) and <<suspend, suspend>> (with the input `startNewTransaction` flag off).
+
+=== [[activeTaskCheckpointableOffsets]] `activeTaskCheckpointableOffsets` Method
+
+[source, java]
+----
+Map<TopicPartition, Long> activeTaskCheckpointableOffsets()
+----
+
+NOTE: `activeTaskCheckpointableOffsets` is part of the <<kafka-streams-AbstractTask.adoc#activeTaskCheckpointableOffsets, AbstractTask Contract>> to return the checkpointable offsets.
+
+`activeTaskCheckpointableOffsets`...FIXME

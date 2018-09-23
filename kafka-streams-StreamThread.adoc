@@ -605,7 +605,7 @@ Committing all active tasks [activeTaskIds] and standby tasks [standbyTaskIds] s
 
 Only if there are still running active and standby tasks, `maybeCommit` does the following:
 
-. Requests the <<streamsMetrics, StreamsMetricsThreadImpl>> for <<kafka-streams-StreamsMetricsThreadImpl.adoc#commitTimeSensor, commitTimeSensor>> and records the commit time (as the latency of committing all the tasks by their number)
+. Requests the <<streamsMetrics, StreamsMetricsThreadImpl>> for the <<kafka-streams-StreamsMetricsThreadImpl.adoc#commitTimeSensor, commitTimeSensor>> and records the commit time (as the latency of committing all the tasks by their number)
 
 . Requests the <<taskManager, TaskManager>> to <<kafka-streams-TaskManager.adoc#maybePurgeCommitedRecords, maybePurgeCommitedRecords>>
 
