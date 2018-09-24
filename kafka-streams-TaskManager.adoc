@@ -121,7 +121,7 @@ boolean updateNewAndRestoringTasks()
 
 `updateNewAndRestoringTasks`...FIXME
 
-NOTE: `updateNewAndRestoringTasks` is used exclusively when `StreamThread` is requested to link:kafka-streams-StreamThread.adoc#runOnce[consume records once].
+NOTE: `updateNewAndRestoringTasks` is used exclusively when `StreamThread` is requested to <<kafka-streams-StreamThread.adoc#runOnce, poll records once>>.
 
 === [[activeTask]] Getting Active Stream Processor Task for Topic Partition -- `activeTask` Method
 
@@ -138,7 +138,7 @@ NOTE: `activeTask` is used exclusively when `StreamThread` is requested to link:
 
 `TaskManager` takes the following when created:
 
-* [[changelogReader]] link:kafka-streams-ChangelogReader.adoc[ChangelogReader]
+* [[changelogReader]] <<kafka-streams-ChangelogReader.adoc#, ChangelogReader>>
 * [[processId]] `UUID`
 * [[logPrefix]] `logPrefix`
 * [[restoreConsumer]] Kafka https://kafka.apache.org/20/javadoc/org/apache/kafka/clients/consumer/KafkaConsumer.html[Consumer] (`Consumer<byte[], byte[]>`)
@@ -189,7 +189,7 @@ void createTasks(final Collection<TopicPartition> assignment)
 .TaskManager.createTasks
 image::images/kafka-streams-TaskManager-createTasks.png[align="center"]
 
-`createTasks` requests the <<changelogReader, ChangelogReader>> to link:kafka-streams-ChangelogReader.adoc#reset[reset].
+`createTasks` requests the <<changelogReader, ChangelogReader>> to <<kafka-streams-ChangelogReader.adoc#reset, reset>>.
 
 `createTasks` requests the <<standby, AssignedStandbyTasks>> and <<active, AssignedStreamsTasks>> to link:kafka-streams-AssignedTasks.adoc#closeNonAssignedSuspendedTasks[closeNonAssignedSuspendedTasks] (with <<assignedStandbyTasks, assignedStandbyTasks>> and <<assignedActiveTasks, assignedActiveTasks>>, respectively).
 
@@ -213,7 +213,7 @@ Pausing partitions: [partitions]
 stream-thread [threadClientId] consumer has not been initialized while adding stream tasks. This should not happen.
 ```
 
-NOTE: `createTasks` is used exclusively when `RebalanceListener` handles link:kafka-streams-StreamThread-RebalanceListener.adoc#onPartitionsAssigned[onPartitionsAssigned].
+NOTE: `createTasks` is used exclusively when `RebalanceListener` handles <<kafka-streams-StreamThread-RebalanceListener.adoc#onPartitionsAssigned, onPartitionsAssigned>>.
 
 === [[addStreamTasks]] Adding New Stream Tasks -- `addStreamTasks` Internal Method
 

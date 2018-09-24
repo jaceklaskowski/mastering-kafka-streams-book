@@ -20,6 +20,8 @@ a| [[checkpoint]]
 void checkpoint(final Map<TopicPartition, Long> offsets)
 ----
 
+Checkpointing offsets
+
 Used when:
 
 * `StandbyTask` is requested to <<kafka-streams-StandbyTask.adoc#flushAndCheckpointState, flushAndCheckpointState>> (when requested to <<kafka-streams-StandbyTask.adoc#commit, commit>> and <<kafka-streams-StandbyTask.adoc#suspend, suspend>>)

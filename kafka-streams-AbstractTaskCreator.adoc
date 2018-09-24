@@ -63,6 +63,6 @@ NOTE: `createTasks` is used when `TaskManager` is requested for <<kafka-streams-
 * [[streamsMetrics]] link:kafka-streams-StreamsMetrics.adoc[StreamsMetrics]
 * [[stateDirectory]] link:kafka-streams-StateDirectory.adoc[StateDirectory]
 * [[taskCreatedSensor]] Kafka `Sensor` (to monitor task created)
-* [[storeChangelogReader]] link:kafka-streams-ChangelogReader.adoc[ChangelogReader]
+* [[storeChangelogReader]] <<kafka-streams-ChangelogReader.adoc#, ChangelogReader>>
 * [[time]] `Time`
 * [[log]] `Logger`
