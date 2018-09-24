@@ -212,17 +212,6 @@ NOTE: `checkpointed` is part of the <<kafka-streams-Checkpointable.adoc#checkpoi
 
 `checkpointed`...FIXME
 
-=== [[checkpoint]] `checkpoint` Method
-
-[source, java]
-----
-void checkpoint(final Map<TopicPartition, Long> checkpointableOffsets)
-----
-
-NOTE: `checkpoint` is part of the <<kafka-streams-Checkpointable.adoc#checkpoint, Checkpointable Contract>> to...FIXME.
-
-`checkpoint`...FIXME
-
 === [[updateStandbyStates]] `updateStandbyStates` Method
 
 [source, java]
@@ -235,3 +224,14 @@ List<ConsumerRecord<byte[], byte[]>> updateStandbyStates(
 `updateStandbyStates`...FIXME
 
 NOTE: `updateStandbyStates` is used exclusively when `StandbyTask` is requested to <<kafka-streams-StandbyTask.adoc#update, update standby replicas of the state store>>.
+
+=== [[checkpoint]] `checkpoint` Method
+
+[source, java]
+----
+void checkpoint(final Map<TopicPartition, Long> checkpointableOffsets)
+----
+
+NOTE: `checkpoint` is part of the <<kafka-streams-Checkpointable.adoc#checkpoint, Checkpointable Contract>> to...FIXME.
+
+`checkpoint`...FIXME

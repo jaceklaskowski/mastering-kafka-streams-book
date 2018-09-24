@@ -368,7 +368,7 @@ Committing
 
 `commit` <<flushState, flushState>>.
 
-(only when <<kafka-streams-AbstractTask.adoc#eosEnabled, exactly-once support>> is disabled) `commit` requests the <<stateMgr, ProcessorStateManager>> to <<kafka-streams-ProcessorStateManager.adoc#checkpoint, checkpoint>> with the <<activeTaskCheckpointableOffsets, checkpointable offsets>>.
+(only when <<kafka-streams-AbstractTask.adoc#eosEnabled, exactly-once support>> is off) `commit` requests the <<stateMgr, ProcessorStateManager>> to <<kafka-streams-ProcessorStateManager.adoc#checkpoint, checkpoint>> with the <<activeTaskCheckpointableOffsets, checkpointable offsets>>.
 
 `commit` <<commitOffsets, commitOffsets>> with the input `startNewTransaction` flag.
 

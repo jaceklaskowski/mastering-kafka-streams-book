@@ -90,3 +90,14 @@ void register(
 NOTE: `register` is part of the <<kafka-streams-StateManager.adoc#register, StateManager Contract>> to register a state store.
 
 `register`...FIXME
+
+=== [[close]] Closing State Manager -- `close` Method
+
+[source, scala]
+----
+void close(final Map<TopicPartition, Long> offsets) throws IOException
+----
+
+NOTE: `close` is part of the <<kafka-streams-StateManager.adoc#close, StateManager Contract>> to close the state manager.
+
+`close`...FIXME

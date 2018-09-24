@@ -1,8 +1,6 @@
 == [[StateManager]] StateManager Contract -- State Store Managers
 
-`StateManager` is the <<contract, contract>> of <<implementations, state store managers>> that manage one or more <<kafka-streams-StateStore.adoc#, state stores>>.
-
-`StateManager` is a <<kafka-streams-Checkpointable.adoc#, Checkpointable>> that...FIXME
+`StateManager` is the <<contract, contract>> of <<implementations, state store managers>> that manage <<kafka-streams-StateStore.adoc#, state stores>> and are <<kafka-streams-Checkpointable.adoc#, checkpointable>>.
 
 [[contract]]
 .StateManager Contract

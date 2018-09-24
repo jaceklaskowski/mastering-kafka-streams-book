@@ -10,7 +10,7 @@
 [[deserializers]]
 `GlobalStateUpdateTask` keeps track of the *deserializers* for...FIXME
 
-=== [[initialize]] `initialize` Method
+=== [[initialize]] Initializing -- `initialize` Method
 
 [source, java]
 ----

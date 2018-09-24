@@ -1,27 +1,46 @@
-== [[Checkpointable]] Checkpointable
+== [[Checkpointable]] Checkpointable Internal Contract
 
-`Checkpointable` is the <<contract, contract>> for...FIXME
+`Checkpointable` is the internal <<contract, contract>> for <<implementations, objects>> with associated partition offsets that can be <<checkpoint, checkpointed>>.
+
+[[implementations]]
+NOTE: <<kafka-streams-StateManager.adoc#, StateManager>> is the one and only known direct extension contract of the <<contract, Checkpointable Contract>>.
 
 [[contract]]
-[source, java]
-----
-package org.apache.kafka.streams.processor.internals;
-
-interface Checkpointable {
-  void checkpoint(final Map<TopicPartition, Long> offsets);
-  Map<TopicPartition, Long> checkpointed();
-}
-----
-
 .Checkpointable Contract
-[cols="1,2",options="header",width="100%"]
+[cols="1m,2",options="header",width="100%"]
 |===
 | Method
 | Description
 
-| [[checkpoint]] `checkpoint`
-| Used when...FIXME
+| checkpoint
+a| [[checkpoint]]
 
-| [[checkpointed]] `checkpointed`
-| Used when...FIXME
+[source, java]
+----
+void checkpoint(final Map<TopicPartition, Long> offsets)
+----
+
+Used when:
+
+* `StandbyTask` is requested to <<kafka-streams-StandbyTask.adoc#flushAndCheckpointState, flushAndCheckpointState>> (when requested to <<kafka-streams-StandbyTask.adoc#commit, commit>> and <<kafka-streams-StandbyTask.adoc#suspend, suspend>>)
+
+* `StreamTask` is requested to <<kafka-streams-StreamTask.adoc#commit, commit>> (with <<kafka-streams-AbstractTask.adoc#eosEnabled, exactly-once support>> is off)
+
+* `GlobalStateUpdateTask` is requested to <<kafka-streams-GlobalStateUpdateTask.adoc#flushState, flush state stores>>
+
+* <<kafka-streams-GlobalStateManagerImpl.adoc#close, GlobalStateManagerImpl>> and <<kafka-streams-ProcessorStateManager.adoc#close, ProcessorStateManager>> are requested to close
+
+| checkpointed
+a| [[checkpointed]]
+
+[source, java]
+----
+Map<TopicPartition, Long> checkpointed()
+----
+
+Used when:
+
+* `GlobalStateUpdateTask` is requested to <<kafka-streams-GlobalStateUpdateTask.adoc#initialize, initialize>>
+
+* `StandbyTask` is requested to <<kafka-streams-StandbyTask.adoc#initializeStateStores, initialize state stores>>
 |===
