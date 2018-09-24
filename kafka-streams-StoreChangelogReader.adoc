@@ -2,36 +2,36 @@
 
 `StoreChangelogReader` is a concrete <<kafka-streams-ChangelogReader.adoc#, ChangelogReader>> that...FIXME
 
-`StoreChangelogReader` is <<creating-instance, created>> along with a link:kafka-streams-StreamThread.adoc#create[StreamThread] (when `KafkaStreams` is link:kafka-streams-KafkaStreams.adoc#creating-instance[created]).
-
-NOTE: link:kafka-streams-StreamThread.adoc[StreamThread] uses a `StoreChangelogReader` to create a link:kafka-streams-TaskCreator.adoc#storeChangelogReader[TaskCreator], a link:kafka-streams-StandbyTaskCreator.adoc#storeChangelogReader[StandbyTaskCreator] and a link:kafka-streams-TaskManager.adoc#changelogReader[TaskManager] exclusively.
+`StoreChangelogReader` is <<creating-instance, created>> for a <<kafka-streams-StreamThread.adoc#create, StreamThread>>.
 
 .StoreChangelogReader
 image::images/kafka-streams-StoreChangelogReader.png[align="center"]
 
+NOTE: link:kafka-streams-StreamThread.adoc[StreamThread] uses a `StoreChangelogReader` to create a link:kafka-streams-TaskCreator.adoc#storeChangelogReader[TaskCreator], a link:kafka-streams-StandbyTaskCreator.adoc#storeChangelogReader[StandbyTaskCreator] and a link:kafka-streams-TaskManager.adoc#changelogReader[TaskManager].
+
 [[internal-registries]]
 .StoreChangelogReader's Internal Properties (e.g. Registries, Counters and Flags)
-[cols="1,2",options="header",width="100%"]
+[cols="1m,2",options="header",width="100%"]
 |===
 | Name
 | Description
 
-| `endOffsets`
+| endOffsets
 | [[endOffsets]]
 
-| `log`
+| log
 | [[log]]
 
-| `needsInitializing`
+| needsInitializing
 | [[needsInitializing]]
 
-| `needsRestoring`
+| needsRestoring
 | [[needsRestoring]]
 
-| `partitionInfo`
+| partitionInfo
 | [[partitionInfo]]
 
-| `stateRestorers`
+| stateRestorers
 | [[stateRestorers]]
 |===
 
@@ -40,7 +40,7 @@ image::images/kafka-streams-StoreChangelogReader.png[align="center"]
 `StoreChangelogReader` takes the following when created:
 
 * [[restoreConsumer]] Kafka https://kafka.apache.org/20/javadoc/org/apache/kafka/clients/consumer/KafkaConsumer.html[Consumer] (`Consumer<byte[], byte[]>`)
-* [[userStateRestoreListener]] `StateRestoreListener`
+* [[userStateRestoreListener]] <<kafka-streams-StateRestoreListener.adoc#, StateRestoreListener>>
 * [[logContext]] `LogContext`
 
 `StoreChangelogReader` initializes the <<internal-registries, internal registries and counters>>.

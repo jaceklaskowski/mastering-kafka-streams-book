@@ -40,6 +40,6 @@ NOTE: `run` is used when `KafkaStreams` is link:kafka-streams-KafkaStreams.adoc#
 * [[metrics]] `Metrics`
 * [[time]] `Time`
 * [[threadClientId]] `threadClientId`
-* [[stateRestoreListener]] `StateRestoreListener`
+* [[stateRestoreListener]] <<kafka-streams-StateRestoreListener.adoc#, StateRestoreListener>>
 
 `GlobalStreamThread` initializes the <<internal-registries, internal registries and counters>>.

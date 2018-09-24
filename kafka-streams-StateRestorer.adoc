@@ -1,0 +1,36 @@
+== [[StateRestorer]] StateRestorer
+
+`StateRestorer` is...FIXME
+
+=== [[restoreBatchCompleted]] `restoreBatchCompleted` Method
+
+[source, java]
+----
+void restoreBatchCompleted(long currentRestoredOffset, int numRestored)
+----
+
+`restoreBatchCompleted`...FIXME
+
+NOTE: `restoreBatchCompleted` is used when...FIXME
+
+=== [[restoreStarted]] `restoreStarted` Method
+
+[source, java]
+----
+void restoreStarted()
+----
+
+`restoreStarted`...FIXME
+
+NOTE: `restoreStarted` is used when...FIXME
+
+=== [[restoreDone]] `restoreDone` Method
+
+[source, java]
+----
+void restoreDone()
+----
+
+`restoreDone`...FIXME
+
+NOTE: `restoreDone` is used when...FIXME

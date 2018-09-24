@@ -1,0 +1,3 @@
+== [[AbstractNotifyingRestoreCallback]] AbstractNotifyingRestoreCallback
+
+`AbstractNotifyingRestoreCallback` is...FIXME

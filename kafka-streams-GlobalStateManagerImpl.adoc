@@ -34,7 +34,7 @@ NOTE: `checkpoint` is part of link:kafka-streams-Checkpointable.adoc#checkpoint[
 * [[topology]] <<kafka-streams-ProcessorTopology.adoc#, ProcessorTopology>>
 * [[globalConsumer]] (Global) Kafka https://kafka.apache.org/20/javadoc/org/apache/kafka/clients/consumer/KafkaConsumer.html[Consumer] (`Consumer<byte[], byte[]>`)
 * [[stateDirectory]] <<kafka-streams-StateDirectory.adoc#, StateDirectory>>
-* [[stateRestoreListener]] `StateRestoreListener`
+* [[stateRestoreListener]] <<kafka-streams-StateRestoreListener.adoc#, StateRestoreListener>>
 * [[config]] <<kafka-streams-StreamsConfig.adoc#, StreamsConfig>>
 
 `GlobalStateManagerImpl` initializes the <<internal-registries, internal registries and counters>>.

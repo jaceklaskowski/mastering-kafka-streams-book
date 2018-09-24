@@ -1,0 +1,85 @@
+== [[StateRestoreListener]] StateRestoreListener Contract
+
+`StateRestoreListener` is the <<contract, contract>> of <<implementations, objects>> that want to be notified when <<onBatchRestored, onBatchRestored>>, <<onRestoreEnd, onRestoreEnd>> and <<onRestoreStart, onRestoreStart>>.
+
+[[contract]]
+.StateRestoreListener Contract
+[cols="1m,2",options="header",width="100%"]
+|===
+| Method
+| Description
+
+| onBatchRestored
+a| [[onBatchRestored]]
+
+[source, java]
+----
+void onBatchRestored(
+  final TopicPartition topicPartition,
+  final String storeName,
+  final long batchEndOffset,
+  final long numRestored)
+----
+
+Used when:
+
+* `GlobalStateManagerImpl` is requested to <<kafka-streams-GlobalStateManagerImpl.adoc#restoreState, restoreState>> (when requested to <<kafka-streams-GlobalStateManagerImpl.adoc#register, register a state store>>)
+
+* `StateRestorer` is requested to <<kafka-streams-StateRestorer.adoc#restoreBatchCompleted, restoreBatchCompleted>>
+
+| onRestoreEnd
+a| [[onRestoreEnd]]
+
+[source, java]
+----
+void onRestoreEnd(
+  final TopicPartition topicPartition,
+  final String storeName,
+  final long totalRestored)
+----
+
+Used when:
+
+* `GlobalStateManagerImpl` is requested to <<kafka-streams-GlobalStateManagerImpl.adoc#restoreState, restoreState>> (when requested to <<kafka-streams-GlobalStateManagerImpl.adoc#register, register a state store>>)
+
+* `StateRestorer` is requested to <<kafka-streams-StateRestorer.adoc#restoreDone, restoreDone>>
+
+| onRestoreStart
+a| [[onRestoreStart]]
+
+[source, java]
+----
+void onRestoreStart(
+  final TopicPartition topicPartition,
+  final String storeName,
+  final long startingOffset,
+  final long endingOffset)
+----
+
+Used when:
+
+* `GlobalStateManagerImpl` is requested to <<kafka-streams-GlobalStateManagerImpl.adoc#restoreState, restoreState>> (when requested to <<kafka-streams-GlobalStateManagerImpl.adoc#register, register a state store>>)
+
+* `StateRestorer` is requested to <<kafka-streams-StateRestorer.adoc#restoreStarted, restoreStarted>>
+
+|===
+
+[[implementations]]
+.StateRestoreListeners (Direct Implementations)
+[cols="1,2",options="header",width="100%"]
+|===
+| StateRestoreListener
+| Description
+
+| <<kafka-streams-AbstractNotifyingBatchingRestoreCallback.adoc#, AbstractNotifyingBatchingRestoreCallback>>
+| [[AbstractNotifyingBatchingRestoreCallback]]
+
+| <<kafka-streams-AbstractNotifyingRestoreCallback.adoc#, AbstractNotifyingRestoreCallback>>
+| [[AbstractNotifyingRestoreCallback]]
+
+| <<kafka-streams-CompositeRestoreListener.adoc#, CompositeRestoreListener>>
+| [[CompositeRestoreListener]]
+
+| <<kafka-streams-DelegatingStateRestoreListener.adoc#, DelegatingStateRestoreListener>>
+| [[DelegatingStateRestoreListener]]
+|===
