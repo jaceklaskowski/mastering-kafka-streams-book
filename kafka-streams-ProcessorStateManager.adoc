@@ -225,7 +225,7 @@ List<ConsumerRecord<byte[], byte[]>> updateStandbyStates(
 
 NOTE: `updateStandbyStates` is used exclusively when `StandbyTask` is requested to <<kafka-streams-StandbyTask.adoc#update, update standby replicas of the state store>>.
 
-=== [[checkpoint]] Checkpointing Offsets -- `checkpoint` Method
+=== [[checkpoint]] Checkpointing Offsets (Writing Offsets to Checkpoint File) -- `checkpoint` Method
 
 [source, java]
 ----
@@ -236,4 +236,14 @@ NOTE: `checkpoint` is part of the <<kafka-streams-Checkpointable.adoc#checkpoint
 
 `checkpoint` requests the <<changelogReader, ChangelogReader>> for <<kafka-streams-ChangelogReader.adoc#restoredOffsets, restoredOffsets>> and adds them to the <<kafka-streams-AbstractStateManager.adoc#checkpointableOffsets, checkpointableOffsets>> registry.
 
-`checkpoint`...FIXME
+For every <<kafka-streams-StateStore.adoc#, state store>> (in the <<kafka-streams-AbstractStateManager.adoc#stores, stores>> internal registry), `checkpoint`...FIXME
+
+`checkpoint` creates a new <<kafka-streams-OffsetCheckpoint.adoc#, OffsetCheckpoint>> (with the <<kafka-streams-AbstractStateManager.adoc#CHECKPOINT_FILE_NAME, .checkpoint>> file in the <<kafka-streams-AbstractStateManager.adoc#baseDir, base directory>>) unless <<kafka-streams-AbstractStateManager.adoc#checkpoint, it was done already>>.
+
+`checkpoint` prints out the following TRACE message to the logs:
+
+```
+Writing checkpoint: [checkpointableOffsets]
+```
+
+In the end, `checkpoint` requests the <<kafka-streams-AbstractStateManager.adoc#checkpoint, OffsetCheckpoint>> to <<kafka-streams-OffsetCheckpoint.adoc#write, write>> the <<kafka-streams-AbstractStateManager.adoc#checkpointableOffsets, checkpointableOffsets>>.

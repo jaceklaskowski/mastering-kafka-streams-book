@@ -34,7 +34,7 @@ Map<TopicPartition, Long> read() throws IOException
 * `ProcessorStateManager` is link:kafka-streams-ProcessorStateManager.adoc#creating-instance[created]
 ====
 
-=== [[write]] Writing Offset Checkpoint File -- `write` Method
+=== [[write]] Writing Offsets to Checkpoint File -- `write` Method
 
 [source, java]
 ----

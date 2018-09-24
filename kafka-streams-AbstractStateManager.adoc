@@ -4,7 +4,7 @@
 
 [[creating-instance]]
 [[baseDir]]
-`AbstractStateManager` only takes an base directory of a <<checkpoint, checkpoint>> offset file when created.
+`AbstractStateManager` only takes the base directory for the <<checkpoint, checkpoint>> offset file when created.
 
 NOTE: `AbstractStateManager` is a Java abstract class and cannot be <<creating-instance, created>> directly. It is created indirectly when the <<implementations, concrete AbstractStateManagers>> are.
 
@@ -19,7 +19,7 @@ NOTE: `AbstractStateManager` is a Java abstract class and cannot be <<creating-i
 | Description
 
 | checkpoint
-| [[checkpoint]] link:kafka-streams-OffsetCheckpoint.adoc[OffsetCheckpoint] with the <<CHECKPOINT_FILE_NAME, offset checkpoint file>> in the <<baseDir, base directory>>.
+| [[checkpoint]] <<kafka-streams-OffsetCheckpoint.adoc#, OffsetCheckpoint>> with the <<CHECKPOINT_FILE_NAME, offset checkpoint file>> in the <<baseDir, base directory>>.
 
 Used when...FIXME
 
@@ -27,7 +27,7 @@ Used when...FIXME
 | [[checkpointableOffsets]]
 
 | stores
-| [[stores]] Names of the <<kafka-streams-StateStore.adoc#, StateStores>> that...FIXME
+| [[stores]] <<kafka-streams-StateStore.adoc#, State stores>> by their names
 
 | globalStores
 | [[globalStores]]
