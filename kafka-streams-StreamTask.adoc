@@ -243,17 +243,6 @@ In the end, `addRecords` returns the number of records added.
 
 NOTE: `addRecords` is used exclusively when `StreamThread` is requested to link:kafka-streams-StreamThread.adoc#addRecordsToTasks[add records to active stream tasks (and report skipped records)].
 
-=== [[flushState]] `flushState` Method
-
-[source, java]
-----
-void flushState()
-----
-
-NOTE: `flushState` is part of link:kafka-streams-AbstractTask.adoc#flushState[AbstractTask Contract] to...FIXME.
-
-`flushState`...FIXME
-
 === [[recordCollectorOffsets]] `recordCollectorOffsets` Method
 
 [source, java]
@@ -399,3 +388,22 @@ Map<TopicPartition, Long> activeTaskCheckpointableOffsets()
 NOTE: `activeTaskCheckpointableOffsets` is part of the <<kafka-streams-AbstractTask.adoc#activeTaskCheckpointableOffsets, AbstractTask Contract>> to return the checkpointable offsets.
 
 `activeTaskCheckpointableOffsets`...FIXME
+
+=== [[flushState]] Flushing State Stores And Producer (RecordCollector) -- `flushState` Method
+
+[source, java]
+----
+void flushState()
+----
+
+NOTE: `flushState` is part of link:kafka-streams-AbstractTask.adoc#flushState[AbstractTask Contract] to flush all <<kafka-streams-StateStore.adoc#, state stores>> registered with the task.
+
+`flushState` prints out the following TRACE message to the logs:
+
+```
+Flushing state and producer
+```
+
+`flushState` <<kafka-streams-AbstractTask.adoc#flushState, flushes state stores>>.
+
+`flushState` requests the <<recordCollector, RecordCollector>> to <<kafka-streams-RecordCollector.adoc#flush, flush>>.
