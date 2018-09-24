@@ -121,7 +121,7 @@ boolean updateNewAndRestoringTasks()
 
 `updateNewAndRestoringTasks`...FIXME
 
-NOTE: `updateNewAndRestoringTasks` is used exclusively when `StreamThread` is requested to <<kafka-streams-StreamThread.adoc#runOnce, poll records once>>.
+NOTE: `updateNewAndRestoringTasks` is used exclusively when `StreamThread` is requested to <<kafka-streams-StreamThread.adoc#runOnce, poll records once>> (while <<kafka-streams-StreamThread.adoc#runLoop, running the main record processing loop>>).
 
 === [[activeTask]] Getting Active Stream Processor Task for Topic Partition -- `activeTask` Method
 

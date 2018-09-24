@@ -62,7 +62,7 @@ Used exclusively when `ProcessorStateManager` is requested to <<getPartition, fi
 
 `ProcessorStateManager` initializes the <<internal-registries, internal registries and counters>>.
 
-=== [[register]] Registering StateStore (and StateRestoreCallback) -- `register` Method
+=== [[register]] Registering State Store (and StateRestoreCallback) -- `register` Method
 
 [source, java]
 ----

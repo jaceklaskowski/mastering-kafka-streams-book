@@ -67,14 +67,14 @@ NOTE: `reset` is part of link:kafka-streams-ChangelogReader.adoc#reset[Changelog
 
 `reset`...FIXME
 
-=== [[restore]] Restoring -- `restore` Method
+=== [[restore]] `restore` Method
 
 [source, java]
 ----
 Collection<TopicPartition> restore(final RestoringTasks active)
 ----
 
-NOTE: `restore` is part of link:kafka-streams-ChangelogReader.adoc#restore[ChangelogReader Contract] to...FIXME.
+NOTE: `restore` is part of the <<kafka-streams-ChangelogReader.adoc#restore, ChangelogReader Contract>> to...FIXME.
 
 `restore`...FIXME
 
@@ -88,3 +88,39 @@ Map<TopicPartition, Long> restoredOffsets()
 NOTE: `restoredOffsets` is part of link:kafka-streams-ChangelogReader.adoc#restoredOffsets[ChangelogReader Contract] to...FIXME.
 
 `restoredOffsets`...FIXME
+
+=== [[processNext]] `processNext` Internal Method
+
+[source, java]
+----
+long processNext(
+  final List<ConsumerRecord<byte[], byte[]>> records,
+  final StateRestorer restorer,
+  final Long endOffset)
+----
+
+`processNext`...FIXME
+
+NOTE: `processNext` is used exclusively when `StoreChangelogReader` is requested to <<restore, restore>>.
+
+=== [[startRestoration]] `startRestoration` Internal Method
+
+[source, java]
+----
+void startRestoration(final Map<TopicPartition, StateRestorer> initialized)
+----
+
+`startRestoration`...FIXME
+
+NOTE: `startRestoration` is used exclusively when `StoreChangelogReader` is requested to <<initialize, initialize>> (when requested to <<restore, restore>>).
+
+=== [[initialize]] `initialize` Internal Method
+
+[source, java]
+----
+void initialize()
+----
+
+`initialize`...FIXME
+
+NOTE: `initialize` is used exclusively when `StateRestorer` is requested to <<restore, restore>>.

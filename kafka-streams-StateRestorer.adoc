@@ -2,6 +2,8 @@
 
 `StateRestorer` is...FIXME
 
+`StateRestorer` is <<creating-instance, created>> exclusively when `ProcessorStateManager` is requested to <<kafka-streams-ProcessorStateManager.adoc#register, register a state store>>.
+
 === [[restoreBatchCompleted]] `restoreBatchCompleted` Method
 
 [source, java]
@@ -11,7 +13,7 @@ void restoreBatchCompleted(long currentRestoredOffset, int numRestored)
 
 `restoreBatchCompleted`...FIXME
 
-NOTE: `restoreBatchCompleted` is used when...FIXME
+NOTE: `restoreBatchCompleted` is used exclusively when `StoreChangelogReader` is requested to <<kafka-streams-StoreChangelogReader.adoc#processNext, processNext>> (when requested to <<kafka-streams-StoreChangelogReader.adoc#restore, restore>>).
 
 === [[restoreStarted]] `restoreStarted` Method
 
@@ -22,7 +24,7 @@ void restoreStarted()
 
 `restoreStarted`...FIXME
 
-NOTE: `restoreStarted` is used when...FIXME
+NOTE: `restoreStarted` is used exclusively when `StoreChangelogReader` is requested to <<kafka-streams-StoreChangelogReader.adoc#startRestoration, startRestoration>> (when requested to <<kafka-streams-StoreChangelogReader.adoc#initialize, initialize>> as part of <<kafka-streams-StoreChangelogReader.adoc#restore, restore>>).
 
 === [[restoreDone]] `restoreDone` Method
 
@@ -33,4 +35,17 @@ void restoreDone()
 
 `restoreDone`...FIXME
 
-NOTE: `restoreDone` is used when...FIXME
+NOTE: `restoreDone` is used exclusively when `StoreChangelogReader` is requested to <<kafka-streams-StoreChangelogReader.adoc#restore, restore>>.
+
+=== [[creating-instance]] Creating StateRestorer Instance
+
+`StateRestorer` takes the following when created:
+
+* [[partition]] Kafka https://kafka.apache.org/20/javadoc/index.html?org/apache/kafka/common/TopicPartition.html[TopicPartition]
+* [[compositeRestoreListener]] <<kafka-streams-CompositeRestoreListener.adoc#, CompositeRestoreListener>>
+* [[checkpoint]] `checkpoint`
+* [[offsetLimit]] `offsetLimit`
+* [[persistent]] `persistent` flag
+* [[storeName]] Name of the state store
+
+`StateRestorer` initializes the <<internal-registries, internal registries and counters>>.
