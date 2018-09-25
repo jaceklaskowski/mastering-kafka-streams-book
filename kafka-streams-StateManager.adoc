@@ -89,7 +89,7 @@ void register(
   final StateRestoreCallback stateRestoreCallback)
 ----
 
-Registering a <<kafka-streams-StateStore.adoc#, state store>> with a `StateRestoreCallback`
+Registering a <<kafka-streams-StateStore.adoc#, state store>> (with a <<kafka-streams-StateRestoreCallback.adoc#, StateRestoreCallback>>)
 
 Used exclusively when `AbstractProcessorContext` is requested to <<kafka-streams-AbstractProcessorContext.adoc#register, register a state store>>
 

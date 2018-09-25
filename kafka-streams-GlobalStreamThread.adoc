@@ -2,7 +2,7 @@
 
 `GlobalStreamThread` is...FIXME
 
-`GlobalStreamThread` is <<creating-instance, created>> exclusively when `KafkaStreams` is link:kafka-streams-KafkaStreams.adoc#globalStreamThread[created].
+`GlobalStreamThread` is <<creating-instance, created>> exclusively when `KafkaStreams` is <<kafka-streams-KafkaStreams.adoc#globalStreamThread, created>>.
 
 === [[initialize]] `initialize` Internal Method
 
@@ -15,7 +15,7 @@ StateConsumer initialize()
 
 NOTE: `initialize` is used exclusively when `GlobalStreamThread` is <<run, started>>.
 
-=== [[run]] Starting Global Stream Processor Thread -- `run` Method
+=== [[run]] Starting Thread -- `run` Method
 
 [source, java]
 ----
@@ -26,7 +26,7 @@ NOTE: `run` is part of Java's https://docs.oracle.com/javase/9/docs/api/java/lan
 
 `run`...FIXME
 
-NOTE: `run` is used when `KafkaStreams` is link:kafka-streams-KafkaStreams.adoc#start[started].
+NOTE: `run` is used exclusively when `KafkaStreams` is <<kafka-streams-KafkaStreams.adoc#start, started>>.
 
 === [[creating-instance]] Creating GlobalStreamThread Instance
 

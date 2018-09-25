@@ -232,3 +232,25 @@ Map<String, Object> getMainConsumerConfigs(
 `getMainConsumerConfigs` then...FIXME
 
 NOTE: `getMainConsumerConfigs` is used exclusively when `StreamThread` is requested to <<kafka-streams-StreamThread.adoc#create, create a StreamThread instance>> (and requests the `KafkaClientSupplier` for a <<kafka-streams-KafkaClientSupplier.adoc#getConsumer, Kafka Consumer>>).
+
+=== [[defaultValueSerde]] `defaultValueSerde` Method
+
+[source, java]
+----
+Serde defaultValueSerde()
+----
+
+`defaultValueSerde`...FIXME
+
+NOTE: `defaultValueSerde` is used when...FIXME
+
+=== [[defaultKeySerde]] `defaultKeySerde` Method
+
+[source, java]
+----
+Serde defaultKeySerde()
+----
+
+`defaultKeySerde`...FIXME
+
+NOTE: `defaultKeySerde` is used when...FIXME

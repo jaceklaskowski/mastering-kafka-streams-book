@@ -122,7 +122,7 @@ void register(
   final StateRestoreCallback stateRestoreCallback)
 ----
 
-Registers a <<kafka-streams-StateStore.adoc#, state store>>
+Registers a <<kafka-streams-StateStore.adoc#, state store>> (and an associated <<kafka-streams-StateRestoreCallback.adoc#, StateRestoreCallback>>)
 
 Used when <<kafka-streams-StateStore-InMemoryKeyValueStore.adoc#init, InMemoryKeyValueStore>>, <<kafka-streams-StateStore-MemoryLRUCache.adoc#init, MemoryLRUCache>>, <<kafka-streams-StateStore-RocksDBSegmentedBytesStore.adoc#init, RocksDBSegmentedBytesStore>> and <<kafka-streams-StateStore-RocksDBStore.adoc#init, RocksDBStore>> are requested to initialize itself
 

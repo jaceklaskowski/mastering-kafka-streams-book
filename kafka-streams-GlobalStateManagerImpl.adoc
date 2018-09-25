@@ -1,8 +1,8 @@
 == [[GlobalStateManagerImpl]] GlobalStateManagerImpl
 
-`GlobalStateManagerImpl` is a custom link:kafka-streams-GlobalStateManager.adoc[GlobalStateManager] that...FIXME
+`GlobalStateManagerImpl` is a concrete <<kafka-streams-GlobalStateManager.adoc#, GlobalStateManager>> (and a <<kafka-streams-AbstractStateManager.adoc#, AbstractStateManager>>) that...FIXME
 
-`GlobalStateManagerImpl` is <<creating-instance, created>> when...FIXME
+`GlobalStateManagerImpl` is <<creating-instance, created>> exclusively when `GlobalStreamThread` is requested to <<kafka-streams-GlobalStreamThread.adoc#initialize, initialize>> (when `GlobalStreamThread` is <<kafka-streams-GlobalStreamThread.adoc#run, started>> with <<kafka-streams-KafkaStreams.adoc#start, KafkaStreams>>).
 
 === [[initialize]] `initialize` Method
 
@@ -87,7 +87,7 @@ void register(
   final StateRestoreCallback stateRestoreCallback)
 ----
 
-NOTE: `register` is part of the <<kafka-streams-StateManager.adoc#register, StateManager Contract>> to register a state store.
+NOTE: `register` is part of the <<kafka-streams-StateManager.adoc#register, StateManager Contract>> to register a <<kafka-streams-StateStore.adoc#, state store>>.
 
 `register`...FIXME
 

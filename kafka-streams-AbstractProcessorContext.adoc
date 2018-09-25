@@ -1,8 +1,10 @@
 == [[AbstractProcessorContext]] AbstractProcessorContext -- Base Of Internal Processor Contexts
 
-`AbstractProcessorContext` is the base of <<extensions, internal processor contexts>> that <<FIXME, FIXME>>.
+`AbstractProcessorContext` is the base implementation of the <<kafka-streams-InternalProcessorContext.adoc#, InternalProcessorContext contract>> for <<implementations, processor contexts>> that <<FIXME, FIXME>>.
 
-[[extensions]]
+NOTE: `AbstractProcessorContext` is a Java abstract class and cannot be <<creating-instance, created>> directly. It is created indirectly for the <<implementations, concrete AbstractProcessorContexts>>.
+
+[[implementations]]
 .AbstractProcessorContexts
 [cols="1,2",options="header",width="100%"]
 |===
@@ -17,6 +19,30 @@
 
 | <<kafka-streams-StandbyContextImpl.adoc#, StandbyContextImpl>>
 | [[StandbyContextImpl]]
+|===
+
+[[internal-registries]]
+.AbstractProcessorContext's Internal Properties (e.g. Registries, Counters and Flags)
+[cols="1m,2",options="header",width="100%"]
+|===
+| Name
+| Description
+
+| applicationId
+a| [[applicationId]] <<kafka-streams-StreamsConfig.adoc#APPLICATION_ID_CONFIG, APPLICATION_ID_CONFIG>>
+
+| valueSerde
+a| [[valueSerde]] Default `Serde` for values (from the <<kafka-streams-StreamsConfig.adoc#defaultValueSerde, StreamsConfig>>)
+
+| keySerde
+a| [[keySerde]] Default `Serde` for keys (from the <<kafka-streams-StreamsConfig.adoc#defaultKeySerde, StreamsConfig>>)
+
+| initialized
+a| [[initialized]] Flag that indicates whether the `AbstractProcessorContext` was initialized (`true`) or not (`false`)
+
+Turned off (`false`) when `AbstractProcessorContext` is requested to <<uninitialize, uninitialize>>
+
+Used when `AbstractProcessorContext` is requested to <<register, register a state store>>
 |===
 
 === [[stateDir]] `stateDir` Method
@@ -41,4 +67,35 @@ void register(
 
 NOTE: `register` is part of the <<kafka-streams-ProcessorContext.adoc#register, ProcessorContext Contract>> to register a <<kafka-streams-StateStore.adoc#, state store>>.
 
-`register`...FIXME
+`register` simply requests the <<stateManager, StateManager>> to <<kafka-streams-StateManager.adoc#register, register the state store>> (and the given <<kafka-streams-StateRestoreCallback.adoc#, StateRestoreCallback>>)
+
+`register` throws an `IllegalStateException` when <<initialized, initialized>>:
+
+```
+Can only create state stores during initialization.
+```
+
+=== [[uninitialize]] `uninitialize` Method
+
+[source, java]
+----
+void uninitialize()
+----
+
+NOTE: `uninitialize` is part of the <<kafka-streams-InternalProcessorContext.adoc#uninitialize, InternalProcessorContext Contract>> to...FIXME.
+
+`uninitialize` marks the content uninitialized (and simply turns the <<initialized, initialized>> flag off).
+
+=== [[creating-instance]] Creating AbstractProcessorContext Instance
+
+`AbstractProcessorContext` takes the following when created:
+
+* [[taskId]] <<kafka-streams-TaskId.adoc#, TaskId>>
+* [[config]] <<kafka-streams-StreamsConfig.adoc#, StreamsConfig>>
+* [[metrics]] <<kafka-streams-StreamsMetricsImpl.adoc#, StreamsMetricsImpl>>
+* [[stateManager]] <<kafka-streams-StateManager.adoc#, StateManager>>
+* [[cache]] `ThreadCache`
+
+`AbstractProcessorContext` initializes the <<internal-registries, internal registries and counters>>.
+
+NOTE: `AbstractProcessorContext` is a Java abstract class and cannot be <<creating-instance, created>> directly. It is created indirectly for the <<implementations, concrete AbstractProcessorContexts>>.

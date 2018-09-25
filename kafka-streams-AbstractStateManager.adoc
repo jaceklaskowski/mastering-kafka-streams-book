@@ -1,15 +1,25 @@
 == [[AbstractStateManager]] AbstractStateManager
 
-`AbstractStateManager` is an extension to the link:kafka-streams-StateManager.adoc#contract[StateManager Contract] for <<implementations, StateManagers>> that use an <<checkpoint, OffsetCheckpoint>> for...FIXME
+`AbstractStateManager` is the base implementation of the <<kafka-streams-StateManager.adoc#, StateManager contract>> for <<implementations, state managers>> that use <<checkpoint, offset checkpointing>>.
 
-[[creating-instance]]
-[[baseDir]]
-`AbstractStateManager` only takes the base directory for the <<checkpoint, checkpoint>> offset file when created.
-
-NOTE: `AbstractStateManager` is a Java abstract class and cannot be <<creating-instance, created>> directly. It is created indirectly when the <<implementations, concrete AbstractStateManagers>> are.
+NOTE: `AbstractStateManager` is a Java abstract class and cannot be <<creating-instance, created>> directly. It is created indirectly for the <<implementations, concrete AbstractStateManagers>>.
 
 [[CHECKPOINT_FILE_NAME]]
 `AbstractStateManager` uses `.checkpoint` for the name of the <<checkpoint, checkpoint>> offset file.
+
+[[implementations]]
+.AbstractStateManagers
+[cols="1,2",options="header",width="100%"]
+|===
+| AbstractStateManager
+| Description
+
+| <<kafka-streams-GlobalStateManagerImpl.adoc#, GlobalStateManagerImpl>>
+| [[GlobalStateManagerImpl]]
+
+| <<kafka-streams-ProcessorStateManager.adoc#, ProcessorStateManager>>
+| [[ProcessorStateManager]]
+|===
 
 [[internal-registries]]
 .AbstractStateManager's Internal Properties (e.g. Registries, Counters and Flags)
@@ -19,32 +29,50 @@ NOTE: `AbstractStateManager` is a Java abstract class and cannot be <<creating-i
 | Description
 
 | checkpoint
-| [[checkpoint]] <<kafka-streams-OffsetCheckpoint.adoc#, OffsetCheckpoint>> with the <<CHECKPOINT_FILE_NAME, offset checkpoint file>> in the <<baseDir, base directory>>.
+a| [[checkpoint]] <<kafka-streams-OffsetCheckpoint.adoc#, OffsetCheckpoint>> with the <<CHECKPOINT_FILE_NAME, .checkpoint>> file in the <<baseDir, base directory>>.
 
-Used when...FIXME
+Initialized to a new <<kafka-streams-OffsetCheckpoint.adoc#, OffsetCheckpoint>> when `AbstractStateManager` is <<creating-instance, created>>
+
+Used when:
+
+* `AbstractStateManager` is requested to <<reinitializeStateStoresForPartitions, reinitializeStateStoresForPartitions>> (to write the <<checkpointableOffsets, checkpointableOffsets>> with <<eosEnabled, exactly-once support>> off)
+
+* `GlobalStateManagerImpl` is requested to <<kafka-streams-GlobalStateManagerImpl.adoc#initialize, initialize>> and <<kafka-streams-GlobalStateManagerImpl.adoc#checkpoint, checkpoint>>
+
+* `ProcessorStateManager` is <<kafka-streams-ProcessorStateManager.adoc#, created>> and requested to <<kafka-streams-ProcessorStateManager.adoc#checkpoint, checkpoint>>
 
 | checkpointableOffsets
-| [[checkpointableOffsets]]
+a| [[checkpointableOffsets]] Collection of Kafka https://kafka.apache.org/20/javadoc/index.html?org/apache/kafka/common/TopicPartition.html[TopicPartitions] with offsets (`Map<TopicPartition, Long>`)
 
-| stores
-| [[stores]] <<kafka-streams-StateStore.adoc#, State stores>> by their names
+Entries (partitions with offsets) added when:
+
+* `GlobalStateManagerImpl` is requested to <<kafka-streams-GlobalStateManagerImpl.adoc#initialize, initialize>>, <<kafka-streams-GlobalStateManagerImpl.adoc#restoreState, restoreState>> and <<kafka-streams-GlobalStateManagerImpl.adoc#checkpoint, checkpoint>>
+
+* `ProcessorStateManager` is <<kafka-streams-ProcessorStateManager.adoc#, created>> and requested to <<kafka-streams-ProcessorStateManager.adoc#checkpoint, checkpoint>>
 
 | globalStores
-| [[globalStores]]
-|===
+a| [[globalStores]] Global <<kafka-streams-StateStore.adoc#, state stores>> by name (managed by <<kafka-streams-GlobalStateManagerImpl.adoc#, GlobalStateManagerImpl>> _mostly_)
 
-[[implementations]]
-.AbstractStateManagers
-[cols="1,2",options="header",width="100%"]
-|===
-| AbstractStateManager
-| Description
+New state stores added when:
 
-| link:kafka-streams-GlobalStateManagerImpl.adoc[GlobalStateManagerImpl]
-| [[GlobalStateManagerImpl]]
+* `GlobalStateManagerImpl` is requested to <<kafka-streams-GlobalStateManagerImpl.adoc#register, register a state store>>
 
-| link:kafka-streams-ProcessorStateManager.adoc[ProcessorStateManager]
-| [[ProcessorStateManager]]
+* `ProcessorStateManager` is requested to <<kafka-streams-ProcessorStateManager.adoc#registerGlobalStateStores, registerGlobalStateStores>>
+
+State stores removed when:
+
+* `GlobalStateManagerImpl` is requested to <<kafka-streams-GlobalStateManagerImpl.adoc#close, close>>
+
+| stores
+a| [[stores]] <<kafka-streams-StateStore.adoc#, State stores>> by name (managed by <<kafka-streams-ProcessorStateManager.adoc#, ProcessorStateManager>>)
+
+New state stores added when:
+
+* `ProcessorStateManager` is requested to <<kafka-streams-ProcessorStateManager.adoc#register, register a state store>>
+
+State stores removed when:
+
+* `ProcessorStateManager` is requested to <<kafka-streams-ProcessorStateManager.adoc#close, close>>
 |===
 
 === [[reinitializeStateStoresForPartitions]] `reinitializeStateStoresForPartitions` Method
@@ -80,3 +108,14 @@ Map<String, String> inverseOneToOneMap(final Map<String, String> origin)
 `inverseOneToOneMap`...FIXME
 
 NOTE: `inverseOneToOneMap` is used exclusively when `AbstractStateManager` is requested to <<reinitializeStateStoresForPartitions, reinitializeStateStoresForPartitions>>.
+
+=== [[creating-instance]] Creating AbstractStateManager Instance
+
+`AbstractStateManager` takes the following when created:
+
+* [[baseDir]] Base directory
+* [[eosEnabled]] `eosEnabled` flag
+
+`AbstractStateManager` initializes the <<internal-registries, internal registries and counters>>.
+
+NOTE: `AbstractStateManager` is a Java abstract class and cannot be <<creating-instance, created>> directly. It is created indirectly for the <<implementations, concrete AbstractStateManagers>>.

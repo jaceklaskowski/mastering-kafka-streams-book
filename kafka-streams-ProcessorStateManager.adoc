@@ -1,6 +1,6 @@
 == [[ProcessorStateManager]] ProcessorStateManager
 
-`ProcessorStateManager` is a concrete <<kafka-streams-StateManager.adoc#, StateManager>> (as a link:kafka-streams-AbstractStateManager.adoc[AbstractStateManager]) that...FIXME
+`ProcessorStateManager` is a concrete <<kafka-streams-StateManager.adoc#, StateManager>> (as a <<kafka-streams-AbstractStateManager.adoc#, AbstractStateManager>>) that...FIXME
 
 `ProcessorStateManager` is <<creating-instance, created>> exclusively when `AbstractTask` is <<kafka-streams-AbstractTask.adoc#stateMgr, created>>.
 
@@ -247,3 +247,14 @@ Writing checkpoint: [checkpointableOffsets]
 ```
 
 In the end, `checkpoint` requests the <<kafka-streams-AbstractStateManager.adoc#checkpoint, OffsetCheckpoint>> to <<kafka-streams-OffsetCheckpoint.adoc#write, write>> the <<kafka-streams-AbstractStateManager.adoc#checkpointableOffsets, checkpointableOffsets>>.
+
+=== [[registerGlobalStateStores]] `registerGlobalStateStores` Method
+
+[source, java]
+----
+void registerGlobalStateStores(final List<StateStore> stateStores)
+----
+
+`registerGlobalStateStores`...FIXME
+
+NOTE: `registerGlobalStateStores` is used exclusively when `StreamTask` is <<kafka-streams-StreamTask.adoc#, created>>.
