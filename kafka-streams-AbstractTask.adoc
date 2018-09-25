@@ -1,8 +1,8 @@
 == [[AbstractTask]] AbstractTask -- Base Processor Task
 
-`AbstractTask` is the base of <<implementations, stream processor tasks>> that <<FIXME, FIXME>>.
+`AbstractTask` is the base implementation of the <<kafka-streams-Task.adoc#, Task contract>> for <<implementations, tasks>> that <<FIXME, FIXME>>.
 
-NOTE: `AbstractTask` is a Java abstract class and cannot be <<creating-instance, created>> directly. It is created indirectly as part of the <<implementations, concrete AbstractTasks>>.
+NOTE: `AbstractTask` is a Java abstract class and cannot be <<creating-instance, created>> directly. It is created indirectly for the <<implementations, concrete AbstractTasks>>.
 
 [[eosEnabled]]
 `AbstractTask` uses link:kafka-streams-properties.adoc#processing.guarantee[processing.guarantee] configuration property to enable link:kafka-streams-exactly-once-support-eos.adoc[Exactly-Once Support] for...FIXME
@@ -21,11 +21,21 @@ The `taskInitialized` flag is used by the <<implementations, concrete AbstractTa
 * `StreamTask` is requested to link:kafka-streams-StreamTask.adoc#closeTopology[closeTopology]
 
 [[taskClosed]]
-`AbstractTask` has `taskClosed` flag that is on (i.e. `true`) to mark when:
+`AbstractTask` has `taskClosed` flag that is on (i.e. `true`) to mark when <<kafka-streams-StandbyTask.adoc#close, StandbyTask>> and <<kafka-streams-StreamTask.adoc#close, StreamTask>> have already been requested to close.
 
-* `StandbyTask` was requested to link:kafka-streams-StandbyTask.adoc#close[close]
+[[implementations]]
+.AbstractTasks
+[cols="1,2",options="header",width="100%"]
+|===
+| AbstractTask
+| Description
 
-* `StreamTask` was requested to link:kafka-streams-StreamTask.adoc#close[close]
+| <<kafka-streams-StandbyTask.adoc#, StandbyTask>>
+| [[StandbyTask]]
+
+| <<kafka-streams-StreamTask.adoc#, StreamTask>>
+| [[StreamTask]]
+|===
 
 [[internal-registries]]
 .AbstractTask's Internal Properties (e.g. Registries, Counters and Flags)
@@ -55,20 +65,6 @@ Used when:
 * `StreamTask` is <<kafka-streams-StreamTask.adoc#creating-instance, created>> (and creates the <<processorContext, InternalProcessorContext>>), and is requested to <<kafka-streams-StreamTask.adoc#commit, commit>> and <<kafka-streams-StreamTask.adoc#commitOffsets, commitOffsets>>
 |===
 
-[[implementations]]
-.AbstractTasks
-[cols="1,2",options="header",width="100%"]
-|===
-| AbstractTask
-| Description
-
-| link:kafka-streams-StreamTask.adoc[StreamTask]
-| [[StreamTask]]
-
-| link:kafka-streams-StandbyTask.adoc[StandbyTask]
-| [[StandbyTask]]
-|===
-
 === [[closeStateManager]] Closing State Manager -- `closeStateManager` Method
 
 [source, java]
@@ -94,6 +90,8 @@ NOTE: `closeStateManager` is used when...FIXME
 * [[config]] <<kafka-streams-StreamsConfig.adoc#, StreamsConfig>>
 
 `AbstractTask` initializes the <<internal-registries, internal registries and counters>>.
+
+NOTE: `AbstractTask` is a Java abstract class and cannot be <<creating-instance, created>> directly. It is created indirectly for the <<implementations, concrete AbstractTasks>>.
 
 === [[hasStateStores]] Checking If Topology Uses State Stores -- `hasStateStores` Method
 

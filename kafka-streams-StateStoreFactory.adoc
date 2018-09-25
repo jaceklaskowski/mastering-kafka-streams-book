@@ -54,7 +54,7 @@ Map<String, String> logConfig()
 Used exclusively when `InternalTopologyBuilder` is requested to <<kafka-streams-InternalTopologyBuilder.adoc#createChangelogTopicConfig, createChangelogTopicConfig>>
 
 | loggingEnabled
-| [[loggingEnabled]]
+| [[loggingEnabled]] Indicates whether change-logging is enabled or not
 
 | name
 | [[name]]

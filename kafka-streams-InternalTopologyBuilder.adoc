@@ -148,9 +148,11 @@ a| [[stateFactories]] link:kafka-streams-StateStoreFactory.adoc[StateStoreFactor
 | [[stateStoreNameToSourceTopics]]
 
 | storeToChangelogTopic
-a| [[storeToChangelogTopic]] Topic names by the names of state stores
+a| [[storeToChangelogTopic]] Names of the <<kafka-streams-StateStore.adoc#, state stores>> and the names of the corresponding changelog topics (`Map<String, String>`)
 
-* A new entry is added when `InternalTopologyBuilder` is requested to <<buildProcessorNode, buildProcessorNode>> and <<connectSourceStoreAndTopic, associate the names of a state store and a topic>>
+`storeToChangelogTopic` manages <<kafka-streams-StateStore.adoc#, state stores>> with the `StateStoreFactory` with <<kafka-streams-StateStoreFactory.adoc#loggingEnabled, change-logging enabled>>
+
+A new pair is added when `InternalTopologyBuilder` is requested to <<buildProcessorNode, buildProcessorNode>> and <<connectSourceStoreAndTopic, associate the names of a state store and a topic>>
 
 | subscriptionUpdates
 | [[subscriptionUpdates]]

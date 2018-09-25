@@ -2,7 +2,7 @@
 
 `ProcessorTopology` is...FIXME
 
-`ProcessorTopology` is <<creating-instance, created>> exclusively when `InternalTopologyBuilder` is requested to link:kafka-streams-InternalTopologyBuilder.adoc#build[build a processor task topology].
+`ProcessorTopology` is <<creating-instance, created>> exclusively when `InternalTopologyBuilder` is requested to <<kafka-streams-InternalTopologyBuilder.adoc#build, build a processor task topology>>.
 
 [source, scala]
 ----
@@ -115,5 +115,16 @@ NOTE: `withSources` is used when...FIXME
 * [[sinksByTopic]] link:kafka-streams-SinkNode.adoc[SinkNodes] by name
 * [[stateStores]] Local link:kafka-streams-StateStore.adoc[StateStores]
 * [[globalStateStores]] Global link:kafka-streams-StateStore.adoc[StateStores]
-* [[stateStoreToChangelogTopic]] Names of changelog topics by the names of state stores
+* [[stateStoreToChangelogTopic]] Names of the <<kafka-streams-StateStore.adoc#, state stores>> and the names of the corresponding changelog topics (from the <<kafka-streams-InternalTopologyBuilder.adoc#storeToChangelogTopic, InternalTopologyBuilder>>)
 * [[repartitionTopics]] Names of repartition topics
+
+=== [[storeToChangelogTopic]] `storeToChangelogTopic` Method
+
+[source, java]
+----
+Map<String, String> storeToChangelogTopic()
+----
+
+`storeToChangelogTopic` simply returns the <<stateStoreToChangelogTopic, stateStoreToChangelogTopic>>.
+
+NOTE: `storeToChangelogTopic` is used when...FIXME

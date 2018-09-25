@@ -1,4 +1,4 @@
-== [[AbstractStateManager]] AbstractStateManager
+== [[AbstractStateManager]] AbstractStateManager -- Base State Manager
 
 `AbstractStateManager` is the base implementation of the <<kafka-streams-StateManager.adoc#, StateManager contract>> for <<implementations, state managers>> that use <<checkpoint, offset checkpointing>>.
 
