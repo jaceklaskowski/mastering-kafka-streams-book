@@ -1,25 +1,11 @@
-== [[StateStoreFactory]] StateStoreFactory
+== [[StateStoreFactory]] StateStoreFactory Internal Contract
 
-`StateStoreFactory` is the <<contract, contract>> for...FIXME
+`StateStoreFactory` is the internal <<contract, contract>> (of <<kafka-streams-InternalTopologyBuilder.adoc#, InternalTopologyBuilder>>) for <<implementations, factories>> that can <<build, build state stores>>.
 
-NOTE: `StateStoreFactory` is an internal interface of link:kafka-streams-InternalTopologyBuilder.adoc[InternalTopologyBuilder].
+[[implementations]]
+NOTE: <<kafka-streams-AbstractStateStoreFactory.adoc#, AbstractStateStoreFactory>> is the one and only known direct extension contract of the <<contract, StateStoreFactory Contract>>.
 
 [[contract]]
-[source, java]
-----
-package org.apache.kafka.streams.processor.internals;
-
-interface StateStoreFactory {
-  StateStore build();
-  boolean isWindowStore();
-  Map<String, String> logConfig();
-  boolean loggingEnabled();
-  String name();
-  long retentionPeriod();
-  Set<String> users();
-}
-----
-
 .StateStoreFactory Contract
 [cols="1m,2",options="header",width="100%"]
 |===
@@ -27,21 +13,30 @@ interface StateStoreFactory {
 | Description
 
 | build
-| [[build]]
+a| [[build]]
+
+[source, java]
+----
+StateStore build()
+----
 
 Builds a <<kafka-streams-StateStore.adoc#, state store>>
 
 | isWindowStore
-a| [[isWindowStore]] Indicates whether a `StateStoreFactory` was created for a link:kafka-streams-WindowStoreBuilder.adoc[WindowStoreBuilder] (`true`) or not (`false`)
+a| [[isWindowStore]]
+
+[source, java]
+----
+boolean isWindowStore()
+----
+
+Indicates whether a `StateStoreFactory` was created for a link:kafka-streams-WindowStoreBuilder.adoc[WindowStoreBuilder] (`true`) or not (`false`)
 
 Used exclusively when `InternalTopologyBuilder` is requested to link:kafka-streams-InternalTopologyBuilder.adoc#createChangelogTopicConfig[create an InternalTopicConfig (for a given name and StateStoreFactory)]
 
-[NOTE]
-====
 `isWindowStore` is implemented by link:kafka-streams-AbstractStateStoreFactory.adoc#isWindowStore[AbstractStateStoreFactory] only and corresponds to link:kafka-streams-AbstractStateStoreFactory.adoc#windowStore[windowStore] flag that is given when link:kafka-streams-AbstractStateStoreFactory.adoc#implementations[concrete StateStoreFactories] are created.
 
 In a nutshell, The flag is enabled only when the `StateStoreFactory` is created for a link:kafka-streams-WindowStoreBuilder.adoc[WindowStoreBuilder].
-====
 
 | logConfig
 a| [[logConfig]]
@@ -54,36 +49,47 @@ Map<String, String> logConfig()
 Used exclusively when `InternalTopologyBuilder` is requested to <<kafka-streams-InternalTopologyBuilder.adoc#createChangelogTopicConfig, createChangelogTopicConfig>>
 
 | loggingEnabled
-| [[loggingEnabled]] Indicates whether change-logging is enabled or not
+a| [[loggingEnabled]]
+
+[source, java]
+----
+boolean loggingEnabled()
+----
+
+Indicates whether <<kafka-streams-AbstractStateStoreFactory.adoc#loggingEnabled, change-logging>> is enabled (`true`) or not (`false`)
+
+Used when `InternalTopologyBuilder` is requested to <<kafka-streams-InternalTopologyBuilder.adoc#buildProcessorNode, buildProcessorNode>> and for <<kafka-streams-InternalTopologyBuilder.adoc#topicGroups, topic groups>>
 
 | name
-| [[name]]
+a| [[name]]
+
+[source, java]
+----
+String name()
+----
 
 | retentionPeriod
-| [[retentionPeriod]] Window retention period (in milliseconds)
+a| [[retentionPeriod]]
+
+[source, java]
+----
+long retentionPeriod()
+----
+
+Window retention period (in milliseconds)
 
 Used exclusively when `InternalTopologyBuilder` is requested to link:kafka-streams-InternalTopologyBuilder.adoc#createChangelogTopicConfig[create an InternalTopicConfig (for a given name and StateStoreFactory)]
 
 | users
-| [[users]] Names of the processors that are connected to a state store
+a| [[users]]
+
+[source, java]
+----
+Set<String> users()
+----
+
+Names of the processors that are connected to a state store
 
 Used when `InternalTopologyBuilder` is requested to link:kafka-streams-InternalTopologyBuilder.adoc#connectProcessorAndStateStore[connect a state store with a processor node] and link:kafka-streams-InternalTopologyBuilder.adoc#topicGroups[topic groups]
 
-|===
-
-[[implementations]]
-.StateStoreFactories
-[cols="1,2",options="header",width="100%"]
-|===
-| StateStoreFactory
-| Description
-
-| [[AbstractStateStoreFactory]] link:kafka-streams-AbstractStateStoreFactory.adoc[AbstractStateStoreFactory]
-|
-
-| [[StoreBuilderFactory]] link:kafka-streams-StoreBuilderFactory.adoc[StoreBuilderFactory]
-|
-
-| [[StateStoreSupplierFactory]] link:kafka-streams-StateStoreSupplierFactory.adoc[StateStoreSupplierFactory]
-|
 |===

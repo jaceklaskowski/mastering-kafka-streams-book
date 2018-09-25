@@ -594,7 +594,7 @@ void addStateStore(
 * `KTableImpl` is requested to link:kafka-streams-KTableImpl.adoc#doFilter[doFilter], link:kafka-streams-KTableImpl.adoc#doJoin[doJoin] and link:kafka-streams-KTableImpl.adoc#mapValues[mapValues]
 ====
 
-=== [[topicGroups]] Requesting Topic Groups (TopicsInfos By IDs) -- `topicGroups` Method
+=== [[topicGroups]] Topic Groups (TopicsInfos By IDs) -- `topicGroups` Method
 
 [source, java]
 ----

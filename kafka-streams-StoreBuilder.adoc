@@ -2,6 +2,9 @@
 
 `StoreBuilder` is the <<contract, contract>> of <<implementations, state store builders>> that can <<build, build a state store>> (with optional <<withCachingEnabled, caching>> and <<withLoggingEnabled, logging>>).
 
+[[implementations]]
+NOTE: <<kafka-streams-AbstractStoreBuilder.adoc#, AbstractStoreBuilder>> is the one and only known base implementation of the <<contract, StoreBuilder Contract>>.
+
 `StoreBuilder` is used to add a local or global <<kafka-streams-StateStore.adoc#, state store>> to a topology using the following:
 
 * <<kafka-streams-StreamsBuilder.adoc#, StreamsBuilder>> (i.e. <<kafka-streams-StreamsBuilder.adoc#addStateStore, StreamsBuilder.addStateStore>> and <<kafka-streams-StreamsBuilder.adoc#addGlobalStore, StreamsBuilder.addGlobalStore>>)
@@ -51,7 +54,7 @@ a| [[loggingEnabled]]
 boolean loggingEnabled()
 ----
 
-Indicates whether logging should be enabled (`true`) or not (`false`) on the <<kafka-streams-StateStore.adoc#, state store>>
+Indicates whether change-logging should be enabled (`true`) or not (`false`) on the <<kafka-streams-StateStore.adoc#, state store>>
 
 Used when:
 
@@ -77,7 +80,7 @@ a| [[withCachingEnabled]]
 StoreBuilder<T> withCachingEnabled()
 ----
 
-Enables caching on the <<kafka-streams-StateStore.adoc#, state store>>
+Enables caching on <<kafka-streams-StateStore.adoc#, state stores>>
 
 | withLoggingDisabled
 a| [[withLoggingDisabled]]
@@ -87,7 +90,7 @@ a| [[withLoggingDisabled]]
 StoreBuilder<T> withLoggingDisabled()
 ----
 
-Disables logging on the <<kafka-streams-StateStore.adoc#, state store>>
+Disables change-logging on <<kafka-streams-StateStore.adoc#, state stores>>
 
 | withLoggingEnabled
 a| [[withLoggingEnabled]]
@@ -97,9 +100,6 @@ a| [[withLoggingEnabled]]
 StoreBuilder<T> withLoggingEnabled(final Map<String, String> config)
 ----
 
-Enables logging on the <<kafka-streams-StateStore.adoc#, state store>>
+Enables change-logging on <<kafka-streams-StateStore.adoc#, state stores>> (i.e. a changelog for any changes made to the stores)
 
 |===
-
-[[implementations]]
-NOTE: <<kafka-streams-AbstractStoreBuilder.adoc#, AbstractStoreBuilder>> is the one and only known base implementation of the <<contract, StoreBuilder Contract>>.

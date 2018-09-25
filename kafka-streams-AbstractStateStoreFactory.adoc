@@ -1,25 +1,25 @@
-== [[AbstractStateStoreFactory]] AbstractStateStoreFactory
+== [[AbstractStateStoreFactory]] AbstractStateStoreFactory -- Base State Store Factory
 
-`AbstractStateStoreFactory` is the <<contract, base>> of <<extensions, state store factories>> that <<FIXME, FIXME>>.
+`AbstractStateStoreFactory` is the base implementation of the <<kafka-streams-StateStoreFactory.adoc#, StateStoreFactory contract>> for <<implementations, state store factories>> that...FIXME
+
+NOTE: `AbstractStateStoreFactory` is a Java abstract class and cannot be <<creating-instance, created>> directly. It is created indirectly for the <<implementations, concrete AbstractStateStoreFactories>>.
+
+[[implementations]]
+NOTE: <<kafka-streams-StoreBuilderFactory.adoc#, StoreBuilderFactory>> is the one and only known `AbstractStateStoreFactory`.
 
 [[internal-registries]]
 [[users]]
 `AbstractStateStoreFactory` manages a collection of names (as `users` internal registry). A new processor name is added when `InternalTopologyBuilder` is requested to link:kafka-streams-InternalTopologyBuilder.adoc#connectProcessorAndStateStore[connect a state store with a processor node].
-
-NOTE: `AbstractStateStoreFactory` is a Java abstract class and cannot be <<creating-instance, created>> directly. It is created indirectly for the <<extensions, concrete AbstractStateStoreFactories>>.
-
-[[extensions]]
-NOTE: <<kafka-streams-StoreBuilderFactory.adoc#, StoreBuilderFactory>> is the one and only known implementation of the <<contract, AbstractStateStoreFactory Contract>>.
 
 === [[creating-instance]] Creating AbstractStateStoreFactory Instance
 
 `AbstractStateStoreFactory` takes the following when created:
 
 * [[name]] Name
-* [[loggingEnabled]] `loggingEnabled` flag
+* [[loggingEnabled]] `loggingEnabled` flag (that indicates whether the `StoreBuilderFactory` was <<kafka-streams-StoreBuilderFactory.adoc#creating-instance, created>> with a `StoreBuilder` with <<kafka-streams-StoreBuilder.adoc#loggingEnabled, logging>> enabled or not)
 * [[windowStore]] `windowStore` flag (indicates whether a <<kafka-streams-WindowStoreBuilder.adoc#, WindowStoreBuilder>> was used to create the instance)
 * [[logConfig]] `logConfig` as `Map<String, String>`
 
 `AbstractStateStoreFactory` initializes the <<internal-registries, internal registries and counters>>.
 
-NOTE: `AbstractStateStoreFactory` is a Java abstract class and cannot be <<creating-instance, created>> directly. It is created indirectly when the <<implementations, concrete AbstractStateStoreFactories>> are.
+NOTE: `AbstractStateStoreFactory` is a Java abstract class and cannot be <<creating-instance, created>> directly. It is created indirectly for the <<implementations, concrete AbstractStateStoreFactories>>.
