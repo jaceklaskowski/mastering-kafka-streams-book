@@ -1,6 +1,6 @@
-== [[Materialized]] Materialized -- State Store Materialization
+== [[Materialized]] Materialized -- State Store Materialized View
 
-`Materialized` is the <<interface, interface>> to describe how to materialize a <<kafka-streams-StateStore.adoc#, state store>> (for a <<kafka-streams-KTable.adoc#, KTable>>).
+`Materialized` is the <<interface, interface>> to describe how to materialize a <<kafka-streams-StateStore.adoc#, state store>> (as a <<kafka-streams-KTable.adoc#, KTable>>).
 
 `Materialized` is used for the following:
 

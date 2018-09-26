@@ -1,3 +1,58 @@
 == [[TimeWindowedKStream]] TimeWindowedKStream -- Time-Windowed Stream Aggregations
 
-`TimeWindowedKStream` is...FIXME
+`TimeWindowedKStream` is the <<contract, abstraction>> of <<implementations, windowed stream of KeyValue pairs>> that allows Kafka Streams developers for <<aggregate, aggregate>>, <<count, count>>, <<reduce, reduce>> aggregations over a record stream.
+
+`TimeWindowedKStream` is the result of <<kafka-streams-KGroupedStream.adoc#windowedBy, KGroupedStream.windowedBy>> operator.
+
+[source, java]
+----
+// FIXME Demo
+----
+
+TIP: Use <<kafka-streams-scala.adoc#, Scala API for Kafka Streams>> to make your Kafka Streams development more pleasant if Scala is your programming language.
+
+[[contract]]
+.TimeWindowedKStream Contract
+[cols="1m,2",options="header",width="100%"]
+|===
+| Method
+| Description
+
+| aggregate
+a| [[aggregate]]
+
+[source, java]
+----
+KTable<Windowed<K>, VR> aggregate(
+  final Initializer<VR> initializer,
+  final Aggregator<? super K, ? super V, VR> aggregator)
+KTable<Windowed<K>, VR> aggregate(
+  final Initializer<VR> initializer,
+  final Aggregator<? super K, ? super V, VR> aggregator,
+  final Materialized<K, VR, WindowStore<Bytes, byte[]>> materialized)
+----
+
+| count
+a| [[count]]
+
+[source, java]
+----
+KTable<Windowed<K>, Long> count()
+KTable<Windowed<K>, Long> count(
+  final Materialized<K, Long, WindowStore<Bytes, byte[]>> materialized)
+----
+
+| reduce
+a| [[reduce]]
+
+[source, java]
+----
+KTable<Windowed<K>, V> reduce(final Reducer<V> reducer)
+KTable<Windowed<K>, V> reduce(
+  final Reducer<V> reducer,
+  final Materialized<K, V, WindowStore<Bytes, byte[]>> materialized)
+----
+|===
+
+[[implementations]]
+NOTE: <<kafka-streams-TimeWindowedKStreamImpl.adoc#, TimeWindowedKStreamImpl>> is the one and only known implementation of the <<contract, TimeWindowedKStream Contract>>.
