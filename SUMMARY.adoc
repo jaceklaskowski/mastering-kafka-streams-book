@@ -7,6 +7,8 @@
 
 == Developing Stream Processing Applications with Kafka Streams
 
+. link:kafka-streams-KafkaStreams.adoc[KafkaStreams]
+
 . link:kafka-streams-StreamsBuilder.adoc[StreamsBuilder -- High-Level Stream Processing DSL]
 . link:kafka-streams-Topology.adoc[Topology -- Processor API]
 . link:kafka-streams-KStream.adoc[KStream]
@@ -30,8 +32,6 @@
 . link:kafka-streams-KeyValueMapper.adoc[KeyValueMapper]
 
 . link:kafka-streams-StreamsConfig.adoc[StreamsConfig -- Configuration Properties for Kafka Clients]
-
-. link:kafka-streams-KafkaStreams.adoc[KafkaStreams]
 
 . link:kafka-streams-ProcessorContext.adoc[ProcessorContext]
 .. link:kafka-streams-TaskId.adoc[TaskId]
@@ -148,12 +148,6 @@
 . link:kafka-streams-RecordCollector.adoc[RecordCollector]
 .. link:kafka-streams-RecordCollectorImpl.adoc[RecordCollectorImpl]
 
-. link:kafka-streams-StateRestoreListener.adoc[StateRestoreListener]
-.. link:kafka-streams-AbstractNotifyingBatchingRestoreCallback.adoc[AbstractNotifyingBatchingRestoreCallback]
-.. link:kafka-streams-AbstractNotifyingRestoreCallback.adoc[AbstractNotifyingRestoreCallback]
-.. link:kafka-streams-CompositeRestoreListener.adoc[CompositeRestoreListener]
-.. link:kafka-streams-DelegatingStateRestoreListener.adoc[DelegatingStateRestoreListener]
-
 == Monitoring Kafka Streams Applications
 
 . link:kafka-streams-StateListener.adoc[StateListener -- KafkaStreams State Listener]
@@ -164,6 +158,10 @@
 .. link:kafka-streams-StreamsMetricsThreadImpl.adoc[StreamsMetricsThreadImpl]
 
 . link:kafka-streams-StreamTask-TaskMetrics.adoc[TaskMetrics]
+
+. link:kafka-streams-StateRestoreListener.adoc[StateRestoreListener]
+.. link:kafka-streams-AbstractNotifyingBatchingRestoreCallback.adoc[AbstractNotifyingBatchingRestoreCallback]
+.. link:kafka-streams-AbstractNotifyingRestoreCallback.adoc[AbstractNotifyingRestoreCallback]
 
 == Testing
 
@@ -295,6 +293,9 @@
 .. link:kafka-streams-StoreBuilderFactory.adoc[StoreBuilderFactory]
 .. link:kafka-streams-StateStoreSupplierFactory.adoc[StateStoreSupplierFactory]
 .. link:kafka-streams-AbstractStateStoreFactory.adoc[AbstractStateStoreFactory]
+
+. link:kafka-streams-DelegatingStateRestoreListener.adoc[DelegatingStateRestoreListener]
+. link:kafka-streams-CompositeRestoreListener.adoc[CompositeRestoreListener]
 
 == Deprecated
 

@@ -527,7 +527,10 @@ Creating restore consumer client
 
 `create` requests the input `KafkaClientSupplier` for link:kafka-streams-KafkaClientSupplier.adoc#getRestoreConsumer[getRestoreConsumer] for the `restoreConsumerConfigs`.
 
+[[create-StoreChangelogReader]]
 `create` creates a <<kafka-streams-StoreChangelogReader.adoc#, StoreChangelogReader>> (with the `restoreConsumer`, the given <<kafka-streams-StateRestoreListener.adoc#, StateRestoreListener>> and the configured <<kafka-streams-properties.adoc#poll.ms, poll.ms>>).
+
+NOTE: The input <<kafka-streams-StateRestoreListener.adoc#, StateRestoreListener>> is a <<kafka-streams-DelegatingStateRestoreListener.adoc#, DelegatingStateRestoreListener>> actually.
 
 (Only with eos enabled) `create`...FIXME
 

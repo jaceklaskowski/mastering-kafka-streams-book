@@ -1,6 +1,8 @@
 == [[StateRestoreListener]] StateRestoreListener Contract
 
-`StateRestoreListener` is the <<contract, contract>> of <<implementations, objects>> that want to be notified when <<onBatchRestored, onBatchRestored>>, <<onRestoreEnd, onRestoreEnd>> and <<onRestoreStart, onRestoreStart>>.
+`StateRestoreListener` is the <<contract, contract>> of <<implementations, objects>> that want to be notified about the store-related events, i.e. <<onBatchRestored, onBatchRestored>>, <<onRestoreEnd, onRestoreEnd>> and <<onRestoreStart, onRestoreStart>>.
+
+NOTE: A Kafka Streams developer uses <<kafka-streams-KafkaStreams.adoc#setGlobalStateRestoreListener, KafkaStreams.setGlobalStateRestoreListener>> method to register a `StateRestoreListener` in a Kafka Streams application.
 
 [[contract]]
 .StateRestoreListener Contract

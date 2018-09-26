@@ -7,6 +7,8 @@
 .StoreChangelogReader
 image::images/kafka-streams-StoreChangelogReader.png[align="center"]
 
+`StoreChangelogReader` uses the <<userStateRestoreListener, StateRestoreListener>> exclusively when <<register, registering a StateRestorer>>.
+
 NOTE: link:kafka-streams-StreamThread.adoc[StreamThread] uses a `StoreChangelogReader` to create a link:kafka-streams-TaskCreator.adoc#storeChangelogReader[TaskCreator], a link:kafka-streams-StandbyTaskCreator.adoc#storeChangelogReader[StandbyTaskCreator] and a link:kafka-streams-TaskManager.adoc#changelogReader[TaskManager].
 
 [[internal-registries]]
@@ -45,7 +47,7 @@ NOTE: link:kafka-streams-StreamThread.adoc[StreamThread] uses a `StoreChangelogR
 
 `StoreChangelogReader` initializes the <<internal-registries, internal registries and counters>>.
 
-=== [[register]] `register` Method
+=== [[register]] Registering StateRestorer -- `register` Method
 
 [source, java]
 ----

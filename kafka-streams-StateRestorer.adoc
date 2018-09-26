@@ -1,6 +1,8 @@
 == [[StateRestorer]] StateRestorer
 
-`StateRestorer` is...FIXME
+`StateRestorer` is a concrete `BatchingStateRestoreCallback` and a <<kafka-streams-StateRestoreListener.adoc#, StateRestoreListener>>.
+
+`StateRestorer` uses a <<compositeRestoreListener, CompositeRestoreListener>> to propagate the events: <<restoreStarted, restoreStarted>>, <<restoreDone, restoreDone>>, <<restoreBatchCompleted, restoreBatchCompleted>>, <<restore, restore>>.
 
 `StateRestorer` is <<creating-instance, created>> exclusively when `ProcessorStateManager` is requested to <<kafka-streams-ProcessorStateManager.adoc#register, register a state store>>.
 
@@ -35,7 +37,18 @@ void restoreDone()
 
 `restoreDone`...FIXME
 
-NOTE: `restoreDone` is used exclusively when `StoreChangelogReader` is requested to <<kafka-streams-StoreChangelogReader.adoc#restore, restore>>.
+NOTE: `restoreDone` is used exclusively when `StoreChangelogReader` is requested to <<kafka-streams-StoreChangelogReader.adoc#processNext, processNext>> (when requested to <<kafka-streams-StoreChangelogReader.adoc#restore, restore>>).
+
+=== [[restore]] `restore` Method
+
+[source, java]
+----
+void restore(final Collection<KeyValue<byte[], byte[]>> records)
+----
+
+`restore`...FIXME
+
+NOTE: `restore` is used exclusively when `StoreChangelogReader` is requested to <<kafka-streams-StoreChangelogReader.adoc#restore, restore>>.
 
 === [[creating-instance]] Creating StateRestorer Instance
 
@@ -49,3 +62,14 @@ NOTE: `restoreDone` is used exclusively when `StoreChangelogReader` is requested
 * [[storeName]] Name of the state store
 
 `StateRestorer` initializes the <<internal-registries, internal registries and counters>>.
+
+=== [[setUserRestoreListener]] Setting StateRestoreListener -- `setUserRestoreListener` Method
+
+[source, java]
+----
+void setUserRestoreListener(StateRestoreListener userRestoreListener)
+----
+
+`setUserRestoreListener` simply requests the <<compositeRestoreListener, CompositeRestoreListener>> to <<kafka-streams-CompositeRestoreListener.adoc#setUserRestoreListener, use>> the input <<kafka-streams-StateRestoreListener.adoc#, StateRestoreListener>>.
+
+NOTE: `setUserRestoreListener` is used exclusively when `StoreChangelogReader` is requested to <<kafka-streams-StoreChangelogReader.adoc#register, register a StateRestorer>>.

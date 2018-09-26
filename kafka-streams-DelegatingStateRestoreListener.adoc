@@ -1,3 +1,55 @@
 == [[DelegatingStateRestoreListener]] DelegatingStateRestoreListener
 
-`DelegatingStateRestoreListener` is...FIXME
+`DelegatingStateRestoreListener` is a concrete <<kafka-streams-StateRestoreListener.adoc#, StateRestoreListener>> that simply intercepts the state-related events (e.g. <<onRestoreStart, onRestoreStart>>, <<onBatchRestored, onBatchRestored>> and <<onRestoreEnd, onRestoreEnd>>) and notifies the <<kafka-streams-KafkaStreams.adoc#setGlobalStateRestoreListener, user-defined global StateRestoreListener>>.
+
+NOTE: `DelegatingStateRestoreListener` is a final class of <<kafka-streams-KafkaStreams.adoc#, KafkaStreams>> class and so has access to the internals of a `KafkaStreams` instance.
+
+`DelegatingStateRestoreListener` is <<creating-instance, created>> for a <<kafka-streams-KafkaStreams.adoc#, KafkaStreams>> (that uses it to create a <<kafka-streams-GlobalStreamThread.adoc#stateRestoreListener, GlobalStreamThread>> and <<kafka-streams-StreamThread.adoc#create-StoreChangelogReader, StreamThreads>>).
+
+[[creating-instance]]
+`DelegatingStateRestoreListener` takes no arguments when created.
+
+=== [[onBatchRestored]] `onBatchRestored` Method
+
+[source, java]
+----
+void onBatchRestored(
+  final TopicPartition topicPartition,
+  final String storeName,
+  final long batchEndOffset,
+  final long numRestored)
+----
+
+NOTE: `onBatchRestored` is part of the <<kafka-streams-StateRestoreListener.adoc#onBatchRestored, StateRestoreListener Contract>> to...FIXME.
+
+`onBatchRestored`...FIXME
+
+=== [[onRestoreEnd]] `onRestoreEnd` Method
+
+[source, java]
+----
+void onRestoreEnd(
+  final TopicPartition topicPartition,
+  final String storeName,
+  final long batchEndOffset,
+  final long numRestored)
+----
+
+NOTE: `onRestoreEnd` is part of the <<kafka-streams-StateRestoreListener.adoc#onRestoreEnd, StateRestoreListener Contract>> to...FIXME.
+
+`onRestoreEnd`...FIXME
+
+=== [[onRestoreStart]] `onRestoreStart` Method
+
+[source, java]
+----
+void onRestoreStart(
+  final TopicPartition topicPartition,
+  final String storeName,
+  final long batchEndOffset,
+  final long numRestored)
+----
+
+NOTE: `onRestoreStart` is part of the <<kafka-streams-StateRestoreListener.adoc#onRestoreStart, StateRestoreListener Contract>> to...FIXME.
+
+`onRestoreStart`...FIXME

@@ -25,6 +25,15 @@ Once <<creating-instance, created>>, `KafkaStreams` is <<start, started up>> to 
 ks.start
 ----
 
+(only when in <<state, CREATED>> state) `KafkaStreams` can be <<setGlobalStateRestoreListener, given>> a <<globalStateRestoreListener, StateRestoreListener>> to be informed about the state-related events: <<kafka-streams-DelegatingStateRestoreListener.adoc#onRestoreStart, onRestoreStart>>, <<kafka-streams-DelegatingStateRestoreListener.adoc#onBatchRestored, onBatchRestored>> and <<kafka-streams-DelegatingStateRestoreListener.adoc#onRestoreEnd, onRestoreEnd>> (through <<kafka-streams-DelegatingStateRestoreListener.adoc#, DelegatingStateRestoreListener>>).
+
+[source, scala]
+----
+import org.apache.kafka.streams.processor.StateRestoreListener
+val userRestoreListener: StateRestoreListener = ???
+ks.setGlobalStateRestoreListener(userRestoreListener)
+----
+
 `KafkaStreams` uses a <<internalTopologyBuilder, InternalTopologyBuilder>> for the following:
 
 * Creating a <<streamsMetadataState, StreamsMetadataState>>, <<threads, StreamThreads>> and <<queryableStoreProvider, QueryableStoreProvider>>
@@ -40,6 +49,11 @@ ks.start
 
 | clientId
 | [[clientId]]
+
+| globalStateRestoreListener
+a| [[globalStateRestoreListener]] A user-defined global <<kafka-streams-StateRestoreListener.adoc#, StateRestoreListener>> to be notified about the state-related events: <<kafka-streams-DelegatingStateRestoreListener.adoc#onRestoreStart, onRestoreStart>>, <<kafka-streams-DelegatingStateRestoreListener.adoc#onBatchRestored, onBatchRestored>> and <<kafka-streams-DelegatingStateRestoreListener.adoc#onRestoreEnd, onRestoreEnd>> (through <<kafka-streams-DelegatingStateRestoreListener.adoc#, DelegatingStateRestoreListener>>)
+
+Set using <<setGlobalStateRestoreListener, setGlobalStateRestoreListener>> method
 
 | globalStreamThread
 a| [[globalStreamThread]] link:kafka-streams-GlobalStreamThread.adoc[GlobalStreamThread]
@@ -273,3 +287,20 @@ NOTE: `allMetadataForStore` is used when...FIXME
 `store`...FIXME
 
 NOTE: `store` is used when...FIXME
+
+=== [[setGlobalStateRestoreListener]] Registering Global StateRestoreListener -- `setGlobalStateRestoreListener` Method
+
+[source, java]
+----
+void setGlobalStateRestoreListener(final StateRestoreListener globalStateRestoreListener)
+----
+
+`setGlobalStateRestoreListener` registers a <<kafka-streams-StateRestoreListener.adoc#, StateRestoreListener>> (in a Kafka Streams application).
+
+Internally, `setGlobalStateRestoreListener` simply sets the <<globalStateRestoreListener, globalStateRestoreListener>> internal property to be the input <<kafka-streams-StateRestoreListener.adoc#, StateRestoreListener>> (only when in <<state, CREATED>> state).
+
+`setGlobalStateRestoreListener` throws a `IllegalStateException` when not in <<state, CREATED>> state:
+
+```
+Can only set GlobalStateRestoreListener in CREATED state. Current state is: [state]
+```
