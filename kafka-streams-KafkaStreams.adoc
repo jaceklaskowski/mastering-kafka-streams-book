@@ -38,7 +38,7 @@ ks.setGlobalStateRestoreListener(userRestoreListener)
 .KafkaStreams API
 [cols="1,2",options="header",width="100%"]
 |===
-| Operator
+| Method
 | Description
 
 | allMetadata

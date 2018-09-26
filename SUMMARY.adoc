@@ -105,7 +105,7 @@
 .. link:kafka-streams-AbstractStoreBuilder.adoc[AbstractStoreBuilder]
 
 . link:kafka-streams-Stores.adoc[Stores -- Factory of State Stores]
-. link:kafka-streams-Materialized.adoc[Materialized]
+. link:kafka-streams-Materialized.adoc[Materialized -- State Store Materialization]
 
 . link:kafka-streams-PartitionGroup.adoc[PartitionGroup]
 

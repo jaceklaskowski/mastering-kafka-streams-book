@@ -147,7 +147,7 @@ When <<creating-instance, created>>, `StreamsBuilder` creates an empty <<kafka-s
 
 In other words, `StreamsBuilder` offers a more <<operators, developer-friendly API>> for developing Kafka Streams applications as compared to the <<kafka-streams-InternalStreamsBuilder.adoc#, InternalStreamsBuilder>> API (and is a façade of `InternalStreamsBuilder`).
 
-=== [[table]] Creating KTable -- `table` Method
+=== [[table-detailed]] Creating KTable -- `table` Method
 
 [source, java]
 ----
@@ -166,7 +166,7 @@ KTable<K, V> table(
 
 `table`...FIXME
 
-=== [[globalTable]] Creating GlobalKTable -- `globalTable` Method
+=== [[globalTable-detailed]] Creating GlobalKTable -- `globalTable` Method
 
 [source, java]
 ----
