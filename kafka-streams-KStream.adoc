@@ -21,11 +21,35 @@ val input: KStream[String, String] = builder.stream("input")
 
 [[contract]]
 [[operators]]
-.KStream Operators
+.KStream API / Stream Operators
 [cols="1m,2",options="header",width="100%"]
 |===
 | Operator
 | Description
+
+| branch
+a| [[branch]]
+
+[source, java]
+----
+KStream<K, V>[] branch(final Predicate<? super K, ? super V>... predicates)
+----
+
+| filter
+a| [[filter]]
+
+[source, java]
+----
+KStream<K, V> filter(Predicate<? super K, ? super V> predicate)
+----
+
+| filterNot
+a| [[filterNot]]
+
+[source, java]
+----
+KStream<K, V> filterNot(Predicate<? super K, ? super V> predicate)
+----
 
 | flatMap
 a| [[flatMap]]
@@ -33,7 +57,29 @@ a| [[flatMap]]
 [source, java]
 ----
 KStream<KR, VR> flatMap(
-  KeyValueMapper<? super K, ? super V, ? extends Iterable<? extends KeyValue<? extends KR, ? extends VR>>> mapper);
+  KeyValueMapper<
+    ? super K,
+    ? super V,
+    ? extends Iterable<? extends KeyValue<? extends KR, ? extends VR>>> mapper)
+----
+
+| flatMapValues
+a| [[flatMapValues]]
+
+[source, java]
+----
+KStream<K, VR> flatMapValues(
+  final ValueMapper<? super V, ? extends Iterable<? extends VR>> mapper)
+KStream<K, VR> flatMapValues(
+  final ValueMapperWithKey<? super K, ? super V, ? extends Iterable<? extends VR>> mapper)
+----
+
+| foreach
+a| [[foreach]]
+
+[source, java]
+----
+void foreach(final ForeachAction<? super K, ? super V> action)
 ----
 
 | groupBy
@@ -120,7 +166,7 @@ a| [[map]]
 
 [source, java]
 ----
-KStream<KR, VR> map(KeyValueMapper<? super K, ? super V, ? extends KeyValue<? extends KR, ? extends VR>> mapper);
+KStream<KR, VR> map(KeyValueMapper<? super K, ? super V, ? extends KeyValue<? extends KR, ? extends VR>> mapper)
 ----
 
 | mapValues
@@ -132,12 +178,54 @@ KStream<K, VR> mapValues(ValueMapper<? super V, ? extends VR> mapper);
 KStream<K, VR> mapValues(final ValueMapperWithKey<? super K, ? super V, ? extends VR> mapper);
 ----
 
+| merge
+a| [[merge]]
+
+[source, java]
+----
+KStream<K, V> merge(final KStream<K, V> stream)
+----
+
+| outerJoin
+a| [[outerJoin]]
+
+[source, java]
+----
+KStream<K, VR> outerJoin(
+  final KStream<K, VO> otherStream,
+  final ValueJoiner<? super V, ? super VO, ? extends VR> joiner,
+  final JoinWindows windows)
+KStream<K, VR> outerJoin(
+  final KStream<K, VO> otherStream,
+  final ValueJoiner<? super V, ? super VO, ? extends VR> joiner,
+  final JoinWindows windows,
+  final Joined<K, V, VO> joined)
+----
+
+| peek
+a| [[peek]]
+
+[source, java]
+----
+KStream<K, V> peek(final ForeachAction<? super K, ? super V> action)
+----
+
 | print
 a| [[print]]
 
 [source, java]
 ----
 void print(final Printed<K, V> printed);
+----
+
+| process
+a| [[process]]
+
+[source, java]
+----
+void process(
+  final ProcessorSupplier<? super K, ? super V> processorSupplier,
+  final String... stateStoreNames)
 ----
 
 | selectKey
@@ -162,11 +250,15 @@ a| [[to]]
 
 [source, java]
 ----
-void to(final String topic);
-void to(final String topic, final Produced<K, V> produced);
+void to(final String topic)
+void to(final String topic, final Produced<K, V> produced)
+void to(final TopicNameExtractor<K, V> topicExtractor)
+void to(
+  final TopicNameExtractor<K, V> topicExtractor,
+  final Produced<K, V> produced)
 ----
 
-NOTE: The specified `topic` should be manually created before the Kafka Streams application is started.
+The specified `topic` should be manually created before the Kafka Streams application is started.
 
 | transform
 a| [[transform]]
