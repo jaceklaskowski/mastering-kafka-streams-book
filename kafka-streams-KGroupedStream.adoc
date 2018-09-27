@@ -35,6 +35,8 @@ KTable<K, VR> aggregate(
   final Materialized<K, VR, KeyValueStore<Bytes, byte[]>> materialized)
 ----
 
+Creates a <<kafka-streams-KTable.adoc#, KTable>> for an `Initializer`, an `Aggregator` and a <<kafka-streams-Materialized.adoc#, Materialized>> (view of a <<kafka-streams-StateStore-KeyValueStore.adoc#, KeyValueStore>>)
+
 | count
 a| [[count]]
 
@@ -44,6 +46,8 @@ KTable<K, Long> count()
 KTable<K, Long> count(
   final Materialized<K, Long, KeyValueStore<Bytes, byte[]>> materialized)
 ----
+
+Creates a <<kafka-streams-KTable.adoc#, KTable>> for a <<kafka-streams-Materialized.adoc#, Materialized>> (view of a <<kafka-streams-StateStore-KeyValueStore.adoc#, KeyValueStore>>)
 
 | reduce
 a| [[reduce]]
@@ -56,14 +60,26 @@ KTable<K, V> reduce(
   final Materialized<K, V, KeyValueStore<Bytes, byte[]>> materialized)
 ----
 
+Creates a <<kafka-streams-KTable.adoc#, KTable>> for a `Reducer` and a <<kafka-streams-Materialized.adoc#, Materialized>> (view of a <<kafka-streams-StateStore-KeyValueStore.adoc#, KeyValueStore>>)
+
 | windowedBy
-a| [[windowedBy]]
+a| [[windowedBy]][[windowedBy-SessionWindowedKStream]]
 
 [source, java]
 ----
 SessionWindowedKStream<K, V> windowedBy(final SessionWindows windows)
+----
+Creates a <<kafka-streams-SessionWindowedKStream.adoc#, SessionWindowedKStream>> for a `SessionWindows` specification
+
+| windowedBy
+a| [[windowedBy-TimeWindowedKStream]]
+
+[source, java]
+----
 <W extends Window> TimeWindowedKStream<K, V> windowedBy(final Windows<W> windows)
 ----
+
+Creates a <<kafka-streams-TimeWindowedKStream.adoc#, TimeWindowedKStream>> for a <<kafka-streams-Windows.adoc#, Windows>> specification
 |===
 
 [[implementations]]

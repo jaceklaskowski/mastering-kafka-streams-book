@@ -54,9 +54,12 @@
 .. link:kafka-streams-ExtractRecordMetadataTimestamp.adoc[ExtractRecordMetadataTimestamp]
 .. link:kafka-streams-FailOnInvalidTimestamp.adoc[FailOnInvalidTimestamp]
 
-. link:kafka-streams-Windows.adoc[Windows -- Window Specifications]
+. link:kafka-streams-Windows.adoc[Windows -- Window Specification]
+.. link:kafka-streams-TimeWindows.adoc[TimeWindows -- Time-Bound Window Specification]
+
 . link:kafka-streams-Window.adoc[Window]
 .. link:kafka-streams-SessionWindow.adoc[SessionWindow]
+.. link:kafka-streams-TimeWindow.adoc[TimeWindow]
 
 . link:kafka-streams-SessionKeySerde.adoc[SessionKeySerde]
 

@@ -1,0 +1,56 @@
+== [[TimeWindows]] TimeWindows -- Time-Bound Window Specification
+
+`TimeWindows` is a concrete <<kafka-streams-Windows.adoc#, window specification>> of <<kafka-streams-TimeWindow.adoc#, time windows>>.
+
+[[creating-instance]]
+`TimeWindows` is described by the following properties:
+
+* [[sizeMs]] *Duration* (aka _size_) (in millis)
+* [[advanceMs]] *Advance interval* (in millis)
+
+`TimeWindows` can be created only using the <<of, of>> factory method.
+
+[source, java]
+----
+TimeWindows of(final long sizeMs) throws IllegalArgumentException
+----
+
+`of` is used to create a time specification of *tumbling windows* which are fixed-sized, gap-less, non-overlapping windows (and simply sets the <<sizeMs, sizeMs>> and <<advanceMs, advanceMs>> internal properties to the same value).
+
+`TimeWindows` can be further configured using the <<advanceBy, advanceBy>> method.
+
+[source, java]
+----
+TimeWindows advanceBy(final long advanceMs)
+----
+
+`advanceBy` allows for a time specification of *hopping windows* which are fixed-sized, overlapping windows (and simply sets the <<advanceMs, advanceMs>> internal property).
+
+[source, scala]
+----
+import org.apache.kafka.streams.kstream.TimeWindows
+import scala.concurrent.duration._
+val timeWindows = TimeWindows
+  .of(1.minute.toMillis)
+  .advanceBy(0.5.minutes.toMillis)
+----
+
+=== [[windowsFor]] `windowsFor` Method
+
+[source, java]
+----
+Map<Long, TimeWindow> windowsFor(final long timestamp)
+----
+
+NOTE: `windowsFor` is part of the <<kafka-streams-Windows.adoc#windowsFor, Windows Contract>> to...FIXME.
+
+`windowsFor`...FIXME
+
+[source, scala]
+----
+import collection.JavaConverters._
+val windows = timeWindows.windowsFor(1.minute.toMillis).asScala
+scala> windows.foreach(println)
+(30000,Window{start=30000, end=90000})
+(60000,Window{start=60000, end=120000})
+----

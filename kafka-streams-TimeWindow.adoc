@@ -1,0 +1,3 @@
+== [[TimeWindow]] TimeWindow
+
+`TimeWindow` is a concrete <<kafka-streams-Window.adoc#, window>>.

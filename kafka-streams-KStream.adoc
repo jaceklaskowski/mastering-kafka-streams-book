@@ -48,6 +48,8 @@ KGroupedStream<KR, V> groupBy(
   final Serialized<KR, V> serialized);
 ----
 
+Creates a <<kafka-streams-KGroupedStream.adoc#, KGroupedStream>> with a given <<kafka-streams-KeyValueMapper.adoc#, KeyValueMapper>>
+
 | groupByKey
 a| [[groupByKey]]
 
@@ -56,6 +58,8 @@ a| [[groupByKey]]
 KGroupedStream<K, V> groupByKey();
 KGroupedStream<K, V> groupByKey(final Serialized<K, V> serialized);
 ----
+
+Creates a <<kafka-streams-KGroupedStream.adoc#, KGroupedStream>>
 
 | join
 a| [[join]]
@@ -111,23 +115,6 @@ KStream<K, VR> leftJoin(
   final Joined<K, V, VT> joined);
 ----
 
-| transformValues
-a| [[transformValues]]
-
-[source, java]
-----
-KStream<K, VR> transformValues(
-  final ValueTransformerSupplier<? super V, ? extends VR> valueTransformerSupplier,
-  final String... stateStoreNames)
-KStream<K, VR> transformValues(
-  final ValueTransformerWithKeySupplier<? super K, ? super V, ? extends VR> valueTransformerSupplier,
-  final String... stateStoreNames)
-----
-
-Stateful record-by-record value transformation
-
-`transformValues` uses link:kafka-streams-ValueTransformerSupplier.adoc[ValueTransformerSupplier] to create a link:kafka-streams-ValueTransformer.adoc[ValueTransformer] that is used for a stateful transformation of record values in a stream.
-
 | map
 a| [[map]]
 
@@ -170,6 +157,17 @@ KStream<K, V> through(final String topic);
 KStream<K, V> through(final String topic, final Produced<K, V> produced);
 ----
 
+| to
+a| [[to]]
+
+[source, java]
+----
+void to(final String topic);
+void to(final String topic, final Produced<K, V> produced);
+----
+
+NOTE: The specified `topic` should be manually created before the Kafka Streams application is started.
+
 | transform
 a| [[transform]]
 
@@ -182,16 +180,22 @@ KStream<K1, V1> transform(
 
 Stateful record transformation
 
-| to
-a| [[to]]
+| transformValues
+a| [[transformValues]]
 
 [source, java]
 ----
-void to(final String topic);
-void to(final String topic, final Produced<K, V> produced);
+KStream<K, VR> transformValues(
+  final ValueTransformerSupplier<? super V, ? extends VR> valueTransformerSupplier,
+  final String... stateStoreNames)
+KStream<K, VR> transformValues(
+  final ValueTransformerWithKeySupplier<? super K, ? super V, ? extends VR> valueTransformerSupplier,
+  final String... stateStoreNames)
 ----
 
-NOTE: The specified `topic` should be manually created before the Kafka Streams application is started.
+Stateful record-by-record value transformation
+
+`transformValues` uses link:kafka-streams-ValueTransformerSupplier.adoc[ValueTransformerSupplier] to create a link:kafka-streams-ValueTransformer.adoc[ValueTransformer] that is used for a stateful transformation of record values in a stream.
 
 |===
 

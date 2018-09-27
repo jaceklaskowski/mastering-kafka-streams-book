@@ -1,31 +1,33 @@
-== [[Windows]] Windows -- Window Specifications
+== [[Windows]] Windows -- Window Specification
 
-`Windows` is the <<contract, base>> of <<extensions, window specifications>> that <<FIXME, FIXME>>.
+`Windows` is the <<contract, abstraction>> of <<extensions, specifications>> that define a <<kafka-streams-Window.adoc#, time window>> in <<kafka-streams-TimeWindowedKStream.adoc#, time-windowed stream aggregations>>.
 
 [[contract]]
-[source, java]
-----
-package org.apache.kafka.streams.kstream;
-
-abstract class Windows<W extends Window> {
-  // only required methods that have no implementation
-  // the others follow
-  public abstract long size();
-  public abstract Map<Long, W> windowsFor(final long timestamp);
-}
-----
-
 .(Subset of) Windows Contract
 [cols="1,2",options="header",width="100%"]
 |===
 | Method
 | Description
 
-| `size`
-| [[size]] Used when...FIXME
+| size
+a| [[size]]
 
-| `windowsFor`
-| [[windowsFor]] Used when...FIXME
+[source, java]
+----
+long size()
+----
+
+| windowsFor
+a| [[windowsFor]]
+
+[source, java]
+----
+Map<Long, W> windowsFor(final long timestamp)
+----
+
+Creates the windows that contain the provided timestamp, indexed by non-negative window start timestamps.
+
+Used when <<kafka-streams-KStreamWindowAggregateProcessor.adoc#process, KStreamWindowAggregateProcessor>> and <<kafka-streams-KStreamWindowReduceProcessor.adoc#process, KStreamWindowReduceProcessor>> are requested to process a record
 |===
 
 [[maintainMs]]
@@ -43,18 +45,18 @@ long maintainMs()
 
 [[extensions]]
 .Windows
-[cols="1,2",options="header",width="100%"]
+[cols="1m,2",options="header",width="100%"]
 |===
 | Windows
 | Description
 
-| `JoinWindows`
+| JoinWindows
 | [[JoinWindows]]
 
-| `TimeWindows`
-| [[TimeWindows]]
+| TimeWindows
+| [[TimeWindows]] Time-bound window specification for *tumbling* or *hopping windows*
 
-| `UnlimitedWindows`
+| UnlimitedWindows
 | [[UnlimitedWindows]]
 |===
 
