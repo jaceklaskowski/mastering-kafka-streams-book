@@ -11,13 +11,15 @@
 
 . link:kafka-streams-StreamsBuilder.adoc[StreamsBuilder -- High-Level Stream Processing DSL]
 . link:kafka-streams-Topology.adoc[Topology -- Processor API]
+
 . link:kafka-streams-KStream.adoc[KStream]
+. link:kafka-streams-KGroupedStream.adoc[KGroupedStream -- Basic Stream Aggregations]
+. link:kafka-streams-SessionWindowedKStream.adoc[SessionWindowedKStream]
+. link:kafka-streams-TimeWindowedKStream.adoc[TimeWindowedKStream -- Time-Windowed Stream Aggregations]
+
 . link:kafka-streams-KTable.adoc[KTable]
 . link:kafka-streams-GlobalKTable.adoc[GlobalKTable]
-. link:kafka-streams-KGroupedStream.adoc[KGroupedStream]
 . link:kafka-streams-KGroupedTable.adoc[KGroupedTable]
-. link:kafka-streams-TimeWindowedKStream.adoc[TimeWindowedKStream]
-. link:kafka-streams-SessionWindowedKStream.adoc[SessionWindowedKStream]
 
 . link:kafka-streams-scala.adoc[Scala API for Kafka Streams]
 .. link:kafka-streams-scala-Serdes.adoc[Serdes]
@@ -68,7 +70,7 @@
 . link:kafka-streams-properties.adoc[Configuration Properties]
 . link:kafka-logging.adoc[Logging]
 
-=== Developing Stateful Applications with Kafka Streams
+== Developing Stateful Applications with Kafka Streams
 
 . link:kafka-streams-StateStore.adoc[StateStore]
 .. link:kafka-streams-StateStore-AbstractStateStore.adoc[AbstractStateStore]

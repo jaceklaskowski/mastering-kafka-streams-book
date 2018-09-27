@@ -1,18 +1,45 @@
 == [[TimeWindowedKStream]] TimeWindowedKStream -- Time-Windowed Stream Aggregations
 
-`TimeWindowedKStream` is the <<contract, abstraction>> of <<implementations, windowed record stream>> (of key-value pairs) that allows Kafka Streams developers for <<aggregate, aggregate>>, <<count, count>>, <<reduce, reduce>> aggregations over a record stream.
+`TimeWindowedKStream` is the <<contract, abstraction>> of a <<implementations, windowed record stream>> that allows Kafka Streams developers for <<aggregate, aggregate>>, <<count, count>>, <<reduce, reduce>> aggregations.
 
-`TimeWindowedKStream` is the result of <<kafka-streams-KGroupedStream.adoc#windowedBy, KGroupedStream.windowedBy>> stream operator.
-
-[source, java]
-----
-// FIXME Demo
-----
+`TimeWindowedKStream` is the result of <<kafka-streams-KGroupedStream.adoc#windowedBy-TimeWindowedKStream, KGroupedStream.windowedBy>> stream operator with a <<kafka-streams-TimeWindows.adoc#, TimeWindows>> window specification.
 
 TIP: Use <<kafka-streams-scala.adoc#, Scala API for Kafka Streams>> to make your Kafka Streams development more pleasant if Scala is your programming language.
 
+[source, scala]
+----
+import org.apache.kafka.streams.kstream.TimeWindows
+import scala.concurrent.duration._
+val everyMinute = TimeWindows.of(1.minute.toMillis)
+
+import org.apache.kafka.streams.scala.StreamsBuilder
+import org.apache.kafka.streams.scala._
+import ImplicitConversions._
+import Serdes._
+val builder = new StreamsBuilder
+val windowedKStream = builder
+  .stream[String, String]("events")
+  .groupByKey
+  .windowedBy(everyMinute)
+scala> :type windowedKStream
+org.apache.kafka.streams.scala.kstream.TimeWindowedKStream[String,String]
+
+// Print out counts over 1-minute time windows to stdout
+import org.apache.kafka.streams.kstream.Printed
+import org.apache.kafka.streams.kstream.Windowed
+val stdout = Printed
+  .toSysOut[Windowed[String], Long]
+  .withLabel("[time-windows]")
+windowedKStream
+  .count
+  .toStream
+  .print(stdout)
+
+// Use println(builder.build.describe) to see the whole topology
+----
+
 [[contract]]
-.TimeWindowedKStream Operators
+.TimeWindowedKStream API / Windowed Operators
 [cols="1m,2",options="header",width="100%"]
 |===
 | Method
@@ -32,7 +59,7 @@ KTable<Windowed<K>, VR> aggregate(
   final Materialized<K, VR, WindowStore<Bytes, byte[]>> materialized)
 ----
 
-Creates a <<kafka-streams-KTable.adoc#, KTable>> for an `Initializer`, an `Aggregator` and a <<kafka-streams-Materialized.adoc#, Materialized>> (view of a <<kafka-streams-StateStore-WindowStore.adoc#, WindowStore>>)
+Creates a <<kafka-streams-KTable.adoc#, KTable>> with a given `Initializer`, `Aggregator` and <<kafka-streams-Materialized.adoc#, Materialized>> (view of a <<kafka-streams-StateStore-WindowStore.adoc#, WindowStore>>)
 
 | count
 a| [[count]]
@@ -44,7 +71,7 @@ KTable<Windowed<K>, Long> count(
   final Materialized<K, Long, WindowStore<Bytes, byte[]>> materialized)
 ----
 
-Creates a <<kafka-streams-KTable.adoc#, KTable>> for a <<kafka-streams-Materialized.adoc#, Materialized>> (view of a <<kafka-streams-StateStore-WindowStore.adoc#, WindowStore>>)
+Creates a <<kafka-streams-KTable.adoc#, KTable>> with a given <<kafka-streams-Materialized.adoc#, Materialized>> (view of a <<kafka-streams-StateStore-WindowStore.adoc#, WindowStore>>)
 
 | reduce
 a| [[reduce]]
@@ -57,7 +84,7 @@ KTable<Windowed<K>, V> reduce(
   final Materialized<K, V, WindowStore<Bytes, byte[]>> materialized)
 ----
 
-Creates a <<kafka-streams-KTable.adoc#, KTable>> for a `Reducer` and a <<kafka-streams-Materialized.adoc#, Materialized>> (view of a <<kafka-streams-StateStore-WindowStore.adoc#, WindowStore>>)
+Creates a <<kafka-streams-KTable.adoc#, KTable>> with a given `Reducer` and <<kafka-streams-Materialized.adoc#, Materialized>> (view of a <<kafka-streams-StateStore-WindowStore.adoc#, WindowStore>>)
 |===
 
 [[implementations]]

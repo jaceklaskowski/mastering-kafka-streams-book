@@ -53,7 +53,7 @@ long maintainMs()
 | JoinWindows
 | [[JoinWindows]]
 
-| TimeWindows
+| <<kafka-streams-TimeWindows.adoc#, TimeWindows>>
 | [[TimeWindows]] Time-bound window specification for *tumbling* or *hopping windows*
 
 | UnlimitedWindows

@@ -1,4 +1,4 @@
-== [[KGroupedStream]] KGroupedStream -- Basic Aggregations
+== [[KGroupedStream]] KGroupedStream -- Basic Stream Aggregations
 
 `KGroupedStream` is the <<contract, abstraction>> of a <<implementations, grouped record stream>> that allows Kafka Streams developers for <<aggregate, aggregate>>, <<count, count>>, <<reduce, reduce>> and <<windowedBy, windowedBy>> aggregations.
 
