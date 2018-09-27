@@ -1,57 +1,70 @@
 == [[KGroupedStream]] KGroupedStream -- Basic Aggregations
 
-`KGroupedStream` is the <<contract, contract>> of <<implementations, KStreams>> that allows Kafka Streams developers for <<aggregate, aggregate>>, <<count, count>>, <<reduce, reduce>> and <<windowedBy, windowedBy>> aggregations over a record stream.
+`KGroupedStream` is the <<contract, abstraction>> of <<implementations, grouped record stream>> (of key-value pairs) that allows Kafka Streams developers for <<aggregate, aggregate>>, <<count, count>>, <<reduce, reduce>> and <<windowedBy, windowedBy>> aggregations over a record stream.
 
-`KGroupedStream` is created using the following aggregate stream operators:
+`KGroupedStream` is the result of the following aggregate stream operators:
 
-* link:kafka-streams-KStream.adoc#groupBy[KStream.groupBy]
-* link:kafka-streams-KStream.adoc#groupByKey[KStream.groupByKey]
+* <<kafka-streams-KStream.adoc#groupBy, KStream.groupBy>>
+* <<kafka-streams-KStream.adoc#groupByKey, KStream.groupByKey>>
 
-[[contract]]
 [source, java]
 ----
-package org.apache.kafka.streams.kstream;
-
-interface KGroupedStream<K, V> {
-  // Deprecated methods are not listed
-  <VR> KTable<K, VR> aggregate(
-    final Initializer<VR> initializer,
-    final Aggregator<? super K, ? super V, VR> aggregator);
-  <VR> KTable<K, VR> aggregate(
-    final Initializer<VR> initializer,
-    final Aggregator<? super K, ? super V, VR> aggregator,
-    final Materialized<K, VR, KeyValueStore<Bytes, byte[]>> materialized);
-  KTable<K, Long> count();
-  KTable<K, Long> count(final Materialized<K, Long, KeyValueStore<Bytes, byte[]>> materialized);
-  KTable<K, V> reduce(final Reducer<V> reducer);
-  KTable<K, V> reduce(
-    final Reducer<V> reducer,
-    final Materialized<K, V, KeyValueStore<Bytes, byte[]>> materialized);
-  SessionWindowedKStream<K, V> windowedBy(final SessionWindows windows);
-  <W extends Window> TimeWindowedKStream<K, V> windowedBy(final Windows<W> windows);
-}
+// FIXME Demo
 ----
 
-NOTE: `KGroupedStream` is an `Evolving` contract which means that compatibility may be broken at a minor release.
+TIP: Use <<kafka-streams-scala.adoc#, Scala API for Kafka Streams>> to make your Kafka Streams development more pleasant if Scala is your programming language.
 
-.KGroupedStream Contract
+[[contract]]
+.KGroupedStream Operators
 [cols="1,2",options="header",width="100%"]
 |===
 | Method
 | Description
 
-| `aggregate`
-| [[aggregate]]
+| aggregate
+a| [[aggregate]]
 
-| `count`
-| [[count]]
+[source, java]
+----
+KTable<K, VR> aggregate(
+  final Initializer<VR> initializer,
+  final Aggregator<? super K, ? super V, VR> aggregator)
+KTable<K, VR> aggregate(
+  final Initializer<VR> initializer,
+  final Aggregator<? super K, ? super V, VR> aggregator,
+  final Materialized<K, VR, KeyValueStore<Bytes, byte[]>> materialized)
+----
 
-| `reduce`
-| [[reduce]]
+| count
+a| [[count]]
 
-| `windowedBy`
-| [[windowedBy]]
+[source, java]
+----
+KTable<K, Long> count()
+KTable<K, Long> count(
+  final Materialized<K, Long, KeyValueStore<Bytes, byte[]>> materialized)
+----
+
+| reduce
+a| [[reduce]]
+
+[source, java]
+----
+KTable<K, V> reduce(final Reducer<V> reducer)
+KTable<K, V> reduce(
+  final Reducer<V> reducer,
+  final Materialized<K, V, KeyValueStore<Bytes, byte[]>> materialized)
+----
+
+| windowedBy
+a| [[windowedBy]]
+
+[source, java]
+----
+SessionWindowedKStream<K, V> windowedBy(final SessionWindows windows)
+<W extends Window> TimeWindowedKStream<K, V> windowedBy(final Windows<W> windows)
+----
 |===
 
 [[implementations]]
-NOTE: link:kafka-streams-KGroupedStreamImpl.adoc[KGroupedStreamImpl] is the one and only known implementation of <<contract, KGroupedStream Contract>> in Kafka Streams {{ book.kafka_version }}.
+NOTE: <<kafka-streams-KGroupedStreamImpl.adoc#, KGroupedStreamImpl>> is the one and only known implementation of the <<contract, KGroupedStream Contract>> in Kafka Streams {{ book.kafka_version }}.

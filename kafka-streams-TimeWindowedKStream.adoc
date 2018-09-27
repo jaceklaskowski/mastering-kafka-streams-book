@@ -1,8 +1,8 @@
 == [[TimeWindowedKStream]] TimeWindowedKStream -- Time-Windowed Stream Aggregations
 
-`TimeWindowedKStream` is the <<contract, abstraction>> of <<implementations, windowed stream of KeyValue pairs>> that allows Kafka Streams developers for <<aggregate, aggregate>>, <<count, count>>, <<reduce, reduce>> aggregations over a record stream.
+`TimeWindowedKStream` is the <<contract, abstraction>> of <<implementations, windowed record stream>> (of key-value pairs) that allows Kafka Streams developers for <<aggregate, aggregate>>, <<count, count>>, <<reduce, reduce>> aggregations over a record stream.
 
-`TimeWindowedKStream` is the result of <<kafka-streams-KGroupedStream.adoc#windowedBy, KGroupedStream.windowedBy>> operator.
+`TimeWindowedKStream` is the result of <<kafka-streams-KGroupedStream.adoc#windowedBy, KGroupedStream.windowedBy>> stream operator.
 
 [source, java]
 ----
@@ -12,7 +12,7 @@
 TIP: Use <<kafka-streams-scala.adoc#, Scala API for Kafka Streams>> to make your Kafka Streams development more pleasant if Scala is your programming language.
 
 [[contract]]
-.TimeWindowedKStream Contract
+.TimeWindowedKStream Operators
 [cols="1m,2",options="header",width="100%"]
 |===
 | Method
@@ -55,4 +55,4 @@ KTable<Windowed<K>, V> reduce(
 |===
 
 [[implementations]]
-NOTE: <<kafka-streams-TimeWindowedKStreamImpl.adoc#, TimeWindowedKStreamImpl>> is the one and only known implementation of the <<contract, TimeWindowedKStream Contract>>.
+NOTE: <<kafka-streams-TimeWindowedKStreamImpl.adoc#, TimeWindowedKStreamImpl>> is the one and only known implementation of the <<contract, TimeWindowedKStream Contract>> in Kafka Streams {{ book.kafka_version }}.

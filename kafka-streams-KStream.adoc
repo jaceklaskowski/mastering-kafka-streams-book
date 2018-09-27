@@ -1,12 +1,14 @@
 == [[KStream]] KStream
 
-`KStream` is an abstraction of a *record stream* of key-value pairs (where each record is an independent entity or event in the real world).
+`KStream` is the <<contract, abstraction>> of a *record stream* (of key-value pairs).
 
 `KStream` can be created directly from one or many Kafka topics (using link:kafka-streams-StreamsBuilder.adoc#stream[StreamsBuilder.stream] operator) or as a result of <<operators, transformations>> on an existing `KStream`.
 
+TIP: Use <<kafka-streams-scala.adoc#, Scala API for Kafka Streams>> to make your Kafka Streams development more pleasant if Scala is your programming language.
+
 [source, scala]
 ----
-import org.apache.kafka.streams.StreamsBuilder
+import org.apache.kafka.streams.scala.StreamsBuilder
 val builder = new StreamsBuilder
 
 import org.apache.kafka.streams.kstream.KStream
@@ -16,9 +18,6 @@ val input: KStream[String, String] = builder.stream("input")
 ----
 
 `KStream` comes with a rich set of <<operators, operators>> (aka _KStream API_) that allow for building topologies to consume, process and produce key-value records.
-
-[[implementations]]
-NOTE: link:kafka-streams-KStreamImpl.adoc[KStreamImpl] is the one and only known implementation of <<contract, KStream Contract>> in Kafka Streams {{ book.kafka_version }}.
 
 [[contract]]
 [[operators]]
@@ -195,3 +194,6 @@ void to(final String topic, final Produced<K, V> produced);
 NOTE: The specified `topic` should be manually created before the Kafka Streams application is started.
 
 |===
+
+[[implementations]]
+NOTE: link:kafka-streams-KStreamImpl.adoc[KStreamImpl] is the one and only known implementation of the <<contract, KStream Contract>> in Kafka Streams {{ book.kafka_version }}.
