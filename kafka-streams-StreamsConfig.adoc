@@ -25,8 +25,17 @@ val conf = new StreamsConfig(props)
 | [[APPLICATION_SERVER_CONFIG]] APPLICATION_SERVER_CONFIG
 | <<kafka-streams-properties.adoc#application.server, application.server>>
 
+| [[CACHE_MAX_BYTES_BUFFERING_CONFIG]] CACHE_MAX_BYTES_BUFFERING_CONFIG
+| <<kafka-streams-properties.adoc#cache.max.bytes.buffering, cache.max.bytes.buffering>>
+
 | [[COMMIT_INTERVAL_MS_CONFIG]] COMMIT_INTERVAL_MS_CONFIG
 | <<kafka-streams-properties.adoc#commit.interval.ms, commit.interval.ms>>
+
+| [[DEFAULT_WINDOWED_KEY_SERDE_INNER_CLASS]] DEFAULT_WINDOWED_KEY_SERDE_INNER_CLASS
+| <<kafka-streams-properties.adoc#default.windowed.key.serde.inner, default.windowed.key.serde.inner>>
+
+| [[DEFAULT_WINDOWED_VALUE_SERDE_INNER_CLASS]] DEFAULT_WINDOWED_VALUE_SERDE_INNER_CLASS
+| <<kafka-streams-properties.adoc#default.windowed.value.serde.inner, default.windowed.value.serde.inner>>
 
 | [[DEFAULT_TIMESTAMP_EXTRACTOR_CLASS_CONFIG]] DEFAULT_TIMESTAMP_EXTRACTOR_CLASS_CONFIG
 | <<kafka-streams-properties.adoc#default.timestamp.extractor, default.timestamp.extractor>>

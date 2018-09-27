@@ -23,6 +23,12 @@ Used when `StreamPartitionAssignor` is requested to link:kafka-streams-StreamsPa
 
 Use <<kafka-streams-StreamsConfig.adoc#APPLICATION_SERVER_CONFIG, StreamsConfig.APPLICATION_SERVER_CONFIG>> to reference the property.
 
+| cache.max.bytes.buffering
+| `10MB` (10 * 1024 * 1024L)
+| [[cache.max.bytes.buffering]] Maximum number of memory bytes to be used for buffering across all (processor and global) threads
+
+Use <<kafka-streams-StreamsConfig.adoc#CACHE_MAX_BYTES_BUFFERING_CONFIG, StreamsConfig.CACHE_MAX_BYTES_BUFFERING_CONFIG>> to reference the property.
+
 | commit.interval.ms
 a|
 * `100L` when <<processing.guarantee, processing.guarantee>> is <<exactly_once, exactly_once>> (which is not by default)
@@ -32,6 +38,18 @@ a| [[commit.interval.ms]] *Flush interval* or *commit interval* (in millis), i.e
 Use <<kafka-streams-StreamsConfig.adoc#COMMIT_INTERVAL_MS_CONFIG, StreamsConfig.COMMIT_INTERVAL_MS_CONFIG>> to reference the property.
 
 If the commit interval is negative, `StreamThread` will never <<kafka-streams-StreamThread.adoc#maybeCommit, commit tasks>>.
+
+| default.windowed.key.serde.inner
+| (empty)
+| [[default.windowed.key.serde.inner]] Inner serde class that implements the `org.apache.kafka.common.serialization.Serde` interface
+
+Use <<kafka-streams-StreamsConfig.adoc#DEFAULT_WINDOWED_KEY_SERDE_INNER_CLASS, StreamsConfig.DEFAULT_WINDOWED_KEY_SERDE_INNER_CLASS>> to reference the property.
+
+| default.windowed.value.serde.inner
+| (empty)
+| [[default.windowed.value.serde.inner]] Inner serde class that implements the `org.apache.kafka.common.serialization.Serde` interface
+
+Use <<kafka-streams-StreamsConfig.adoc#DEFAULT_WINDOWED_VALUE_SERDE_INNER_CLASS, StreamsConfig.DEFAULT_WINDOWED_VALUE_SERDE_INNER_CLASS>> to reference the property.
 
 | default.timestamp.extractor
 | <<kafka-streams-FailOnInvalidTimestamp.adoc#, FailOnInvalidTimestamp>>

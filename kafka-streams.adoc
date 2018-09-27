@@ -73,7 +73,7 @@ On the inside, the `KafkaStreams` object creates a <<kafka-streams-StateDirector
 
 `KafkaStreams` uses <<kafka-streams-properties.adoc#num.stream.threads, num.stream.threads>> configuration property for the number of `StreamThreads` to create (default: `1` processing thread).
 
-A single `StreamThread` creates a restore Kafka Consumer (`restoreConsumer`), a <<kafka-streams-StoreChangelogReader.adoc#, StoreChangelogReader>>, a <<kafka-streams-StreamsMetricsThreadImpl.adoc#, StreamsMetricsThreadImpl>>, a `ThreadCache`, a <<kafka-streams-TaskCreator.adoc#, TaskCreator>> (for <<kafka-streams-StreamTask.adoc#, StreamTasks>>), a <<kafka-streams-StandbyTaskCreator.adoc#, StandbyTaskCreator>> (for <<kafka-streams-StandbyTask.adoc#, StandbyTasks>>) and the <<kafka-streams-TaskManager.adoc#, TaskManager>>.
+A single `StreamThread` creates a restore Kafka Consumer (`restoreConsumer`), a <<kafka-streams-StoreChangelogReader.adoc#, StoreChangelogReader>>, a <<kafka-streams-StreamsMetricsThreadImpl.adoc#, StreamsMetricsThreadImpl>>, a <<kafka-streams-ThreadCache.adoc#, ThreadCache>>, a <<kafka-streams-TaskCreator.adoc#, TaskCreator>> (for <<kafka-streams-StreamTask.adoc#, StreamTasks>>), a <<kafka-streams-StandbyTaskCreator.adoc#, StandbyTaskCreator>> (for <<kafka-streams-StandbyTask.adoc#, StandbyTasks>>) and the <<kafka-streams-TaskManager.adoc#, TaskManager>>.
 
 It is through the <<kafka-streams-TaskManager.adoc#, TaskManager>> that a `StreamThread` manages the <<kafka-streams-TaskManager.adoc#active, active stream tasks>> and <<kafka-streams-TaskManager.adoc#process, processes records>>.
 

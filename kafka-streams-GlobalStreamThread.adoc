@@ -4,6 +4,17 @@
 
 `GlobalStreamThread` is <<creating-instance, created>> exclusively when `KafkaStreams` is <<kafka-streams-KafkaStreams.adoc#globalStreamThread, created>>.
 
+[[internal-registries]]
+.GlobalStreamThread's Internal Properties (e.g. Registries, Counters and Flags)
+[cols="1m,2",options="header",width="100%"]
+|===
+| Name
+| Description
+
+| cache
+| [[cache]] <<kafka-streams-ThreadCache.adoc#, ThreadCache>>
+|===
+
 === [[initialize]] `initialize` Internal Method
 
 [source, java]

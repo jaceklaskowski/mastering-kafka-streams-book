@@ -1,0 +1,21 @@
+== [[ThreadCache]] ThreadCache
+
+`ThreadCache` is...FIXME
+
+`ThreadCache` is <<creating-instance, created>> when:
+
+* `GlobalStreamThread` is <<kafka-streams-GlobalStreamThread.adoc#cache, created>>
+
+* `StandbyContextImpl` is <<kafka-streams-StandbyContextImpl.adoc#, created>> (as a <<kafka-streams-AbstractProcessorContext.adoc#cache, AbstractProcessorContext>>)
+
+* `StreamThread` is <<kafka-streams-StreamThread.adoc#create, created>> (and creates a <<kafka-streams-TaskCreator.adoc#cache, TaskCreator>>)
+
+=== [[creating-instance]] Creating ThreadCache Instance
+
+`ThreadCache` takes the following when created:
+
+* [[logContext]] `LogContext`
+* [[maxCacheSizeBytes]] `maxCacheSizeBytes`
+* [[metrics]] <<kafka-streams-StreamsMetricsImpl.adoc#, StreamsMetricsImpl>>
+
+`ThreadCache` initializes the <<internal-registries, internal registries and counters>>.

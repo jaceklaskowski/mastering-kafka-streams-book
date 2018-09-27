@@ -54,3 +54,20 @@ scala> windows.foreach(println)
 (30000,Window{start=30000, end=90000})
 (60000,Window{start=60000, end=120000})
 ----
+
+=== [[until]] Setting Window Maintain Duration (Retention Time) -- `until` Method
+
+[source, java]
+----
+TimeWindows until(final long durationMs)
+----
+
+NOTE: `until` is part of the <<kafka-streams-Windows.adoc#until, Windows Contract>> to set the window maintain duration (retention time).
+
+`until` simply makes sure that the input `durationMs` is at least the <<sizeMs, size>> of the window and executes the parent's <<kafka-streams-Windows.adoc#until, until>>.
+
+`until` throws an `IllegalArgumentException` when the input `durationMs` is smaller than the <<sizeMs, size>>:
+
+```
+Window retention time (durationMs) cannot be smaller than the window size.
+```

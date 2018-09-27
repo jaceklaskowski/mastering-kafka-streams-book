@@ -1,9 +1,9 @@
 == [[Windows]] Windows -- Window Specification
 
-`Windows` is the <<contract, abstraction>> of <<extensions, specifications>> that define a <<kafka-streams-Window.adoc#, time window>> in <<kafka-streams-TimeWindowedKStream.adoc#, time-windowed stream aggregations>>.
+`Windows` is the <<contract, abstraction>> of <<extensions, window specifications>> that describe a <<kafka-streams-Window.adoc#, time window>> in <<kafka-streams-TimeWindowedKStream.adoc#, time-windowed stream aggregations>>.
 
 [[contract]]
-.(Subset of) Windows Contract
+.Windows API / Operators
 [cols="1,2",options="header",width="100%"]
 |===
 | Method
@@ -16,6 +16,16 @@ a| [[size]]
 ----
 long size()
 ----
+
+| <<until-detailed, until>>
+a| [[until]]
+
+[source, java]
+----
+Windows<W> until(final long durationMs)
+----
+
+Sets the <<maintainDurationMs, window maintain duration>> (aka _retention time_)
 
 | windowsFor
 a| [[windowsFor]]
@@ -33,12 +43,14 @@ Used when <<kafka-streams-KStreamWindowAggregateProcessor.adoc#process, KStreamW
 [[maintainMs]]
 [[DEFAULT_MAINTAIN_DURATION_MS]]
 [[window-maintain-duration]]
-`Windows` defines a *window maintain duration* (aka *retention time*) in milliseconds. The default window maintain duration is `1 day`. You can access the current window maintain duration using `maintainMs` method.
+`Windows` defines a *window maintain duration* (aka *retention time*) that is available using `maintainMs` method.
 
 [source, java]
 ----
 long maintainMs()
 ----
+
+The default window maintain duration is `1 day`.
 
 [[DEFAULT_NUM_SEGMENTS]]
 `Windows` defaults to `3` for the <<segments, number of segments>>.
@@ -67,21 +79,21 @@ NOTE: `Windows` is a Java abstract class and cannot be <<creating-instance, crea
 
 [[internal-registries]]
 .Windows's Internal Properties (e.g. Registries, Counters and Flags)
-[cols="1,1,2",options="header",width="100%"]
+[cols="1m,1,2",options="header",width="100%"]
 |===
 | Name
 | Default Value
 | Description
 
-| `maintainDurationMs`
+| maintainDurationMs
 | <<DEFAULT_MAINTAIN_DURATION_MS, 1 day>>
 | [[maintainDurationMs]] <<window-maintain-duration, Window maintain duration>> (aka *retention time*) in milliseconds
 
-Can be changed using <<until, until>> method.
+Set using <<until, until>> method.
 
 Use <<maintainMs, maintainMs>> accessor to get the current value.
 
-| `segments`
+| segments
 | <<DEFAULT_NUM_SEGMENTS, 3>>
 a| [[segments]] Number of segments
 
@@ -107,13 +119,17 @@ Windows<W> segments(final int segments) throws IllegalArgumentException
 
 NOTE: `segments` is used when...FIXME
 
-=== [[until]] `until` Method
+=== [[until-detailed]] Setting Window Maintain Duration (Retention Time) -- `until` Method
 
 [source, java]
 ----
 Windows<W> until(final long durationMs) throws IllegalArgumentException
 ----
 
-`until`...FIXME
+`until` simply sets the <<maintainDurationMs, maintainDurationMs>> internal property (to the input `durationMs`).
 
-NOTE: `until` is used when...FIXME
+`until` throws a `IllegalArgumentException` if the input `durationMs` is negative:
+
+```
+Window retention time (durationMs) cannot be negative.
+```

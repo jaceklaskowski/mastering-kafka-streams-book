@@ -16,4 +16,4 @@
 
 `join`...FIXME
 
-NOTE: `join` is used when...FIXME
+NOTE: `join` is used exclusively when `KStreamImpl` is requested to <<kafka-streams-KStreamImpl.adoc#doJoin, doJoin>>.

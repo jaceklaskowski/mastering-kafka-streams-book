@@ -94,7 +94,7 @@ NOTE: `uninitialize` is part of the <<kafka-streams-InternalProcessorContext.ado
 * [[config]] <<kafka-streams-StreamsConfig.adoc#, StreamsConfig>>
 * [[metrics]] <<kafka-streams-StreamsMetricsImpl.adoc#, StreamsMetricsImpl>>
 * [[stateManager]] <<kafka-streams-StateManager.adoc#, StateManager>>
-* [[cache]] `ThreadCache`
+* [[cache]] <<kafka-streams-ThreadCache.adoc#, ThreadCache>>
 
 `AbstractProcessorContext` initializes the <<internal-registries, internal registries and counters>>.
 

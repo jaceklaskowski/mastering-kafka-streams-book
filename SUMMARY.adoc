@@ -246,6 +246,8 @@
 .. link:kafka-streams-ProcessorContextImpl.adoc[ProcessorContextImpl]
 .. link:kafka-streams-StandbyContextImpl.adoc[StandbyContextImpl]
 
+. link:kafka-streams-ThreadCache.adoc[ThreadCache]
+
 . link:kafka-streams-GlobalStreamThread.adoc[GlobalStreamThread]
 .. link:kafka-streams-StateConsumer.adoc[StateConsumer]
 

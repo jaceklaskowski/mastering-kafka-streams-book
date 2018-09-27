@@ -113,7 +113,7 @@ NOTE: `close` is part of link:kafka-streams-Task.adoc#close[Task Contract] to...
 * [[config]] link:kafka-streams-StreamsConfig.adoc[StreamsConfig]
 * [[metrics]] link:kafka-streams-StreamsMetrics.adoc[StreamsMetrics]
 * [[stateDirectory]] link:kafka-streams-StateDirectory.adoc[StateDirectory]
-* [[cache]] `ThreadCache`
+* [[cache]] <<kafka-streams-ThreadCache.adoc#, ThreadCache>>
 * [[time]] `Time`
 * [[producer]] Kafka `Producer` (of keys and values as array of bytes)
 

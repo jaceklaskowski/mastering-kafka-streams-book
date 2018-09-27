@@ -1,6 +1,6 @@
 == [[KStreamImpl]] KStreamImpl
 
-`KStreamImpl` is the one and only link:kafka-streams-KStream.adoc[KStream] in Kafka Streams {{ book.kafka_version }}.
+`KStreamImpl` is a concrete <<kafka-streams-AbstractStream.adoc#, AbstractStream>> and the one and only <<kafka-streams-KStream.adoc#, KStream>>.
 
 `KStreamImpl` is <<creating-instance, created>> every time a transformation is executed and when...FIXME
 
@@ -43,7 +43,7 @@ NOTE: `doStreamTableJoin` is used when...FIXME
 
 `doJoin`...FIXME
 
-NOTE: `doJoin` is used when...FIXME
+NOTE: `doJoin` is used when `KStreamImpl` is requested to <<join, join>>, <<outerJoin, outerJoin>> and <<leftJoin, leftJoin>>.
 
 === [[transformValues]] Transforming Values with Optional State -- `transformValues` Method
 
@@ -270,4 +270,4 @@ In the end, `createReparitionedSource` returns the source name.
 
 `createWindowedStateStore`...FIXME
 
-NOTE: `createWindowedStateStore` is used when...FIXME
+NOTE: `createWindowedStateStore` is used exclusively when `KStreamImplJoin` is requested to <<kafka-streams-KStreamImplJoin.adoc#join, join>>.

@@ -30,7 +30,7 @@ NOTE: `createTask` is part of link:kafka-streams-AbstractTaskCreator.adoc#create
 * [[stateDirectory]] link:kafka-streams-StateDirectory.adoc[StateDirectory]
 * [[taskCreatedSensor]] `Sensor`
 * [[storeChangelogReader]] <<kafka-streams-ChangelogReader.adoc#, ChangelogReader>>
-* [[cache]] `ThreadCache`
+* [[cache]] <<kafka-streams-ThreadCache.adoc#, ThreadCache>>
 * [[time]] `Time`
 * [[clientSupplier]] link:kafka-streams-KafkaClientSupplier.adoc[KafkaClientSupplier]
 * [[threadProducer]] Kafka https://kafka.apache.org/20/javadoc/org/apache/kafka/clients/producer/Producer.html[Producer] (`Producer<byte[], byte[]>`)
