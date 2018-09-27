@@ -1,22 +1,31 @@
 == [[KGroupedStream]] KGroupedStream -- Basic Aggregations
 
-`KGroupedStream` is the <<contract, abstraction>> of <<implementations, grouped record stream>> (of key-value pairs) that allows Kafka Streams developers for <<aggregate, aggregate>>, <<count, count>>, <<reduce, reduce>> and <<windowedBy, windowedBy>> aggregations over a record stream.
+`KGroupedStream` is the <<contract, abstraction>> of a <<implementations, grouped record stream>> that allows Kafka Streams developers for <<aggregate, aggregate>>, <<count, count>>, <<reduce, reduce>> and <<windowedBy, windowedBy>> aggregations.
 
 `KGroupedStream` is the result of the following aggregate stream operators:
 
 * <<kafka-streams-KStream.adoc#groupBy, KStream.groupBy>>
 * <<kafka-streams-KStream.adoc#groupByKey, KStream.groupByKey>>
 
-[source, java]
-----
-// FIXME Demo
-----
-
 TIP: Use <<kafka-streams-scala.adoc#, Scala API for Kafka Streams>> to make your Kafka Streams development more pleasant if Scala is your programming language.
 
+[source, scala]
+----
+import org.apache.kafka.streams.scala.StreamsBuilder
+import org.apache.kafka.streams.scala._
+import ImplicitConversions._
+import Serdes._
+val builder = new StreamsBuilder
+val groupedKStream = builder
+  .stream[String, String]("events")
+  .groupByKey
+scala> :type groupedKStream
+org.apache.kafka.streams.scala.kstream.KGroupedStream[String,String]
+----
+
 [[contract]]
-.KGroupedStream Operators
-[cols="1,2",options="header",width="100%"]
+.KGroupedStream API / Aggregation Operators
+[cols="1m,2",options="header",width="100%"]
 |===
 | Method
 | Description
@@ -35,7 +44,7 @@ KTable<K, VR> aggregate(
   final Materialized<K, VR, KeyValueStore<Bytes, byte[]>> materialized)
 ----
 
-Creates a <<kafka-streams-KTable.adoc#, KTable>> for an `Initializer`, an `Aggregator` and a <<kafka-streams-Materialized.adoc#, Materialized>> (view of a <<kafka-streams-StateStore-KeyValueStore.adoc#, KeyValueStore>>)
+Creates a <<kafka-streams-KTable.adoc#, KTable>> with a given `Initializer`, `Aggregator` and <<kafka-streams-Materialized.adoc#, Materialized>> (view of a <<kafka-streams-StateStore-KeyValueStore.adoc#, KeyValueStore>>)
 
 | count
 a| [[count]]
@@ -47,7 +56,7 @@ KTable<K, Long> count(
   final Materialized<K, Long, KeyValueStore<Bytes, byte[]>> materialized)
 ----
 
-Creates a <<kafka-streams-KTable.adoc#, KTable>> for a <<kafka-streams-Materialized.adoc#, Materialized>> (view of a <<kafka-streams-StateStore-KeyValueStore.adoc#, KeyValueStore>>)
+Creates a <<kafka-streams-KTable.adoc#, KTable>> with a given <<kafka-streams-Materialized.adoc#, Materialized>> (view of a <<kafka-streams-StateStore-KeyValueStore.adoc#, KeyValueStore>>)
 
 | reduce
 a| [[reduce]]
@@ -60,7 +69,7 @@ KTable<K, V> reduce(
   final Materialized<K, V, KeyValueStore<Bytes, byte[]>> materialized)
 ----
 
-Creates a <<kafka-streams-KTable.adoc#, KTable>> for a `Reducer` and a <<kafka-streams-Materialized.adoc#, Materialized>> (view of a <<kafka-streams-StateStore-KeyValueStore.adoc#, KeyValueStore>>)
+Creates a <<kafka-streams-KTable.adoc#, KTable>> with a given `Reducer` and <<kafka-streams-Materialized.adoc#, Materialized>> (view of a <<kafka-streams-StateStore-KeyValueStore.adoc#, KeyValueStore>>)
 
 | windowedBy
 a| [[windowedBy]][[windowedBy-SessionWindowedKStream]]
@@ -69,7 +78,8 @@ a| [[windowedBy]][[windowedBy-SessionWindowedKStream]]
 ----
 SessionWindowedKStream<K, V> windowedBy(final SessionWindows windows)
 ----
-Creates a <<kafka-streams-SessionWindowedKStream.adoc#, SessionWindowedKStream>> for a `SessionWindows` specification
+
+Creates a <<kafka-streams-SessionWindowedKStream.adoc#, SessionWindowedKStream>> with a given `SessionWindows` window specification
 
 | windowedBy
 a| [[windowedBy-TimeWindowedKStream]]
@@ -79,7 +89,7 @@ a| [[windowedBy-TimeWindowedKStream]]
 <W extends Window> TimeWindowedKStream<K, V> windowedBy(final Windows<W> windows)
 ----
 
-Creates a <<kafka-streams-TimeWindowedKStream.adoc#, TimeWindowedKStream>> for a <<kafka-streams-Windows.adoc#, Windows>> specification
+Creates a <<kafka-streams-TimeWindowedKStream.adoc#, TimeWindowedKStream>> with a given <<kafka-streams-Windows.adoc#, Windows>> window specification
 |===
 
 [[implementations]]

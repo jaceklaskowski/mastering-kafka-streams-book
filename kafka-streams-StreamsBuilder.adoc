@@ -7,7 +7,7 @@
 TIP: Use <<kafka-streams-scala.adoc#, Scala API for Kafka Streams>> to make your Kafka Streams development more pleasant if Scala is your programming language.
 
 [[operators]]
-.StreamsBuilder's Operators
+.StreamsBuilder API / Operators
 [cols="1,2",options="header",width="100%"]
 |===
 | Operator
