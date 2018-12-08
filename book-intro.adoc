@@ -1,6 +1,6 @@
-== Mastering Kafka Streams {{ book.kafka_version }}
+== The Internals of Kafka Streams {{ book.kafka_version }}
 
-Welcome to *Mastering Kafka Streams* gitbook! I'm very excited to have you here and hope you will enjoy exploring the internals of Kafka Streams as much as I have.
+Welcome to *The Internals of Kafka Streams* gitbook! I'm very excited to have you here and hope you will enjoy exploring the internals of Kafka Streams as much as I have.
 
 I'm https://pl.linkedin.com/in/jaceklaskowski[Jacek Laskowski], an independent consultant, software developer and technical instructor specializing in Apache Spark, Apache Kafka and *Kafka Streams* (with Scala, sbt, Kubernetes and a bit of Apache Mesos, DC/OS, Hadoop YARN).
 
@@ -8,10 +8,8 @@ I offer software development and consultancy services with https://github.com/ja
 
 Consider joining me at http://www.meetup.com/WarsawScala/[Warsaw Scala Enthusiasts] and http://www.meetup.com/Warsaw-Spark[Warsaw Spark] meetups in Warsaw, Poland.
 
-TIP: I'm also writing https://bit.ly/mastering-apache-spark[Mastering Apache Spark 2], https://bit.ly/mastering-spark-sql[Mastering Spark SQL], https://bit.ly/mastering-apache-kafka[Apache Kafka Notebook] and https://bit.ly/spark-structured-streaming[Spark Structured Streaming Notebook] gitbooks.
-
-This collections of notes (what some may rashly call a "book") serves as the ultimate place of mine to collect all the nuts and bolts of using https://kafka.apache.org/documentation/streams/[Kafka Streams] in your projects. The notes help me designing and developing better products with Kafka Streams. They are also a viable proof of my understanding of Kafka Streams (which I believe will help me reaching the highest level of mastery in Kafka Streams).
+TIP: I'm also writing https://bit.ly/mastering-apache-kafka[The Internals of Apache Kafka], https://bit.ly/mastering-apache-spark[Mastering Apache Spark], https://bit.ly/mastering-spark-sql[The Internals of Spark SQL], and https://bit.ly/spark-structured-streaming[The Internals of Spark Structured Streaming] gitbooks.
 
 Expect text and code snippets from a variety of public sources. Attribution follows.
 
-Now, let me introduce you to link:kafka-streams.adoc[Kafka Streams].
+Now, let me introduce you to <<kafka-streams.adoc#, Kafka Streams>>.
