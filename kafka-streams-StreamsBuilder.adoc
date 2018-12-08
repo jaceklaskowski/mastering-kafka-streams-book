@@ -65,7 +65,7 @@ GlobalKTable<K, V> globalTable(
   final Materialized<K, V, KeyValueStore<Bytes, byte[]>> materialized)
 ----
 
-Creates a <<kafka-streams-GlobalKTable.adoc#, GlobalKTable>>
+Adds a <<kafka-streams-GlobalKTable.adoc#, GlobalKTable>> to the topology
 
 | <<stream-detailed, stream>>
 a| [[stream]]
@@ -166,7 +166,7 @@ KTable<K, V> table(
 
 `table`...FIXME
 
-=== [[globalTable-internals]] Creating GlobalKTable -- `globalTable` Method
+=== [[globalTable-internals]] Adding GlobalKTable to Topology -- `globalTable` Method
 
 [source, java]
 ----
@@ -183,29 +183,74 @@ GlobalKTable<K, V> globalTable(
   final Materialized<K, V, KeyValueStore<Bytes, byte[]>> materialized)
 ----
 
-`globalTable`...FIXME
+`globalTable` creates an <<kafka-streams-ConsumedInternal.adoc#, ConsumedInternal>> for the given <<kafka-streams-Consumed.adoc#, Consumed>>.
+
+`globalTable` creates a new <<kafka-streams-MaterializedInternal.adoc#, MaterializedInternal>> (with a new <<kafka-streams-Materialized.adoc#, Materialized>> with the `keySerde` and the `valueSerde` of the `ConsumedInternal`).
+
+NOTE: The new <<kafka-streams-MaterializedInternal.adoc#, MaterializedInternal>> uses `KeyValueStore<Bytes, byte[]>` <<kafka-streams-StateStore.adoc#, StateStore>>.
+
+`globalTable` requests the `MaterializedInternal` to <<kafka-streams-MaterializedInternal.adoc#generateStoreNameIfNeeded, generateStoreNameIfNeeded>> (with the <<internalStreamsBuilder, InternalStreamsBuilder>> and the input `topic` name).
+
+In the end, `globalTable` requests the <<internalStreamsBuilder, InternalStreamsBuilder>> to <<kafka-streams-InternalStreamsBuilder.adoc#globalTable, add a GlobalKTable to the topology>> (with the `topic` name, the `ConsumedInternal` and the `MaterializedInternal`).
 
 .Demo: Non-queryable GlobalKTable
 [source, scala]
 ----
-import org.apache.kafka.streams.StreamsBuilder
+import org.apache.kafka.streams.scala._
+import ImplicitConversions._
+import Serdes._
+
+import org.apache.kafka.streams.scala.StreamsBuilder
 val builder = new StreamsBuilder
-val globalTable = builder.globalTable[String, String]("global-table")
+
+val globalTable = builder.globalTable[String, String](topic = "global-table")
+scala> :type globalTable
+org.apache.kafka.streams.kstream.GlobalKTable[String,String]
+
+assert(globalTable.queryableStoreName == null)
+
 val topology = builder.build
 scala> println(topology.describe)
 Topologies:
    Sub-topology: 0 for global store (will not generate tasks)
-    Source: KSTREAM-SOURCE-0000000001 (topics: global-table)
+    Source: KTABLE-SOURCE-0000000001 (topics: [global-table])
       --> KTABLE-SOURCE-0000000002
     Processor: KTABLE-SOURCE-0000000002 (stores: [global-table-STATE-STORE-0000000000])
       --> none
-      <-- KSTREAM-SOURCE-0000000001
+      <-- KTABLE-SOURCE-0000000001
 ----
 
 .Demo: Queryable GlobalKTable
 [source, scala]
 ----
-// FIXME
+import org.apache.kafka.streams.scala._
+import ImplicitConversions._
+import Serdes._
+
+import org.apache.kafka.streams.scala.StreamsBuilder
+val builder = new StreamsBuilder
+
+import org.apache.kafka.streams.state.Stores
+val supplier = Stores.inMemoryKeyValueStore("queryable-store-name")
+
+import org.apache.kafka.streams.scala.kstream.Materialized
+val materialized = Materialized.as[String, String](supplier)
+val zipCodes = builder.globalTable[String, String](topic = "zip-codes", materialized)
+
+scala> :type zipCodes
+org.apache.kafka.streams.kstream.GlobalKTable[String,String]
+
+assert(zipCodes.queryableStoreName == "queryable-store-name")
+
+val topology = builder.build
+scala> println(topology.describe)
+Topologies:
+   Sub-topology: 0 for global store (will not generate tasks)
+    Source: KTABLE-SOURCE-0000000000 (topics: [zip-codes])
+      --> KTABLE-SOURCE-0000000001
+    Processor: KTABLE-SOURCE-0000000001 (stores: [queryable-store-name])
+      --> none
+      <-- KTABLE-SOURCE-0000000000
 ----
 
 === [[addGlobalStore-detailed]] Registering Global State Store (in Topology) -- `addGlobalStore` Method

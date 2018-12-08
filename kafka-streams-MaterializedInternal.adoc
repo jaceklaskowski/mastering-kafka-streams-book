@@ -4,3 +4,16 @@
 
 [[queryable]]
 `MaterializedInternal` can be *queryable* which is...FIXME
+
+=== [[generateStoreNameIfNeeded]] `generateStoreNameIfNeeded` Method
+
+[source, java]
+----
+void generateStoreNameIfNeeded(
+  final InternalNameProvider nameProvider,
+  final String generatedStorePrefix)
+----
+
+`generateStoreNameIfNeeded`...FIXME
+
+NOTE: `generateStoreNameIfNeeded` is used when...FIXME
