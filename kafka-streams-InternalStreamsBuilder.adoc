@@ -16,6 +16,9 @@ image::images/kafka-streams-InternalStreamsBuilder.png[align="center"]
 [[index]]
 `InternalStreamsBuilder` uses `index` counter that starts at `0` and is incremented every time a new name for a <<newProcessorName, processor>> or a <<newStoreName, store>> is requested. That makes all names unique and sources and stores uniquely identified by name.
 
+[[root]]
+`InternalStreamsBuilder` uses a `StreamsGraphNode` (with `repartitionRequired` disabled) for the root graph node.
+
 === [[addStateStore]] `addStateStore` Method
 
 [source, java]
@@ -123,19 +126,17 @@ NOTE: `addGlobalStore` is used when...FIXME
 
 `globalTable` creates a new <<kafka-streams-GlobalKTableImpl.adoc#, GlobalKTableImpl>>.
 
-Internally, `globalTable` requests `MaterializedInternal` to link:kafka-streams-Materialized.adoc#withLoggingDisabled[withLoggingDisabled].
+Internally, `globalTable` requests the `MaterializedInternal` to <<kafka-streams-Materialized.adoc#withLoggingDisabled, disable logging>> (regardless whether it was enabled initially or not).
 
-`globalTable` then creates a link:kafka-streams-KeyValueStoreMaterializer.adoc#creating-instance[KeyValueStoreMaterializer] (with the input `materialized`) and requests to link:kafka-streams-KeyValueStoreMaterializer.adoc#materialize[materialize] (i.e. create a link:kafka-streams-StoreBuilder.adoc[StoreBuilder]).
+NOTE: `GlobalKTables` use state stores with logging disabled.
 
-`globalTable` creates a link:kafka-streams-KTableSource.adoc#creating-instance[KTableSource] (with the link:kafka-streams-StoreBuilder.adoc#name[name] of `StoreBuilder`).
+`globalTable` then creates a <<kafka-streams-KeyValueStoreMaterializer.adoc#, KeyValueStoreMaterializer>> (with the input `MaterializedInternal` with logging disabled) and requests it to <<kafka-streams-KeyValueStoreMaterializer.adoc#materialize, materialize>> (and create a <<kafka-streams-StoreBuilder.adoc#, StoreBuilder>>).
 
-`globalTable` requests <<internalTopologyBuilder, InternalTopologyBuilder>> to link:kafka-streams-InternalTopologyBuilder.adoc#addGlobalStore[register a global state store] (with the source and processor names starting with `KSTREAM-SOURCE-` prefix).
+`globalTable` creates a `TableSourceNode` (with the `StoreBuilder`, the <<newProcessorName, source processor name>> with `KSTREAM-SOURCE-` prefix, and `isGlobalKTable` flag on)
 
-`globalTable` creates a link:kafka-streams-GlobalKTableImpl.adoc#creating-instance[GlobalKTableImpl] with the following:
+`globalTable` <<addGraphNode, adds>> the `TableSourceNode` to the <<root, root node>>.
 
-* link:kafka-streams-KTableSourceValueGetterSupplier.adoc#creating-instance[KTableSourceValueGetterSupplier] with the link:kafka-streams-StoreBuilder.adoc#name[name] of `StoreBuilder`
-
-* link:kafka-streams-GlobalKTableImpl.adoc#queryable[queryable] flag being link:kafka-streams-MaterializedInternal.adoc#queryable[that] of the input `MaterializedInternal`
+In the end, `globalTable` creates a <<kafka-streams-GlobalKTableImpl.adoc#, GlobalKTableImpl>> (with a new <<kafka-streams-KTableSourceValueGetterSupplier.adoc#, KTableSourceValueGetterSupplier>> and the queryable flag of the `MaterializedInternal`).
 
 NOTE: `globalTable` is used exclusively when `StreamsBuilder` is requested to <<kafka-streams-StreamsBuilder.adoc#globalTable, add a GlobalKTable to the topology>>.
 
@@ -186,3 +187,32 @@ val name = newBuilder.newStoreName("PREFIX")
 scala> println(name)
 PREFIXSTATE-STORE-0000000001
 ----
+
+=== [[addGraphNode]] Adding StreamsGraphNode Child to StreamsGraphNode Parent -- `addGraphNode` Method
+
+[source, java]
+----
+void addGraphNode(
+  final StreamsGraphNode parent,
+  final StreamsGraphNode child)
+void addGraphNode(
+  final Collection<StreamsGraphNode> parents,
+  final StreamsGraphNode child)
+----
+
+`addGraphNode` simply requests the input `StreamsGraphNode` to add the given child `StreamsGraphNode`.
+
+In the end, `addGraphNode` <<maybeAddNodeForOptimizationMetadata, maybeAddNodeForOptimizationMetadata>>.
+
+NOTE: `addGraphNode` is used when...FIXME
+
+=== [[maybeAddNodeForOptimizationMetadata]] `maybeAddNodeForOptimizationMetadata` Internal Method
+
+[source, java]
+----
+void maybeAddNodeForOptimizationMetadata(final StreamsGraphNode node)
+----
+
+`maybeAddNodeForOptimizationMetadata`...FIXME
+
+NOTE: `maybeAddNodeForOptimizationMetadata` is used when...FIXME

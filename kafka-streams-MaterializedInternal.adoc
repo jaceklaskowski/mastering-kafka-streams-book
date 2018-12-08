@@ -2,8 +2,15 @@
 
 `MaterializedInternal` is a link:kafka-streams-Materialized.adoc[Materialized] with link:kafka-streams-StateStore.adoc[StateStore] that...FIXME
 
-[[queryable]]
-`MaterializedInternal` can be *queryable* which is...FIXME
+[[queriable]]
+[[isQueryable]]
+`MaterializedInternal` can be *queriable* which is...FIXME
+
+[[loggingEnabled]]
+`MaterializedInternal` uses the `loggingEnabled` flag for...FIXME
+
+[[topicConfig]]
+`MaterializedInternal` uses the `topicConfig` registry with mappings for...FIXME
 
 === [[generateStoreNameIfNeeded]] `generateStoreNameIfNeeded` Method
 
@@ -17,3 +24,16 @@ void generateStoreNameIfNeeded(
 `generateStoreNameIfNeeded`...FIXME
 
 NOTE: `generateStoreNameIfNeeded` is used when...FIXME
+
+=== [[withLoggingDisabled]] `withLoggingDisabled` Method
+
+[source, java]
+----
+Materialized<K, V, S> withLoggingDisabled()
+----
+
+`withLoggingDisabled` turns the <<loggingEnabled, loggingEnabled>> flag off and removes all of the mappings from the <<topicConfig, topicConfig>>.
+
+In the end, `withLoggingDisabled` returns the current `Materialized` instance.
+
+NOTE: `withLoggingDisabled` is used exclusively when `InternalStreamsBuilder` is requested to <<kafka-streams-InternalStreamsBuilder.adoc#globalTable, add a GlobalKTable to the topology>>.
