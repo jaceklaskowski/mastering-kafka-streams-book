@@ -1,20 +1,49 @@
 == [[KeyValueStoreMaterializer]] KeyValueStoreMaterializer
 
-`KeyValueStoreMaterializer` is...FIXME
+`KeyValueStoreMaterializer` can <<materialize, materialize a StoreBuilder (of KeyValueStores)>> (based on the given <<materialized, MaterializedInternal>>).
 
-`KeyValueStoreMaterializer` is <<creating-instance, created>> when...FIXME
+`KeyValueStoreMaterializer` is <<creating-instance, created>> (and immediately requested to <<materialize, materialize a StoreBuilder>>) when:
+
+* `InternalStreamsBuilder` is requested to add a <<kafka-streams-InternalStreamsBuilder.adoc#table, KTable>> or <<kafka-streams-InternalStreamsBuilder.adoc#globalTable, GlobalKTable>> to the topology
+
+* `KGroupedStreamImpl` is requested to <<kafka-streams-KGroupedStreamImpl.adoc#doAggregate, doAggregate>> (for <<kafka-streams-KGroupedStreamImpl.adoc#aggregate, aggregate>>, <<kafka-streams-KGroupedStreamImpl.adoc#count, count>>, and <<kafka-streams-KGroupedStreamImpl.adoc#reduce, reduce>> aggregation operators)
+
+* `KGroupedTableImpl` is requested to <<kafka-streams-KGroupedTableImpl.adoc#doAggregate, doAggregate>> (for <<kafka-streams-KGroupedTableImpl.adoc#aggregate, aggregate>>, <<kafka-streams-KGroupedTableImpl.adoc#count, count>>, and <<kafka-streams-KGroupedTableImpl.adoc#reduce, reduce>> aggregation operators)
+
+* `KTableKTableJoinNode` and `TableProcessorNode` are requested to `writeToTopology`
 
 [[materialized]]
 [[creating-instance]]
-`KeyValueStoreMaterializer` takes a `MaterializedInternal<K, V, KeyValueStore<Bytes, byte[]>>`.
+`KeyValueStoreMaterializer` takes a single <<kafka-streams-MaterializedInternal.adoc#, MaterializedInternal>> (with a <<kafka-streams-StateStore-KeyValueStore.adoc#, ++KeyValueStore<Bytes, byte[]>++>> state store) when created.
 
-=== [[materialize]] Creating StoreBuilder (of KeyValueStores) -- `materialize` Method
+=== [[materialize]] Materializing StoreBuilder (of KeyValueStores) -- `materialize` Method
 
 [source, java]
 ----
 StoreBuilder<KeyValueStore<K, V>> materialize()
 ----
 
-`materialize`...FIXME
+`materialize` creates ("materializes") a <<kafka-streams-StoreBuilder.adoc#, StoreBuilder>> (of <<kafka-streams-StateStore-KeyValueStore.adoc#, KeyValueStores>>) based on the <<materialized, MaterializedInternal>>.
 
-NOTE: `materialize` is used when...FIXME
+Internally, `materialize` requests the <<materialized, MaterializedInternal>> for the optional <<kafka-streams-MaterializedInternal.adoc#storeSupplier, StoreSupplier>> (which is expected a <<kafka-streams-KeyValueBytesStoreSupplier.adoc#, KeyValueBytesStoreSupplier>>).
+
+If not defined, `materialize` requests the <<materialized, MaterializedInternal>> for the <<kafka-streams-MaterializedInternal.adoc#storeName, store name>> and uses the `Stores` factory object for a new <<kafka-streams-Stores.adoc#persistentKeyValueStore, persistent KeyValueBytesStoreSupplier>>.
+
+`materialize` uses the `Stores` factory object for a new <<kafka-streams-Stores.adoc#keyValueStoreBuilder, ++StoreBuilder<KeyValueStore<K, V>>++>> (for the `KeyValueBytesStoreSupplier`, the `keySerde` and the `valueSerde` of the <<materialized, MaterializedInternal>>).
+
+`materialize` enables or disables the logging (of the `StoreBuilder`) per the <<kafka-streams-MaterializedInternal.adoc#loggingEnabled, loggingEnabled>> flag of the <<materialized, MaterializedInternal>>.
+
+`materialize` enables caching (of the `StoreBuilder`) if caching is enabled for the <<materialized, MaterializedInternal>>.
+
+[NOTE]
+====
+`materialize` is used when:
+
+* `InternalStreamsBuilder` is requested to add a <<kafka-streams-InternalStreamsBuilder.adoc#table, KTable>> or <<kafka-streams-InternalStreamsBuilder.adoc#globalTable, GlobalKTable>> to the topology
+
+* `KGroupedStreamImpl` is requested to <<kafka-streams-KGroupedStreamImpl.adoc#doAggregate, doAggregate>> (for <<kafka-streams-KGroupedStreamImpl.adoc#aggregate, aggregate>>, <<kafka-streams-KGroupedStreamImpl.adoc#count, count>>, and <<kafka-streams-KGroupedStreamImpl.adoc#reduce, reduce>> aggregation operators)
+
+* `KGroupedTableImpl` is requested to <<kafka-streams-KGroupedTableImpl.adoc#doAggregate, doAggregate>> (for <<kafka-streams-KGroupedTableImpl.adoc#aggregate, aggregate>>, <<kafka-streams-KGroupedTableImpl.adoc#count, count>>, and <<kafka-streams-KGroupedTableImpl.adoc#reduce, reduce>> aggregation operators)
+
+* `KTableKTableJoinNode` and `TableProcessorNode` are requested to `writeToTopology`
+====

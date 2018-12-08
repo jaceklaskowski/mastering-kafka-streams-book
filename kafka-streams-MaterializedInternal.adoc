@@ -1,6 +1,6 @@
 == [[MaterializedInternal]] MaterializedInternal
 
-`MaterializedInternal` is a link:kafka-streams-Materialized.adoc[Materialized] with link:kafka-streams-StateStore.adoc[StateStore] that...FIXME
+`MaterializedInternal` is a <<kafka-streams-Materialized.adoc#, Materialized>> with link:kafka-streams-StateStore.adoc[StateStore] that...FIXME
 
 [[queriable]]
 [[isQueryable]]
@@ -9,8 +9,17 @@
 [[loggingEnabled]]
 `MaterializedInternal` uses the `loggingEnabled` flag for...FIXME
 
+[[cachingEnabled]]
+`MaterializedInternal` uses the `cachingEnabled` flag for...FIXME
+
 [[topicConfig]]
 `MaterializedInternal` uses the `topicConfig` registry with mappings for...FIXME
+
+[[storeSupplier]]
+`MaterializedInternal` uses the optional <<kafka-streams-Materialized.adoc#storeSupplier, StoreSupplier>> that...FIXME
+
+[[storeName]]
+`MaterializedInternal` uses the <<kafka-streams-Materialized.adoc#storeName, store name>> for...FIXME
 
 === [[generateStoreNameIfNeeded]] `generateStoreNameIfNeeded` Method
 
