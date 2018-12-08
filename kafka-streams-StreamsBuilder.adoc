@@ -47,7 +47,7 @@ Topology build()
 
 Returns the <<kafka-streams-Topology.adoc#, Topology>>
 
-| <<globalTable-detailed, globalTable>>
+| <<globalTable-internals, globalTable>>
 a| [[globalTable]]
 
 [source, java]
@@ -166,7 +166,7 @@ KTable<K, V> table(
 
 `table`...FIXME
 
-=== [[globalTable-detailed]] Creating GlobalKTable -- `globalTable` Method
+=== [[globalTable-internals]] Creating GlobalKTable -- `globalTable` Method
 
 [source, java]
 ----
@@ -185,6 +185,7 @@ GlobalKTable<K, V> globalTable(
 
 `globalTable`...FIXME
 
+.Demo: Non-queryable GlobalKTable
 [source, scala]
 ----
 import org.apache.kafka.streams.StreamsBuilder
@@ -199,6 +200,12 @@ Topologies:
     Processor: KTABLE-SOURCE-0000000002 (stores: [global-table-STATE-STORE-0000000000])
       --> none
       <-- KSTREAM-SOURCE-0000000001
+----
+
+.Demo: Queryable GlobalKTable
+[source, scala]
+----
+// FIXME
 ----
 
 === [[addGlobalStore-detailed]] Registering Global State Store (in Topology) -- `addGlobalStore` Method

@@ -1,8 +1,8 @@
 == [[GlobalKTableImpl]] GlobalKTableImpl
 
-`GlobalKTableImpl` is a link:kafka-streams-GlobalKTable.adoc[GlobalKTable] (of `K` primary keys and `V` value changes) that uses a <<valueGetterSupplier, KTableValueGetterSupplier>> for the <<queryableStoreName, queryableStoreName>> when <<queryable, queryable>>.
+`GlobalKTableImpl` is a <<kafka-streams-GlobalKTable.adoc#, GlobalKTable>> (of `K` primary keys and `V` value changes) that uses a <<valueGetterSupplier, KTableValueGetterSupplier>> for the <<queryableStoreName, queryableStoreName>> when <<queryable, queryable>>.
 
-`GlobalKTableImpl` is <<creating-instance, created>> exclusively when `InternalStreamsBuilder` is requested to link:kafka-streams-InternalStreamsBuilder.adoc#globalTable[create one] (exclusively when `StreamsBuilder` is requested to link:kafka-streams-StreamsBuilder.adoc#globalTable[create it]).
+`GlobalKTableImpl` is <<creating-instance, created>> exclusively when `InternalStreamsBuilder` is requested to <<kafka-streams-InternalStreamsBuilder.adoc#globalTable, add a global table to a topology>> (exclusively when `StreamsBuilder` is requested to <<kafka-streams-StreamsBuilder.adoc#globalTable, create a GlobalKTable>>).
 
 [source, scala]
 ----
