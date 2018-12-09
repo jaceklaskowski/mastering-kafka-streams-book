@@ -183,7 +183,7 @@ GlobalKTable<K, V> globalTable(
   final Materialized<K, V, KeyValueStore<Bytes, byte[]>> materialized)
 ----
 
-`globalTable` creates an <<kafka-streams-ConsumedInternal.adoc#, ConsumedInternal>> for the given <<kafka-streams-Consumed.adoc#, Consumed>>.
+`globalTable` creates an <<kafka-streams-internals-ConsumedInternal.adoc#, ConsumedInternal>> for the given <<kafka-streams-Consumed.adoc#, Consumed>>.
 
 `globalTable` creates a new <<kafka-streams-MaterializedInternal.adoc#, MaterializedInternal>> (with a new <<kafka-streams-Materialized.adoc#, Materialized>> with the `keySerde` and the `valueSerde` of the `ConsumedInternal`).
 
@@ -308,7 +308,7 @@ scala> :type input
 org.apache.kafka.streams.kstream.KStream[String,String]
 ----
 
-Internally, `stream` creates a link:kafka-streams-ConsumedInternal.adoc#creating-instance[ConsumedInternal] (for the input link:kafka-streams-Consumed.adoc[Consumed]) and requests the <<internalStreamsBuilder, InternalStreamsBuilder>> to link:kafka-streams-InternalStreamsBuilder.adoc#stream[create a KStream] (for the input `topics` and the `ConsumedInternal`).
+Internally, `stream` creates a link:kafka-streams-internals-ConsumedInternal.adoc#creating-instance[ConsumedInternal] (for the input link:kafka-streams-Consumed.adoc[Consumed]) and requests the <<internalStreamsBuilder, InternalStreamsBuilder>> to link:kafka-streams-InternalStreamsBuilder.adoc#stream[create a KStream] (for the input `topics` and the `ConsumedInternal`).
 
 === [[build-detailed]] Building Topology -- `build` Method
 

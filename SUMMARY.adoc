@@ -118,7 +118,7 @@
 .. link:kafka-streams-WindowedStreamPartitioner.adoc[WindowedStreamPartitioner]
 
 . link:kafka-streams-DefaultKafkaClientSupplier.adoc[DefaultKafkaClientSupplier]
-. link:kafka-streams-ConsumedInternal.adoc[ConsumedInternal]
+. link:kafka-streams-internals-ConsumedInternal.adoc[ConsumedInternal]
 . link:kafka-streams-InternalTopicManager.adoc[InternalTopicManager]
 
 . link:kafka-streams-GlobalStateMaintainer.adoc[GlobalStateMaintainer]
