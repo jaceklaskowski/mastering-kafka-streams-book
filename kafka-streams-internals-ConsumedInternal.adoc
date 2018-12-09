@@ -1,4 +1,4 @@
-== [[ConsumedInternal]] ConsumedInternal -- Accessor Object to Consumed
+== [[ConsumedInternal]] ConsumedInternal -- Internal Accessors to Consumed Metadata
 
 `ConsumedInternal` is a <<kafka-streams-Consumed.adoc#, Consumed>> that is used internally as an accessor object to the following properties of the managed <<consumed, Consumed>> instance:
 
@@ -14,10 +14,10 @@
 [[consumed]]
 `ConsumedInternal` takes a single <<kafka-streams-Consumed.adoc#, Consumed>>, its parts or none at all (that are used to create a `Consumed`) when created:
 
-* [[keySerde]] `Serde` for the keys
-* [[valSerde]][[valueSerde]] `Serde` for the values
+* [[keySerde]] Key `Serde`
+* [[valSerde]][[valueSerde]] Value `Serde`
 * [[timestampExtractor]] <<kafka-streams-TimestampExtractor.adoc#, TimestampExtractor>>
-* [[offsetReset]] `Topology.AutoOffsetReset` (either `EARLIEST` or `LATEST`)
+* [[offsetReset]] Offset reset policy (`Topology.AutoOffsetReset` as either `EARLIEST` or `LATEST`)
 
 `ConsumedInternal` is <<creating-instance, created>> when:
 

@@ -7,26 +7,25 @@
 
 == Developing Stream Processing Applications with Kafka Streams
 
-. link:kafka-streams-KafkaStreams.adoc[KafkaStreams]
+. link:kafka-streams-scala.adoc[Scala API for Kafka Streams]
+.. link:kafka-streams-scala-FunctionConversions.adoc[FunctionConversions]
+.. link:kafka-streams-scala-ImplicitConversions.adoc[ImplicitConversions]
+.. link:kafka-streams-scala-Serdes.adoc[Serdes]
 
 . link:kafka-streams-StreamsBuilder.adoc[StreamsBuilder -- High-Level Stream Processing DSL]
 . link:kafka-streams-Topology.adoc[Topology -- Processor API]
 
 . link:kafka-streams-KStream.adoc[KStream]
 . link:kafka-streams-KGroupedStream.adoc[KGroupedStream -- Basic Stream Aggregations]
-. link:kafka-streams-SessionWindowedKStream.adoc[SessionWindowedKStream]
-. link:kafka-streams-TimeWindowedKStream.adoc[TimeWindowedKStream -- Time-Windowed Stream Aggregations]
+.. link:kafka-streams-SessionWindowedKStream.adoc[SessionWindowedKStream]
+.. link:kafka-streams-TimeWindowedKStream.adoc[TimeWindowedKStream -- Time-Windowed Stream Aggregations]
 
 . link:kafka-streams-KTable.adoc[KTable]
+
 . link:kafka-streams-GlobalKTable.adoc[GlobalKTable -- Global Changelog Stream]
 . link:kafka-streams-KGroupedTable.adoc[KGroupedTable]
 
-. link:kafka-streams-scala.adoc[Scala API for Kafka Streams]
-.. link:kafka-streams-scala-Serdes.adoc[Serdes]
-.. link:kafka-streams-scala-ImplicitConversions.adoc[ImplicitConversions]
-.. link:kafka-streams-scala-FunctionConversions.adoc[FunctionConversions]
-
-. link:kafka-streams-Consumed.adoc[Consumed]
+. link:kafka-streams-Consumed.adoc[Consumed -- Metadata for Consuming Record Stream]
 . link:kafka-streams-Produced.adoc[Produced]
 . link:kafka-streams-Printed.adoc[Printed]
 . link:kafka-streams-KafkaClientSupplier.adoc[KafkaClientSupplier Contract]
@@ -34,6 +33,8 @@
 . link:kafka-streams-KeyValueMapper.adoc[KeyValueMapper]
 
 . link:kafka-streams-StreamsConfig.adoc[StreamsConfig -- Configuration Properties for Kafka Clients]
+
+. link:kafka-streams-KafkaStreams.adoc[KafkaStreams]
 
 . link:kafka-streams-ProcessorContext.adoc[ProcessorContext]
 .. link:kafka-streams-TaskId.adoc[TaskId]
@@ -185,7 +186,7 @@
 
 . link:kafka-streams-InternalStreamsBuilder.adoc[InternalStreamsBuilder]
 . link:kafka-streams-InternalTopologyBuilder.adoc[InternalTopologyBuilder]
-.. link:kafka-streams-internals-ConsumedInternal.adoc[ConsumedInternal -- Accessor Object to Consumed]
+.. link:kafka-streams-internals-ConsumedInternal.adoc[ConsumedInternal -- Internal Accessors to Consumed Metadata]
 
 . link:kafka-streams-NodeFactory.adoc[NodeFactory]
 .. link:kafka-streams-ProcessorNodeFactory.adoc[ProcessorNodeFactory]

@@ -1,29 +1,91 @@
-== [[Consumed]] Consumed
+== [[Consumed]] Consumed -- Metadata for Consuming Record Stream
 
-`Consumed` is...FIXME
+[[creating-instance]]
+`Consumed` defines the optional parameters that describe how to load a record stream using <<kafka-streams-StreamsBuilder.adoc#stream, stream>>, <<kafka-streams-StreamsBuilder.adoc#table, table>> and <<kafka-streams-StreamsBuilder.adoc#globalTable, globalTable>> and <<kafka-streams-StreamsBuilder.adoc#addGlobalStore, addGlobalStore>> operators in the <<kafka-streams-StreamsBuilder.adoc#, High-Level Stream Processing DSL>>:
 
-=== [[with]] `with` Static Method
+* [[keySerde]] *Key Serde* (Apache Kafka's https://kafka.apache.org/21/javadoc/org/apache/kafka/common/serialization/Serde.html[Serde] for record keys)
+* [[valueSerde]] *Value Serde* (Apache Kafka's https://kafka.apache.org/21/javadoc/org/apache/kafka/common/serialization/Serde.html[Serde] for record values)
+* [[timestampExtractor]] <<kafka-streams-TimestampExtractor.adoc#, TimestampExtractor>>
+* [[resetPolicy]] *Offset reset policy* (`Topology.AutoOffsetReset` as either `EARLIEST` or `LATEST`)
 
+A `Consumed` instance is created using one of the available <<with, with>> factory methods.
+
+[[with]]
 [source, java]
 ----
-static <K, V> Consumed<K, V> with(
+Consumed<K, V> with(
+  final Serde<K> keySerde,
+  final Serde<V> valueSerde)
+Consumed<K, V> with(final TimestampExtractor timestampExtractor)
+Consumed<K, V> with(final Topology.AutoOffsetReset resetPolicy)
+Consumed<K, V> with(
   final Serde<K> keySerde,
   final Serde<V> valueSerde,
   final TimestampExtractor timestampExtractor,
   final Topology.AutoOffsetReset resetPolicy)
 ----
 
-`with`...FIXME
+A `Consumed` instance can futher be configured using the <<methods, "with" methods>>.
 
-NOTE: `with` is used when...FIXME
+[[methods]]
+.Consumed's "with" Methods
+[cols="1m,2",options="header",width="100%"]
+|===
+| Operator
+| Description
 
-=== [[withTimestampExtractor]] `withTimestampExtractor` Method
+| withKeySerde
+a| [[withKeySerde]]
+
+[source, java]
+----
+Consumed<K, V> withKeySerde(final Serde<K> keySerde)
+----
+
+| withOffsetResetPolicy
+a| [[withOffsetResetPolicy]]
+
+[source, java]
+----
+Consumed<K, V> withOffsetResetPolicy(final Topology.AutoOffsetReset resetPolicy)
+----
+
+| withTimestampExtractor
+a| [[withTimestampExtractor]]
 
 [source, java]
 ----
 Consumed<K, V> withTimestampExtractor(final TimestampExtractor timestampExtractor)
 ----
 
-`withTimestampExtractor`...FIXME
+| withValueSerde
+a| [[withValueSerde]]
 
-NOTE: `withTimestampExtractor` is used when...FIXME
+[source, java]
+----
+Consumed<K, V> withValueSerde(final Serde<V> valueSerde)
+----
+|===
+
+=== Scala API for Kafka Streams
+
+<<kafka-streams-scala.adoc#, Scala API for Kafka Streams>> makes the optional `Consumed` metadata an implicit parameter.
+
+Moreover, <<kafka-streams-scala-ImplicitConversions.adoc#, ImplicitConversions>> object defines <<kafka-streams-scala-ImplicitConversions.adoc#consumedFromSerde, consumedFromSerde>> implicit method that creates a `Consumed` instance with the key and value `Serde` objects available in implicit scope.
+
+And the last but not least, Scala API for Kafka Streams defines `Consumed` object with `++`with`++` factory methods that use implicit key and value `Serde` objects.
+
+[source, scala]
+----
+import org.apache.kafka.streams.scala._
+import ImplicitConversions._
+import Serdes._
+
+import org.apache.kafka.streams.scala.kstream.Consumed
+val consumed = Consumed.`with`[Long, String]
+
+scala> :type consumed
+org.apache.kafka.streams.kstream.Consumed[Long,String]
+----
+
+TIP: Read up on https://docs.scala-lang.org/tour/implicit-parameters.html[Implicit Parameters].
