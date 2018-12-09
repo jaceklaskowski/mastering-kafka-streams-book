@@ -118,7 +118,6 @@
 .. link:kafka-streams-WindowedStreamPartitioner.adoc[WindowedStreamPartitioner]
 
 . link:kafka-streams-DefaultKafkaClientSupplier.adoc[DefaultKafkaClientSupplier]
-. link:kafka-streams-internals-ConsumedInternal.adoc[ConsumedInternal]
 . link:kafka-streams-InternalTopicManager.adoc[InternalTopicManager]
 
 . link:kafka-streams-GlobalStateMaintainer.adoc[GlobalStateMaintainer]
@@ -186,6 +185,7 @@
 
 . link:kafka-streams-InternalStreamsBuilder.adoc[InternalStreamsBuilder]
 . link:kafka-streams-InternalTopologyBuilder.adoc[InternalTopologyBuilder]
+.. link:kafka-streams-internals-ConsumedInternal.adoc[ConsumedInternal -- Accessor Object to Consumed]
 
 . link:kafka-streams-NodeFactory.adoc[NodeFactory]
 .. link:kafka-streams-ProcessorNodeFactory.adoc[ProcessorNodeFactory]

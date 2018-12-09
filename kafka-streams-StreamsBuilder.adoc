@@ -67,7 +67,7 @@ GlobalKTable<K, V> globalTable(
 
 Adds a <<kafka-streams-GlobalKTable.adoc#, GlobalKTable>> to the topology
 
-| <<stream-detailed, stream>>
+| <<stream-internals, stream>>
 a| [[stream]]
 
 [source, java]
@@ -185,7 +185,7 @@ GlobalKTable<K, V> globalTable(
 
 `globalTable` creates an <<kafka-streams-internals-ConsumedInternal.adoc#, ConsumedInternal>> for the given <<kafka-streams-Consumed.adoc#, Consumed>>.
 
-`globalTable` creates a new <<kafka-streams-MaterializedInternal.adoc#, MaterializedInternal>> (with a new <<kafka-streams-Materialized.adoc#, Materialized>> with the `keySerde` and the `valueSerde` of the `ConsumedInternal`).
+`globalTable` creates a new <<kafka-streams-MaterializedInternal.adoc#, MaterializedInternal>> (with a new <<kafka-streams-Materialized.adoc#, Materialized>> with the <<kafka-streams-internals-ConsumedInternal.adoc#keySerde, keySerde>> and the <<kafka-streams-internals-ConsumedInternal.adoc#valueSerde, valueSerde>> of the `ConsumedInternal`).
 
 NOTE: The new <<kafka-streams-MaterializedInternal.adoc#, MaterializedInternal>> uses `KeyValueStore<Bytes, byte[]>` <<kafka-streams-StateStore.adoc#, StateStore>>.
 
@@ -275,7 +275,7 @@ StreamsBuilder addStateStore(final StoreBuilder builder)
 
 `addStateStore`...FIXME
 
-=== [[stream]] Creating KStream (of Records from One or Many Topics) -- `stream` Method
+=== [[stream-internals]] Creating KStream (of Records from One or Many Topics) -- `stream` Method
 
 [source, java]
 ----
@@ -308,7 +308,7 @@ scala> :type input
 org.apache.kafka.streams.kstream.KStream[String,String]
 ----
 
-Internally, `stream` creates a link:kafka-streams-internals-ConsumedInternal.adoc#creating-instance[ConsumedInternal] (for the input link:kafka-streams-Consumed.adoc[Consumed]) and requests the <<internalStreamsBuilder, InternalStreamsBuilder>> to link:kafka-streams-InternalStreamsBuilder.adoc#stream[create a KStream] (for the input `topics` and the `ConsumedInternal`).
+Internally, `stream` creates a <<kafka-streams-internals-ConsumedInternal.adoc#, ConsumedInternal>> (for the input link:kafka-streams-Consumed.adoc[Consumed]) and requests the <<internalStreamsBuilder, InternalStreamsBuilder>> to link:kafka-streams-InternalStreamsBuilder.adoc#stream[create a KStream] (for the input `topics` and the `ConsumedInternal`).
 
 === [[build-detailed]] Building Topology -- `build` Method
 

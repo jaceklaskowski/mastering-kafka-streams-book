@@ -1,18 +1,26 @@
-== [[ConsumedInternal]] ConsumedInternal
+== [[ConsumedInternal]] ConsumedInternal -- Accessor Object to Consumed
 
-`ConsumedInternal` is...FIXME
+`ConsumedInternal` is a <<kafka-streams-Consumed.adoc#, Consumed>> that is used internally as an accessor object to the following properties of the managed <<consumed, Consumed>> instance:
 
-`ConsumedInternal` is <<creating-instance, created>> when...FIXME
+* [[keyDeserializer]] `Deserializer` of keys (only when <<keySerde, Serde>> for keys is defined)
 
-=== [[creating-instance]] Creating ConsumedInternal Instance
+* [[valueDeserializer]] `Deserializer` of values (only when <<valueSerde, Serde>> for values is defined)
 
-`ConsumedInternal` takes either of the following when created:
+* [[offsetResetPolicy]] `Topology.AutoOffsetReset` (either `EARLIEST` or `LATEST`)
 
-* [[consumed]] link:kafka-streams-Consumed.adoc[Consumed]
+* <<timestampExtractor, TimestampExtractor>>
 
-or
+[[creating-instance]]
+[[consumed]]
+`ConsumedInternal` takes a single <<kafka-streams-Consumed.adoc#, Consumed>>, its parts or none at all (that are used to create a `Consumed`) when created:
 
 * [[keySerde]] `Serde` for the keys
-* [[valSerde]] `Serde` for the values
-* [[timestampExtractor]] `TimestampExtractor`
-* [[offsetReset]] `Topology.AutoOffsetReset`
+* [[valSerde]][[valueSerde]] `Serde` for the values
+* [[timestampExtractor]] <<kafka-streams-TimestampExtractor.adoc#, TimestampExtractor>>
+* [[offsetReset]] `Topology.AutoOffsetReset` (either `EARLIEST` or `LATEST`)
+
+`ConsumedInternal` is <<creating-instance, created>> when:
+
+* `StreamsBuilder` is requested to <<kafka-streams-StreamsBuilder.adoc#stream, stream>>, <<kafka-streams-StreamsBuilder.adoc#table, table>>, <<kafka-streams-StreamsBuilder.adoc#globalTable, globalTable>>, and <<kafka-streams-StreamsBuilder.adoc#addGlobalStore, addGlobalStore>>
+
+* `KStreamImpl` is requested to <<kafka-streams-KStreamImpl.adoc#through, through>>
