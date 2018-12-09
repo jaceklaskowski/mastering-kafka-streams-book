@@ -7,7 +7,7 @@
 [source, java]
 ----
 // Note the backticks to use "with" reserved keyword
-// ConsumedJ is simply an import alias for Consumed
+// ConsumedJ is simply an import alias for the Java-aware Consumed
 
 `with`[K, V](
   timestampExtractor: TimestampExtractor,

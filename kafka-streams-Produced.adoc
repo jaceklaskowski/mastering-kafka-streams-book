@@ -1,3 +1,75 @@
-== [[Produced]] Produced
+== [[Produced]] Produced -- Metadata for Producing Record Stream
 
-`Produced` is...FIXME
+[[creating-instance]]
+`Produced` provides the optional parameters that describe how to produce record streams in the <<kafka-streams-StreamsBuilder.adoc#, High-Level Stream Processing DSL>>:
+
+* [[keySerde]] *Key Serde* (Apache Kafka's https://kafka.apache.org/21/javadoc/org/apache/kafka/common/serialization/Serde.html[Serde] for record keys)
+* [[valueSerde]] *Value Serde* (Apache Kafka's https://kafka.apache.org/21/javadoc/org/apache/kafka/common/serialization/Serde.html[Serde] for record values)
+* [[partitioner]] <<kafka-streams-StreamPartitioner.adoc#, StreamPartitioner>>
+
+`Produced` is used as an optional parameter in the following `KStream` operators:
+
+* <<kafka-streams-KStream.adoc#through, KStream.through>>
+
+* <<kafka-streams-KStream.adoc#to, KStream.to>>
+
+A `Produced` instance is <<creating-instance, created>> using one of the available <<factory-methods, factory methods>>.
+
+[[factory-methods]]
+[source, java]
+----
+Produced<K, V> keySerde(final Serde<K> keySerde)
+Produced<K, V> streamPartitioner(
+  final StreamPartitioner<? super K, ? super V> partitioner)
+Produced<K, V> valueSerde(final Serde<V> valueSerde)
+Produced<K, V> with(
+  final Serde<K> keySerde,
+  final Serde<V> valueSerde)
+Produced<K, V> with(
+  final Serde<K> keySerde,
+  final Serde<V> valueSerde,
+  final StreamPartitioner<? super K, ? super V> partitioner)
+----
+
+A `Produced` instance can futher be configured using the <<methods, "with" methods>>.
+
+[[methods]]
+.Produced's "with" Methods
+[cols="1m,2",options="header",width="100%"]
+|===
+| Method
+| Description
+
+| withKeySerde
+a| [[withKeySerde]]
+
+[source, java]
+----
+Produced<K, V> withKeySerde(final Serde<K> keySerde)
+----
+
+| withStreamPartitioner
+a| [[withStreamPartitioner]]
+
+[source, java]
+----
+Produced<K, V> withStreamPartitioner(
+  final StreamPartitioner<? super K, ? super V> partitioner)
+----
+
+| withValueSerde
+a| [[withValueSerde]]
+
+[source, java]
+----
+Produced<K, V> withValueSerde(final Serde<V> valueSerde)
+----
+|===
+
+=== Scala API for Kafka Streams
+
+<<kafka-streams-scala.adoc#, Scala API for Kafka Streams>> makes the optional `Produced` metadata an implicit parameter in the `KStream` API.
+
+Moreover, <<kafka-streams-scala-ImplicitConversions.adoc#, ImplicitConversions>> object defines <<kafka-streams-scala-ImplicitConversions.adoc#producedFromSerde, producedFromSerde>> implicit method that creates a `Produced` instance with the key and value `Serde` objects available in implicit scope.
+
+And the last but not least, Scala API for Kafka Streams defines <<kafka-streams-scala-Produced.adoc#, Produced>> object with `++`with`++` factory methods that use implicit key and value `Serde` objects.

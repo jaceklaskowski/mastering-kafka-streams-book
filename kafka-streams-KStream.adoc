@@ -88,10 +88,10 @@ a| [[groupBy]]
 [source, java]
 ----
 KGroupedStream<KR, V> groupBy(
-  final KeyValueMapper<? super K, ? super V, KR> selector);
+  final KeyValueMapper<? super K, ? super V, KR> selector)
 KGroupedStream<KR, V> groupBy(
   final KeyValueMapper<? super K, ? super V, KR> selector,
-  final Serialized<KR, V> serialized);
+  final Serialized<KR, V> serialized)
 ----
 
 Creates a <<kafka-streams-KGroupedStream.adoc#, KGroupedStream>> with a given <<kafka-streams-KeyValueMapper.adoc#, KeyValueMapper>>
@@ -101,8 +101,8 @@ a| [[groupByKey]]
 
 [source, java]
 ----
-KGroupedStream<K, V> groupByKey();
-KGroupedStream<K, V> groupByKey(final Serialized<K, V> serialized);
+KGroupedStream<K, V> groupByKey()
+KGroupedStream<K, V> groupByKey(final Serialized<K, V> serialized)
 ----
 
 Creates a <<kafka-streams-KGroupedStream.adoc#, KGroupedStream>>
@@ -115,23 +115,23 @@ a| [[join]]
 KStream<K, RV> join(
   final GlobalKTable<GK, GV> globalKTable,
   final KeyValueMapper<? super K, ? super V, ? extends GK> keyValueMapper,
-  final ValueJoiner<? super V, ? super GV, ? extends RV> joiner);
+  final ValueJoiner<? super V, ? super GV, ? extends RV> joiner)
 KStream<K, VR> join(
   final KStream<K, VO> otherStream,
   final ValueJoiner<? super V, ? super VO, ? extends VR> joiner,
-  final JoinWindows windows);
+  final JoinWindows windows)
 KStream<K, VR> join(
   final KStream<K, VO> otherStream,
   final ValueJoiner<? super V, ? super VO, ? extends VR> joiner,
   final JoinWindows windows,
-  final Joined<K, V, VO> joined);
+  final Joined<K, V, VO> joined)
 KStream<K, VR> join(
   final KTable<K, VT> table,
-  final ValueJoiner<? super V, ? super VT, ? extends VR> joiner);
+  final ValueJoiner<? super V, ? super VT, ? extends VR> joiner)
 KStream<K, VR> join(
   final KTable<K, VT> table,
   final ValueJoiner<? super V, ? super VT, ? extends VR> joiner,
-  final Joined<K, V, VT> joined);
+  final Joined<K, V, VT> joined)
 ----
 
 | leftJoin
@@ -142,23 +142,23 @@ a| [[leftJoin]]
 KStream<K, RV> leftJoin(
   final GlobalKTable<GK, GV> globalKTable,
   final KeyValueMapper<? super K, ? super V, ? extends GK> keyValueMapper,
-  final ValueJoiner<? super V, ? super GV, ? extends RV> valueJoiner);
+  final ValueJoiner<? super V, ? super GV, ? extends RV> valueJoiner)
 KStream<K, VR> leftJoin(
   final KStream<K, VO> otherStream,
   final ValueJoiner<? super V, ? super VO, ? extends VR> joiner,
-  final JoinWindows windows);
+  final JoinWindows windows)
 KStream<K, VR> leftJoin(
   final KStream<K, VO> otherStream,
   final ValueJoiner<? super V, ? super VO, ? extends VR> joiner,
   final JoinWindows windows,
-  final Joined<K, V, VO> joined);
+  final Joined<K, V, VO> joined)
 KStream<K, VR> leftJoin(
   final KTable<K, VT> table,
-  final ValueJoiner<? super V, ? super VT, ? extends VR> joiner);
+  final ValueJoiner<? super V, ? super VT, ? extends VR> joiner)
 KStream<K, VR> leftJoin(
   final KTable<K, VT> table,
   final ValueJoiner<? super V, ? super VT, ? extends VR> joiner,
-  final Joined<K, V, VT> joined);
+  final Joined<K, V, VT> joined)
 ----
 
 | map
@@ -166,7 +166,8 @@ a| [[map]]
 
 [source, java]
 ----
-KStream<KR, VR> map(KeyValueMapper<? super K, ? super V, ? extends KeyValue<? extends KR, ? extends VR>> mapper)
+KStream<KR, VR> map(
+  KeyValueMapper<? super K, ? super V, ? extends KeyValue<? extends KR, ? extends VR>> mapper)
 ----
 
 | mapValues
@@ -174,8 +175,10 @@ a| [[mapValues]]
 
 [source, java]
 ----
-KStream<K, VR> mapValues(ValueMapper<? super V, ? extends VR> mapper);
-KStream<K, VR> mapValues(final ValueMapperWithKey<? super K, ? super V, ? extends VR> mapper);
+KStream<K, VR> mapValues(
+  ValueMapper<? super V, ? extends VR> mapper)
+KStream<K, VR> mapValues(
+  final ValueMapperWithKey<? super K, ? super V, ? extends VR> mapper)
 ----
 
 | merge
@@ -207,7 +210,8 @@ a| [[peek]]
 
 [source, java]
 ----
-KStream<K, V> peek(final ForeachAction<? super K, ? super V> action)
+KStream<K, V> peek(
+  final ForeachAction<? super K, ? super V> action)
 ----
 
 | print
@@ -215,7 +219,7 @@ a| [[print]]
 
 [source, java]
 ----
-void print(final Printed<K, V> printed);
+void print(final Printed<K, V> printed)
 ----
 
 | process
@@ -233,7 +237,8 @@ a| [[selectKey]]
 
 [source, java]
 ----
-KStream<KR, V> selectKey(KeyValueMapper<? super K, ? super V, ? extends KR> mapper);
+KStream<KR, V> selectKey(
+  KeyValueMapper<? super K, ? super V, ? extends KR> mapper)
 ----
 
 | through
@@ -241,8 +246,10 @@ a| [[through]]
 
 [source, java]
 ----
-KStream<K, V> through(final String topic);
-KStream<K, V> through(final String topic, final Produced<K, V> produced);
+KStream<K, V> through(final String topic)
+KStream<K, V> through(
+  final String topic,
+  final Produced<K, V> produced)
 ----
 
 | to
