@@ -1,0 +1,41 @@
+== [[Consumed]] Consumed
+
+`Consumed` Scala object is part of <<kafka-streams-scala.adoc#, Scala API for Kafka Streams>> that defines <<with, with>> factory methods for creating <<kafka-streams-Consumed.adoc#, Consumed>> instances with key and value `Serdes` objects available in implicit scope.
+
+[[with]]
+.Consumed's "with" Factory Methods
+[source, java]
+----
+// Note the backticks to use "with" reserved keyword
+// ConsumedJ is simply an import alias for Consumed
+
+`with`[K, V](
+  timestampExtractor: TimestampExtractor,
+  resetPolicy: Topology.AutoOffsetReset
+)(implicit keySerde: Serde[K], valueSerde: Serde[V]): ConsumedJ[K, V]
+
+`with`[K, V](
+  implicit keySerde: Serde[K], valueSerde: Serde[V]): ConsumedJ[K, V]
+
+`with`[K, V](timestampExtractor: TimestampExtractor)(
+  implicit keySerde: Serde[K], valueSerde: Serde[V]): ConsumedJ[K, V]
+
+`with`[K, V](resetPolicy: Topology.AutoOffsetReset)(
+  implicit keySerde: Serde[K], valueSerde: Serde[V]): ConsumedJ[K, V]
+----
+
+.Example: Creating Consumed Instance using Scala API for Kafka Streams
+[source, scala]
+----
+import org.apache.kafka.streams.scala._
+import ImplicitConversions._
+import Serdes._
+
+import org.apache.kafka.streams.scala.kstream.Consumed
+val consumed = Consumed.`with`[Long, String]
+
+scala> :type consumed
+org.apache.kafka.streams.kstream.Consumed[Long,String]
+----
+
+TIP: Read up on https://docs.scala-lang.org/tour/implicit-parameters.html[Implicit Parameters].

@@ -1,7 +1,7 @@
 == [[Consumed]] Consumed -- Metadata for Consuming Record Stream
 
 [[creating-instance]]
-`Consumed` defines the optional parameters that describe how to load a record stream using <<kafka-streams-StreamsBuilder.adoc#stream, stream>>, <<kafka-streams-StreamsBuilder.adoc#table, table>> and <<kafka-streams-StreamsBuilder.adoc#globalTable, globalTable>> and <<kafka-streams-StreamsBuilder.adoc#addGlobalStore, addGlobalStore>> operators in the <<kafka-streams-StreamsBuilder.adoc#, High-Level Stream Processing DSL>>:
+`Consumed` defines the optional parameters that describe how to consume a record stream using <<kafka-streams-StreamsBuilder.adoc#stream, stream>>, <<kafka-streams-StreamsBuilder.adoc#table, table>>, <<kafka-streams-StreamsBuilder.adoc#globalTable, globalTable>>, and <<kafka-streams-StreamsBuilder.adoc#addGlobalStore, addGlobalStore>> operators in the <<kafka-streams-StreamsBuilder.adoc#, High-Level Stream Processing DSL>>:
 
 * [[keySerde]] *Key Serde* (Apache Kafka's https://kafka.apache.org/21/javadoc/org/apache/kafka/common/serialization/Serde.html[Serde] for record keys)
 * [[valueSerde]] *Value Serde* (Apache Kafka's https://kafka.apache.org/21/javadoc/org/apache/kafka/common/serialization/Serde.html[Serde] for record values)
@@ -31,7 +31,7 @@ A `Consumed` instance can futher be configured using the <<methods, "with" metho
 .Consumed's "with" Methods
 [cols="1m,2",options="header",width="100%"]
 |===
-| Operator
+| Method
 | Description
 
 | withKeySerde
@@ -47,7 +47,8 @@ a| [[withOffsetResetPolicy]]
 
 [source, java]
 ----
-Consumed<K, V> withOffsetResetPolicy(final Topology.AutoOffsetReset resetPolicy)
+Consumed<K, V> withOffsetResetPolicy(
+  final Topology.AutoOffsetReset resetPolicy)
 ----
 
 | withTimestampExtractor
@@ -55,7 +56,8 @@ a| [[withTimestampExtractor]]
 
 [source, java]
 ----
-Consumed<K, V> withTimestampExtractor(final TimestampExtractor timestampExtractor)
+Consumed<K, V> withTimestampExtractor(
+  final TimestampExtractor timestampExtractor)
 ----
 
 | withValueSerde
@@ -73,19 +75,4 @@ Consumed<K, V> withValueSerde(final Serde<V> valueSerde)
 
 Moreover, <<kafka-streams-scala-ImplicitConversions.adoc#, ImplicitConversions>> object defines <<kafka-streams-scala-ImplicitConversions.adoc#consumedFromSerde, consumedFromSerde>> implicit method that creates a `Consumed` instance with the key and value `Serde` objects available in implicit scope.
 
-And the last but not least, Scala API for Kafka Streams defines `Consumed` object with `++`with`++` factory methods that use implicit key and value `Serde` objects.
-
-[source, scala]
-----
-import org.apache.kafka.streams.scala._
-import ImplicitConversions._
-import Serdes._
-
-import org.apache.kafka.streams.scala.kstream.Consumed
-val consumed = Consumed.`with`[Long, String]
-
-scala> :type consumed
-org.apache.kafka.streams.kstream.Consumed[Long,String]
-----
-
-TIP: Read up on https://docs.scala-lang.org/tour/implicit-parameters.html[Implicit Parameters].
+And the last but not least, Scala API for Kafka Streams defines <<kafka-streams-scala-Consumed.adoc#, Consumed>> object with `++`with`++` factory methods that use implicit key and value `Serde` objects.

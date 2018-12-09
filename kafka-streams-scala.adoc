@@ -2,15 +2,14 @@
 
 *Scala API for Kafka Streams* is a separate Kafka Streams module (a Scala library) that acts as a wrapper over the existing Java API for Kafka Streams.
 
-NOTE: Scala API for Kafka Streams was added in Kafka Streams 2.0.0 as link:++https://issues.apache.org/jira/browse/KAFKA-6670++[KAFKA-6670
-Implement a Scala wrapper library for Kafka Streams].
+The Scala API is available in `org.apache.kafka.streams.scala` package.
 
 As a separate Scala library you have to define the dependency in `build.sbt`.
 
 [source, scala]
 ----
 // Note two percent signs (%%) to encode Scala version
-libraryDependencies += "org.apache.kafka" %% "kafka-streams-scala" % "2.0.0"
+libraryDependencies += "org.apache.kafka" %% "kafka-streams-scala" % "2.1.0"
 ----
 
 [[types]]
@@ -24,17 +23,16 @@ The Scala API for Kafka Streams defines Scala-friendly types that wrap the corre
 * <<kafka-streams-SessionWindowedKStream.adoc#, SessionWindowedKStream>>
 * <<kafka-streams-TimeWindowedKStream.adoc#, TimeWindowedKStream>>
 
-Beside the Scala-friendly types, the Scala API for Kafka Streams defines implicit conversions, i.e. <<kafka-streams-scala-Serdes.adoc#, Serdes>>, <<kafka-streams-scala-ImplicitConversions.adoc#, ImplicitConversions>> and <<kafka-streams-scala-FunctionConversions.adoc#, FunctionConversions>>.
-
-The Scala API is available in `org.apache.kafka.streams.scala` package.
+Beside the Scala-friendly types, the Scala API for Kafka Streams defines implicit conversions, i.e. <<kafka-streams-scala-Serdes.adoc#, Serdes>>, and <<kafka-streams-scala-ImplicitConversions.adoc#, ImplicitConversions>>.
 
 [source, scala]
 ----
 import org.apache.kafka.streams.scala._
-import FunctionConversions._
 import ImplicitConversions._
 import Serdes._
 ----
+
+The Scala API for Kafka Streams comes with <<kafka-streams-scala-Consumed.adoc#, Consumed>> Scala object that allows for creating <<kafka-streams-Consumed.adoc#, Consumed>> instances with key and value `Serdes` objects available in implicit scope.
 
 You could also use `Serdes` when defining `StreamsConfig.DEFAULT_KEY_SERDE_CLASS_CONFIG` and `StreamsConfig.DEFAULT_VALUE_SERDE_CLASS_CONFIG`.
 
@@ -43,3 +41,5 @@ You could also use `Serdes` when defining `StreamsConfig.DEFAULT_KEY_SERDE_CLASS
 import org.apache.kafka.streams.scala.Serdes._
 Serdes.String.getClass.getName
 ----
+
+NOTE: Scala API for Kafka Streams was added in Kafka Streams 2.0.0 as link:++https://issues.apache.org/jira/browse/KAFKA-6670++[KAFKA-6670 Implement a Scala wrapper library for Kafka Streams].

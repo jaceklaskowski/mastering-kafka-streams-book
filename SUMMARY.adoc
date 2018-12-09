@@ -8,9 +8,9 @@
 == Developing Stream Processing Applications with Kafka Streams
 
 . link:kafka-streams-scala.adoc[Scala API for Kafka Streams]
-.. link:kafka-streams-scala-FunctionConversions.adoc[FunctionConversions]
 .. link:kafka-streams-scala-ImplicitConversions.adoc[ImplicitConversions]
 .. link:kafka-streams-scala-Serdes.adoc[Serdes]
+.. link:kafka-streams-scala-Consumed.adoc[Consumed]
 
 . link:kafka-streams-StreamsBuilder.adoc[StreamsBuilder -- High-Level Stream Processing DSL]
 . link:kafka-streams-Topology.adoc[Topology -- Processor API]
