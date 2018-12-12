@@ -19,41 +19,41 @@ val conf = new StreamsConfig(props)
 | Name
 | Property
 
-| [[APPLICATION_ID_CONFIG]] APPLICATION_ID_CONFIG
-| <<kafka-streams-properties.adoc#application.id, application.id>>
+| APPLICATION_ID_CONFIG
+| [[APPLICATION_ID_CONFIG]] <<kafka-streams-properties.adoc#application.id, application.id>>
 
-| [[APPLICATION_SERVER_CONFIG]] APPLICATION_SERVER_CONFIG
-| <<kafka-streams-properties.adoc#application.server, application.server>>
+| APPLICATION_SERVER_CONFIG
+| [[APPLICATION_SERVER_CONFIG]] <<kafka-streams-properties.adoc#application.server, application.server>>
 
-| [[CACHE_MAX_BYTES_BUFFERING_CONFIG]] CACHE_MAX_BYTES_BUFFERING_CONFIG
-| <<kafka-streams-properties.adoc#cache.max.bytes.buffering, cache.max.bytes.buffering>>
+| CACHE_MAX_BYTES_BUFFERING_CONFIG
+| [[CACHE_MAX_BYTES_BUFFERING_CONFIG]] <<kafka-streams-properties.adoc#cache.max.bytes.buffering, cache.max.bytes.buffering>>
 
-| [[COMMIT_INTERVAL_MS_CONFIG]] COMMIT_INTERVAL_MS_CONFIG
-| <<kafka-streams-properties.adoc#commit.interval.ms, commit.interval.ms>>
+| COMMIT_INTERVAL_MS_CONFIG
+| [[COMMIT_INTERVAL_MS_CONFIG]] <<kafka-streams-properties.adoc#commit.interval.ms, commit.interval.ms>>
 
-| [[DEFAULT_WINDOWED_KEY_SERDE_INNER_CLASS]] DEFAULT_WINDOWED_KEY_SERDE_INNER_CLASS
-| <<kafka-streams-properties.adoc#default.windowed.key.serde.inner, default.windowed.key.serde.inner>>
+| DEFAULT_WINDOWED_KEY_SERDE_INNER_CLASS
+| [[DEFAULT_WINDOWED_KEY_SERDE_INNER_CLASS]] <<kafka-streams-properties.adoc#default.windowed.key.serde.inner, default.windowed.key.serde.inner>>
 
-| [[DEFAULT_WINDOWED_VALUE_SERDE_INNER_CLASS]] DEFAULT_WINDOWED_VALUE_SERDE_INNER_CLASS
-| <<kafka-streams-properties.adoc#default.windowed.value.serde.inner, default.windowed.value.serde.inner>>
+| DEFAULT_WINDOWED_VALUE_SERDE_INNER_CLASS
+| [[DEFAULT_WINDOWED_VALUE_SERDE_INNER_CLASS]] <<kafka-streams-properties.adoc#default.windowed.value.serde.inner, default.windowed.value.serde.inner>>
 
-| [[DEFAULT_TIMESTAMP_EXTRACTOR_CLASS_CONFIG]] DEFAULT_TIMESTAMP_EXTRACTOR_CLASS_CONFIG
-| <<kafka-streams-properties.adoc#default.timestamp.extractor, default.timestamp.extractor>>
+| DEFAULT_TIMESTAMP_EXTRACTOR_CLASS_CONFIG
+| [[DEFAULT_TIMESTAMP_EXTRACTOR_CLASS_CONFIG]] <<kafka-streams-properties.adoc#default.timestamp.extractor, default.timestamp.extractor>>
 
-| [[METRICS_RECORDING_LEVEL_CONFIG]] METRICS_RECORDING_LEVEL_CONFIG
-| <<kafka-streams-properties.adoc#metrics.recording.level, metrics.recording.level>>
+| METRICS_RECORDING_LEVEL_CONFIG
+| [[METRICS_RECORDING_LEVEL_CONFIG]] <<kafka-streams-properties.adoc#metrics.recording.level, metrics.recording.level>>
 
-| [[NUM_STREAM_THREADS_CONFIG]] NUM_STREAM_THREADS_CONFIG
-| <<kafka-streams-properties.adoc#num.stream.threads, num.stream.threads>>
+| NUM_STREAM_THREADS_CONFIG
+| [[NUM_STREAM_THREADS_CONFIG]] <<kafka-streams-properties.adoc#num.stream.threads, num.stream.threads>>
 
-| [[POLL_MS_CONFIG]] POLL_MS_CONFIG
-| <<kafka-streams-properties.adoc#poll.ms, poll.ms>>
+| POLL_MS_CONFIG
+| [[POLL_MS_CONFIG]] <<kafka-streams-properties.adoc#poll.ms, poll.ms>>
 
-| [[PROCESSING_GUARANTEE_CONFIG]] PROCESSING_GUARANTEE_CONFIG
-| <<kafka-streams-properties.adoc#processing.guarantee, processing.guarantee>>
+| PROCESSING_GUARANTEE_CONFIG
+| [[PROCESSING_GUARANTEE_CONFIG]] <<kafka-streams-properties.adoc#processing.guarantee, processing.guarantee>>
 
-| [[STATE_DIR_CONFIG]] STATE_DIR_CONFIG
-| <<kafka-streams-properties.adoc#state.dir, state.dir>>
+| STATE_DIR_CONFIG
+| [[STATE_DIR_CONFIG]] <<kafka-streams-properties.adoc#state.dir, state.dir>>
 |===
 
 `StreamsConfig` is also used the configuration for the following Kafka clients (that Kafka Streams uses under the covers):
