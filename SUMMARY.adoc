@@ -5,7 +5,33 @@
 . link:kafka-streams.adoc[Kafka Streams -- Stream Processing Library on Apache Kafka]
 . link:kafka-streams-why.adoc[Why Kafka Streams]
 
-== Developing Stream Processing Applications with Kafka Streams
+== High-Level Streams DSL
+
+. link:kafka-streams-streams-dsl.adoc[High-Level Streams DSL]
+
+. link:kafka-streams-StreamsBuilder.adoc[StreamsBuilder -- High-Level Stream Processing DSL]
+. link:kafka-streams-KStream.adoc[KStream]
+
+. link:kafka-streams-KTable.adoc[KTable]
+
+. link:kafka-streams-GlobalKTable.adoc[GlobalKTable -- Global Changelog Stream]
+
+. link:kafka-streams-KGroupedStream.adoc[KGroupedStream -- Basic Stream Aggregations]
+.. link:kafka-streams-SessionWindowedKStream.adoc[SessionWindowedKStream]
+.. link:kafka-streams-TimeWindowedKStream.adoc[TimeWindowedKStream -- Time-Windowed Stream Aggregations]
+
+. link:kafka-streams-KGroupedTable.adoc[KGroupedTable]
+
+. link:kafka-streams-Consumed.adoc[Consumed -- Metadata for Consuming Record Stream]
+. link:kafka-streams-Produced.adoc[Produced -- Metadata for Producing Record Stream]
+. link:kafka-streams-Printed.adoc[Printed]
+
+. link:kafka-streams-KeyValueMapper.adoc[KeyValueMapper]
+
+. link:kafka-streams-ValueTransformer.adoc[ValueTransformer -- Stateful Record-by-Record Value Transformation]
+.. link:kafka-streams-ValueTransformerSupplier.adoc[ValueTransformerSupplier -- ValueTransformers Object Factory]
+
+. link:kafka-streams-ValueTransformerWithKey.adoc[ValueTransformerWithKey]
 
 . link:kafka-streams-scala.adoc[Scala API for Kafka Streams]
 .. link:kafka-streams-scala-ImplicitConversions.adoc[ImplicitConversions]
@@ -13,29 +39,14 @@
 .. link:kafka-streams-scala-Consumed.adoc[Consumed]
 .. link:kafka-streams-scala-Produced.adoc[Produced]
 
-. link:kafka-streams-StreamsBuilder.adoc[StreamsBuilder -- High-Level Stream Processing DSL]
+== Developing Stream Processing Applications with Kafka Streams
+
 . link:kafka-streams-Topology.adoc[Topology -- Processor API]
-
-. link:kafka-streams-KStream.adoc[KStream]
-. link:kafka-streams-KGroupedStream.adoc[KGroupedStream -- Basic Stream Aggregations]
-.. link:kafka-streams-SessionWindowedKStream.adoc[SessionWindowedKStream]
-.. link:kafka-streams-TimeWindowedKStream.adoc[TimeWindowedKStream -- Time-Windowed Stream Aggregations]
-
-. link:kafka-streams-KTable.adoc[KTable]
-
-. link:kafka-streams-GlobalKTable.adoc[GlobalKTable -- Global Changelog Stream]
-. link:kafka-streams-KGroupedTable.adoc[KGroupedTable]
-
-. link:kafka-streams-Consumed.adoc[Consumed -- Metadata for Consuming Record Stream]
-. link:kafka-streams-Produced.adoc[Produced -- Metadata for Producing Record Stream]
-. link:kafka-streams-Printed.adoc[Printed]
-. link:kafka-streams-KafkaClientSupplier.adoc[KafkaClientSupplier Contract]
-
-. link:kafka-streams-KeyValueMapper.adoc[KeyValueMapper]
 
 . link:kafka-streams-StreamsConfig.adoc[StreamsConfig -- Configuration Properties for Kafka Clients]
 
 . link:kafka-streams-KafkaStreams.adoc[KafkaStreams]
+.. link:kafka-streams-KafkaClientSupplier.adoc[KafkaClientSupplier Contract]
 
 . link:kafka-streams-ProcessorContext.adoc[ProcessorContext]
 .. link:kafka-streams-TaskId.adoc[TaskId]
@@ -44,11 +55,6 @@
 
 . link:kafka-streams-Transformer.adoc[Transformer -- Record-by-Record Stateful Transformation]
 .. link:kafka-streams-TransformerSupplier.adoc[TransformerSupplier]
-
-. link:kafka-streams-ValueTransformer.adoc[ValueTransformer -- Stateful Record-by-Record Value Transformation]
-.. link:kafka-streams-ValueTransformerSupplier.adoc[ValueTransformerSupplier -- ValueTransformers Object Factory]
-
-. link:kafka-streams-ValueTransformerWithKey.adoc[ValueTransformerWithKey]
 
 . link:kafka-streams-Punctuator.adoc[Punctuator -- Contract for Scheduled Periodic Actions]
 .. link:kafka-streams-Cancellable.adoc[Cancellable]

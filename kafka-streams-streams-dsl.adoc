@@ -1,0 +1,21 @@
+== High-Level Streams DSL
+
+Kafka Streams offers *Streams DSL* with high-level data stream abstractions for streams and tables, and to build a stream processing topology.
+
+Streams DSL includes:
+
+* <<kafka-streams-StreamsBuilder.adoc#, StreamsBuilder>> for building a topology
+
+* <<kafka-streams-KStream.adoc#, KStream>> for working with record streams
+
+* <<kafka-streams-KTable.adoc#, KTable>> for working with changelog streams
+
+* <<kafka-streams-GlobalKTable.adoc#, GlobalKTable>> for working with global changelog streams
+
+Streams DSL also includes the following for streaming aggregations and joins:
+
+* <<kafka-streams-KGroupedStream.adoc#, KGroupedStream>>
+
+* <<kafka-streams-KGroupedTable.adoc#, KGroupedTable>>
+
+Streams DSL is designed for Java developers primarily, but also offers <<kafka-streams-scala.adoc#, Scala API for Kafka Streams>> for Scala developers.
