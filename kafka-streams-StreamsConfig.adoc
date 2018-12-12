@@ -1,15 +1,13 @@
 == [[StreamsConfig]] StreamsConfig -- Configuration Properties for Kafka Clients
 
-`StreamsConfig` is a Apache Kafka https://kafka.apache.org/20/javadoc/org/apache/kafka/common/config/AbstractConfig.html[AbstractConfig] for the <<properties, configuration properties>> for Kafka Streams applications.
+`StreamsConfig` is a Apache Kafka https://kafka.apache.org/21/javadoc/org/apache/kafka/common/config/AbstractConfig.html[AbstractConfig] for the <<properties, configuration properties>> for Kafka Streams applications.
 
 [source, scala]
 ----
 import org.apache.kafka.streams.StreamsConfig
-val props = new java.util.Properties()
-props.put(StreamsConfig.APPLICATION_ID_CONFIG, "appId")
-import org.apache.kafka.clients.consumer.ConsumerConfig
-props.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, "localhost:8082")
-val conf = new StreamsConfig(props)
+val conf = new java.util.Properties()
+conf.put(StreamsConfig.APPLICATION_ID_CONFIG, "appId")
+conf.put(StreamsConfig.BOOTSTRAP_SERVERS_CONFIG, ":9092,localhost:9192")
 ----
 
 [[properties]]
@@ -24,6 +22,9 @@ val conf = new StreamsConfig(props)
 
 | APPLICATION_SERVER_CONFIG
 | [[APPLICATION_SERVER_CONFIG]] <<kafka-streams-properties.adoc#application.server, application.server>>
+
+| BOOTSTRAP_SERVERS_CONFIG
+| [[BOOTSTRAP_SERVERS_CONFIG]] Kafka Client's `bootstrap.servers`
 
 | CACHE_MAX_BYTES_BUFFERING_CONFIG
 | [[CACHE_MAX_BYTES_BUFFERING_CONFIG]] <<kafka-streams-properties.adoc#cache.max.bytes.buffering, cache.max.bytes.buffering>>
