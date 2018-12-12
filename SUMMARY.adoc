@@ -5,6 +5,16 @@
 . link:kafka-streams.adoc[Kafka Streams -- Stream Processing Library on Apache Kafka]
 . link:kafka-streams-why.adoc[Why Kafka Streams]
 
+== Developing Stream Processing Applications with Kafka Streams
+
+. link:kafka-streams-Topology.adoc[Topology -- Directed Acyclic Graph of Stream Processing Nodes]
+. link:kafka-streams-KafkaStreams.adoc[KafkaStreams]
+. link:kafka-streams-StreamsConfig.adoc[StreamsConfig -- Configuration Properties for Kafka Clients]
+. link:kafka-streams-exactly-once-support-eos.adoc[Exactly-Once Support (EOS)]
+. link:kafka-streams-properties.adoc[Configuration Properties]
+. link:kafka-logging.adoc[Logging]
+. link:kafka-streams-KafkaClientSupplier.adoc[KafkaClientSupplier Contract]
+
 == High-Level Streams DSL
 
 . link:kafka-streams-streams-dsl.adoc[High-Level Streams DSL]
@@ -33,36 +43,8 @@
 
 . link:kafka-streams-ValueTransformerWithKey.adoc[ValueTransformerWithKey]
 
-. link:kafka-streams-scala.adoc[Scala API for Kafka Streams]
-.. link:kafka-streams-scala-ImplicitConversions.adoc[ImplicitConversions]
-.. link:kafka-streams-scala-Serdes.adoc[Serdes]
-.. link:kafka-streams-scala-Consumed.adoc[Consumed]
-.. link:kafka-streams-scala-Produced.adoc[Produced]
-
-== Developing Stream Processing Applications with Kafka Streams
-
-. link:kafka-streams-Topology.adoc[Topology -- Processor API]
-
-. link:kafka-streams-StreamsConfig.adoc[StreamsConfig -- Configuration Properties for Kafka Clients]
-
-. link:kafka-streams-KafkaStreams.adoc[KafkaStreams]
-.. link:kafka-streams-KafkaClientSupplier.adoc[KafkaClientSupplier Contract]
-
-. link:kafka-streams-ProcessorContext.adoc[ProcessorContext]
-.. link:kafka-streams-TaskId.adoc[TaskId]
-.. link:kafka-streams-StateRestoreCallback.adoc[StateRestoreCallback]
-.. link:kafka-streams-To.adoc[To]
-
 . link:kafka-streams-Transformer.adoc[Transformer -- Record-by-Record Stateful Transformation]
-.. link:kafka-streams-TransformerSupplier.adoc[TransformerSupplier]
-
-. link:kafka-streams-Punctuator.adoc[Punctuator -- Contract for Scheduled Periodic Actions]
-.. link:kafka-streams-Cancellable.adoc[Cancellable]
-
-. link:kafka-streams-TimestampExtractor.adoc[TimestampExtractor Contract]
-.. link:kafka-streams-WallclockTimestampExtractor.adoc[WallclockTimestampExtractor]
-.. link:kafka-streams-ExtractRecordMetadataTimestamp.adoc[ExtractRecordMetadataTimestamp]
-.. link:kafka-streams-FailOnInvalidTimestamp.adoc[FailOnInvalidTimestamp]
+. link:kafka-streams-TransformerSupplier.adoc[TransformerSupplier]
 
 . link:kafka-streams-Windows.adoc[Windows -- Window Specification]
 .. link:kafka-streams-TimeWindows.adoc[TimeWindows -- Time-Bound Window Specification]
@@ -73,15 +55,43 @@
 
 . link:kafka-streams-SessionKeySerde.adoc[SessionKeySerde]
 
-. link:kafka-streams-exactly-once-support-eos.adoc[Exactly-Once Support (EOS)]
+. link:kafka-streams-scala.adoc[Scala API for Kafka Streams]
+.. link:kafka-streams-scala-ImplicitConversions.adoc[ImplicitConversions]
+.. link:kafka-streams-scala-Serdes.adoc[Serdes]
+.. link:kafka-streams-scala-Consumed.adoc[Consumed]
+.. link:kafka-streams-scala-Produced.adoc[Produced]
 
-. link:kafka-streams-properties.adoc[Configuration Properties]
-. link:kafka-logging.adoc[Logging]
+== Low-Level Processor API
+
+. link:kafka-streams-processor-api.adoc[Low-Level Processor API]
+
+. link:kafka-streams-Processor.adoc[Processor Contract -- Stream Processing Nodes]
+. link:kafka-streams-StateStore.adoc[StateStore]
+
+. link:kafka-streams-ProcessorContext.adoc[ProcessorContext]
+.. link:kafka-streams-TaskId.adoc[TaskId]
+.. link:kafka-streams-To.adoc[To]
+
+. link:kafka-streams-Punctuator.adoc[Punctuator -- Contract for Scheduled Periodic Actions]
+. link:kafka-streams-Cancellable.adoc[Cancellable]
+
+. link:kafka-streams-ProcessorSupplier.adoc[ProcessorSupplier]
+. link:kafka-streams-StateRestoreCallback.adoc[StateRestoreCallback]
+
+. link:kafka-streams-StateRestoreListener.adoc[StateRestoreListener]
+.. link:kafka-streams-AbstractNotifyingBatchingRestoreCallback.adoc[AbstractNotifyingBatchingRestoreCallback]
+.. link:kafka-streams-AbstractNotifyingRestoreCallback.adoc[AbstractNotifyingRestoreCallback]
+
+. link:kafka-streams-StreamPartitioner.adoc[StreamPartitioner]
+
+. link:kafka-streams-TimestampExtractor.adoc[TimestampExtractor Contract]
+.. link:kafka-streams-WallclockTimestampExtractor.adoc[WallclockTimestampExtractor]
+.. link:kafka-streams-ExtractRecordMetadataTimestamp.adoc[ExtractRecordMetadataTimestamp]
+.. link:kafka-streams-FailOnInvalidTimestamp.adoc[FailOnInvalidTimestamp]
 
 == Developing Stateful Applications with Kafka Streams
 
-. link:kafka-streams-StateStore.adoc[StateStore]
-.. link:kafka-streams-StateStore-AbstractStateStore.adoc[AbstractStateStore]
+. link:kafka-streams-StateStore-AbstractStateStore.adoc[AbstractStateStore]
 .. link:kafka-streams-StateStore-KeyValueStore.adoc[KeyValueStore]
 .. link:kafka-streams-StateStore-InMemoryKeyValueStore.adoc[InMemoryKeyValueStore]
 .. link:kafka-streams-StateStore-InMemoryKeyValueLoggedStore.adoc[InMemoryKeyValueLoggedStore]
@@ -120,10 +130,7 @@
 . link:kafka-streams-Stores.adoc[Stores -- Factory of State Stores]
 . link:kafka-streams-Materialized.adoc[Materialized -- State Store Materialized View]
 
-. link:kafka-streams-PartitionGroup.adoc[PartitionGroup]
-
-. link:kafka-streams-StreamPartitioner.adoc[StreamPartitioner]
-.. link:kafka-streams-WindowedStreamPartitioner.adoc[WindowedStreamPartitioner]
+. link:kafka-streams-WindowedStreamPartitioner.adoc[WindowedStreamPartitioner]
 
 . link:kafka-streams-DefaultKafkaClientSupplier.adoc[DefaultKafkaClientSupplier]
 . link:kafka-streams-InternalTopicManager.adoc[InternalTopicManager]
@@ -170,10 +177,6 @@
 
 . link:kafka-streams-StreamTask-TaskMetrics.adoc[TaskMetrics]
 
-. link:kafka-streams-StateRestoreListener.adoc[StateRestoreListener]
-.. link:kafka-streams-AbstractNotifyingBatchingRestoreCallback.adoc[AbstractNotifyingBatchingRestoreCallback]
-.. link:kafka-streams-AbstractNotifyingRestoreCallback.adoc[AbstractNotifyingRestoreCallback]
-
 == Testing
 
 . link:kafka-streams-TopologyTestDriver.adoc[TopologyTestDriver]
@@ -199,20 +202,10 @@
 .. link:kafka-streams-SinkNodeFactory.adoc[SinkNodeFactory]
 .. link:kafka-streams-SourceNodeFactory.adoc[SourceNodeFactory -- NodeFactory With No Predecessors]
 
-. link:kafka-streams-ProcessorSupplier.adoc[ProcessorSupplier]
-.. link:kafka-streams-KStreamAggProcessorSupplier.adoc[KStreamAggProcessorSupplier]
-.. link:kafka-streams-KStreamSessionWindowAggregate.adoc[KStreamSessionWindowAggregate]
-.. link:kafka-streams-KStreamTransform.adoc[KStreamTransform -- Supplier of KStreamTransformProcessors]
-.. link:kafka-streams-KStreamTransformValues.adoc[KStreamTransformValues]
-
-. link:kafka-streams-Processor.adoc[Processor Contract -- Stream Processing Nodes]
-.. link:kafka-streams-AbstractProcessor.adoc[AbstractProcessor -- Base for Stream Processors]
-.. link:kafka-streams-KStreamJoinWindowProcessor.adoc[KStreamJoinWindowProcessor]
-.. link:kafka-streams-KStreamSessionWindowAggregateProcessor.adoc[KStreamSessionWindowAggregateProcessor]
-.. link:kafka-streams-KStreamTransformProcessor.adoc[KStreamTransformProcessor]
-.. link:kafka-streams-KStreamTransformValuesProcessor.adoc[KStreamTransformValuesProcessor]
-.. link:kafka-streams-KStreamWindowAggregateProcessor.adoc[KStreamWindowAggregateProcessor]
-.. link:kafka-streams-KStreamWindowReduceProcessor.adoc[KStreamWindowReduceProcessor]
+. link:kafka-streams-KStreamAggProcessorSupplier.adoc[KStreamAggProcessorSupplier]
+. link:kafka-streams-KStreamSessionWindowAggregate.adoc[KStreamSessionWindowAggregate]
+. link:kafka-streams-KStreamTransform.adoc[KStreamTransform -- Supplier of KStreamTransformProcessors]
+. link:kafka-streams-KStreamTransformValues.adoc[KStreamTransformValues]
 
 . link:kafka-streams-ProcessorNodePunctuator.adoc[ProcessorNodePunctuator]
 . link:kafka-streams-NodeMetrics.adoc[NodeMetrics]
@@ -248,6 +241,14 @@
 . link:kafka-streams-AssignedTasks.adoc[AssignedTasks]
 .. link:kafka-streams-AssignedStandbyTasks.adoc[AssignedStandbyTasks -- AssignedTasks For StandbyTasks]
 .. link:kafka-streams-AssignedStreamsTasks.adoc[AssignedStreamsTasks -- AssignedTasks For StreamTasks]
+
+. link:kafka-streams-AbstractProcessor.adoc[AbstractProcessor -- Base for Stream Processors]
+.. link:kafka-streams-KStreamJoinWindowProcessor.adoc[KStreamJoinWindowProcessor]
+.. link:kafka-streams-KStreamSessionWindowAggregateProcessor.adoc[KStreamSessionWindowAggregateProcessor]
+.. link:kafka-streams-KStreamTransformProcessor.adoc[KStreamTransformProcessor]
+.. link:kafka-streams-KStreamTransformValuesProcessor.adoc[KStreamTransformValuesProcessor]
+.. link:kafka-streams-KStreamWindowAggregateProcessor.adoc[KStreamWindowAggregateProcessor]
+.. link:kafka-streams-KStreamWindowReduceProcessor.adoc[KStreamWindowReduceProcessor]
 
 . link:kafka-streams-AbstractProcessorContext.adoc[AbstractProcessorContext -- Base Of Internal Processor Contexts]
 .. link:kafka-streams-GlobalProcessorContextImpl.adoc[GlobalProcessorContextImpl]
@@ -288,6 +289,8 @@
 .. link:kafka-streams-WrappingStoreProvider.adoc[WrappingStoreProvider]
 
 . link:kafka-streams-RecordDeserializer.adoc[RecordDeserializer]
+
+. link:kafka-streams-PartitionGroup.adoc[PartitionGroup]
 
 === State (Store) Management
 

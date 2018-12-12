@@ -1,10 +1,10 @@
 == High-Level Streams DSL
 
-Kafka Streams offers *Streams DSL* with high-level data stream abstractions for streams and tables, and to build a stream processing topology.
+Kafka Streams offers *Streams DSL* with high-level data stream abstractions for streams and tables, and to define a stream processing topology.
 
 Streams DSL includes:
 
-* <<kafka-streams-StreamsBuilder.adoc#, StreamsBuilder>> for building a topology
+* <<kafka-streams-StreamsBuilder.adoc#, StreamsBuilder>> for defining a topology
 
 * <<kafka-streams-KStream.adoc#, KStream>> for working with record streams
 

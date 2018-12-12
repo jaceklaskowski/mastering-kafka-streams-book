@@ -1,4 +1,4 @@
-== [[Topology]] Topology -- Processor API / Acyclic Graph of Stream Processing Nodes
+== [[Topology]] Topology -- Directed Acyclic Graph of Stream Processing Nodes
 
 `Topology` represents an *acyclic graph of stream processing nodes* (_DAG of processors_).
 
