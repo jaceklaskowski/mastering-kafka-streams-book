@@ -124,7 +124,7 @@ Map<String, Assignment> assign(
   Map<String, Subscription> subscriptions)
 ----
 
-NOTE: `assign` is part of Kafka Consumer's `PartitionAssignor` contract to perform the group assignment given the member subscriptions and current cluster metadata.
+NOTE: `assign` is part of Kafka Consumer's `PartitionAssignor` contract to perform *group assignment* given the member subscriptions and current cluster metadata.
 
 `assign` takes consumer IDs with subscriptions (from `subscriptions`).
 

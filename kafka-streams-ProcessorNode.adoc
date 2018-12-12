@@ -89,7 +89,7 @@ void close()
 
 NOTE: `close` is used when...FIXME
 
-=== [[toString]] Human-Friendly / Textual Representation of ProcessorNode -- `toString` Method
+=== [[toString]] Describing Itself (Textual Representation) -- `toString` Method
 
 [source, java]
 ----

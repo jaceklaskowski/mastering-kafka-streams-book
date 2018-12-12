@@ -299,7 +299,7 @@ In case of `TaskMigratedException`, `maybeResumeSuspendedTask` <<closeZombieTask
 
 NOTE: `maybeResumeSuspendedTask` is used when `TaskManager` is requested to link:kafka-streams-TaskManager.adoc#createTasks[create processor tasks for assigned topic partitions] (and register new link:kafka-streams-TaskManager.adoc#addStandbyTasks[standby] and link:kafka-streams-TaskManager.adoc#addStreamTasks[stream] tasks).
 
-=== [[toString]] Describing Itself (Text Representation) -- `toString` Method
+=== [[toString]] Describing Itself (Textual Representation) -- `toString` Method
 
 [source, java]
 ----

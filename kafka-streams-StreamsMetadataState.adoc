@@ -1,17 +1,36 @@
 == [[StreamsMetadataState]] StreamsMetadataState
 
-`StreamsMetadataState` is...FIXME
+`StreamsMetadataState` manages the <<clusterMetadata, Kafka cluster metadata>> for a <<kafka-streams-KafkaStreams.adoc#streamsMetadataState, KafkaStreams>> instance.
 
-`StreamsMetadataState` is <<creating-instance, created>> along with link:kafka-streams-KafkaStreams.adoc#streamsMetadataState[KafkaStreams].
+.StreamsMetadataState and Cluster Metadata Changes (from StreamsPartitionAssignor)
+image::images/kafka-streams-StreamsMetadataState-onChange.png[align="center"]
+
+`StreamsMetadataState` is <<creating-instance, created>> exclusively for the <<kafka-streams-StreamThread.adoc#taskManager, TaskManager>> of the <<kafka-streams-KafkaStreams.adoc#threads, stream processor threads>> of a <<kafka-streams-KafkaStreams.adoc#streamsMetadataState, KafkaStreams>> instance.
 
 [[internal-registries]]
 .StreamsMetadataState's Internal Properties (e.g. Registries, Counters and Flags)
-[cols="1,2",options="header",width="100%"]
+[cols="1m,2",options="header",width="100%"]
 |===
 | Name
 | Description
 
-| `globalStores`
+| allMetadata
+a| [[allMetadata]][[getAllMetadata]] `StreamsMetadatas` for...FIXME
+
+Used when...FIXME
+
+| clusterMetadata
+a| [[clusterMetadata]] Cluster metadata, i.e. a subset of the nodes, topics, and partitions in the Kafka cluster (as a Kafka https://kafka.apache.org/21/javadoc/org/apache/kafka/common/Cluster.html[Cluster]) that is given when `StreamsMetadataState` is <<onChange, notified about cluster metadata changes>>
+
+Used when:
+
+* <<getMetadataWithKey, getMetadataWithKey>>
+
+* <<isInitialized, isInitialized>>
+
+* <<toString, toString>>
+
+| globalStores
 | [[globalStores]] Names of the global link:kafka-streams-StateStore.adoc[StateStores]
 
 Used when...FIXME
@@ -36,3 +55,65 @@ Collection<StreamsMetadata> getAllMetadataForStore(final String storeName)
 `getAllMetadataForStore`...FIXME
 
 NOTE: `getAllMetadataForStore` is used exclusively when `KafkaStreams` is requested to link:kafka-streams-KafkaStreams.adoc#allMetadataForStore[allMetadataForStore].
+
+=== [[onChange]] Intercepting Cluster Metadata Changes -- `onChange` Method
+
+[source, scala]
+----
+void onChange(
+  final Map<HostInfo, Set<TopicPartition>> currentState,
+  final Cluster clusterMetadata)
+----
+
+`onChange` simply records the given `Cluster` as the <<clusterMetadata, Cluster>> and <<rebuildMetadata, rebuildMetadata>> (with the given current state of Kafka `TopicPartition` per `HostInfo`).
+
+NOTE: `onChange` is used exclusively when `TaskManager` is requested to <<kafka-streams-TaskManager.adoc#setPartitionsByHostState, notify the StreamsMetadataState about cluster metadata changes>>.
+
+=== [[rebuildMetadata]] `rebuildMetadata` Internal Method
+
+[source, scala]
+----
+void rebuildMetadata(final Map<HostInfo, Set<TopicPartition>> currentState)
+----
+
+`rebuildMetadata`...FIXME
+
+NOTE: `rebuildMetadata` is used when...FIXME
+
+=== [[toString]] Describing Itself (Textual Representation) -- `toString` Method
+
+[source, java]
+----
+String toString() // <1>
+String toString(final String indent)
+----
+<1> Uses an empty indent
+
+`toString`...FIXME
+
+NOTE: `toString` is used when...FIXME
+
+=== [[isInitialized]] `isInitialized` Internal Method
+
+[source, java]
+----
+boolean isInitialized()
+----
+
+`isInitialized`...FIXME
+
+NOTE: `isInitialized` is used when...FIXME
+
+=== [[getMetadataWithKey]] `getMetadataWithKey` Method
+
+[source, java]
+----
+StreamsMetadata getMetadataWithKey(
+  final String storeName,
+  final K key,
+  final Serializer<K> keySerializer)
+----
+
+`getMetadataWithKey`...FIXME
+
+NOTE: `getMetadataWithKey` is used when...FIXME

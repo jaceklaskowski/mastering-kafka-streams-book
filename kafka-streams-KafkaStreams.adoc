@@ -36,12 +36,12 @@ ks.setGlobalStateRestoreListener(userRestoreListener)
 
 [[operators]]
 .KafkaStreams API
-[cols="1,2",options="header",width="100%"]
+[cols="1m,2",options="header",width="100%"]
 |===
 | Method
 | Description
 
-| allMetadata
+| <<allMetadata-internals, allMetadata>>
 a| [[allMetadata]]
 
 [source, java]
@@ -217,7 +217,17 @@ a| [[adminClient]] Kafka https://kafka.apache.org/20/javadoc/org/apache/kafka/cl
 | [[stateLock]] Object lock for...FIXME
 
 | streamsMetadataState
-| [[streamsMetadataState]] link:kafka-streams-StreamsMetadataState.adoc[StreamsMetadataState] (for the <<internalTopologyBuilder, InternalTopologyBuilder>> and link:kafka-streams-properties.adoc#application.server[application.server] configuration property)
+a| [[streamsMetadataState]] <<kafka-streams-StreamsMetadataState.adoc#, StreamsMetadataState>> (with the <<internalTopologyBuilder, InternalTopologyBuilder>> and <<kafka-streams-properties.adoc#application.server, application.server>> configuration property)
+
+`KafkaStreams` is simply a public facade to expose the <<streamsMetadataState, StreamsMetadataState>> using the following methods:
+
+* <<allMetadata, allMetadata>>
+
+* <<allMetadataForStore, allMetadataForStore>>
+
+* <<metadataForKey, metadataForKey>>
+
+Initialized when `KafkaStreams` is <<creating-instance, created>> to <<kafka-streams-StreamThread.adoc#create, create StreamThreads>>
 
 | threads
 a| [[threads]] <<kafka-streams-StreamThread.adoc#, Stream processor threads>>
@@ -331,7 +341,7 @@ boolean setRunningFromCreated()
 
 NOTE: `setRunningFromCreated` is used exclusively when `KafkaStreams` is <<start, started>>.
 
-=== [[toString]] Describing Itself (Text Representation) -- `toString` Method
+=== [[toString]] Describing Itself (Textual Representation) -- `toString` Method
 
 [source, java]
 ----
@@ -396,3 +406,27 @@ Internally, `setGlobalStateRestoreListener` simply sets the <<globalStateRestore
 ```
 Can only set GlobalStateRestoreListener in CREATED state. Current state is: [state]
 ```
+
+=== [[allMetadata-internals]] `allMetadata` Method
+
+[source, java]
+----
+Collection<StreamsMetadata> allMetadata()
+----
+
+`allMetadata` <<validateIsRunning, makes sure that KafkaStreams is running>> and requests the <<streamsMetadataState, StreamsMetadataState>> for <<kafka-streams-StreamsMetadataState.adoc#getAllMetadata, metadata>>.
+
+=== [[validateIsRunning]] Making Sure That KafkaStreams Is Running -- `validateIsRunning` Internal Method
+
+[source, java]
+----
+void validateIsRunning()
+----
+
+`validateIsRunning` throws a `IllegalStateException` when `KafkaStreams` is not <<isRunning, running>>. Otherwise, `validateIsRunning` does nothing.
+
+```
+KafkaStreams is not running. State is [state].
+```
+
+NOTE: `validateIsRunning` is used when `KafkaStreams` is requested to <<allMetadata, allMetadata>>, <<allMetadataForStore, allMetadataForStore>>, <<metadataForKey, metadataForKey>>, <<metadataForKey, metadataForKey>>, <<store, store>>, and <<localThreadsMetadata, localThreadsMetadata>>.

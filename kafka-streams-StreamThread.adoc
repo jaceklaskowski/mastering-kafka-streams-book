@@ -367,7 +367,7 @@ processing latency [processLatency] < commit time [commitTime] for [totalProcess
 
 NOTE: `adjustRecordsProcessedBeforeCommit` is used exclusively when `StreamThread` is requested to <<runOnce, poll records once>> (and there have been records available).
 
-=== [[toString]] Describing Itself (Text Representation) -- `toString` Method
+=== [[toString]] Describing Itself (Textual Representation) -- `toString` Method
 
 [source, java]
 ----
@@ -543,7 +543,7 @@ NOTE: The input <<kafka-streams-StateRestoreListener.adoc#, StateRestoreListener
 
 `create` creates a <<kafka-streams-ThreadCache.adoc#, ThreadCache>> (with `cacheSizeBytes` for the `maxCacheSizeBytes` and the `StreamsMetricsThreadImpl`).
 
-`create` creates a link:kafka-streams-TaskCreator.adoc#creating-instance[TaskCreator] and a link:kafka-streams-StandbyTaskCreator.adoc#creating-instance[StandbyTaskCreator] that are used exclusively to create a link:kafka-streams-TaskManager.adoc#creating-instance[TaskManager] (with a new link:kafka-streams-AssignedStreamsTasks.adoc#creating-instance[AssignedStreamsTasks] and link:kafka-streams-AssignedStandbyTasks.adoc#creating-instance[AssignedStandbyTasks]).
+`create` creates a link:kafka-streams-TaskCreator.adoc#creating-instance[TaskCreator] and a link:kafka-streams-StandbyTaskCreator.adoc#creating-instance[StandbyTaskCreator] that are used exclusively to create a link:kafka-streams-TaskManager.adoc#creating-instance[TaskManager] (with a new link:kafka-streams-AssignedStreamsTasks.adoc#creating-instance[AssignedStreamsTasks] and link:kafka-streams-AssignedStandbyTasks.adoc#creating-instance[AssignedStandbyTasks] as well as the given <<kafka-streams-StreamsMetadataState.adoc#, StreamsMetadataState>>).
 
 `create` prints out the following INFO message to the logs:
 

@@ -146,7 +146,6 @@
 . link:kafka-streams-AssignmentInfo.adoc[AssignmentInfo]
 . link:kafka-streams-SubscriptionInfo.adoc[SubscriptionInfo]
 . link:kafka-streams-ClientMetadata.adoc[ClientMetadata]
-. link:kafka-streams-StreamsMetadataState.adoc[StreamsMetadataState]
 . link:kafka-streams-QuickUnion.adoc[QuickUnion]
 . link:kafka-streams-RecordInfo.adoc[RecordInfo]
 
@@ -228,6 +227,7 @@
 
 . link:kafka-streams-StreamThread.adoc[StreamThread -- Stream Processor Thread]
 . link:kafka-streams-StreamThread-RebalanceListener.adoc[RebalanceListener -- Kafka ConsumerRebalanceListener for Partition Assignment Among Processor Tasks]
+. link:kafka-streams-StreamsMetadataState.adoc[StreamsMetadataState]
 
 . link:kafka-streams-Task.adoc[Task Contract -- Stream Processor Tasks]
 .. link:kafka-streams-AbstractTask.adoc[AbstractTask -- Base Processor Task]

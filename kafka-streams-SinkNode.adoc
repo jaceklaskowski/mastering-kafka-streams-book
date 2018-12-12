@@ -51,7 +51,7 @@ NOTE: `init` is part of link:kafka-streams-ProcessorNode.adoc#init[ProcessorNode
 
 `init`...FIXME
 
-=== [[toString]] Human-Friendly / Textual Representation of ProcessorNode -- `toString` Method
+=== [[toString]] Describing Itself (Textual Representation) -- `toString` Method
 
 [source, java]
 ----

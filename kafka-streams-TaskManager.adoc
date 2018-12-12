@@ -13,6 +13,14 @@ When <<creating-instance, created>>, `TaskManager` is given a Kafka <<adminClien
 
 * `StreamsPartitionAssignor` is requested to <<kafka-streams-StreamsPartitionAssignor.adoc#configure, configure>> (and creates an <<kafka-streams-StreamsPartitionAssignor.adoc#internalTopicManager, InternalTopicManager>>)
 
+When <<creating-instance, created>>, `TaskManager` is given a <<streamsMetadataState, StreamsMetadataState>> that is used exclusively to <<setPartitionsByHostState, get notifications about the changes in cluster metadata>>. The <<streamsMetadataState, StreamsMetadataState>> can then be displayed when `TaskManager` is requested for <<toString, text representation>>.
+
+.Displaying StreamsMetadataState (In Textual Representation)
+[source, scala]
+----
+// FIXME: TaskManager.toString
+----
+
 [[internal-registries]]
 .TaskManager's Internal Properties (e.g. Registries, Counters and Flags)
 [cols="1,2",options="header",width="100%"]
@@ -55,16 +63,16 @@ log4j.logger.org.apache.kafka.streams.processor.internals.TaskManager=TRACE
 Refer to link:kafka-logging.adoc#log4j.properties[Application Logging Using log4j].
 ====
 
-=== [[setPartitionsByHostState]] Notifying StreamsMetadataState about Cluster Metadata Changes -- `setPartitionsByHostState` Method
+=== [[setPartitionsByHostState]] Notifying StreamsMetadataState About Changes in Cluster Metadata -- `setPartitionsByHostState` Method
 
 [source, java]
 ----
 void setPartitionsByHostState(final Map<HostInfo, Set<TopicPartition>> partitionsByHostState)
 ----
 
-`setPartitionsByHostState` simply notifies <<streamsMetadataState, StreamsMetadataState>> that link:kafka-streams-StreamsMetadataState.adoc#onChange[cluster metadata has changed].
+`setPartitionsByHostState` simply notifies the <<streamsMetadataState, StreamsMetadataState>> that <<kafka-streams-StreamsMetadataState.adoc#onChange, cluster metadata has changed>>.
 
-NOTE: `setPartitionsByHostState` is used exclusively when...FIXME
+NOTE: `setPartitionsByHostState` is used when `StreamsPartitionAssignor` is requested to <<kafka-streams-StreamsPartitionAssignor.adoc#assign, assign>> and <<kafka-streams-StreamsPartitionAssignor.adoc#onAssignment, onAssignment>>.
 
 === [[setAssignmentMetadata]] Setting Assignment Metadata with Active and Standby Tasks -- `setAssignmentMetadata` Method
 
@@ -142,7 +150,7 @@ NOTE: `activeTask` is used exclusively when `StreamThread` is requested to link:
 * [[processId]] `UUID`
 * [[logPrefix]] `logPrefix`
 * [[restoreConsumer]] Kafka https://kafka.apache.org/20/javadoc/org/apache/kafka/clients/consumer/KafkaConsumer.html[Consumer] (`Consumer<byte[], byte[]>`)
-* [[streamsMetadataState]] link:kafka-streams-StreamsMetadataState.adoc[StreamsMetadataState]
+* [[streamsMetadataState]] <<kafka-streams-StreamsMetadataState.adoc#, StreamsMetadataState>>
 * [[taskCreator]] link:kafka-streams-TaskCreator.adoc[StreamThread.AbstractTaskCreator<StreamTask>]
 * [[standbyTaskCreator]] link:kafka-streams-StandbyTaskCreator.adoc[StreamThread.AbstractTaskCreator<StandbyTask>]
 * [[adminClient]] Kafka https://kafka.apache.org/20/javadoc/org/apache/kafka/clients/admin/AdminClient.html[AdminClient]
@@ -287,7 +295,7 @@ New standby tasks to be created: [newStandbyTasks]
 
 NOTE: `addStandbyTasks` is used exclusively when `TaskManager` is requested to <<createTasks, create tasks for assigned topic partitions>>.
 
-=== [[toString]] Describing Itself (Text Representation) -- `toString` Method
+=== [[toString]] Describing Itself (Textual Representation) -- `toString` Method
 
 [source, java]
 ----
