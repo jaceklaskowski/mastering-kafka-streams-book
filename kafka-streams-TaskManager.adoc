@@ -153,7 +153,7 @@ NOTE: `activeTask` is used exclusively when `StreamThread` is requested to link:
 * [[streamsMetadataState]] <<kafka-streams-StreamsMetadataState.adoc#, StreamsMetadataState>>
 * [[taskCreator]] link:kafka-streams-TaskCreator.adoc[StreamThread.AbstractTaskCreator<StreamTask>]
 * [[standbyTaskCreator]] link:kafka-streams-StandbyTaskCreator.adoc[StreamThread.AbstractTaskCreator<StandbyTask>]
-* [[adminClient]] Kafka https://kafka.apache.org/20/javadoc/org/apache/kafka/clients/admin/AdminClient.html[AdminClient]
+* [[adminClient]] Kafka https://kafka.apache.org/21/javadoc/org/apache/kafka/clients/admin/AdminClient.html[AdminClient]
 * [[active]] link:kafka-streams-AssignedStreamsTasks.adoc[AssignedStreamsTasks]
 * [[standby]] link:kafka-streams-AssignedStandbyTasks.adoc[AssignedStandbyTasks]
 

@@ -5,15 +5,16 @@
 . link:kafka-streams.adoc[Kafka Streams -- Stream Processing Library on Apache Kafka]
 . link:kafka-streams-why.adoc[Why Kafka Streams]
 
+. link:kafka-streams-exactly-once-support-eos.adoc[Exactly-Once Support (EOS)]
+
 == Developing Stream Processing Applications with Kafka Streams
 
+. link:kafka-streams-KafkaStreams.adoc[KafkaStreams -- Streams Client]
 . link:kafka-streams-Topology.adoc[Topology -- Directed Acyclic Graph of Stream Processing Nodes]
-. link:kafka-streams-KafkaStreams.adoc[KafkaStreams]
 . link:kafka-streams-StreamsConfig.adoc[StreamsConfig -- Configuration Properties for Kafka Clients]
-. link:kafka-streams-exactly-once-support-eos.adoc[Exactly-Once Support (EOS)]
 . link:kafka-streams-properties.adoc[Configuration Properties]
 . link:kafka-logging.adoc[Logging]
-. link:kafka-streams-KafkaClientSupplier.adoc[KafkaClientSupplier Contract]
+. link:kafka-streams-KafkaClientSupplier.adoc[KafkaClientSupplier Contract -- Suppliers of Kafka AdminClient, Consumers and Producers]
 
 == High-Level Streams DSL
 

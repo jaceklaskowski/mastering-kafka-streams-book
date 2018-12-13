@@ -144,7 +144,7 @@ Map<String, Object> getProducerConfigs(final String clientId)
 
 NOTE: `getProducerConfigs` is used when...FIXME
 
-=== [[getAdminConfigs]] Configuration for Kafka AdminClient -- `getAdminConfigs` Method
+=== [[getAdminConfigs]] Getting Configuration for (Creating) Kafka AdminClient -- `getAdminConfigs` Method
 
 [source, java]
 ----

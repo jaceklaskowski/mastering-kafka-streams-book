@@ -17,7 +17,7 @@ TIP: Read https://cwiki.apache.org/confluence/display/KAFKA/Kafka+Client-side+As
 | Description
 
 | internalTopicManager
-| [[internalTopicManager]] link:kafka-streams-InternalTopicManager.adoc[InternalTopicManager]
+| [[internalTopicManager]] <<kafka-streams-InternalTopicManager.adoc#, InternalTopicManager>>
 
 Initialized when `StreamsPartitionAssignor` is requested to <<configure, configure>> itself
 

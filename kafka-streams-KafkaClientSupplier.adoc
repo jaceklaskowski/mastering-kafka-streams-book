@@ -1,6 +1,6 @@
-== [[KafkaClientSupplier]] KafkaClientSupplier Contract
+== [[KafkaClientSupplier]] KafkaClientSupplier Contract -- Suppliers of Kafka AdminClient, Consumers and Producers
 
-`KafkaClientSupplier` is the <<contract, contract>> of <<implementations, Kafka client suppliers>> that provide (_supply_) Kafka clients, i.e. <<getAdminClient, AdminClient>>, Consumers (<<getConsumer, getConsumer>>, <<getGlobalConsumer, getGlobalConsumer>> and <<getRestoreConsumer, getRestoreConsumer>>) and a <<getProducer, Producer>>.
+`KafkaClientSupplier` is the <<contract, contract>> of <<implementations, Kafka client suppliers>> that provide (_supply_) Kafka clients, i.e. <<getAdminClient, AdminClient>>, Kafka Consumers (<<getConsumer, getConsumer>>, <<getGlobalConsumer, getGlobalConsumer>> and <<getRestoreConsumer, getRestoreConsumer>>) and a Kafka <<getProducer, Producer>>.
 
 [[contract]]
 .KafkaClientSupplier Contract
