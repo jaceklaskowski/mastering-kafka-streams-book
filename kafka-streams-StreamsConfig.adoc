@@ -53,8 +53,15 @@ conf.put(StreamsConfig.BOOTSTRAP_SERVERS_CONFIG, ":9092,localhost:9192")
 | PROCESSING_GUARANTEE_CONFIG
 | [[PROCESSING_GUARANTEE_CONFIG]] <<kafka-streams-properties.adoc#processing.guarantee, processing.guarantee>>
 
+| REPLICATION_FACTOR_CONFIG
+| [[REPLICATION_FACTOR_CONFIG]] <<kafka-streams-properties.adoc#replication.factor, replication.factor>>
+
 | STATE_DIR_CONFIG
 | [[STATE_DIR_CONFIG]] <<kafka-streams-properties.adoc#state.dir, state.dir>>
+
+| WINDOW_STORE_CHANGE_LOG_ADDITIONAL_RETENTION_MS_CONFIG
+| [[WINDOW_STORE_CHANGE_LOG_ADDITIONAL_RETENTION_MS_CONFIG]] <<kafka-streams-properties.adoc#windowstore.changelog.additional.retention.ms, windowstore.changelog.additional.retention.ms>>
+
 |===
 
 `StreamsConfig` is also used the configuration for the following Kafka clients (that Kafka Streams uses under the covers):
@@ -296,3 +303,14 @@ Serde defaultKeySerde()
 `defaultKeySerde`...FIXME
 
 NOTE: `defaultKeySerde` is used when...FIXME
+
+=== [[originalsWithPrefix]] `originalsWithPrefix` Method
+
+[source, java]
+----
+Map<String, Object> originalsWithPrefix(String prefix)
+----
+
+`originalsWithPrefix`...FIXME
+
+NOTE: `originalsWithPrefix` is used when...FIXME

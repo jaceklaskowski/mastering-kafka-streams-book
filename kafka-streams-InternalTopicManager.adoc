@@ -1,3 +1,88 @@
 == [[InternalTopicManager]] InternalTopicManager
 
-`InternalTopicManager` is...FIXME
+`InternalTopicManager` is <<creating-instance, created>> exclusively for the <<kafka-streams-StreamsPartitionAssignor.adoc#internalTopicManager, StreamsPartitionAssignor>> so it can <<makeReady, make repartition and state changelog internal topics ready>>.
+
+`InternalTopicManager` uses a Kafka <<adminClient, AdminClient>> to <<makeReady, create>> and <<getNumPartitions, describe>> topics.
+
+[[logContext]]
+`InternalTopicManager` uses *stream-thread [threadName]* for the `logContext`.
+
+[[internal-registries]]
+.InternalTopicManager's Internal Properties (e.g. Registries, Counters and Flags)
+[cols="1m,2",options="header",width="100%"]
+|===
+| Name
+| Description
+
+| defaultTopicConfigs
+| [[defaultTopicConfigs]] *Default topic configurations* (`Map<String, String>`) that is filled out with new entries (with `topic.` prefix) when `InternalTopicManager` is <<creating-instance, created>>
+
+| log
+| [[log]] `Logger`
+
+| replicationFactor
+| [[replicationFactor]] Value of <<kafka-streams-properties.adoc#replication.factor, replication.factor>> configuration property
+
+| retries
+| [[retries]] Value of AdminClient's `retries` configuration property (to resend any request that fails with a potentially transient error)
+
+| windowChangeLogAdditionalRetention
+| [[windowChangeLogAdditionalRetention]] Value of <<kafka-streams-properties.adoc#windowstore.changelog.additional.retention.ms, windowstore.changelog.additional.retention.ms>> configuration property
+
+|===
+
+[[logging]]
+[TIP]
+====
+Enable any of `DEBUG` logging level for `org.apache.kafka.streams.processor.internals.InternalTopicManager` logger to see what happens inside.
+
+Add the following line to `log4j.properties`:
+
+```
+log4j.logger.org.apache.kafka.streams.processor.internals.InternalTopicManager=DEBUG
+```
+
+Refer to link:kafka-logging.adoc#log4j.properties[Application Logging Using log4j].
+====
+
+=== [[creating-instance]] Creating InternalTopicManager Instance
+
+`InternalTopicManager` takes the following when created:
+
+* [[adminClient]] Kafka https://kafka.apache.org/21/javadoc/org/apache/kafka/clients/admin/AdminClient.html[AdminClient]
+* [[streamsConfig]] <<kafka-streams-StreamsConfig.adoc#, StreamsConfig>>
+
+`InternalTopicManager` initializes the <<internal-registries, internal registries and counters>>.
+
+While being created, `InternalTopicManager` prints out the following DEBUG message to the logs:
+
+```
+Configs:
+  retries = [retries]
+  replication.factor = [replicationFactor]
+  windowstore.changelog.additional.retention.ms = [windowChangeLogAdditionalRetention]
+```
+
+In the end, `InternalTopicManager` requests the <<streamsConfig, StreamsConfig>> for <<kafka-streams-StreamsConfig.adoc#originalsWithPrefix, originalsWithPrefix>> with `topic.` prefix and adds every non-empty configuration to the <<defaultTopicConfigs, defaultTopicConfigs>>.
+
+=== [[makeReady]] `makeReady` Method
+
+[source, java]
+----
+void makeReady(final Map<String, InternalTopicConfig> topics)
+----
+
+`makeReady`...FIXME
+
+NOTE: `makeReady` is used exclusively when `StreamsPartitionAssignor` is requested to <<kafka-streams-StreamsPartitionAssignor.adoc#prepareTopic, prepareTopic>> (when requested to <<kafka-streams-StreamsPartitionAssignor.adoc#assign, perform group assignment>>).
+
+=== [[getNumPartitions]] `getNumPartitions` Method
+
+[source, java]
+----
+Map<String, Integer> getNumPartitions(final Set<String> topics)
+----
+
+`getNumPartitions`...FIXME
+
+NOTE: `getNumPartitions` is used when `InternalTopicManager` is requested to <<makeReady, makeReady>>.

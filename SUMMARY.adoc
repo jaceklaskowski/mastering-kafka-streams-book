@@ -134,7 +134,6 @@
 . link:kafka-streams-WindowedStreamPartitioner.adoc[WindowedStreamPartitioner]
 
 . link:kafka-streams-DefaultKafkaClientSupplier.adoc[DefaultKafkaClientSupplier]
-. link:kafka-streams-InternalTopicManager.adoc[InternalTopicManager]
 
 . link:kafka-streams-GlobalStateMaintainer.adoc[GlobalStateMaintainer]
 .. link:kafka-streams-GlobalStateUpdateTask.adoc[GlobalStateUpdateTask -- The Default GlobalStateMaintainer]
@@ -224,6 +223,7 @@
 === Execution Environment
 
 . link:kafka-streams-StreamsPartitionAssignor.adoc[StreamsPartitionAssignor -- Partition Assignment Strategy]
+.. link:kafka-streams-InternalTopicManager.adoc[InternalTopicManager]
 
 . link:kafka-streams-StreamThread.adoc[StreamThread -- Stream Processor Thread]
 . link:kafka-streams-StreamThread-RebalanceListener.adoc[RebalanceListener -- Kafka ConsumerRebalanceListener for Partition Assignment Among Processor Tasks]

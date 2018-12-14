@@ -98,6 +98,12 @@ For development you can change this by adjusting broker setting `transaction.sta
 
 Use <<kafka-streams-StreamsConfig.adoc#PROCESSING_GUARANTEE_CONFIG, StreamsConfig.PROCESSING_GUARANTEE_CONFIG>> to reference the property.
 
+| replication.factor
+| `1`
+| [[replication.factor]] The replication factor for change log topics and repartition topics created by a stream processing application
+
+Use <<kafka-streams-StreamsConfig.adoc#REPLICATION_FACTOR_CONFIG, StreamsConfig.REPLICATION_FACTOR_CONFIG>> to reference the property.
+
 | state.cleanup.delay.ms
 | `10` mins (`10 * 60 * 1000`)
 | [[state.cleanup.delay.ms]] The amount of time (in milliseconds) to wait before deleting state when a partition has migrated. Only state directories that have not been modified for at least `state.cleanup.delay.ms` will be removed.
@@ -109,5 +115,9 @@ a| [[state.dir]] Path to the base directory for a state storage
 * Used when `StateDirectory` is link:kafka-streams-StateDirectory.adoc#creating-instance[created]
 
 Use <<kafka-streams-StreamsConfig.adoc#STATE_DIR_CONFIG, StreamsConfig.STATE_DIR_CONFIG>> to reference the property.
+
+| windowstore.changelog.additional.retention.ms
+| `24 * 60 * 60 * 1000L`
+| [[windowstore.changelog.additional.retention.ms]] Added to a Window `maintainMs` to ensure data is not deleted from the log prematurely. Allows for clock drift. Default is 1 day
 
 |===
