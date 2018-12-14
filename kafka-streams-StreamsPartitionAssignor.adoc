@@ -9,6 +9,9 @@ TIP: Read https://cwiki.apache.org/confluence/display/KAFKA/Kafka+Client-side+As
 
 `StreamsPartitionAssignor` is registered when `StreamsConfig` is requested for the link:kafka-streams-StreamsConfig.adoc#getMainConsumerConfigs[configuration for a Kafka Consumer] with `partition.assignment.strategy` (`ConsumerConfig.PARTITION_ASSIGNMENT_STRATEGY_CONFIG`) property.
 
+[[logPrefix]]
+`StreamsPartitionAssignor` uses *stream-thread [client.id]* for the `logPrefix`.
+
 [[internal-registries]]
 .StreamsPartitionAssignor's Internal Properties (e.g. Registries, Counters and Flags)
 [cols="1m,2",options="header",width="100%"]
@@ -90,7 +93,7 @@ In the end, `onAssignment` requests the <<taskManager, TaskManager>> for the fol
 `onAssignment` reports an `TaskAssignmentException` if the numbers of partitions and active tasks are not equal.
 
 ```
-[logPrefix]Number of assigned partitions [partitions] is not equal to the number of active taskIds [activeTasks], assignmentInfo=[info]
+Number of assigned partitions [partitions] is not equal to the number of active taskIds [activeTasks], assignmentInfo=[info]
 ```
 
 === [[configure]] Configuring Partition Assignor -- `configure` Method
