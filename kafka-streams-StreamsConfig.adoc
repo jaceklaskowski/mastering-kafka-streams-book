@@ -151,9 +151,41 @@ NOTE: `getProducerConfigs` is used when...FIXME
 Map<String, Object> getAdminConfigs(final String clientId)
 ----
 
-`getAdminConfigs`...FIXME
+`getAdminConfigs` firstly <<getClientPropsWithPrefix, finds the client properties>> for a Kafka AdminClient (with *admin.* prefix).
 
-NOTE: `getAdminConfigs` is used when...FIXME
+`getAdminConfigs` takes the <<getClientCustomProps, getClientCustomProps>> and copies the AdminClient properties over.
+
+In the end, `getAdminConfigs` adds the `clientId` with `-admin` suffix as the `client.id` configuration property.
+
+[source, scala]
+----
+import org.apache.kafka.streams.StreamsConfig
+val props = new java.util.Properties()
+// required configurations
+props.put(StreamsConfig.APPLICATION_ID_CONFIG, "demo")
+props.put(StreamsConfig.BOOTSTRAP_SERVERS_CONFIG, ":9092")
+
+// Define a custom configuration with admin prefix
+import org.apache.kafka.clients.admin.AdminClientConfig
+props.put("admin." + AdminClientConfig.METADATA_MAX_AGE_CONFIG, "10")
+val streamsConf = new StreamsConfig(props)
+val adminConfigs = streamsConf.getAdminConfigs("my-client-id")
+
+import scala.collection.JavaConverters._
+scala> adminConfigs.asScala.map { case (k,v) => s"$k = $v" }.foreach(println)
+bootstrap.servers = :9092
+metadata.max.age.ms = 10
+client.id = my-client-id-admin
+----
+
+[NOTE]
+====
+`getAdminConfigs` is used when:
+
+* `KafkaStreams` is <<kafka-streams-KafkaStreams.adoc#adminClient, created>>
+
+* `InternalTopicManager` is <<kafka-streams-InternalTopicManager.adoc#retries, created>>
+====
 
 === [[clientProps]] Collecting Properties per Key -- `clientProps` Internal Method
 
