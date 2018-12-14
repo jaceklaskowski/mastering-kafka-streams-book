@@ -1,6 +1,6 @@
 == [[StreamsConfig]] StreamsConfig -- Configuration Properties for Kafka Clients
 
-`StreamsConfig` is a Apache Kafka https://kafka.apache.org/21/javadoc/org/apache/kafka/common/config/AbstractConfig.html[AbstractConfig] for the <<properties, configuration properties>> for Kafka Streams applications.
+`StreamsConfig` is a Apache Kafka https://kafka.apache.org/21/javadoc/org/apache/kafka/common/config/AbstractConfig.html[AbstractConfig] for the <<properties, configuration properties>> for a Kafka Streams application.
 
 [source, scala]
 ----
@@ -8,6 +8,20 @@ import org.apache.kafka.streams.StreamsConfig
 val conf = new java.util.Properties()
 conf.put(StreamsConfig.APPLICATION_ID_CONFIG, "appId")
 conf.put(StreamsConfig.BOOTSTRAP_SERVERS_CONFIG, ":9092,localhost:9192")
+----
+
+[[ADMIN_CLIENT_PREFIX]]
+`StreamsConfig` uses *admin.* prefix for the configuration properties that are meant to be used for a Kafka <<getAdminConfigs, AdminClient>>. Use <<adminClientPrefix, adminClientPrefix>> method to add the prefix to a `AdminClient` property.
+
+[source, scala]
+----
+import org.apache.kafka.clients.admin.AdminClientConfig
+scala> println(AdminClientConfig.RETRIES_CONFIG)
+retries
+
+import org.apache.kafka.streams.StreamsConfig.adminClientPrefix
+scala> println(adminClientPrefix(AdminClientConfig.RETRIES_CONFIG))
+admin.retries
 ----
 
 [[properties]]
@@ -158,7 +172,7 @@ NOTE: `getProducerConfigs` is used when...FIXME
 Map<String, Object> getAdminConfigs(final String clientId)
 ----
 
-`getAdminConfigs` firstly <<getClientPropsWithPrefix, finds the client properties>> for a Kafka AdminClient (with *admin.* prefix).
+`getAdminConfigs` firstly <<getClientPropsWithPrefix, finds the client properties>> for a Kafka AdminClient (with <<ADMIN_CLIENT_PREFIX, admin.>> prefix).
 
 `getAdminConfigs` takes the <<getClientCustomProps, getClientCustomProps>> and copies the AdminClient properties over.
 
@@ -314,3 +328,12 @@ Map<String, Object> originalsWithPrefix(String prefix)
 `originalsWithPrefix`...FIXME
 
 NOTE: `originalsWithPrefix` is used when...FIXME
+
+=== [[adminClientPrefix]] `adminClientPrefix` Static Method
+
+[source, java]
+----
+static String adminClientPrefix(final String adminClientProp)
+----
+
+`adminClientPrefix` simply adds the <<ADMIN_CLIENT_PREFIX, admin.>> prefix to a given `adminClientProp`.
