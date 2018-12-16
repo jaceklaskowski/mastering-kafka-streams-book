@@ -114,7 +114,7 @@ String toString(final String indent)
 
 `toString`...FIXME
 
-NOTE: `toString` is used when...FIXME
+NOTE: `toString` is used when `TaskManager` is requested to <<kafka-streams-TaskManager.adoc#toString, describe itself>>.
 
 === [[isInitialized]] `isInitialized` Internal Method
 

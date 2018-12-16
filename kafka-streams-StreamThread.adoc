@@ -383,8 +383,6 @@ String toString(final String indent)
 FIXME toString in action
 ----
 
-NOTE: `toString` is used when `KafkaStreams` is requested to link:kafka-streams-KafkaStreams.adoc#toString[describe itself].
-
 === [[processAndMaybeCommit]] Processing Records (with Optional Commit) -- `processAndMaybeCommit` Internal Method
 
 [source, java]

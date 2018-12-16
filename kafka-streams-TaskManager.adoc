@@ -313,7 +313,7 @@ String toString(final String indent)
 FIXME toString in action
 ----
 
-NOTE: `toString` is used exclusively when `StreamThread` is requested to link:kafka-streams-StreamThread.adoc#toString[describe itself].
+NOTE: `toString` is used exclusively when `StreamThread` is requested to <<kafka-streams-StreamThread.adoc#toString, describe itself>>.
 
 === [[maybePurgeCommitedRecords]] `maybePurgeCommitedRecords` Method
 
