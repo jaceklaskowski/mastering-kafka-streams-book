@@ -1,0 +1,17 @@
+== Multi-Instance Kafka Streams Applications
+
+A single Kafka Streams application can be executed in a group (of individual <<kafka-streams-KafkaStreams.adoc#, stream processing nodes>> that are identified by the same <<kafka-streams-properties.adoc#application.id, application.id>>).
+
+The stream processing clients can be run on the same physical machine or separate nodes.
+
+From the perspective of a Apache Kafka cluster the instances all together act as a *consumer group* (and, by the rules of consumer group, they share the partitions in such a way that no two instances access a partition).
+
+If a topology uses local state stores, they are owned exclusively (and not shared) by the instances themselves that have an exclusive access to the stores (that hold state based on the records in the exclusive set of partitions assigned to them).
+
+In such a stream processing group, every `KafkaStreams` streams client can however expose a user-defined endpoint (as a pair of host and port using <<kafka-streams-properties.adoc#application.server, application.server>> configuration property) that allows for <<kafka-streams-KafkaStreams.adoc#allMetadata, discovering the location of and connecting to the state stores and the partitions available on the instance>>.
+
+The KafkaStreams instances become *discoverable* as a feature of KafkaStreams libraray not some external discovery framework.
+
+That distributed yet interconnected Kafka Streams application allows for developing APIs and services that could use the state distributed across stream processing nodes (that span over multiple machines).
+
+TIP: Read up more on the feature in the initial code drop as part of https://issues.apache.org/jira/browse/KAFKA-3914[KAFKA-3914: Global discovery of state stores] and https://cwiki.apache.org/confluence/display/KAFKA/KIP-67%3A+Queryable+state+for+Kafka+Streams[KIP-67: Queryable state for Kafka Streams].

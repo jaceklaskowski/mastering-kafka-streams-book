@@ -30,6 +30,8 @@ a| [[allMetadata]]
 Collection<StreamsMetadata> allMetadata()
 ----
 
+<<kafka-streams-StreamsMetadataState.adoc#StreamsMetadatas, StreamsMetadatas>> for all instances in a <<kafka-streams-multi-instance-kafka-streams-application.adoc#, multi-instance Kafka Streams application>>
+
 | allMetadataForStore
 a| [[allMetadataForStore]]
 

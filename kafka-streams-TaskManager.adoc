@@ -1,6 +1,8 @@
 == [[TaskManager]] TaskManager
 
-`TaskManager` manages <<active, active>> and <<standby, standby>> tasks. `TaskManager` <<createTasks, creates new tasks>> when `RebalanceListener` handles link:kafka-streams-StreamThread-RebalanceListener.adoc#onPartitionsAssigned[onPartitionsAssigned] (and requests to <<createTasks, create processor tasks for assigned topic partitions>> that in turn <<addStreamTasks, adds new stream tasks>>).
+`TaskManager` manages <<active, active>> and <<standby, standby>> tasks of a KafkaStreams application.
+
+`TaskManager` <<createTasks, creates new tasks>> when `RebalanceListener` handles link:kafka-streams-StreamThread-RebalanceListener.adoc#onPartitionsAssigned[onPartitionsAssigned] (and requests to <<createTasks, create processor tasks for assigned topic partitions>> that in turn <<addStreamTasks, adds new stream tasks>>).
 
 `TaskManager` is <<creating-instance, created>> when `StreamThread` is link:kafka-streams-StreamThread.adoc#create[created] (with a new <<active, AssignedStreamsTasks>> and <<standby, AssignedStandbyTasks>> for <<active, active>> and <<standby, standby>> tasks, respectively).
 

@@ -9,7 +9,7 @@
 
 | application.id
 | (empty)
-| [[application.id]] Required *application ID*, i.e. the identifier of a Kafka Streams stream processing application
+| [[application.id]] *Application ID* that is the required identifier of a Kafka Streams stream processing application
 
 It must be unique within the Kafka cluster as it is used as a namespace for the default client-id prefix, the group-id for membership management, and the prefix for internal topics (that Kafka Streams creates internally).
 
@@ -17,9 +17,9 @@ Use <<kafka-streams-StreamsConfig.adoc#APPLICATION_ID_CONFIG, StreamsConfig.APPL
 
 | application.server
 | (empty)
-| [[application.server]] A `host:port` pair pointing to an embedded user-defined endpoint (that can be used for discovering the locations of state stores in a single KafkaStreams application).
+| [[application.server]] A `host:port` pair of a user-defined endpoint of a single instance in <<kafka-streams-multi-instance-kafka-streams-application.adoc#, multi-instance Kafka Streams application>> that can be used for discovering the locations of local state stores
 
-Used when `StreamPartitionAssignor` is requested to link:kafka-streams-StreamsPartitionAssignor.adoc#configure[configure itself].
+Used exclusively when `StreamPartitionAssignor` is requested to <<kafka-streams-StreamsPartitionAssignor.adoc#configure, configure itself>>.
 
 Use <<kafka-streams-StreamsConfig.adoc#APPLICATION_SERVER_CONFIG, StreamsConfig.APPLICATION_SERVER_CONFIG>> to reference the property.
 

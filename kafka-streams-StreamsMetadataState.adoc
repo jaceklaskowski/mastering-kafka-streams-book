@@ -5,12 +5,14 @@
 .StreamsMetadataState and Cluster Metadata Changes (from StreamsPartitionAssignor)
 image::images/kafka-streams-StreamsMetadataState-onChange.png[align="center"]
 
+`StreamsMetadata` comes with <<getAllMetadata, getAllMetadata>> method that returns <<allMetadata, StreamsMetadatas>> for all instances in a <<kafka-streams-multi-instance-kafka-streams-application.adoc#, multi-instance Kafka Streams application>>.
+
 `StreamsMetadataState` is <<creating-instance, created>> exclusively for the <<kafka-streams-StreamThread.adoc#taskManager, TaskManager>> of the <<kafka-streams-KafkaStreams.adoc#threads, stream processor threads>> of a <<kafka-streams-KafkaStreams.adoc#streamsMetadataState, KafkaStreams>> instance.
 
 [[StreamsMetadata]]
-`StreamsMetadata` represents the metadata of a <<kafka-streams-KafkaStreams.adoc#, KafkaStreams>> instance (process) in a Kafka Streams application:
+`StreamsMetadata` represents the metadata of a <<kafka-streams-KafkaStreams.adoc#, KafkaStreams>> stream processing node (process) in a Kafka Streams application:
 
-* [[hostInfo]] A user-defined endpoint (with a host and a port)
+* [[hostInfo]] A user-defined endpoint (as a pair of a host and a port)
 * [[stateStoreNames]] Names of state stores
 * [[topicPartitions]] Kafka https://kafka.apache.org/21/javadoc/org/apache/kafka/common/TopicPartition.html[TopicPartitions] (that this instance is assigned to)
 
@@ -22,15 +24,11 @@ image::images/kafka-streams-StreamsMetadataState-onChange.png[align="center"]
 | Description
 
 | allMetadata
-a| [[allMetadata]][[getAllMetadata]] <<StreamsMetadata, StreamsMetadata>> for...FIXME
+a| [[allMetadata]] <<StreamsMetadata, StreamsMetadatas>> for all instances in a <<kafka-streams-multi-instance-kafka-streams-application.adoc#, multi-instance Kafka Streams application>>
 
 <<StreamsMetadata, StreamsMetadata>> are added exclusively when `StreamsMetadataState` is requested to <<rebuildMetadata, rebuildMetadata>> (after all entries are first removed)
 
-Used when:
-
-* `KafkaStreams` is requested for <<kafka-streams-KafkaStreams.adoc#allMetadata, all metadata>>
-
-* `StreamsMetadataState` is requested for a <<toString, textual representation>>, <<getAllMetadataForStore, getAllMetadataForStore>>, <<getMetadataWithKey, getMetadataWithKey>>, <<getStreamsMetadataForKey, getStreamsMetadataForKey>>
+`allMetadata` is accessed when `StreamsMetadataState` is requested for a <<toString, textual representation>>, <<getAllMetadataForStore, getAllMetadataForStore>>, <<getMetadataWithKey, getMetadataWithKey>>, <<getStreamsMetadataForKey, getStreamsMetadataForKey>>
 
 | clusterMetadata
 a| [[clusterMetadata]] Cluster metadata, i.e. a subset of the nodes, topics, and partitions in the Kafka cluster (as a Kafka https://kafka.apache.org/21/javadoc/org/apache/kafka/common/Cluster.html[Cluster]) that is given when `StreamsMetadataState` is requested to <<onChange, handle cluster metadata changes>>
@@ -157,3 +155,14 @@ boolean hasPartitionsForAnyTopics(
 `hasPartitionsForAnyTopics` is enabled (returns `true`) when the input `topicNames` contain any of the topics in the input `partitionForHost`. Otherwise, `hasPartitionsForAnyTopics` is disabled (`false`).
 
 NOTE: `hasPartitionsForAnyTopics` is used exclusively when `StreamsMetadataState` is requested to <<rebuildMetadata, rebuildMetadata>>.
+
+=== [[getAllMetadata]] `getAllMetadata` Method
+
+[source, java]
+----
+Collection<StreamsMetadata> getAllMetadata()
+----
+
+`getAllMetadata` simply returns the <<allMetadata, allMetadata>> internal registry.
+
+NOTE: `getAllMetadata` is used exclusively when `KafkaStreams` is requested for <<kafka-streams-KafkaStreams.adoc#allMetadata, StreamsMetadatas for all KafkaStreams instances>> (in a <<kafka-streams-multi-instance-kafka-streams-application.adoc#, multi-instance Kafka Streams application>>).

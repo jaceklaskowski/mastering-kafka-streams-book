@@ -5,6 +5,8 @@
 . link:kafka-streams.adoc[Kafka Streams -- Stream Processing Library on Apache Kafka]
 . link:kafka-streams-why.adoc[Why Kafka Streams]
 
+. link:kafka-streams-multi-instance-kafka-streams-application.adoc[Multi-Instance Kafka Streams Applications]
+
 . link:kafka-streams-exactly-once-support-eos.adoc[Exactly-Once Support (EOS)]
 
 == Developing Stream Processing Applications with Kafka Streams
