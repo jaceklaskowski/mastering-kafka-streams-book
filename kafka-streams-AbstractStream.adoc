@@ -28,10 +28,10 @@ Every `AbstractStream` has the following internal properties:
 | [[SessionWindowedKStreamImpl]] link:kafka-streams-SessionWindowedKStreamImpl.adoc[SessionWindowedKStreamImpl]
 |
 
-| [[KStreamImpl]] link:kafka-streams-KStreamImpl.adoc[KStreamImpl]
+| [[KStreamImpl]] link:kafka-streams-internals-KStreamImpl.adoc[KStreamImpl]
 |
 
-| [[KGroupedStreamImpl]] link:kafka-streams-KGroupedStreamImpl.adoc[KGroupedStreamImpl]
+| [[KGroupedStreamImpl]] link:kafka-streams-internals-KGroupedStreamImpl.adoc[KGroupedStreamImpl]
 |
 |===
 
@@ -53,7 +53,7 @@ static <T, K> Stores.PersistentKeyValueFactory<K, T> storeFactory(
 
 * `AbstractStream` is requested for <<keyValueStore, keyValueStore>> and <<windowedStore, windowedStore>>
 
-* `KGroupedStreamImpl` is requested for link:kafka-streams-KGroupedStreamImpl.adoc#aggregate[aggregate] and link:kafka-streams-KGroupedStreamImpl.adoc#reduce[reduce]
+* `KGroupedStreamImpl` is requested for link:kafka-streams-internals-KGroupedStreamImpl.adoc#aggregate[aggregate] and link:kafka-streams-internals-KGroupedStreamImpl.adoc#reduce[reduce]
 ====
 
 === [[keyValueStore]] `keyValueStore` Static Method
@@ -103,7 +103,7 @@ toInternalValueTransformerSupplier(final ValueTransformerWithKeySupplier<K, V, V
 
 `toInternalValueTransformerSupplier` reports an `NullPointerException` when `ValueTransformerSupplier` or `ValueTransformerWithKeySupplier` are `null`.
 
-NOTE: `toInternalValueTransformerSupplier` is used exclusively when `KStreamImpl` is requested for link:kafka-streams-KStreamImpl.adoc#transformValues[transforming values with state].
+NOTE: `toInternalValueTransformerSupplier` is used exclusively when `KStreamImpl` is requested for link:kafka-streams-internals-KStreamImpl.adoc#transformValues[transforming values with state].
 
 === [[ensureJoinableWith]] `ensureJoinableWith` Method
 
@@ -118,7 +118,7 @@ Set<String> ensureJoinableWith(final AbstractStream<K> other)
 ====
 `ensureJoinableWith` is used when:
 
-* `KStreamImpl` is requested to link:kafka-streams-KStreamImpl.adoc#doJoin[doJoin] and link:kafka-streams-KStreamImpl.adoc#doStreamTableJoin[doStreamTableJoin]
+* `KStreamImpl` is requested to link:kafka-streams-internals-KStreamImpl.adoc#doJoin[doJoin] and link:kafka-streams-internals-KStreamImpl.adoc#doStreamTableJoin[doStreamTableJoin]
 
 * `KTableImpl` is requested to link:kafka-streams-KTableImpl.adoc#buildJoin[buildJoin]
 ====

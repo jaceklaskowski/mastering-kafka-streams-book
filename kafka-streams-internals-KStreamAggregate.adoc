@@ -1,0 +1,3 @@
+== [[KStreamAggregate]] KStreamAggregate
+
+`KStreamAggregate` is...FIXME

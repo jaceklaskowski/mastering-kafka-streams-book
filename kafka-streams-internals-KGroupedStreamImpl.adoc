@@ -1,0 +1,114 @@
+== [[KGroupedStreamImpl]] KGroupedStreamImpl
+
+`KGroupedStreamImpl` is a concrete <<kafka-streams-AbstractStream.adoc#, stream>> of <<kafka-streams-KGroupedStream.adoc#, grouped records>> as a result of <<kafka-streams-internals-KStreamImpl.adoc#groupBy, KStream.groupBy>> and <<kafka-streams-internals-KStreamImpl.adoc#groupByKey, KStream.groupByKey>> streaming operators.
+
+[[aggregateBuilder]]
+[[internal-registries]]
+`KGroupedStreamImpl` uses a <<kafka-streams-GroupedStreamAggregateBuilder.adoc#, GroupedStreamAggregateBuilder>> for...FIXME
+
+=== [[aggregate]] `aggregate` Method
+
+[source, java]
+----
+KTable<K, VR> aggregate(
+  final Initializer<VR> initializer,
+  final Aggregator<? super K, ? super V, VR> aggregator)
+KTable<K, VR> aggregate(
+  final Initializer<VR> initializer,
+  final Aggregator<? super K, ? super V, VR> aggregator,
+  final Materialized<K, VR, KeyValueStore<Bytes, byte[]>> materialized)
+----
+
+NOTE: `aggregate` is part of link:kafka-streams-KGroupedStream.adoc#aggregate[KGroupedStream Contract] to...FIXME.
+
+`aggregate`...FIXME
+
+=== [[reduce]] `reduce` Method
+
+[source, java]
+----
+KTable<K, V> reduce(final Reducer<V> reducer)
+KTable<K, V> reduce(
+  final Reducer<V> reducer,
+  final Materialized<K, V, KeyValueStore<Bytes, byte[]>> materialized)
+----
+
+NOTE: `reduce` is part of link:kafka-streams-KGroupedStream.adoc#reduce[KGroupedStream Contract] to...FIXME.
+
+`reduce`...FIXME
+
+=== [[windowedBy-SessionWindows]] Creating SessionWindowedKStream Instance -- `windowedBy` Method
+
+[source, java]
+----
+SessionWindowedKStream<K, V> windowedBy(final SessionWindows windows)
+----
+
+NOTE: `windowedBy` is part of link:kafka-streams-KGroupedStream.adoc#windowedBy[KGroupedStream Contract] to...FIXME.
+
+`windowedBy`...FIXME
+
+=== [[windowedBy]][[windowedBy-Windows]] Creating TimeWindowedKStream Instance -- `windowedBy` Method
+
+[source, java]
+----
+TimeWindowedKStream<K, V> windowedBy(final Windows<W> windows)
+----
+
+NOTE: `windowedBy` is part of link:kafka-streams-KGroupedStream.adoc#windowedBy[KGroupedStream Contract] to...FIXME.
+
+`windowedBy`...FIXME
+
+=== [[doAggregate]] Building KTable -- `doAggregate` Internal Method
+
+[source, java]
+----
+KTable<K, T> doAggregate(
+  final KStreamAggProcessorSupplier<K, ?, V, T> aggregateSupplier,
+  final String functionName,
+  final MaterializedInternal<K, T, KeyValueStore<Bytes, byte[]>> materializedInternal)
+----
+
+`doAggregate`...FIXME
+
+NOTE: `doAggregate` is used when `KGroupedStreamImpl` is requested to <<reduce, reduce>>, <<aggregate, aggregate>> and <<doCount, doCount>>.
+
+=== [[doCount]] `doCount` Internal Method
+
+[source, java]
+----
+KTable<K, Long> doCount(final Materialized<K, Long, KeyValueStore<Bytes, byte[]>> materialized)
+----
+
+`doCount` creates a <<kafka-streams-MaterializedInternal.adoc#, MaterializedInternal>> for the given <<kafka-streams-Materialized.adoc#, Materialized>> and requests it to <<kafka-streams-MaterializedInternal.adoc#generateStoreNameIfNeeded, generateStoreNameIfNeeded>> (with the <<kafka-streams-AbstractStream.adoc#builder, InternalStreamsBuilder>> and *KSTREAM-AGGREGATE-* store name prefix).
+
+Unless specified (and not `null`), `doCount` defines key and value serdes.
+
+In the end, `doCount` <<doAggregate, doAggregate>> with a new <<kafka-streams-internals-KStreamAggregate.adoc#, KStreamAggregate>>, *KSTREAM-AGGREGATE-* function name prefix, and the `MaterializedInternal`.
+
+NOTE: `doCount` is used exclusively when `KGroupedStreamImpl` is requested to <<count, count>>.
+
+=== [[count]] `count` Method
+
+[source, java]
+----
+KTable<K, Long> count()
+KTable<K, Long> count(final Materialized<K, Long, KeyValueStore<Bytes, byte[]>> materialized)
+----
+
+NOTE: `count` is part of the <<kafka-streams-KGroupedStream.adoc#count, KGroupedStream Contract>> to...FIXME.
+
+`count` simply <<doCount, doCount>> with the given <<kafka-streams-Materialized.adoc#, Materialized>> or <<kafka-streams-Materialized.adoc#with, one>> with no state store name, the key serde and `Long` serde for values.
+
+=== [[creating-instance]] Creating KGroupedStreamImpl Instance
+
+`KGroupedStreamImpl` takes the following when created:
+
+* [[name]] Name
+* [[sourceNodes]] Names of the source nodes
+* [[groupedInternal]] `GroupedInternal` (of `K` keys and `V` values)
+* [[repartitionRequired]] `repartitionRequired` flag
+* [[streamsGraphNode]] `StreamsGraphNode`
+* [[builder]] <<kafka-streams-InternalStreamsBuilder.adoc#, InternalStreamsBuilder>>
+
+`KGroupedStreamImpl` initializes the <<internal-registries, internal registries and counters>>.

@@ -2,7 +2,7 @@
 
 `KStreamTransformValues` is a link:kafka-streams-ProcessorSupplier.adoc[ProcessorSupplier] that <<get, supplies KStreamTransformValuesProcessors>>.
 
-`KStreamTransformValues` is <<creating-instance, created>> exclusively when `KStreamImpl` is requested to link:kafka-streams-KStreamImpl.adoc#transformValues[transform values with optional state] (aka _stateful record-by-record value transformation_).
+`KStreamTransformValues` is <<creating-instance, created>> exclusively when `KStreamImpl` is requested to link:kafka-streams-internals-KStreamImpl.adoc#transformValues[transform values with optional state] (aka _stateful record-by-record value transformation_).
 
 [[creating-instance]]
 [[valueTransformerSupplier]]

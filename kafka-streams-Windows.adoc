@@ -103,7 +103,7 @@ Used when:
 
 * `AbstractStream` is requested for link:kafka-streams-AbstractStream.adoc#windowedStore[windowedStore]
 
-* `KStreamImpl` is requested to link:kafka-streams-KStreamImpl.adoc#createWindowedStateStore[createWindowedStateStore]
+* `KStreamImpl` is requested to link:kafka-streams-internals-KStreamImpl.adoc#createWindowedStateStore[createWindowedStateStore]
 
 * `TimeWindowedKStreamImpl` is requested to link:kafka-streams-TimeWindowedKStreamImpl.adoc#materialize[materialize] and link:kafka-streams-TimeWindowedKStreamImpl.adoc#windowStoreBuilder[windowStoreBuilder]
 |===

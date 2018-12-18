@@ -2,7 +2,7 @@
 
 `TimeWindowedKStreamImpl` is a concrete <<kafka-streams-AbstractStream.adoc#, AbstractStream>> that allows for <<kafka-streams-TimeWindowedKStream.adoc#, time-windowed stream aggregations>>.
 
-`TimeWindowedKStreamImpl` is <<creating-instance, created>> exclusively when `KGroupedStreamImpl` is requested to <<kafka-streams-KGroupedStreamImpl.adoc#windowedBy, windowedBy>>.
+`TimeWindowedKStreamImpl` is <<creating-instance, created>> exclusively when `KGroupedStreamImpl` is requested to <<kafka-streams-internals-KGroupedStreamImpl.adoc#windowedBy, windowedBy>>.
 
 [[aggregateBuilder]]
 `TimeWindowedKStreamImpl` uses a <<kafka-streams-GroupedStreamAggregateBuilder.adoc#, GroupedStreamAggregateBuilder>> for...FIXME

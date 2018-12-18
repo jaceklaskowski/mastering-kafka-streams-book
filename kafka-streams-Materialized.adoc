@@ -67,7 +67,7 @@ a| [[with]]
 Materialized<K, V, S> with(final Serde<K> keySerde, final Serde<V> valueSerde)
 ----
 
-Creates a `Materialized` with the ``Serde``s (for the keys and values)
+Creates a `Materialized` with the given ``Serde``s for the keys and values, and no queryable state store
 |===
 
 [[with-methods]]

@@ -5,7 +5,7 @@
 .StreamsMetadataState and Cluster Metadata Changes (from StreamsPartitionAssignor)
 image::images/kafka-streams-StreamsMetadataState-onChange.png[align="center"]
 
-`StreamsMetadata` comes with <<getAllMetadata, getAllMetadata>> method that returns <<allMetadata, StreamsMetadatas>> for all instances in a <<kafka-streams-multi-instance-kafka-streams-application.adoc#, multi-instance Kafka Streams application>>.
+`StreamsMetadataState` comes with <<getAllMetadata, getAllMetadata>> method that returns <<allMetadata, StreamsMetadatas>> for all streams client instances in a <<kafka-streams-multi-instance-kafka-streams-application.adoc#, multi-instance Kafka Streams application>>.
 
 `StreamsMetadataState` is <<creating-instance, created>> exclusively for the <<kafka-streams-StreamThread.adoc#taskManager, TaskManager>> of the <<kafka-streams-KafkaStreams.adoc#threads, stream processor threads>> of a <<kafka-streams-KafkaStreams.adoc#streamsMetadataState, KafkaStreams>> instance.
 

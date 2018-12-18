@@ -23,4 +23,4 @@
 
 * `StreamsBuilder` is requested to <<kafka-streams-StreamsBuilder.adoc#stream, stream>>, <<kafka-streams-StreamsBuilder.adoc#table, table>>, <<kafka-streams-StreamsBuilder.adoc#globalTable, globalTable>>, and <<kafka-streams-StreamsBuilder.adoc#addGlobalStore, addGlobalStore>>
 
-* `KStreamImpl` is requested to <<kafka-streams-KStreamImpl.adoc#through, through>>
+* `KStreamImpl` is requested to <<kafka-streams-internals-KStreamImpl.adoc#through, through>>

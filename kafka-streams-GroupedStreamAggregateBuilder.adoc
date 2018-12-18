@@ -19,7 +19,7 @@
 ====
 `build` is used when:
 
-* `KGroupedStreamImpl` is requested to <<kafka-streams-KGroupedStreamImpl.adoc#doAggregate, doAggregate>>
+* `KGroupedStreamImpl` is requested to <<kafka-streams-internals-KGroupedStreamImpl.adoc#doAggregate, doAggregate>>
 
 * `SessionWindowedKStreamImpl` is requested to <<kafka-streams-SessionWindowedKStreamImpl.adoc#doCount, doCount>>, <<kafka-streams-SessionWindowedKStreamImpl.adoc#reduce, reduce>> and <<kafka-streams-SessionWindowedKStreamImpl.adoc#aggregate, aggregate>>
 

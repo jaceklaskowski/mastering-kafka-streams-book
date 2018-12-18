@@ -57,7 +57,7 @@ a| [[flatMap]]
 [source, java]
 ----
 KStream<KR, VR> flatMap(
-  KeyValueMapper<
+  final KeyValueMapper<
     ? super K,
     ? super V,
     ? extends Iterable<? extends KeyValue<? extends KR, ? extends VR>>> mapper)
@@ -69,9 +69,14 @@ a| [[flatMapValues]]
 [source, java]
 ----
 KStream<K, VR> flatMapValues(
-  final ValueMapper<? super V, ? extends Iterable<? extends VR>> mapper)
+  final ValueMapper<
+    ? super V,
+    ? extends Iterable<? extends VR>> mapper)
 KStream<K, VR> flatMapValues(
-  final ValueMapperWithKey<? super K, ? super V, ? extends Iterable<? extends VR>> mapper)
+  final ValueMapperWithKey<
+    ? super K,
+    ? super V,
+    ? extends Iterable<? extends VR>> mapper)
 ----
 
 | foreach
@@ -79,7 +84,8 @@ a| [[foreach]]
 
 [source, java]
 ----
-void foreach(final ForeachAction<? super K, ? super V> action)
+void foreach(
+  final ForeachAction<? super K, ? super V> action)
 ----
 
 | groupBy
@@ -91,7 +97,7 @@ KGroupedStream<KR, V> groupBy(
   final KeyValueMapper<? super K, ? super V, KR> selector)
 KGroupedStream<KR, V> groupBy(
   final KeyValueMapper<? super K, ? super V, KR> selector,
-  final Serialized<KR, V> serialized)
+  final Grouped<KR, V> grouped)
 ----
 
 Creates a <<kafka-streams-KGroupedStream.adoc#, KGroupedStream>> with a given <<kafka-streams-KeyValueMapper.adoc#, KeyValueMapper>>
@@ -102,7 +108,8 @@ a| [[groupByKey]]
 [source, java]
 ----
 KGroupedStream<K, V> groupByKey()
-KGroupedStream<K, V> groupByKey(final Serialized<K, V> serialized)
+KGroupedStream<K, V> groupByKey(
+  final Grouped<K, V> grouped)
 ----
 
 Creates a <<kafka-streams-KGroupedStream.adoc#, KGroupedStream>>
@@ -299,4 +306,4 @@ Stateful record-by-record value transformation
 |===
 
 [[implementations]]
-NOTE: link:kafka-streams-KStreamImpl.adoc[KStreamImpl] is the one and only known implementation of the <<contract, KStream Contract>> in Kafka Streams {{ book.kafka_version }}.
+NOTE: link:kafka-streams-internals-KStreamImpl.adoc[KStreamImpl] is the one and only known implementation of the <<contract, KStream Contract>> in Kafka Streams {{ book.kafka_version }}.

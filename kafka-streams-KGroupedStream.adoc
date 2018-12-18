@@ -93,4 +93,4 @@ Creates a <<kafka-streams-TimeWindowedKStream.adoc#, TimeWindowedKStream>> with 
 |===
 
 [[implementations]]
-NOTE: <<kafka-streams-KGroupedStreamImpl.adoc#, KGroupedStreamImpl>> is the one and only known implementation of the <<contract, KGroupedStream Contract>> in Kafka Streams {{ book.kafka_version }}.
+NOTE: <<kafka-streams-internals-KGroupedStreamImpl.adoc#, KGroupedStreamImpl>> is the one and only known implementation of the <<contract, KGroupedStream Contract>> in Kafka Streams {{ book.kafka_version }}.

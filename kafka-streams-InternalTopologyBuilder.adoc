@@ -344,7 +344,7 @@ For every topic name in the input `topics`, `addSource`:
 
 * `KGroupedTableImpl` is requested to link:kafka-streams-KGroupedTableImpl.adoc#buildAggregate[buildAggregate]
 
-* `KStreamImpl` is requested to link:kafka-streams-KStreamImpl.adoc#createReparitionedSource[createReparitionedSource]
+* `KStreamImpl` is requested to link:kafka-streams-internals-KStreamImpl.adoc#createReparitionedSource[createReparitionedSource]
 ====
 
 === [[maybeAddToResetList]] `maybeAddToResetList` Internal Method
@@ -394,7 +394,7 @@ NOTE: `connectProcessorAndStateStores` (plural) is a public method that uses the
 ====
 `connectProcessorAndStateStores` is used when:
 
-* `KStreamImpl` is requested to link:kafka-streams-KStreamImpl.adoc#doStreamTableJoin[doStreamTableJoin], link:kafka-streams-KStreamImpl.adoc#process[process], link:kafka-streams-KStreamImpl.adoc#transform[transform], link:kafka-streams-KStreamImpl.adoc#transformValues[transformValues]
+* `KStreamImpl` is requested to link:kafka-streams-internals-KStreamImpl.adoc#doStreamTableJoin[doStreamTableJoin], link:kafka-streams-internals-KStreamImpl.adoc#process[process], link:kafka-streams-internals-KStreamImpl.adoc#transform[transform], link:kafka-streams-internals-KStreamImpl.adoc#transformValues[transformValues]
 
 * `KTableImpl` is requested to link:kafka-streams-KTableImpl.adoc#buildJoin[buildJoin]
 
@@ -841,7 +841,7 @@ void addSink(
 
 * `KGroupedTableImpl` is requested to link:kafka-streams-KGroupedTableImpl.adoc#buildAggregate[buildAggregate]
 
-* `KStreamImpl` is requested to link:kafka-streams-KStreamImpl.adoc#to[register a sink node] and link:kafka-streams-KStreamImpl.adoc#createReparitionedSource[createReparitionedSource]
+* `KStreamImpl` is requested to link:kafka-streams-internals-KStreamImpl.adoc#to[register a sink node] and link:kafka-streams-internals-KStreamImpl.adoc#createReparitionedSource[createReparitionedSource]
 
 * `Topology` is requested to link:kafka-streams-Topology.adoc#addSink[add a sink]
 ====
@@ -859,7 +859,7 @@ void addInternalTopic(final String topicName)
 ====
 `addInternalTopic` is used when:
 
-* `KStreamImpl` is requested to <<kafka-streams-KStreamImpl.adoc#createReparitionedSource, createReparitionedSource>>
+* `KStreamImpl` is requested to <<kafka-streams-internals-KStreamImpl.adoc#createReparitionedSource, createReparitionedSource>>
 
 * `KGroupedTableImpl` is requested to <<kafka-streams-KGroupedTableImpl.adoc#buildAggregate, buildAggregate>> (for <<kafka-streams-KGroupedTableImpl.adoc#reduce, reduce>>, <<kafka-streams-KGroupedTableImpl.adoc#count, count>> and <<kafka-streams-KGroupedTableImpl.adoc#aggregate, aggregate>> operators)
 ====

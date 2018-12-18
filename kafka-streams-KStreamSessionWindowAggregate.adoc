@@ -4,7 +4,7 @@
 
 `KStreamSessionWindowAggregate` is <<creating-instance, created>> when:
 
-* `KGroupedStreamImpl` is requested to link:kafka-streams-KGroupedStreamImpl.adoc#aggregate[aggregate]
+* `KGroupedStreamImpl` is requested to link:kafka-streams-internals-KGroupedStreamImpl.adoc#aggregate[aggregate]
 
 * `SessionWindowedKStreamImpl` is requested to link:kafka-streams-SessionWindowedKStreamImpl.adoc#aggregate[aggregate] and link:kafka-streams-SessionWindowedKStreamImpl.adoc#doAggregate[doAggregate]
 

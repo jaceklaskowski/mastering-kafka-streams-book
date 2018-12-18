@@ -1,6 +1,6 @@
 == [[InternalStreamsBuilder]] InternalStreamsBuilder
 
-`InternalStreamsBuilder` is a façade of <<internalTopologyBuilder, InternalTopologyBuilder>> (to add sources and state stores to a topology) and link:kafka-streams-KTableImpl.adoc[KTableImpl] for <<table, table>>, link:kafka-streams-GlobalKTableImpl.adoc[GlobalKTableImpl] for <<globalTable, globalTable>>, and link:kafka-streams-KStreamImpl.adoc[KStreamImpl] for <<stream, stream>> operators.
+`InternalStreamsBuilder` is a façade of <<internalTopologyBuilder, InternalTopologyBuilder>> (to add sources and state stores to a topology) and link:kafka-streams-KTableImpl.adoc[KTableImpl] for <<table, table>>, link:kafka-streams-GlobalKTableImpl.adoc[GlobalKTableImpl] for <<globalTable, globalTable>>, and link:kafka-streams-internals-KStreamImpl.adoc[KStreamImpl] for <<stream, stream>> operators.
 
 `InternalStreamsBuilder` is <<creating-instance, created>> along with link:kafka-streams-StreamsBuilder.adoc#internalStreamsBuilder[StreamsBuilder].
 
@@ -44,7 +44,7 @@ KStream<K, V> stream(
 
 `stream` <<newProcessorName, creates a new processor name>> (with *KSTREAM-SOURCE-* prefix) and requests the <<internalTopologyBuilder, InternalTopologyBuilder>> to link:kafka-streams-InternalTopologyBuilder.adoc#addSource[register a new source processor] (under the new processor name and with the input `topics` or `topicPattern`).
 
-In the end, `stream` returns a new instance of link:kafka-streams-KStreamImpl.adoc#creating-instance[KStreamImpl] (with the new processor name that is also used as the name of the single source node and the `repartitionRequired` flag disabled).
+In the end, `stream` returns a new instance of link:kafka-streams-internals-KStreamImpl.adoc#creating-instance[KStreamImpl] (with the new processor name that is also used as the name of the single source node and the `repartitionRequired` flag disabled).
 
 [source, scala]
 ----
