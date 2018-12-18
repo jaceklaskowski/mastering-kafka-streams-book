@@ -1,0 +1,3 @@
+== [[Joined]] Joined -- Metadata for Joined Streams
+
+`Joined` is...FIXME

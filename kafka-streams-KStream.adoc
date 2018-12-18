@@ -8,20 +8,26 @@ TIP: Use <<kafka-streams-scala.adoc#, Scala API for Kafka Streams>> to make your
 
 [source, scala]
 ----
-import org.apache.kafka.streams.scala.StreamsBuilder
+// Required imports for Scala API for Kafka Streams
+import org.apache.kafka.streams.scala._
+import ImplicitConversions._
+import Serdes._
+
 val builder = new StreamsBuilder
 
-import org.apache.kafka.streams.kstream.KStream
-// Use type annotation to describe the stream, i.e. KStream[String, String]
+// Use type annotation to describe the stream, i.e. stream[String, String]
 // Else...Scala type inferencer gives us a stream of "nothing", i.e. KStream[Nothing, Nothing]
-val input: KStream[String, String] = builder.stream("input")
+val input = builder.stream[String, String]("input")
+
+scala> :type input
+org.apache.kafka.streams.scala.kstream.KStream[String,String]
 ----
 
 `KStream` comes with a rich set of <<operators, operators>> (aka _KStream API_) that allow for building topologies to consume, process and produce key-value records.
 
 [[contract]]
 [[operators]]
-.KStream API / Stream Operators
+.KStream API / Stream Processing Operators
 [cols="1m,2",options="header",width="100%"]
 |===
 | Operator
@@ -174,7 +180,10 @@ a| [[map]]
 [source, java]
 ----
 KStream<KR, VR> map(
-  KeyValueMapper<? super K, ? super V, ? extends KeyValue<? extends KR, ? extends VR>> mapper)
+  KeyValueMapper<
+    ? super K,
+    ? super V,
+    ? extends KeyValue<? extends KR, ? extends VR>> mapper)
 ----
 
 | mapValues
@@ -292,10 +301,15 @@ a| [[transformValues]]
 [source, java]
 ----
 KStream<K, VR> transformValues(
-  final ValueTransformerSupplier<? super V, ? extends VR> valueTransformerSupplier,
+  final ValueTransformerSupplier<
+    ? super V,
+    ? extends VR> valueTransformerSupplier,
   final String... stateStoreNames)
 KStream<K, VR> transformValues(
-  final ValueTransformerWithKeySupplier<? super K, ? super V, ? extends VR> valueTransformerSupplier,
+  final ValueTransformerWithKeySupplier<
+    ? super K,
+    ? super V,
+    ? extends VR> valueTransformerSupplier,
   final String... stateStoreNames)
 ----
 
@@ -306,4 +320,4 @@ Stateful record-by-record value transformation
 |===
 
 [[implementations]]
-NOTE: link:kafka-streams-internals-KStreamImpl.adoc[KStreamImpl] is the one and only known implementation of the <<contract, KStream Contract>> in Kafka Streams {{ book.kafka_version }}.
+NOTE: link:kafka-streams-internals-KStreamImpl.adoc[KStreamImpl] is the one and only known implementation of the <<contract, KStream Contract>> in Kafka Streams.

@@ -35,8 +35,10 @@
 
 . link:kafka-streams-KGroupedTable.adoc[KGroupedTable]
 
-. link:kafka-streams-Consumed.adoc[Consumed -- Metadata for Consuming Record Stream]
-. link:kafka-streams-Produced.adoc[Produced -- Metadata for Producing Record Stream]
+. link:kafka-streams-Consumed.adoc[Consumed -- Metadata for Consuming Streams]
+. link:kafka-streams-Produced.adoc[Produced -- Metadata for Producing Streams]
+. link:kafka-streams-Grouped.adoc[Grouped -- Metadata for Aggregating Streams]
+. link:kafka-streams-Joined.adoc[Joined -- Metadata for Joined Streams]
 . link:kafka-streams-Printed.adoc[Printed]
 
 . link:kafka-streams-KeyValueMapper.adoc[KeyValueMapper]
@@ -63,6 +65,7 @@
 .. link:kafka-streams-scala-Serdes.adoc[Serdes]
 .. link:kafka-streams-scala-Consumed.adoc[Consumed]
 .. link:kafka-streams-scala-Produced.adoc[Produced]
+.. link:kafka-streams-scala-Grouped.adoc[Grouped]
 
 == Low-Level Processor API
 

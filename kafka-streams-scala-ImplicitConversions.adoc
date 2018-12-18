@@ -14,41 +14,139 @@ import org.apache.kafka.streams.scala.ImplicitConversions._
 [cols="1m,2",options="header",width="100%"]
 |===
 | Name
-| Type
-
-| wrapKStream
-| [[wrapKStream]] `KStream[K, V]`
-
-| wrapKGroupedStream
-| [[wrapKGroupedStream]] `KGroupedStream[K, V]`
-
-| wrapSessionWindowedKStream
-| [[wrapSessionWindowedKStream]] `SessionWindowedKStream[K, V]`
-
-| wrapTimeWindowedKStream
-| [[wrapTimeWindowedKStream]] `TimeWindowedKStream[K, V]`
-
-| wrapKTable
-| [[wrapKTable]] `KTable[K, V]`
-
-| wrapKGroupedTable
-| [[wrapKGroupedTable]] `KGroupedTable[K, V]`
-
-| tuple2ToKeyValue
-| [[tuple2ToKeyValue]] `KeyValue[K, V]`
-
-| serializedFromSerde
-| [[serializedFromSerde]] `Serialized[K, V]`
+| Description
 
 | consumedFromSerde
-| [[consumedFromSerde]] `Consumed[K, V]`
+a| [[consumedFromSerde]]
 
-| producedFromSerde
-| [[producedFromSerde]] `Produced[K, V]`
+[source, scala]
+----
+consumedFromSerde[K, V](
+  implicit keySerde: Serde[K],
+  valueSerde: Serde[V]): Consumed[K, V]
+----
 
-| materializedFromSerde
-| [[materializedFromSerde]] `Materialized[K, V, S]`
+Creates a <<kafka-streams-Consumed.adoc#, Consumed>> instance
+
+| groupedFromSerde
+a| [[groupedFromSerde]]
+
+[source, scala]
+----
+groupedFromSerde[K, V](
+  implicit keySerde: Serde[K],
+  valueSerde: Serde[V]): Grouped[K, V]
+----
+
+Creates a <<kafka-streams-Grouped.adoc#, Grouped>> instance
 
 | joinedFromKeyValueOtherSerde
-| [[joinedFromKeyValueOtherSerde]] `Joined[K, V, VO]`
+a| [[joinedFromKeyValueOtherSerde]]
+
+[source, scala]
+----
+joinedFromKeyValueOtherSerde[K, V, VO](
+  implicit keySerde: Serde[K],
+  valueSerde: Serde[V],
+  otherValueSerde: Serde[VO]): Joined[K, V, VO]
+----
+
+Creates a <<kafka-streams-Joined.adoc#, Joined>> instance
+
+| materializedFromSerde
+a| [[materializedFromSerde]]
+
+[source, scala]
+----
+materializedFromSerde[K, V, S <: StateStore](
+  implicit keySerde: Serde[K],
+  valueSerde: Serde[V]): Materialized[K, V, S]
+----
+
+Creates a <<kafka-streams-Materialized.adoc#, Materialized>> instance
+
+| producedFromSerde
+a| [[producedFromSerde]]
+
+[source, scala]
+----
+producedFromSerde[K, V](
+  implicit keySerde: Serde[K],
+  valueSerde: Serde[V]): Produced[K, V]
+----
+
+Creates a <<kafka-streams-Produced.adoc#, Produced>> instance
+
+| tuple2ToKeyValue
+a| [[tuple2ToKeyValue]]
+
+[source, scala]
+----
+tuple2ToKeyValue[K, V](tuple: (K, V)): KeyValue[K, V]
+----
+
+Creates a `KeyValue` instance
+
+| wrapKGroupedStream
+a| [[wrapKGroupedStream]]
+
+[source, scala]
+----
+wrapKGroupedStream[K, V](inner: KGroupedStreamJ[K, V]): KGroupedStream[K, V]
+----
+
+Extends (_wraps_) a Java-based <<kafka-streams-KGroupedStream.adoc#, KGroupedStream>> with Scala API
+
+| wrapKGroupedTable
+a| [[wrapKGroupedTable]]
+
+[source, scala]
+----
+wrapKGroupedTable[K, V](inner: KGroupedTableJ[K, V]): KGroupedTable[K, V]
+----
+
+Extends (_wraps_) a Java-based <<kafka-streams-KGroupedTable.adoc#, KGroupedTable>> with Scala API
+
+| wrapKStream
+a| [[wrapKStream]]
+
+[source, scala]
+----
+wrapKStream[K, V](inner: KStreamJ[K, V]): KStream[K, V]
+----
+
+Extends (_wraps_) a Java-based <<kafka-streams-KStream.adoc#, KStream>> with Scala API
+
+| wrapKTable
+a| [[wrapKTable]]
+
+[source, scala]
+----
+wrapKTable[K, V](inner: KTableJ[K, V]): KTable[K, V]
+----
+
+Extends (_wraps_) a Java-based <<kafka-streams-KTable.adoc#, KTable>> with Scala API
+
+| wrapSessionWindowedKStream
+a| [[wrapSessionWindowedKStream]]
+
+[source, scala]
+----
+wrapSessionWindowedKStream[K, V](
+  inner: SessionWindowedKStreamJ[K, V]): SessionWindowedKStream[K, V]
+----
+
+Extends (_wraps_) a Java-based <<kafka-streams-SessionWindowedKStream.adoc#, SessionWindowedKStream>> with Scala API
+
+| wrapTimeWindowedKStream
+a| [[wrapTimeWindowedKStream]]
+
+[source, scala]
+----
+wrapTimeWindowedKStream[K, V](
+  inner: TimeWindowedKStreamJ[K, V]): TimeWindowedKStream[K, V]
+----
+
+Extends (_wraps_) a Java-based <<kafka-streams-TimeWindowedKStream.adoc#, TimeWindowedKStream>> with Scala API
+
 |===

@@ -1,0 +1,76 @@
+== [[Grouped]] Grouped -- Metadata for Aggregating Streams
+
+[[creating-instance]]
+`Grouped` provides the optional parameters that describe how to aggregate streams in the <<kafka-streams-StreamsBuilder.adoc#, High-Level Stream Processing DSL>>:
+
+* [[name]] *Repartition topic name*
+* [[keySerde]] *Key Serde* (Apache Kafka's https://kafka.apache.org/21/javadoc/org/apache/kafka/common/serialization/Serde.html[Serde] for record keys)
+* [[valueSerde]] *Value Serde* (Apache Kafka's https://kafka.apache.org/21/javadoc/org/apache/kafka/common/serialization/Serde.html[Serde] for record values)
+
+`Grouped` is used as an optional parameter in the following streaming aggregation operators:
+
+* <<kafka-streams-KStream.adoc#groupByKey, KStream.groupByKey>>
+
+* <<kafka-streams-KStream.adoc#groupBy, KStream.groupBy>>
+
+* <<kafka-streams-KTable.adoc#groupBy, KTable.groupBy>>
+
+A `Grouped` instance is <<creating-instance, created>> using one of the <<factory-methods, factory methods>>:
+
+[[factory-methods]]
+[source, java]
+----
+static <K, V> Grouped<K, V> as(final String name)
+static <K> Grouped keySerde(final Serde<K> keySerde)
+static <V> Grouped valueSerde(final Serde<V> valueSerde)
+static <K, V> Grouped<K, V> with(
+  final Serde<K> keySerde,
+  final Serde<V> valueSerde)
+static <K, V> Grouped<K, V> with(
+  final String name,
+  final Serde<K> keySerde,
+  final Serde<V> valueSerde)
+----
+
+A `Grouped` instance can futher be configured using the <<methods, "with" methods>>.
+
+[[methods]]
+.Grouped's "with" Methods
+[cols="1m,2",options="header",width="100%"]
+|===
+| Method
+| Description
+
+| withKeySerde
+a| [[withKeySerde]]
+
+[source, java]
+----
+Grouped<K, V> withKeySerde(final Serde<K> keySerde)
+----
+
+| withName
+a| [[withName]]
+
+[source, java]
+----
+Grouped<K, V> withName(final String name)
+----
+
+| withValueSerde
+a| [[withValueSerde]]
+
+[source, java]
+----
+Grouped<K, V> withValueSerde(final Serde<V> valueSerde)
+----
+
+|===
+
+=== Scala API for Kafka Streams
+
+<<kafka-streams-scala.adoc#, Scala API for Kafka Streams>> makes the optional `Grouped` metadata an implicit parameter in the `KStream` and `KTable` APIs.
+
+Moreover, <<kafka-streams-scala-ImplicitConversions.adoc#, ImplicitConversions>> object defines <<kafka-streams-scala-ImplicitConversions.adoc#groupedFromSerde, groupedFromSerde>> implicit conversion that creates a `Grouped` instance with the key and value `Serde` objects available in implicit scope.
+
+And the last but not least, Scala API for Kafka Streams defines <<kafka-streams-scala-Grouped.adoc#, Grouped>> object with `++`with`++` factory methods that use implicit key and value `Serde` objects.
