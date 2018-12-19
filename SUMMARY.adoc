@@ -12,7 +12,7 @@
 == Developing Stream Processing Applications with Kafka Streams
 
 . link:kafka-streams-KafkaStreams.adoc[KafkaStreams -- Streams Client]
-. link:kafka-streams-Topology.adoc[Topology -- Directed Acyclic Graph of Stream Processing Nodes]
+. link:kafka-streams-Topology.adoc[Topology -- Directed Acyclic Graph of Stream Processors]
 . link:kafka-streams-StreamsConfig.adoc[StreamsConfig -- Configuration Properties for Kafka Clients]
 . link:kafka-streams-properties.adoc[Configuration Properties]
 . link:kafka-logging.adoc[Logging]
@@ -72,7 +72,6 @@
 . link:kafka-streams-processor-api.adoc[Low-Level Processor API]
 
 . link:kafka-streams-Processor.adoc[Processor Contract -- Stream Processing Nodes]
-. link:kafka-streams-StateStore.adoc[StateStore]
 
 . link:kafka-streams-ProcessorContext.adoc[ProcessorContext]
 .. link:kafka-streams-TaskId.adoc[TaskId]
@@ -96,6 +95,8 @@
 .. link:kafka-streams-FailOnInvalidTimestamp.adoc[FailOnInvalidTimestamp]
 
 == Developing Stateful Applications with Kafka Streams
+
+. link:kafka-streams-StateStore.adoc[StateStore]
 
 . link:kafka-streams-StateStore-AbstractStateStore.adoc[AbstractStateStore]
 .. link:kafka-streams-StateStore-KeyValueStore.adoc[KeyValueStore]

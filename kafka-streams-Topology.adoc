@@ -1,166 +1,281 @@
-== [[Topology]] Topology -- Directed Acyclic Graph of Stream Processing Nodes
+== [[Topology]] Topology -- Directed Acyclic Graph of Stream Processors
 
-`Topology` represents an *acyclic graph of stream processing nodes* (_DAG of processors_).
+`Topology` is a <<operators, fluent API>> to create an *acyclic graph of stream processing nodes* (_DAG of stream processors_).
 
-`Topology` can be <<creating-instance, created>> directly (as the *Processor API*) or used indirectly using <<kafka-streams-StreamsBuilder.adoc#, StreamsBuilder>> API.
+`Topology` can be <<creating-instance, created>> directly or indirectly (using <<kafka-streams-streams-dsl.adoc#, Streams DSL>>).
 
 [[creating-instance]]
 `Topology` takes no arguments when created.
 
 [source, scala]
 ----
-// Used directly
+// Created directly
 import org.apache.kafka.streams.Topology
 val topology = new Topology
 
-// Used through StreamsBuilder API
-import org.apache.kafka.streams.StreamsBuilder
+// Created using Streams DSL (StreamsBuilder API)
+// Scala API for Kafka Streams
+import org.apache.kafka.streams.scala._
+import ImplicitConversions._
+import Serdes._
+
 val builder = new StreamsBuilder
 val topology = builder.build
 scala> :type topology
 org.apache.kafka.streams.Topology
 ----
 
-[[internalTopologyBuilder]]
-`Topology` manages an link:kafka-streams-InternalTopologyBuilder.adoc[InternalTopologyBuilder]. When <<creating-instance, created>>, `Topology` immediately creates a link:kafka-streams-InternalTopologyBuilder.adoc#creating-instance[InternalTopologyBuilder] for...FIXME
+Once <<creating-instance, created>>, `Topology` can be extended with <<addGlobalStore, global stores>>, <<addProcessor, processors>> (possibly <<connectProcessorAndStateStores, connected to one or more state stores>>), <<addSink, sinks>>, <<addSource, sources>>, and <<addStateStore, state stores>>.
 
-.Topology and InternalTopologyBuilder
-image::images/kafka-streams-Topology-InternalTopologyBuilder.png[align="center"]
+[source, scala]
+----
+scala> :type topology
+org.apache.kafka.streams.Topology
 
-`Topology` can be <<describe, described>>, i.e. FIXME + EXAMPLE
+import org.apache.kafka.streams.state.Stores
+val storeBuilder = Stores.keyValueStoreBuilder[String, String](
+  Stores.inMemoryKeyValueStore("in-memory-key-value-store"),
+  Serdes.String,
+  Serdes.String)
+  .withLoggingDisabled  // this is for a global table
+val sourceName = "demo-source-processor"
+val timestampExtractor = null
+val keyDeserializer = Serdes.String.deserializer
+val valueDeserializer = Serdes.String.deserializer
+val topic = "demo-topic"
+val processorName = "demo-processor-supplier"
+import org.apache.kafka.streams.kstream.internals.KTableSource
+val stateUpdateSupplier = new KTableSource[String, String]("store-name")
+topology.addGlobalStore(
+  storeBuilder,
+  sourceName,
+  timestampExtractor,
+  keyDeserializer,
+  valueDeserializer,
+  topic,
+  processorName,
+  stateUpdateSupplier)
+----
 
-=== [[addStateStore]] Adding State Store to Topology -- `addStateStore` Method
+`Topology` can be <<describe, described>>.
+
+[source, scala]
+----
+scala> :type topology
+org.apache.kafka.streams.Topology
+
+scala> println(topology.describe)
+Topologies:
+   Sub-topology: 0 for global store (will not generate tasks)
+    Source: demo-source-processor (topics: [demo-topic])
+      --> demo-processor-supplier
+    Processor: demo-processor-supplier (stores: [in-memory-key-value-store])
+      --> none
+      <-- demo-source-processor
+----
+
+[[operators]]
+.Topology's Fluent API / Methods
+[cols="1m,2",options="header",width="100%"]
+|===
+| Method
+| Description
+
+| addGlobalStore
+a| [[addGlobalStore]]
 
 [source, java]
 ----
-synchronized Topology addStateStore(
+Topology addGlobalStore(
+  final StoreBuilder storeBuilder,
+  final String sourceName,
+  final Deserializer keyDeserializer,
+  final Deserializer valueDeserializer,
+  final String topic,
+  final String processorName,
+  final ProcessorSupplier stateUpdateSupplier)
+Topology addGlobalStore(
+  final StoreBuilder storeBuilder,
+  final String sourceName,
+  final TimestampExtractor timestampExtractor,
+  final Deserializer keyDeserializer,
+  final Deserializer valueDeserializer,
+  final String topic,
+  final String processorName,
+  final ProcessorSupplier stateUpdateSupplier)
+----
+
+Adds a global <<kafka-streams-StateStore.adoc#, StateStore>> to the topology.
+
+| addProcessor
+a| [[addProcessor]]
+
+[source, java]
+----
+Topology addProcessor(
+  final String name,
+  final ProcessorSupplier supplier,
+  final String... parentNames)
+----
+
+| addSink
+a| [[addSink]]
+
+[source, java]
+----
+Topology addSink(
+  final String name,
+  final String topic,
+  final Serializer<K> keySerializer,
+  final Serializer<V> valueSerializer,
+  final StreamPartitioner<? super K, ? super V> partitioner,
+  final String... parentNames)
+Topology addSink(
+  final String name,
+  final String topic,
+  final Serializer<K> keySerializer,
+  final Serializer<V> valueSerializer,
+  final String... parentNames)
+Topology addSink(
+  final String name,
+  final String topic,
+  final StreamPartitioner<? super K, ? super V> partitioner,
+  final String... parentNames)
+Topology addSink(
+  final String name,
+  final String topic,
+  final String... parentNames)
+Topology addSink(
+  final String name,
+  final TopicNameExtractor<K, V> topicExtractor,
+  final Serializer<K> keySerializer,
+  final Serializer<V> valueSerializer,
+  final StreamPartitioner<? super K, ? super V> partitioner,
+  final String... parentNames)
+Topology addSink(
+  final String name,
+  final TopicNameExtractor<K, V> topicExtractor,
+  final Serializer<K> keySerializer,
+  final Serializer<V> valueSerializer,
+  final String... parentNames)
+Topology addSink(
+  final String name,
+  final TopicNameExtractor<K, V> topicExtractor,
+  final StreamPartitioner<? super K, ? super V> partitioner,
+  final String... parentNames)
+Topology addSink(
+  final String name,
+  final TopicNameExtractor<K, V> topicExtractor,
+  final String... parentNames)
+----
+
+| addSource
+a| [[addSource]]
+
+[source, java]
+----
+Topology addSource(
+  final AutoOffsetReset offsetReset,
+  final String name,
+  final Deserializer keyDeserializer,
+  final Deserializer valueDeserializer,
+  final Pattern topicPattern)
+Topology addSource(
+  final AutoOffsetReset offsetReset,
+  final String name,
+  final Deserializer keyDeserializer,
+  final Deserializer valueDeserializer,
+  final String... topics)
+Topology addSource(
+  final AutoOffsetReset offsetReset,
+  final String name,
+  final Pattern topicPattern)
+Topology addSource(
+  final AutoOffsetReset offsetReset,
+  final String name,
+  final String... topics)
+Topology addSource(
+  final AutoOffsetReset offsetReset,
+  final String name,
+  final TimestampExtractor timestampExtractor,
+  final Deserializer keyDeserializer,
+  final Deserializer valueDeserializer,
+  final Pattern topicPattern)
+Topology addSource(
+  final AutoOffsetReset offsetReset,
+  final String name,
+  final TimestampExtractor timestampExtractor,
+  final Deserializer keyDeserializer,
+  final Deserializer valueDeserializer,
+  final String... topics)
+Topology addSource(
+  final AutoOffsetReset offsetReset,
+  final TimestampExtractor timestampExtractor,
+  final String name,
+  final Pattern topicPattern)
+Topology addSource(
+  final AutoOffsetReset offsetReset,
+  final TimestampExtractor timestampExtractor,
+  final String name,
+  final String... topics)
+Topology addSource(
+  final String name,
+  final Deserializer keyDeserializer,
+  final Deserializer valueDeserializer,
+  final Pattern topicPattern)
+Topology addSource(
+  final String name,
+  final Deserializer keyDeserializer,
+  final Deserializer valueDeserializer,
+  final String... topics)
+Topology addSource(
+  final String name,
+  final Pattern topicPattern)
+Topology addSource(
+  final String name,
+  final String... topics)
+Topology addSource(
+  final TimestampExtractor timestampExtractor,
+  final String name,
+  final Pattern topicPattern)
+Topology addSource(
+  final TimestampExtractor timestampExtractor,
+  final String name,
+  final String... topics)
+----
+
+| addStateStore
+a| [[addStateStore]]
+
+[source, java]
+----
+Topology addStateStore(
   final StoreBuilder storeBuilder,
   final String... processorNames)
 ----
 
-`addStateStore`...FIXME
-
-NOTE: `addStateStore` is used when...FIXME
-
-=== [[addSource]] `addSource` Method
-
-[source, scala]
-----
-synchronized Topology addSource(
-  final String name,
-  final String... topics)
-synchronized Topology addSource(
-  final AutoOffsetReset offsetReset,
-  final String name,
-  final String... topics)
-synchronized Topology addSource(
-  final TimestampExtractor timestampExtractor,
-  final String name,
-  final String... topics)
-synchronized Topology addSource(
-  final AutoOffsetReset offsetReset,
-  final TimestampExtractor timestampExtractor,
-  final String name,
-  final String... topics)
-synchronized Topology addSource(
-  final String name,
-  final Deserializer keyDeserializer,
-  final Deserializer valueDeserializer,
-  final String... topics)
-synchronized Topology addSource(
-  final AutoOffsetReset offsetReset,
-  final String name,
-  final Deserializer keyDeserializer,
-  final Deserializer valueDeserializer,
-  final String... topics)
-synchronized Topology addSource(
-  final AutoOffsetReset offsetReset,
-  final String name,
-  final TimestampExtractor timestampExtractor,
-  final Deserializer keyDeserializer,
-  final Deserializer valueDeserializer,
-  final String... topics)
-----
-
-`addSource`...FIXME
-
-NOTE: `addSource` is used when...FIXME
-
-=== [[addGlobalStore]] Adding Global State Store to Topology -- `addGlobalStore` Method
+| connectProcessorAndStateStores
+a| [[connectProcessorAndStateStores]]
 
 [source, java]
 ----
-synchronized Topology addGlobalStore(
-  final StoreBuilder storeBuilder,
-  final String sourceName,
-  final Deserializer keyDeserializer,
-  final Deserializer valueDeserializer,
-  final String topic,
-  final String processorName,
-  final ProcessorSupplier stateUpdateSupplier)
-synchronized Topology addGlobalStore(
-  final StoreBuilder storeBuilder,
-  final String sourceName,
-  final TimestampExtractor timestampExtractor,
-  final Deserializer keyDeserializer,
-  final Deserializer valueDeserializer,
-  final String topic,
-  final String processorName,
-  final ProcessorSupplier stateUpdateSupplier)
-----
-
-`addGlobalStore`...FIXME
-
-NOTE: `addGlobalStore` is used when...FIXME
-
-=== [[connectProcessorAndStateStores]] `connectProcessorAndStateStores` Method
-
-[source, java]
-----
-synchronized Topology connectProcessorAndStateStores(
+Topology connectProcessorAndStateStores(
   final String processorName,
   final String... stateStoreNames)
 ----
 
-`connectProcessorAndStateStores` simply requests <<internalTopologyBuilder, InternalTopologyBuilder>> to link:kafka-streams-InternalTopologyBuilder.adoc#connectProcessorAndStateStores[connectProcessorAndStateStores] and returns itself (the `Topology` being built).
-
-=== [[addSink]] `addSink` Method
-
-[source, java]
-----
-Topology addSink(
-  final String name,
-  final String topic,
-  final String... parentNames)
-Topology addSink(
-  final String name,
-  final String topic,
-  final Serializer<K> keySerializer,
-  final Serializer<V> valueSerializer,
-  final String... parentNames)
-Topology addSink(
-  final String name,
-  final String topic,
-  final StreamPartitioner<? super K, ? super V> partitioner,
-  final String... parentNames)
-Topology addSink(
-  final String name,
-  final String topic,
-  final Serializer<K> keySerializer,
-  final Serializer<V> valueSerializer,
-  final StreamPartitioner<? super K, ? super V> partitioner,
-  final String... parentNames)
-----
-
-`addSink`...FIXME
-
-NOTE: `addSink` is used when...FIXME
-
-=== [[describe]] Describing Topology -- `describe` Method
+| describe
+a| [[describe]]
 
 [source, java]
 ----
 TopologyDescription describe()
 ----
 
-`describe`...FIXME
+|===
+
+[[internalTopologyBuilder]]
+Internally, `Topology` uses an <<kafka-streams-InternalTopologyBuilder.adoc#, InternalTopologyBuilder>> for all <<operators, methods>> (and is therefore a thin layer atop).
+
+.Topology and InternalTopologyBuilder
+image::images/kafka-streams-Topology-InternalTopologyBuilder.png[align="center"]
