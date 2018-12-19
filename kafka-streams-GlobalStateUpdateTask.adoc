@@ -44,7 +44,7 @@ When the record has been successfully deserialized, `update` does the following:
 
 1. Requests <<processorContext, InternalProcessorContext>> to link:kafka-streams-InternalProcessorContext.adoc#setCurrentNode[use the source node] of the link:kafka-streams-RecordDeserializer.adoc#sourceNode[RecordDeserializer]
 
-1. Requests the link:kafka-streams-RecordDeserializer.adoc#sourceNode[SourceNode] (of the deserialized record) to link:kafka-streams-SourceNode.adoc#process[process] the deserialized record
+1. Requests the link:kafka-streams-RecordDeserializer.adoc#sourceNode[SourceNode] (of the deserialized record) to link:kafka-streams-internals-SourceNode.adoc#process[process] the deserialized record
 
 In the end, `update` saves the topic and the partition of the record with the offset in the <<offsets, offsets>> internal registry.
 

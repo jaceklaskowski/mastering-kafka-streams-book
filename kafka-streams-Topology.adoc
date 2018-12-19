@@ -74,6 +74,12 @@ Topologies:
       <-- demo-source-processor
 ----
 
+[[AutoOffsetReset]]
+`Topology` defines *offset reset policy* (`AutoOffsetReset`) that can be one of the two possible values:
+
+* [[EARLIEST]] `EARLIEST`
+* [[LATEST]] `LATEST`
+
 [[operators]]
 .Topology's Fluent API / Methods
 [cols="1m,2",options="header",width="100%"]
@@ -105,7 +111,7 @@ Topology addGlobalStore(
   final ProcessorSupplier stateUpdateSupplier)
 ----
 
-Adds a global <<kafka-streams-StateStore.adoc#, StateStore>> to the topology.
+Adds a global <<kafka-streams-StateStore.adoc#, StateStore>> (with the <<kafka-streams-StoreBuilder.adoc#, StoreBuilder>>, <<kafka-streams-ProcessorSupplier.adoc#, ProcessorSupplier>> and optional <<kafka-streams-TimestampExtractor.adoc#, TimestampExtractor>>) to the topology.
 
 | addProcessor
 a| [[addProcessor]]
@@ -117,6 +123,8 @@ Topology addProcessor(
   final ProcessorSupplier supplier,
   final String... parentNames)
 ----
+
+Adds a new <<kafka-streams-Processor.adoc#, processor node>> (using the <<kafka-streams-ProcessorSupplier.adoc#, ProcessorSupplier>>) to the topology.
 
 | addSink
 a| [[addSink]]
@@ -168,6 +176,8 @@ Topology addSink(
   final TopicNameExtractor<K, V> topicExtractor,
   final String... parentNames)
 ----
+
+Adds a new <<kafka-streams-internals-SinkNode.adoc#, sink node>> (with the optional <<kafka-streams-TopicNameExtractor.adoc#, TopicNameExtractor>> and <<kafka-streams-StreamPartitioner.adoc#, StreamPartitioner>>) to the topology.
 
 | addSource
 a| [[addSource]]
@@ -244,6 +254,8 @@ Topology addSource(
   final String... topics)
 ----
 
+Adds a new <<kafka-streams-internals-SourceNode.adoc#, source node>> (with the optional <<AutoOffsetReset, AutoOffsetReset>> and <<kafka-streams-TimestampExtractor.adoc#, TimestampExtractor>>) to the topology.
+
 | addStateStore
 a| [[addStateStore]]
 
@@ -253,6 +265,8 @@ Topology addStateStore(
   final StoreBuilder storeBuilder,
   final String... processorNames)
 ----
+
+Adds a new <<kafka-streams-StateStore.adoc#, StateStore>> (with the <<kafka-streams-StoreBuilder.adoc#, StoreBuilder>>) to the topology.
 
 | connectProcessorAndStateStores
 a| [[connectProcessorAndStateStores]]
@@ -264,6 +278,8 @@ Topology connectProcessorAndStateStores(
   final String... stateStoreNames)
 ----
 
+Connects the <<kafka-streams-internals-ProcessorNode.adoc#, processor node>> with <<kafka-streams-StateStore.adoc#, state stores>>.
+
 | describe
 a| [[describe]]
 
@@ -271,6 +287,8 @@ a| [[describe]]
 ----
 TopologyDescription describe()
 ----
+
+Describes the topology.
 
 |===
 

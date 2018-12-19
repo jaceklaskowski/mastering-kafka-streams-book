@@ -32,7 +32,7 @@ Topologies:
 ----
 
 [[applicationId]]
-`InternalTopologyBuilder` uses an *application ID* as a namespace for the internal topics (so they do not clash across Kafka Streams applications). The application ID is set using <<setApplicationId, setApplicationId>> (and is actually the <<kafka-streams-StreamsConfig.adoc#APPLICATION_ID_CONFIG, APPLICATION_ID_CONFIG>> required configuration property that `KafkaStreams` sets when link:kafka-streams-KafkaStreams.adoc#creating-instance[created]).
+`InternalTopologyBuilder` uses an *application ID* as a namespace for the internal topics (so they do not clash with other Kafka Streams applications). The application ID is set using <<setApplicationId, setApplicationId>> (and is the <<kafka-streams-StreamsConfig.adoc#APPLICATION_ID_CONFIG, APPLICATION_ID_CONFIG>> configuration property that `KafkaStreams` requires when link:kafka-streams-KafkaStreams.adoc#creating-instance[created]).
 
 [[setApplicationId]]
 [source, java]

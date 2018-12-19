@@ -19,7 +19,7 @@ interface Punctuator {
 | Description
 
 | `punctuate`
-| [[punctuate]] Used exclusively when `ProcessorNode` is requested to link:kafka-streams-ProcessorNode.adoc#punctuate[punctuate].
+| [[punctuate]] Used exclusively when `ProcessorNode` is requested to link:kafka-streams-internals-ProcessorNode.adoc#punctuate[punctuate].
 |===
 
 `Punctuator` can be link:kafka-streams-ProcessorContext.adoc#schedule[scheduled] (registered) on a link:kafka-streams-ProcessorContext.adoc[ProcessorContext].

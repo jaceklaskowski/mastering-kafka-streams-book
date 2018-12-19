@@ -147,7 +147,7 @@ NOTE: `globalTable` is used exclusively when `StreamsBuilder` is requested to <<
 String newProcessorName(final String prefix)
 ----
 
-NOTE: `newProcessorName` is part of link:kafka-streams-InternalNameProvider.adoc#newProcessorName[InternalNameProvider Contract] to give a new name for a link:kafka-streams-ProcessorNode.adoc[processor].
+NOTE: `newProcessorName` is part of link:kafka-streams-InternalNameProvider.adoc#newProcessorName[InternalNameProvider Contract] to give a new name for a link:kafka-streams-internals-ProcessorNode.adoc[processor].
 
 `newProcessorName` simply takes the input `prefix` followed by the <<index, index>>.
 

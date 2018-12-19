@@ -155,7 +155,7 @@ T store(
 ----
 |===
 
-`KafkaStreams` is simply a <<clientSupplier, Kafka client>> that consumes messages from and produces the processing results to Kafka topics (abstracted as link:kafka-streams-SourceNode.adoc[SourceNodes] and link:kafka-streams-SinkNode.adoc[SinkNodes], respectively).
+`KafkaStreams` is simply a <<clientSupplier, Kafka client>> that consumes messages from and produces the processing results to Kafka topics (abstracted as link:kafka-streams-internals-SourceNode.adoc[SourceNodes] and link:kafka-streams-internals-SinkNode.adoc[SinkNodes], respectively).
 
 .KafkaStreams
 image::images/kafka-streams-KafkaStreams.png[align="center"]

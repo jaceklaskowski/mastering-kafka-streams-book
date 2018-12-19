@@ -13,7 +13,7 @@ In other words, `PunctuationSchedule` represents a <<record, ProcessorNode>> at 
 [[creating-instance]]
 `PunctuationSchedule` takes the following when created:
 
-* [[node]] link:kafka-streams-ProcessorNode.adoc[ProcessorNode]
+* [[node]] link:kafka-streams-internals-ProcessorNode.adoc[ProcessorNode]
 * [[time]] Timestamp
 * [[interval]] Interval
 * [[punctuator]] link:kafka-streams-Punctuator.adoc[Punctuator]

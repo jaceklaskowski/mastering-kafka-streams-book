@@ -20,7 +20,7 @@ interface InternalNameProvider {
 | Description
 
 | `newProcessorName`
-| [[newProcessorName]] Gives a new name for a link:kafka-streams-ProcessorNode.adoc[processor]
+| [[newProcessorName]] Gives a new name for a link:kafka-streams-internals-ProcessorNode.adoc[processor]
 
 Used when...FIXME
 

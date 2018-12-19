@@ -26,10 +26,10 @@ ProcessorNode build()
 
 NOTE: `build` is part of link:kafka-streams-NodeFactory.adoc#build[NodeFactory Contract] to build a processor node.
 
-`build` creates a link:kafka-streams-SourceNode.adoc#creating-instance[SourceNode] with the <<name, name>> and the source topic names (as recorded in the link:kafka-streams-InternalTopologyBuilder.adoc#nodeToSourceTopics[nodeToSourceTopics] internal registry).
+`build` creates a link:kafka-streams-internals-SourceNode.adoc#creating-instance[SourceNode] with the <<name, name>> and the source topic names (as recorded in the link:kafka-streams-InternalTopologyBuilder.adoc#nodeToSourceTopics[nodeToSourceTopics] internal registry).
 
 Internally, `build` looks up the link:kafka-streams-NodeFactory.adoc#name[node name] in the link:kafka-streams-InternalTopologyBuilder.adoc#nodeToSourceTopics[nodeToSourceTopics] internal registry to find the topic names (the node is attached to).
 
-`build` creates a link:kafka-streams-SourceNode.adoc#creating-instance[SourceNode] with the <<name, name>>, the source topic names (possibly link:kafka-streams-InternalTopologyBuilder.adoc#maybeDecorateInternalSourceTopics[decorated] if internal), and the other properties, i.e. the <<timestampExtractor, timestampExtractor>>, the <<keyDeserializer, keyDeserializer>> and the <<valDeserializer, valDeserializer>>
+`build` creates a link:kafka-streams-internals-SourceNode.adoc#creating-instance[SourceNode] with the <<name, name>>, the source topic names (possibly link:kafka-streams-InternalTopologyBuilder.adoc#maybeDecorateInternalSourceTopics[decorated] if internal), and the other properties, i.e. the <<timestampExtractor, timestampExtractor>>, the <<keyDeserializer, keyDeserializer>> and the <<valDeserializer, valDeserializer>>
 
-It is (hardly) possible that no topic names could be found, but when it happens, `build` creates a link:kafka-streams-SourceNode.adoc#creating-instance[SourceNode] with the <<pattern, pattern>> (and the other properties, i.e. the <<name, name>>, the <<timestampExtractor, timestampExtractor>>, the <<keyDeserializer, keyDeserializer>> and the <<valDeserializer, valDeserializer>>).
+It is (hardly) possible that no topic names could be found, but when it happens, `build` creates a link:kafka-streams-internals-SourceNode.adoc#creating-instance[SourceNode] with the <<pattern, pattern>> (and the other properties, i.e. the <<name, name>>, the <<timestampExtractor, timestampExtractor>>, the <<keyDeserializer, keyDeserializer>> and the <<valDeserializer, valDeserializer>>).

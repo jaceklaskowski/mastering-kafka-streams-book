@@ -6,7 +6,7 @@
 
 * [[valueDeserializer]] `Deserializer` of values (only when <<valueSerde, Serde>> for values is defined)
 
-* [[offsetResetPolicy]] `Topology.AutoOffsetReset` (either `EARLIEST` or `LATEST`)
+* [[offsetResetPolicy]] *Offset reset policy* (<<kafka-streams-Topology.adoc#, Topology.AutoOffsetReset>>)
 
 * <<timestampExtractor, TimestampExtractor>>
 
@@ -17,7 +17,7 @@
 * [[keySerde]] Key `Serde`
 * [[valSerde]][[valueSerde]] Value `Serde`
 * [[timestampExtractor]] <<kafka-streams-TimestampExtractor.adoc#, TimestampExtractor>>
-* [[offsetReset]] Offset reset policy (`Topology.AutoOffsetReset` as either `EARLIEST` or `LATEST`)
+* [[offsetReset]] *Offset reset policy* (<<kafka-streams-Topology.adoc#, Topology.AutoOffsetReset>>)
 
 `ConsumedInternal` is <<creating-instance, created>> when:
 

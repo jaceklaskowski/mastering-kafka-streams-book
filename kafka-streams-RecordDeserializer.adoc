@@ -5,7 +5,7 @@
 
 `RecordDeserializer` takes the following when created:
 
-* [[sourceNode]] link:kafka-streams-SourceNode.adoc[SourceNode]
+* [[sourceNode]] link:kafka-streams-internals-SourceNode.adoc[SourceNode]
 * [[deserializationExceptionHandler]] `DeserializationExceptionHandler`
 * [[logContext]] `LogContext`
 

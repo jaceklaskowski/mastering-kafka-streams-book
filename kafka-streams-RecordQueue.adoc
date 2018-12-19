@@ -49,7 +49,7 @@ Refer to link:kafka-logging.adoc#log4j.properties[Application Logging Using log4
 `RecordQueue` takes the following when created:
 
 * [[partition]] Kafka https://kafka.apache.org/11/javadoc/org/apache/kafka/common/TopicPartition.html[TopicPartition]
-* [[source]] link:kafka-streams-SourceNode.adoc[SourceNode]
+* [[source]] link:kafka-streams-internals-SourceNode.adoc[SourceNode]
 * [[timestampExtractor]] <<kafka-streams-TimestampExtractor.adoc#, TimestampExtractor>>
 * [[deserializationExceptionHandler]] `DeserializationExceptionHandler`
 * [[processorContext]] link:kafka-streams-ProcessorContext.adoc[ProcessorContext]

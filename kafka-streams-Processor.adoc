@@ -1,8 +1,8 @@
 == [[Processor]] Processor Contract -- Stream Processing Nodes
 
-`Processor` is the <<contract, contract>> in Kafka Streams for *stream processors* that <<process, process key-value pair records>>.
+`Processor` is the <<contract, contract>> for *record stream processors* (aka _stream processing nodes_) that <<process, process records>> (one at a time).
 
-`Processor` is an integral part of link:kafka-streams-ProcessorNode.adoc#processor[ProcessorNode].
+`Processor` is an integral part of link:kafka-streams-internals-ProcessorNode.adoc#processor[ProcessorNode].
 
 [[contract]]
 .Processor Contract

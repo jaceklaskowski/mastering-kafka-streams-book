@@ -40,5 +40,5 @@ assert(stampeds.asScala == Set(s1, s2, s3))
 | [[StampedRecord]] Uses Kafka `ConsumerRecords` for <<value, values>>
 
 | link:kafka-streams-PunctuationSchedule.adoc[PunctuationSchedule]
-| [[PunctuationSchedule]] Uses link:kafka-streams-ProcessorNode.adoc[ProcessorNodes] for <<value, values>>
+| [[PunctuationSchedule]] Uses link:kafka-streams-internals-ProcessorNode.adoc[ProcessorNodes] for <<value, values>>
 |===

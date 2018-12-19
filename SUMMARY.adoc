@@ -88,6 +88,7 @@
 .. link:kafka-streams-AbstractNotifyingRestoreCallback.adoc[AbstractNotifyingRestoreCallback]
 
 . link:kafka-streams-StreamPartitioner.adoc[StreamPartitioner]
+. link:kafka-streams-TopicNameExtractor.adoc[TopicNameExtractor]
 
 . link:kafka-streams-TimestampExtractor.adoc[TimestampExtractor Contract]
 .. link:kafka-streams-WallclockTimestampExtractor.adoc[WallclockTimestampExtractor]
@@ -192,9 +193,9 @@
 
 === Topology -- Logical Plan of Execution
 
-. link:kafka-streams-ProcessorNode.adoc[ProcessorNode]
-.. link:kafka-streams-SourceNode.adoc[SourceNode]
-.. link:kafka-streams-SinkNode.adoc[SinkNode]
+. link:kafka-streams-internals-ProcessorNode.adoc[ProcessorNode]
+.. link:kafka-streams-internals-SourceNode.adoc[SourceNode]
+.. link:kafka-streams-internals-SinkNode.adoc[SinkNode]
 
 . link:kafka-streams-ProcessorTopology.adoc[ProcessorTopology]
 . link:kafka-streams-TopologyDescription.adoc[TopologyDescription]

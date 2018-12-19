@@ -21,7 +21,7 @@ ProcessorNode build()
 
 NOTE: `build` is part of link:kafka-streams-NodeFactory.adoc#build[NodeFactory Contract] to...FIXME.
 
-`build` requests <<supplier, ProcessorSupplier>> to link:kafka-streams-ProcessorSupplier.adoc#get[get a Processor] and then creates a link:kafka-streams-ProcessorNode.adoc#creating-instance[ProcessorNode] with the <<name, name>>, the processor and the <<stateStoreNames, stateStoreNames>>.
+`build` requests <<supplier, ProcessorSupplier>> to link:kafka-streams-ProcessorSupplier.adoc#get[get a Processor] and then creates a link:kafka-streams-internals-ProcessorNode.adoc#creating-instance[ProcessorNode] with the <<name, name>>, the processor and the <<stateStoreNames, stateStoreNames>>.
 
 === [[creating-instance]] Creating ProcessorNodeFactory Instance
 

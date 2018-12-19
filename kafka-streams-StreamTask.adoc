@@ -171,7 +171,7 @@ Start processing one record [record]
 
 `process` <<updateProcessorContext, updateProcessorContext>> (with the current record and the source processor node).
 
-`process` requests the source processor node to link:kafka-streams-ProcessorNode.adoc#process[process] the key and the value of the record.
+`process` requests the source processor node to link:kafka-streams-internals-ProcessorNode.adoc#process[process] the key and the value of the record.
 
 `process` prints out the following TRACE message to the logs:
 

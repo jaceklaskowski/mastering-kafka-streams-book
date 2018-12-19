@@ -2,7 +2,7 @@
 
 `NodeMetrics` is...FIXME
 
-`NodeMetrics` is <<creating-instance, created>> exclusively when `ProcessorNode` is requested to link:kafka-streams-ProcessorNode.adoc#init[init].
+`NodeMetrics` is <<creating-instance, created>> exclusively when `ProcessorNode` is requested to link:kafka-streams-internals-ProcessorNode.adoc#init[init].
 
 [[internal-registries]]
 .NodeMetrics's Internal Properties (e.g. Registries, Counters and Flags)
@@ -47,7 +47,7 @@ Used when...FIXME
 `NodeMetrics` takes the following when created:
 
 * [[metrics]] link:kafka-streams-StreamsMetrics.adoc[StreamsMetrics]
-* [[name]] link:kafka-streams-ProcessorNode.adoc#name[Name] of a `ProcessorNode`
+* [[name]] link:kafka-streams-internals-ProcessorNode.adoc#name[Name] of a `ProcessorNode`
 * [[context]] link:kafka-streams-ProcessorContext.adoc[ProcessorContext]
 
 `NodeMetrics` initializes the <<internal-registries, internal registries and counters>>.

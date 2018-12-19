@@ -110,9 +110,9 @@ NOTE: `withSources` is used when...FIXME
 
 `ProcessorTopology` takes the following when created:
 
-* [[processorNodes]] link:kafka-streams-ProcessorNode.adoc[ProcessorNodes]
-* [[sourcesByTopic]] link:kafka-streams-SourceNode.adoc[SourceNodes] by name
-* [[sinksByTopic]] link:kafka-streams-SinkNode.adoc[SinkNodes] by name
+* [[processorNodes]] link:kafka-streams-internals-ProcessorNode.adoc[ProcessorNodes]
+* [[sourcesByTopic]] link:kafka-streams-internals-SourceNode.adoc[SourceNodes] by name
+* [[sinksByTopic]] link:kafka-streams-internals-SinkNode.adoc[SinkNodes] by name
 * [[stateStores]] Local link:kafka-streams-StateStore.adoc[StateStores]
 * [[globalStateStores]] Global link:kafka-streams-StateStore.adoc[StateStores]
 * [[stateStoreToChangelogTopic]] Names of the <<kafka-streams-StateStore.adoc#, state stores>> and the names of the corresponding changelog topics (from the <<kafka-streams-InternalTopologyBuilder.adoc#storeToChangelogTopic, InternalTopologyBuilder>>)

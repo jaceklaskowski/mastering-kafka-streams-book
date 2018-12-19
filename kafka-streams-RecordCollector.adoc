@@ -52,7 +52,7 @@ a| [[send]] Used when:
 
 * `StoreChangeLogger` is requested to link:kafka-streams-StoreChangeLogger.adoc#logChange[logChange]
 
-* `SinkNode` is requested to link:kafka-streams-SinkNode.adoc#process[process]
+* `SinkNode` is requested to link:kafka-streams-internals-SinkNode.adoc#process[process]
 
 NOTE: There are two `send` methods with a partition ID or a link:kafka-streams-StreamPartitioner.adoc[StreamPartitioner].
 |===

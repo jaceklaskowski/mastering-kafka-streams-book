@@ -13,9 +13,9 @@ ProcessorNode build()
 
 NOTE: `build` is part of link:kafka-streams-NodeFactory.adoc#build[NodeFactory Contract] to build a processor node.
 
-`build` simply creates a link:kafka-streams-SinkNode.adoc#creating-instance[SinkNode] (with the link:kafka-streams-NodeFactory.adoc#name[name], the <<keySerializer, key serializer>>, the <<valSerializer, value serializer>> and the <<partitioner, StreamPartitioner>>).
+`build` simply creates a link:kafka-streams-internals-SinkNode.adoc#creating-instance[SinkNode] (with the link:kafka-streams-NodeFactory.adoc#name[name], the <<keySerializer, key serializer>>, the <<valSerializer, value serializer>> and the <<partitioner, StreamPartitioner>>).
 
-NOTE: The link:kafka-streams-SinkNode.adoc#name[name of the topic] of the `SinkNode` is the <<topic, topic>> with link:kafka-streams-InternalTopologyBuilder.adoc#decorateTopic[application id] for an link:kafka-streams-InternalTopologyBuilder.adoc#internalTopicNames[internal topic].
+NOTE: The link:kafka-streams-internals-SinkNode.adoc#name[name of the topic] of the `SinkNode` is the <<topic, topic>> with link:kafka-streams-InternalTopologyBuilder.adoc#decorateTopic[application id] for an link:kafka-streams-InternalTopologyBuilder.adoc#internalTopicNames[internal topic].
 
 === [[creating-instance]] Creating SinkNodeFactory Instance
 

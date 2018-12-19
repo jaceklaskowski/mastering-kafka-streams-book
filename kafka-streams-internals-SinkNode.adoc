@@ -1,6 +1,6 @@
 == [[SinkNode]] SinkNode
 
-`SinkNode` is a link:kafka-streams-ProcessorNode.adoc[ProcessorNode] with no <<addChild, child processor nodes>>.
+`SinkNode` is a link:kafka-streams-internals-ProcessorNode.adoc[ProcessorNode] with no <<addChild, child processor nodes>>.
 
 `SinkNode` is <<creating-instance, created>> exclusively when `SinkNodeFactory` is requested to link:kafka-streams-SinkNodeFactory.adoc#build[build a processor node] (when `InternalTopologyBuilder` is requested to link:kafka-streams-InternalTopologyBuilder.adoc#build[build a processor task topology] for specified node groups).
 
@@ -11,7 +11,7 @@
 void process(final K key, final V value)
 ----
 
-NOTE: `process` is part of link:kafka-streams-ProcessorNode.adoc#process[ProcessorNode Contract] to...FIXME.
+NOTE: `process` is part of link:kafka-streams-internals-ProcessorNode.adoc#process[ProcessorNode Contract] to...FIXME.
 
 `process`...FIXME
 
@@ -32,7 +32,7 @@ NOTE: `process` is part of link:kafka-streams-ProcessorNode.adoc#process[Process
 void addChild(final ProcessorNode<?, ?> child)
 ----
 
-NOTE: `addChild` is part of link:kafka-streams-ProcessorNode.adoc#addChild[ProcessorNode Contract] to...FIXME.
+NOTE: `addChild` is part of link:kafka-streams-internals-ProcessorNode.adoc#addChild[ProcessorNode Contract] to...FIXME.
 
 `addChild` simply throws an `UnsupportedOperationException` with the following message:
 
@@ -47,7 +47,7 @@ sink node does not allow addChild
 void init(final ProcessorContext context)
 ----
 
-NOTE: `init` is part of link:kafka-streams-ProcessorNode.adoc#init[ProcessorNode Contract] to...FIXME.
+NOTE: `init` is part of link:kafka-streams-internals-ProcessorNode.adoc#init[ProcessorNode Contract] to...FIXME.
 
 `init`...FIXME
 
@@ -58,6 +58,6 @@ NOTE: `init` is part of link:kafka-streams-ProcessorNode.adoc#init[ProcessorNode
 void toString(final ProcessorContext context)
 ----
 
-NOTE: `toString` is part of link:kafka-streams-ProcessorNode.adoc#toString[ProcessorNode Contract] for the human-friendly / textual representation of a `ProcessorNode`.
+NOTE: `toString` is part of link:kafka-streams-internals-ProcessorNode.adoc#toString[ProcessorNode Contract] for the human-friendly / textual representation of a `ProcessorNode`.
 
 `toString`...FIXME

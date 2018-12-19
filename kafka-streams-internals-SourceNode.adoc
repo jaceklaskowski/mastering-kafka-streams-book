@@ -1,6 +1,6 @@
 == [[SourceNode]] SourceNode
 
-`SourceNode` is a link:kafka-streams-ProcessorNode.adoc[ProcessorNode] that...FIXME
+`SourceNode` is a link:kafka-streams-internals-ProcessorNode.adoc[ProcessorNode] that...FIXME
 
 `SourceNode` is <<creating-instance, created>> exclusively when `SourceNodeFactory` is requested to link:kafka-streams-SourceNodeFactory.adoc#build[build a processor node] (when...FIXME)
 
@@ -14,7 +14,7 @@
 void init(ProcessorContext context)
 ----
 
-NOTE: `init` is part of link:kafka-streams-ProcessorNode.adoc#init[ProcessorNode Contract] to...FIXME.
+NOTE: `init` is part of link:kafka-streams-internals-ProcessorNode.adoc#init[ProcessorNode Contract] to...FIXME.
 
 `init`...FIXME
 
@@ -25,7 +25,7 @@ NOTE: `init` is part of link:kafka-streams-ProcessorNode.adoc#init[ProcessorNode
 void process(final K key, final V value)
 ----
 
-NOTE: `process` is part of link:kafka-streams-ProcessorNode.adoc#process[ProcessorNode Contract] to...FIXME.
+NOTE: `process` is part of link:kafka-streams-internals-ProcessorNode.adoc#process[ProcessorNode Contract] to...FIXME.
 
 `process` simply requests <<context, ProcessorContext>> to link:kafka-streams-ProcessorContext.adoc#forward[forward] followed by informing the `sourceNodeForwardSensor` that a record was processed.
 

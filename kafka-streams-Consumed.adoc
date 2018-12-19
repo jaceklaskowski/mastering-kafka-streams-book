@@ -6,7 +6,7 @@
 * [[keySerde]] *Key Serde* (Apache Kafka's https://kafka.apache.org/21/javadoc/org/apache/kafka/common/serialization/Serde.html[Serde] for record keys)
 * [[valueSerde]] *Value Serde* (Apache Kafka's https://kafka.apache.org/21/javadoc/org/apache/kafka/common/serialization/Serde.html[Serde] for record values)
 * [[timestampExtractor]] <<kafka-streams-TimestampExtractor.adoc#, TimestampExtractor>>
-* [[resetPolicy]] *Offset reset policy* (`Topology.AutoOffsetReset` as either `EARLIEST` or `LATEST`)
+* [[resetPolicy]] *Offset reset policy* (<<kafka-streams-Topology.adoc#, Topology.AutoOffsetReset>>)
 
 `Consumed` is used as an optional parameter in the following `StreamsBuilder` operators:
 
