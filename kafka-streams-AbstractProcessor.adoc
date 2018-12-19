@@ -15,7 +15,7 @@
 | `KStreamWindowReduceProcessor`
 | [[KStreamWindowReduceProcessor]]
 
-| `KStreamFilterProcessor`
+| <<kafka-streams-internals-KStreamFilter.adoc#KStreamFilterProcessor, KStreamFilterProcessor>>
 | [[KStreamFilterProcessor]]
 
 | `KStreamMapProcessor`

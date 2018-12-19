@@ -235,7 +235,7 @@ String createReparitionedSource(
 
 * Requests the `InternalTopologyBuilder` to link:kafka-streams-InternalTopologyBuilder.adoc#addInternalTopic[addInternalTopic] with the topic name as the input `topicNamePrefix` (if defined) or the input `name` and `-repartition` suffix
 
-* Requests the `InternalStreamsBuilder` for a link:kafka-streams-InternalStreamsBuilder.adoc#newProcessorName[new processor name] with `KSTREAM-FILTER-` prefix and requests the `InternalTopologyBuilder` to link:kafka-streams-InternalTopologyBuilder.adoc#addProcessor[addProcessor] with the new processor name and a new `KStreamFilter` (that filters out `null` keys) and the `name` predecessor
+* Requests the `InternalStreamsBuilder` for a link:kafka-streams-InternalStreamsBuilder.adoc#newProcessorName[new processor name] with `KSTREAM-FILTER-` prefix and requests the `InternalTopologyBuilder` to link:kafka-streams-InternalTopologyBuilder.adoc#addProcessor[addProcessor] with the new processor name and a new <<kafka-streams-internals-KStreamFilter.adoc#, KStreamFilter>> (that filters out `null` keys) and the `name` predecessor
 
 * Requests the `InternalStreamsBuilder` for a link:kafka-streams-InternalStreamsBuilder.adoc#newProcessorName[new processor name] with `KSTREAM-SINK-` prefix and requests the `InternalTopologyBuilder` to link:kafka-streams-InternalTopologyBuilder.adoc#addSink[add a sink node] with the new processor name, the repartition topic and the new `KStreamFilter` as a predecessor
 
@@ -298,3 +298,25 @@ KGroupedStream<K, V> groupByKey(final Grouped<K, V> grouped)
 NOTE: `groupByKey` is part of the <<kafka-streams-KStream.adoc#groupByKey, KStream Contract>> to...FIXME.
 
 `groupByKey`...FIXME
+
+=== [[filter]] `filter` Method
+
+[source, java]
+----
+KStream<K, V> filter(final Predicate<? super K, ? super V> predicate)
+----
+
+NOTE: `filter` is part of the <<kafka-streams-KStream.adoc#filter, KStream Contract>> to...FIXME.
+
+`filter`...FIXME
+
+=== [[filterNot]] `filterNot` Method
+
+[source, java]
+----
+KStream<K, V> filterNot(final Predicate<? super K, ? super V> predicate)
+----
+
+NOTE: `filterNot` is part of the <<kafka-streams-KStream.adoc#filterNot, KStream Contract>> to...FIXME.
+
+`filterNot`...FIXME

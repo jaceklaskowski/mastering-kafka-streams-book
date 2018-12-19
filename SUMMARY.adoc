@@ -72,6 +72,7 @@
 . link:kafka-streams-processor-api.adoc[Low-Level Processor API]
 
 . link:kafka-streams-Processor.adoc[Processor Contract -- Stream Processing Nodes]
+.. link:kafka-streams-AbstractProcessor.adoc[AbstractProcessor -- Base for Stream Processors]
 
 . link:kafka-streams-ProcessorContext.adoc[ProcessorContext]
 .. link:kafka-streams-TaskId.adoc[TaskId]
@@ -250,13 +251,12 @@
 .. link:kafka-streams-AssignedStandbyTasks.adoc[AssignedStandbyTasks -- AssignedTasks For StandbyTasks]
 .. link:kafka-streams-AssignedStreamsTasks.adoc[AssignedStreamsTasks -- AssignedTasks For StreamTasks]
 
-. link:kafka-streams-AbstractProcessor.adoc[AbstractProcessor -- Base for Stream Processors]
-.. link:kafka-streams-KStreamJoinWindowProcessor.adoc[KStreamJoinWindowProcessor]
-.. link:kafka-streams-KStreamSessionWindowAggregateProcessor.adoc[KStreamSessionWindowAggregateProcessor]
-.. link:kafka-streams-KStreamTransformProcessor.adoc[KStreamTransformProcessor]
-.. link:kafka-streams-KStreamTransformValuesProcessor.adoc[KStreamTransformValuesProcessor]
-.. link:kafka-streams-KStreamWindowAggregateProcessor.adoc[KStreamWindowAggregateProcessor]
-.. link:kafka-streams-KStreamWindowReduceProcessor.adoc[KStreamWindowReduceProcessor]
+. link:kafka-streams-KStreamJoinWindowProcessor.adoc[KStreamJoinWindowProcessor]
+. link:kafka-streams-KStreamSessionWindowAggregateProcessor.adoc[KStreamSessionWindowAggregateProcessor]
+. link:kafka-streams-KStreamTransformProcessor.adoc[KStreamTransformProcessor]
+. link:kafka-streams-KStreamTransformValuesProcessor.adoc[KStreamTransformValuesProcessor]
+. link:kafka-streams-KStreamWindowAggregateProcessor.adoc[KStreamWindowAggregateProcessor]
+. link:kafka-streams-KStreamWindowReduceProcessor.adoc[KStreamWindowReduceProcessor]
 
 . link:kafka-streams-AbstractProcessorContext.adoc[AbstractProcessorContext -- Base Of Internal Processor Contexts]
 .. link:kafka-streams-GlobalProcessorContextImpl.adoc[GlobalProcessorContextImpl]
@@ -288,6 +288,8 @@
 .. link:kafka-streams-SessionWindowedKStreamImpl.adoc[SessionWindowedKStreamImpl -- Default SessionWindowedKStream]
 .. link:kafka-streams-TimeWindowedKStreamImpl.adoc[TimeWindowedKStreamImpl]
 .. link:kafka-streams-KStreamImplJoin.adoc[KStreamImplJoin]
+
+. link:kafka-streams-internals-KStreamFilter.adoc[KStreamFilter -- ProcessorSupplier for filter and filterNot Streaming Operators]
 
 . link:kafka-streams-QueryableStoreProvider.adoc[QueryableStoreProvider]
 . link:kafka-streams-StateStoreProvider.adoc[StateStoreProvider]

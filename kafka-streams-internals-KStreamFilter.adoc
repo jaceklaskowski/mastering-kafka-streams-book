@@ -1,0 +1,21 @@
+== [[KStreamFilter]] KStreamFilter -- ProcessorSupplier for filter and filterNot Streaming Operators
+
+`KStreamFilter` is a <<kafka-streams-ProcessorSupplier.adoc#, ProcessorSupplier>> of <<get, KStreamFilterProcessors>>.
+
+`KStreamFilter` is <<creating-instance, created>> when `KStreamImpl` is requested to execute the following streaming operators:
+
+* <<kafka-streams-internals-KStreamImpl.adoc#filter, KStreamImpl.filter>>
+* <<kafka-streams-internals-KStreamImpl.adoc#filterNot, KStreamImpl.filterNot>>
+* <<kafka-streams-internals-KStreamImpl.adoc#createRepartitionedSource, KStreamImpl.createRepartitionedSource>>
+
+[[creating-instance]]
+`KStreamFilter` takes the following when created:
+
+* [[predicate]] `Predicate` (of `K` keys and `V` values)
+* [[filterNot]] `filterNot` flag
+
+[[get]]
+`KStreamFilter` creates a new <<KStreamFilterProcessor, KStreamFilterProcessor>> whenever requested to <<kafka-streams-ProcessorSupplier.adoc#get, supply one>>.
+
+[[KStreamFilterProcessor]]
+`KStreamFilterProcessor` is an <<kafka-streams-AbstractProcessor.adoc#, AbstractProcessor>> that requests the <<kafka-streams-AbstractProcessor.adoc#context, ProcessorContext>> to <<kafka-streams-ProcessorContext.adoc#forward, forward a record>> (to downstream processors) only when the <<predicate, Predicate>> is met.
