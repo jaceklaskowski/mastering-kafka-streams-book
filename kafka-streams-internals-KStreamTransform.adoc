@@ -9,4 +9,4 @@
 `KStreamTransform` takes a single <<kafka-streams-TransformerSupplier.adoc#, TransformerSupplier>> when created.
 
 [[get]]
-When <<kafka-streams-ProcessorSupplier.adoc#get, requested for a processor>>, `KStreamTransform` creates a new <<kafka-streams-KStreamTransformProcessor.adoc#creating-instance, KStreamTransformProcessor>> with a new <<kafka-streams-Transformer.adoc#, Transformer>> (after <<kafka-streams-TransformerSupplier.adoc#get, requesting one>> from the <<transformerSupplier, TransformerSupplier>>).
+When <<kafka-streams-ProcessorSupplier.adoc#get, requested for a processor>>, `KStreamTransform` creates a new <<kafka-streams-internals-KStreamTransformProcessor.adoc#creating-instance, KStreamTransformProcessor>> with a new <<kafka-streams-Transformer.adoc#, Transformer>> (after <<kafka-streams-TransformerSupplier.adoc#get, requesting one>> from the <<transformerSupplier, TransformerSupplier>>).

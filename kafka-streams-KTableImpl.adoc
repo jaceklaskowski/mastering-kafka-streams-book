@@ -129,3 +129,25 @@ NOTE: `buildJoin` is used exclusively when `KTableImpl` is requested to <<doJoin
 `doJoin`...FIXME
 
 NOTE: `doJoin` is used when `KTableImpl` is requested to <<join, join>>, <<leftJoin, leftJoin>> and <<outerJoin, outerJoin>>.
+
+=== [[valueGetterSupplier]] `valueGetterSupplier` Method
+
+[source, java]
+----
+KTableValueGetterSupplier<K, V> valueGetterSupplier()
+----
+
+`valueGetterSupplier`...FIXME
+
+NOTE: `valueGetterSupplier` is used when...FIXME
+
+=== [[enableSendingOldValues]] `enableSendingOldValues` Method
+
+[source, java]
+----
+void enableSendingOldValues()
+----
+
+`enableSendingOldValues`...FIXME
+
+NOTE: `enableSendingOldValues` is used when...FIXME

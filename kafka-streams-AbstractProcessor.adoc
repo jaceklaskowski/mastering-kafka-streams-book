@@ -48,7 +48,7 @@
 | `KTableKTableJoinMergeProcessor`
 | [[KTableKTableJoinMergeProcessor]]
 
-| <<kafka-streams-KStreamTransformProcessor.adoc#, KStreamTransformProcessor>>
+| <<kafka-streams-internals-KStreamTransformProcessor.adoc#, KStreamTransformProcessor>>
 | [[KStreamTransformProcessor]]
 
 | `KStreamWindowAggregateProcessor`
@@ -66,7 +66,7 @@
 | `KStreamFlatMapValuesProcessor`
 | [[KStreamFlatMapValuesProcessor]]
 
-| `KTableSourceProcessor`
+| <<kafka-streams-internals-KTableSourceProcessor.adoc#, KTableSourceProcessor>>
 | [[KTableSourceProcessor]]
 
 | `KTableMapProcessor`
@@ -78,7 +78,7 @@
 | `KStreamBranchProcessor`
 | [[KStreamBranchProcessor]]
 
-| link:kafka-streams-KStreamSessionWindowAggregateProcessor.adoc[KStreamSessionWindowAggregateProcessor]
+| link:kafka-streams-internals-KStreamSessionWindowAggregateProcessor.adoc[KStreamSessionWindowAggregateProcessor]
 | [[KStreamSessionWindowAggregateProcessor]]
 
 | `KStreamPrintProcessor`

@@ -29,7 +29,7 @@ a| [[put]] Storing an aggregated value for a session key
 
 Used when:
 
-* `KStreamSessionWindowAggregateProcessor` is requested to link:kafka-streams-KStreamSessionWindowAggregateProcessor.adoc#process[process a key-value record]
+* `KStreamSessionWindowAggregateProcessor` is requested to link:kafka-streams-internals-KStreamSessionWindowAggregateProcessor.adoc#process[process a key-value record]
 
 * `CachingSessionStore` is requested to link:kafka-streams-StateStore-CachingSessionStore.adoc#remove[remove a session key] and link:kafka-streams-StateStore-CachingSessionStore.adoc#putAndMaybeForward[putAndMaybeForward]
 

@@ -33,7 +33,7 @@ void close()
 
 Closes the transformer
 
-Used exclusively when `KStreamTransformProcessor` is requested to <<kafka-streams-KStreamTransformProcessor.adoc#close, close>>
+Used exclusively when `KStreamTransformProcessor` is requested to <<kafka-streams-internals-KStreamTransformProcessor.adoc#close, close>>
 
 | init
 a| [[init]]
@@ -45,7 +45,7 @@ void init(final ProcessorContext context)
 
 Initializes the transformer in the given <<kafka-streams-ProcessorContext.adoc#, ProcessorContext>>
 
-Used exclusively when `KStreamTransformProcessor` is requested to <<kafka-streams-KStreamTransformProcessor.adoc#init, initialize itself>>
+Used exclusively when `KStreamTransformProcessor` is requested to <<kafka-streams-internals-KStreamTransformProcessor.adoc#init, initialize itself>>
 
 | transform
 a| [[transform]]
@@ -59,7 +59,7 @@ Transforms a single record (into a `KeyValue` object)
 
 In order to emit (produce) no record, `transform` should return `null`.
 
-Used exclusively when `KStreamTransformProcessor` is requested to <<kafka-streams-KStreamTransformProcessor.adoc#process, process a record>>
+Used exclusively when `KStreamTransformProcessor` is requested to <<kafka-streams-internals-KStreamTransformProcessor.adoc#process, process a record>>
 |===
 
-`Transformer` is used to create a <<kafka-streams-KStreamTransformProcessor.adoc#, KStreamTransformProcessor>>.
+`Transformer` is used to create a <<kafka-streams-internals-KStreamTransformProcessor.adoc#, KStreamTransformProcessor>>.

@@ -159,7 +159,6 @@
 .. link:kafka-streams-KTableSourceValueGetterSupplier.adoc[KTableSourceValueGetterSupplier]
 .. link:kafka-streams-KTableKTableAbstractJoinValueGetterSupplier.adoc[KTableKTableAbstractJoinValueGetterSupplier]
 
-. link:kafka-streams-KTableSource.adoc[KTableSource]
 . link:kafka-streams-KeyValueStoreMaterializer.adoc[KeyValueStoreMaterializer]
 . link:kafka-streams-ReadOnlyKeyValueStore.adoc[ReadOnlyKeyValueStore]
 . link:kafka-streams-MaterializedInternal.adoc[MaterializedInternal]
@@ -212,7 +211,6 @@
 
 . link:kafka-streams-KStreamAggProcessorSupplier.adoc[KStreamAggProcessorSupplier]
 . link:kafka-streams-KStreamSessionWindowAggregate.adoc[KStreamSessionWindowAggregate]
-. link:kafka-streams-KStreamTransform.adoc[KStreamTransform -- Supplier of KStreamTransformProcessors]
 . link:kafka-streams-KStreamTransformValues.adoc[KStreamTransformValues]
 
 . link:kafka-streams-ProcessorNodePunctuator.adoc[ProcessorNodePunctuator]
@@ -227,6 +225,13 @@
 . link:kafka-streams-InternalTopicConfig.adoc[InternalTopicConfig]
 .. link:kafka-streams-WindowedChangelogTopicConfig.adoc[WindowedChangelogTopicConfig]
 .. link:kafka-streams-UnwindowedChangelogTopicConfig.adoc[UnwindowedChangelogTopicConfig]
+
+. link:kafka-streams-internals-KTableSource.adoc[KTableSource -- ProcessorSupplier of KTableSourceProcessors]
+.. link:kafka-streams-internals-KTableSourceProcessor.adoc[KTableSourceProcessor]
+. link:kafka-streams-internals-KStreamFilter.adoc[KStreamFilter -- ProcessorSupplier for filter and filterNot Streaming Operators]
+. link:kafka-streams-internals-KStreamTransform.adoc[KStreamTransform -- Supplier of KStreamTransformProcessors]
+.. link:kafka-streams-internals-KStreamTransformProcessor.adoc[KStreamTransformProcessor for transform Streaming Operator]
+. link:kafka-streams-internals-KStreamSessionWindowAggregateProcessor.adoc[KStreamSessionWindowAggregateProcessor]
 
 === Execution Environment
 
@@ -252,8 +257,6 @@
 .. link:kafka-streams-AssignedStreamsTasks.adoc[AssignedStreamsTasks -- AssignedTasks For StreamTasks]
 
 . link:kafka-streams-KStreamJoinWindowProcessor.adoc[KStreamJoinWindowProcessor]
-. link:kafka-streams-KStreamSessionWindowAggregateProcessor.adoc[KStreamSessionWindowAggregateProcessor]
-. link:kafka-streams-KStreamTransformProcessor.adoc[KStreamTransformProcessor]
 . link:kafka-streams-KStreamTransformValuesProcessor.adoc[KStreamTransformValuesProcessor]
 . link:kafka-streams-KStreamWindowAggregateProcessor.adoc[KStreamWindowAggregateProcessor]
 . link:kafka-streams-KStreamWindowReduceProcessor.adoc[KStreamWindowReduceProcessor]
@@ -288,8 +291,6 @@
 .. link:kafka-streams-SessionWindowedKStreamImpl.adoc[SessionWindowedKStreamImpl -- Default SessionWindowedKStream]
 .. link:kafka-streams-TimeWindowedKStreamImpl.adoc[TimeWindowedKStreamImpl]
 .. link:kafka-streams-KStreamImplJoin.adoc[KStreamImplJoin]
-
-. link:kafka-streams-internals-KStreamFilter.adoc[KStreamFilter -- ProcessorSupplier for filter and filterNot Streaming Operators]
 
 . link:kafka-streams-QueryableStoreProvider.adoc[QueryableStoreProvider]
 . link:kafka-streams-StateStoreProvider.adoc[StateStoreProvider]
