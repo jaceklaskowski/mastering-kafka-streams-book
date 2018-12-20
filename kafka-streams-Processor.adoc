@@ -29,7 +29,7 @@ a| [[init]]
 void init(ProcessorContext context)
 ----
 
-Initializes the processor
+Initializes the processor (with a <<kafka-streams-ProcessorContext.adoc#, ProcessorContext>>)
 
 | process
 a| [[process]]
@@ -47,15 +47,18 @@ The lifecycle of a `Processor` starts at <<init, init>> when....FIXME
 TIP: Use <<AbstractProcessor, AbstractProcessor>> when you want to develop a custom `Processor`.
 
 [[implementations]]
-.(Direct) Processors
+.Processors (Direct Implementations)
 [cols="1,2",options="header",width="100%"]
 |===
 | Processor
 | Description
 
-| link:kafka-streams-AbstractProcessor.adoc[AbstractProcessor]
-| [[AbstractProcessor]] Abstract Processor that manages the `ProcessorContext` instance and provides default no-op implementations
+| <<kafka-streams-AbstractProcessor.adoc#, AbstractProcessor>>
+| [[AbstractProcessor]] Abstract Processor that manages the `ProcessorContext` instance and provides a no-op <<close, close>> implementation
 
-| link:kafka-streams-KStreamTransformValuesProcessor.adoc[KStreamTransformValuesProcessor]
+| <<kafka-streams-internals-KStreamTransformValuesProcessor.adoc#, KStreamTransformValuesProcessor>>
 | [[KStreamTransformValuesProcessor]]
+
+| <<kafka-streams-internals-KTableSuppressProcessor.adoc#, KTableSuppressProcessor>>
+| [[KTableSuppressProcessor]]
 |===

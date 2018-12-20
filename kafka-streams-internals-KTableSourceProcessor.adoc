@@ -1,3 +1,12 @@
 == [[KTableSourceProcessor]] KTableSourceProcessor
 
-`KTableSourceProcessor` is an <<kafka-streams-AbstractProcessor.adoc#, AbstractProcessor>> that...FIXME
+`KTableSourceProcessor` is a <<kafka-streams-AbstractProcessor.adoc#, stream processor>> that is <<creating-instance, created>> when `KTableSource` is requested to <<kafka-streams-internals-KTableSource.adoc#get, supply one>>.
+
+[[creating-instance]]
+`KTableSourceProcessor` takes no arguments when created.
+
+[[init]]
+When requested to <<kafka-streams-Processor.adoc#init, initialize>>, `KTableSourceProcessor`...FIXME
+
+[[process]]
+When requested to <<kafka-streams-Processor.adoc#process, process a record>>, `KTableSourceProcessor`...FIXME

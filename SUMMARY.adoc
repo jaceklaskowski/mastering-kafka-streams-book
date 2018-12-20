@@ -189,7 +189,31 @@
 . link:kafka-streams-TopologyTestDriver.adoc[TopologyTestDriver]
 . link:kafka-streams-ProcessorTopologyTestDriver.adoc[ProcessorTopologyTestDriver]
 
-== Internals of Kafka Streams Application
+== Internals of Kafka Streams
+
+=== Processors and ProcessorSuppliers
+
+. link:kafka-streams-internals-KTableSourceProcessor.adoc[KTableSourceProcessor]
+.. link:kafka-streams-internals-KTableSource.adoc[KTableSource -- ProcessorSupplier of KTableSourceProcessors]
+
+. link:kafka-streams-internals-KStreamFilter.adoc[KStreamFilter -- ProcessorSupplier of KStreamFilterProcessors for filter and filterNot Streaming Operators]
+
+. link:kafka-streams-internals-KStreamTransformProcessor.adoc[KStreamTransformProcessor for transform Streaming Operator]
+.. link:kafka-streams-internals-KStreamTransform.adoc[KStreamTransform -- Supplier of KStreamTransformProcessors]
+
+. link:kafka-streams-internals-KStreamAggProcessorSupplier.adoc[KStreamAggProcessorSupplier Contract]
+
+. link:kafka-streams-internals-KStreamSessionWindowAggregateProcessor.adoc[KStreamSessionWindowAggregateProcessor]
+.. link:kafka-streams-internals-KStreamSessionWindowAggregate.adoc[KStreamSessionWindowAggregate -- ProcessorSupplier of KStreamSessionWindowAggregateProcessors]
+
+. link:kafka-streams-internals-KStreamWindowAggregateProcessor.adoc[KStreamWindowAggregateProcessor]
+.. link:kafka-streams-internals-KStreamWindowAggregate.adoc[KStreamWindowAggregate]
+
+. link:kafka-streams-internals-KStreamTransformValuesProcessor.adoc[KStreamTransformValuesProcessor]
+
+. link:kafka-streams-internals-KStreamJoinWindowProcessor.adoc[KStreamJoinWindowProcessor]
+
+. link:kafka-streams-internals-KTableSuppressProcessor.adoc[KTableSuppressProcessor]
 
 === Topology -- Logical Plan of Execution
 
@@ -209,8 +233,6 @@
 .. link:kafka-streams-SinkNodeFactory.adoc[SinkNodeFactory]
 .. link:kafka-streams-SourceNodeFactory.adoc[SourceNodeFactory -- NodeFactory With No Predecessors]
 
-. link:kafka-streams-KStreamAggProcessorSupplier.adoc[KStreamAggProcessorSupplier]
-. link:kafka-streams-KStreamSessionWindowAggregate.adoc[KStreamSessionWindowAggregate]
 . link:kafka-streams-KStreamTransformValues.adoc[KStreamTransformValues]
 
 . link:kafka-streams-ProcessorNodePunctuator.adoc[ProcessorNodePunctuator]
@@ -225,13 +247,6 @@
 . link:kafka-streams-InternalTopicConfig.adoc[InternalTopicConfig]
 .. link:kafka-streams-WindowedChangelogTopicConfig.adoc[WindowedChangelogTopicConfig]
 .. link:kafka-streams-UnwindowedChangelogTopicConfig.adoc[UnwindowedChangelogTopicConfig]
-
-. link:kafka-streams-internals-KTableSource.adoc[KTableSource -- ProcessorSupplier of KTableSourceProcessors]
-.. link:kafka-streams-internals-KTableSourceProcessor.adoc[KTableSourceProcessor]
-. link:kafka-streams-internals-KStreamFilter.adoc[KStreamFilter -- ProcessorSupplier for filter and filterNot Streaming Operators]
-. link:kafka-streams-internals-KStreamTransform.adoc[KStreamTransform -- Supplier of KStreamTransformProcessors]
-.. link:kafka-streams-internals-KStreamTransformProcessor.adoc[KStreamTransformProcessor for transform Streaming Operator]
-. link:kafka-streams-internals-KStreamSessionWindowAggregateProcessor.adoc[KStreamSessionWindowAggregateProcessor]
 
 === Execution Environment
 
@@ -255,11 +270,6 @@
 . link:kafka-streams-AssignedTasks.adoc[AssignedTasks]
 .. link:kafka-streams-AssignedStandbyTasks.adoc[AssignedStandbyTasks -- AssignedTasks For StandbyTasks]
 .. link:kafka-streams-AssignedStreamsTasks.adoc[AssignedStreamsTasks -- AssignedTasks For StreamTasks]
-
-. link:kafka-streams-KStreamJoinWindowProcessor.adoc[KStreamJoinWindowProcessor]
-. link:kafka-streams-KStreamTransformValuesProcessor.adoc[KStreamTransformValuesProcessor]
-. link:kafka-streams-KStreamWindowAggregateProcessor.adoc[KStreamWindowAggregateProcessor]
-. link:kafka-streams-KStreamWindowReduceProcessor.adoc[KStreamWindowReduceProcessor]
 
 . link:kafka-streams-AbstractProcessorContext.adoc[AbstractProcessorContext -- Base Of Internal Processor Contexts]
 .. link:kafka-streams-GlobalProcessorContextImpl.adoc[GlobalProcessorContextImpl]

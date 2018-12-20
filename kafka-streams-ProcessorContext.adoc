@@ -137,7 +137,7 @@ Cancellable schedule(
   final Punctuator callback)
 ----
 
-Used exclusively when `KStreamTransformValuesProcessor` is requested to link:kafka-streams-KStreamTransformValuesProcessor.adoc#init[initialize]
+Used exclusively when `KStreamTransformValuesProcessor` is requested to link:kafka-streams-internals-KStreamTransformValuesProcessor.adoc#init[initialize]
 
 | stateDir
 a| [[stateDir]]

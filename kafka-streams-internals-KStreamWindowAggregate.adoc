@@ -1,0 +1,3 @@
+== [[KStreamWindowAggregate]] KStreamWindowAggregate
+
+`KStreamWindowAggregate` is...FIXME

@@ -19,7 +19,7 @@ void put(K key, V value, long timestamp)
 ----
 <1> Uses the current wall-clock time as the timestamp
 
-Used when <<kafka-streams-KStreamJoinWindowProcessor.adoc#process, KStreamJoinWindowProcessor>>, <<kafka-streams-KStreamWindowReduceProcessor.adoc#process, KStreamWindowReduceProcessor>> and <<kafka-streams-KStreamWindowAggregateProcessor.adoc#process, KStreamWindowAggregateProcessor>> are requested to process a record
+Used when <<kafka-streams-internals-KStreamJoinWindowProcessor.adoc#process, KStreamJoinWindowProcessor>> and <<kafka-streams-internals-KStreamWindowAggregateProcessor.adoc#process, KStreamWindowAggregateProcessor>> are requested to process a record
 
 |===
 

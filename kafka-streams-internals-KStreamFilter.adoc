@@ -1,4 +1,4 @@
-== [[KStreamFilter]] KStreamFilter -- ProcessorSupplier for filter and filterNot Streaming Operators
+== [[KStreamFilter]] KStreamFilter -- ProcessorSupplier of KStreamFilterProcessors for filter and filterNot Streaming Operators
 
 `KStreamFilter` is a <<kafka-streams-ProcessorSupplier.adoc#, ProcessorSupplier>> of <<get, KStreamFilterProcessors>>.
 

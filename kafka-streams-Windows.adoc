@@ -37,7 +37,7 @@ Map<Long, W> windowsFor(final long timestamp)
 
 Creates the windows that contain the provided timestamp, indexed by non-negative window start timestamps.
 
-Used when <<kafka-streams-KStreamWindowAggregateProcessor.adoc#process, KStreamWindowAggregateProcessor>> and <<kafka-streams-KStreamWindowReduceProcessor.adoc#process, KStreamWindowReduceProcessor>> are requested to process a record
+Used when <<kafka-streams-internals-KStreamWindowAggregateProcessor.adoc#process, KStreamWindowAggregateProcessor>> is requested to process a record
 |===
 
 [[maintainMs]]

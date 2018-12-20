@@ -4,7 +4,7 @@
 
 `SessionWindow` is <<creating-instance, created>> when:
 
-* `KStreamSessionWindowAggregate` is requested to link:kafka-streams-KStreamSessionWindowAggregate.adoc#mergeSessionWindow[mergeSessionWindow]
+* `KStreamSessionWindowAggregate` is requested to link:kafka-streams-internals-KStreamSessionWindowAggregate.adoc#mergeSessionWindow[mergeSessionWindow]
 
 * `KStreamSessionWindowAggregateProcessor` is requested to link:kafka-streams-internals-KStreamSessionWindowAggregateProcessor.adoc#process[process a single record]
 
