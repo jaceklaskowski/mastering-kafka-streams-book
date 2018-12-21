@@ -23,7 +23,7 @@ byte[] serializeBaseKey(String topic, Windowed<T> data)
 | SessionWindowedSerializer
 | [[SessionWindowedSerializer]]
 
-| TimeWindowedSerializer
+| <<kafka-streams-TimeWindowedSerializer.adoc#, TimeWindowedSerializer>>
 | [[TimeWindowedSerializer]]
 
 |===

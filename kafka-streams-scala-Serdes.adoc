@@ -58,10 +58,10 @@ Serdes.String.getClass.getName
 | [[String]] Serde[String]
 
 | sessionWindowedSerde[T]
-| [[sessionWindowedSerde]] WindowedSerdes.SessionWindowedSerde[T]
+| [[sessionWindowedSerde]] <<kafka-streams-WindowedSerdes.adoc#SessionWindowedSerde, WindowedSerdes.SessionWindowedSerde[T]>>
 
 | timeWindowedSerde[T]
-| [[timeWindowedSerde]] WindowedSerdes.TimeWindowedSerde[T]
+| [[timeWindowedSerde]] <<kafka-streams-WindowedSerdes.adoc#TimeWindowedSerde, WindowedSerdes.TimeWindowedSerde[T]>>
 |===
 
 === [[fromFn]] `fromFn` Method

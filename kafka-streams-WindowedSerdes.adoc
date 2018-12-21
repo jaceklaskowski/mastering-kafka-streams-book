@@ -1,0 +1,43 @@
+== [[WindowedSerdes]] WindowedSerdes -- SessionWindowedSerde and TimeWindowedSerde
+
+`WindowedSerdes` is a class that acts as a namespace for two static classes:
+
+* [[SessionWindowedSerde]] `SessionWindowedSerde` for session-windowed aggregations
+* [[TimeWindowedSerde]] `TimeWindowedSerde` for time-windowed aggregation
+
+`WindowedSerdes` also defines two <<factory-methods, factory methods>> to create instances of <<timeWindowedSerdeFrom, TimeWindowedSerde>> and <<sessionWindowedSerdeFrom, SessionWindowedSerde>> for the specified inner class type.
+
+[[factory-methods]]
+.WindowedSerdes's Factory Methods
+[cols="1m,2",options="header",width="100%"]
+|===
+| Method
+| Description
+
+| sessionWindowedSerdeFrom
+a| [[sessionWindowedSerdeFrom]]
+
+[source, java]
+----
+Serde<Windowed<T>> sessionWindowedSerdeFrom(
+  final Class<T> type)
+----
+
+| timeWindowedSerdeFrom
+a| [[timeWindowedSerdeFrom]]
+
+[source, java]
+----
+Serde<Windowed<T>> timeWindowedSerdeFrom(
+  final Class<T> type)
+----
+
+|===
+
+=== Scala API for Kafka Streams
+
+<<kafka-streams-scala-Serdes.adoc#, Serdes>> object defines the following implicit conversions to create instances of `TimeWindowedSerde` and `SessionWindowedSerde` (without an explicit inner class type):
+
+* <<kafka-streams-scala-Serdes.adoc#sessionWindowedSerde, sessionWindowedSerde>> for a <<SessionWindowedSerde, WindowedSerdes.SessionWindowedSerde[T]>> instance
+
+* <<kafka-streams-scala-Serdes.adoc#timeWindowedSerde, timeWindowedSerde>> for a <<TimeWindowedSerde, WindowedSerdes.TimeWindowedSerde[T]>> instance

@@ -58,7 +58,9 @@
 .. link:kafka-streams-SessionWindow.adoc[SessionWindow]
 .. link:kafka-streams-TimeWindow.adoc[TimeWindow]
 
-. link:kafka-streams-Windowed.adoc[Windowed]
+. link:kafka-streams-WindowedSerdes.adoc[WindowedSerdes -- SessionWindowedSerde and TimeWindowedSerde]
+.. link:kafka-streams-Windowed.adoc[Windowed]
+.. link:kafka-streams-TimeWindowedSerializer.adoc[TimeWindowedSerializer]
 
 . link:kafka-streams-SessionKeySerde.adoc[SessionKeySerde]
 
