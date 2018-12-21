@@ -1,3 +1,27 @@
 == [[Windowed]] Windowed
 
-`Windowed` is...FIXME
+`Windowed` is the result key type of a windowed stream aggregation.
+
+`Windowed` is <<creating-instance, created>> when:
+
+* <<kafka-streams-internals-KStreamSessionWindowAggregateProcessor.adoc#process, KStreamSessionWindowAggregateProcessor>> and <<kafka-streams-internals-KStreamWindowAggregateProcessor.adoc#process, KStreamWindowAggregateProcessor>> processors are requested to process a record
+
+* `CachingSessionStore` state store is requested to <<kafka-streams-StateStore-CachingSessionStore.adoc#putAndMaybeForward, putAndMaybeForward>>
+
+* `MergedSortedCacheSessionStoreIterator` is requested to `deserializeCacheKey`
+
+* `MeteredSessionStore` is requested to <<kafka-streams-StateStore-MeteredSessionStore.adoc#remove, remove a session>> and <<kafka-streams-StateStore-MeteredSessionStore.adoc#put, store an aggregated value for a session>>
+
+* `MeteredWindowedKeyValueIterator` is requested to `windowedKey`
+
+* `SessionKeySchema` is requested to...FIXME
+
+* `WindowKeySchema` is requested to...FIXME
+
+* `WindowStoreIteratorWrapper` is requested to...FIXME
+
+[[creating-instance]]
+`Windowed` takes the following when created:
+
+* [[key]] Key of `K` type
+* [[window]] <<kafka-streams-Window.adoc#, Window>>

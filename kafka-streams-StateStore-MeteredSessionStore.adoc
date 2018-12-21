@@ -13,13 +13,24 @@ NOTE: `init` is part of <<kafka-streams-StateStore-AbstractStateStore.adoc#init,
 
 `init`...FIXME
 
-=== [[put]] Storing Aggregated Value for Session Key -- `put` Method
+=== [[put]] Storing Aggregated Value for Session -- `put` Method
 
 [source, java]
 ----
 void put(final Windowed<K> sessionKey, final V aggregate)
 ----
 
-NOTE: `put` is part of link:kafka-streams-StateStore-SessionStore.adoc#put[SessionStore Contract] to store an aggregated value for a session key.
+NOTE: `put` is part of link:kafka-streams-StateStore-SessionStore.adoc#put[SessionStore Contract] to store an aggregated value for a session.
 
 `put`...FIXME
+
+=== [[remove]] Removing Aggregated Value for Session -- `remove` Method
+
+[source, java]
+----
+void remove(final Windowed<K> sessionKey)
+----
+
+NOTE: `remove` is part of link:kafka-streams-StateStore-SessionStore.adoc#remove[SessionStore Contract] to remove an aggregated value for a session.
+
+`remove`...FIXME
