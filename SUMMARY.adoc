@@ -139,8 +139,6 @@
 . link:kafka-streams-Stores.adoc[Stores -- Factory of State Stores]
 . link:kafka-streams-Materialized.adoc[Materialized -- State Store Materialized View]
 
-. link:kafka-streams-WindowedStreamPartitioner.adoc[WindowedStreamPartitioner]
-
 . link:kafka-streams-DefaultKafkaClientSupplier.adoc[DefaultKafkaClientSupplier]
 
 . link:kafka-streams-GlobalStateMaintainer.adoc[GlobalStateMaintainer]
@@ -247,6 +245,10 @@
 . link:kafka-streams-InternalTopicConfig.adoc[InternalTopicConfig]
 .. link:kafka-streams-WindowedChangelogTopicConfig.adoc[WindowedChangelogTopicConfig]
 .. link:kafka-streams-UnwindowedChangelogTopicConfig.adoc[UnwindowedChangelogTopicConfig]
+
+. link:kafka-streams-internals-WindowedStreamPartitioner.adoc[WindowedStreamPartitioner -- Default StreamPartitioner of Windowed Keys]
+. link:kafka-streams-internals-WindowedSerializer.adoc[WindowedSerializer]
+. link:kafka-streams-internals-StreamsGraphNode.adoc[StreamsGraphNode]
 
 === Execution Environment
 

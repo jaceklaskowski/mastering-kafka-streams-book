@@ -1,0 +1,13 @@
+== [[WindowedStreamPartitioner]] WindowedStreamPartitioner -- Default StreamPartitioner of Windowed Keys
+
+`WindowedStreamPartitioner` is a <<kafka-streams-StreamPartitioner.adoc#, StreamPartitioner>> (of `Windowed<K>` keys and `V` values).
+
+`WindowedStreamPartitioner` is used as the default `StreamPartitioner` when <<kafka-streams-internals-WindowedSerializer.adoc#, WindowedSerializer>> is used for record keys.
+
+`WindowedStreamPartitioner` is <<creating-instance, created>> exclusively when `StreamSinkNode` is requested to `writeToTopology`.
+
+[[creating-instance]]
+[[serializer]]
+`WindowedStreamPartitioner` takes a <<kafka-streams-internals-WindowedSerializer.adoc#, WindowedSerializer>> when created.
+
+When requested to <<kafka-streams-StreamPartitioner.adoc#partition, determine the partition for a record>>, `WindowedStreamPartitioner` requests the <<serializer, WindowedSerializer>> to <<kafka-streams-internals-WindowedSerializer.adoc#serializeBaseKey, serializeBaseKey>> (for the given topic and `windowedKey`). It then generates 32-bit murmur2 hash from the byte array and chooses the partition.

@@ -170,7 +170,7 @@ NOTE: `to` uses the input `ProducedInternal` to access the `key` and `value` ser
 
 NOTE: `to` uses <<builder, InternalStreamsBuilder>> to access the current link:kafka-streams-InternalStreamsBuilder.adoc#internalTopologyBuilder[InternalTopologyBuilder].
 
-NOTE: `to` uses link:kafka-streams-WindowedStreamPartitioner.adoc[WindowedStreamPartitioner] when the input `ProducedInternal` defines no link:kafka-streams-StreamPartitioner.adoc[StreamPartitioner] and uses `WindowedSerializer` for the key serializer.
+NOTE: `to` uses link:kafka-streams-internals-WindowedStreamPartitioner.adoc[WindowedStreamPartitioner] when the input `ProducedInternal` defines no link:kafka-streams-StreamPartitioner.adoc[StreamPartitioner] and uses `WindowedSerializer` for the key serializer.
 
 NOTE: `to` is used in <<to, to>> and <<through, through>> operators.
 
