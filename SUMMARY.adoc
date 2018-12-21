@@ -58,6 +58,8 @@
 .. link:kafka-streams-SessionWindow.adoc[SessionWindow]
 .. link:kafka-streams-TimeWindow.adoc[TimeWindow]
 
+. link:kafka-streams-Windowed.adoc[Windowed]
+
 . link:kafka-streams-SessionKeySerde.adoc[SessionKeySerde]
 
 . link:kafka-streams-scala.adoc[Scala API for Kafka Streams]
@@ -247,7 +249,8 @@
 .. link:kafka-streams-UnwindowedChangelogTopicConfig.adoc[UnwindowedChangelogTopicConfig]
 
 . link:kafka-streams-internals-WindowedStreamPartitioner.adoc[WindowedStreamPartitioner -- Default StreamPartitioner of Windowed Keys]
-. link:kafka-streams-internals-WindowedSerializer.adoc[WindowedSerializer]
+. link:kafka-streams-internals-WindowedSerializer.adoc[WindowedSerializer Contract]
+
 . link:kafka-streams-internals-StreamsGraphNode.adoc[StreamsGraphNode]
 
 === Execution Environment

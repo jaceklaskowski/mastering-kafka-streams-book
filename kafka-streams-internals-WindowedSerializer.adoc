@@ -1,3 +1,29 @@
-== [[WindowedSerializer]] WindowedSerializer
+== [[WindowedSerializer]] WindowedSerializer Contract
 
-`WindowedSerializer` is...FIXME
+`WindowedSerializer` is the <<contract, extension>> of the https://kafka.apache.org/21/javadoc/org/apache/kafka/common/serialization/Serializer.html[Serializer] contract in Apache Kafka for <<implementations, serializers>> that can <<serializeBaseKey, serialize Windowed keys>>.
+
+[[contract]]
+[[serializeBaseKey]]
+`WindowedSerializer` defines the single `serializeBaseKey` method to convert (_serialize_) objects of <<kafka-streams-Windowed.adoc#, Windowed>> type to bytes.
+
+[source, java]
+----
+byte[] serializeBaseKey(String topic, Windowed<T> data)
+----
+
+`serializeBaseKey` is used exclusively when `WindowedStreamPartitioner` is requested to <<kafka-streams-internals-WindowedStreamPartitioner.adoc#partition, determine the partition for a record>>.
+
+[[implementations]]
+.WindowedSerializers
+[cols="1m,2",options="header",width="100%"]
+|===
+| WindowedSerializer
+| Description
+
+| SessionWindowedSerializer
+| [[SessionWindowedSerializer]]
+
+| TimeWindowedSerializer
+| [[TimeWindowedSerializer]]
+
+|===
