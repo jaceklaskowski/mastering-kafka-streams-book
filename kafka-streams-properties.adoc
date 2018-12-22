@@ -112,7 +112,7 @@ Use <<kafka-streams-StreamsConfig.adoc#REPLICATION_FACTOR_CONFIG, StreamsConfig.
 | `/tmp/kafka-streams`
 a| [[state.dir]] Path to the base directory for a state storage
 
-* Used when `StateDirectory` is link:kafka-streams-StateDirectory.adoc#creating-instance[created]
+* Used when `StateDirectory` is link:kafka-streams-internals-StateDirectory.adoc#creating-instance[created]
 
 Use <<kafka-streams-StreamsConfig.adoc#STATE_DIR_CONFIG, StreamsConfig.STATE_DIR_CONFIG>> to reference the property.
 

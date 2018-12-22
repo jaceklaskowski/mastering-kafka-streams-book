@@ -1,6 +1,6 @@
 == [[SessionStoreBuilder]] SessionStoreBuilder
 
-`SessionStoreBuilder` is an link:kafka-streams-AbstractStoreBuilder.adoc[AbstractStoreBuilder] that <<build, builds a MeteredSessionStore>> (possibly with <<maybeWrapCaching, caching>> and <<maybeWrapLogging, logging>>).
+`SessionStoreBuilder` is an link:kafka-streams-internals-AbstractStoreBuilder.adoc[AbstractStoreBuilder] that <<build, builds a MeteredSessionStore>> (possibly with <<maybeWrapCaching, caching>> and <<maybeWrapLogging, logging>>).
 
 `SessionStoreBuilder` is <<creating-instance, created>> exclusively when `Stores` is requested to link:kafka-streams-Stores.adoc#sessionStoreBuilder[create one] (with `Time.SYSTEM` <<time, time>>).
 

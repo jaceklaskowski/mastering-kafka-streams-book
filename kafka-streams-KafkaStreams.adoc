@@ -228,7 +228,7 @@ a| [[adminClient]] Kafka https://kafka.apache.org/21/javadoc/org/apache/kafka/cl
 | [[queryableStoreProvider]] link:kafka-streams-QueryableStoreProvider.adoc[QueryableStoreProvider]
 
 | stateDirectory
-| [[stateDirectory]] link:kafka-streams-StateDirectory.adoc[StateDirectory]
+| [[stateDirectory]] link:kafka-streams-internals-StateDirectory.adoc[StateDirectory]
 
 | stateLock
 | [[stateLock]] Object lock for...FIXME
@@ -277,7 +277,7 @@ Refer to link:kafka-logging.adoc#log4j.properties[Application Logging Using log4
 void cleanUp()
 ----
 
-`cleanUp` simply requests <<stateDirectory, StateDirectory>> to link:kafka-streams-StateDirectory.adoc#clean[clean] when `KafkaStreams` is not <<isRunning, running>>.
+`cleanUp` simply requests <<stateDirectory, StateDirectory>> to link:kafka-streams-internals-StateDirectory.adoc#clean[clean] when `KafkaStreams` is not <<isRunning, running>>.
 
 NOTE: `cleanUp` can only be executed before `KafkaStreams` will be <<start, started>> or after has been <<close, closed>>.
 
@@ -380,7 +380,7 @@ Starting Streams client
 
 `start` starts <<threads, stream threads>>.
 
-`start` schedules a thread that requests <<stateDirectory, StateDirectory>> to link:kafka-streams-StateDirectory.adoc#cleanRemovedTasks[cleanRemovedTasks] every link:kafka-streams-properties.adoc#state.cleanup.delay.ms[state.cleanup.delay.ms] milliseconds.
+`start` schedules a thread that requests <<stateDirectory, StateDirectory>> to link:kafka-streams-internals-StateDirectory.adoc#cleanRemovedTasks[cleanRemovedTasks] every link:kafka-streams-properties.adoc#state.cleanup.delay.ms[state.cleanup.delay.ms] milliseconds.
 
 You should see the following DEBUG message in the logs:
 

@@ -252,7 +252,7 @@ In the end, `createReparitionedSource` returns the source name.
 ====
 `createReparitionedSource` is used when:
 
-* `GroupedStreamAggregateBuilder` is requested to <<kafka-streams-GroupedStreamAggregateBuilder.adoc#repartitionIfRequired, repartitionIfRequired>>
+* `GroupedStreamAggregateBuilder` is requested to <<kafka-streams-internals-GroupedStreamAggregateBuilder.adoc#repartitionIfRequired, repartitionIfRequired>>
 
 * `KStreamImpl` is requested to <<repartitionForJoin, repartitionForJoin>>
 ====

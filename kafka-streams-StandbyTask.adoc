@@ -14,7 +14,7 @@
 | Description
 
 | processorContext
-| [[processorContext]] <<kafka-streams-InternalProcessorContext.adoc#, InternalProcessorContext>>
+| [[processorContext]] <<kafka-streams-internals-InternalProcessorContext.adoc#, InternalProcessorContext>>
 
 Used when...FIXME
 |===
@@ -116,7 +116,7 @@ NOTE: `resume` is part of the <<kafka-streams-Task.adoc#resume, Task Contract>> 
 * [[changelogReader]] <<kafka-streams-ChangelogReader.adoc#, ChangelogReader>>
 * [[config]] <<kafka-streams-StreamsConfig.adoc#, StreamsConfig>>
 * [[metrics]] <<kafka-streams-StreamsMetricsImpl.adoc#, StreamsMetricsImpl>>
-* [[stateDirectory]] <<kafka-streams-StateDirectory.adoc#, StateDirectory>>
+* [[stateDirectory]] <<kafka-streams-internals-StateDirectory.adoc#, StateDirectory>>
 
 `StandbyTask` initializes the <<internal-registries, internal registries and counters>>.
 

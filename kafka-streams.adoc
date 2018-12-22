@@ -70,7 +70,7 @@ libraryDependencies += "org.apache.kafka" %% "kafka-streams-scala" % kafkaVer
 
 On the outside, a typical Kafka Streams application is made up of two main objects, i.e. <<kafka-streams-Topology.adoc#, Topology>> and <<kafka-streams-KafkaStreams.adoc#, KafkaStreams>> (aka _streams client_).
 
-On the inside, the `KafkaStreams` object creates a <<kafka-streams-StateDirectory.adoc#, StateDirectory>>, a `Metric` (with a `JmxReporter`), a <<kafka-streams-StreamsMetadataState.adoc#, StreamsMetadataState>>, a <<kafka-streams-GlobalStreamThread.adoc#, GlobalStreamThread>> and one or more <<kafka-streams-StreamThread.adoc#, StreamThreads>>.
+On the inside, the `KafkaStreams` object creates a <<kafka-streams-internals-StateDirectory.adoc#, StateDirectory>>, a `Metric` (with a `JmxReporter`), a <<kafka-streams-StreamsMetadataState.adoc#, StreamsMetadataState>>, a <<kafka-streams-GlobalStreamThread.adoc#, GlobalStreamThread>> and one or more <<kafka-streams-StreamThread.adoc#, StreamThreads>>.
 
 `KafkaStreams` uses <<kafka-streams-properties.adoc#num.stream.threads, num.stream.threads>> configuration property for the number of `StreamThreads` to create (default: `1` processing thread).
 

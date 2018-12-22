@@ -4,7 +4,7 @@
 `WindowBytesStoreSupplier` is the <<contract, extension>> of the <<kafka-streams-StoreSupplier.adoc#, StoreSupplier contract>> for <<implementations, state store suppliers>> that <<kafka-streams-StoreSupplier.adoc#get, supply WindowStores>>.
 
 [[implementations]]
-NOTE: <<kafka-streams-RocksDbWindowBytesStoreSupplier.adoc#, RocksDbWindowBytesStoreSupplier>> is the one and only known implementation of the <<contract, WindowBytesStoreSupplier Contract>>.
+NOTE: <<kafka-streams-internals-RocksDbWindowBytesStoreSupplier.adoc#, RocksDbWindowBytesStoreSupplier>> is the one and only known implementation of the <<contract, WindowBytesStoreSupplier Contract>>.
 
 [[contract]]
 .WindowBytesStoreSupplier Contract

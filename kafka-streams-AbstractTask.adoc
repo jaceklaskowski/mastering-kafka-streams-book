@@ -45,7 +45,7 @@ The `taskInitialized` flag is used by the <<implementations, concrete AbstractTa
 | Description
 
 | processorContext
-a| [[processorContext]] <<kafka-streams-InternalProcessorContext.adoc#, InternalProcessorContext>>, i.e.
+a| [[processorContext]] <<kafka-streams-internals-InternalProcessorContext.adoc#, InternalProcessorContext>>, i.e.
 
 * <<kafka-streams-ProcessorContextImpl.adoc#, ProcessorContextImpl>> for <<kafka-streams-StreamTask.adoc#, StreamTask>>
 
@@ -86,7 +86,7 @@ NOTE: `closeStateManager` is used when...FIXME
 * [[consumer]] Kafka https://kafka.apache.org/20/javadoc/org/apache/kafka/clients/consumer/KafkaConsumer.html[Consumer] (`Consumer<byte[], byte[]>`)
 * [[changelogReader]] <<kafka-streams-ChangelogReader.adoc#, ChangelogReader>>
 * [[isStandby]] `isStandby` flag
-* [[stateDirectory]] <<kafka-streams-StateDirectory.adoc#, StateDirectory>>
+* [[stateDirectory]] <<kafka-streams-internals-StateDirectory.adoc#, StateDirectory>>
 * [[config]] <<kafka-streams-StreamsConfig.adoc#, StreamsConfig>>
 
 `AbstractTask` initializes the <<internal-registries, internal registries and counters>>.

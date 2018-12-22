@@ -112,7 +112,7 @@ NOTE: `close` is part of link:kafka-streams-Task.adoc#close[Task Contract] to...
 * [[changelogReader]] <<kafka-streams-ChangelogReader.adoc#, ChangelogReader>>
 * [[config]] link:kafka-streams-StreamsConfig.adoc[StreamsConfig]
 * [[metrics]] link:kafka-streams-StreamsMetrics.adoc[StreamsMetrics]
-* [[stateDirectory]] link:kafka-streams-StateDirectory.adoc[StateDirectory]
+* [[stateDirectory]] link:kafka-streams-internals-StateDirectory.adoc[StateDirectory]
 * [[cache]] <<kafka-streams-ThreadCache.adoc#, ThreadCache>>
 * [[time]] `Time`
 * [[producer]] Kafka `Producer` (of keys and values as array of bytes)
@@ -139,7 +139,7 @@ void initializeTopology()
 
 NOTE: `initializeTopology` is part of link:kafka-streams-Task.adoc#initializeTopology[Task Contract] to...FIXME.
 
-`initializeTopology` <<initTopology, initTopology>>. It then requests link:kafka-streams-AbstractTask.adoc#processorContext[InternalProcessorContext] to link:kafka-streams-InternalProcessorContext.adoc#initialized[initialized] and in the end sets link:kafka-streams-AbstractTask.adoc#taskInitialized[taskInitialized] to `true`.
+`initializeTopology` <<initTopology, initTopology>>. It then requests link:kafka-streams-AbstractTask.adoc#processorContext[InternalProcessorContext] to link:kafka-streams-internals-InternalProcessorContext.adoc#initialized[initialized] and in the end sets link:kafka-streams-AbstractTask.adoc#taskInitialized[taskInitialized] to `true`.
 
 === [[updateProcessorContext]] `updateProcessorContext` Internal Method
 
@@ -185,7 +185,7 @@ Completed processing one record [record]
 
 `process` requests the <<consumer, Kafka consumer>> to resume the partition if the size of the link:kafka-streams-RecordInfo.adoc#queue[queue] of the <<recordInfo, RecordInfo>> is exactly <<maxBufferedSize, maxBufferedSize>>.
 
-`process` always requests link:kafka-streams-AbstractTask.adoc#processorContext[InternalProcessorContext] to link:kafka-streams-InternalProcessorContext.adoc#setCurrentNode[setCurrentNode] as `null`.
+`process` always requests link:kafka-streams-AbstractTask.adoc#processorContext[InternalProcessorContext] to link:kafka-streams-internals-InternalProcessorContext.adoc#setCurrentNode[setCurrentNode] as `null`.
 
 In case of a `ProducerFencedException`, `process` reports a `TaskMigratedException`.
 

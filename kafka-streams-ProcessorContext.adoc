@@ -181,4 +181,4 @@ Serde<?> valueSerde()
 |===
 
 [[implementations]]
-NOTE: <<kafka-streams-InternalProcessorContext.adoc#, InternalProcessorContext>> is the one and only extension contract of the <<contract, ProcessorContext Contract>>.
+NOTE: <<kafka-streams-internals-InternalProcessorContext.adoc#, InternalProcessorContext>> is the one and only extension contract of the <<contract, ProcessorContext Contract>>.

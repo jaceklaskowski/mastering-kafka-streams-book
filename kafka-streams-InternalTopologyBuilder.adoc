@@ -583,7 +583,7 @@ void addStateStore(
 
 * `Topology` is requested to link:kafka-streams-Topology.adoc#addStateStore[addStateStore]
 
-* `GroupedStreamAggregateBuilder` is requested to link:kafka-streams-GroupedStreamAggregateBuilder.adoc#build[build]
+* `GroupedStreamAggregateBuilder` is requested to link:kafka-streams-internals-GroupedStreamAggregateBuilder.adoc#build[build]
 
 * `InternalStreamsBuilder` is requested to link:kafka-streams-InternalStreamsBuilder.adoc#addStateStore[addStateStore] and link:kafka-streams-InternalStreamsBuilder.adoc#table[create a KTable for a topic]
 
@@ -950,7 +950,7 @@ InternalTopicConfig createChangelogTopicConfig(
 
 Internally, `createChangelogTopicConfig` requests the input link:kafka-streams-StateStoreFactory.adoc[StateStoreFactory] for link:kafka-streams-StateStoreFactory.adoc#isWindowStore[isWindowStore] flag.
 
-NOTE: `isWindowStore` flag is enabled when a `StateStoreFactory` is created for a link:kafka-streams-WindowStoreBuilder.adoc[WindowStoreBuilder].
+NOTE: `isWindowStore` flag is enabled when a `StateStoreFactory` is created for a link:kafka-streams-internals-WindowStoreBuilder.adoc[WindowStoreBuilder].
 
 If `isWindowStore` flag is enabled (`true`), `createChangelogTopicConfig` does the following:
 

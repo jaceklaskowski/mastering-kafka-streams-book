@@ -3,7 +3,7 @@
 `StoreBuilder` is the <<contract, contract>> of <<implementations, state store builders>> that can <<build, build a state store>> (with optional <<withCachingEnabled, caching>> and <<withLoggingEnabled, logging>>).
 
 [[implementations]]
-NOTE: <<kafka-streams-AbstractStoreBuilder.adoc#, AbstractStoreBuilder>> is the one and only known base implementation of the <<contract, StoreBuilder Contract>>.
+NOTE: <<kafka-streams-internals-AbstractStoreBuilder.adoc#, AbstractStoreBuilder>> is the one and only known base implementation of the <<contract, StoreBuilder Contract>>.
 
 `StoreBuilder` is used to add a local or global <<kafka-streams-StateStore.adoc#, state store>> to a topology using the following APIs:
 

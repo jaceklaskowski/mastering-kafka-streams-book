@@ -29,9 +29,9 @@ NOTE: `AbstractStateManager` is a Java abstract class and cannot be <<creating-i
 | Description
 
 | checkpoint
-a| [[checkpoint]] <<kafka-streams-OffsetCheckpoint.adoc#, OffsetCheckpoint>> with the <<CHECKPOINT_FILE_NAME, .checkpoint>> file in the <<baseDir, base directory>>.
+a| [[checkpoint]] <<kafka-streams-internals-OffsetCheckpoint.adoc#, OffsetCheckpoint>> with the <<CHECKPOINT_FILE_NAME, .checkpoint>> file in the <<baseDir, base directory>>.
 
-Initialized to a new <<kafka-streams-OffsetCheckpoint.adoc#, OffsetCheckpoint>> when `AbstractStateManager` is <<creating-instance, created>>
+Initialized to a new <<kafka-streams-internals-OffsetCheckpoint.adoc#, OffsetCheckpoint>> when `AbstractStateManager` is <<creating-instance, created>>
 
 Used when:
 

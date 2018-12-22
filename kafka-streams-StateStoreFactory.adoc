@@ -30,13 +30,13 @@ a| [[isWindowStore]]
 boolean isWindowStore()
 ----
 
-Indicates whether a `StateStoreFactory` was created for a link:kafka-streams-WindowStoreBuilder.adoc[WindowStoreBuilder] (`true`) or not (`false`)
+Indicates whether a `StateStoreFactory` was created for a link:kafka-streams-internals-WindowStoreBuilder.adoc[WindowStoreBuilder] (`true`) or not (`false`)
 
 Used exclusively when `InternalTopologyBuilder` is requested to link:kafka-streams-InternalTopologyBuilder.adoc#createChangelogTopicConfig[create an InternalTopicConfig (for a given name and StateStoreFactory)]
 
 `isWindowStore` is implemented by link:kafka-streams-AbstractStateStoreFactory.adoc#isWindowStore[AbstractStateStoreFactory] only and corresponds to link:kafka-streams-AbstractStateStoreFactory.adoc#windowStore[windowStore] flag that is given when link:kafka-streams-AbstractStateStoreFactory.adoc#implementations[concrete StateStoreFactories] are created.
 
-In a nutshell, The flag is enabled only when the `StateStoreFactory` is created for a link:kafka-streams-WindowStoreBuilder.adoc[WindowStoreBuilder].
+In a nutshell, The flag is enabled only when the `StateStoreFactory` is created for a link:kafka-streams-internals-WindowStoreBuilder.adoc[WindowStoreBuilder].
 
 | logConfig
 a| [[logConfig]]

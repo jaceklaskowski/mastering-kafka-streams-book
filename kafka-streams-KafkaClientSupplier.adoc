@@ -76,4 +76,4 @@ Used exclusively when `StreamThread` is <<kafka-streams-StreamThread.adoc#create
 |===
 
 [[implementations]]
-NOTE: <<kafka-streams-DefaultKafkaClientSupplier.adoc#, DefaultKafkaClientSupplier>> is the one and only known implementation of the <<contract, KafkaClientSupplier Contract>>.
+NOTE: <<kafka-streams-internals-DefaultKafkaClientSupplier.adoc#, DefaultKafkaClientSupplier>> is the one and only known implementation of the <<contract, KafkaClientSupplier Contract>>.

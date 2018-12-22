@@ -27,7 +27,7 @@ NOTE: `createTask` is used when...FIXME
 * [[builder]] link:kafka-streams-InternalTopologyBuilder.adoc[InternalTopologyBuilder]
 * [[config]] link:kafka-streams-StreamsConfig.adoc[StreamsConfig]
 * [[streamsMetrics]] link:kafka-streams-StreamsMetrics.adoc[StreamsMetrics]
-* [[stateDirectory]] link:kafka-streams-StateDirectory.adoc[StateDirectory]
+* [[stateDirectory]] link:kafka-streams-internals-StateDirectory.adoc[StateDirectory]
 * [[taskCreatedSensor]] `Sensor`
 * [[storeChangelogReader]] <<kafka-streams-ChangelogReader.adoc#, ChangelogReader>>
 * [[time]] `Time`

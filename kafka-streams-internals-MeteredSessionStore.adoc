@@ -1,6 +1,6 @@
 == [[MeteredSessionStore]] MeteredSessionStore
 
-`MeteredSessionStore` is...FIXME
+`MeteredSessionStore` is a <<kafka-streams-StateStore-SessionStore.adoc#, SessionStore>> that...FIXME
 
 === [[init]] Initialize State Store -- `init` Method
 

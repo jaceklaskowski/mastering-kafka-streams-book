@@ -1,6 +1,6 @@
 == [[AbstractProcessorContext]] AbstractProcessorContext -- Base Of Internal Processor Contexts
 
-`AbstractProcessorContext` is the base implementation of the <<kafka-streams-InternalProcessorContext.adoc#, InternalProcessorContext contract>> for <<implementations, processor contexts>> that <<FIXME, FIXME>>.
+`AbstractProcessorContext` is the base implementation of the <<kafka-streams-internals-InternalProcessorContext.adoc#, InternalProcessorContext contract>> for <<implementations, processor contexts>> that <<FIXME, FIXME>>.
 
 NOTE: `AbstractProcessorContext` is a Java abstract class and cannot be <<creating-instance, created>> directly. It is created indirectly for the <<implementations, concrete AbstractProcessorContexts>>.
 
@@ -82,7 +82,7 @@ Can only create state stores during initialization.
 void uninitialize()
 ----
 
-NOTE: `uninitialize` is part of the <<kafka-streams-InternalProcessorContext.adoc#uninitialize, InternalProcessorContext Contract>> to...FIXME.
+NOTE: `uninitialize` is part of the <<kafka-streams-internals-InternalProcessorContext.adoc#uninitialize, InternalProcessorContext Contract>> to...FIXME.
 
 `uninitialize` marks the content uninitialized (and simply turns the <<initialized, initialized>> flag off).
 

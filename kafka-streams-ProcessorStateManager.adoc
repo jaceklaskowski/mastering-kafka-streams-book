@@ -56,7 +56,7 @@ Used exclusively when `ProcessorStateManager` is requested to <<getPartition, fi
 * [[taskId]] Task ID
 * [[sources]] Source Kafka https://kafka.apache.org/20/javadoc/org/apache/kafka/common/TopicPartition.html[TopicPartitions]
 * [[isStandby]] `isStandby` flag (to indicate whether used by <<kafka-streams-StandbyTask.adoc#, StandbyTask>>, i.e. `true` or <<kafka-streams-StreamTask.adoc#, StreamTask>>, i.e. `false` that is used exclusively when <<register, registering a state store>>)
-* [[stateDirectory]] link:kafka-streams-StateDirectory.adoc[StateDirectory]
+* [[stateDirectory]] link:kafka-streams-internals-StateDirectory.adoc[StateDirectory]
 * [[storeToChangelogTopic]] Names of the state stores and the names of the corresponding changelog topics (from the <<kafka-streams-ProcessorTopology.adoc#storeToChangelogTopic, ProcessorTopology>>)
 * [[changelogReader]] <<kafka-streams-ChangelogReader.adoc#, ChangelogReader>>
 * [[eosEnabled]] `eosEnabled` Flag (that corresponds to link:kafka-streams-properties.adoc#processing.guarantee[processing.guarantee] configuration property)
@@ -240,7 +240,7 @@ NOTE: `checkpoint` is part of the <<kafka-streams-Checkpointable.adoc#checkpoint
 
 For every <<kafka-streams-StateStore.adoc#, state store>> (in the <<kafka-streams-AbstractStateManager.adoc#stores, stores>> internal registry), `checkpoint`...FIXME
 
-`checkpoint` creates a new <<kafka-streams-OffsetCheckpoint.adoc#, OffsetCheckpoint>> (with the <<kafka-streams-AbstractStateManager.adoc#CHECKPOINT_FILE_NAME, .checkpoint>> file in the <<kafka-streams-AbstractStateManager.adoc#baseDir, base directory>>) unless <<kafka-streams-AbstractStateManager.adoc#checkpoint, it was done already>>.
+`checkpoint` creates a new <<kafka-streams-internals-OffsetCheckpoint.adoc#, OffsetCheckpoint>> (with the <<kafka-streams-AbstractStateManager.adoc#CHECKPOINT_FILE_NAME, .checkpoint>> file in the <<kafka-streams-AbstractStateManager.adoc#baseDir, base directory>>) unless <<kafka-streams-AbstractStateManager.adoc#checkpoint, it was done already>>.
 
 `checkpoint` prints out the following TRACE message to the logs:
 
@@ -248,7 +248,7 @@ For every <<kafka-streams-StateStore.adoc#, state store>> (in the <<kafka-stream
 Writing checkpoint: [checkpointableOffsets]
 ```
 
-In the end, `checkpoint` requests the <<kafka-streams-AbstractStateManager.adoc#checkpoint, OffsetCheckpoint>> to <<kafka-streams-OffsetCheckpoint.adoc#write, write>> the <<kafka-streams-AbstractStateManager.adoc#checkpointableOffsets, checkpointableOffsets>>.
+In the end, `checkpoint` requests the <<kafka-streams-AbstractStateManager.adoc#checkpoint, OffsetCheckpoint>> to <<kafka-streams-internals-OffsetCheckpoint.adoc#write, write>> the <<kafka-streams-AbstractStateManager.adoc#checkpointableOffsets, checkpointableOffsets>>.
 
 === [[registerGlobalStateStores]] `registerGlobalStateStores` Method
 

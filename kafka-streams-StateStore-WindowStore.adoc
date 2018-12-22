@@ -36,7 +36,7 @@ Used when <<kafka-streams-internals-KStreamJoinWindowProcessor.adoc#process, KSt
 | <<kafka-streams-StateStore-ChangeLoggingWindowBytesStore.adoc#, ChangeLoggingWindowBytesStore>>
 | [[ChangeLoggingWindowBytesStore]]
 
-| <<kafka-streams-StateStore-MeteredWindowStore.adoc#, MeteredWindowStore>>
+| <<kafka-streams-internals-MeteredWindowStore.adoc#, MeteredWindowStore>>
 | [[MeteredWindowStore]]
 
 | <<kafka-streams-StateStore-RocksDBWindowStore.adoc#, RocksDBWindowStore>>

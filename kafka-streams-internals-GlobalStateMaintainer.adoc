@@ -40,4 +40,4 @@ Used when...FIXME
 | [[update]] Used when...FIXME
 |===
 
-NOTE: link:kafka-streams-GlobalStateUpdateTask.adoc[GlobalStateUpdateTask] is the one and only `GlobalStateMaintainer`.
+NOTE: link:kafka-streams-internals-GlobalStateUpdateTask.adoc[GlobalStateUpdateTask] is the one and only `GlobalStateMaintainer`.

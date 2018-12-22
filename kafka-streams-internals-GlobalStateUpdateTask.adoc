@@ -1,6 +1,6 @@
 == [[GlobalStateUpdateTask]] GlobalStateUpdateTask -- The Default GlobalStateMaintainer
 
-`GlobalStateUpdateTask` is the one and only link:kafka-streams-GlobalStateMaintainer.adoc[GlobalStateMaintainer] that...FIXME
+`GlobalStateUpdateTask` is the one and only link:kafka-streams-internals-GlobalStateMaintainer.adoc[GlobalStateMaintainer] that...FIXME
 
 `GlobalStateUpdateTask` is <<creating-instance, created>> exclusively when `GlobalStreamThread` is requested to link:kafka-streams-GlobalStreamThread.adoc#initialize[initialize] (and creates a link:kafka-streams-StateConsumer.adoc#stateMaintainer[StateConsumer]).
 
@@ -17,7 +17,7 @@
 Map<TopicPartition, Long> initialize()
 ----
 
-NOTE: `initialize` is part of link:kafka-streams-GlobalStateMaintainer.adoc#initialize[GlobalStateMaintainer Contract] to...FIXME.
+NOTE: `initialize` is part of link:kafka-streams-internals-GlobalStateMaintainer.adoc#initialize[GlobalStateMaintainer Contract] to...FIXME.
 
 `initialize`...FIXME
 
@@ -28,7 +28,7 @@ NOTE: `initialize` is part of link:kafka-streams-GlobalStateMaintainer.adoc#init
 void update(final ConsumerRecord<byte[], byte[]> record)
 ----
 
-NOTE: `update` is part of link:kafka-streams-GlobalStateMaintainer.adoc#update[GlobalStateMaintainer Contract] to...FIXME.
+NOTE: `update` is part of link:kafka-streams-internals-GlobalStateMaintainer.adoc#update[GlobalStateMaintainer Contract] to...FIXME.
 
 `update` looks up the link:kafka-streams-RecordDeserializer.adoc[RecordDeserializer] for the topic (of the record) in the <<deserializers, deserializers>> internal registry.
 
@@ -38,11 +38,11 @@ NOTE: `RecordDeserializer` is the metadata of a link:kafka-streams-RecordDeseria
 
 When the record has been successfully deserialized, `update` does the following:
 
-1. Creates a link:kafka-streams-ProcessorRecordContext.adoc#creating-instance[ProcessorRecordContext] for the deserialized record
+1. Creates a link:kafka-streams-internals-ProcessorRecordContext.adoc#creating-instance[ProcessorRecordContext] for the deserialized record
 
-1. Requests <<processorContext, InternalProcessorContext>> to link:kafka-streams-InternalProcessorContext.adoc#setRecordContext[use the record context]
+1. Requests <<processorContext, InternalProcessorContext>> to link:kafka-streams-internals-InternalProcessorContext.adoc#setRecordContext[use the record context]
 
-1. Requests <<processorContext, InternalProcessorContext>> to link:kafka-streams-InternalProcessorContext.adoc#setCurrentNode[use the source node] of the link:kafka-streams-RecordDeserializer.adoc#sourceNode[RecordDeserializer]
+1. Requests <<processorContext, InternalProcessorContext>> to link:kafka-streams-internals-InternalProcessorContext.adoc#setCurrentNode[use the source node] of the link:kafka-streams-RecordDeserializer.adoc#sourceNode[RecordDeserializer]
 
 1. Requests the link:kafka-streams-RecordDeserializer.adoc#sourceNode[SourceNode] (of the deserialized record) to link:kafka-streams-internals-SourceNode.adoc#process[process] the deserialized record
 
@@ -55,7 +55,7 @@ In the end, `update` saves the topic and the partition of the record with the of
 void flushState()
 ----
 
-NOTE: `flushState` is part of link:kafka-streams-GlobalStateMaintainer.adoc#flushState[GlobalStateMaintainer Contract] to...FIXME.
+NOTE: `flushState` is part of link:kafka-streams-internals-GlobalStateMaintainer.adoc#flushState[GlobalStateMaintainer Contract] to...FIXME.
 
 `flushState` requests <<stateMgr, GlobalStateManager>> to link:kafka-streams-StateManager.adoc#flush[flush] followed by link:kafka-streams-Checkpointable.adoc#checkpoint[checkpointing] the <<offsets, offsets>>.
 
@@ -75,7 +75,7 @@ NOTE: `close` is part of link:kafka-streams-StateManager.adoc#close[StateManager
 `GlobalStateUpdateTask` takes the following when created:
 
 * [[topology]] `ProcessorTopology`
-* [[processorContext]] link:kafka-streams-InternalProcessorContext.adoc[InternalProcessorContext]
+* [[processorContext]] link:kafka-streams-internals-InternalProcessorContext.adoc[InternalProcessorContext]
 * [[stateMgr]] link:kafka-streams-GlobalStateManager.adoc[GlobalStateManager]
 * [[deserializationExceptionHandler]] `DeserializationExceptionHandler`
 * [[logContext]] `LogContext`

@@ -2,7 +2,7 @@
 
 `MeteredWindowStore` is a concrete <<kafka-streams-StateStore-WindowStore.adoc#, WindowStore>> that registers the <<metrics, metric sensors>> (when <<init, initialized>>).
 
-`MeteredWindowStore` is <<creating-instance, created>> exclusively when `WindowStoreBuilder` is requested for a <<kafka-streams-WindowStoreBuilder.adoc#build, state store>>.
+`MeteredWindowStore` is <<creating-instance, created>> exclusively when `WindowStoreBuilder` is requested for a <<kafka-streams-internals-WindowStoreBuilder.adoc#build, state store>>.
 
 [[metrics]]
 .MeteredWindowStore's (Latency and Throughput) Metric Sensors

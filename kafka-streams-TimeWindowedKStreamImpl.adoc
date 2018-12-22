@@ -5,7 +5,7 @@
 `TimeWindowedKStreamImpl` is <<creating-instance, created>> exclusively when `KGroupedStreamImpl` is requested to <<kafka-streams-internals-KGroupedStreamImpl.adoc#windowedBy, windowedBy>>.
 
 [[aggregateBuilder]]
-`TimeWindowedKStreamImpl` uses a <<kafka-streams-GroupedStreamAggregateBuilder.adoc#, GroupedStreamAggregateBuilder>> for...FIXME
+`TimeWindowedKStreamImpl` uses a <<kafka-streams-internals-GroupedStreamAggregateBuilder.adoc#, GroupedStreamAggregateBuilder>> for...FIXME
 
 === [[materialize]] Creating StoreBuilder (of WindowStores) -- `materialize` Internal Method
 

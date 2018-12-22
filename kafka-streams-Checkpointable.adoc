@@ -28,7 +28,7 @@ Used when:
 
 * `StreamTask` is requested to <<kafka-streams-StreamTask.adoc#commit, commit>> (with <<kafka-streams-AbstractTask.adoc#eosEnabled, exactly-once support>> is off)
 
-* `GlobalStateUpdateTask` is requested to <<kafka-streams-GlobalStateUpdateTask.adoc#flushState, flush state stores>>
+* `GlobalStateUpdateTask` is requested to <<kafka-streams-internals-GlobalStateUpdateTask.adoc#flushState, flush state stores>>
 
 * <<kafka-streams-GlobalStateManagerImpl.adoc#close, GlobalStateManagerImpl>> and <<kafka-streams-ProcessorStateManager.adoc#close, ProcessorStateManager>> are requested to close
 
@@ -42,7 +42,7 @@ Map<TopicPartition, Long> checkpointed()
 
 Used when:
 
-* `GlobalStateUpdateTask` is requested to <<kafka-streams-GlobalStateUpdateTask.adoc#initialize, initialize>>
+* `GlobalStateUpdateTask` is requested to <<kafka-streams-internals-GlobalStateUpdateTask.adoc#initialize, initialize>>
 
 * `StandbyTask` is requested to <<kafka-streams-StandbyTask.adoc#initializeStateStores, initialize state stores>>
 |===

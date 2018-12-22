@@ -39,7 +39,7 @@ StoreBuilder<KeyValueStore<K, V>> keyValueStoreBuilder(
   final Serde<V> valueSerde)
 ----
 
-Creates a <<kafka-streams-KeyValueStoreBuilder.adoc#, KeyValueStoreBuilder>> that creates <<kafka-streams-StateStore-KeyValueStore.adoc#, KeyValueStores>>
+Creates a <<kafka-streams-internals-KeyValueStoreBuilder.adoc#, KeyValueStoreBuilder>> that creates <<kafka-streams-StateStore-KeyValueStore.adoc#, KeyValueStores>>
 
 | lruMap
 a| [[lruMap]]
@@ -88,7 +88,7 @@ WindowBytesStoreSupplier persistentWindowStore(
   final boolean retainDuplicates)
 ----
 
-Creates a <<kafka-streams-RocksDbWindowBytesStoreSupplier.adoc#, RocksDbWindowBytesStoreSupplier>>
+Creates a <<kafka-streams-internals-RocksDbWindowBytesStoreSupplier.adoc#, RocksDbWindowBytesStoreSupplier>>
 
 | sessionStoreBuilder
 a| [[sessionStoreBuilder]]
@@ -101,7 +101,7 @@ StoreBuilder<SessionStore<K, V>> sessionStoreBuilder(
   final Serde<V> valueSerde)
 ----
 
-Creates a <<kafka-streams-SessionStoreBuilder.adoc#, SessionStoreBuilder>>
+Creates a <<kafka-streams-internals-SessionStoreBuilder.adoc#, SessionStoreBuilder>>
 
 | windowStoreBuilder
 a| [[windowStoreBuilder]]
@@ -114,5 +114,5 @@ StoreBuilder<WindowStore<K, V>> windowStoreBuilder(
   final Serde<V> valueSerde)
 ----
 
-Creates a <<kafka-streams-WindowStoreBuilder.adoc#, WindowStoreBuilder>>
+Creates a <<kafka-streams-internals-WindowStoreBuilder.adoc#, WindowStoreBuilder>>
 |===

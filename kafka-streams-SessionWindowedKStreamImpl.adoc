@@ -77,7 +77,7 @@ NOTE: `reduce` is part of link:kafka-streams-SessionWindowedKStream.adoc#reduce[
 * [[name]] Name
 * [[keySerde]] Key Serde (`Serde<K>`)
 * [[valSerde]] Value Serde (`Serde<V>`)
-* [[aggregateBuilder]] link:kafka-streams-GroupedStreamAggregateBuilder.adoc[GroupedStreamAggregateBuilder<K, V>]
+* [[aggregateBuilder]] link:kafka-streams-internals-GroupedStreamAggregateBuilder.adoc[GroupedStreamAggregateBuilder<K, V>]
 
 `SessionWindowedKStreamImpl` initializes the <<internal-registries, internal registries and counters>>.
 

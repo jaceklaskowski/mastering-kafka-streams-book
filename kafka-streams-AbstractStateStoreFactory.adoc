@@ -17,7 +17,7 @@ NOTE: <<kafka-streams-StoreBuilderFactory.adoc#, StoreBuilderFactory>> is the on
 
 * [[name]] Name
 * [[loggingEnabled]] `loggingEnabled` flag (that indicates whether the `StoreBuilderFactory` was <<kafka-streams-StoreBuilderFactory.adoc#creating-instance, created>> with a `StoreBuilder` with <<kafka-streams-StoreBuilder.adoc#loggingEnabled, logging>> enabled or not)
-* [[windowStore]] `windowStore` flag (indicates whether a <<kafka-streams-WindowStoreBuilder.adoc#, WindowStoreBuilder>> was used to create the instance)
+* [[windowStore]] `windowStore` flag (indicates whether a <<kafka-streams-internals-WindowStoreBuilder.adoc#, WindowStoreBuilder>> was used to create the instance)
 * [[logConfig]] `logConfig` as `Map<String, String>`
 
 `AbstractStateStoreFactory` initializes the <<internal-registries, internal registries and counters>>.

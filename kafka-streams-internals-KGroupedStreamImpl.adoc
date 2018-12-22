@@ -4,7 +4,7 @@
 
 [[aggregateBuilder]]
 [[internal-registries]]
-`KGroupedStreamImpl` uses a <<kafka-streams-GroupedStreamAggregateBuilder.adoc#, GroupedStreamAggregateBuilder>> for...FIXME
+`KGroupedStreamImpl` uses a <<kafka-streams-internals-GroupedStreamAggregateBuilder.adoc#, GroupedStreamAggregateBuilder>> for...FIXME
 
 === [[aggregate]] `aggregate` Method
 
