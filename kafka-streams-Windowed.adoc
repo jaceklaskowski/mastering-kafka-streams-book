@@ -10,7 +10,7 @@
 
 * `MergedSortedCacheSessionStoreIterator` is requested to `deserializeCacheKey`
 
-* `MeteredSessionStore` is requested to <<kafka-streams-StateStore-MeteredSessionStore.adoc#remove, remove a session>> and <<kafka-streams-StateStore-MeteredSessionStore.adoc#put, store an aggregated value for a session>>
+* `MeteredSessionStore` is requested to <<kafka-streams-internals-MeteredSessionStore.adoc#remove, remove a session>> and <<kafka-streams-internals-MeteredSessionStore.adoc#put, store an aggregated value for a session>>
 
 * `MeteredWindowedKeyValueIterator` is requested to `windowedKey`
 

@@ -35,7 +35,7 @@ Used when:
 
 * `ChangeLoggingSessionBytesStore` is requested to link:kafka-streams-StateStore-ChangeLoggingSessionBytesStore.adoc#put[store an aggregated value for a session key]
 
-* `MeteredSessionStore` is requested to link:kafka-streams-StateStore-MeteredSessionStore.adoc#put[store an aggregated value for a session key]
+* `MeteredSessionStore` is requested to link:kafka-streams-internals-MeteredSessionStore.adoc#put[store an aggregated value for a session key]
 
 | `remove`
 | [[remove]] Used when...FIXME
@@ -60,6 +60,6 @@ Used when:
 | link:kafka-streams-StateStore-ChangeLoggingSessionBytesStore.adoc[ChangeLoggingSessionBytesStore]
 | [[ChangeLoggingSessionBytesStore]]
 
-| link:kafka-streams-StateStore-MeteredSessionStore.adoc[MeteredSessionStore]
+| link:kafka-streams-internals-MeteredSessionStore.adoc[MeteredSessionStore]
 | [[MeteredSessionStore]]
 |===

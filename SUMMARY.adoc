@@ -120,7 +120,7 @@
 .. link:kafka-streams-StateStore-ChangeLoggingWindowBytesStore.adoc[ChangeLoggingWindowBytesStore]
 .. link:kafka-streams-StateStore-SessionStore.adoc[SessionStore]
 .. link:kafka-streams-StateStore-MeteredKeyValueBytesStore.adoc[MeteredKeyValueBytesStore]
-.. link:kafka-streams-StateStore-MeteredSessionStore.adoc[MeteredSessionStore]
+.. link:kafka-streams-internals-MeteredSessionStore.adoc[MeteredSessionStore]
 .. link:kafka-streams-StateStore-MeteredWindowStore.adoc[MeteredWindowStore]
 .. link:kafka-streams-StateStore-RocksDBStore.adoc[RocksDBStore]
 .. link:kafka-streams-StateStore-RocksDBSegmentedBytesStore.adoc[RocksDBSegmentedBytesStore]
