@@ -1,0 +1,3 @@
+== [[JoinWindows]] JoinWindows -- Window Specification for Streaming Joins
+
+`JoinWindows` is a <<kafka-streams-Windows.adoc#, window specification>> that is used for streaming joins.

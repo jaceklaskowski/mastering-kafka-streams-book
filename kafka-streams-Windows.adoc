@@ -62,7 +62,7 @@ The default window maintain duration is `1 day`.
 | Windows
 | Description
 
-| JoinWindows
+| <<kafka-streams-JoinWindows.adoc#, JoinWindows>>
 | [[JoinWindows]]
 
 | <<kafka-streams-TimeWindows.adoc#, TimeWindows>>

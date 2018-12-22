@@ -1,0 +1,3 @@
+== [[UnlimitedWindows]] UnlimitedWindows
+
+`UnlimitedWindows` is a <<kafka-streams-Windows.adoc#, window specification>> of <<kafka-streams-internals-UnlimitedWindow.adoc#, UnlimitedWindows>>.

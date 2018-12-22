@@ -1,27 +1,40 @@
 == [[TimeWindows]] TimeWindows -- Time-Bound Window Specification
 
-`TimeWindows` is a concrete <<kafka-streams-Windows.adoc#, window specification>> of <<kafka-streams-TimeWindow.adoc#, time windows>>.
+`TimeWindows` is a <<kafka-streams-Windows.adoc#, window specification>> of <<kafka-streams-internals-TimeWindow.adoc#, time windows>>.
 
 [[creating-instance]]
 `TimeWindows` is described by the following properties:
 
-* [[sizeMs]] *Duration* (aka _size_) (in millis)
+* [[sizeMs]] *Window duration* (aka _window size_) (in millis)
 * [[advanceMs]] *Advance interval* (in millis)
+* [[grace]] *Grace period* for late events
+* [[maintainDurationMs]] *Maintain duration* (in millis)
+
+NOTE: <<maintainDurationMs, Maintain duration>> is no longer in use.
 
 `TimeWindows` can be created only using the <<of, of>> factory method.
 
 [source, java]
 ----
-TimeWindows of(final long sizeMs) throws IllegalArgumentException
+static TimeWindows of(final Duration size)
 ----
 
-`of` is used to create a time specification of *tumbling windows* which are fixed-sized, gap-less, non-overlapping windows (and simply sets the <<sizeMs, sizeMs>> and <<advanceMs, advanceMs>> internal properties to the same value).
+`of` is used to create a time specification of *tumbling windows* which are fixed-sized, gap-less, non-overlapping windows (and simply sets the <<sizeMs, sizeMs>> and <<advanceMs, advanceMs>> internal properties to the given value).
 
-`TimeWindows` can be further configured using the <<advanceBy, advanceBy>> method.
+[source, scala]
+----
+import org.apache.kafka.streams.kstream.TimeWindows
+import java.time.Duration
+val timeWindows = TimeWindows.of(Duration.ofMinutes(1))
+scala> println(timeWindows)
+TimeWindows{maintainDurationMs=86400000, sizeMs=60000, advanceMs=60000, grace=null, segments=3}
+----
+
+`TimeWindows` can be further configured using the <<advanceBy, advanceBy>> and <<grace-method, grace>> methods.
 
 [source, java]
 ----
-TimeWindows advanceBy(final long advanceMs)
+TimeWindows advanceBy(final Duration advance)
 ----
 
 `advanceBy` allows for a time specification of *hopping windows* which are fixed-sized, overlapping windows (and simply sets the <<advanceMs, advanceMs>> internal property).
@@ -29,10 +42,30 @@ TimeWindows advanceBy(final long advanceMs)
 [source, scala]
 ----
 import org.apache.kafka.streams.kstream.TimeWindows
-import scala.concurrent.duration._
+import java.time.Duration
 val timeWindows = TimeWindows
-  .of(1.minute.toMillis)
-  .advanceBy(0.5.minutes.toMillis)
+  .of(Duration.ofMinutes(1))
+  .advanceBy(Duration.ofSeconds(30))
+scala> println(timeWindows)
+TimeWindows{maintainDurationMs=86400000, sizeMs=60000, advanceMs=30000, grace=null, segments=3}
+----
+
+[source, java]
+----
+TimeWindows grace(final Duration afterWindowEnd)
+----
+
+`grace` specifies how long to wait for *late events* to be included in a time window (and simply sets the <<grace, grace>> internal property).
+
+[source, scala]
+----
+import org.apache.kafka.streams.kstream.TimeWindows
+import java.time.Duration
+val timeWindows = TimeWindows
+  .of(Duration.ofMinutes(1))
+  .grace(Duration.ofMinutes(2)) // 1 minute late after a time window has elapsed
+scala> println(timeWindows)
+TimeWindows{maintainDurationMs=86400000, sizeMs=60000, advanceMs=60000, grace=PT2M, segments=3}
 ----
 
 === [[windowsFor]] `windowsFor` Method
@@ -54,20 +87,3 @@ scala> windows.foreach(println)
 (30000,Window{start=30000, end=90000})
 (60000,Window{start=60000, end=120000})
 ----
-
-=== [[until]] Setting Window Maintain Duration (Retention Time) -- `until` Method
-
-[source, java]
-----
-TimeWindows until(final long durationMs)
-----
-
-NOTE: `until` is part of the <<kafka-streams-Windows.adoc#until, Windows Contract>> to set the window maintain duration (retention time).
-
-`until` simply makes sure that the input `durationMs` is at least the <<sizeMs, size>> of the window and executes the parent's <<kafka-streams-Windows.adoc#until, until>>.
-
-`until` throws an `IllegalArgumentException` when the input `durationMs` is smaller than the <<sizeMs, size>>:
-
-```
-Window retention time (durationMs) cannot be smaller than the window size.
-```

@@ -53,7 +53,7 @@ Window{start=[startMs], end=[endMs]}
 | Window
 | Description
 
-| link:kafka-streams-SessionWindow.adoc[SessionWindow]
+| link:kafka-streams-internals-SessionWindow.adoc[SessionWindow]
 | [[SessionWindow]]
 
 | `TimeWindow`

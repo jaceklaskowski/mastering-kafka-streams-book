@@ -52,11 +52,11 @@
 . link:kafka-streams-TransformerSupplier.adoc[TransformerSupplier]
 
 . link:kafka-streams-Windows.adoc[Windows -- Window Specification]
+.. link:kafka-streams-JoinWindows.adoc[JoinWindows -- Window Specification for Streaming Joins]
 .. link:kafka-streams-TimeWindows.adoc[TimeWindows -- Time-Bound Window Specification]
+.. link:kafka-streams-UnlimitedWindows.adoc[UnlimitedWindows]
 
 . link:kafka-streams-Window.adoc[Window]
-.. link:kafka-streams-SessionWindow.adoc[SessionWindow]
-.. link:kafka-streams-TimeWindow.adoc[TimeWindow]
 
 . link:kafka-streams-WindowedSerdes.adoc[WindowedSerdes -- SessionWindowedSerde and TimeWindowedSerde]
 .. link:kafka-streams-Windowed.adoc[Windowed]
@@ -249,6 +249,10 @@
 . link:kafka-streams-internals-StreamsGraphNode.adoc[StreamsGraphNode]
 
 . link:kafka-streams-internals-DefaultKafkaClientSupplier.adoc[DefaultKafkaClientSupplier]
+
+. link:kafka-streams-internals-SessionWindow.adoc[SessionWindow]
+. link:kafka-streams-internals-TimeWindow.adoc[TimeWindow]
+. link:kafka-streams-internals-UnlimitedWindow.adoc[UnlimitedWindow]
 
 === Execution Environment
 
