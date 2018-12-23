@@ -1,4 +1,4 @@
-== [[TimeWindowedKStream]] TimeWindowedKStream -- Time-Windowed Stream Aggregations
+== [[TimeWindowedKStream]] TimeWindowedKStream -- Time-Windowed Streaming Aggregations
 
 `TimeWindowedKStream` is the <<contract, abstraction>> of a <<implementations, windowed record stream>> that allows Kafka Streams developers for <<aggregate, aggregate>>, <<count, count>>, <<reduce, reduce>> aggregations.
 

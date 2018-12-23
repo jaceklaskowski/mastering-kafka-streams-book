@@ -51,7 +51,7 @@
 . link:kafka-streams-Transformer.adoc[Transformer -- Record-by-Record Stateful Transformation]
 . link:kafka-streams-TransformerSupplier.adoc[TransformerSupplier]
 
-. link:kafka-streams-Windows.adoc[Windows -- Window Specification]
+. link:kafka-streams-Windows.adoc[Windows -- Window Specification For Time-Windowed Streaming Aggregations]
 .. link:kafka-streams-JoinWindows.adoc[JoinWindows -- Window Specification for Streaming Joins]
 .. link:kafka-streams-TimeWindows.adoc[TimeWindows -- Time-Bound Window Specification]
 .. link:kafka-streams-UnlimitedWindows.adoc[UnlimitedWindows]

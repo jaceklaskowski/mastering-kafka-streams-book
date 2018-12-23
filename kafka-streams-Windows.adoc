@@ -1,13 +1,27 @@
-== [[Windows]] Windows -- Window Specification
+== [[Windows]] Windows -- Window Specification For Time-Windowed Streaming Aggregations
 
-`Windows` is the <<contract, abstraction>> of <<extensions, window specifications>> that describe a <<kafka-streams-Window.adoc#, time window>> in <<kafka-streams-TimeWindowedKStream.adoc#, time-windowed stream aggregations>>.
+`Windows` is the <<contract, abstraction>> of <<extensions, window specifications>> that describe <<kafka-streams-Window.adoc#, windows>> of fixed <<size, size>> and <<gracePeriodMs, grace period>>.
+
+`Windows` are used in <<kafka-streams-KGroupedStream.adoc#windowedBy-TimeWindowedKStream, KGroupedStream.windowedBy>> streaming operator (for <<kafka-streams-TimeWindowedKStream.adoc#, time-windowed streaming aggregations>>).
 
 [[contract]]
 .Windows API / Operators
-[cols="1,2",options="header",width="100%"]
+[cols="1m,2",options="header",width="100%"]
 |===
 | Method
 | Description
+
+| gracePeriodMs
+a| [[gracePeriodMs]]
+
+[source, java]
+----
+long gracePeriodMs()
+----
+
+*Grace period* (in milliseconds)
+
+New events are added to windows until their grace period ends
 
 | size
 a| [[size]]
@@ -17,15 +31,7 @@ a| [[size]]
 long size()
 ----
 
-| <<until-detailed, until>>
-a| [[until]]
-
-[source, java]
-----
-Windows<W> until(final long durationMs)
-----
-
-Sets the <<maintainDurationMs, window maintain duration>> (aka _retention time_)
+*Window size* (in milliseconds)
 
 | windowsFor
 a| [[windowsFor]]
@@ -35,25 +41,10 @@ a| [[windowsFor]]
 Map<Long, W> windowsFor(final long timestamp)
 ----
 
-Creates the windows that contain the provided timestamp, indexed by non-negative window start timestamps.
+Returns all the windows that contain the given timestamp, indexed by non-negative window start timestamps.
 
-Used when <<kafka-streams-internals-KStreamWindowAggregateProcessor.adoc#process, KStreamWindowAggregateProcessor>> is requested to process a record
+Used when `KStreamWindowAggregateProcessor` is requested to <<kafka-streams-internals-KStreamWindowAggregateProcessor.adoc#process, process a record>>
 |===
-
-[[maintainMs]]
-[[DEFAULT_MAINTAIN_DURATION_MS]]
-[[window-maintain-duration]]
-`Windows` defines a *window maintain duration* (aka *retention time*) that is available using `maintainMs` method.
-
-[source, java]
-----
-long maintainMs()
-----
-
-The default window maintain duration is `1 day`.
-
-[[DEFAULT_NUM_SEGMENTS]]
-`Windows` defaults to `3` for the <<segments, number of segments>>.
 
 [[extensions]]
 .Windows
@@ -66,9 +57,9 @@ The default window maintain duration is `1 day`.
 | [[JoinWindows]]
 
 | <<kafka-streams-TimeWindows.adoc#, TimeWindows>>
-| [[TimeWindows]] Time-bound window specification for *tumbling* or *hopping windows*
+| [[TimeWindows]] Time-bound window specification for *tumbling* or *hopping* windows
 
-| UnlimitedWindows
+| <<kafka-streams-UnlimitedWindows.adoc#, UnlimitedWindows>>
 | [[UnlimitedWindows]]
 |===
 
@@ -77,59 +68,7 @@ The default window maintain duration is `1 day`.
 
 NOTE: `Windows` is a Java abstract class and cannot be <<creating-instance, created>> directly. It is created indirectly when the <<extensions, concrete Windows>> are.
 
-[[internal-registries]]
-.Windows's Internal Properties (e.g. Registries, Counters and Flags)
-[cols="1m,1,2",options="header",width="100%"]
-|===
-| Name
-| Default Value
-| Description
-
-| maintainDurationMs
-| <<DEFAULT_MAINTAIN_DURATION_MS, 1 day>>
-| [[maintainDurationMs]] <<window-maintain-duration, Window maintain duration>> (aka *retention time*) in milliseconds
-
-Set using <<until, until>> method.
-
-Use <<maintainMs, maintainMs>> accessor to get the current value.
-
-| segments
-| <<DEFAULT_NUM_SEGMENTS, 3>>
-a| [[segments]] Number of segments
-
-Can be changed using <<segments, segments>> method.
-
-Used when:
-
-* `AbstractStream` is requested for link:kafka-streams-AbstractStream.adoc#windowedStore[windowedStore]
-
-* `KStreamImpl` is requested to link:kafka-streams-internals-KStreamImpl.adoc#createWindowedStateStore[createWindowedStateStore]
-
-* `TimeWindowedKStreamImpl` is requested to link:kafka-streams-TimeWindowedKStreamImpl.adoc#materialize[materialize] and link:kafka-streams-TimeWindowedKStreamImpl.adoc#windowStoreBuilder[windowStoreBuilder]
-|===
-
-=== [[segments]] `segments` Method
-
-[source, java]
-----
-Windows<W> segments(final int segments) throws IllegalArgumentException
-----
-
-`segments`...FIXME
-
-NOTE: `segments` is used when...FIXME
-
-=== [[until-detailed]] Setting Window Maintain Duration (Retention Time) -- `until` Method
-
-[source, java]
-----
-Windows<W> until(final long durationMs) throws IllegalArgumentException
-----
-
-`until` simply sets the <<maintainDurationMs, maintainDurationMs>> internal property (to the input `durationMs`).
-
-`until` throws a `IllegalArgumentException` if the input `durationMs` is negative:
-
-```
-Window retention time (durationMs) cannot be negative.
-```
+[[maintainMs]]
+[[DEFAULT_MAINTAIN_DURATION_MS]]
+[[window-maintain-duration]]
+`Windows` defines a *window maintain duration* (aka *retention time*). The default window maintain duration is `1 day`.
