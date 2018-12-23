@@ -84,8 +84,10 @@ KTable<Windowed<K>, V> reduce(
   final Materialized<K, V, WindowStore<Bytes, byte[]>> materialized)
 ----
 
+Combining record stream (by a grouped key)
+
 Creates a <<kafka-streams-KTable.adoc#, KTable>> with a given `Reducer` and <<kafka-streams-Materialized.adoc#, Materialized>> (view of a <<kafka-streams-StateStore-WindowStore.adoc#, WindowStore>>)
 |===
 
 [[implementations]]
-NOTE: <<kafka-streams-TimeWindowedKStreamImpl.adoc#, TimeWindowedKStreamImpl>> is the one and only known implementation of the <<contract, TimeWindowedKStream Contract>> in Kafka Streams {{ book.kafka_version }}.
+NOTE: <<kafka-streams-internals-TimeWindowedKStreamImpl.adoc#, TimeWindowedKStreamImpl>> is the one and only known implementation of the <<contract, TimeWindowedKStream Contract>> in Kafka Streams {{ book.kafka_version }}.

@@ -48,7 +48,7 @@ Used when `KStreamWindowAggregateProcessor` is requested to <<kafka-streams-inte
 
 [[extensions]]
 .Windows
-[cols="1m,2",options="header",width="100%"]
+[cols="1,2",options="header",width="100%"]
 |===
 | Windows
 | Description

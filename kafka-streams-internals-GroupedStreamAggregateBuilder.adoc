@@ -2,7 +2,7 @@
 
 `GroupedStreamAggregateBuilder` is...FIXME
 
-=== [[build]] `build` Internal Method
+=== [[build]] `build` Method
 
 [source, java]
 ----
@@ -23,7 +23,7 @@
 
 * `SessionWindowedKStreamImpl` is requested to <<kafka-streams-SessionWindowedKStreamImpl.adoc#doCount, doCount>>, <<kafka-streams-SessionWindowedKStreamImpl.adoc#reduce, reduce>> and <<kafka-streams-SessionWindowedKStreamImpl.adoc#aggregate, aggregate>>
 
-* `TimeWindowedKStreamImpl` is requested to <<kafka-streams-TimeWindowedKStreamImpl.adoc#doCount, doCount>>, <<kafka-streams-TimeWindowedKStreamImpl.adoc#reduce, reduce>> and <<kafka-streams-TimeWindowedKStreamImpl.adoc#aggregate, aggregate>>
+* `TimeWindowedKStreamImpl` is requested to <<kafka-streams-internals-TimeWindowedKStreamImpl.adoc#doCount, doCount>>, <<kafka-streams-internals-TimeWindowedKStreamImpl.adoc#reduce, reduce>> and <<kafka-streams-internals-TimeWindowedKStreamImpl.adoc#aggregate, aggregate>>
 ====
 
 === [[repartitionIfRequired]] `repartitionIfRequired` Internal Method

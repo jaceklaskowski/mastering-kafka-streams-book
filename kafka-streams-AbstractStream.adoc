@@ -22,7 +22,7 @@ Every `AbstractStream` has the following internal properties:
 | [[KGroupedTableImpl]] link:kafka-streams-KGroupedTableImpl.adoc[KGroupedTableImpl]
 |
 
-| [[TimeWindowedKStreamImpl]] link:kafka-streams-TimeWindowedKStreamImpl.adoc[TimeWindowedKStreamImpl]
+| [[TimeWindowedKStreamImpl]] link:kafka-streams-internals-TimeWindowedKStreamImpl.adoc[TimeWindowedKStreamImpl]
 |
 
 | [[SessionWindowedKStreamImpl]] link:kafka-streams-SessionWindowedKStreamImpl.adoc[SessionWindowedKStreamImpl]

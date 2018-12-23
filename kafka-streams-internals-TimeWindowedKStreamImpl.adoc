@@ -1,11 +1,10 @@
 == [[TimeWindowedKStreamImpl]] TimeWindowedKStreamImpl
 
-`TimeWindowedKStreamImpl` is a concrete <<kafka-streams-AbstractStream.adoc#, AbstractStream>> that allows for <<kafka-streams-TimeWindowedKStream.adoc#, time-windowed stream aggregations>>.
+`TimeWindowedKStreamImpl` is a <<kafka-streams-AbstractStream.adoc#, stream>> that allows for <<kafka-streams-TimeWindowedKStream.adoc#, time-windowed streaming aggregations>>.
 
 `TimeWindowedKStreamImpl` is <<creating-instance, created>> exclusively when `KGroupedStreamImpl` is requested to <<kafka-streams-internals-KGroupedStreamImpl.adoc#windowedBy, windowedBy>>.
 
-[[aggregateBuilder]]
-`TimeWindowedKStreamImpl` uses a <<kafka-streams-internals-GroupedStreamAggregateBuilder.adoc#, GroupedStreamAggregateBuilder>> for...FIXME
+`TimeWindowedKStreamImpl` uses a <<aggregateBuilder, GroupedStreamAggregateBuilder>> for...FIXME
 
 === [[materialize]] Creating StoreBuilder (of WindowStores) -- `materialize` Internal Method
 
@@ -40,15 +39,18 @@ NOTE: `aggregate` is part of the <<kafka-streams-TimeWindowedKStream.adoc#aggreg
 
 [source, java]
 ----
-KTable<Windowed<K>, V> reduce(final Reducer<V> reducer)
+KTable<Windowed<K>, V> reduce(final Reducer<V> reducer) // <1>
 KTable<Windowed<K>, V> reduce(
   final Reducer<V> reducer,
   final Materialized<K, V, WindowStore<Bytes, byte[]>> materialized)
 ----
+<1> Uses <<kafka-streams-Materialized.adoc#, Materialized>> with the serdes for <<keySerde, keys>> and <<valSerde, values>>
 
-NOTE: `reduce` is part of the <<kafka-streams-TimeWindowedKStream.adoc#reduce, TimeWindowedKStream Contract>> to...FIXME.
+NOTE: `reduce` is part of the <<kafka-streams-TimeWindowedKStream.adoc#reduce, TimeWindowedKStream Contract>> to combine record stream (by a grouped key).
 
-`reduce`...FIXME
+`reduce` creates a <<kafka-streams-internals-MaterializedInternal.adoc#, MaterializedInternal>> for the given <<kafka-streams-Materialized.adoc#, Materialized>> and requests it to <<kafka-streams-internals-MaterializedInternal.adoc#generateStoreNameIfNeeded, generateStoreNameIfNeeded>> (with `KSTREAM-REDUCE-` store prefix).
+
+In the end, `reduce` requests the <<aggregateBuilder, GroupedStreamAggregateBuilder>> to <<kafka-streams-internals-GroupedStreamAggregateBuilder.adoc#build, build>> (with `KSTREAM-REDUCE-` store prefix and a new `KStreamWindowReduce`).
 
 === [[count]] `count` Method
 
@@ -83,6 +85,7 @@ NOTE: `doCount` is used exclusively when `TimeWindowedKStreamImpl` is requested 
 * [[name]] Name
 * [[keySerde]] `Serde<K>` for keys
 * [[valSerde]] `Serde<V>` for values
-* [[repartitionRequired]] `repartitionRequired` flag
+* [[aggregateBuilder]] <<kafka-streams-internals-GroupedStreamAggregateBuilder.adoc#, GroupedStreamAggregateBuilder>>
+* [[streamsGraphNode]] <<kafka-streams-internals-StreamsGraphNode.adoc#, StreamsGraphNode>>
 
 `TimeWindowedKStreamImpl` initializes the <<internal-registries, internal registries and counters>>.

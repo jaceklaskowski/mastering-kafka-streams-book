@@ -185,11 +185,11 @@ GlobalKTable<K, V> globalTable(
 
 `globalTable` creates an <<kafka-streams-internals-ConsumedInternal.adoc#, ConsumedInternal>> for the given <<kafka-streams-Consumed.adoc#, Consumed>>.
 
-`globalTable` creates a new <<kafka-streams-MaterializedInternal.adoc#, MaterializedInternal>> (with a new <<kafka-streams-Materialized.adoc#, Materialized>> with the <<kafka-streams-internals-ConsumedInternal.adoc#keySerde, keySerde>> and the <<kafka-streams-internals-ConsumedInternal.adoc#valueSerde, valueSerde>> of the `ConsumedInternal`).
+`globalTable` creates a new <<kafka-streams-internals-MaterializedInternal.adoc#, MaterializedInternal>> (with a new <<kafka-streams-Materialized.adoc#, Materialized>> with the <<kafka-streams-internals-ConsumedInternal.adoc#keySerde, keySerde>> and the <<kafka-streams-internals-ConsumedInternal.adoc#valueSerde, valueSerde>> of the `ConsumedInternal`).
 
-NOTE: The new <<kafka-streams-MaterializedInternal.adoc#, MaterializedInternal>> uses `KeyValueStore<Bytes, byte[]>` <<kafka-streams-StateStore.adoc#, StateStore>>.
+NOTE: The new <<kafka-streams-internals-MaterializedInternal.adoc#, MaterializedInternal>> uses `KeyValueStore<Bytes, byte[]>` <<kafka-streams-StateStore.adoc#, StateStore>>.
 
-`globalTable` requests the `MaterializedInternal` to <<kafka-streams-MaterializedInternal.adoc#generateStoreNameIfNeeded, generateStoreNameIfNeeded>> (with the <<internalStreamsBuilder, InternalStreamsBuilder>> and the input `topic` name).
+`globalTable` requests the `MaterializedInternal` to <<kafka-streams-internals-MaterializedInternal.adoc#generateStoreNameIfNeeded, generateStoreNameIfNeeded>> (with the <<internalStreamsBuilder, InternalStreamsBuilder>> and the input `topic` name).
 
 In the end, `globalTable` requests the <<internalStreamsBuilder, InternalStreamsBuilder>> to <<kafka-streams-InternalStreamsBuilder.adoc#globalTable, add a GlobalKTable to the topology>> (with the `topic` name, the `ConsumedInternal` and the `MaterializedInternal`).
 

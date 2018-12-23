@@ -14,7 +14,7 @@
 
 [[materialized]]
 [[creating-instance]]
-`KeyValueStoreMaterializer` takes a single <<kafka-streams-MaterializedInternal.adoc#, MaterializedInternal>> (with a <<kafka-streams-StateStore-KeyValueStore.adoc#, ++KeyValueStore<Bytes, byte[]>++>> state store) when created.
+`KeyValueStoreMaterializer` takes a single <<kafka-streams-internals-MaterializedInternal.adoc#, MaterializedInternal>> (with a <<kafka-streams-StateStore-KeyValueStore.adoc#, ++KeyValueStore<Bytes, byte[]>++>> state store) when created.
 
 === [[materialize]] Materializing StoreBuilder (of KeyValueStores) -- `materialize` Method
 
@@ -25,13 +25,13 @@ StoreBuilder<KeyValueStore<K, V>> materialize()
 
 `materialize` creates ("materializes") a <<kafka-streams-StoreBuilder.adoc#, StoreBuilder>> (of <<kafka-streams-StateStore-KeyValueStore.adoc#, KeyValueStores>>) based on the <<materialized, MaterializedInternal>>.
 
-Internally, `materialize` requests the <<materialized, MaterializedInternal>> for the optional <<kafka-streams-MaterializedInternal.adoc#storeSupplier, StoreSupplier>> (which is expected a <<kafka-streams-KeyValueBytesStoreSupplier.adoc#, KeyValueBytesStoreSupplier>>).
+Internally, `materialize` requests the <<materialized, MaterializedInternal>> for the optional <<kafka-streams-internals-MaterializedInternal.adoc#storeSupplier, StoreSupplier>> (which is expected a <<kafka-streams-KeyValueBytesStoreSupplier.adoc#, KeyValueBytesStoreSupplier>>).
 
-If not defined, `materialize` requests the <<materialized, MaterializedInternal>> for the <<kafka-streams-MaterializedInternal.adoc#storeName, store name>> and uses the `Stores` factory object for a new <<kafka-streams-Stores.adoc#persistentKeyValueStore, persistent KeyValueBytesStoreSupplier>>.
+If not defined, `materialize` requests the <<materialized, MaterializedInternal>> for the <<kafka-streams-internals-MaterializedInternal.adoc#storeName, store name>> and uses the `Stores` factory object for a new <<kafka-streams-Stores.adoc#persistentKeyValueStore, persistent KeyValueBytesStoreSupplier>>.
 
 `materialize` uses the `Stores` factory object for a new <<kafka-streams-Stores.adoc#keyValueStoreBuilder, ++StoreBuilder<KeyValueStore<K, V>>++>> (for the `KeyValueBytesStoreSupplier`, the `keySerde` and the `valueSerde` of the <<materialized, MaterializedInternal>>).
 
-`materialize` enables or disables the logging (of the `StoreBuilder`) per the <<kafka-streams-MaterializedInternal.adoc#loggingEnabled, loggingEnabled>> flag of the <<materialized, MaterializedInternal>>.
+`materialize` enables or disables the logging (of the `StoreBuilder`) per the <<kafka-streams-internals-MaterializedInternal.adoc#loggingEnabled, loggingEnabled>> flag of the <<materialized, MaterializedInternal>>.
 
 `materialize` enables caching (of the `StoreBuilder`) if caching is enabled for the <<materialized, MaterializedInternal>>.
 

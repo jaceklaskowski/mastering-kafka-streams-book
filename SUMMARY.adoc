@@ -125,7 +125,6 @@
 
 . link:kafka-streams-KeyValueStoreMaterializer.adoc[KeyValueStoreMaterializer]
 . link:kafka-streams-ReadOnlyKeyValueStore.adoc[ReadOnlyKeyValueStore]
-. link:kafka-streams-MaterializedInternal.adoc[MaterializedInternal]
 
 . link:kafka-streams-AssignmentInfo.adoc[AssignmentInfo]
 . link:kafka-streams-SubscriptionInfo.adoc[SubscriptionInfo]
@@ -254,6 +253,19 @@
 . link:kafka-streams-internals-TimeWindow.adoc[TimeWindow]
 . link:kafka-streams-internals-UnlimitedWindow.adoc[UnlimitedWindow]
 
+. link:kafka-streams-AbstractStream.adoc[AbstractStream]
+.. link:kafka-streams-internals-KStreamImpl.adoc[KStreamImpl]
+.. link:kafka-streams-KTableImpl.adoc[KTableImpl]
+.. link:kafka-streams-GlobalKTableImpl.adoc[GlobalKTableImpl]
+.. link:kafka-streams-internals-KGroupedStreamImpl.adoc[KGroupedStreamImpl]
+.. link:kafka-streams-internals-KStreamAggregate.adoc[KStreamAggregate]
+.. link:kafka-streams-KGroupedTableImpl.adoc[KGroupedTableImpl]
+.. link:kafka-streams-SessionWindowedKStreamImpl.adoc[SessionWindowedKStreamImpl -- Default SessionWindowedKStream]
+.. link:kafka-streams-internals-TimeWindowedKStreamImpl.adoc[TimeWindowedKStreamImpl]
+.. link:kafka-streams-KStreamImplJoin.adoc[KStreamImplJoin]
+
+. link:kafka-streams-internals-MaterializedInternal.adoc[MaterializedInternal]
+
 === Execution Environment
 
 . link:kafka-streams-StreamsPartitionAssignor.adoc[StreamsPartitionAssignor -- Partition Assignment Strategy]
@@ -299,17 +311,6 @@
 
 . link:kafka-streams-PunctuationQueue.adoc[PunctuationQueue]
 .. link:kafka-streams-PunctuationSchedule.adoc[PunctuationSchedule -- Orderable ProcessorNodes At Timestamp]
-
-. link:kafka-streams-AbstractStream.adoc[AbstractStream]
-.. link:kafka-streams-internals-KStreamImpl.adoc[KStreamImpl]
-.. link:kafka-streams-KTableImpl.adoc[KTableImpl]
-.. link:kafka-streams-GlobalKTableImpl.adoc[GlobalKTableImpl]
-.. link:kafka-streams-internals-KGroupedStreamImpl.adoc[KGroupedStreamImpl]
-.. link:kafka-streams-internals-KStreamAggregate.adoc[KStreamAggregate]
-.. link:kafka-streams-KGroupedTableImpl.adoc[KGroupedTableImpl]
-.. link:kafka-streams-SessionWindowedKStreamImpl.adoc[SessionWindowedKStreamImpl -- Default SessionWindowedKStream]
-.. link:kafka-streams-TimeWindowedKStreamImpl.adoc[TimeWindowedKStreamImpl]
-.. link:kafka-streams-KStreamImplJoin.adoc[KStreamImplJoin]
 
 . link:kafka-streams-QueryableStoreProvider.adoc[QueryableStoreProvider]
 . link:kafka-streams-StateStoreProvider.adoc[StateStoreProvider]
