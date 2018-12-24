@@ -14,7 +14,29 @@ StoreBuilder<WindowStore<K, VR>> materialize(
   final MaterializedInternal<K, VR, WindowStore<Bytes, byte[]>> materialized)
 ----
 
-`materialize`...FIXME
+`materialize` creates a `StoreBuilder` of `WindowStores` per <<kafka-streams-internals-MaterializedInternal.adoc#, MaterializedInternal>>.
+
+Internally, `materialize` requests the given `MaterializedInternal` for <<kafka-streams-internals-MaterializedInternal.adoc#storeSupplier, WindowBytesStoreSupplier>>.
+
+Unless a <<kafka-streams-WindowBytesStoreSupplier.adoc#, WindowBytesStoreSupplier>> is specified, `materialize` ...FIXME
+
+`materialize` uses the given `MaterializedInternal` for <<kafka-streams-internals-MaterializedInternal.adoc#retention, retention>>.
+
+`materialize` throws a `IllegalArgumentException` when...FIXME
+
+```
+The retention period of the window store [name] must be no smaller than its window size plus the grace period. Got size=[[size]], grace=[[gracePeriodMs]], retention=[[retentionPeriod]]
+```
+
+`materialize` uses the `Stores` factory object to <<kafka-streams-Stores.adoc#persistentWindowStore, create a WindowBytesStoreSupplier>> (with the store name and the `retentionPeriod` of the `MaterializedInternal` and the window size).
+
+With `WindowBytesStoreSupplier` specified, `materialize` uses the `Stores` factory object to <<kafka-streams-Stores.adoc#windowStoreBuilder, create a StoreBuilder of WindowStores>> (with the `WindowBytesStoreSupplier` and the key and value serdes from the given `MaterializedInternal`).
+
+If the given `MaterializedInternal` has <<kafka-streams-internals-MaterializedInternal.adoc#loggingEnabled, loggingEnabled>> flag enabled, `materialize` requests the `StoreBuilder` to <<kafka-streams-StoreBuilder.adoc#withLoggingEnabled, withLoggingEnabled>> (with the <<kafka-streams-internals-MaterializedInternal.adoc#logConfig, logConfig>> of the given `MaterializedInternal`) or <<kafka-streams-StoreBuilder.adoc#withLoggingDisabled, withLoggingDisabled>> otherwise.
+
+If the given `MaterializedInternal` has <<kafka-streams-internals-MaterializedInternal.adoc#cachingEnabled, cachingEnabled>> flag enabled, `materialize` requests the `StoreBuilder` to <<kafka-streams-StoreBuilder.adoc#withCachingEnabled, withCachingEnabled>>.
+
+In the end, `materialize` returns the `StoreBuilder` of `WindowStores`.
 
 NOTE: `materialize` is used when `TimeWindowedKStreamImpl` is requested to <<doCount, doCount>>, <<aggregate, aggregate>> and <<reduce, reduce>>.
 

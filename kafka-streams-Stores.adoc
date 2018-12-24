@@ -88,7 +88,7 @@ WindowBytesStoreSupplier persistentWindowStore(
   final boolean retainDuplicates)
 ----
 
-Creates a <<kafka-streams-internals-RocksDbWindowBytesStoreSupplier.adoc#, RocksDbWindowBytesStoreSupplier>>
+Creates a <<kafka-streams-WindowBytesStoreSupplier.adoc#, WindowBytesStoreSupplier>> (i.e. <<kafka-streams-internals-RocksDbWindowBytesStoreSupplier.adoc#, RocksDbWindowBytesStoreSupplier>>)
 
 | sessionStoreBuilder
 a| [[sessionStoreBuilder]]
@@ -114,5 +114,5 @@ StoreBuilder<WindowStore<K, V>> windowStoreBuilder(
   final Serde<V> valueSerde)
 ----
 
-Creates a <<kafka-streams-internals-WindowStoreBuilder.adoc#, WindowStoreBuilder>>
+Creates a <<kafka-streams-StoreBuilder.adoc#, StoreBuilder>> of <<kafka-streams-StateStore-WindowStore.adoc#, WindowStores>> (i.e. <<kafka-streams-internals-WindowStoreBuilder.adoc#, WindowStoreBuilder>>)
 |===

@@ -12,6 +12,7 @@
 [[cachingEnabled]]
 `MaterializedInternal` uses the `cachingEnabled` flag for...FIXME
 
+[[logConfig]]
 [[topicConfig]]
 `MaterializedInternal` uses the `topicConfig` registry with mappings for...FIXME
 

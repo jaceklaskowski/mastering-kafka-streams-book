@@ -33,12 +33,12 @@ long retentionPeriod()
 
 Used when...FIXME
 
-| segments
-a| [[segments]]
+| segmentIntervalMs
+a| [[segmentIntervalMs]]
 
 [source, java]
 ----
-int segments()
+long segmentIntervalMs()
 ----
 
 Used when...FIXME
