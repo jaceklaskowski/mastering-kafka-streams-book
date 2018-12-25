@@ -1,76 +1,39 @@
-== [[Materialized]] Materialized -- State Store Materialized View
+== [[Materialized]] Materialized -- Metadata for State Store Materialized View
 
-`Materialized` is the <<interface, interface>> to describe how to materialize a <<kafka-streams-StateStore.adoc#, state store>> (as a <<kafka-streams-KTable.adoc#, KTable>>).
+[[creating-instance]]
+`Materialized` provides optional parameters that describe how to materialize a <<kafka-streams-StateStore.adoc#, state store>> (as a <<kafka-streams-KTable.adoc#, KTable>>):
+
+* [[storeName]] Name of the <<kafka-streams-StateStore.adoc#, state store>>
+* [[storeSupplier]] <<kafka-streams-StoreSupplier.adoc#, StoreSupplier>>
 
 `Materialized` is used for the following:
 
-* In <<kafka-streams-StreamsBuilder.adoc#, StreamsBuilder>> high-level stream processing DSL to create <<kafka-streams-StreamsBuilder.adoc#table, KTables>> (incl. <<kafka-streams-StreamsBuilder.adoc#globalTable, global KTables>>)
+* In <<kafka-streams-StreamsBuilder.adoc#, High-Level Stream Processing DSL>> to create <<kafka-streams-StreamsBuilder.adoc#table, KTables>> and <<kafka-streams-StreamsBuilder.adoc#globalTable, global KTables>>
 
-* <<kafka-streams-KTable.adoc#, KTable>>
+* <<kafka-streams-KTable.adoc#, KTable>> API
 
 * For `count`, `reduce` and `aggregate` operators in <<kafka-streams-KGroupedStream.adoc#, KGroupedStream>>, <<kafka-streams-KGroupedTable.adoc#, KGroupedTable>>, <<kafka-streams-SessionWindowedKStream.adoc#, SessionWindowedKStream>>, <<kafka-streams-TimeWindowedKStream.adoc#, TimeWindowedKStream>>
 
 `Materialized` is <<creating-instance, created>> using the <<factory-methods, factory methods>>.
 
 [[factory-methods]]
-.Materialized Factory Methods
-[cols="1m,2",options="header",width="100%"]
-|===
-| Method
-| Description
-
-| as
-a| [[as-KeyValueStore]]
-
-[source, java]
-----
-Materialized<K, V, KeyValueStore<Bytes, byte[]>> as(final KeyValueBytesStoreSupplier supplier)
-----
-
-Creates a `Materialized` with a <<kafka-streams-StateStore-KeyValueStore.adoc#, KeyValueStore>> for a given <<kafka-streams-KeyValueBytesStoreSupplier.adoc#, KeyValueBytesStoreSupplier>>
-
-| as
-a| [[as-SessionStore]]
-
-[source, java]
-----
-Materialized<K, V, SessionStore<Bytes, byte[]>> as(final SessionBytesStoreSupplier supplier)
-----
-
-Creates a `Materialized` with a <<kafka-streams-StateStore-SessionStore.adoc#, SessionStore>> for a given <<kafka-streams-SessionBytesStoreSupplier.adoc#, SessionBytesStoreSupplier>>
-
-| as
-a| [[as-String]]
-
 [source, java]
 ----
 Materialized<K, V, S> as(final String storeName)
+Materialized<K, V, KeyValueStore<Bytes, byte[]>> as(
+  final KeyValueBytesStoreSupplier supplier)
+Materialized<K, V, SessionStore<Bytes, byte[]>> as(
+  final SessionBytesStoreSupplier supplier)
+Materialized<K, V, WindowStore<Bytes, byte[]>> as(
+  final WindowBytesStoreSupplier supplier)
+Materialized<K, V, S> with(
+  final Serde<K> keySerde,
+  final Serde<V> valueSerde)
 ----
 
-Creates a `Materialized` for the <<kafka-streams-StateStore.adoc#, StateStore>> with the `storeName`
+A `Materialized` instance can futher be configured using the <<methods, "with" methods>>.
 
-| as
-a| [[as-WindowStore]]
-
-[source, java]
-----
-Materialized<K, V, WindowStore<Bytes, byte[]>> as(final WindowBytesStoreSupplier supplier)
-----
-
-Creates a `Materialized` with a <<kafka-streams-StateStore-WindowStore.adoc#, WindowStore>> for a given <<kafka-streams-WindowBytesStoreSupplier.adoc#, WindowBytesStoreSupplier>>
-
-| with
-a| [[with]]
-
-[source, java]
-----
-Materialized<K, V, S> with(final Serde<K> keySerde, final Serde<V> valueSerde)
-----
-
-Creates a `Materialized` with the given ``Serde``s for the keys and values, and no queryable state store
-|===
-
-[[with-methods]]
+[[methods]]
 .Materialized's with Methods
 [cols="1m,2",options="header",width="100%"]
 |===
@@ -127,6 +90,14 @@ Materialized<K, V, S> withLoggingEnabled(final Map<String, String> config)
 
 Creates a `Materialized` with <<loggingEnabled, logging enabled>>
 
+| withRetention
+a| [[withRetention]]
+
+[source, java]
+----
+Materialized<K, V, S> withRetention(final Duration retention)
+----
+
 | withValueSerde
 a| [[withValueSerde]]
 
@@ -138,9 +109,10 @@ Materialized<K, V, S> withValueSerde(final Serde<V> valueSerde)
 Creates a `Materialized` with the <<valueSerde, Serde for values>>
 |===
 
-=== [[creating-instance]] Creating Materialized Instance
+=== Scala API for Kafka Streams
 
-`Materialized` takes one of the following when created:
+<<kafka-streams-scala.adoc#, Scala API for Kafka Streams>> makes the optional `Materialized` metadata an implicit parameter in the `KStream` API.
 
-* [[storeName]] Name of the <<kafka-streams-StateStore.adoc#, state store>>
-* [[storeSupplier]] <<kafka-streams-StoreSupplier.adoc#, StoreSupplier>>
+Moreover, <<kafka-streams-scala-ImplicitConversions.adoc#, ImplicitConversions>> object defines <<kafka-streams-scala-ImplicitConversions.adoc#materializedFromSerde, materializedFromSerde>> implicit method that creates a `Materialized` instance with the key and value `Serde` objects available in implicit scope.
+
+Scala API for Kafka Streams also defines <<kafka-streams-scala-Materialized.adoc#, Materialized>> object with `++`with`++` and `++as++` factory methods that use implicit key and value `Serde` objects.

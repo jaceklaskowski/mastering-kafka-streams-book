@@ -1,6 +1,6 @@
 == [[Produced]] Produced
 
-`Produced` Scala object is part of <<kafka-streams-scala.adoc#, Scala API for Kafka Streams>> that defines <<with, with>> factory methods for creating <<kafka-streams-Produced.adoc#, Produced>> instances with key and value `Serdes` objects available in implicit scope.
+`Produced` Scala object is part of <<kafka-streams-scala.adoc#, Scala API for Kafka Streams>> that defines <<with, with>> factory methods for creating <<kafka-streams-Produced.adoc#, Produced>> instances with key and value `Serde` objects available in implicit scope.
 
 [[with]]
 .Produced's "with" Factory Methods

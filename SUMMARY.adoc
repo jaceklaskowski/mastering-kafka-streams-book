@@ -70,6 +70,7 @@
 .. link:kafka-streams-scala-Consumed.adoc[Consumed]
 .. link:kafka-streams-scala-Produced.adoc[Produced]
 .. link:kafka-streams-scala-Grouped.adoc[Grouped]
+.. link:kafka-streams-scala-Materialized.adoc[Materialized]
 
 == Low-Level Processor API
 
@@ -114,7 +115,8 @@
 . link:kafka-streams-StoreBuilder.adoc[StoreBuilder]
 
 . link:kafka-streams-Stores.adoc[Stores -- Factory of State Stores]
-. link:kafka-streams-Materialized.adoc[Materialized -- State Store Materialized View]
+
+. link:kafka-streams-Materialized.adoc[Materialized -- Metadata for State Store Materialized View]
 
 . link:kafka-streams-KTableValueGetter.adoc[KTableValueGetter]
 

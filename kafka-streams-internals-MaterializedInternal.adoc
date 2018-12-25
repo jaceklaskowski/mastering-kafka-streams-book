@@ -1,6 +1,6 @@
 == [[MaterializedInternal]] MaterializedInternal
 
-`MaterializedInternal` is a <<kafka-streams-Materialized.adoc#, Materialized>> with link:kafka-streams-StateStore.adoc[StateStore] that...FIXME
+`MaterializedInternal` is a <<kafka-streams-Materialized.adoc#, Materialized>> that...FIXME
 
 [[queriable]]
 [[isQueryable]]

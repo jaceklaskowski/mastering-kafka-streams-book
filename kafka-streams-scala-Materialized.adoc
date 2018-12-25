@@ -1,0 +1,46 @@
+== [[Materialized]] Materialized
+
+`Materialized` Scala object is part of <<kafka-streams-scala.adoc#, Scala API for Kafka Streams>> that defines <<with, with>> and <<as, as>> factory methods for creating <<kafka-streams-Materialized.adoc#, Materialized>> instances with key and value `Serde` objects available in implicit scope.
+
+[[with]]
+[[as]]
+.Materialized's Factory Method
+[source, java]
+----
+// Note the backticks to use "with" reserved keyword
+// MaterializedJ is simply an import alias for the Java-aware Materialized
+// ByteArray*Store types are type aliases for *Store[Bytes, Array[Byte]]
+// e.g. ByteArrayWindowStore = WindowStore[Bytes, Array[Byte]]
+
+`with`[K, V, S <: StateStore](
+  implicit keySerde: Serde[K], valueSerde: Serde[V]): MaterializedJ[K, V, S]
+
+as[K, V, S <: StateStore](storeName: String)(
+  implicit keySerde: Serde[K], valueSerde: Serde[V]): MaterializedJ[K, V, S]
+
+as[K, V](supplier: KeyValueBytesStoreSupplier)(
+  implicit keySerde: Serde[K], valueSerde: Serde[V]): MaterializedJ[K, V, ByteArrayKeyValueStore]
+
+as[K, V](supplier: SessionBytesStoreSupplier)(
+  implicit keySerde: Serde[K], valueSerde: Serde[V]): MaterializedJ[K, V, ByteArraySessionStore]
+
+as[K, V](supplier: WindowBytesStoreSupplier)(
+  implicit keySerde: Serde[K], valueSerde: Serde[V]): MaterializedJ[K, V, ByteArrayWindowStore]
+----
+
+.Example: Creating Materialized Instance using Scala API for Kafka Streams
+[source, scala]
+----
+import org.apache.kafka.streams.scala._
+import ImplicitConversions._
+import Serdes._
+
+import org.apache.kafka.streams.scala.kstream.Materialized
+import org.apache.kafka.streams.state.WindowStore
+val materialized = Materialized.`with`[Long, String, ByteArrayWindowStore]
+
+scala> :type materialized
+org.apache.kafka.streams.kstream.Materialized[Long,String,org.apache.kafka.streams.scala.ByteArrayWindowStore]
+----
+
+TIP: Read up on https://docs.scala-lang.org/tour/implicit-parameters.html[Implicit Parameters].
