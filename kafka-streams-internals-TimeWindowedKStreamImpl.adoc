@@ -38,7 +38,7 @@ If the given `MaterializedInternal` has <<kafka-streams-internals-MaterializedIn
 
 In the end, `materialize` returns the `StoreBuilder` of `WindowStores`.
 
-NOTE: `materialize` is used when `TimeWindowedKStreamImpl` is requested to <<doCount, doCount>>, <<aggregate, aggregate>> and <<reduce, reduce>>.
+NOTE: `materialize` is used when `TimeWindowedKStreamImpl` is requested to <<doCount, doCount>>, <<aggregate, aggregate>> and <<reduce, reduce>> (when the internal <<aggregateBuilder, GroupedStreamAggregateBuilder>> is requested to <<kafka-streams-internals-GroupedStreamAggregateBuilder.adoc#build, build>>).
 
 === [[aggregate]] `aggregate` Method
 

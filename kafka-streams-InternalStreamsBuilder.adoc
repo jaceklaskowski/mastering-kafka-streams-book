@@ -130,7 +130,7 @@ Internally, `globalTable` requests the `MaterializedInternal` to <<kafka-streams
 
 NOTE: `GlobalKTables` use state stores with logging disabled.
 
-`globalTable` then creates a <<kafka-streams-KeyValueStoreMaterializer.adoc#, KeyValueStoreMaterializer>> (with the input `MaterializedInternal` with logging disabled) and requests it to <<kafka-streams-KeyValueStoreMaterializer.adoc#materialize, materialize>> (and create a <<kafka-streams-StoreBuilder.adoc#, StoreBuilder>>).
+`globalTable` then creates a <<kafka-streams-internals-KeyValueStoreMaterializer.adoc#, KeyValueStoreMaterializer>> (with the input `MaterializedInternal` with logging disabled) and requests it to <<kafka-streams-internals-KeyValueStoreMaterializer.adoc#materialize, materialize>> (and create a <<kafka-streams-StoreBuilder.adoc#, StoreBuilder>>).
 
 `globalTable` creates a `TableSourceNode` (with the `StoreBuilder`, the <<newProcessorName, source processor name>> with `KSTREAM-SOURCE-` prefix, and `isGlobalKTable` flag on)
 

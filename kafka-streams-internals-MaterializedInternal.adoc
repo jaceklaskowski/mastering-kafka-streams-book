@@ -16,8 +16,7 @@
 [[topicConfig]]
 `MaterializedInternal` uses the `topicConfig` registry with mappings for...FIXME
 
-[[storeSupplier]]
-`MaterializedInternal` uses the optional <<kafka-streams-Materialized.adoc#storeSupplier, StoreSupplier>> that...FIXME
+`MaterializedInternal` allows accessing the optional <<storeSupplier, StoreSupplier>>.
 
 [[storeName]]
 `MaterializedInternal` uses the <<kafka-streams-Materialized.adoc#storeName, store name>> for...FIXME
@@ -47,3 +46,14 @@ Materialized<K, V, S> withLoggingDisabled()
 In the end, `withLoggingDisabled` returns the current `Materialized` instance.
 
 NOTE: `withLoggingDisabled` is used exclusively when `InternalStreamsBuilder` is requested to <<kafka-streams-InternalStreamsBuilder.adoc#globalTable, add a GlobalKTable to the topology>>.
+
+=== [[storeSupplier]] Accessing Optional StoreSupplier -- `storeSupplier` Method
+
+[source, java]
+----
+StoreSupplier<S> storeSupplier()
+----
+
+`storeSupplier` simply returns the <<kafka-streams-Materialized.adoc#storeSupplier, StoreSupplier>>.
+
+NOTE: `storeSupplier` is used when <<kafka-streams-internals-KeyValueStoreMaterializer.adoc#materialize, KeyValueStoreMaterializer>>, <<kafka-streams-internals-SessionWindowedKStreamImpl.adoc#materialize, SessionWindowedKStreamImpl>>, and <<kafka-streams-internals-TimeWindowedKStreamImpl.adoc#materialize, TimeWindowedKStreamImpl>> are requested to materialize a StoreBuilder.

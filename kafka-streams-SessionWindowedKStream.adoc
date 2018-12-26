@@ -46,4 +46,4 @@ interface SessionWindowedKStream<K, V> {
 |===
 
 [[implementations]]
-NOTE: link:kafka-streams-SessionWindowedKStreamImpl.adoc[SessionWindowedKStreamImpl] is the one and only known implementation of <<contract, SessionWindowedKStream Contract>> in Kafka Streams {{ book.kafka_version }}.
+NOTE: link:kafka-streams-internals-SessionWindowedKStreamImpl.adoc[SessionWindowedKStreamImpl] is the one and only known implementation of <<contract, SessionWindowedKStream Contract>> in Kafka Streams {{ book.kafka_version }}.

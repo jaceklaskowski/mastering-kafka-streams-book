@@ -25,7 +25,7 @@ Every `AbstractStream` has the following internal properties:
 | [[TimeWindowedKStreamImpl]] link:kafka-streams-internals-TimeWindowedKStreamImpl.adoc[TimeWindowedKStreamImpl]
 |
 
-| [[SessionWindowedKStreamImpl]] link:kafka-streams-SessionWindowedKStreamImpl.adoc[SessionWindowedKStreamImpl]
+| [[SessionWindowedKStreamImpl]] link:kafka-streams-internals-SessionWindowedKStreamImpl.adoc[SessionWindowedKStreamImpl]
 |
 
 | [[KStreamImpl]] link:kafka-streams-internals-KStreamImpl.adoc[KStreamImpl]

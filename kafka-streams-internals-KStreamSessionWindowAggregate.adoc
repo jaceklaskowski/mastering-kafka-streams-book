@@ -6,7 +6,7 @@
 
 * `KGroupedStreamImpl` is requested to link:kafka-streams-internals-KGroupedStreamImpl.adoc#aggregate[aggregate]
 
-* `SessionWindowedKStreamImpl` is requested to link:kafka-streams-SessionWindowedKStreamImpl.adoc#aggregate[aggregate] and link:kafka-streams-SessionWindowedKStreamImpl.adoc#doAggregate[doAggregate]
+* `SessionWindowedKStreamImpl` is requested to link:kafka-streams-internals-SessionWindowedKStreamImpl.adoc#aggregate[aggregate] and link:kafka-streams-internals-SessionWindowedKStreamImpl.adoc#doAggregate[doAggregate]
 
 [[sendOldValues]]
 `KStreamSessionWindowAggregate` uses `sendOldValues` flag that is disabled (`false`) by default and can be <<enableSendingOldValues, enabled>>.

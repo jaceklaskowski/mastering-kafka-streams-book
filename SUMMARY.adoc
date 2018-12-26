@@ -125,7 +125,6 @@
 .. link:kafka-streams-KTableSourceValueGetterSupplier.adoc[KTableSourceValueGetterSupplier]
 .. link:kafka-streams-KTableKTableAbstractJoinValueGetterSupplier.adoc[KTableKTableAbstractJoinValueGetterSupplier]
 
-. link:kafka-streams-KeyValueStoreMaterializer.adoc[KeyValueStoreMaterializer]
 . link:kafka-streams-ReadOnlyKeyValueStore.adoc[ReadOnlyKeyValueStore]
 
 . link:kafka-streams-AssignmentInfo.adoc[AssignmentInfo]
@@ -262,11 +261,12 @@
 .. link:kafka-streams-internals-KGroupedStreamImpl.adoc[KGroupedStreamImpl]
 .. link:kafka-streams-internals-KStreamAggregate.adoc[KStreamAggregate]
 .. link:kafka-streams-KGroupedTableImpl.adoc[KGroupedTableImpl]
-.. link:kafka-streams-SessionWindowedKStreamImpl.adoc[SessionWindowedKStreamImpl -- Default SessionWindowedKStream]
+.. link:kafka-streams-internals-SessionWindowedKStreamImpl.adoc[SessionWindowedKStreamImpl -- Default SessionWindowedKStream]
 .. link:kafka-streams-internals-TimeWindowedKStreamImpl.adoc[TimeWindowedKStreamImpl]
 .. link:kafka-streams-KStreamImplJoin.adoc[KStreamImplJoin]
 
 . link:kafka-streams-internals-MaterializedInternal.adoc[MaterializedInternal]
+. link:kafka-streams-internals-KeyValueStoreMaterializer.adoc[KeyValueStoreMaterializer]
 
 === Execution Environment
 

@@ -21,7 +21,7 @@
 
 * `KGroupedStreamImpl` is requested to <<kafka-streams-internals-KGroupedStreamImpl.adoc#doAggregate, doAggregate>>
 
-* `SessionWindowedKStreamImpl` is requested to <<kafka-streams-SessionWindowedKStreamImpl.adoc#doCount, doCount>>, <<kafka-streams-SessionWindowedKStreamImpl.adoc#reduce, reduce>> and <<kafka-streams-SessionWindowedKStreamImpl.adoc#aggregate, aggregate>>
+* `SessionWindowedKStreamImpl` is requested to <<kafka-streams-internals-SessionWindowedKStreamImpl.adoc#doCount, doCount>>, <<kafka-streams-internals-SessionWindowedKStreamImpl.adoc#reduce, reduce>> and <<kafka-streams-internals-SessionWindowedKStreamImpl.adoc#aggregate, aggregate>>
 
 * `TimeWindowedKStreamImpl` is requested to <<kafka-streams-internals-TimeWindowedKStreamImpl.adoc#doCount, doCount>>, <<kafka-streams-internals-TimeWindowedKStreamImpl.adoc#reduce, reduce>> and <<kafka-streams-internals-TimeWindowedKStreamImpl.adoc#aggregate, aggregate>>
 ====
