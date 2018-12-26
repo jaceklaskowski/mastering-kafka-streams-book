@@ -1,3 +1,53 @@
 == [[StreamsGraphNode]] StreamsGraphNode
 
-`StreamsGraphNode` is...FIXME
+`StreamsGraphNode` is the <<contract, abstraction>> of <<implementations, graph nodes>> that can <<writeToTopology, writeToTopology>>.
+
+[[contract]]
+[[writeToTopology]]
+[source, java]
+----
+void writeToTopology(final InternalTopologyBuilder topologyBuilder)
+----
+
+`StreamsGraphNode` is used exclusively in <<kafka-streams-InternalStreamsBuilder.adoc#root, InternalStreamsBuilder>> (to <<kafka-streams-InternalStreamsBuilder.adoc#buildAndOptimizeTopology, build a topology>>).
+
+[[creating-instance]]
+`StreamsGraphNode` takes the following when created:
+
+* [[nodeName]] Node name
+* [[repartitionRequired]] *repartitionRequired* flag
+
+NOTE: `StreamsGraphNode` is a Java abstract class and cannot be <<creating-instance, created>> directly. It is created indirectly for the <<implementations, concrete StreamsGraphNodes>> and as the <<kafka-streams-InternalStreamsBuilder.adoc#root, root node of an InternalStreamsBuilder>>.
+
+[[implementations]]
+.StreamsGraphNodes (Direct Implementations)
+[cols="1,2",options="header",width="100%"]
+|===
+| StreamsGraphNode
+| Description
+
+| BaseJoinProcessorNode
+| [[BaseJoinProcessorNode]]
+
+| BaseRepartitionNode
+| [[BaseRepartitionNode]]
+
+| ProcessorGraphNode
+| [[ProcessorGraphNode]]
+
+| StateStoreNode
+| [[StateStoreNode]]
+
+| StreamSinkNode
+| [[StreamSinkNode]]
+
+| StreamSourceNode
+| [[StreamSourceNode]]
+
+| StreamTableJoinNode
+| [[StreamTableJoinNode]]
+
+| TableProcessorNode
+| [[TableProcessorNode]]
+
+|===

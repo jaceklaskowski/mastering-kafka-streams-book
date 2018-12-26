@@ -17,7 +17,21 @@ image::images/kafka-streams-InternalStreamsBuilder.png[align="center"]
 `InternalStreamsBuilder` uses `index` counter that starts at `0` and is incremented every time a new name for a <<newProcessorName, processor>> or a <<newStoreName, store>> is requested. That makes all names unique and sources and stores uniquely identified by name.
 
 [[root]]
-`InternalStreamsBuilder` uses a `StreamsGraphNode` (with `repartitionRequired` disabled) for the root graph node.
+`InternalStreamsBuilder` manages a <<kafka-streams-internals-StreamsGraphNode.adoc#, StreamsGraphNode>> as the *root node*. Every time `InternalStreamsBuilder` is requested to <<stream, stream>>, <<table, table>>, <<globalTable, globalTable>>, <<addStateStore, addStateStore>>, <<addGlobalStore, addGlobalStore>> the root node <<addGraphNode, gets a child node added>>. In the end, `InternalStreamsBuilder` is requested to <<buildAndOptimizeTopology, buildAndOptimizeTopology>>.
+
+[[logging]]
+[TIP]
+====
+Enable `DEBUG` logging level for `org.apache.kafka.streams.kstream.internals.InternalStreamsBuilder` logger to see what happens inside.
+
+Add the following line to `log4j.properties`:
+
+```
+log4j.logger.org.apache.kafka.streams.kstream.internals.InternalStreamsBuilder=DEBUG
+```
+
+Refer to link:kafka-logging.adoc#log4j.properties[Application Logging Using log4j].
+====
 
 === [[addStateStore]] `addStateStore` Method
 
@@ -216,3 +230,27 @@ void maybeAddNodeForOptimizationMetadata(final StreamsGraphNode node)
 `maybeAddNodeForOptimizationMetadata`...FIXME
 
 NOTE: `maybeAddNodeForOptimizationMetadata` is used when...FIXME
+
+=== [[buildAndOptimizeTopology]] Building Optimized Topology -- `buildAndOptimizeTopology` Method
+
+[source, scala]
+----
+void buildAndOptimizeTopology(final Properties props)
+----
+
+`buildAndOptimizeTopology` starts with <<maybePerformOptimizations, maybePerformOptimizations>> (and the given `Properties`).
+
+`buildAndOptimizeTopology`...FIXME
+
+NOTE: `buildAndOptimizeTopology` is used exclusively when `StreamsBuilder` is requested to <<kafka-streams-StreamsBuilder.adoc#build, build a topology>>.
+
+=== [[maybePerformOptimizations]] `maybePerformOptimizations` Internal Method
+
+[source, java]
+----
+void maybePerformOptimizations(final Properties props)
+----
+
+`maybePerformOptimizations`...FIXME
+
+NOTE: `maybePerformOptimizations` is used exclusively when `InternalStreamsBuilder` is requested to <<buildAndOptimizeTopology, build an optimized topology>>.

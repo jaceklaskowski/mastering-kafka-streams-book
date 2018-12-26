@@ -1,6 +1,6 @@
 == [[Topology]] Topology -- Directed Acyclic Graph of Stream Processors
 
-`Topology` is a <<operators, fluent API>> to create an *acyclic graph of stream processing nodes* (_DAG of stream processors_).
+`Topology` is a <<operators, fluent API>> to create an *acyclic graph of stream processing nodes* (_DAG of stream processors_) that represents the stream processing logic of a Kafka Streams application.
 
 `Topology` can be <<creating-instance, created>> directly or indirectly (using <<kafka-streams-streams-dsl.adoc#, Streams DSL>>).
 

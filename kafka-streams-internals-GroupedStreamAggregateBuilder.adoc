@@ -2,7 +2,7 @@
 
 `GroupedStreamAggregateBuilder` is...FIXME
 
-=== [[build]] `build` Method
+=== [[build]] Creating KTableImpl (For Given KStreamAggProcessorSupplier And New StatefulProcessorNode) -- `build` Method
 
 [source, java]
 ----

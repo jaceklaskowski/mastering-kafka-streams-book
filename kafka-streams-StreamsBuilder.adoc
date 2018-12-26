@@ -42,10 +42,12 @@ a| [[build]]
 
 [source, java]
 ----
-Topology build()
+Topology build()  // <1>
+Topology build(final Properties props)
 ----
+<1> Uses `null` for the `Properties`
 
-Returns the <<kafka-streams-Topology.adoc#, Topology>>
+Builds the <<kafka-streams-Topology.adoc#, Topology>>
 
 | <<globalTable-internals, globalTable>>
 a| [[globalTable]]
@@ -123,19 +125,25 @@ A typical Kafka Streams application looks as follows:
 
 [source, scala]
 ----
-import org.apache.kafka.streams.StreamsBuilder
+// Using Scala API for Kafka Streams
+import org.apache.kafka.streams.scala._
+import ImplicitConversions._
+import Serdes._
+
 val builder = new StreamsBuilder
 
-// Add a GlobalKTable with a global store if needed
-builder
-  .addGlobalStore(...)
-  .globalTable(...)
-
 // Add a KStream if needed
-builder.stream(...)
+// K and V are the types of keys and values, accordingly
+builder.stream[K, V](...)
 
 // Add a KTable if needed
-builder.table(...)
+builder.table[K, V](...)
+
+// Add a global store if needed
+builder.addGlobalStore(...)
+
+// Add a global store if needed
+builder.globalTable[K, V](...)
 
 // In the end, build a topology
 val topology = builder.build
@@ -315,6 +323,7 @@ Internally, `stream` creates a <<kafka-streams-internals-ConsumedInternal.adoc#,
 [source, java]
 ----
 Topology build()
+Topology build(final Properties props)
 ----
 
-`build` simply returns the underlying <<topology, topology>>.
+`build` requests the <<internalStreamsBuilder, InternalStreamsBuilder>> to <<kafka-streams-InternalStreamsBuilder.adoc#buildAndOptimizeTopology, buildAndOptimizeTopology>> (with the given `Properties`) and returns the underlying <<topology, topology>>.
