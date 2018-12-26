@@ -140,7 +140,7 @@
 == Monitoring Kafka Streams Applications
 
 . link:kafka-streams-StateListener.adoc[StateListener -- KafkaStreams State Listener]
-. link:kafka-streams-CacheFlushListener.adoc[CacheFlushListener]
+. link:kafka-streams-internals-CacheFlushListener.adoc[CacheFlushListener]
 
 . link:kafka-streams-StreamsMetrics.adoc[StreamsMetrics]
 .. link:kafka-streams-StreamsMetricsImpl.adoc[StreamsMetricsImpl]
@@ -219,7 +219,7 @@
 . link:kafka-streams-ProcessorTopology.adoc[ProcessorTopology]
 . link:kafka-streams-TopologyDescription.adoc[TopologyDescription]
 
-. link:kafka-streams-InternalStreamsBuilder.adoc[InternalStreamsBuilder]
+. link:kafka-streams-internals-InternalStreamsBuilder.adoc[InternalStreamsBuilder]
 
 . link:kafka-streams-internals-StreamsGraphNode.adoc[StreamsGraphNode]
 
@@ -235,8 +235,6 @@
 
 . link:kafka-streams-ProcessorNodePunctuator.adoc[ProcessorNodePunctuator]
 . link:kafka-streams-NodeMetrics.adoc[NodeMetrics]
-
-. link:kafka-streams-InternalNameProvider.adoc[InternalNameProvider]
 
 . link:kafka-streams-GlobalStore.adoc[GlobalStore]
 
@@ -268,6 +266,8 @@
 
 . link:kafka-streams-internals-MaterializedInternal.adoc[MaterializedInternal]
 . link:kafka-streams-internals-KeyValueStoreMaterializer.adoc[KeyValueStoreMaterializer]
+
+. link:kafka-streams-internals-InternalNameProvider.adoc[InternalNameProvider]
 
 === Execution Environment
 

@@ -31,4 +31,4 @@ Used when...FIXME
 |===
 
 [[implementations]]
-NOTE: link:kafka-streams-InternalStreamsBuilder.adoc[InternalStreamsBuilder] is the one and only known implementation of <<contract, InternalStreamsBuilder Contract>> in Kafka Streams {{ book.kafka_version }}.
+NOTE: link:kafka-streams-internals-InternalStreamsBuilder.adoc[InternalStreamsBuilder] is the one and only known implementation of <<contract, InternalStreamsBuilder Contract>> in Kafka Streams {{ book.kafka_version }}.

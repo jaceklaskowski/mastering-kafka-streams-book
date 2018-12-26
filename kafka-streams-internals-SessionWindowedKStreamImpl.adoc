@@ -72,7 +72,7 @@ NOTE: `reduce` is part of link:kafka-streams-SessionWindowedKStream.adoc#reduce[
 `SessionWindowedKStreamImpl` takes the following when created:
 
 * [[windows]] `SessionWindows`
-* [[builder]] link:kafka-streams-InternalStreamsBuilder.adoc[InternalStreamsBuilder]
+* [[builder]] link:kafka-streams-internals-InternalStreamsBuilder.adoc[InternalStreamsBuilder]
 * [[sourceNodes]] Names of the source nodes
 * [[name]] Name
 * [[keySerde]] Key Serde (`Serde<K>`)

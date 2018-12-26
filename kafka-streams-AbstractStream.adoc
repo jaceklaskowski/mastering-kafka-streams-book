@@ -5,7 +5,7 @@
 [[creating-instance]]
 Every `AbstractStream` has the following internal properties:
 
-* [[builder]] link:kafka-streams-InternalStreamsBuilder.adoc[InternalStreamsBuilder]
+* [[builder]] link:kafka-streams-internals-InternalStreamsBuilder.adoc[InternalStreamsBuilder]
 * [[name]] Name
 * [[sourceNodes]] One or more names of the source nodes
 

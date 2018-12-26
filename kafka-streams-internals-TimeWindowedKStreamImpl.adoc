@@ -102,7 +102,7 @@ NOTE: `doCount` is used exclusively when `TimeWindowedKStreamImpl` is requested 
 `TimeWindowedKStreamImpl` takes the following when created:
 
 * [[windows]] <<kafka-streams-Windows.adoc#, Windows>>
-* [[builder]] <<kafka-streams-InternalStreamsBuilder.adoc#, InternalStreamsBuilder>>
+* [[builder]] <<kafka-streams-internals-InternalStreamsBuilder.adoc#, InternalStreamsBuilder>>
 * [[sourceNodes]] Names of the source topics
 * [[name]] Name
 * [[keySerde]] `Serde<K>` for keys

@@ -340,7 +340,7 @@ For every topic name in the input `topics`, `addSource`:
 
 * `Topology` is requested to link:kafka-streams-Topology.adoc#addSource[add a source node]
 
-* `InternalStreamsBuilder` is requested to link:kafka-streams-InternalStreamsBuilder.adoc#createKTable[createKTable] or link:kafka-streams-InternalStreamsBuilder.adoc#stream[stream]
+* `InternalStreamsBuilder` is requested to link:kafka-streams-internals-InternalStreamsBuilder.adoc#createKTable[createKTable] or link:kafka-streams-internals-InternalStreamsBuilder.adoc#stream[stream]
 
 * `KGroupedTableImpl` is requested to link:kafka-streams-KGroupedTableImpl.adoc#buildAggregate[buildAggregate]
 
@@ -461,7 +461,7 @@ In the end, `addGlobalStore` <<connectSourceStoreAndTopic, associates the names 
 ====
 `addGlobalStore` is used when:
 
-* `InternalStreamsBuilder` is requested for a link:kafka-streams-InternalStreamsBuilder.adoc#globalTable[globalTable] or link:kafka-streams-InternalStreamsBuilder.adoc#addGlobalStore[addGlobalStore]
+* `InternalStreamsBuilder` is requested for a link:kafka-streams-internals-InternalStreamsBuilder.adoc#globalTable[globalTable] or link:kafka-streams-internals-InternalStreamsBuilder.adoc#addGlobalStore[addGlobalStore]
 
 * `Topology` is requested to link:kafka-streams-Topology.adoc#addGlobalStore[addGlobalStore]
 ====
@@ -516,7 +516,7 @@ Source store [sourceStoreName] is already added.
 ====
 `connectSourceStoreAndTopic` is used when:
 
-* `InternalStreamsBuilder` is requested to link:kafka-streams-InternalStreamsBuilder.adoc#table[create a KTable for a topic]
+* `InternalStreamsBuilder` is requested to link:kafka-streams-internals-InternalStreamsBuilder.adoc#table[create a KTable for a topic]
 
 * `InternalTopologyBuilder` is requested to <<addGlobalStore, add a global state store to a topology>>
 
@@ -585,7 +585,7 @@ void addStateStore(
 
 * `GroupedStreamAggregateBuilder` is requested to link:kafka-streams-internals-GroupedStreamAggregateBuilder.adoc#build[build]
 
-* `InternalStreamsBuilder` is requested to link:kafka-streams-InternalStreamsBuilder.adoc#addStateStore[addStateStore] and link:kafka-streams-InternalStreamsBuilder.adoc#table[create a KTable for a topic]
+* `InternalStreamsBuilder` is requested to link:kafka-streams-internals-InternalStreamsBuilder.adoc#addStateStore[addStateStore] and link:kafka-streams-internals-InternalStreamsBuilder.adoc#table[create a KTable for a topic]
 
 * `KGroupedTableImpl` is requested to link:kafka-streams-KGroupedTableImpl.adoc#doAggregate[doAggregate]
 

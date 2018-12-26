@@ -2,7 +2,7 @@
 
 `KTableSource` is a <<kafka-streams-ProcessorSupplier.adoc#, ProcessorSupplier>> of <<get, KTableSourceProcessors>>.
 
-`KTableSource` is <<creating-instance, created>> when `InternalStreamsBuilder` is requested to add a <<kafka-streams-InternalStreamsBuilder.adoc#table, KTable>> and a <<kafka-streams-InternalStreamsBuilder.adoc#globalTable, GlobalKTable>> to a topology (when `StreamsBuilder` is requested to create a <<kafka-streams-StreamsBuilder.adoc#table, KTable>> and <<kafka-streams-StreamsBuilder.adoc#globalTable, GlobalKTable>> for topics, respectively).
+`KTableSource` is <<creating-instance, created>> when `InternalStreamsBuilder` is requested to add a <<kafka-streams-internals-InternalStreamsBuilder.adoc#table, KTable>> and a <<kafka-streams-internals-InternalStreamsBuilder.adoc#globalTable, GlobalKTable>> to a topology (when `StreamsBuilder` is requested to create a <<kafka-streams-StreamsBuilder.adoc#table, KTable>> and <<kafka-streams-StreamsBuilder.adoc#globalTable, GlobalKTable>> for topics, respectively).
 
 [[storeName]]
 [[creating-instance]]

@@ -4,7 +4,7 @@
 
 `KeyValueStoreMaterializer` is <<creating-instance, created>> (and immediately requested to <<materialize, materialize a StoreBuilder>>) when:
 
-* `InternalStreamsBuilder` is requested to add a <<kafka-streams-InternalStreamsBuilder.adoc#table, KTable>> or <<kafka-streams-InternalStreamsBuilder.adoc#globalTable, GlobalKTable>> to the topology
+* `InternalStreamsBuilder` is requested to add a <<kafka-streams-internals-InternalStreamsBuilder.adoc#table, KTable>> or <<kafka-streams-internals-InternalStreamsBuilder.adoc#globalTable, GlobalKTable>> to the topology
 
 * `KGroupedStreamImpl` is requested to <<kafka-streams-internals-KGroupedStreamImpl.adoc#doAggregate, doAggregate>> (for <<kafka-streams-internals-KGroupedStreamImpl.adoc#aggregate, aggregate>>, <<kafka-streams-internals-KGroupedStreamImpl.adoc#count, count>>, and <<kafka-streams-internals-KGroupedStreamImpl.adoc#reduce, reduce>> aggregation operators)
 
@@ -39,7 +39,7 @@ If not defined, `materialize` requests the <<materialized, MaterializedInternal>
 ====
 `materialize` is used when:
 
-* `InternalStreamsBuilder` is requested to add a <<kafka-streams-InternalStreamsBuilder.adoc#table, KTable>> or <<kafka-streams-InternalStreamsBuilder.adoc#globalTable, GlobalKTable>> to the topology
+* `InternalStreamsBuilder` is requested to add a <<kafka-streams-internals-InternalStreamsBuilder.adoc#table, KTable>> or <<kafka-streams-internals-InternalStreamsBuilder.adoc#globalTable, GlobalKTable>> to the topology
 
 * `KGroupedStreamImpl` is requested to <<kafka-streams-internals-KGroupedStreamImpl.adoc#doAggregate, doAggregate>> (for <<kafka-streams-internals-KGroupedStreamImpl.adoc#aggregate, aggregate>>, <<kafka-streams-internals-KGroupedStreamImpl.adoc#count, count>>, and <<kafka-streams-internals-KGroupedStreamImpl.adoc#reduce, reduce>> aggregation operators)
 

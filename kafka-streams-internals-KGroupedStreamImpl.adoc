@@ -109,6 +109,6 @@ NOTE: `count` is part of the <<kafka-streams-KGroupedStream.adoc#count, KGrouped
 * [[groupedInternal]] `GroupedInternal` (of `K` keys and `V` values)
 * [[repartitionRequired]] `repartitionRequired` flag
 * [[streamsGraphNode]] `StreamsGraphNode`
-* [[builder]] <<kafka-streams-InternalStreamsBuilder.adoc#, InternalStreamsBuilder>>
+* [[builder]] <<kafka-streams-internals-InternalStreamsBuilder.adoc#, InternalStreamsBuilder>>
 
 `KGroupedStreamImpl` initializes the <<internal-registries, internal registries and counters>>.

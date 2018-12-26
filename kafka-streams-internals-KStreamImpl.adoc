@@ -91,7 +91,7 @@ NOTE: `transform` is part of <<kafka-streams-KStream.adoc#transform, KStream API
 
 `transform` then creates a new `KStreamTransform` (for the input `transformerSupplier`) and requests `InternalTopologyBuilder` to link:kafka-streams-InternalTopologyBuilder.adoc#addProcessor[register] a new processor supplier under the name.
 
-NOTE: `transform` uses <<builder, InternalStreamsBuilder>> to access the current link:kafka-streams-InternalStreamsBuilder.adoc#internalTopologyBuilder[InternalTopologyBuilder].
+NOTE: `transform` uses <<builder, InternalStreamsBuilder>> to access the current link:kafka-streams-internals-InternalStreamsBuilder.adoc#internalTopologyBuilder[InternalTopologyBuilder].
 
 `transform` requests `InternalTopologyBuilder` to link:kafka-streams-InternalTopologyBuilder.adoc#connectProcessorAndStateStores[connect the processor supplier with state stores] if specified.
 
@@ -112,7 +112,7 @@ NOTE: `mapValues` is part of link:kafka-streams-KStream.adoc#mapValues[KStream C
 
 Internally, `mapValues` requests <<builder, InternalStreamsBuilder>> for a new processor name with *KSTREAM-MAPVALUES* prefix and link:kafka-streams-InternalTopologyBuilder.adoc#addProcessor[registers] a `KStreamMapValues` processor supplier under the name.
 
-NOTE: `mapValues` uses <<builder, InternalStreamsBuilder>> to access the current link:kafka-streams-InternalStreamsBuilder.adoc#internalTopologyBuilder[InternalTopologyBuilder].
+NOTE: `mapValues` uses <<builder, InternalStreamsBuilder>> to access the current link:kafka-streams-internals-InternalStreamsBuilder.adoc#internalTopologyBuilder[InternalTopologyBuilder].
 
 === [[through]] `through` Operator
 
@@ -140,7 +140,7 @@ NOTE: `print` is part of link:kafka-streams-KStream.adoc#print[KStream Contract]
 
 `print` requests <<builder, InternalStreamsBuilder>> for a new processor name with *KSTREAM-PRINTER* prefix and link:kafka-streams-InternalTopologyBuilder.adoc#addProcessor[registers] a `KStreamPrint` (with `PrintForeachAction`) processor supplier under the name.
 
-NOTE: `print` uses <<builder, InternalStreamsBuilder>> to access the current link:kafka-streams-InternalStreamsBuilder.adoc#internalTopologyBuilder[InternalTopologyBuilder].
+NOTE: `print` uses <<builder, InternalStreamsBuilder>> to access the current link:kafka-streams-internals-InternalStreamsBuilder.adoc#internalTopologyBuilder[InternalTopologyBuilder].
 
 === [[to]] Registering Sink Node (with KSTREAM-SINK Prefix) -- `to` Operator
 
@@ -166,9 +166,9 @@ void to(final String topic, final ProducedInternal<K, V> produced)
 
 NOTE: `to` uses the input `ProducedInternal` to access the `key` and `value` serializers, and the link:kafka-streams-StreamPartitioner.adoc[StreamPartitioner].
 
-`to` requests the link:kafka-streams-AbstractStream.adoc#builder[InternalStreamsBuilder] for the link:kafka-streams-InternalStreamsBuilder.adoc#internalTopologyBuilder[InternalTopologyBuilder] and requests it to link:kafka-streams-InternalTopologyBuilder.adoc#addSink[register a new sink node] under the new processor name.
+`to` requests the link:kafka-streams-AbstractStream.adoc#builder[InternalStreamsBuilder] for the link:kafka-streams-internals-InternalStreamsBuilder.adoc#internalTopologyBuilder[InternalTopologyBuilder] and requests it to link:kafka-streams-InternalTopologyBuilder.adoc#addSink[register a new sink node] under the new processor name.
 
-NOTE: `to` uses <<builder, InternalStreamsBuilder>> to access the current link:kafka-streams-InternalStreamsBuilder.adoc#internalTopologyBuilder[InternalTopologyBuilder].
+NOTE: `to` uses <<builder, InternalStreamsBuilder>> to access the current link:kafka-streams-internals-InternalStreamsBuilder.adoc#internalTopologyBuilder[InternalTopologyBuilder].
 
 NOTE: `to` uses link:kafka-streams-internals-WindowedStreamPartitioner.adoc[WindowedStreamPartitioner] when the input `ProducedInternal` defines no link:kafka-streams-StreamPartitioner.adoc[StreamPartitioner] and uses `WindowedSerializer` for the key serializer.
 
@@ -191,7 +191,7 @@ NOTE: `repartitionForJoin` is used when...FIXME
 
 `KStreamImpl` takes the following when created:
 
-* [[builder]] link:kafka-streams-InternalStreamsBuilder.adoc[InternalStreamsBuilder] that created the `KStreamImpl`
+* [[builder]] link:kafka-streams-internals-InternalStreamsBuilder.adoc[InternalStreamsBuilder] that created the `KStreamImpl`
 * [[name]] Name of the source processor node
 * [[sourceNodes]] Source nodes
 * [[repartitionRequired]] Flag whether repartitioning is required or not
@@ -211,7 +211,7 @@ private <VR> KStream<K, VR> transformValues(
 
 `transformValues` then creates a new link:kafka-streams-KStreamTransformValues.adoc#creating-instance[KStreamTransformValues] (for the input `internalValueTransformerWithKeySupplier`) and requests `InternalTopologyBuilder` to link:kafka-streams-InternalTopologyBuilder.adoc#addProcessor[register] a new processor supplier under the name.
 
-NOTE: `transformValues` uses <<builder, InternalStreamsBuilder>> to access the current link:kafka-streams-InternalStreamsBuilder.adoc#internalTopologyBuilder[InternalTopologyBuilder].
+NOTE: `transformValues` uses <<builder, InternalStreamsBuilder>> to access the current link:kafka-streams-internals-InternalStreamsBuilder.adoc#internalTopologyBuilder[InternalTopologyBuilder].
 
 `transformValues` requests `InternalTopologyBuilder` to link:kafka-streams-InternalTopologyBuilder.adoc#connectProcessorAndStateStores[connect the processor supplier with state stores] if specified.
 
@@ -231,15 +231,15 @@ String createReparitionedSource(
   final String name)
 ----
 
-`createReparitionedSource` requests the input `InternalStreamsBuilder` for the link:kafka-streams-InternalStreamsBuilder.adoc#internalTopologyBuilder[InternalTopologyBuilder] and does the following:
+`createReparitionedSource` requests the input `InternalStreamsBuilder` for the link:kafka-streams-internals-InternalStreamsBuilder.adoc#internalTopologyBuilder[InternalTopologyBuilder] and does the following:
 
 * Requests the `InternalTopologyBuilder` to link:kafka-streams-InternalTopologyBuilder.adoc#addInternalTopic[addInternalTopic] with the topic name as the input `topicNamePrefix` (if defined) or the input `name` and `-repartition` suffix
 
-* Requests the `InternalStreamsBuilder` for a link:kafka-streams-InternalStreamsBuilder.adoc#newProcessorName[new processor name] with `KSTREAM-FILTER-` prefix and requests the `InternalTopologyBuilder` to link:kafka-streams-InternalTopologyBuilder.adoc#addProcessor[addProcessor] with the new processor name and a new <<kafka-streams-internals-KStreamFilter.adoc#, KStreamFilter>> (that filters out `null` keys) and the `name` predecessor
+* Requests the `InternalStreamsBuilder` for a link:kafka-streams-internals-InternalStreamsBuilder.adoc#newProcessorName[new processor name] with `KSTREAM-FILTER-` prefix and requests the `InternalTopologyBuilder` to link:kafka-streams-InternalTopologyBuilder.adoc#addProcessor[addProcessor] with the new processor name and a new <<kafka-streams-internals-KStreamFilter.adoc#, KStreamFilter>> (that filters out `null` keys) and the `name` predecessor
 
-* Requests the `InternalStreamsBuilder` for a link:kafka-streams-InternalStreamsBuilder.adoc#newProcessorName[new processor name] with `KSTREAM-SINK-` prefix and requests the `InternalTopologyBuilder` to link:kafka-streams-InternalTopologyBuilder.adoc#addSink[add a sink node] with the new processor name, the repartition topic and the new `KStreamFilter` as a predecessor
+* Requests the `InternalStreamsBuilder` for a link:kafka-streams-internals-InternalStreamsBuilder.adoc#newProcessorName[new processor name] with `KSTREAM-SINK-` prefix and requests the `InternalTopologyBuilder` to link:kafka-streams-InternalTopologyBuilder.adoc#addSink[add a sink node] with the new processor name, the repartition topic and the new `KStreamFilter` as a predecessor
 
-* Requests the `InternalStreamsBuilder` for a link:kafka-streams-InternalStreamsBuilder.adoc#newProcessorName[new processor name] with `KSTREAM-SOURCE-` prefix (aka `sourceName`) and requests the `InternalTopologyBuilder` to link:kafka-streams-InternalTopologyBuilder.adoc#addSource[add a source node] with the new processor name, a link:kafka-streams-FailOnInvalidTimestamp.adoc[FailOnInvalidTimestamp] and the repartition topic
+* Requests the `InternalStreamsBuilder` for a link:kafka-streams-internals-InternalStreamsBuilder.adoc#newProcessorName[new processor name] with `KSTREAM-SOURCE-` prefix (aka `sourceName`) and requests the `InternalTopologyBuilder` to link:kafka-streams-InternalTopologyBuilder.adoc#addSource[add a source node] with the new processor name, a link:kafka-streams-FailOnInvalidTimestamp.adoc[FailOnInvalidTimestamp] and the repartition topic
 
 In the end, `createReparitionedSource` returns the source name.
 

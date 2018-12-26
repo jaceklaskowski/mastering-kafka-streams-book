@@ -151,9 +151,9 @@ val topology = builder.build
 
 [[topology]]
 [[internalStreamsBuilder]]
-When <<creating-instance, created>>, `StreamsBuilder` creates an empty <<kafka-streams-Topology.adoc#, topology>> (that you enrich using the <<operators, operators>>). The topology is then requested for the <<kafka-streams-Topology.adoc#internalTopologyBuilder, InternalTopologyBuilder>> that is in turn used to create an <<kafka-streams-InternalStreamsBuilder.adoc#, InternalStreamsBuilder>>.
+When <<creating-instance, created>>, `StreamsBuilder` creates an empty <<kafka-streams-Topology.adoc#, topology>> (that you enrich using the <<operators, operators>>). The topology is then requested for the <<kafka-streams-Topology.adoc#internalTopologyBuilder, InternalTopologyBuilder>> that is in turn used to create an <<kafka-streams-internals-InternalStreamsBuilder.adoc#, InternalStreamsBuilder>>.
 
-In other words, `StreamsBuilder` offers a more <<operators, developer-friendly API>> for developing Kafka Streams applications as compared to the <<kafka-streams-InternalStreamsBuilder.adoc#, InternalStreamsBuilder>> API (and is a façade of `InternalStreamsBuilder`).
+In other words, `StreamsBuilder` offers a more <<operators, developer-friendly API>> for developing Kafka Streams applications as compared to the <<kafka-streams-internals-InternalStreamsBuilder.adoc#, InternalStreamsBuilder>> API (and is a façade of `InternalStreamsBuilder`).
 
 === [[table-detailed]] Creating KTable -- `table` Method
 
@@ -199,7 +199,7 @@ NOTE: The new <<kafka-streams-internals-MaterializedInternal.adoc#, Materialized
 
 `globalTable` requests the `MaterializedInternal` to <<kafka-streams-internals-MaterializedInternal.adoc#generateStoreNameIfNeeded, generateStoreNameIfNeeded>> (with the <<internalStreamsBuilder, InternalStreamsBuilder>> and the input `topic` name).
 
-In the end, `globalTable` requests the <<internalStreamsBuilder, InternalStreamsBuilder>> to <<kafka-streams-InternalStreamsBuilder.adoc#globalTable, add a GlobalKTable to the topology>> (with the `topic` name, the `ConsumedInternal` and the `MaterializedInternal`).
+In the end, `globalTable` requests the <<internalStreamsBuilder, InternalStreamsBuilder>> to <<kafka-streams-internals-InternalStreamsBuilder.adoc#globalTable, add a GlobalKTable to the topology>> (with the `topic` name, the `ConsumedInternal` and the `MaterializedInternal`).
 
 .Demo: Non-queryable GlobalKTable
 [source, scala]
@@ -316,7 +316,7 @@ scala> :type input
 org.apache.kafka.streams.kstream.KStream[String,String]
 ----
 
-Internally, `stream` creates a <<kafka-streams-internals-ConsumedInternal.adoc#, ConsumedInternal>> (for the input link:kafka-streams-Consumed.adoc[Consumed]) and requests the <<internalStreamsBuilder, InternalStreamsBuilder>> to link:kafka-streams-InternalStreamsBuilder.adoc#stream[create a KStream] (for the input `topics` and the `ConsumedInternal`).
+Internally, `stream` creates a <<kafka-streams-internals-ConsumedInternal.adoc#, ConsumedInternal>> (for the input link:kafka-streams-Consumed.adoc[Consumed]) and requests the <<internalStreamsBuilder, InternalStreamsBuilder>> to link:kafka-streams-internals-InternalStreamsBuilder.adoc#stream[create a KStream] (for the input `topics` and the `ConsumedInternal`).
 
 === [[build-detailed]] Building Topology -- `build` Method
 
@@ -326,4 +326,4 @@ Topology build()
 Topology build(final Properties props)
 ----
 
-`build` requests the <<internalStreamsBuilder, InternalStreamsBuilder>> to <<kafka-streams-InternalStreamsBuilder.adoc#buildAndOptimizeTopology, buildAndOptimizeTopology>> (with the given `Properties`) and returns the underlying <<topology, topology>>.
+`build` requests the <<internalStreamsBuilder, InternalStreamsBuilder>> to <<kafka-streams-internals-InternalStreamsBuilder.adoc#buildAndOptimizeTopology, buildAndOptimizeTopology>> (with the given `Properties`) and returns the underlying <<topology, topology>>.

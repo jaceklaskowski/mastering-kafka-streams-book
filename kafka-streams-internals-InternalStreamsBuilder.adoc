@@ -11,7 +11,7 @@ image::images/kafka-streams-InternalStreamsBuilder.png[align="center"]
 [[internalTopologyBuilder]]
 `InternalStreamsBuilder` takes a link:kafka-streams-InternalTopologyBuilder.adoc[InternalTopologyBuilder] when created (that all the methods are based on).
 
-`InternalStreamsBuilder` is an link:kafka-streams-InternalNameProvider.adoc[InternalNameProvider] and so can be requested for a new name for a <<newProcessorName, processor>> or a <<newStoreName, store>>.
+`InternalStreamsBuilder` is an link:kafka-streams-internals-InternalNameProvider.adoc[InternalNameProvider] and so can be requested for a new name for a <<newProcessorName, processor>> or a <<newStoreName, store>>.
 
 [[index]]
 `InternalStreamsBuilder` uses `index` counter that starts at `0` and is incremented every time a new name for a <<newProcessorName, processor>> or a <<newStoreName, store>> is requested. That makes all names unique and sources and stores uniquely identified by name.
@@ -161,7 +161,7 @@ NOTE: `globalTable` is used exclusively when `StreamsBuilder` is requested to <<
 String newProcessorName(final String prefix)
 ----
 
-NOTE: `newProcessorName` is part of link:kafka-streams-InternalNameProvider.adoc#newProcessorName[InternalNameProvider Contract] to give a new name for a link:kafka-streams-internals-ProcessorNode.adoc[processor].
+NOTE: `newProcessorName` is part of link:kafka-streams-internals-InternalNameProvider.adoc#newProcessorName[InternalNameProvider Contract] to give a new name for a link:kafka-streams-internals-ProcessorNode.adoc[processor].
 
 `newProcessorName` simply takes the input `prefix` followed by the <<index, index>>.
 
@@ -185,7 +185,7 @@ PREFIX0000000001
 String newStoreName(final String prefix)
 ----
 
-NOTE: `newStoreName` is part of link:kafka-streams-InternalNameProvider.adoc#newStoreName[InternalNameProvider Contract] to give a new name for a link:kafka-streams-StateStore.adoc[state store].
+NOTE: `newStoreName` is part of link:kafka-streams-internals-InternalNameProvider.adoc#newStoreName[InternalNameProvider Contract] to give a new name for a link:kafka-streams-StateStore.adoc[state store].
 
 `newStoreName` simply concatenates the input `prefix`, `STATE-STORE-` and the <<index, index>>.
 

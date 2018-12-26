@@ -45,7 +45,7 @@ Materialized<K, V, S> withLoggingDisabled()
 
 In the end, `withLoggingDisabled` returns the current `Materialized` instance.
 
-NOTE: `withLoggingDisabled` is used exclusively when `InternalStreamsBuilder` is requested to <<kafka-streams-InternalStreamsBuilder.adoc#globalTable, add a GlobalKTable to the topology>>.
+NOTE: `withLoggingDisabled` is used exclusively when `InternalStreamsBuilder` is requested to <<kafka-streams-internals-InternalStreamsBuilder.adoc#globalTable, add a GlobalKTable to the topology>>.
 
 === [[storeSupplier]] Accessing Optional StoreSupplier -- `storeSupplier` Method
 
