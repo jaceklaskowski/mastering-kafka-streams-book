@@ -18,6 +18,6 @@ void writeToTopology(final InternalTopologyBuilder topologyBuilder)
 
 NOTE: `writeToTopology` is part of the <<kafka-streams-internals-StreamsGraphNode.adoc#writeToTopology, StreamsGraphNode Contract>> to...FIXME.
 
-`writeToTopology` simply requests the given `InternalTopologyBuilder` to <<kafka-streams-InternalTopologyBuilder.adoc#addSink, addSink>> (per <<producedInternal, ProducedInternal>>).
+`writeToTopology` simply requests the given `InternalTopologyBuilder` to <<kafka-streams-internals-InternalTopologyBuilder.adoc#addSink, addSink>> (per <<producedInternal, ProducedInternal>>).
 
 `writeToTopology` creates a new <<kafka-streams-internals-WindowedStreamPartitioner.adoc#, WindowedStreamPartitioner>> as the <<kafka-streams-StreamPartitioner.adoc#, StreamPartitioner>> when no <<kafka-streams-internals-ProducedInternal.adoc#streamPartitioner, streamPartitioner>> is specified and the <<kafka-streams-internals-ProducedInternal.adoc#keySerde, key serializer>> is a <<kafka-streams-internals-WindowedSerializer.adoc#, WindowedSerializer>>.

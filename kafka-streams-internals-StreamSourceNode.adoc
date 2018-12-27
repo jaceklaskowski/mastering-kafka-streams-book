@@ -18,4 +18,4 @@ void writeToTopology(final InternalTopologyBuilder topologyBuilder)
 
 NOTE: `writeToTopology` is part of the <<kafka-streams-internals-StreamsGraphNode.adoc#writeToTopology, StreamsGraphNode Contract>> to...FIXME.
 
-`writeToTopology` simply requests the given `InternalTopologyBuilder` to <<kafka-streams-InternalTopologyBuilder.adoc#addSource, addSource>> (per <<consumedInternal, ConsumedInternal>> and <<topicPattern, topicPattern>> or <<topicNames, topicNames>>).
+`writeToTopology` simply requests the given `InternalTopologyBuilder` to <<kafka-streams-internals-InternalTopologyBuilder.adoc#addSource, addSource>> (per <<consumedInternal, ConsumedInternal>> and <<topicPattern, topicPattern>> or <<topicNames, topicNames>>).

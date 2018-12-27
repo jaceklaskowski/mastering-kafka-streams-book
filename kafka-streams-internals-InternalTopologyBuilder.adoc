@@ -300,7 +300,7 @@ void buildSourceNode(
 
 `buildSourceNode`...FIXME
 
-NOTE: `buildSourceNode` is used exclusively when `InternalTopologyBuilder` is requested to link:kafka-streams-InternalTopologyBuilder.adoc#build[build a topology of processor tasks] (aka *processor topology*).
+NOTE: `buildSourceNode` is used exclusively when `InternalTopologyBuilder` is requested to link:kafka-streams-internals-InternalTopologyBuilder.adoc#build[build a topology of processor tasks] (aka *processor topology*).
 
 === [[addSource]] Registering Source Node -- `addSource` Method
 

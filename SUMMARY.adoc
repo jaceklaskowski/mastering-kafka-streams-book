@@ -227,7 +227,7 @@
 
 . link:kafka-streams-internals-InternalStreamsBuilder.adoc[InternalStreamsBuilder]
 
-. link:kafka-streams-InternalTopologyBuilder.adoc[InternalTopologyBuilder]
+. link:kafka-streams-internals-InternalTopologyBuilder.adoc[InternalTopologyBuilder]
 .. link:kafka-streams-internals-ConsumedInternal.adoc[ConsumedInternal -- Internal Accessors to Consumed Metadata]
 .. link:kafka-streams-internals-ProducedInternal.adoc[ProducedInternal -- Internal Accessors to Produced Metadata]
 

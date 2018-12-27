@@ -2,7 +2,7 @@
 
 `UnwindowedChangelogTopicConfig` is an link:kafka-streams-InternalTopicConfig.adoc[InternalTopicConfig] that...FIXME
 
-`UnwindowedChangelogTopicConfig` is <<creating-instance, created>> exclusively when `InternalTopologyBuilder` is requested for link:kafka-streams-InternalTopologyBuilder.adoc#createChangelogTopicConfig[create an InternalTopicConfig (for a given name and StateStoreFactory)].
+`UnwindowedChangelogTopicConfig` is <<creating-instance, created>> exclusively when `InternalTopologyBuilder` is requested for link:kafka-streams-internals-InternalTopologyBuilder.adoc#createChangelogTopicConfig[create an InternalTopicConfig (for a given name and StateStoreFactory)].
 
 [[internal-registries]]
 [[UNWINDOWED_STORE_CHANGELOG_TOPIC_DEFAULT_OVERRIDES]]

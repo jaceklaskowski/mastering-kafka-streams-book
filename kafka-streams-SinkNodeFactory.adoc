@@ -2,7 +2,7 @@
 
 `SinkNodeFactory` is a link:kafka-streams-NodeFactory.adoc[NodeFactory] that...FIXME
 
-`SinkNodeFactory` is <<creating-instance, created>> exclusively when `InternalTopologyBuilder` is requested to link:kafka-streams-InternalTopologyBuilder.adoc#addSink[register a sink].
+`SinkNodeFactory` is <<creating-instance, created>> exclusively when `InternalTopologyBuilder` is requested to link:kafka-streams-internals-InternalTopologyBuilder.adoc#addSink[register a sink].
 
 === [[build]] Building ProcessorNode -- `build` Method
 
@@ -15,7 +15,7 @@ NOTE: `build` is part of link:kafka-streams-NodeFactory.adoc#build[NodeFactory C
 
 `build` simply creates a link:kafka-streams-internals-SinkNode.adoc#creating-instance[SinkNode] (with the link:kafka-streams-NodeFactory.adoc#name[name], the <<keySerializer, key serializer>>, the <<valSerializer, value serializer>> and the <<partitioner, StreamPartitioner>>).
 
-NOTE: The link:kafka-streams-internals-SinkNode.adoc#name[name of the topic] of the `SinkNode` is the <<topic, topic>> with link:kafka-streams-InternalTopologyBuilder.adoc#decorateTopic[application id] for an link:kafka-streams-InternalTopologyBuilder.adoc#internalTopicNames[internal topic].
+NOTE: The link:kafka-streams-internals-SinkNode.adoc#name[name of the topic] of the `SinkNode` is the <<topic, topic>> with link:kafka-streams-internals-InternalTopologyBuilder.adoc#decorateTopic[application id] for an link:kafka-streams-internals-InternalTopologyBuilder.adoc#internalTopicNames[internal topic].
 
 === [[creating-instance]] Creating SinkNodeFactory Instance
 

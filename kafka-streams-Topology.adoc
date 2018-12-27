@@ -293,7 +293,7 @@ Describes the topology.
 |===
 
 [[internalTopologyBuilder]]
-Internally, `Topology` uses an <<kafka-streams-InternalTopologyBuilder.adoc#, InternalTopologyBuilder>> for all <<operators, methods>> (and is therefore a thin layer atop).
+Internally, `Topology` uses an <<kafka-streams-internals-InternalTopologyBuilder.adoc#, InternalTopologyBuilder>> for all <<operators, methods>> (and is therefore a thin layer atop).
 
 .Topology and InternalTopologyBuilder
 image::images/kafka-streams-Topology-InternalTopologyBuilder.png[align="center"]

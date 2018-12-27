@@ -55,7 +55,7 @@ a| [[myMetadata]] <<StreamsMetadata, StreamsMetadata>> of the <<thisHost, curren
 
 `StreamsMetadataState` takes the following when created:
 
-* [[builder]] link:kafka-streams-InternalTopologyBuilder.adoc[InternalTopologyBuilder]
+* [[builder]] link:kafka-streams-internals-InternalTopologyBuilder.adoc[InternalTopologyBuilder]
 * [[thisHost]] `HostInfo` (with the `host` and `port`)
 
 `StreamsMetadataState` initializes the <<internal-registries, internal registries and counters>>.

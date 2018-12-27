@@ -1,6 +1,6 @@
 == [[StateStoreFactory]] StateStoreFactory Internal Contract
 
-`StateStoreFactory` is the internal <<contract, contract>> (of <<kafka-streams-InternalTopologyBuilder.adoc#, InternalTopologyBuilder>>) for <<implementations, factories>> that can <<build, build state stores>>.
+`StateStoreFactory` is the internal <<contract, contract>> (of <<kafka-streams-internals-InternalTopologyBuilder.adoc#, InternalTopologyBuilder>>) for <<implementations, factories>> that can <<build, build state stores>>.
 
 [[implementations]]
 NOTE: <<kafka-streams-AbstractStateStoreFactory.adoc#, AbstractStateStoreFactory>> is the one and only known direct extension contract of the <<contract, StateStoreFactory Contract>>.
@@ -32,7 +32,7 @@ boolean isWindowStore()
 
 Indicates whether a `StateStoreFactory` was created for a link:kafka-streams-internals-WindowStoreBuilder.adoc[WindowStoreBuilder] (`true`) or not (`false`)
 
-Used exclusively when `InternalTopologyBuilder` is requested to link:kafka-streams-InternalTopologyBuilder.adoc#createChangelogTopicConfig[create an InternalTopicConfig (for a given name and StateStoreFactory)]
+Used exclusively when `InternalTopologyBuilder` is requested to link:kafka-streams-internals-InternalTopologyBuilder.adoc#createChangelogTopicConfig[create an InternalTopicConfig (for a given name and StateStoreFactory)]
 
 `isWindowStore` is implemented by link:kafka-streams-AbstractStateStoreFactory.adoc#isWindowStore[AbstractStateStoreFactory] only and corresponds to link:kafka-streams-AbstractStateStoreFactory.adoc#windowStore[windowStore] flag that is given when link:kafka-streams-AbstractStateStoreFactory.adoc#implementations[concrete StateStoreFactories] are created.
 
@@ -46,7 +46,7 @@ a| [[logConfig]]
 Map<String, String> logConfig()
 ----
 
-Used exclusively when `InternalTopologyBuilder` is requested to <<kafka-streams-InternalTopologyBuilder.adoc#createChangelogTopicConfig, createChangelogTopicConfig>>
+Used exclusively when `InternalTopologyBuilder` is requested to <<kafka-streams-internals-InternalTopologyBuilder.adoc#createChangelogTopicConfig, createChangelogTopicConfig>>
 
 | loggingEnabled
 a| [[loggingEnabled]]
@@ -58,7 +58,7 @@ boolean loggingEnabled()
 
 Indicates whether <<kafka-streams-AbstractStateStoreFactory.adoc#loggingEnabled, change-logging>> is enabled (`true`) or not (`false`)
 
-Used when `InternalTopologyBuilder` is requested to <<kafka-streams-InternalTopologyBuilder.adoc#buildProcessorNode, buildProcessorNode>> and for <<kafka-streams-InternalTopologyBuilder.adoc#topicGroups, topic groups>>
+Used when `InternalTopologyBuilder` is requested to <<kafka-streams-internals-InternalTopologyBuilder.adoc#buildProcessorNode, buildProcessorNode>> and for <<kafka-streams-internals-InternalTopologyBuilder.adoc#topicGroups, topic groups>>
 
 | name
 a| [[name]]
@@ -78,7 +78,7 @@ long retentionPeriod()
 
 Window retention period (in milliseconds)
 
-Used exclusively when `InternalTopologyBuilder` is requested to link:kafka-streams-InternalTopologyBuilder.adoc#createChangelogTopicConfig[create an InternalTopicConfig (for a given name and StateStoreFactory)]
+Used exclusively when `InternalTopologyBuilder` is requested to link:kafka-streams-internals-InternalTopologyBuilder.adoc#createChangelogTopicConfig[create an InternalTopicConfig (for a given name and StateStoreFactory)]
 
 | users
 a| [[users]]
@@ -90,6 +90,6 @@ Set<String> users()
 
 Names of the processors that are connected to a state store
 
-Used when `InternalTopologyBuilder` is requested to link:kafka-streams-InternalTopologyBuilder.adoc#connectProcessorAndStateStore[connect a state store with a processor node] and link:kafka-streams-InternalTopologyBuilder.adoc#topicGroups[topic groups]
+Used when `InternalTopologyBuilder` is requested to link:kafka-streams-internals-InternalTopologyBuilder.adoc#connectProcessorAndStateStore[connect a state store with a processor node] and link:kafka-streams-internals-InternalTopologyBuilder.adoc#topicGroups[topic groups]
 
 |===

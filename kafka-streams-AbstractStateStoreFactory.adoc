@@ -9,7 +9,7 @@ NOTE: <<kafka-streams-StoreBuilderFactory.adoc#, StoreBuilderFactory>> is the on
 
 [[internal-registries]]
 [[users]]
-`AbstractStateStoreFactory` manages a collection of names (as `users` internal registry). A new processor name is added when `InternalTopologyBuilder` is requested to link:kafka-streams-InternalTopologyBuilder.adoc#connectProcessorAndStateStore[connect a state store with a processor node].
+`AbstractStateStoreFactory` manages a collection of names (as `users` internal registry). A new processor name is added when `InternalTopologyBuilder` is requested to link:kafka-streams-internals-InternalTopologyBuilder.adoc#connectProcessorAndStateStore[connect a state store with a processor node].
 
 === [[creating-instance]] Creating AbstractStateStoreFactory Instance
 

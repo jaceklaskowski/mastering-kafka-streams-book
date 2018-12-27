@@ -191,7 +191,7 @@ ks.setGlobalStateRestoreListener(userRestoreListener)
 
 * Creating a <<streamsMetadataState, StreamsMetadataState>>, <<threads, StreamThreads>> and <<queryableStoreProvider, QueryableStoreProvider>>
 
-* Requesting a <<kafka-streams-InternalTopologyBuilder.adoc#buildGlobalStateTopology, global processor topology>> (for a <<globalStreamThread, GlobalStreamThread>>)
+* Requesting a <<kafka-streams-internals-InternalTopologyBuilder.adoc#buildGlobalStateTopology, global processor topology>> (for a <<globalStreamThread, GlobalStreamThread>>)
 
 [[internal-registries]]
 .KafkaStreams's Internal Properties (e.g. Registries, Counters and Flags)
@@ -211,7 +211,7 @@ Set using <<setGlobalStateRestoreListener, setGlobalStateRestoreListener>> metho
 | globalStreamThread
 a| [[globalStreamThread]] link:kafka-streams-GlobalStreamThread.adoc[GlobalStreamThread]
 
-* Initialized exclusively when <<internalTopologyBuilder, InternalTopologyBuilder>> could link:kafka-streams-InternalTopologyBuilder.adoc#buildGlobalStateTopology[build a global ProcessorTopology]
+* Initialized exclusively when <<internalTopologyBuilder, InternalTopologyBuilder>> could link:kafka-streams-internals-InternalTopologyBuilder.adoc#buildGlobalStateTopology[build a global ProcessorTopology]
 
 * Started when `KafkaStreams` is being <<start, started>>
 
@@ -335,7 +335,7 @@ KafkaStreams(
 
 `KafkaStreams` takes the following when created:
 
-* [[internalTopologyBuilder]] link:kafka-streams-InternalTopologyBuilder.adoc[InternalTopologyBuilder]
+* [[internalTopologyBuilder]] link:kafka-streams-internals-InternalTopologyBuilder.adoc[InternalTopologyBuilder]
 * [[config]] link:kafka-streams-StreamsConfig.adoc[StreamsConfig]
 * [[clientSupplier]] link:kafka-streams-KafkaClientSupplier.adoc[KafkaClientSupplier]
 * [[time]] `Time`

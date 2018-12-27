@@ -2,9 +2,9 @@
 
 `SourceNodeFactory` is a link:kafka-streams-NodeFactory.adoc[NodeFactory] that has no link:kafka-streams-NodeFactory.adoc#predecessors[predecessors].
 
-`SourceNodeFactory` is <<creating-instance, created>> when `InternalTopologyBuilder` is requested to register a link:kafka-streams-InternalTopologyBuilder.adoc#addGlobalStore[global state store] or link:kafka-streams-InternalTopologyBuilder.adoc#addSource[source topic].
+`SourceNodeFactory` is <<creating-instance, created>> when `InternalTopologyBuilder` is requested to register a link:kafka-streams-internals-InternalTopologyBuilder.adoc#addGlobalStore[global state store] or link:kafka-streams-internals-InternalTopologyBuilder.adoc#addSource[source topic].
 
-NOTE: `SourceNodeFactory` is an internal `private` class of link:kafka-streams-InternalTopologyBuilder.adoc[InternalTopologyBuilder].
+NOTE: `SourceNodeFactory` is an internal `private` class of link:kafka-streams-internals-InternalTopologyBuilder.adoc[InternalTopologyBuilder].
 
 === [[creating-instance]] Creating SourceNodeFactory Instance
 
@@ -26,10 +26,10 @@ ProcessorNode build()
 
 NOTE: `build` is part of link:kafka-streams-NodeFactory.adoc#build[NodeFactory Contract] to build a processor node.
 
-`build` creates a link:kafka-streams-internals-SourceNode.adoc#creating-instance[SourceNode] with the <<name, name>> and the source topic names (as recorded in the link:kafka-streams-InternalTopologyBuilder.adoc#nodeToSourceTopics[nodeToSourceTopics] internal registry).
+`build` creates a link:kafka-streams-internals-SourceNode.adoc#creating-instance[SourceNode] with the <<name, name>> and the source topic names (as recorded in the link:kafka-streams-internals-InternalTopologyBuilder.adoc#nodeToSourceTopics[nodeToSourceTopics] internal registry).
 
-Internally, `build` looks up the link:kafka-streams-NodeFactory.adoc#name[node name] in the link:kafka-streams-InternalTopologyBuilder.adoc#nodeToSourceTopics[nodeToSourceTopics] internal registry to find the topic names (the node is attached to).
+Internally, `build` looks up the link:kafka-streams-NodeFactory.adoc#name[node name] in the link:kafka-streams-internals-InternalTopologyBuilder.adoc#nodeToSourceTopics[nodeToSourceTopics] internal registry to find the topic names (the node is attached to).
 
-`build` creates a link:kafka-streams-internals-SourceNode.adoc#creating-instance[SourceNode] with the <<name, name>>, the source topic names (possibly link:kafka-streams-InternalTopologyBuilder.adoc#maybeDecorateInternalSourceTopics[decorated] if internal), and the other properties, i.e. the <<timestampExtractor, timestampExtractor>>, the <<keyDeserializer, keyDeserializer>> and the <<valDeserializer, valDeserializer>>
+`build` creates a link:kafka-streams-internals-SourceNode.adoc#creating-instance[SourceNode] with the <<name, name>>, the source topic names (possibly link:kafka-streams-internals-InternalTopologyBuilder.adoc#maybeDecorateInternalSourceTopics[decorated] if internal), and the other properties, i.e. the <<timestampExtractor, timestampExtractor>>, the <<keyDeserializer, keyDeserializer>> and the <<valDeserializer, valDeserializer>>
 
 It is (hardly) possible that no topic names could be found, but when it happens, `build` creates a link:kafka-streams-internals-SourceNode.adoc#creating-instance[SourceNode] with the <<pattern, pattern>> (and the other properties, i.e. the <<name, name>>, the <<timestampExtractor, timestampExtractor>>, the <<keyDeserializer, keyDeserializer>> and the <<valDeserializer, valDeserializer>>).

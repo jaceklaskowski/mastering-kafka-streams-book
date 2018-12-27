@@ -30,9 +30,9 @@ Builds a <<kafka-streams-StateStore.adoc#, state store>>
 
 Used when:
 
-* `InternalTopologyBuilder` is requested to <<kafka-streams-InternalTopologyBuilder.adoc#addGlobalStore, add a global state store>>
+* `InternalTopologyBuilder` is requested to <<kafka-streams-internals-InternalTopologyBuilder.adoc#addGlobalStore, add a global state store>>
 
-* `StoreBuilderFactory` is requested to <<kafka-streams-StoreBuilderFactory.adoc#build, build a state store>> (when `InternalTopologyBuilder` is requested to <<kafka-streams-InternalTopologyBuilder.adoc#addStateStore, add a state store>>)
+* `StoreBuilderFactory` is requested to <<kafka-streams-StoreBuilderFactory.adoc#build, build a state store>> (when `InternalTopologyBuilder` is requested to <<kafka-streams-internals-InternalTopologyBuilder.adoc#addStateStore, add a state store>>)
 
 | logConfig
 a| [[logConfig]]
@@ -58,7 +58,7 @@ Indicates whether change-logging should be enabled (`true`) or not (`false`) on 
 
 Used when:
 
-* `InternalTopologyBuilder` is requested to <<kafka-streams-InternalTopologyBuilder.adoc#addGlobalStore, addGlobalStore>>
+* `InternalTopologyBuilder` is requested to <<kafka-streams-internals-InternalTopologyBuilder.adoc#addGlobalStore, addGlobalStore>>
 
 * `StoreBuilderFactory` is <<kafka-streams-StoreBuilderFactory.adoc#, created>>
 

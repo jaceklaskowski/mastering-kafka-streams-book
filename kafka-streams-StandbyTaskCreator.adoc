@@ -24,7 +24,7 @@ NOTE: `createTask` is used when...FIXME
 
 `StandbyTaskCreator` takes the following when created:
 
-* [[builder]] link:kafka-streams-InternalTopologyBuilder.adoc[InternalTopologyBuilder]
+* [[builder]] link:kafka-streams-internals-InternalTopologyBuilder.adoc[InternalTopologyBuilder]
 * [[config]] link:kafka-streams-StreamsConfig.adoc[StreamsConfig]
 * [[streamsMetrics]] link:kafka-streams-StreamsMetrics.adoc[StreamsMetrics]
 * [[stateDirectory]] link:kafka-streams-internals-StateDirectory.adoc[StateDirectory]

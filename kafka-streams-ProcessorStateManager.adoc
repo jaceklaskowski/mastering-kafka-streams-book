@@ -181,7 +181,7 @@ static String storeChangelogTopic(final String applicationId, final String store
 ====
 `storeChangelogTopic` is used when:
 
-* `InternalTopologyBuilder` is requested to link:kafka-streams-InternalTopologyBuilder.adoc#buildProcessorNode[buildProcessorNode] and link:kafka-streams-InternalTopologyBuilder.adoc#topicGroups[topicGroups]
+* `InternalTopologyBuilder` is requested to link:kafka-streams-internals-InternalTopologyBuilder.adoc#buildProcessorNode[buildProcessorNode] and link:kafka-streams-internals-InternalTopologyBuilder.adoc#topicGroups[topicGroups]
 
 * `CachingSessionStore`, `ChangeLoggingKeyValueBytesStore`, link:kafka-streams-StateStore-ChangeLoggingSessionBytesStore.adoc#init[ChangeLoggingSessionBytesStore], link:kafka-streams-StateStore-ChangeLoggingWindowBytesStore.adoc#init[ChangeLoggingWindowBytesStore], link:kafka-streams-StateStore-InMemoryKeyValueLoggedStore.adoc#init[InMemoryKeyValueLoggedStore], `InMemoryKeyValueStore`, `MemoryLRUCache`, link:kafka-streams-StateStore-MeteredKeyValueBytesStore.adoc#init[MeteredKeyValueBytesStore], `MeteredSessionStore`, `MeteredWindowStore`, `RocksDBSegmentedBytesStore`, `RocksDBSessionStore`, <<kafka-streams-StateStore-RocksDBWindowStore.adoc#init, RocksDBWindowStore>>, `CachingKeyValueStore` and `CachingWindowStore` are requested to `init`
 

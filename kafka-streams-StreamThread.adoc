@@ -5,7 +5,7 @@
 .StreamThread and Stream Processing
 image::images/kafka-streams-StreamThread.png[align="center"]
 
-`StreamThread` uses a <<consumer, Kafka Consumer>> to subscribe to the <<kafka-streams-InternalTopologyBuilder.adoc#sourceTopicPattern, source topics>> (of the <<builder, InternalTopologyBuilder>>).
+`StreamThread` uses a <<consumer, Kafka Consumer>> to subscribe to the <<kafka-streams-internals-InternalTopologyBuilder.adoc#sourceTopicPattern, source topics>> (of the <<builder, InternalTopologyBuilder>>).
 
 `StreamThread` is <<create, created>> exclusively when `KafkaStreams` is <<kafka-streams-KafkaStreams.adoc#creating-instance, created>>.
 
@@ -33,7 +33,7 @@ NOTE: `KafkaStreams` uses <<kafka-streams-KafkaStreams.adoc#threads, num.stream.
 
 * Creating a <<kafka-streams-TaskCreator.adoc#, TaskCreator>> and a <<kafka-streams-StandbyTaskCreator.adoc#, StandbyTaskCreator>>
 
-* <<runLoop, Running the main record processing loop>> (and subscribing to the <<kafka-streams-InternalTopologyBuilder.adoc#sourceTopicPattern, source topics>>)
+* <<runLoop, Running the main record processing loop>> (and subscribing to the <<kafka-streams-internals-InternalTopologyBuilder.adoc#sourceTopicPattern, source topics>>)
 
 * <<resetInvalidOffsets, resetInvalidOffsets>>
 
@@ -49,14 +49,14 @@ NOTE: `KafkaStreams` uses <<kafka-streams-KafkaStreams.adoc#threads, num.stream.
 | Description
 
 | builder
-| [[builder]] link:kafka-streams-InternalTopologyBuilder.adoc[InternalTopologyBuilder]
+| [[builder]] link:kafka-streams-internals-InternalTopologyBuilder.adoc[InternalTopologyBuilder]
 
 | rebalanceListener
 a| [[rebalanceListener]] link:kafka-streams-StreamThread-RebalanceListener.adoc[RebalanceListener]
 
 * Used exclusively when `StreamThread` is requested to <<runLoop, run the main record processing loop>> (and requests the Kafka <<consumer, Consumer>> to subscribe to get dynamically assigned partitions of topics matching specified pattern)
 
-NOTE: `StreamThread` requests <<builder, InternalTopologyBuilder>> for the link:kafka-streams-InternalTopologyBuilder.adoc#sourceTopicPattern[source topic pattern] to subscribe to.
+NOTE: `StreamThread` requests <<builder, InternalTopologyBuilder>> for the link:kafka-streams-internals-InternalTopologyBuilder.adoc#sourceTopicPattern[source topic pattern] to subscribe to.
 
 | lastCommitMs
 | [[lastCommitMs]] Time of the last <<maybeCommit, commit>>
@@ -263,7 +263,7 @@ NOTE: `maybeUpdateStandbyTasks` is used exclusively when `StreamThread` is reque
 * [[originalReset]] `originalReset`
 * [[taskManager]] <<kafka-streams-TaskManager.adoc#, TaskManager>>
 * [[streamsMetrics]] <<kafka-streams-StreamsMetricsThreadImpl.adoc#, StreamsMetricsThreadImpl>>
-* [[builder]] <<kafka-streams-InternalTopologyBuilder.adoc#, InternalTopologyBuilder>>
+* [[builder]] <<kafka-streams-internals-InternalTopologyBuilder.adoc#, InternalTopologyBuilder>>
 * [[threadClientId]] `threadClientId`
 * [[logContext]] `LogContext`
 * [[versionProbingFlag]] `versionProbingFlag` flag
@@ -277,7 +277,7 @@ NOTE: `maybeUpdateStandbyTasks` is used exclusively when `StreamThread` is reque
 void runLoop()
 ----
 
-`runLoop` requests the <<consumer, Consumer>> to subscribe to the link:kafka-streams-InternalTopologyBuilder.adoc#sourceTopicPattern[source topics] (from <<builder, InternalTopologyBuilder>>) with <<rebalanceListener, ConsumerRebalanceListener>>.
+`runLoop` requests the <<consumer, Consumer>> to subscribe to the link:kafka-streams-internals-InternalTopologyBuilder.adoc#sourceTopicPattern[source topics] (from <<builder, InternalTopologyBuilder>>) with <<rebalanceListener, ConsumerRebalanceListener>>.
 
 `runLoop` <<runOnce, runs once>> in a loop (as long as <<isRunning, isRunning>> flag is turned on).
 
