@@ -1,0 +1,23 @@
+== [[StreamSinkNode]] StreamSinkNode
+
+`StreamSinkNode` is a <<kafka-streams-internals-StreamsGraphNode.adoc#, StreamsGraphNode>> that is <<creating-instance, created>> exclusively when `KStreamImpl` is requested to <<kafka-streams-internals-KStreamImpl.adoc#to, add a StreamSinkNode to a node graph>>.
+
+[[creating-instance]]
+`StreamSinkNode` takes the following when created:
+
+* [[nodeName]] *Name* of the node
+* [[topicNameExtractor]] <<kafka-streams-TopicNameExtractor.adoc#, TopicNameExtractor>>
+* [[producedInternal]] <<kafka-streams-internals-ProducedInternal.adoc#, ProducedInternal>>
+
+=== [[writeToTopology]] `writeToTopology` Method
+
+[source, java]
+----
+void writeToTopology(final InternalTopologyBuilder topologyBuilder)
+----
+
+NOTE: `writeToTopology` is part of the <<kafka-streams-internals-StreamsGraphNode.adoc#writeToTopology, StreamsGraphNode Contract>> to...FIXME.
+
+`writeToTopology` simply requests the given `InternalTopologyBuilder` to <<kafka-streams-InternalTopologyBuilder.adoc#addSink, addSink>> (per <<producedInternal, ProducedInternal>>).
+
+`writeToTopology` creates a new <<kafka-streams-internals-WindowedStreamPartitioner.adoc#, WindowedStreamPartitioner>> as the <<kafka-streams-StreamPartitioner.adoc#, StreamPartitioner>> when no <<kafka-streams-internals-ProducedInternal.adoc#streamPartitioner, streamPartitioner>> is specified and the <<kafka-streams-internals-ProducedInternal.adoc#keySerde, key serializer>> is a <<kafka-streams-internals-WindowedSerializer.adoc#, WindowedSerializer>>.

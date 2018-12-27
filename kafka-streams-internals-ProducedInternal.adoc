@@ -1,0 +1,3 @@
+== [[ProducedInternal]] ProducedInternal -- Internal Accessors to Produced Metadata
+
+`ProducedInternal` is...FIXME

@@ -213,6 +213,7 @@
 === Logical Streams Graph
 
 . link:kafka-streams-internals-StreamsGraphNode.adoc[StreamsGraphNode]
+.. link:kafka-streams-internals-StreamSinkNode.adoc[StreamSinkNode]
 .. link:kafka-streams-internals-StreamSourceNode.adoc[StreamSourceNode]
 
 === Logical Plan of Execution
@@ -228,6 +229,7 @@
 
 . link:kafka-streams-InternalTopologyBuilder.adoc[InternalTopologyBuilder]
 .. link:kafka-streams-internals-ConsumedInternal.adoc[ConsumedInternal -- Internal Accessors to Consumed Metadata]
+.. link:kafka-streams-internals-ProducedInternal.adoc[ProducedInternal -- Internal Accessors to Produced Metadata]
 
 . link:kafka-streams-NodeFactory.adoc[NodeFactory]
 .. link:kafka-streams-ProcessorNodeFactory.adoc[ProcessorNodeFactory]

@@ -206,7 +206,7 @@ scala> println(name)
 PREFIXSTATE-STORE-0000000001
 ----
 
-=== [[addGraphNode]] Adding StreamsGraphNode Child to StreamsGraphNode Parent -- `addGraphNode` Method
+=== [[addGraphNode]] Adding StreamsGraphNode Child to StreamsGraphNode Parent(s) -- `addGraphNode` Method
 
 [source, java]
 ----

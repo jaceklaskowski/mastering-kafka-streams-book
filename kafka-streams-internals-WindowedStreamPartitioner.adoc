@@ -4,7 +4,7 @@
 
 `WindowedStreamPartitioner` is used as the default `StreamPartitioner` when <<kafka-streams-internals-WindowedSerializer.adoc#, WindowedSerializer>> is used for record keys.
 
-`WindowedStreamPartitioner` is <<creating-instance, created>> exclusively when `StreamSinkNode` is requested to `writeToTopology`.
+`WindowedStreamPartitioner` is <<creating-instance, created>> exclusively when `StreamSinkNode` is requested to <<kafka-streams-internals-StreamSinkNode.adoc#writeToTopology, writeToTopology>>.
 
 [[creating-instance]]
 [[serializer]]

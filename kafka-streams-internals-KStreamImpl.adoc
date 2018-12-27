@@ -5,7 +5,10 @@
 `KStreamImpl` is <<creating-instance, created>> every time a transformation is executed and when...FIXME
 
 [[SOURCE_NAME]]
-`KStreamImpl` uses *KSTREAM-SOURCE-* for...FIXME
+`KStreamImpl` uses *KSTREAM-SOURCE-* as the prefix for...FIXME
+
+[[SINK_NAME]]
+`KStreamImpl` uses *KSTREAM-SINK-* as the prefix for...FIXME
 
 [[internal-registries]]
 .KStreamImpl's Internal Properties (e.g. Registries, Counters and Flags)
@@ -145,12 +148,14 @@ NOTE: `print` is part of link:kafka-streams-KStream.adoc#print[KStream Contract]
 
 NOTE: `print` uses <<builder, InternalStreamsBuilder>> to access the current link:kafka-streams-internals-InternalStreamsBuilder.adoc#internalTopologyBuilder[InternalTopologyBuilder].
 
-=== [[to]] Registering Sink Node (with KSTREAM-SINK Prefix) -- `to` Operator
+=== [[to]] Adding StreamSinkNode to Node Graph -- `to` Operator
 
 [source, java]
 ----
 void to(final String topic) // <1>
 void to(final String topic, final Produced<K, V> produced)
+void to(final TopicNameExtractor<K, V> topicExtractor)
+void to(final TopicNameExtractor<K, V> topicExtractor, final Produced<K, V> produced)
 ----
 <1> Calls the other `to` with `Produced` of `nulls`
 
@@ -158,24 +163,20 @@ NOTE: `to` is part of link:kafka-streams-KStream.adoc#to[KStream Contract] to...
 
 `to` merely passes the call on to the internal <<to-internal, to>> with a new `ProducedInternal` for the input link:kafka-streams-Produced.adoc[Produced].
 
-=== [[to-internal]] Registering Sink Node with KSTREAM-SINK Prefix -- `to` Internal Method
+==== [[to-internal]] `to` Internal Method
 
 [source, java]
 ----
-void to(final String topic, final ProducedInternal<K, V> produced)
+void to(
+  final TopicNameExtractor<K, V> topicExtractor,
+  final ProducedInternal<K, V> produced)
 ----
 
-`to` requests the <<builder, InternalStreamsBuilder>> for a new processor name with *KSTREAM-SINK* prefix.
+`to` requests the <<builder, InternalStreamsBuilder>> for a <<kafka-streams-internals-InternalStreamsBuilder.adoc#newProcessorName, new processor name>> with <<SINK_NAME, KSTREAM-SINK>> prefix.
 
-NOTE: `to` uses the input `ProducedInternal` to access the `key` and `value` serializers, and the link:kafka-streams-StreamPartitioner.adoc[StreamPartitioner].
+`to` creates a new <<kafka-streams-internals-StreamSinkNode.adoc#, StreamSinkNode>> and requests the <<builder, InternalStreamsBuilder>> to <<kafka-streams-internals-InternalStreamsBuilder.adoc#addGraphNode, add it>> to the <<streamsGraphNode, parent StreamsGraphNode>>.
 
-`to` requests the link:kafka-streams-AbstractStream.adoc#builder[InternalStreamsBuilder] for the link:kafka-streams-internals-InternalStreamsBuilder.adoc#internalTopologyBuilder[InternalTopologyBuilder] and requests it to link:kafka-streams-InternalTopologyBuilder.adoc#addSink[register a new sink node] under the new processor name.
-
-NOTE: `to` uses <<builder, InternalStreamsBuilder>> to access the current link:kafka-streams-internals-InternalStreamsBuilder.adoc#internalTopologyBuilder[InternalTopologyBuilder].
-
-NOTE: `to` uses link:kafka-streams-internals-WindowedStreamPartitioner.adoc[WindowedStreamPartitioner] when the input `ProducedInternal` defines no link:kafka-streams-StreamPartitioner.adoc[StreamPartitioner] and uses `WindowedSerializer` for the key serializer.
-
-NOTE: `to` is used in <<to, to>> and <<through, through>> operators.
+NOTE: `to` is used in <<to, to>> operators.
 
 === [[repartitionForJoin]] `repartitionForJoin` Internal Method
 
@@ -194,10 +195,13 @@ NOTE: `repartitionForJoin` is used when...FIXME
 
 `KStreamImpl` takes the following when created:
 
-* [[builder]] link:kafka-streams-internals-InternalStreamsBuilder.adoc[InternalStreamsBuilder] that created the `KStreamImpl`
-* [[name]] *Name* of the source processor node
-* [[sourceNodes]] *Source nodes*
+* [[name]] *Name*
+* [[keySerde]] `Serde` for keys
+* [[valueSerde]] `Serde` for values
+* [[sourceNodes]] *Names of the source nodes*
 * [[repartitionRequired]] *repartitionRequired* flag
+* [[streamsGraphNode]] Parent <<kafka-streams-internals-StreamsGraphNode.adoc#, StreamsGraphNode>>
+* [[builder]] <<kafka-streams-internals-InternalStreamsBuilder.adoc#, InternalStreamsBuilder>>
 
 `KStreamImpl` initializes the <<internal-registries, internal registries and counters>>.
 

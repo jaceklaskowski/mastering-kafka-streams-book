@@ -816,7 +816,7 @@ void describeGlobalStore(
 
 NOTE: `describeGlobalStore` is used exclusively when `InternalTopologyBuilder` is requested to <<describe, describe>>.
 
-=== [[addSink]] Registering Sink Node -- `addSink` Method
+=== [[addSink]] Adding Sink Node -- `addSink` Method
 
 [source, java]
 ----
