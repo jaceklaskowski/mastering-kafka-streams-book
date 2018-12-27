@@ -1,6 +1,6 @@
-== High-Level Streams DSL
+== Streams DSL -- High-Level Stream Processing DSL
 
-Kafka Streams offers *Streams DSL* with high-level data stream abstractions for streams and tables, and to define a stream processing topology.
+Kafka Streams offers *Streams DSL* with high-level data stream abstractions for streams, tables, state stores, topologies.
 
 Streams DSL includes:
 

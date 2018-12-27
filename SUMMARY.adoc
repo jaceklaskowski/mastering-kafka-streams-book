@@ -20,9 +20,9 @@
 
 == High-Level Streams DSL
 
-. link:kafka-streams-streams-dsl.adoc[High-Level Streams DSL]
+. link:kafka-streams-streams-dsl.adoc[Streams DSL -- High-Level Stream Processing DSL]
 
-. link:kafka-streams-StreamsBuilder.adoc[StreamsBuilder -- High-Level Stream Processing DSL]
+. link:kafka-streams-StreamsBuilder.adoc[StreamsBuilder -- The Entry Point to High-Level Streams DSL]
 . link:kafka-streams-KStream.adoc[KStream]
 
 . link:kafka-streams-KTable.adoc[KTable]
@@ -126,6 +126,7 @@
 .. link:kafka-streams-KTableKTableAbstractJoinValueGetterSupplier.adoc[KTableKTableAbstractJoinValueGetterSupplier]
 
 . link:kafka-streams-ReadOnlyKeyValueStore.adoc[ReadOnlyKeyValueStore]
+.. link:kafka-streams-StateStore-KeyValueStore.adoc[KeyValueStore]
 
 . link:kafka-streams-AssignmentInfo.adoc[AssignmentInfo]
 . link:kafka-streams-SubscriptionInfo.adoc[SubscriptionInfo]
@@ -182,7 +183,6 @@
 === State Stores
 
 . link:kafka-streams-StateStore-AbstractStateStore.adoc[AbstractStateStore]
-.. link:kafka-streams-StateStore-KeyValueStore.adoc[KeyValueStore]
 .. link:kafka-streams-StateStore-InMemoryKeyValueStore.adoc[InMemoryKeyValueStore]
 .. link:kafka-streams-StateStore-InMemoryKeyValueLoggedStore.adoc[InMemoryKeyValueLoggedStore]
 .. link:kafka-streams-StateStore-MemoryLRUCache.adoc[MemoryLRUCache]

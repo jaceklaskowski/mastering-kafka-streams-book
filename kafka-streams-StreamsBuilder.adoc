@@ -1,10 +1,12 @@
-== [[StreamsBuilder]] StreamsBuilder -- High-Level Stream Processing DSL
+== [[StreamsBuilder]] StreamsBuilder -- The Entry Point to High-Level Streams DSL
 
-`StreamsBuilder` provides the <<operators, operators>> for *high-level stream processing DSL* to <<build, build a processor topology>> (with sources, processors, sinks and state stores).
+`StreamsBuilder` is the entry point to the <<kafka-streams-streams-dsl.adoc#, Streams DSL -- High-Level Stream Processing DSL>>.
 
-`StreamsBuilder` is one of the very first entities that you will be working with as a Kafka Streams developer.
+`StreamsBuilder` provides the <<operators, operators>> to <<build, build a processor topology>> of <<addStateStore, local>> and <<addGlobalStore, global>> state stores, <<globalTable, global tables>>, <<stream, streams>>, and <<table, tables>>.
 
-TIP: Use <<kafka-streams-scala.adoc#, Scala API for Kafka Streams>> to make your Kafka Streams development more pleasant if Scala is your programming language.
+`StreamsBuilder` is one of the very first data abstractions you will be working with as a Kafka Streams developer.
+
+TIP: Use <<kafka-streams-scala.adoc#, Scala API for Kafka Streams>> to make your Kafka Streams development more pleasant if Scala is the programming language of your choice.
 
 [[operators]]
 .StreamsBuilder API / Operators
@@ -25,7 +27,7 @@ StreamsBuilder addGlobalStore(
   final ProcessorSupplier stateUpdateSupplier)
 ----
 
-Adds a global <<kafka-streams-StateStore.adoc#, StateStore>> to the topology
+Adds a global <<kafka-streams-StateStore.adoc#, StateStore>> (given <<kafka-streams-StoreBuilder.adoc#, StoreBuilder>>, <<kafka-streams-Consumed.adoc#, Consumed>> and <<kafka-streams-ProcessorSupplier.adoc#, ProcessorSupplier>>) to the topology
 
 | <<addStateStore-detailed, addStateStore>>
 a| [[addStateStore]]
@@ -35,7 +37,7 @@ a| [[addStateStore]]
 StreamsBuilder addStateStore(final StoreBuilder builder)
 ----
 
-Adds a <<kafka-streams-StateStore.adoc#, StateStore>> to the topology
+Adds a <<kafka-streams-StateStore.adoc#, StateStore>> to the topology (given <<kafka-streams-StoreBuilder.adoc#, StoreBuilder>>)
 
 | <<build-detailed, build>>
 a| [[build]]
@@ -47,7 +49,7 @@ Topology build(final Properties props)
 ----
 <1> Uses `null` for the `Properties`
 
-Builds the <<kafka-streams-Topology.adoc#, Topology>>
+Builds the <<kafka-streams-Topology.adoc#, topology>>
 
 | <<globalTable-internals, globalTable>>
 a| [[globalTable]]
@@ -67,7 +69,7 @@ GlobalKTable<K, V> globalTable(
   final Materialized<K, V, KeyValueStore<Bytes, byte[]>> materialized)
 ----
 
-Adds a <<kafka-streams-GlobalKTable.adoc#, GlobalKTable>> to the topology
+Creates a <<kafka-streams-GlobalKTable.adoc#, GlobalKTable>> for the given topic (and <<kafka-streams-Consumed.adoc#, Consumed>>, <<kafka-streams-Materialized.adoc#, Materialized>> or both)
 
 | <<stream-internals, stream>>
 a| [[stream]]
@@ -88,7 +90,7 @@ KStream<K, V> stream(
   final Consumed<K, V> consumed)
 ----
 
-Creates a <<kafka-streams-KStream.adoc#, KStream>>
+Creates a <<kafka-streams-KStream.adoc#, KStream>> for the given topic(s) (and <<kafka-streams-Consumed.adoc#, Consumed>>)
 
 | <<table-detailed, table>>
 a| [[table]]
@@ -108,7 +110,7 @@ KTable<K, V> table(
   final Materialized<K, V, KeyValueStore<Bytes, byte[]>> materialized)
 ----
 
-Creates a <<kafka-streams-KTable.adoc#, KTable>>
+Creates a <<kafka-streams-KTable.adoc#, KTable>> for the given topic (and <<kafka-streams-Consumed.adoc#, Consumed>>, <<kafka-streams-Materialized.adoc#, Materialized>> or both)
 
 |===
 
@@ -153,9 +155,9 @@ val topology = builder.build
 [[internalStreamsBuilder]]
 When <<creating-instance, created>>, `StreamsBuilder` creates an empty <<kafka-streams-Topology.adoc#, topology>> (that you enrich using the <<operators, operators>>). The topology is then requested for the <<kafka-streams-Topology.adoc#internalTopologyBuilder, InternalTopologyBuilder>> that is in turn used to create an <<kafka-streams-internals-InternalStreamsBuilder.adoc#, InternalStreamsBuilder>>.
 
-In other words, `StreamsBuilder` offers a more <<operators, developer-friendly API>> for developing Kafka Streams applications as compared to the <<kafka-streams-internals-InternalStreamsBuilder.adoc#, InternalStreamsBuilder>> API (and is a façade of `InternalStreamsBuilder`).
+All <<operators, operators>> use the <<internalStreamsBuilder, InternalStreamsBuilder>> behind the scenes. In other words, `StreamsBuilder` offers a more <<operators, developer-friendly high-level API>> for developing Kafka Streams applications than using the <<kafka-streams-internals-InternalStreamsBuilder.adoc#, InternalStreamsBuilder>> API directly (and is a façade of `InternalStreamsBuilder`).
 
-=== [[table-detailed]] Creating KTable -- `table` Method
+=== [[table-detailed]] Creating KTable for Topic -- `table` Method
 
 [source, java]
 ----

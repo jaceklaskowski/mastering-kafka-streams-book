@@ -90,15 +90,11 @@ KTable<K, V> table(
   final String topic,
   final ConsumedInternal<K, V> consumed,
   final MaterializedInternal<K, V, KeyValueStore<Bytes, byte[]>> materialized)
-KTable<K, V> table(
-  final String topic,
-  final ConsumedInternal<K, V> consumed,
-  final org.apache.kafka.streams.processor.StateStoreSupplier<KeyValueStore> storeSupplier)
 ----
 
 `table`...FIXME
 
-NOTE: `table` is used exclusively when `StreamsBuilder` is requested to link:kafka-streams-StreamsBuilder.adoc#table[create a KTable for a topic].
+NOTE: `table` is used exclusively when `StreamsBuilder` is requested to <<kafka-streams-StreamsBuilder.adoc#table, add a KTable to a topology>>.
 
 === [[createKTable]] `createKTable` Internal Method
 
