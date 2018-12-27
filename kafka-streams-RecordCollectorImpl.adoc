@@ -16,6 +16,6 @@
   final StreamPartitioner<? super K, ? super V> partitioner)
 ----
 
-NOTE: `send` is part of link:kafka-streams-RecordCollector.adoc#send[RecordCollector Contract] to...FIXME.
+NOTE: `send` is part of link:kafka-streams-internals-RecordCollector.adoc#send[RecordCollector Contract] to...FIXME.
 
 `send`...FIXME

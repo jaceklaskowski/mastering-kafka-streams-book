@@ -167,7 +167,7 @@ boolean process()
 Start processing one record [record]
 ```
 
-`process` requests <<recordInfo, RecordInfo>> for the link:kafka-streams-RecordInfo.adoc#node[source processor node].
+`process` requests <<recordInfo, RecordInfo>> for the link:kafka-streams-internals-RecordInfo.adoc#node[source processor node].
 
 `process` <<updateProcessorContext, updateProcessorContext>> (with the current record and the source processor node).
 
@@ -179,11 +179,11 @@ Start processing one record [record]
 Completed processing one record [record]
 ```
 
-`process` requests <<recordInfo, RecordInfo>> for the link:kafka-streams-RecordInfo.adoc#partition[topic partition] and stores the partition and the record's link:kafka-streams-StampedRecord.adoc#offset[offset] in <<consumedOffsets, consumedOffsets>>.
+`process` requests <<recordInfo, RecordInfo>> for the link:kafka-streams-internals-RecordInfo.adoc#partition[topic partition] and stores the partition and the record's link:kafka-streams-StampedRecord.adoc#offset[offset] in <<consumedOffsets, consumedOffsets>>.
 
 `process` turns <<commitOffsetNeeded, commitOffsetNeeded>> flag on.
 
-`process` requests the <<consumer, Kafka consumer>> to resume the partition if the size of the link:kafka-streams-RecordInfo.adoc#queue[queue] of the <<recordInfo, RecordInfo>> is exactly <<maxBufferedSize, maxBufferedSize>>.
+`process` requests the <<consumer, Kafka consumer>> to resume the partition if the size of the link:kafka-streams-internals-RecordInfo.adoc#queue[queue] of the <<recordInfo, RecordInfo>> is exactly <<maxBufferedSize, maxBufferedSize>>.
 
 `process` always requests link:kafka-streams-AbstractTask.adoc#processorContext[InternalProcessorContext] to link:kafka-streams-internals-InternalProcessorContext.adoc#setCurrentNode[setCurrentNode] as `null`.
 
@@ -406,4 +406,4 @@ Flushing state and producer
 
 `flushState` <<kafka-streams-AbstractTask.adoc#flushState, flushes state stores>>.
 
-`flushState` requests the <<recordCollector, RecordCollector>> to <<kafka-streams-RecordCollector.adoc#flush, flush>>.
+`flushState` requests the <<recordCollector, RecordCollector>> to <<kafka-streams-internals-RecordCollector.adoc#flush, flush>>.

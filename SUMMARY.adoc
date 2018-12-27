@@ -128,16 +128,6 @@
 . link:kafka-streams-ReadOnlyKeyValueStore.adoc[ReadOnlyKeyValueStore]
 .. link:kafka-streams-StateStore-KeyValueStore.adoc[KeyValueStore]
 
-. link:kafka-streams-AssignmentInfo.adoc[AssignmentInfo]
-. link:kafka-streams-SubscriptionInfo.adoc[SubscriptionInfo]
-. link:kafka-streams-ClientMetadata.adoc[ClientMetadata]
-. link:kafka-streams-QuickUnion.adoc[QuickUnion]
-. link:kafka-streams-RecordInfo.adoc[RecordInfo]
-
-. link:kafka-streams-StoreChangeLogger.adoc[StoreChangeLogger]
-. link:kafka-streams-RecordCollector.adoc[RecordCollector]
-.. link:kafka-streams-RecordCollectorImpl.adoc[RecordCollectorImpl]
-
 == Monitoring Kafka Streams Applications
 
 . link:kafka-streams-StateListener.adoc[StateListener -- KafkaStreams State Listener]
@@ -148,6 +138,8 @@
 .. link:kafka-streams-StreamsMetricsThreadImpl.adoc[StreamsMetricsThreadImpl]
 
 . link:kafka-streams-StreamTask-TaskMetrics.adoc[TaskMetrics]
+
+. link:kafka-streams-StoreChangeLogger.adoc[StoreChangeLogger]
 
 == Testing
 
@@ -231,6 +223,7 @@
 . link:kafka-streams-internals-InternalTopologyBuilder.adoc[InternalTopologyBuilder]
 .. link:kafka-streams-internals-ConsumedInternal.adoc[ConsumedInternal -- Internal Accessors to Consumed Metadata]
 .. link:kafka-streams-internals-ProducedInternal.adoc[ProducedInternal -- Internal Accessors to Produced Metadata]
+.. link:kafka-streams-internals-QuickUnion.adoc[QuickUnion]
 
 . link:kafka-streams-NodeFactory.adoc[NodeFactory]
 .. link:kafka-streams-ProcessorNodeFactory.adoc[ProcessorNodeFactory]
@@ -275,10 +268,16 @@
 
 . link:kafka-streams-internals-InternalNameProvider.adoc[InternalNameProvider Contract]
 
+. link:kafka-streams-internals-RecordCollector.adoc[RecordCollector Contract]
+.. link:kafka-streams-RecordCollectorImpl.adoc[RecordCollectorImpl]
+
 === Execution Environment
 
 . link:kafka-streams-StreamsPartitionAssignor.adoc[StreamsPartitionAssignor -- Partition Assignment Strategy]
 .. link:kafka-streams-InternalTopicManager.adoc[InternalTopicManager]
+.. link:kafka-streams-internals-AssignmentInfo.adoc[AssignmentInfo]
+.. link:kafka-streams-internals-SubscriptionInfo.adoc[SubscriptionInfo]
+.. link:kafka-streams-internals-ClientMetadata.adoc[ClientMetadata]
 
 . link:kafka-streams-StreamThread.adoc[StreamThread -- Stream Processor Thread]
 . link:kafka-streams-StreamThread-RebalanceListener.adoc[RebalanceListener -- Kafka ConsumerRebalanceListener for Partition Assignment Among Processor Tasks]
@@ -330,6 +329,7 @@
 . link:kafka-streams-RecordDeserializer.adoc[RecordDeserializer]
 
 . link:kafka-streams-PartitionGroup.adoc[PartitionGroup]
+.. link:kafka-streams-internals-RecordInfo.adoc[RecordInfo]
 
 . link:kafka-streams-internals-StateDirectory.adoc[StateDirectory]
 . link:kafka-streams-internals-ProcessorRecordContext.adoc[ProcessorRecordContext]

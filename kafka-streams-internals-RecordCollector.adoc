@@ -1,4 +1,4 @@
-== [[RecordCollector]] RecordCollector
+== [[RecordCollector]] RecordCollector Contract
 
 `RecordCollector` is the <<contract, contract>> of <<implementations, record collectors>> that <<FIXME, FIXME>>.
 

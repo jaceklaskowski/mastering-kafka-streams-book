@@ -76,7 +76,7 @@ image::images/kafka-streams-StreamsPartitionAssignor-onAssignment.png[align="cen
 
 `onAssignment` takes the partitions (from the input `assignment`) and sorts it by topic and partition.
 
-`onAssignment` requests `AssignmentInfo` to link:kafka-streams-AssignmentInfo.adoc#decode[decode] the additional metadata (i.e. the `userData` from the input `assignment`).
+`onAssignment` requests `AssignmentInfo` to link:kafka-streams-internals-AssignmentInfo.adoc#decode[decode] the additional metadata (i.e. the `userData` from the input `assignment`).
 
 CAUTION: FIXME Finish me
 
@@ -131,11 +131,11 @@ NOTE: `assign` is part of Kafka Consumer's `PartitionAssignor` contract to perfo
 
 `assign` takes consumer IDs with subscriptions (from `subscriptions`).
 
-`assign` requests `SubscriptionInfo` to link:kafka-streams-SubscriptionInfo.adoc#decode[decode] the user data of the subscription (aka _metadata_) and makes sure that the version is supported, i.e. up to 2 currently.
+`assign` requests `SubscriptionInfo` to link:kafka-streams-internals-SubscriptionInfo.adoc#decode[decode] the user data of the subscription (aka _metadata_) and makes sure that the version is supported, i.e. up to 2 currently.
 
 `assign` finds the client metadata (by the process ID) and creates one if not available.
 
-`assign` requests the `ClientMetadata` to link:kafka-streams-ClientMetadata.adoc#addConsumer[addConsumer].
+`assign` requests the `ClientMetadata` to link:kafka-streams-internals-ClientMetadata.adoc#addConsumer[addConsumer].
 
 `assign` prints out the following DEBUG message to the logs:
 

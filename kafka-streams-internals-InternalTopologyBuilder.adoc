@@ -105,7 +105,7 @@ a| [[nodeFactories]] link:kafka-streams-NodeFactory.adoc[NodeFactories] by node 
 * A new `NodeFactory` is added when `InternalTopologyBuilder` is requested to <<addGlobalStore, add a global state store to a topology>>, <<addProcessor, addProcessor>>, <<addSink, addSink>> and <<addSource, addSource>>
 
 | nodeGrouper
-| [[nodeGrouper]] link:kafka-streams-QuickUnion.adoc[QuickUnion] of the names of node groups
+| [[nodeGrouper]] link:kafka-streams-internals-QuickUnion.adoc[QuickUnion] of the names of node groups
 
 Used when...FIXME
 
@@ -332,7 +332,7 @@ For every topic name in the input `topics`, `addSource`:
 
 `addSource` registers `topics` under the `name` in <<nodeToSourceTopics, nodeToSourceTopics>> registry.
 
-`addSource` requests <<nodeGrouper, QuickUnion of the names of node groups>> to link:kafka-streams-QuickUnion.adoc#add[add] the `name`.
+`addSource` requests <<nodeGrouper, QuickUnion of the names of node groups>> to link:kafka-streams-internals-QuickUnion.adoc#add[add] the `name`.
 
 [NOTE]
 ====
@@ -443,15 +443,15 @@ The private `addGlobalStore` creates a link:kafka-streams-ProcessorNodeFactory.a
 
 . Associates the `sourceName` with `topic` to <<nodeToSourceTopics, nodeToSourceTopics>>
 
-. Requests <<nodeGrouper, QuickUnion of the names of node groups>> to link:kafka-streams-QuickUnion.adoc#add[add] the `sourceName`
+. Requests <<nodeGrouper, QuickUnion of the names of node groups>> to link:kafka-streams-internals-QuickUnion.adoc#add[add] the `sourceName`
 
 . Requests `ProcessorNodeFactory` to link:kafka-streams-ProcessorNodeFactory.adoc#addStateStore[add a state store] as `name`
 
 . Associates the `processorName` with `nodeFactory` in <<nodeFactories, nodeFactories>>
 
-. Requests <<nodeGrouper, QuickUnion of the names of node groups>> to link:kafka-streams-QuickUnion.adoc#add[add] the `processorName`
+. Requests <<nodeGrouper, QuickUnion of the names of node groups>> to link:kafka-streams-internals-QuickUnion.adoc#add[add] the `processorName`
 
-. Requests <<nodeGrouper, QuickUnion of the names of node groups>> to link:kafka-streams-QuickUnion.adoc#unite[unite] the `processorName` and `predecessors`
+. Requests <<nodeGrouper, QuickUnion of the names of node groups>> to link:kafka-streams-internals-QuickUnion.adoc#unite[unite] the `processorName` and `predecessors`
 
 . Associates the `name` with the `store` in <<globalStateStores, globalStateStores>>
 
@@ -719,7 +719,7 @@ int putNodeGroupName(
 
 `putNodeGroupName` takes the name of a node, the current node group ID, the current node groups and the rootToNodeGroup.
 
-`putNodeGroupName` requests <<nodeGrouper, QuickUnion of the names of node groups>> for the link:kafka-streams-QuickUnion.adoc#root[root node] of the input `nodeName`.
+`putNodeGroupName` requests <<nodeGrouper, QuickUnion of the names of node groups>> for the link:kafka-streams-internals-QuickUnion.adoc#root[root node] of the input `nodeName`.
 
 `putNodeGroupName` gets the node group for the root node from the input `rootToNodeGroup` and adds the input `nodeName` to it.
 
@@ -833,7 +833,7 @@ void addSink(
 
 `addSink` registers the input `topic` with the input `name` in the <<nodeToSinkTopic, nodeToSinkTopic>> internal registry.
 
-`addSink` adds the input `name` to the <<nodeGrouper, nodeGrouper>> internal registry and requests it to link:kafka-streams-QuickUnion.adoc#unite[unite] the input `name` with the input `predecessorNames`.
+`addSink` adds the input `name` to the <<nodeGrouper, nodeGrouper>> internal registry and requests it to link:kafka-streams-internals-QuickUnion.adoc#unite[unite] the input `name` with the input `predecessorNames`.
 
 [NOTE]
 ====

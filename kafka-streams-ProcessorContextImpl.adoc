@@ -33,7 +33,7 @@ NOTE: `schedule` is part of link:kafka-streams-ProcessorContext.adoc#schedule[Pr
 * [[id]] <<kafka-streams-TaskId.adoc#, TaskId>>
 * [[task]] <<kafka-streams-StreamTask.adoc#, StreamTask>>
 * [[config]] <<kafka-streams-StreamsConfig.adoc#, StreamsConfig>>
-* [[collector]] <<kafka-streams-RecordCollector.adoc#, RecordCollector>>
+* [[collector]] <<kafka-streams-internals-RecordCollector.adoc#, RecordCollector>>
 * [[stateMgr]] <<kafka-streams-ProcessorStateManager.adoc#, ProcessorStateManager>>
 * [[metrics]] <<kafka-streams-StreamsMetricsImpl.adoc#, StreamsMetricsImpl>>
 * [[cache]] <<kafka-streams-ThreadCache.adoc#, ThreadCache>>
