@@ -277,7 +277,7 @@ In the end, `createReparitionedSource` returns the source name.
 
 `createWindowedStateStore`...FIXME
 
-NOTE: `createWindowedStateStore` is used exclusively when `KStreamImplJoin` is requested to <<kafka-streams-KStreamImplJoin.adoc#join, join>>.
+NOTE: `createWindowedStateStore` is used exclusively when `KStreamImplJoin` is requested to <<kafka-streams-internals-KStreamImplJoin.adoc#join, join>>.
 
 === [[groupBy]] `groupBy` Method
 

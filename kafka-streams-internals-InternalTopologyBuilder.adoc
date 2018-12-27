@@ -342,7 +342,7 @@ For every topic name in the input `topics`, `addSource`:
 
 * `InternalStreamsBuilder` is requested to link:kafka-streams-internals-InternalStreamsBuilder.adoc#createKTable[createKTable] or link:kafka-streams-internals-InternalStreamsBuilder.adoc#stream[stream]
 
-* `KGroupedTableImpl` is requested to link:kafka-streams-KGroupedTableImpl.adoc#buildAggregate[buildAggregate]
+* `KGroupedTableImpl` is requested to link:kafka-streams-internals-KGroupedTableImpl.adoc#buildAggregate[buildAggregate]
 
 * `KStreamImpl` is requested to link:kafka-streams-internals-KStreamImpl.adoc#createReparitionedSource[createReparitionedSource]
 ====
@@ -396,7 +396,7 @@ NOTE: `connectProcessorAndStateStores` (plural) is a public method that uses the
 
 * `KStreamImpl` is requested to link:kafka-streams-internals-KStreamImpl.adoc#doStreamTableJoin[doStreamTableJoin], link:kafka-streams-internals-KStreamImpl.adoc#process[process], link:kafka-streams-internals-KStreamImpl.adoc#transform[transform], link:kafka-streams-internals-KStreamImpl.adoc#transformValues[transformValues]
 
-* `KTableImpl` is requested to link:kafka-streams-KTableImpl.adoc#buildJoin[buildJoin]
+* `KTableImpl` is requested to link:kafka-streams-internals-KTableImpl.adoc#buildJoin[buildJoin]
 
 * `Topology` is requested to link:kafka-streams-Topology.adoc#connectProcessorAndStateStores[connectProcessorAndStateStores]
 ====
@@ -587,11 +587,11 @@ void addStateStore(
 
 * `InternalStreamsBuilder` is requested to link:kafka-streams-internals-InternalStreamsBuilder.adoc#addStateStore[addStateStore] and link:kafka-streams-internals-InternalStreamsBuilder.adoc#table[create a KTable for a topic]
 
-* `KGroupedTableImpl` is requested to link:kafka-streams-KGroupedTableImpl.adoc#doAggregate[doAggregate]
+* `KGroupedTableImpl` is requested to link:kafka-streams-internals-KGroupedTableImpl.adoc#doAggregate[doAggregate]
 
-* `KStreamImplJoin` is requested to link:kafka-streams-KStreamImplJoin.adoc#join[join]
+* `KStreamImplJoin` is requested to link:kafka-streams-internals-KStreamImplJoin.adoc#join[join]
 
-* `KTableImpl` is requested to link:kafka-streams-KTableImpl.adoc#doFilter[doFilter], link:kafka-streams-KTableImpl.adoc#doJoin[doJoin] and link:kafka-streams-KTableImpl.adoc#mapValues[mapValues]
+* `KTableImpl` is requested to link:kafka-streams-internals-KTableImpl.adoc#doFilter[doFilter], link:kafka-streams-internals-KTableImpl.adoc#doJoin[doJoin] and link:kafka-streams-internals-KTableImpl.adoc#mapValues[mapValues]
 ====
 
 === [[topicGroups]] Topic Groups (TopicsInfos By IDs) -- `topicGroups` Method
@@ -839,7 +839,7 @@ void addSink(
 ====
 `addSink` is used when:
 
-* `KGroupedTableImpl` is requested to link:kafka-streams-KGroupedTableImpl.adoc#buildAggregate[buildAggregate]
+* `KGroupedTableImpl` is requested to link:kafka-streams-internals-KGroupedTableImpl.adoc#buildAggregate[buildAggregate]
 
 * `KStreamImpl` is requested to link:kafka-streams-internals-KStreamImpl.adoc#to[register a sink node] and link:kafka-streams-internals-KStreamImpl.adoc#createReparitionedSource[createReparitionedSource]
 
@@ -861,7 +861,7 @@ void addInternalTopic(final String topicName)
 
 * `KStreamImpl` is requested to <<kafka-streams-internals-KStreamImpl.adoc#createReparitionedSource, createReparitionedSource>>
 
-* `KGroupedTableImpl` is requested to <<kafka-streams-KGroupedTableImpl.adoc#buildAggregate, buildAggregate>> (for <<kafka-streams-KGroupedTableImpl.adoc#reduce, reduce>>, <<kafka-streams-KGroupedTableImpl.adoc#count, count>> and <<kafka-streams-KGroupedTableImpl.adoc#aggregate, aggregate>> operators)
+* `KGroupedTableImpl` is requested to <<kafka-streams-internals-KGroupedTableImpl.adoc#buildAggregate, buildAggregate>> (for <<kafka-streams-internals-KGroupedTableImpl.adoc#reduce, reduce>>, <<kafka-streams-internals-KGroupedTableImpl.adoc#count, count>> and <<kafka-streams-internals-KGroupedTableImpl.adoc#aggregate, aggregate>> operators)
 ====
 
 === [[build]] Building Processor Task Topology -- `build` Factory Method

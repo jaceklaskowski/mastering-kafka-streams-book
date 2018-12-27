@@ -16,10 +16,10 @@ Every `AbstractStream` has the following internal properties:
 | AbstractStream
 | Description
 
-| [[KTableImpl]] link:kafka-streams-KTableImpl.adoc[KTableImpl]
+| [[KTableImpl]] link:kafka-streams-internals-KTableImpl.adoc[KTableImpl]
 |
 
-| [[KGroupedTableImpl]] link:kafka-streams-KGroupedTableImpl.adoc[KGroupedTableImpl]
+| [[KGroupedTableImpl]] link:kafka-streams-internals-KGroupedTableImpl.adoc[KGroupedTableImpl]
 |
 
 | [[TimeWindowedKStreamImpl]] link:kafka-streams-internals-TimeWindowedKStreamImpl.adoc[TimeWindowedKStreamImpl]
@@ -120,5 +120,5 @@ Set<String> ensureJoinableWith(final AbstractStream<K> other)
 
 * `KStreamImpl` is requested to link:kafka-streams-internals-KStreamImpl.adoc#doJoin[doJoin] and link:kafka-streams-internals-KStreamImpl.adoc#doStreamTableJoin[doStreamTableJoin]
 
-* `KTableImpl` is requested to link:kafka-streams-KTableImpl.adoc#buildJoin[buildJoin]
+* `KTableImpl` is requested to link:kafka-streams-internals-KTableImpl.adoc#buildJoin[buildJoin]
 ====

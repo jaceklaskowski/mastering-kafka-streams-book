@@ -1,6 +1,6 @@
 == [[InternalStreamsBuilder]] InternalStreamsBuilder
 
-`InternalStreamsBuilder` is a façade of <<internalTopologyBuilder, InternalTopologyBuilder>> (to add sources and state stores to a topology) and link:kafka-streams-KTableImpl.adoc[KTableImpl] for <<table, table>>, link:kafka-streams-GlobalKTableImpl.adoc[GlobalKTableImpl] for <<globalTable, globalTable>>, and link:kafka-streams-internals-KStreamImpl.adoc[KStreamImpl] for <<stream, stream>> operators.
+`InternalStreamsBuilder` is a façade of <<internalTopologyBuilder, InternalTopologyBuilder>> (to add sources and state stores to a topology) and link:kafka-streams-internals-KTableImpl.adoc[KTableImpl] for <<table, table>>, link:kafka-streams-GlobalKTableImpl.adoc[GlobalKTableImpl] for <<globalTable, globalTable>>, and link:kafka-streams-internals-KStreamImpl.adoc[KStreamImpl] for <<stream, stream>> operators.
 
 `InternalStreamsBuilder` is <<creating-instance, created>> along with link:kafka-streams-StreamsBuilder.adoc#internalStreamsBuilder[StreamsBuilder].
 
