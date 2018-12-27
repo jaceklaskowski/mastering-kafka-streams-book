@@ -1,0 +1,3 @@
+== [[StateStoreNode]] StateStoreNode
+
+`StateStoreNode` is...FIXME

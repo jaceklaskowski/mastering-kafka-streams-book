@@ -35,7 +35,7 @@ NOTE: `StreamsGraphNode` is a Java abstract class and cannot be <<creating-insta
 | ProcessorGraphNode
 | [[ProcessorGraphNode]]
 
-| StateStoreNode
+| <<kafka-streams-internals-StateStoreNode.adoc#, StateStoreNode>>
 | [[StateStoreNode]]
 
 | <<kafka-streams-internals-StreamSinkNode.adoc#, StreamSinkNode>>

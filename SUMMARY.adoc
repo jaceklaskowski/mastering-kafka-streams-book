@@ -215,6 +215,7 @@
 . link:kafka-streams-internals-StreamsGraphNode.adoc[StreamsGraphNode]
 .. link:kafka-streams-internals-StreamSinkNode.adoc[StreamSinkNode]
 .. link:kafka-streams-internals-StreamSourceNode.adoc[StreamSourceNode]
+.. link:kafka-streams-internals-StateStoreNode.adoc[StateStoreNode]
 
 === Logical Plan of Execution
 
