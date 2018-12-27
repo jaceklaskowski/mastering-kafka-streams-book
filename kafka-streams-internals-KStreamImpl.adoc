@@ -4,6 +4,9 @@
 
 `KStreamImpl` is <<creating-instance, created>> every time a transformation is executed and when...FIXME
 
+[[SOURCE_NAME]]
+`KStreamImpl` uses *KSTREAM-SOURCE-* for...FIXME
+
 [[internal-registries]]
 .KStreamImpl's Internal Properties (e.g. Registries, Counters and Flags)
 [cols="1,2",options="header",width="100%"]
@@ -192,9 +195,9 @@ NOTE: `repartitionForJoin` is used when...FIXME
 `KStreamImpl` takes the following when created:
 
 * [[builder]] link:kafka-streams-internals-InternalStreamsBuilder.adoc[InternalStreamsBuilder] that created the `KStreamImpl`
-* [[name]] Name of the source processor node
-* [[sourceNodes]] Source nodes
-* [[repartitionRequired]] Flag whether repartitioning is required or not
+* [[name]] *Name* of the source processor node
+* [[sourceNodes]] *Source nodes*
+* [[repartitionRequired]] *repartitionRequired* flag
 
 `KStreamImpl` initializes the <<internal-registries, internal registries and counters>>.
 

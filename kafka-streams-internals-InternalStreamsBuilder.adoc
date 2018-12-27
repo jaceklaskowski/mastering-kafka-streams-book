@@ -44,7 +44,7 @@ synchronized void addStateStore(final StoreBuilder builder)
 
 NOTE: `addStateStore` is used when...FIXME
 
-=== [[stream]] Creating KStream -- `stream` Method
+=== [[stream]] Adding KStream to Topology -- `stream` Method
 
 [source, java]
 ----
@@ -56,9 +56,11 @@ KStream<K, V> stream(
   final ConsumedInternal<K, V> consumed)
 ----
 
-`stream` <<newProcessorName, creates a new processor name>> (with *KSTREAM-SOURCE-* prefix) and requests the <<internalTopologyBuilder, InternalTopologyBuilder>> to link:kafka-streams-InternalTopologyBuilder.adoc#addSource[register a new source processor] (under the new processor name and with the input `topics` or `topicPattern`).
+`stream` <<newProcessorName, creates a new processor name>> with <<kafka-streams-internals-KStreamImpl.adoc#SOURCE_NAME, KSTREAM-SOURCE->> prefix.
 
-In the end, `stream` returns a new instance of link:kafka-streams-internals-KStreamImpl.adoc#creating-instance[KStreamImpl] (with the new processor name that is also used as the name of the single source node and the `repartitionRequired` flag disabled).
+`stream` creates a new <<kafka-streams-internals-StreamSourceNode.adoc#, StreamSourceNode>> and <<addGraphNode, adds it>> to the <<root, root>> node.
+
+In the end, `stream` returns a new instance of <<kafka-streams-internals-KStreamImpl.adoc#, KStreamImpl>> (with the new processor name that is also used as the name of the single source node and the <<kafka-streams-internals-KStreamImpl.adoc#repartitionRequired, repartitionRequired>> flag off).
 
 [source, scala]
 ----
@@ -73,9 +75,11 @@ import org.apache.kafka.streams.kstream.internals.ConsumedInternal
 val consumed = new ConsumedInternal[String, String]()
 import collection.JavaConverters._
 val kstream = internalStreamsBuilder.stream(topics.asJava, consumed)
+scala> :type kstream
+org.apache.kafka.streams.kstream.KStream[String,String]
 
 import org.apache.kafka.streams.kstream.internals.KStreamImpl
-val kstreamImpl = kstream.asInstanceOf[KStreamImpl[String, String]]
+assert(kstream.isInstanceOf[KStreamImpl[String, String]])
 ----
 
 === [[table]] Adding KTable to Topology -- `table` Method

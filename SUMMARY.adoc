@@ -210,7 +210,12 @@
 
 . link:kafka-streams-internals-RocksDbWindowBytesStoreSupplier.adoc[RocksDbWindowBytesStoreSupplier]
 
-=== Topology -- Logical Plan of Execution
+=== Logical Streams Graph
+
+. link:kafka-streams-internals-StreamsGraphNode.adoc[StreamsGraphNode]
+.. link:kafka-streams-internals-StreamSourceNode.adoc[StreamSourceNode]
+
+=== Logical Plan of Execution
 
 . link:kafka-streams-internals-ProcessorNode.adoc[ProcessorNode]
 .. link:kafka-streams-internals-SourceNode.adoc[SourceNode]
@@ -220,8 +225,6 @@
 . link:kafka-streams-TopologyDescription.adoc[TopologyDescription]
 
 . link:kafka-streams-internals-InternalStreamsBuilder.adoc[InternalStreamsBuilder]
-
-. link:kafka-streams-internals-StreamsGraphNode.adoc[StreamsGraphNode]
 
 . link:kafka-streams-InternalTopologyBuilder.adoc[InternalTopologyBuilder]
 .. link:kafka-streams-internals-ConsumedInternal.adoc[ConsumedInternal -- Internal Accessors to Consumed Metadata]

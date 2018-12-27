@@ -14,7 +14,7 @@ void writeToTopology(final InternalTopologyBuilder topologyBuilder)
 [[creating-instance]]
 `StreamsGraphNode` takes the following when created:
 
-* [[nodeName]] Node name
+* [[nodeName]] *Name* of the node
 * [[repartitionRequired]] *repartitionRequired* flag
 
 NOTE: `StreamsGraphNode` is a Java abstract class and cannot be <<creating-instance, created>> directly. It is created indirectly for the <<implementations, concrete StreamsGraphNodes>> and as the <<kafka-streams-internals-InternalStreamsBuilder.adoc#root, root node of an InternalStreamsBuilder>>.
@@ -41,7 +41,7 @@ NOTE: `StreamsGraphNode` is a Java abstract class and cannot be <<creating-insta
 | StreamSinkNode
 | [[StreamSinkNode]]
 
-| StreamSourceNode
+| <<kafka-streams-internals-StreamSourceNode.adoc#, StreamSourceNode>>
 | [[StreamSourceNode]]
 
 | StreamTableJoinNode
