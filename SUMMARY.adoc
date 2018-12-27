@@ -272,7 +272,7 @@
 . link:kafka-streams-internals-MaterializedInternal.adoc[MaterializedInternal]
 . link:kafka-streams-internals-KeyValueStoreMaterializer.adoc[KeyValueStoreMaterializer]
 
-. link:kafka-streams-internals-InternalNameProvider.adoc[InternalNameProvider]
+. link:kafka-streams-internals-InternalNameProvider.adoc[InternalNameProvider Contract]
 
 === Execution Environment
 

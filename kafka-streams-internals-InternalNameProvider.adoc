@@ -1,34 +1,57 @@
-== [[InternalNameProvider]] InternalNameProvider
+== [[InternalNameProvider]] InternalNameProvider Contract
 
-`InternalNameProvider` is the <<contract, contract>> of <<implementations, internal name providers>> that give a new name for a <<newProcessorName, processor>> or a <<newStoreName, store>>.
+`InternalNameProvider` is the <<contract, abstraction>> of <<implementations, internal name providers>> that give a new name for a <<newProcessorName, processor>> or a <<newStoreName, store>>.
 
 [[contract]]
-[source, java]
-----
-package org.apache.kafka.streams.kstream.internals;
-
-interface InternalNameProvider {
-  String newProcessorName(String prefix);
-  String newStoreName(String prefix);
-}
-----
-
 .InternalNameProvider Contract
-[cols="1,2",options="header",width="100%"]
+[cols="1m,2",options="header",width="100%"]
 |===
 | Method
 | Description
 
-| `newProcessorName`
-| [[newProcessorName]] Gives a new name for a link:kafka-streams-internals-ProcessorNode.adoc[processor]
+| newProcessorName
+a| [[newProcessorName]]
 
-Used when...FIXME
+[source, java]
+----
+String newProcessorName(String prefix)
+----
 
-| `newStoreName`
-| [[newStoreName]] Gives a new name for a link:kafka-streams-StateStore.adoc[state store]
+Returns a name of a processor with the given prefix
 
-Used when...FIXME
+Used when:
+
+* `GroupedStreamAggregateBuilder` is requested to <<kafka-streams-internals-GroupedStreamAggregateBuilder.adoc#build, build>>
+
+* `InternalStreamsBuilder` is requested to <<kafka-streams-internals-InternalStreamsBuilder.adoc#stream, stream>>, <<kafka-streams-internals-InternalStreamsBuilder.adoc#table, table>>, <<kafka-streams-internals-InternalStreamsBuilder.adoc#globalTable, globalTable>> and <<kafka-streams-internals-InternalStreamsBuilder.adoc#addGlobalStore, addGlobalStore>>
+
+* `KGroupedTableImpl` is requested to <<kafka-streams-KGroupedTableImpl.adoc#doAggregate, doAggregate>>
+
+* `KStreamImpl` is requested to <<kafka-streams-internals-KStreamImpl.adoc#filter, filter>>, etc.
+
+* `KStreamImplJoin` is requested to <<kafka-streams-KStreamImplJoin.adoc#join, join>>
+
+* `KTableImpl` is requested to <<kafka-streams-KTableImpl.adoc#doFilter, doFilter>>, etc.
+
+| newStoreName
+a| [[newStoreName]]
+
+[source, java]
+----
+String newStoreName(String prefix)
+----
+
+Returns a name of a state store with the given prefix
+
+Used when:
+
+* <<kafka-streams-internals-KGroupedStreamImpl.adoc#count, KGroupedStreamImpl>>, <<kafka-streams-internals-SessionWindowedKStreamImpl.adoc#count, SessionWindowedKStreamImpl>>, and <<kafka-streams-internals-TimeWindowedKStreamImpl.adoc#count, TimeWindowedKStreamImpl>> are requested to count
+
+* `KTableImpl` is requested to <<kafka-streams-KTableImpl.adoc#suppress, suppress>>
+
+* `MaterializedInternal` is requested to <<kafka-streams-internals-MaterializedInternal.adoc#generateStoreNameIfNeeded, generateStoreNameIfNeeded>>
+
 |===
 
 [[implementations]]
-NOTE: link:kafka-streams-internals-InternalStreamsBuilder.adoc[InternalStreamsBuilder] is the one and only known implementation of <<contract, InternalStreamsBuilder Contract>> in Kafka Streams {{ book.kafka_version }}.
+NOTE: link:kafka-streams-internals-InternalStreamsBuilder.adoc[InternalStreamsBuilder] is the one and only known implementation of <<contract, InternalStreamsBuilder Contract>> in Kafka Streams.
