@@ -1,10 +1,10 @@
-== [[StoreSupplier]] StoreSupplier Contract -- State Store Suppliers for High-Level Stream Processing DSL
+== [[StoreSupplier]] StoreSupplier Contract -- State Store Suppliers for High-Level Streams DSL
 
-`StoreSupplier` is the <<contract, contract>> of <<extensions, state store suppliers>> that can <<get, get a state store>>.
+`StoreSupplier` is the <<contract, abstraction>> of <<extensions, state store suppliers>> that can <<get, create state stores>> in the <<kafka-streams-streams-dsl.adoc#, Streams DSL -- High-Level Stream Processing DSL>>.
 
-`StoreSupplier` is used in the high-level stream processing DSL (<<kafka-streams-StreamsBuilder.adoc#, StreamsBuilder>>) and can be customized using <<kafka-streams-Materialized.adoc#, Materialized>>.
+Kafka Streams developers usually create a `StoreSupplier` using <<kafka-streams-Stores.adoc#, Stores>> factory object. The `StoreSupplier` can then be further customized using <<kafka-streams-Materialized.adoc#, Materialized>>.
 
-NOTE: When using the Processor API, i.e. <<kafka-streams-Topology.adoc#, Topology>>, Kafka Streams developers use <<kafka-streams-StoreBuilder.adoc#, StoreBuilders>> instead that can be attached to <<kafka-streams-Processor.adoc#, Processors>>.
+NOTE: When using the <<kafka-streams-processor-api.adoc#, Low-Level Processor API>>, Kafka Streams developers use <<kafka-streams-StoreBuilder.adoc#, StoreBuilders>> instead that are then attached to <<kafka-streams-Processor.adoc#, Processors>>.
 
 [[contract]]
 .StoreSupplier Contract
@@ -21,9 +21,9 @@ a| [[get]]
 T get()
 ----
 
-Returns a <<kafka-streams-StateStore.adoc#, state store>>
+Returns a <<kafka-streams-StateStore.adoc#, state store>> (as `T`)
 
-Used when <<kafka-streams-StoreBuilder.adoc#, StoreBuilders>> (i.e. <<kafka-streams-internals-KeyValueStoreBuilder.adoc#, KeyValueStoreBuilder>>, <<kafka-streams-internals-SessionStoreBuilder.adoc#, SessionStoreBuilder>> and <<kafka-streams-internals-WindowStoreBuilder.adoc#, WindowStoreBuilder>>) are requested for a <<kafka-streams-StoreBuilder.adoc#build, KeyValueStore>>
+Used when <<kafka-streams-StoreBuilder.adoc#, StoreBuilders>> (i.e. <<kafka-streams-internals-KeyValueStoreBuilder.adoc#, KeyValueStoreBuilder>>, <<kafka-streams-internals-SessionStoreBuilder.adoc#, SessionStoreBuilder>> and <<kafka-streams-internals-WindowStoreBuilder.adoc#, WindowStoreBuilder>>) are requested to <<kafka-streams-StoreBuilder.adoc#build, build a KeyValueStore>>
 
 | metricsScope
 a| [[metricsScope]]
@@ -33,7 +33,15 @@ a| [[metricsScope]]
 String metricsScope()
 ----
 
-Scope for metrics recorded by Metered stores (i.e. <<kafka-streams-StateStore-MeteredKeyValueBytesStore.adoc#, MeteredKeyValueBytesStore>>, <<kafka-streams-internals-MeteredSessionStore.adoc#, MeteredSessionStore>> and <<kafka-streams-internals-MeteredWindowStore.adoc#, MeteredWindowStore>>)
+Scope for metrics recorded by metered stores (i.e. <<kafka-streams-StateStore-MeteredKeyValueBytesStore.adoc#, MeteredKeyValueBytesStore>>, <<kafka-streams-internals-MeteredSessionStore.adoc#, MeteredSessionStore>> and <<kafka-streams-internals-MeteredWindowStore.adoc#, MeteredWindowStore>>)
+
+Used when:
+
+* <<kafka-streams-StoreBuilder.adoc#, StoreBuilders>> (i.e. <<kafka-streams-internals-KeyValueStoreBuilder.adoc#, KeyValueStoreBuilder>>, <<kafka-streams-internals-SessionStoreBuilder.adoc#, SessionStoreBuilder>> and <<kafka-streams-internals-WindowStoreBuilder.adoc#, WindowStoreBuilder>>) are requested to <<kafka-streams-StoreBuilder.adoc#build, build a KeyValueStore>>
+
+* `RocksDbSessionBytesStoreSupplier` is requested to get a `SessionStore`
+
+* `RocksDbWindowBytesStoreSupplier` is requested to get a `WindowStore`
 
 | name
 a| [[name]]
@@ -44,6 +52,13 @@ String name()
 ----
 
 Name of the <<kafka-streams-StateStore.adoc#, state store>> (for identification purposes)
+
+Used when:
+
+* `MaterializedInternal` is requested for the <<kafka-streams-internals-MaterializedInternal.adoc#storeName, storeName>>
+
+* <<kafka-streams-StoreBuilder.adoc#, StoreBuilders>> (i.e. <<kafka-streams-internals-KeyValueStoreBuilder.adoc#, KeyValueStoreBuilder>>, <<kafka-streams-internals-SessionStoreBuilder.adoc#, SessionStoreBuilder>> and <<kafka-streams-internals-WindowStoreBuilder.adoc#, WindowStoreBuilder>>) are created
+
 |===
 
 [[extensions]]

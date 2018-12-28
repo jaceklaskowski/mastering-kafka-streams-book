@@ -107,7 +107,7 @@
 .. link:kafka-streams-StateStore-SessionStore.adoc[SessionStore]
 .. link:kafka-streams-StateStore-WindowStore.adoc[WindowStore]
 
-. link:kafka-streams-StoreSupplier.adoc[StoreSupplier Contract -- State Store Suppliers for High-Level Stream Processing DSL]
+. link:kafka-streams-StoreSupplier.adoc[StoreSupplier Contract -- State Store Suppliers for High-Level Streams DSL]
 .. link:kafka-streams-KeyValueBytesStoreSupplier.adoc[KeyValueBytesStoreSupplier]
 .. link:kafka-streams-SessionBytesStoreSupplier.adoc[SessionBytesStoreSupplier]
 .. link:kafka-streams-WindowBytesStoreSupplier.adoc[WindowBytesStoreSupplier Contract -- StoreSuppliers of WindowStore++<Bytes, byte[]>++]
