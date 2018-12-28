@@ -22,6 +22,8 @@ StateStore build()
 
 Builds a <<kafka-streams-StateStore.adoc#, state store>>
 
+Used exclusively when `InternalTopologyBuilder` is requested to <<kafka-streams-internals-InternalTopologyBuilder.adoc#buildProcessorNode, buildProcessorNode>>
+
 | isWindowStore
 a| [[isWindowStore]]
 

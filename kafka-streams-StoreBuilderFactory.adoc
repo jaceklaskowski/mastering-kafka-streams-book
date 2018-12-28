@@ -1,6 +1,6 @@
 == [[StoreBuilderFactory]] StoreBuilderFactory
 
-`StoreBuilderFactory` is a concrete <<kafka-streams-StateStoreFactory.adoc#, StateStoreFactory>> (as a <<kafka-streams-AbstractStateStoreFactory.adoc#, AbstractStateStoreFactory>>).
+`StoreBuilderFactory` is a concrete <<kafka-streams-internals-StateStoreFactory.adoc#, StateStoreFactory>> (as a <<kafka-streams-AbstractStateStoreFactory.adoc#, AbstractStateStoreFactory>>).
 
 `StoreBuilderFactory` is used exclusively when `InternalTopologyBuilder` is requested to <<kafka-streams-internals-InternalTopologyBuilder.adoc#addStateStore, add a state store>>.
 
@@ -15,6 +15,6 @@
 StateStore build()
 ----
 
-NOTE: `build` is part of the <<kafka-streams-StateStoreFactory.adoc#build, StateStoreFactory Contract>> to build a <<kafka-streams-StateStore.adoc#, state store>>.
+NOTE: `build` is part of the <<kafka-streams-internals-StateStoreFactory.adoc#build, StateStoreFactory Contract>> to build a <<kafka-streams-StateStore.adoc#, state store>>.
 
 `build`...FIXME

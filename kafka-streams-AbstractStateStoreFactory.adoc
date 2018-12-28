@@ -1,6 +1,6 @@
 == [[AbstractStateStoreFactory]] AbstractStateStoreFactory -- Base State Store Factory
 
-`AbstractStateStoreFactory` is the base implementation of the <<kafka-streams-StateStoreFactory.adoc#, StateStoreFactory contract>> for <<implementations, state store factories>> that...FIXME
+`AbstractStateStoreFactory` is the base implementation of the <<kafka-streams-internals-StateStoreFactory.adoc#, StateStoreFactory contract>> for <<implementations, state store factories>> that...FIXME
 
 NOTE: `AbstractStateStoreFactory` is a Java abstract class and cannot be <<creating-instance, created>> directly. It is created indirectly for the <<implementations, concrete AbstractStateStoreFactories>>.
 

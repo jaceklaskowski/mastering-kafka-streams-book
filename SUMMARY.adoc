@@ -112,7 +112,7 @@
 .. link:kafka-streams-SessionBytesStoreSupplier.adoc[SessionBytesStoreSupplier]
 .. link:kafka-streams-WindowBytesStoreSupplier.adoc[WindowBytesStoreSupplier Contract -- StoreSuppliers of WindowStore++<Bytes, byte[]>++]
 
-. link:kafka-streams-StoreBuilder.adoc[StoreBuilder]
+. link:kafka-streams-StoreBuilder.adoc[StoreBuilder Contract -- State Store Builders]
 
 . link:kafka-streams-Stores.adoc[Stores -- Factory of State Stores]
 
@@ -354,7 +354,7 @@
 .. link:kafka-streams-StoreChangelogReader.adoc[StoreChangelogReader]
 . link:kafka-streams-StateRestorer.adoc[StateRestorer]
 
-. link:kafka-streams-StateStoreFactory.adoc[StateStoreFactory]
+. link:kafka-streams-internals-StateStoreFactory.adoc[StateStoreFactory]
 .. link:kafka-streams-StoreBuilderFactory.adoc[StoreBuilderFactory]
 .. link:kafka-streams-StateStoreSupplierFactory.adoc[StateStoreSupplierFactory]
 .. link:kafka-streams-AbstractStateStoreFactory.adoc[AbstractStateStoreFactory]

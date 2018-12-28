@@ -42,7 +42,7 @@ InternalTopologyBuilder setApplicationId(final String applicationId)
 
 `InternalTopologyBuilder` uses the <<applicationId, application id>> when:
 
-* <<buildProcessorNode, buildProcessorNode>> and <<topicGroups, topicGroups>> for the names of changelog topics (when a `StateStoreFactory` has link:kafka-streams-StateStoreFactory.adoc#loggingEnabled[logging enabled])
+* <<buildProcessorNode, buildProcessorNode>> and <<topicGroups, topicGroups>> for the names of changelog topics (when a `StateStoreFactory` has link:kafka-streams-internals-StateStoreFactory.adoc#loggingEnabled[logging enabled])
 
 * <<decorateTopic, decorateTopic>> to prefix (_decorate_) internal topic names
 
@@ -137,7 +137,7 @@ New entries are added when `InternalTopologyBuilder` is requested for the follow
 Used when...FIXME
 
 | stateFactories
-a| [[stateFactories]] link:kafka-streams-StateStoreFactory.adoc[StateStoreFactories] by name
+a| [[stateFactories]] link:kafka-streams-internals-StateStoreFactory.adoc[StateStoreFactories] by name
 
 * A new `StateStoreFactory` is added when `InternalTopologyBuilder` is requested to <<addStateStore, addStateStore>>
 
@@ -150,7 +150,7 @@ a| [[stateFactories]] link:kafka-streams-StateStoreFactory.adoc[StateStoreFactor
 | storeToChangelogTopic
 a| [[storeToChangelogTopic]] Names of the <<kafka-streams-StateStore.adoc#, state stores>> and the names of the corresponding changelog topics (`Map<String, String>`)
 
-`storeToChangelogTopic` manages <<kafka-streams-StateStore.adoc#, state stores>> with the `StateStoreFactory` with <<kafka-streams-StateStoreFactory.adoc#loggingEnabled, change-logging enabled>>
+`storeToChangelogTopic` manages <<kafka-streams-StateStore.adoc#, state stores>> with the `StateStoreFactory` with <<kafka-streams-internals-StateStoreFactory.adoc#loggingEnabled, change-logging enabled>>
 
 A new pair is added when `InternalTopologyBuilder` is requested to <<buildProcessorNode, buildProcessorNode>> and <<connectSourceStoreAndTopic, associate the names of a state store and a topic>>
 
@@ -285,7 +285,7 @@ void buildProcessorNode(
 
 `buildProcessorNode`...FIXME
 
-NOTE: `buildProcessorNode` is used when...FIXME
+NOTE: `buildProcessorNode` is used exclusively when `InternalTopologyBuilder` is requested to <<build, build a ProcessorTopology>> (with <<kafka-streams-ProcessorNodeFactory.adoc#, ProcessorNodeFactories>>).
 
 === [[buildSourceNode]] `buildSourceNode` Internal Method
 
@@ -536,7 +536,7 @@ NOTE: `connectProcessorAndStateStore` (singular) is an internal method that is u
 
 `connectProcessorAndStateStore` gets the `StateStoreFactory` for the given `stateStoreName` (in <<stateFactories, stateFactories>>).
 
-`connectProcessorAndStateStore` then unites all link:kafka-streams-StateStoreFactory.adoc#users[users] of the `StateStoreFactory` with the given `processorName`. `connectProcessorAndStateStore` adds the `processorName` to the users.
+`connectProcessorAndStateStore` then unites all link:kafka-streams-internals-StateStoreFactory.adoc#users[users] of the `StateStoreFactory` with the given `processorName`. `connectProcessorAndStateStore` adds the `processorName` to the users.
 
 `connectProcessorAndStateStore` gets the `NodeFactory` for the given `processorName` (in <<nodeFactories, nodeFactories>>). Only when the `NodeFactory` is a `ProcessorNodeFactory`, `connectProcessorAndStateStore` link:kafka-streams-ProcessorNodeFactory.adoc#addStateStore[registers] the `stateStoreName` with the `ProcessorNodeFactory`.
 
@@ -946,19 +946,19 @@ InternalTopicConfig createChangelogTopicConfig(
   final String name)
 ----
 
-`createChangelogTopicConfig` creates a <<kafka-streams-UnwindowedChangelogTopicConfig.adoc#, UnwindowedChangelogTopicConfig>> or a <<kafka-streams-WindowedChangelogTopicConfig.adoc#, WindowedChangelogTopicConfig>> per the <<kafka-streams-StateStoreFactory.adoc#isWindowStore, isWindowStore>> flag of the input `StateStoreFactory`.
+`createChangelogTopicConfig` creates a <<kafka-streams-UnwindowedChangelogTopicConfig.adoc#, UnwindowedChangelogTopicConfig>> or a <<kafka-streams-WindowedChangelogTopicConfig.adoc#, WindowedChangelogTopicConfig>> per the <<kafka-streams-internals-StateStoreFactory.adoc#isWindowStore, isWindowStore>> flag of the input `StateStoreFactory`.
 
-Internally, `createChangelogTopicConfig` requests the input link:kafka-streams-StateStoreFactory.adoc[StateStoreFactory] for link:kafka-streams-StateStoreFactory.adoc#isWindowStore[isWindowStore] flag.
+Internally, `createChangelogTopicConfig` requests the input link:kafka-streams-internals-StateStoreFactory.adoc[StateStoreFactory] for link:kafka-streams-internals-StateStoreFactory.adoc#isWindowStore[isWindowStore] flag.
 
 NOTE: `isWindowStore` flag is enabled when a `StateStoreFactory` is created for a link:kafka-streams-internals-WindowStoreBuilder.adoc[WindowStoreBuilder].
 
 If `isWindowStore` flag is enabled (`true`), `createChangelogTopicConfig` does the following:
 
-. Requests the input `StateStoreFactory` for link:kafka-streams-StateStoreFactory.adoc#logConfig[logConfig] and uses it to create a link:kafka-streams-WindowedChangelogTopicConfig.adoc#creating-instance[WindowedChangelogTopicConfig] (for the input `name`)
+. Requests the input `StateStoreFactory` for link:kafka-streams-internals-StateStoreFactory.adoc#logConfig[logConfig] and uses it to create a link:kafka-streams-WindowedChangelogTopicConfig.adoc#creating-instance[WindowedChangelogTopicConfig] (for the input `name`)
 
-. Requests the input `StateStoreFactory` for link:kafka-streams-StateStoreFactory.adoc#retentionPeriod[retentionPeriod] and uses it to requests the `WindowedChangelogTopicConfig` to link:kafka-streams-WindowedChangelogTopicConfig.adoc#setRetentionMs[setRetentionMs]
+. Requests the input `StateStoreFactory` for link:kafka-streams-internals-StateStoreFactory.adoc#retentionPeriod[retentionPeriod] and uses it to requests the `WindowedChangelogTopicConfig` to link:kafka-streams-WindowedChangelogTopicConfig.adoc#setRetentionMs[setRetentionMs]
 
-If `isWindowStore` flag is disabled (`false`), `createChangelogTopicConfig` requests the input `StateStoreFactory` for link:kafka-streams-StateStoreFactory.adoc#logConfig[logConfig] and uses it to create a link:kafka-streams-UnwindowedChangelogTopicConfig.adoc#creating-instance[UnwindowedChangelogTopicConfig] (for the input `name`).
+If `isWindowStore` flag is disabled (`false`), `createChangelogTopicConfig` requests the input `StateStoreFactory` for link:kafka-streams-internals-StateStoreFactory.adoc#logConfig[logConfig] and uses it to create a link:kafka-streams-UnwindowedChangelogTopicConfig.adoc#creating-instance[UnwindowedChangelogTopicConfig] (for the input `name`).
 
 NOTE: `createChangelogTopicConfig` is used exclusively when `InternalTopologyBuilder` is requested for <<topicGroups, topic groups>>.
 
@@ -1031,3 +1031,14 @@ void updateSubscribedTopics(final Set<String> topics, final String logPrefix)
 `updateSubscribedTopics`...FIXME
 
 NOTE: `updateSubscribedTopics` is used exclusively when `TaskManager` is requested to <<kafka-streams-TaskManager.adoc#updateSubscriptionsFromAssignment, updateSubscriptionsFromAssignment>> and <<kafka-streams-TaskManager.adoc#updateSubscriptionsFromMetadata, updateSubscriptionsFromMetadata>>.
+
+=== [[rewriteTopology]] `rewriteTopology` Method
+
+[source, java]
+----
+InternalTopologyBuilder rewriteTopology(final StreamsConfig config)
+----
+
+`rewriteTopology`...FIXME
+
+NOTE: `rewriteTopology` is used exclusively when `KafkaStreams` is <<kafka-streams-KafkaStreams.adoc#creating-instance, created>>.

@@ -30,9 +30,9 @@ Builds a <<kafka-streams-StateStore.adoc#, state store>>
 
 Used when:
 
-* `InternalTopologyBuilder` is requested to <<kafka-streams-internals-InternalTopologyBuilder.adoc#addGlobalStore, add a global state store>>
+* `InternalTopologyBuilder` is requested to <<kafka-streams-internals-InternalTopologyBuilder.adoc#rewriteTopology, rewriteTopology>> (with any `StoreBuilders` for global state stores)
 
-* `StoreBuilderFactory` is requested to <<kafka-streams-StoreBuilderFactory.adoc#build, build a state store>> (when `InternalTopologyBuilder` is requested to <<kafka-streams-internals-InternalTopologyBuilder.adoc#addStateStore, add a state store>>)
+* `StateStoreFactory` is requested to <<kafka-streams-internals-StateStoreFactory.adoc#build, build a StateStore>> (when `InternalTopologyBuilder` is requested to <<kafka-streams-internals-InternalTopologyBuilder.adoc#buildProcessorNode, buildProcessorNode>>)
 
 | logConfig
 a| [[logConfig]]
@@ -72,6 +72,16 @@ String name()
 
 Name of the <<kafka-streams-StateStore.adoc#, state store>> (for identification purposes)
 
+| withCachingDisabled
+a| [[withCachingDisabled]]
+
+[source, java]
+----
+StoreBuilder<T> withCachingDisabled()
+----
+
+Disables caching on <<kafka-streams-StateStore.adoc#, state stores>>
+
 | withCachingEnabled
 a| [[withCachingEnabled]]
 
@@ -90,7 +100,7 @@ a| [[withLoggingDisabled]]
 StoreBuilder<T> withLoggingDisabled()
 ----
 
-Disables change-logging on <<kafka-streams-StateStore.adoc#, state stores>>
+Disables change-logging on <<kafka-streams-StateStore.adoc#, state stores>> (i.e. a changelog for any changes made to the stores)
 
 | withLoggingEnabled
 a| [[withLoggingEnabled]]
