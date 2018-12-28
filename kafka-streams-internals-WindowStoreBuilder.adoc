@@ -40,3 +40,38 @@ With <<kafka-streams-StoreBuilder.adoc#withLoggingEnabled, logging enabled>>, `b
 * [[keySerde]] `Serde<K>` for keys
 * [[valueSerde]] `Serde<V>` for values
 * [[time]] `Time`
+
+=== [[maybeWrapLogging]] `maybeWrapLogging` Internal Method
+
+[source, java]
+----
+WindowStore<Bytes, byte[]> maybeWrapLogging(
+  final WindowStore<Bytes, byte[]> inner)
+----
+
+`maybeWrapLogging`...FIXME
+
+NOTE: `maybeWrapLogging` is used when...FIXME
+
+=== [[maybeWrapCaching]] `maybeWrapCaching` Internal Method
+
+[source, java]
+----
+WindowStore<Bytes, byte[]> maybeWrapCaching(
+  final WindowStore<Bytes, byte[]> inner)
+----
+
+`maybeWrapCaching`...FIXME
+
+NOTE: `maybeWrapCaching` is used when...FIXME
+
+=== [[retentionPeriod]] `retentionPeriod` Method
+
+[source, java]
+----
+long retentionPeriod()
+----
+
+`retentionPeriod`...FIXME
+
+NOTE: `retentionPeriod` is used when...FIXME

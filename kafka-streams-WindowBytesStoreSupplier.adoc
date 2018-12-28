@@ -1,7 +1,7 @@
-== [[WindowBytesStoreSupplier]] WindowBytesStoreSupplier
+== [[WindowBytesStoreSupplier]] WindowBytesStoreSupplier Contract -- StoreSuppliers of WindowStore<Bytes, byte[]>
 
 [[get]]
-`WindowBytesStoreSupplier` is the <<contract, extension>> of the <<kafka-streams-StoreSupplier.adoc#, StoreSupplier contract>> for <<implementations, state store suppliers>> that <<kafka-streams-StoreSupplier.adoc#get, supply WindowStores>>.
+`WindowBytesStoreSupplier` is the <<contract, extension>> of the <<kafka-streams-StoreSupplier.adoc#, StoreSupplier contract>> for <<implementations, state store suppliers>> that <<kafka-streams-StoreSupplier.adoc#get, supply WindowStores>> (i.e. <<kafka-streams-StateStore-WindowStore.adoc#, WindowStores>> of type `<Bytes, byte[]>`).
 
 [[implementations]]
 NOTE: <<kafka-streams-internals-RocksDbWindowBytesStoreSupplier.adoc#, RocksDbWindowBytesStoreSupplier>> is the one and only known implementation of the <<contract, WindowBytesStoreSupplier Contract>>.
@@ -21,7 +21,7 @@ a| [[retainDuplicates]]
 boolean retainDuplicates()
 ----
 
-Used when...FIXME
+Used exclusively when `WindowStoreBuilder` is requested to <<kafka-streams-internals-WindowStoreBuilder.adoc#maybeWrapLogging, maybeWrapLogging>>.
 
 | retentionPeriod
 a| [[retentionPeriod]]
@@ -31,7 +31,7 @@ a| [[retentionPeriod]]
 long retentionPeriod()
 ----
 
-Used when...FIXME
+Used exclusively when `WindowStoreBuilder` is requested for the <<kafka-streams-internals-WindowStoreBuilder.adoc#retentionPeriod, retentionPeriod>>.
 
 | segmentIntervalMs
 a| [[segmentIntervalMs]]
@@ -41,7 +41,7 @@ a| [[segmentIntervalMs]]
 long segmentIntervalMs()
 ----
 
-Used when...FIXME
+Used exclusively when `WindowStoreBuilder` is requested to <<kafka-streams-internals-WindowStoreBuilder.adoc#maybeWrapCaching, maybeWrapCaching>>.
 
 | windowSize
 a| [[windowSize]]
@@ -51,5 +51,6 @@ a| [[windowSize]]
 long windowSize()
 ----
 
-Used when...FIXME
+Used exclusively when `WindowStoreBuilder` is requested to <<kafka-streams-internals-WindowStoreBuilder.adoc#maybeWrapCaching, maybeWrapCaching>>.
+
 |===
