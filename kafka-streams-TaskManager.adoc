@@ -350,7 +350,7 @@ int maybeCommitActiveTasks()
 
 `maybeCommitActiveTasks` simply requests <<active, AssignedStreamsTasks>> to link:kafka-streams-AssignedStreamsTasks.adoc#maybeCommit[commit running stream tasks that requested it].
 
-In the end, `maybeCommitActiveTasks` gives the number of running stream tasks that link:kafka-streams-StreamTask.adoc#commitNeeded[needed a commit].
+In the end, `maybeCommitActiveTasks` gives the number of running stream tasks that link:kafka-streams-internals-StreamTask.adoc#commitNeeded[needed a commit].
 
 NOTE: `maybeCommitActiveTasks` is used exclusively when `StreamThread` is requested to link:kafka-streams-StreamThread.adoc#processAndMaybeCommit[processAndMaybeCommit].
 

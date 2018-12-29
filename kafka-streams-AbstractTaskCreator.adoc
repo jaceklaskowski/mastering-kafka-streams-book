@@ -20,7 +20,7 @@ abstract class StreamThread.AbstractTaskCreator<T extends Task> {
 | Description
 
 | `createTask`
-| [[createTask]] Creates a <<kafka-streams-Task.adoc#, Task>>
+| [[createTask]] Creates a <<kafka-streams-internals-Task.adoc#, Task>>
 
 Used exclusively when `AbstractTaskCreator` is requested to <<createTasks, create tasks>> (when `TaskManager` is requested for link:kafka-streams-TaskManager.adoc#addStandbyTasks[standby] or link:kafka-streams-TaskManager.adoc#addStreamTasks[stream] tasks)
 |===
@@ -35,10 +35,10 @@ NOTE: `AbstractTaskCreator` is a Java abstract class and cannot be <<creating-in
 | Description
 
 | link:kafka-streams-StandbyTaskCreator.adoc[StandbyTaskCreator]
-| Creates link:kafka-streams-StandbyTask.adoc[standby tasks]
+| Creates link:kafka-streams-internals-StandbyTask.adoc[standby tasks]
 
 | link:kafka-streams-TaskCreator.adoc[TaskCreator]
-| Creates link:kafka-streams-StreamTask.adoc[stream tasks]
+| Creates link:kafka-streams-internals-StreamTask.adoc[stream tasks]
 |===
 
 === [[createTasks]] Creating Processor Tasks -- `createTasks` Method

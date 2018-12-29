@@ -2,7 +2,7 @@
 
 `ProcessorContextImpl` is a concrete <<kafka-streams-AbstractProcessorContext.adoc#, AbstractProcessorContext>> that...FIXME
 
-`ProcessorContextImpl` is <<creating-instance, created>> exclusively for a <<kafka-streams-StreamTask.adoc#processorContext, StreamTask>> (that is available as the <<task, StreamTask>>).
+`ProcessorContextImpl` is <<creating-instance, created>> exclusively for a <<kafka-streams-internals-StreamTask.adoc#processorContext, StreamTask>> (that is available as the <<task, StreamTask>>).
 
 === [[getStateStore]] Accessing State Store by Name -- `getStateStore` Method
 
@@ -31,7 +31,7 @@ NOTE: `schedule` is part of link:kafka-streams-ProcessorContext.adoc#schedule[Pr
 `ProcessorContextImpl` takes the following when created:
 
 * [[id]] <<kafka-streams-TaskId.adoc#, TaskId>>
-* [[task]] <<kafka-streams-StreamTask.adoc#, StreamTask>>
+* [[task]] <<kafka-streams-internals-StreamTask.adoc#, StreamTask>>
 * [[config]] <<kafka-streams-StreamsConfig.adoc#, StreamsConfig>>
 * [[collector]] <<kafka-streams-internals-RecordCollector.adoc#, RecordCollector>>
 * [[stateMgr]] <<kafka-streams-ProcessorStateManager.adoc#, ProcessorStateManager>>

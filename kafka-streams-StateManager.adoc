@@ -31,7 +31,7 @@ Closes a state manager
 
 Used when:
 
-* `AbstractTask` is requested to <<kafka-streams-AbstractTask.adoc#closeStateManager, close the state manager>>
+* `AbstractTask` is requested to <<kafka-streams-internals-AbstractTask.adoc#closeStateManager, close the state manager>>
 
 * `GlobalStateUpdateTask` is requested to <<kafka-streams-internals-GlobalStateUpdateTask.adoc#close, close the state manager>>
 
@@ -47,9 +47,9 @@ Flushes all <<kafka-streams-StateStore.adoc#, state stores>> registered (in the 
 
 Used when:
 
-* <<kafka-streams-AbstractTask.adoc#flushState, AbstractTask>> and <<kafka-streams-internals-GlobalStateUpdateTask.adoc#flushState, GlobalStateUpdateTask>> are requested to flush state stores
+* <<kafka-streams-internals-AbstractTask.adoc#flushState, AbstractTask>> and <<kafka-streams-internals-GlobalStateUpdateTask.adoc#flushState, GlobalStateUpdateTask>> are requested to flush state stores
 
-* `StandbyTask` is requested to <<kafka-streams-StandbyTask.adoc#flushAndCheckpointState, flush and checkpoint state stores>>
+* `StandbyTask` is requested to <<kafka-streams-internals-StandbyTask.adoc#flushAndCheckpointState, flush and checkpoint state stores>>
 
 | getGlobalStore
 a| [[getGlobalStore]]
@@ -65,7 +65,7 @@ Used when:
 
 * <<kafka-streams-GlobalProcessorContextImpl.adoc#getStateStore, GlobalProcessorContextImpl>> and <<kafka-streams-ProcessorContextImpl.adoc#getStateStore, ProcessorContextImpl>> are requested to get the global <<kafka-streams-StateStore.adoc#, state store>> by name
 
-* `GlobalStateManagerImpl` is requested to <<kafka-streams-GlobalStateManagerImpl.adoc#getStore, get state store by name>>
+* `GlobalStateManagerImpl` is requested to <<kafka-streams-internals-GlobalStateManagerImpl.adoc#getStore, get state store by name>>
 
 | getStore
 a| [[getStore]]
@@ -77,7 +77,7 @@ StateStore getStore(final String name)
 
 Accessing the <<kafka-streams-StateStore.adoc#, state store>> by name
 
-Used when <<kafka-streams-AbstractTask.adoc#getStore, AbstractTask>> and <<kafka-streams-ProcessorContextImpl.adoc#getStateStore, ProcessorContextImpl>> are requested to get the state store by name
+Used when <<kafka-streams-internals-AbstractTask.adoc#getStore, AbstractTask>> and <<kafka-streams-ProcessorContextImpl.adoc#getStateStore, ProcessorContextImpl>> are requested to get the state store by name
 
 | register
 a| [[register]]
@@ -105,9 +105,9 @@ void reinitializeStateStoresForPartitions(
 
 Used when:
 
-* `AbstractTask` is requested to <<kafka-streams-AbstractTask.adoc#reinitializeStateStoresForPartitions, reinitializeStateStoresForPartitions>>
+* `AbstractTask` is requested to <<kafka-streams-internals-AbstractTask.adoc#reinitializeStateStoresForPartitions, reinitializeStateStoresForPartitions>>
 
-* `GlobalStateManagerImpl` is requested to <<kafka-streams-GlobalStateManagerImpl.adoc#restoreState, restoreState>>
+* `GlobalStateManagerImpl` is requested to <<kafka-streams-internals-GlobalStateManagerImpl.adoc#restoreState, restoreState>>
 
 |===
 

@@ -74,7 +74,7 @@ Use <<kafka-streams-StreamsConfig.adoc#METRICS_RECORDING_LEVEL_CONFIG, StreamsCo
 | `100`
 a| [[poll.ms]] *Polling interval* (in milliseconds), i.e. the time spent waiting in `Consumer.poll` (unless data is available in the buffer). If `0`, returns immediately with any records that are available currently in the buffer, else returns empty. Must not be negative.
 
-* Used when `GlobalStreamThread` is requested to link:kafka-streams-GlobalStreamThread.adoc#initialize[initialize] (which is right after `KafkaStreams` has been link:kafka-streams-KafkaStreams.adoc#start[started]) and creates a link:kafka-streams-StateConsumer.adoc#pollMs[StateConsumer]
+* Used when `GlobalStreamThread` is requested to link:kafka-streams-internals-GlobalStreamThread.adoc#initialize[initialize] (which is right after `KafkaStreams` has been link:kafka-streams-KafkaStreams.adoc#start[started]) and creates a link:kafka-streams-StateConsumer.adoc#pollMs[StateConsumer]
 
 * Used when `StreamThread` is link:kafka-streams-StreamThread.adoc#pollTimeMs[created]
 

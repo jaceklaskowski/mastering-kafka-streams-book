@@ -4,7 +4,7 @@
 
 `StreamsMetricsImpl` is <<creating-instance, created>> when:
 
-* `GlobalStreamThread` is <<kafka-streams-GlobalStreamThread.adoc#, created>>
+* `GlobalStreamThread` is <<kafka-streams-internals-GlobalStreamThread.adoc#, created>>
 
 * `StreamsMetricsThreadImpl` is <<kafka-streams-StreamsMetricsThreadImpl.adoc#, created>>
 

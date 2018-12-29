@@ -30,7 +30,7 @@ Map<TopicPartition, Long> read() throws IOException
 ====
 `read` is used when:
 
-* `GlobalStateManagerImpl` is requested to link:kafka-streams-GlobalStateManagerImpl.adoc#initialize[initialize]
+* `GlobalStateManagerImpl` is requested to link:kafka-streams-internals-GlobalStateManagerImpl.adoc#initialize[initialize]
 * `ProcessorStateManager` is link:kafka-streams-ProcessorStateManager.adoc#creating-instance[created]
 ====
 
@@ -48,7 +48,7 @@ void write(final Map<TopicPartition, Long> offsets) throws IOException
 `write` is used when:
 
 * `AbstractStateManager` is requested to link:kafka-streams-AbstractStateManager.adoc#reinitializeStateStoresForPartitions[reinitializeStateStoresForPartitions]
-* `GlobalStateManagerImpl` is requested to link:kafka-streams-GlobalStateManagerImpl.adoc#checkpoint[checkpoint]
+* `GlobalStateManagerImpl` is requested to link:kafka-streams-internals-GlobalStateManagerImpl.adoc#checkpoint[checkpoint]
 * `ProcessorStateManager` is requested to link:kafka-streams-ProcessorStateManager.adoc#checkpoint[checkpoint]
 ====
 

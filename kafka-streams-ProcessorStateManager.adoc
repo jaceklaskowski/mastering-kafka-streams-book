@@ -2,9 +2,9 @@
 
 `ProcessorStateManager` is a concrete <<kafka-streams-StateManager.adoc#, StateManager>> (as a <<kafka-streams-AbstractStateManager.adoc#, AbstractStateManager>>) that...FIXME
 
-`ProcessorStateManager` is <<creating-instance, created>> exclusively when `AbstractTask` is <<kafka-streams-AbstractTask.adoc#stateMgr, created>> (for <<kafka-streams-StandbyTask.adoc#, StandbyTask>> and <<kafka-streams-StreamTask.adoc#, StreamTask>> tasks).
+`ProcessorStateManager` is <<creating-instance, created>> exclusively when `AbstractTask` is <<kafka-streams-internals-AbstractTask.adoc#stateMgr, created>> (for <<kafka-streams-internals-StandbyTask.adoc#, StandbyTask>> and <<kafka-streams-internals-StreamTask.adoc#, StreamTask>> tasks).
 
-NOTE: `ProcessorStateManager` is <<creating-instance, created>> with the <<isStandby, isStandby>> flag to indicate whether used by <<kafka-streams-StandbyTask.adoc#, StandbyTask>> (`true`) or <<kafka-streams-StreamTask.adoc#, StreamTask>> (`false`).
+NOTE: `ProcessorStateManager` is <<creating-instance, created>> with the <<isStandby, isStandby>> flag to indicate whether used by <<kafka-streams-internals-StandbyTask.adoc#, StandbyTask>> (`true`) or <<kafka-streams-internals-StreamTask.adoc#, StreamTask>> (`false`).
 
 [[STATE_CHANGELOG_TOPIC_SUFFIX]]
 `ProcessorStateManager` uses the *-changelog* suffix for the name of <<storeChangelogTopic, storeChangelogTopic>>.
@@ -55,7 +55,7 @@ Used exclusively when `ProcessorStateManager` is requested to <<getPartition, fi
 
 * [[taskId]] Task ID
 * [[sources]] Source Kafka https://kafka.apache.org/20/javadoc/org/apache/kafka/common/TopicPartition.html[TopicPartitions]
-* [[isStandby]] `isStandby` flag (to indicate whether used by <<kafka-streams-StandbyTask.adoc#, StandbyTask>>, i.e. `true` or <<kafka-streams-StreamTask.adoc#, StreamTask>>, i.e. `false` that is used exclusively when <<register, registering a state store>>)
+* [[isStandby]] `isStandby` flag (to indicate whether used by <<kafka-streams-internals-StandbyTask.adoc#, StandbyTask>>, i.e. `true` or <<kafka-streams-internals-StreamTask.adoc#, StreamTask>>, i.e. `false` that is used exclusively when <<register, registering a state store>>)
 * [[stateDirectory]] link:kafka-streams-internals-StateDirectory.adoc[StateDirectory]
 * [[storeToChangelogTopic]] Names of the state stores and the names of the corresponding changelog topics (from the <<kafka-streams-internals-ProcessorTopology.adoc#storeToChangelogTopic, ProcessorTopology>>)
 * [[changelogReader]] <<kafka-streams-ChangelogReader.adoc#, ChangelogReader>>
@@ -225,7 +225,7 @@ List<ConsumerRecord<byte[], byte[]>> updateStandbyStates(
 
 `updateStandbyStates`...FIXME
 
-NOTE: `updateStandbyStates` is used exclusively when `StandbyTask` is requested to <<kafka-streams-StandbyTask.adoc#update, update standby replicas of the state store>>.
+NOTE: `updateStandbyStates` is used exclusively when `StandbyTask` is requested to <<kafka-streams-internals-StandbyTask.adoc#update, update standby replicas of the state store>>.
 
 === [[checkpoint]] Checkpointing Offsets (Writing Offsets to Checkpoint File) -- `checkpoint` Method
 
@@ -259,4 +259,4 @@ void registerGlobalStateStores(final List<StateStore> stateStores)
 
 `registerGlobalStateStores`...FIXME
 
-NOTE: `registerGlobalStateStores` is used exclusively when `StreamTask` is <<kafka-streams-StreamTask.adoc#, created>>.
+NOTE: `registerGlobalStateStores` is used exclusively when `StreamTask` is <<kafka-streams-internals-StreamTask.adoc#, created>>.

@@ -1,12 +1,82 @@
-== [[ProcessorTopology]] ProcessorTopology
+== [[ProcessorTopology]] ProcessorTopology -- Physical Processor Task Topology
 
-`ProcessorTopology` is...FIXME
+`ProcessorTopology` is a *physical processor task topology* (of <<kafka-streams-Topology.adoc#, logical processor node topology>>).
 
-`ProcessorTopology` is <<creating-instance, created>> exclusively when `InternalTopologyBuilder` is requested to <<kafka-streams-internals-InternalTopologyBuilder.adoc#build, build a processor task topology>>.
+A `ProcessorTopology` is associated with every <<kafka-streams-internals-Task.adoc#topology, task>>.
+
+A `ProcessorTopology` is used to create <<kafka-streams-internals-AbstractTask.adoc#topology, AbstractTask>>, <<kafka-streams-internals-GlobalStateManagerImpl.adoc#topology, GlobalStateManagerImpl>>, <<kafka-streams-internals-GlobalStateUpdateTask.adoc#topology, GlobalStateUpdateTask>>, <<kafka-streams-internals-GlobalStreamThread.adoc#topology, GlobalStreamThread>>, <<kafka-streams-internals-StandbyTask.adoc#topology, StandbyTask>>, and <<kafka-streams-internals-StreamTask.adoc#topology, StreamTask>>.
+
+`ProcessorTopology` is <<creating-instance, created>> when `InternalTopologyBuilder` is requested to build <<kafka-streams-internals-InternalTopologyBuilder.adoc#build, processor task>> and <<kafka-streams-internals-InternalTopologyBuilder.adoc#buildGlobalStateTopology, global state>> topologies.
+
+NOTE: Once <<creating-instance, created>>, all internal registries in `ProcessorTopology` will never change.
+
+`ProcessorTopology` can also be created using the <<methods, "with" methods>>.
+
+[[methods]]
+.ProcessorTopology's with Methods
+[cols="1m,2",options="header",width="100%"]
+|===
+| Method
+| Description
+
+| <<with-internals, with>>
+a| [[with]]
+
+[source, java]
+----
+ProcessorTopology with(
+  final List<ProcessorNode> processorNodes,
+  final Map<String, SourceNode> sourcesByTopic,
+  final List<StateStore> stateStoresByName,
+  final Map<String, String> storeToChangelogTopic)
+----
+
+| <<withGlobalStores-internals, withGlobalStores>>
+a| [[withGlobalStores]]
+
+[source, java]
+----
+ProcessorTopology withGlobalStores(
+  final List<StateStore> stateStores,
+  final Map<String, String> storeToChangelogTopic)
+----
+
+| <<withLocalStores-internals, withLocalStores>>
+a| [[withLocalStores]]
+
+[source, java]
+----
+ProcessorTopology withLocalStores(
+  final List<StateStore> stateStores,
+  final Map<String, String> storeToChangelogTopic)
+----
+
+| <<withRepartitionTopics-internals, withRepartitionTopics>>
+a| [[withRepartitionTopics]]
+
+[source, java]
+----
+ProcessorTopology withRepartitionTopics(
+  final List<ProcessorNode> processorNodes,
+  final Map<String, SourceNode> sourcesByTopic,
+  final Set<String> repartitionTopics)
+----
+
+| <<withSources-internals, withSources>>
+a| [[withSources]]
+
+[source, java]
+----
+ProcessorTopology withSources(
+  final List<ProcessorNode> processorNodes,
+  final Map<String, SourceNode> sourcesByTopic)
+----
+
+|===
 
 [source, scala]
 ----
-// Please note that I use Scala with Java-centric API of Kafka Streams
+// Using Scala with the Java-centric API of Kafka Streams
 import collection.JavaConverters._
 import org.apache.kafka.streams.processor.internals.ProcessorNode
 val processorNodes = Seq.empty[ProcessorNode[_, _]].asJava
@@ -24,21 +94,7 @@ scala> println(topology)
 ProcessorTopology:
 ----
 
-NOTE: Once <<creating-instance, created>>, all internal registries in `ProcessorTopology` will never change.
-
-`ProcessorTopology` can also be created using the builder methods:
-
-* <<with, with>>
-
-* <<withGlobalStores, withGlobalStores>>
-
-* <<withLocalStores, withLocalStores>>
-
-* <<withRepartitionTopics, withRepartitionTopics>>
-
-* <<withSources, withSources>>
-
-=== [[with]] `with` Method
+=== [[with-internals]] `with` Method
 
 [source, java]
 ----
@@ -53,7 +109,7 @@ static ProcessorTopology with(
 
 NOTE: `with` is used when...FIXME
 
-=== [[withGlobalStores]] `withGlobalStores` Method
+=== [[withGlobalStores-internals]] `withGlobalStores` Method
 
 [source, java]
 ----
@@ -66,7 +122,7 @@ static ProcessorTopology withGlobalStores(
 
 NOTE: `withGlobalStores` is used when...FIXME
 
-=== [[withLocalStores]] `withLocalStores` Method
+=== [[withLocalStores-internals]] `withLocalStores` Method
 
 [source, java]
 ----
@@ -79,7 +135,7 @@ static ProcessorTopology withLocalStores(
 
 NOTE: `withLocalStores` is used when...FIXME
 
-=== [[withRepartitionTopics]] `withRepartitionTopics` Method
+=== [[withRepartitionTopics-internals]] `withRepartitionTopics` Method
 
 [source, java]
 ----
@@ -93,7 +149,7 @@ static ProcessorTopology withRepartitionTopics(
 
 NOTE: `withRepartitionTopics` is used when...FIXME
 
-=== [[withSources]] `withSources` Method
+=== [[withSources-internals]] `withSources` Method
 
 [source, java]
 ----

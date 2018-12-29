@@ -38,7 +38,7 @@ NOTE: `AssignedTasks` is a Java abstract class and cannot be <<creating-instance
 | Description
 
 | commitAction
-| [[commitAction]] `TaskAction` that requests <<running, running tasks>> to <<kafka-streams-Task.adoc#commit, commit>> at <<commit, commit>>
+| [[commitAction]] `TaskAction` that requests <<running, running tasks>> to <<kafka-streams-internals-Task.adoc#commit, commit>> at <<commit, commit>>
 
 | created
 a| [[created]] *New tasks* by their ids
@@ -161,15 +161,15 @@ transitioning [taskTypeName] [taskId] to running
 
 NOTE: Registering a task in <<running, running>> internal registry is the only way to mark the task as running (and link:kafka-streams-AssignedStreamsTasks.adoc#process[processing records]).
 
-`transitionToRunning` requests the input `task` to link:kafka-streams-Task.adoc#initializeTopology[initializeTopology].
+`transitionToRunning` requests the input `task` to link:kafka-streams-internals-Task.adoc#initializeTopology[initializeTopology].
 
-`transitionToRunning` registers the link:kafka-streams-Task.adoc#partitions[partitions] of the input `task` with the `task` (in <<runningByPartition, runningByPartition>> internal registry).
+`transitionToRunning` registers the link:kafka-streams-internals-Task.adoc#partitions[partitions] of the input `task` with the `task` (in <<runningByPartition, runningByPartition>> internal registry).
 
-If the input `task` link:kafka-streams-Task.adoc#[has state stores] `transitionToRunning` adds the partitions to the input `readyPartitions`.
+If the input `task` link:kafka-streams-internals-Task.adoc#[has state stores] `transitionToRunning` adds the partitions to the input `readyPartitions`.
 
 NOTE: The input `readyPartitions` could really be an output.
 
-`transitionToRunning` registers the link:kafka-streams-Task.adoc#changelogPartitions[changelog partitions] of the input `task` with the `task` (in <<runningByPartition, runningByPartition>> internal registry).
+`transitionToRunning` registers the link:kafka-streams-internals-Task.adoc#changelogPartitions[changelog partitions] of the input `task` with the `task` (in <<runningByPartition, runningByPartition>> internal registry).
 
 NOTE: `transitionToRunning` is used when `AssignedTasks` is requested to <<initializeNewTasks, initializeNewTasks>>, <<maybeResumeSuspendedTask, maybeResumeSuspendedTask>> and <<updateRestored, updateRestored>>.
 
@@ -209,9 +209,9 @@ Initializing [taskTypeName]s [created]
 
 `initializeNewTasks` walks over all tasks in <<created, created>>.
 
-`initializeNewTasks` checks if a task should link:kafka-streams-Task.adoc#initializeStateStores[initializeStateStores].
+`initializeNewTasks` checks if a task should link:kafka-streams-internals-Task.adoc#initializeStateStores[initializeStateStores].
 
-If a task should link:kafka-streams-Task.adoc#initializeStateStores[initializeStateStores], `initializeNewTasks` simply <<transitionToRunning, schedules the task for execution>> (passing in the collection of Kafka `TopicPartitions` that `initializeNewTasks` gives in the end).
+If a task should link:kafka-streams-internals-Task.adoc#initializeStateStores[initializeStateStores], `initializeNewTasks` simply <<transitionToRunning, schedules the task for execution>> (passing in the collection of Kafka `TopicPartitions` that `initializeNewTasks` gives in the end).
 
 Otherwise, `initializeNewTasks` prints out the following DEBUG message to the logs and <<addToRestoring, addToRestoring>>.
 
@@ -242,9 +242,9 @@ Internally, `closeNonAssignedSuspendedTasks` takes the <<suspended, suspended>> 
 
 1. `newAssignment` does not contain the id of the suspended task
 
-1. The link:kafka-streams-Task.adoc#partitions[partitions] of the suspended task are not equal the partitions in `newAssignment` for the task id
+1. The link:kafka-streams-internals-Task.adoc#partitions[partitions] of the suspended task are not equal the partitions in `newAssignment` for the task id
 
-If either condition holds, `closeNonAssignedSuspendedTasks` prints out the following DEBUG message to the logs, requests the task to link:kafka-streams-Task.adoc#closeSuspended[closeSuspended] (with the `clean` flag enabled) and in the end removes the task from <<suspended, suspended>> tasks.
+If either condition holds, `closeNonAssignedSuspendedTasks` prints out the following DEBUG message to the logs, requests the task to link:kafka-streams-internals-Task.adoc#closeSuspended[closeSuspended] (with the `clean` flag enabled) and in the end removes the task from <<suspended, suspended>> tasks.
 
 ```
 Closing suspended and not re-assigned [taskType] [id]
@@ -277,7 +277,7 @@ If the task is suspended, `maybeResumeSuspendedTask` prints out the following TR
 found suspended [taskTypeName] [taskId]
 ```
 
-`maybeResumeSuspendedTask` checks whether the link:kafka-streams-Task.adoc#partitions[partitions] of the task are exactly the input `partitions`.
+`maybeResumeSuspendedTask` checks whether the link:kafka-streams-internals-Task.adoc#partitions[partitions] of the task are exactly the input `partitions`.
 
 If the partitions do not match, `maybeResumeSuspendedTask` prints out the following WARN message to the logs:
 
@@ -285,7 +285,7 @@ If the partitions do not match, `maybeResumeSuspendedTask` prints out the follow
 couldn't resume task [taskId] assigned partitions [partitions], task partitions [partitions]
 ```
 
-If however the partitions are equal, `maybeResumeSuspendedTask` removes the task (by the input `taskId`) from <<suspended, suspended>> registry and requests the task to link:kafka-streams-Task.adoc#resume[resume].
+If however the partitions are equal, `maybeResumeSuspendedTask` removes the task (by the input `taskId`) from <<suspended, suspended>> registry and requests the task to link:kafka-streams-internals-Task.adoc#resume[resume].
 
 `maybeResumeSuspendedTask` <<transitionToRunning, schedules the task for execution>> and prints out the following TRACE message to the logs:
 
@@ -334,7 +334,7 @@ void describe(
   final String name)
 ----
 
-`describe` simply requests every task in the input `tasks` to link:kafka-streams-Task.adoc#toString[describe itself] and uses the `indent` and `name` to create a text representation.
+`describe` simply requests every task in the input `tasks` to link:kafka-streams-internals-Task.adoc#toString[describe itself] and uses the `indent` and `name` to create a text representation.
 
 [source, scala]
 ----
@@ -350,7 +350,7 @@ NOTE: `describe` is used exclusively when `AssignedTasks` is requested for a <<t
 Set<TopicPartition> uninitializedPartitions()
 ----
 
-`uninitializedPartitions` gives the link:kafka-streams-Task.adoc#partitions[partitions] of the new tasks (from <<created, created>> registry) that link:kafka-streams-Task.adoc#hasStateStores[have state store].
+`uninitializedPartitions` gives the link:kafka-streams-internals-Task.adoc#partitions[partitions] of the new tasks (from <<created, created>> registry) that link:kafka-streams-internals-Task.adoc#hasStateStores[have state store].
 
 NOTE: `uninitializedPartitions` gives an empty set of partitions if <<created, created>> is empty, i.e. has no tasks registered.
 
@@ -394,7 +394,7 @@ NOTE: `suspend` is used exclusively when `TaskManager` is requested to link:kafk
 RuntimeException closeNonRunningTasks(final Collection<T> tasks)
 ----
 
-`closeNonRunningTasks` link:kafka-streams-Task.adoc#close[closes] every task in the given `tasks` one by one (with `clean` and `isZombie` flags off).
+`closeNonRunningTasks` link:kafka-streams-internals-Task.adoc#close[closes] every task in the given `tasks` one by one (with `clean` and `isZombie` flags off).
 
 In case of a `RuntimeException`, `closeNonRunningTasks` prints out the following ERROR to the logs followed by the exception.
 
@@ -460,11 +460,11 @@ Failed to [actionName] [taskTypeName] [taskId] due to the following error:
 void addToRestoring(final T task)
 ----
 
-`addToRestoring` records the input <<kafka-streams-Task.adoc#, task>> in the <<restoring, restoring>> internal registry.
+`addToRestoring` records the input <<kafka-streams-internals-Task.adoc#, task>> in the <<restoring, restoring>> internal registry.
 
-`addToRestoring` records the task's <<kafka-streams-Task.adoc#partitions, partitions>> and <<kafka-streams-Task.adoc#changelogPartitions, changelogPartitions>> in the <<restoringByPartition, restoringByPartition>> internal registry.
+`addToRestoring` records the task's <<kafka-streams-internals-Task.adoc#partitions, partitions>> and <<kafka-streams-internals-Task.adoc#changelogPartitions, changelogPartitions>> in the <<restoringByPartition, restoringByPartition>> internal registry.
 
-NOTE: `addToRestoring` is used exclusively when `AssignedTasks` is requested to <<initializeNewTasks, initialize new tasks>> (and the task is a <<kafka-streams-StreamTask.adoc#, StreamTask>> and <<kafka-streams-Task.adoc#initializeStateStores, has state stores that need restoring>>).
+NOTE: `addToRestoring` is used exclusively when `AssignedTasks` is requested to <<initializeNewTasks, initialize new tasks>> (and the task is a <<kafka-streams-internals-StreamTask.adoc#, StreamTask>> and <<kafka-streams-internals-Task.adoc#initializeStateStores, has state stores that need restoring>>).
 
 === [[commit]] Committing Running Tasks -- `commit` Method
 

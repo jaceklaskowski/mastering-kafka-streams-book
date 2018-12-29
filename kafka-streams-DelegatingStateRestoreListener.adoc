@@ -4,7 +4,7 @@
 
 NOTE: `DelegatingStateRestoreListener` is a final class of <<kafka-streams-KafkaStreams.adoc#, KafkaStreams>> class and so has access to the internals of a `KafkaStreams` instance.
 
-`DelegatingStateRestoreListener` is <<creating-instance, created>> for a <<kafka-streams-KafkaStreams.adoc#, KafkaStreams>> (that uses it to create a <<kafka-streams-GlobalStreamThread.adoc#stateRestoreListener, GlobalStreamThread>> and <<kafka-streams-StreamThread.adoc#create-StoreChangelogReader, StreamThreads>>).
+`DelegatingStateRestoreListener` is <<creating-instance, created>> for a <<kafka-streams-KafkaStreams.adoc#, KafkaStreams>> (that uses it to create a <<kafka-streams-internals-GlobalStreamThread.adoc#stateRestoreListener, GlobalStreamThread>> and <<kafka-streams-StreamThread.adoc#create-StoreChangelogReader, StreamThreads>>).
 
 [[creating-instance]]
 `DelegatingStateRestoreListener` takes no arguments when created.

@@ -483,7 +483,7 @@ void addRecordsToTasks(final ConsumerRecords<byte[], byte[]> records)
 
 For every Kafka https://kafka.apache.org/11/javadoc/org/apache/kafka/common/TopicPartition.html[TopicPartition] in the input Kafka link:++https://kafka.apache.org/11/javadoc/org/apache/kafka/clients/consumer/ConsumerRecords.html#partitions--++[ConsumerRecords] `addRecordsToTasks` requests the <<taskManager, TaskManager>> for the link:kafka-streams-TaskManager.adoc#activeTask[active stream processor task] (for the partition).
 
-With the `StreamTask`, `addRecordsToTasks` requests the `ConsumerRecords` for the link:++https://kafka.apache.org/11/javadoc/org/apache/kafka/clients/consumer/ConsumerRecords.html#records-org.apache.kafka.common.TopicPartition-++[records for the given partition] followed by requesting the `StreamTask` to link:kafka-streams-StreamTask.adoc#addRecords[addRecords] (with the partition and the records).
+With the `StreamTask`, `addRecordsToTasks` requests the `ConsumerRecords` for the link:++https://kafka.apache.org/11/javadoc/org/apache/kafka/clients/consumer/ConsumerRecords.html#records-org.apache.kafka.common.TopicPartition-++[records for the given partition] followed by requesting the `StreamTask` to link:kafka-streams-internals-StreamTask.adoc#addRecords[addRecords] (with the partition and the records).
 
 `addRecordsToTasks` counts the total number of added records to every `StreamTask` (per partition).
 

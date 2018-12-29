@@ -1,10 +1,10 @@
 == [[StandbyTask]] StandbyTask
 
-`StandbyTask` is a concrete link:kafka-streams-AbstractTask.adoc[processor task] that...FIXME
+`StandbyTask` is a concrete link:kafka-streams-internals-AbstractTask.adoc[processor task] that...FIXME
 
 `StandbyTask` is <<creating-instance, created>> when...FIXME
 
-`StandbyTask` is a concrete <<kafka-streams-AbstractTask.adoc#, AbstractTask>> with <<kafka-streams-AbstractTask.adoc#isStandby, isStandby>> flag on.
+`StandbyTask` is a concrete <<kafka-streams-internals-AbstractTask.adoc#, AbstractTask>> with <<kafka-streams-internals-AbstractTask.adoc#isStandby, isStandby>> flag on.
 
 [[internal-registries]]
 .StandbyTask's Internal Properties (e.g. Registries, Counters and Flags)
@@ -43,7 +43,7 @@ void closeSuspended(
   final RuntimeException e)
 ----
 
-NOTE: `closeSuspended` is part of link:kafka-streams-Task.adoc#closeSuspended[Task Contract] to...FIXME.
+NOTE: `closeSuspended` is part of link:kafka-streams-internals-Task.adoc#closeSuspended[Task Contract] to...FIXME.
 
 `closeSuspended`...FIXME
 
@@ -54,7 +54,7 @@ NOTE: `closeSuspended` is part of link:kafka-streams-Task.adoc#closeSuspended[Ta
 boolean initializeStateStores()
 ----
 
-NOTE: `initializeStateStores` is part of <<kafka-streams-Task.adoc#initializeStateStores, Task Contract>> to initialize <<kafka-streams-StateStore.adoc#, state stores>>.
+NOTE: `initializeStateStores` is part of <<kafka-streams-internals-Task.adoc#initializeStateStores, Task Contract>> to initialize <<kafka-streams-StateStore.adoc#, state stores>>.
 
 `initializeStateStores`...FIXME
 
@@ -67,7 +67,7 @@ void close(
   final boolean isZombie)
 ----
 
-NOTE: `close` is part of link:kafka-streams-Task.adoc#close[Task Contract] to close the task.
+NOTE: `close` is part of link:kafka-streams-internals-Task.adoc#close[Task Contract] to close the task.
 
 `close` prints out the following DEBUG message to the logs:
 
@@ -75,11 +75,11 @@ NOTE: `close` is part of link:kafka-streams-Task.adoc#close[Task Contract] to cl
 Closing
 ```
 
-With the input `clean` flag on, `close` <<commit, commit>> followed by link:kafka-streams-AbstractTask.adoc#closeStateManager[closeStateManager] (with `writeCheckpoint` flag on when `clean` was on and <<commit, commit>> was successful).
+With the input `clean` flag on, `close` <<commit, commit>> followed by link:kafka-streams-internals-AbstractTask.adoc#closeStateManager[closeStateManager] (with `writeCheckpoint` flag on when `clean` was on and <<commit, commit>> was successful).
 
-`close` marks the `StandbyTask` as closed (i.e. sets link:kafka-streams-AbstractTask.adoc#taskClosed[taskClosed] to `true`).
+`close` marks the `StandbyTask` as closed (i.e. sets link:kafka-streams-internals-AbstractTask.adoc#taskClosed[taskClosed] to `true`).
 
-`close` returns immediately if the `StandbyTask` has not been link:kafka-streams-AbstractTask.adoc#taskInitialized[initialized] yet, i.e. when `StandbyTask` has not been requested to link:kafka-streams-StandbyTask.adoc#initializeStateStores[initializeStateStores] yet.
+`close` returns immediately if the `StandbyTask` has not been link:kafka-streams-internals-AbstractTask.adoc#taskInitialized[initialized] yet, i.e. when `StandbyTask` has not been requested to link:kafka-streams-internals-StandbyTask.adoc#initializeStateStores[initializeStateStores] yet.
 
 NOTE: The input `isZombie` flag is ignored (and therefore never used) as `StandbyTask` can never be a zombie.
 
@@ -90,7 +90,7 @@ NOTE: The input `isZombie` flag is ignored (and therefore never used) as `Standb
 void initializeTopology()
 ----
 
-NOTE: `initializeTopology` is part of link:kafka-streams-Task.adoc#initializeTopology[Task Contract] to...FIXME.
+NOTE: `initializeTopology` is part of link:kafka-streams-internals-Task.adoc#initializeTopology[Task Contract] to...FIXME.
 
 `initializeTopology` does nothing (and is simply a _noop_).
 
@@ -101,7 +101,7 @@ NOTE: `initializeTopology` is part of link:kafka-streams-Task.adoc#initializeTop
 void resume()
 ----
 
-NOTE: `resume` is part of the <<kafka-streams-Task.adoc#resume, Task Contract>> to...FIXME.
+NOTE: `resume` is part of the <<kafka-streams-internals-Task.adoc#resume, Task Contract>> to...FIXME.
 
 `resume`...FIXME
 
@@ -138,7 +138,7 @@ NOTE: `flushAndCheckpointState` is used when `StandbyTask` is requested to <<com
 void commit()
 ----
 
-NOTE: `commit` is part of <<kafka-streams-Task.adoc#commit, Task Contract>> to...FIXME
+NOTE: `commit` is part of <<kafka-streams-internals-Task.adoc#commit, Task Contract>> to...FIXME
 
 `commit`...FIXME
 
@@ -149,7 +149,7 @@ NOTE: `commit` is part of <<kafka-streams-Task.adoc#commit, Task Contract>> to..
 void suspend()
 ----
 
-NOTE: `suspend` is part of <<kafka-streams-Task.adoc#suspend, Task Contract>> to...FIXME
+NOTE: `suspend` is part of <<kafka-streams-internals-Task.adoc#suspend, Task Contract>> to...FIXME
 
 `suspend`...FIXME
 

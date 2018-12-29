@@ -2,7 +2,7 @@
 
 `StateConsumer` is...FIXME
 
-`StateConsumer` is <<creating-instance, created>> exclusively when `GlobalStreamThread` is requested to link:kafka-streams-GlobalStreamThread.adoc#initialize[initialize].
+`StateConsumer` is <<creating-instance, created>> exclusively when `GlobalStreamThread` is requested to link:kafka-streams-internals-GlobalStreamThread.adoc#initialize[initialize].
 
 `StateConsumer` uses <<globalConsumer, global Kafka consumer>> that is the link:kafka-streams-KafkaClientSupplier.adoc#getRestoreConsumer[restore Kafka consumer] from `KafkaClientSupplier` (which by default is link:kafka-streams-internals-DefaultKafkaClientSupplier.adoc[DefaultKafkaClientSupplier]).
 
@@ -33,7 +33,7 @@ In case of `InvalidOffsetException` `pollAndUpdate` prints out the following ERR
 Updating global state failed. You can restart KafkaStreams to recover from this error.
 ```
 
-NOTE: `pollAndUpdate` is used exclusively when `GlobalStreamThread` is link:kafka-streams-GlobalStreamThread.adoc#run[up and running].
+NOTE: `pollAndUpdate` is used exclusively when `GlobalStreamThread` is link:kafka-streams-internals-GlobalStreamThread.adoc#run[up and running].
 
 === [[initialize]] Initializing StateConsumer (Initializing GlobalStateMaintainer and Setting Offsets) -- `initialize` Method
 
@@ -48,7 +48,7 @@ void initialize()
 
 In the end, `initialize` records the current time in <<lastFlush, lastFlush>>.
 
-NOTE: `initialize` is used exclusively when `GlobalStreamThread` is requested to link:kafka-streams-GlobalStreamThread.adoc#initialize[initialize].
+NOTE: `initialize` is used exclusively when `GlobalStreamThread` is requested to link:kafka-streams-internals-GlobalStreamThread.adoc#initialize[initialize].
 
 === [[creating-instance]] Creating StateConsumer Instance
 

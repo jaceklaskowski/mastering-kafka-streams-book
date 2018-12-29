@@ -1,6 +1,6 @@
 == [[StreamTask]] StreamTask
 
-`StreamTask` is a concrete link:kafka-streams-AbstractTask.adoc[stream processor task] that manages a <<partitions, collection of Kafka TopicPartitions>> as a <<partitionGroup, PartitionGroup>>.
+`StreamTask` is a concrete link:kafka-streams-internals-AbstractTask.adoc[stream processor task] that manages a <<partitions, collection of Kafka TopicPartitions>> as a <<partitionGroup, PartitionGroup>>.
 
 `StreamTask` is <<creating-instance, created>> exclusively when `TaskCreator` is requested to <<kafka-streams-TaskCreator.adoc#createTask, create one>>.
 
@@ -82,7 +82,7 @@ void suspend(final boolean clean)
 ----
 <1> Uses `clean` flag enabled, i.e. `true`
 
-NOTE: `suspend` is part of <<kafka-streams-Task.adoc#suspend, Task Contract>> to...FIXME
+NOTE: `suspend` is part of <<kafka-streams-internals-Task.adoc#suspend, Task Contract>> to...FIXME
 
 `suspend`...FIXME
 
@@ -97,7 +97,7 @@ void close(
   final boolean isZombie)
 ----
 
-NOTE: `close` is part of link:kafka-streams-Task.adoc#close[Task Contract] to...FIXME.
+NOTE: `close` is part of link:kafka-streams-internals-Task.adoc#close[Task Contract] to...FIXME.
 
 `close`...FIXME
 
@@ -137,9 +137,9 @@ NOTE: `initTopology` is used when...FIXME
 void initializeTopology()
 ----
 
-NOTE: `initializeTopology` is part of link:kafka-streams-Task.adoc#initializeTopology[Task Contract] to...FIXME.
+NOTE: `initializeTopology` is part of link:kafka-streams-internals-Task.adoc#initializeTopology[Task Contract] to...FIXME.
 
-`initializeTopology` <<initTopology, initTopology>>. It then requests link:kafka-streams-AbstractTask.adoc#processorContext[InternalProcessorContext] to link:kafka-streams-internals-InternalProcessorContext.adoc#initialized[initialized] and in the end sets link:kafka-streams-AbstractTask.adoc#taskInitialized[taskInitialized] to `true`.
+`initializeTopology` <<initTopology, initTopology>>. It then requests link:kafka-streams-internals-AbstractTask.adoc#processorContext[InternalProcessorContext] to link:kafka-streams-internals-InternalProcessorContext.adoc#initialized[initialized] and in the end sets link:kafka-streams-internals-AbstractTask.adoc#taskInitialized[taskInitialized] to `true`.
 
 === [[updateProcessorContext]] `updateProcessorContext` Internal Method
 
@@ -185,7 +185,7 @@ Completed processing one record [record]
 
 `process` requests the <<consumer, Kafka consumer>> to resume the partition if the size of the link:kafka-streams-internals-RecordInfo.adoc#queue[queue] of the <<recordInfo, RecordInfo>> is exactly <<maxBufferedSize, maxBufferedSize>>.
 
-`process` always requests link:kafka-streams-AbstractTask.adoc#processorContext[InternalProcessorContext] to link:kafka-streams-internals-InternalProcessorContext.adoc#setCurrentNode[setCurrentNode] as `null`.
+`process` always requests link:kafka-streams-internals-AbstractTask.adoc#processorContext[InternalProcessorContext] to link:kafka-streams-internals-InternalProcessorContext.adoc#setCurrentNode[setCurrentNode] as `null`.
 
 In case of a `ProducerFencedException`, `process` reports a `TaskMigratedException`.
 
@@ -216,7 +216,7 @@ void closeSuspended(
   RuntimeException firstException)
 ----
 
-NOTE: `closeSuspended` is part of link:kafka-streams-Task.adoc#closeSuspended[Task Contract] to...FIXME.
+NOTE: `closeSuspended` is part of link:kafka-streams-internals-Task.adoc#closeSuspended[Task Contract] to...FIXME.
 
 `closeSuspended`...FIXME
 
@@ -250,7 +250,7 @@ NOTE: `addRecords` is used exclusively when `StreamThread` is requested to link:
 Map<TopicPartition, Long> recordCollectorOffsets()
 ----
 
-NOTE: `recordCollectorOffsets` is part of link:kafka-streams-AbstractTask.adoc#recordCollectorOffsets[AbstractTask Contract] to...FIXME.
+NOTE: `recordCollectorOffsets` is part of link:kafka-streams-internals-AbstractTask.adoc#recordCollectorOffsets[AbstractTask Contract] to...FIXME.
 
 `recordCollectorOffsets`...FIXME
 
@@ -319,7 +319,7 @@ NOTE: `schedule` is used exclusively when `ProcessorContextImpl` is requested to
 boolean initializeStateStores()
 ----
 
-NOTE: `initializeStateStores` is part of <<kafka-streams-Task.adoc#initializeStateStores, Task Contract>> to initialize <<kafka-streams-StateStore.adoc#, state stores>>.
+NOTE: `initializeStateStores` is part of <<kafka-streams-internals-Task.adoc#initializeStateStores, Task Contract>> to initialize <<kafka-streams-StateStore.adoc#, state stores>>.
 
 `initializeStateStores` prints out the following TRACE message to the logs:
 
@@ -327,9 +327,9 @@ NOTE: `initializeStateStores` is part of <<kafka-streams-Task.adoc#initializeSta
 Initializing state stores
 ```
 
-`initializeStateStores` <<kafka-streams-AbstractTask.adoc#registerStateStores, registerStateStores>>.
+`initializeStateStores` <<kafka-streams-internals-AbstractTask.adoc#registerStateStores, registerStateStores>>.
 
-In the end, `initializeStateStores` returns `true` if the <<kafka-streams-Task.adoc#changelogPartitions, task has any changelog partitions>>. Otherwise, `initializeStateStores` returns `false`.
+In the end, `initializeStateStores` returns `true` if the <<kafka-streams-internals-Task.adoc#changelogPartitions, task has any changelog partitions>>. Otherwise, `initializeStateStores` returns `false`.
 
 === [[commitOffsets]] `commitOffsets` Internal Method
 
@@ -349,7 +349,7 @@ NOTE: `commitOffsets` is used exclusively when `StreamTask` is requested to <<co
 void commit()
 ----
 
-NOTE: `commit` is part of <<kafka-streams-Task.adoc#commit, Task Contract>> to commit the task.
+NOTE: `commit` is part of <<kafka-streams-internals-Task.adoc#commit, Task Contract>> to commit the task.
 
 `commit` simply <<commit-startNewTransaction, commits>> with the `startNewTransaction` flag on.
 
@@ -368,7 +368,7 @@ Committing
 
 `commit` <<flushState, flushState>>.
 
-(only when <<kafka-streams-AbstractTask.adoc#eosEnabled, exactly-once support>> is off) `commit` requests the <<stateMgr, ProcessorStateManager>> to <<kafka-streams-ProcessorStateManager.adoc#checkpoint, checkpoint>> with the <<activeTaskCheckpointableOffsets, checkpointable offsets>>.
+(only when <<kafka-streams-internals-AbstractTask.adoc#eosEnabled, exactly-once support>> is off) `commit` requests the <<stateMgr, ProcessorStateManager>> to <<kafka-streams-ProcessorStateManager.adoc#checkpoint, checkpoint>> with the <<activeTaskCheckpointableOffsets, checkpointable offsets>>.
 
 `commit` <<commitOffsets, commitOffsets>> with the input `startNewTransaction` flag.
 
@@ -385,7 +385,7 @@ NOTE: `commit` is used when `StreamTask` is requested to <<commit, commit>> (tha
 Map<TopicPartition, Long> activeTaskCheckpointableOffsets()
 ----
 
-NOTE: `activeTaskCheckpointableOffsets` is part of the <<kafka-streams-AbstractTask.adoc#activeTaskCheckpointableOffsets, AbstractTask Contract>> to return the checkpointable offsets.
+NOTE: `activeTaskCheckpointableOffsets` is part of the <<kafka-streams-internals-AbstractTask.adoc#activeTaskCheckpointableOffsets, AbstractTask Contract>> to return the checkpointable offsets.
 
 `activeTaskCheckpointableOffsets`...FIXME
 
@@ -396,7 +396,7 @@ NOTE: `activeTaskCheckpointableOffsets` is part of the <<kafka-streams-AbstractT
 void flushState()
 ----
 
-NOTE: `flushState` is part of link:kafka-streams-AbstractTask.adoc#flushState[AbstractTask Contract] to flush all <<kafka-streams-StateStore.adoc#, state stores>> registered with the task.
+NOTE: `flushState` is part of link:kafka-streams-internals-AbstractTask.adoc#flushState[AbstractTask Contract] to flush all <<kafka-streams-StateStore.adoc#, state stores>> registered with the task.
 
 `flushState` prints out the following TRACE message to the logs:
 
@@ -404,6 +404,6 @@ NOTE: `flushState` is part of link:kafka-streams-AbstractTask.adoc#flushState[Ab
 Flushing state and producer
 ```
 
-`flushState` <<kafka-streams-AbstractTask.adoc#flushState, flushes state stores>>.
+`flushState` <<kafka-streams-internals-AbstractTask.adoc#flushState, flushes state stores>>.
 
 `flushState` requests the <<recordCollector, RecordCollector>> to <<kafka-streams-internals-RecordCollector.adoc#flush, flush>>.

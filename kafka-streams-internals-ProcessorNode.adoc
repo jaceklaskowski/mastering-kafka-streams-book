@@ -113,4 +113,4 @@ void punctuate(final long timestamp, final Punctuator punctuator)
 
 `punctuate` requests the <<nodeMetrics, NodeMetrics>> for the link:kafka-streams-NodeMetrics.adoc#metrics[StreamsMetricsImpl] that is requested to link:kafka-streams-StreamsMetricsImpl.adoc#measureLatencyNs[measureLatencyNs] (that records it with the link:kafka-streams-NodeMetrics.adoc#nodePunctuateTimeSensor[nodePunctuateTimeSensor] of the <<nodeMetrics, NodeMetrics>>).
 
-NOTE: `punctuate` is used exclusively when `StreamTask` is requested to link:kafka-streams-StreamTask.adoc#punctuate[execute a scheduled periodic action].
+NOTE: `punctuate` is used exclusively when `StreamTask` is requested to link:kafka-streams-internals-StreamTask.adoc#punctuate[execute a scheduled periodic action].

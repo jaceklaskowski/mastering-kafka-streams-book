@@ -1,6 +1,6 @@
 == [[AssignedStreamsTasks]] AssignedStreamsTasks -- AssignedTasks For StreamTasks
 
-`AssignedStreamsTasks` is a concrete <<kafka-streams-AssignedTasks.adoc#, AssignedTasks>> of <<kafka-streams-StreamTask.adoc#, StreamTasks>> that...FIXME
+`AssignedStreamsTasks` is a concrete <<kafka-streams-AssignedTasks.adoc#, AssignedTasks>> of <<kafka-streams-internals-StreamTask.adoc#, StreamTasks>> that...FIXME
 
 `AssignedStreamsTasks` is <<creating-instance, created>> for a <<kafka-streams-StreamThread.adoc#create, StreamThread>> (when `KafkaStreams` is <<kafka-streams-KafkaStreams.adoc#creating-instance, created>>).
 
@@ -9,11 +9,11 @@
 It _appears_ that `AssignedStreamsTasks` simply operates on the running tasks (i.e. the tasks that are in link:kafka-streams-AssignedTasks.adoc#running[running] internal registry). When requested to <<process, process>> or <<punctuate, punctuate>> `AssignedStreamsTasks` simply walks over the `running` internal registry and triggers execution of every task.
 
 [[maybeCommitAction]]
-`AssignedStreamsTasks` uses the *maybeCommit* task action (`TaskAction<StreamTask>`) that is used in <<maybeCommit, maybeCommit>>. The task action takes a <<kafka-streams-StreamTask.adoc#, stream task>> and checks if the task link:kafka-streams-StreamTask.adoc#commitNeeded[needs a commit]. If so, the action does the following:
+`AssignedStreamsTasks` uses the *maybeCommit* task action (`TaskAction<StreamTask>`) that is used in <<maybeCommit, maybeCommit>>. The task action takes a <<kafka-streams-internals-StreamTask.adoc#, stream task>> and checks if the task link:kafka-streams-internals-StreamTask.adoc#commitNeeded[needs a commit]. If so, the action does the following:
 
 . Increments the <<committed, committed>> internal counter
 
-. Requests the stream task to link:kafka-streams-StreamTask.adoc#commit[commit]
+. Requests the stream task to link:kafka-streams-internals-StreamTask.adoc#commit[commit]
 
 . Prints out the following DEBUG message to the logs:
 +
@@ -62,7 +62,7 @@ Refer to link:kafka-logging.adoc#log4j.properties[Application Logging Using log4
 int process()
 ----
 
-`process` requests every link:kafka-streams-AssignedTasks.adoc#running[running] stream task to link:kafka-streams-StreamTask.adoc#process[process a single record].
+`process` requests every link:kafka-streams-AssignedTasks.adoc#running[running] stream task to link:kafka-streams-internals-StreamTask.adoc#process[process a single record].
 
 In the end, `process` gives the number of stream tasks that processed a single record successfully.
 
@@ -99,7 +99,7 @@ int maybeCommit()
 
 `maybeCommit` resets the <<committed, committed>> internal counter (to `0`) and <<kafka-streams-AssignedTasks.adoc#applyToRunningTasks, executes>> the <<maybeCommitAction, maybeCommitAction>> task action to every <<kafka-streams-AssignedTasks.adoc#running, running task>> (that modifies <<committed, committed>>).
 
-In the end, `maybeCommit` gives the number of running stream tasks that <<kafka-streams-StreamTask.adoc#commitNeeded, needed a commit>>.
+In the end, `maybeCommit` gives the number of running stream tasks that <<kafka-streams-internals-StreamTask.adoc#commitNeeded, needed a commit>>.
 
 NOTE: `maybeCommit` is used exclusively when `TaskManager` is requested to link:kafka-streams-TaskManager.adoc#maybeCommitActiveTasks[maybeCommitActiveTasks].
 

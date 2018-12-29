@@ -6,7 +6,7 @@ In other words, `PunctuationSchedule` represents a <<record, ProcessorNode>> at 
 
 `PunctuationSchedule` is <<creating-instance, created>> when:
 
-* `StreamTask` is requested to link:kafka-streams-StreamTask.adoc#schedule[schedule]
+* `StreamTask` is requested to link:kafka-streams-internals-StreamTask.adoc#schedule[schedule]
 
 * `PunctuationSchedule` is requested for the <<next, next PunctuationSchedule>>
 

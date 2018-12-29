@@ -25,8 +25,8 @@ interface ProcessorNodePunctuator {
 | `punctuate`
 | [[punctuate]] Executing a scheduled periodic action
 
-Used exclusively when `PunctuationQueue` is requested to link:kafka-streams-PunctuationQueue.adoc#mayPunctuate[mayPunctuate] (when `StreamTask` is requested to link:kafka-streams-StreamTask.adoc#maybePunctuateStreamTime[maybePunctuateStreamTime] and link:kafka-streams-StreamTask.adoc#maybePunctuateSystemTime[maybePunctuateSystemTime]).
+Used exclusively when `PunctuationQueue` is requested to link:kafka-streams-PunctuationQueue.adoc#mayPunctuate[mayPunctuate] (when `StreamTask` is requested to link:kafka-streams-internals-StreamTask.adoc#maybePunctuateStreamTime[maybePunctuateStreamTime] and link:kafka-streams-internals-StreamTask.adoc#maybePunctuateSystemTime[maybePunctuateSystemTime]).
 |===
 
 [[implementations]]
-NOTE: link:kafka-streams-StreamTask.adoc[StreamTask] is the one and only known implementation of <<contract, ProcessorNodePunctuator Contract>> in Kafka Streams {{ book.kafka_version }}.
+NOTE: link:kafka-streams-internals-StreamTask.adoc[StreamTask] is the one and only known implementation of <<contract, ProcessorNodePunctuator Contract>> in Kafka Streams {{ book.kafka_version }}.

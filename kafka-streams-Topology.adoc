@@ -1,6 +1,8 @@
-== [[Topology]] Topology -- Directed Acyclic Graph of Stream Processors
+== [[Topology]] Topology -- Logical Processor Node Topology
 
-`Topology` is an *acyclic graph of stream processing nodes* (_DAG of stream processors_) that represents the stream processing logic of a Kafka Streams application.
+`Topology` is an *directed acyclic graph of processors* (aka _DAG of stream processing nodes_) that represents the stream processing logic of a Kafka Streams application.
+
+`Topology` is a logical representation of a <<kafka-streams-internals-ProcessorTopology.adoc#, ProcessorTopology>>.
 
 `Topology` provides the <<operators, fluent API>> to <<creating-instance, create a processing topology>> of <<addStateStore, local>> and <<addGlobalStore, global>> state stores, <<addSource, sources>>, <<addProcessor, processors>> and <<addSink, sinks>>.
 

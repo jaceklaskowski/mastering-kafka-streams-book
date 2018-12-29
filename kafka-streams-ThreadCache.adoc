@@ -4,7 +4,7 @@
 
 `ThreadCache` is <<creating-instance, created>> when:
 
-* `GlobalStreamThread` is <<kafka-streams-GlobalStreamThread.adoc#cache, created>>
+* `GlobalStreamThread` is <<kafka-streams-internals-GlobalStreamThread.adoc#cache, created>>
 
 * `StandbyContextImpl` is <<kafka-streams-StandbyContextImpl.adoc#, created>> (as a <<kafka-streams-AbstractProcessorContext.adoc#cache, AbstractProcessorContext>>)
 

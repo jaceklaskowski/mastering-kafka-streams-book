@@ -41,7 +41,7 @@ a| [[getGlobalConsumer]]
 Consumer<byte[], byte[]> getGlobalConsumer(final Map<String, Object> config);
 ----
 
-A Kafka https://kafka.apache.org/20/javadoc/org/apache/kafka/clients/consumer/KafkaConsumer.html[Consumer] (for <<kafka-streams-GlobalStreamThread.adoc#globalConsumer, GlobalStreamThread>>)
+A Kafka https://kafka.apache.org/20/javadoc/org/apache/kafka/clients/consumer/KafkaConsumer.html[Consumer] (for <<kafka-streams-internals-GlobalStreamThread.adoc#globalConsumer, GlobalStreamThread>>)
 
 Used exclusively when `KafkaStreams` is <<kafka-streams-KafkaStreams.adoc#creating-instance, created>> (for the only purpose of creating a <<kafka-streams-KafkaStreams.adoc#globalStreamThread, GlobalStreamThread>>)
 

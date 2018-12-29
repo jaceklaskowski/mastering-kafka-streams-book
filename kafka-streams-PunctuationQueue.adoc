@@ -14,4 +14,4 @@ boolean mayPunctuate(
 
 `mayPunctuate`...FIXME
 
-NOTE: `mayPunctuate` is used when `StreamTask` is requested to link:kafka-streams-StreamTask.adoc#maybePunctuateStreamTime[maybePunctuateStreamTime] and link:kafka-streams-StreamTask.adoc#maybePunctuateSystemTime[maybePunctuateSystemTime].
+NOTE: `mayPunctuate` is used when `StreamTask` is requested to link:kafka-streams-internals-StreamTask.adoc#maybePunctuateStreamTime[maybePunctuateStreamTime] and link:kafka-streams-internals-StreamTask.adoc#maybePunctuateSystemTime[maybePunctuateSystemTime].

@@ -2,7 +2,7 @@
 
 `RecordQueue` is a <<fifoQueue, FIFO queue of StampedRecords>> that a `StreamTask` uses for...FIXME
 
-`RecordQueue` is <<creating-instance, created>> along with a link:kafka-streams-StreamTask.adoc#creating-instance[StreamTask] exclusively.
+`RecordQueue` is <<creating-instance, created>> along with a link:kafka-streams-internals-StreamTask.adoc#creating-instance[StreamTask] exclusively.
 
 .RecordQueue, StreamTask and TaskCreator
 image::images/kafka-streams-RecordQueue.png[align="center"]
@@ -127,5 +127,5 @@ int size()
 
 * `RecordQueue` is requested to <<addRawRecords, add Kafka ConsumerRecords (as StampedRecords)>>
 
-* `StreamTask` is requested to link:kafka-streams-StreamTask.adoc#process[process a single record]
+* `StreamTask` is requested to link:kafka-streams-internals-StreamTask.adoc#process[process a single record]
 ====

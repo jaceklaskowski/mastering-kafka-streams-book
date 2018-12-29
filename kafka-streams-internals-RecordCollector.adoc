@@ -37,13 +37,13 @@ interface RecordCollector {
 | Description
 
 | `close`
-| [[close]] Used exclusively when `StreamTask` is requested to link:kafka-streams-StreamTask.adoc#closeSuspended[closeSuspended]
+| [[close]] Used exclusively when `StreamTask` is requested to link:kafka-streams-internals-StreamTask.adoc#closeSuspended[closeSuspended]
 
 | `flush`
-| [[flush]] Used exclusively when `StreamTask` is requested to link:kafka-streams-StreamTask.adoc#flushState[flushState]
+| [[flush]] Used exclusively when `StreamTask` is requested to link:kafka-streams-internals-StreamTask.adoc#flushState[flushState]
 
 | `offsets`
-| [[offsets]] Used exclusively when `StreamTask` is requested to link:kafka-streams-StreamTask.adoc#recordCollectorOffsets[recordCollectorOffsets]
+| [[offsets]] Used exclusively when `StreamTask` is requested to link:kafka-streams-internals-StreamTask.adoc#recordCollectorOffsets[recordCollectorOffsets]
 
 | `send`
 a| [[send]] Used when:

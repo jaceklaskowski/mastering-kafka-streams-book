@@ -1,6 +1,6 @@
 == [[PartitionGroup]] PartitionGroup
 
-`PartitionGroup` manages <<partitionQueues, RecordQueues per Kafka TopicPartition>> (as given when <<creating-instance, created>> for a <<kafka-streams-StreamTask.adoc#partitionGroup, StreamTask>>).
+`PartitionGroup` manages <<partitionQueues, RecordQueues per Kafka TopicPartition>> (as given when <<creating-instance, created>> for a <<kafka-streams-internals-StreamTask.adoc#partitionGroup, StreamTask>>).
 
 [[creating-instance]]
 [[partitionQueues]]
@@ -29,7 +29,7 @@ StampedRecord nextRecord(final RecordInfo info)
 
 `nextRecord`...FIXME
 
-NOTE: `nextRecord` is used exclusively when `StreamTask` is link:kafka-streams-StreamTask.adoc#process[processing]...FIXME
+NOTE: `nextRecord` is used exclusively when `StreamTask` is link:kafka-streams-internals-StreamTask.adoc#process[processing]...FIXME
 
 === [[addRawRecords]] Adding Records to RecordQueue (For Kafka Partition) -- `addRawRecords` Method
 
@@ -50,7 +50,7 @@ int addRawRecords(
 
 `addRawRecords` returns the current (new) size of the `RecordQueue`.
 
-NOTE: `addRawRecords` is used exclusively when `StreamTask` is requested to link:kafka-streams-StreamTask.adoc#addRecords[addRecords].
+NOTE: `addRawRecords` is used exclusively when `StreamTask` is requested to link:kafka-streams-internals-StreamTask.adoc#addRecords[addRecords].
 
 === [[clear]] `clear` Method
 
@@ -61,7 +61,7 @@ void clear()
 
 `clear` removes all of the elements from the <<queuesByTime, queuesByTime>> and requests every link:kafka-streams-RecordQueue.adoc[RecordQueue] (in the internal <<partitionQueues, partitionQueues>> registry) to link:kafka-streams-RecordQueue.adoc#clear[clear itself].
 
-NOTE: `clear` is used exclusively when `StreamTask` is requested to link:kafka-streams-StreamTask.adoc#closeTopology[closeTopology].
+NOTE: `clear` is used exclusively when `StreamTask` is requested to link:kafka-streams-internals-StreamTask.adoc#closeTopology[closeTopology].
 
 === [[numBuffered]] `numBuffered` Method
 
@@ -85,4 +85,4 @@ long timestamp()
 
 In the end, `timestamp` returns the oldest partition timestamp (time-wise).
 
-NOTE: `timestamp` is used exclusively when `StreamTask` is requested to <<kafka-streams-StreamTask.adoc#maybePunctuateStreamTime, maybePunctuateStreamTime>>
+NOTE: `timestamp` is used exclusively when `StreamTask` is requested to <<kafka-streams-internals-StreamTask.adoc#maybePunctuateStreamTime, maybePunctuateStreamTime>>

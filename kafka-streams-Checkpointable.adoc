@@ -24,13 +24,13 @@ Checkpointing offsets
 
 Used when:
 
-* `StandbyTask` is requested to <<kafka-streams-StandbyTask.adoc#flushAndCheckpointState, flushAndCheckpointState>> (when requested to <<kafka-streams-StandbyTask.adoc#commit, commit>> and <<kafka-streams-StandbyTask.adoc#suspend, suspend>>)
+* `StandbyTask` is requested to <<kafka-streams-internals-StandbyTask.adoc#flushAndCheckpointState, flushAndCheckpointState>> (when requested to <<kafka-streams-internals-StandbyTask.adoc#commit, commit>> and <<kafka-streams-internals-StandbyTask.adoc#suspend, suspend>>)
 
-* `StreamTask` is requested to <<kafka-streams-StreamTask.adoc#commit, commit>> (with <<kafka-streams-AbstractTask.adoc#eosEnabled, exactly-once support>> is off)
+* `StreamTask` is requested to <<kafka-streams-internals-StreamTask.adoc#commit, commit>> (with <<kafka-streams-internals-AbstractTask.adoc#eosEnabled, exactly-once support>> is off)
 
 * `GlobalStateUpdateTask` is requested to <<kafka-streams-internals-GlobalStateUpdateTask.adoc#flushState, flush state stores>>
 
-* <<kafka-streams-GlobalStateManagerImpl.adoc#close, GlobalStateManagerImpl>> and <<kafka-streams-ProcessorStateManager.adoc#close, ProcessorStateManager>> are requested to close
+* <<kafka-streams-internals-GlobalStateManagerImpl.adoc#close, GlobalStateManagerImpl>> and <<kafka-streams-ProcessorStateManager.adoc#close, ProcessorStateManager>> are requested to close
 
 | checkpointed
 a| [[checkpointed]]
@@ -44,5 +44,5 @@ Used when:
 
 * `GlobalStateUpdateTask` is requested to <<kafka-streams-internals-GlobalStateUpdateTask.adoc#initialize, initialize>>
 
-* `StandbyTask` is requested to <<kafka-streams-StandbyTask.adoc#initializeStateStores, initialize state stores>>
+* `StandbyTask` is requested to <<kafka-streams-internals-StandbyTask.adoc#initializeStateStores, initialize state stores>>
 |===

@@ -12,7 +12,7 @@
 == Developing Stream Processing Applications with Kafka Streams
 
 . link:kafka-streams-KafkaStreams.adoc[KafkaStreams -- Streams Client]
-. link:kafka-streams-Topology.adoc[Topology -- Directed Acyclic Graph of Stream Processors]
+. link:kafka-streams-Topology.adoc[Topology -- Logical Processor Node Topology]
 . link:kafka-streams-StreamsConfig.adoc[StreamsConfig -- Configuration Properties for Kafka Clients]
 . link:kafka-streams-properties.adoc[Configuration Properties]
 . link:kafka-logging.adoc[Logging]
@@ -215,7 +215,6 @@
 .. link:kafka-streams-internals-SourceNode.adoc[SourceNode]
 .. link:kafka-streams-internals-SinkNode.adoc[SinkNode]
 
-. link:kafka-streams-internals-ProcessorTopology.adoc[ProcessorTopology]
 . link:kafka-streams-TopologyDescription.adoc[TopologyDescription]
 
 . link:kafka-streams-internals-InternalStreamsBuilder.adoc[InternalStreamsBuilder]
@@ -273,6 +272,13 @@
 
 === Execution Environment
 
+. link:kafka-streams-internals-ProcessorTopology.adoc[ProcessorTopology -- Physical Processor Task Topology]
+
+. link:kafka-streams-internals-Task.adoc[Task Contract -- Stream Processor Tasks]
+.. link:kafka-streams-internals-AbstractTask.adoc[AbstractTask -- Base Processor Task]
+.. link:kafka-streams-internals-StreamTask.adoc[StreamTask]
+.. link:kafka-streams-internals-StandbyTask.adoc[StandbyTask]
+
 . link:kafka-streams-StreamsPartitionAssignor.adoc[StreamsPartitionAssignor -- Partition Assignment Strategy]
 .. link:kafka-streams-InternalTopicManager.adoc[InternalTopicManager]
 .. link:kafka-streams-internals-AssignmentInfo.adoc[AssignmentInfo]
@@ -282,11 +288,6 @@
 . link:kafka-streams-StreamThread.adoc[StreamThread -- Stream Processor Thread]
 . link:kafka-streams-StreamThread-RebalanceListener.adoc[RebalanceListener -- Kafka ConsumerRebalanceListener for Partition Assignment Among Processor Tasks]
 . link:kafka-streams-StreamsMetadataState.adoc[StreamsMetadataState]
-
-. link:kafka-streams-Task.adoc[Task Contract -- Stream Processor Tasks]
-.. link:kafka-streams-AbstractTask.adoc[AbstractTask -- Base Processor Task]
-.. link:kafka-streams-StreamTask.adoc[StreamTask]
-.. link:kafka-streams-StandbyTask.adoc[StandbyTask]
 
 . link:kafka-streams-TaskManager.adoc[TaskManager]
 . link:kafka-streams-AbstractTaskCreator.adoc[AbstractTaskCreator]
@@ -304,7 +305,7 @@
 
 . link:kafka-streams-ThreadCache.adoc[ThreadCache]
 
-. link:kafka-streams-GlobalStreamThread.adoc[GlobalStreamThread]
+. link:kafka-streams-internals-GlobalStreamThread.adoc[GlobalStreamThread]
 .. link:kafka-streams-StateConsumer.adoc[StateConsumer]
 
 . link:kafka-streams-internals-GlobalStateMaintainer.adoc[GlobalStateMaintainer]
@@ -344,7 +345,7 @@
 
 . link:kafka-streams-ProcessorStateManager.adoc[ProcessorStateManager]
 . link:kafka-streams-GlobalStateManager.adoc[GlobalStateManager]
-.. link:kafka-streams-GlobalStateManagerImpl.adoc[GlobalStateManagerImpl]
+.. link:kafka-streams-internals-GlobalStateManagerImpl.adoc[GlobalStateManagerImpl]
 
 . link:kafka-streams-Checkpointable.adoc[Checkpointable]
 

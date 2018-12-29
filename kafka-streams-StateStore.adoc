@@ -23,7 +23,7 @@ Used when:
 
 * `AbstractStateManager` is requested to <<kafka-streams-AbstractStateManager.adoc#reinitializeStateStoresForPartitions, reinitializeStateStoresForPartitions>>
 
-* <<kafka-streams-GlobalStateManagerImpl.adoc#close, GlobalStateManagerImpl>> and <<kafka-streams-ProcessorStateManager.adoc#close, ProcessorStateManager>> are requested to close
+* <<kafka-streams-internals-GlobalStateManagerImpl.adoc#close, GlobalStateManagerImpl>> and <<kafka-streams-ProcessorStateManager.adoc#close, ProcessorStateManager>> are requested to close
 
 * `RocksDBStore` is requested to `toggleDbForBulkLoading`
 
@@ -41,7 +41,7 @@ Flushes cached data
 
 Used when:
 
-* <<kafka-streams-GlobalStateManagerImpl.adoc#flush, GlobalStateManagerImpl>> and <<kafka-streams-ProcessorStateManager.adoc#flush, ProcessorStateManager>> are requested to flush their state stores
+* <<kafka-streams-internals-GlobalStateManagerImpl.adoc#flush, GlobalStateManagerImpl>> and <<kafka-streams-ProcessorStateManager.adoc#flush, ProcessorStateManager>> are requested to flush their state stores
 
 * <<kafka-streams-StateStore-CachingKeyValueStore.adoc#close, CachingKeyValueStore>>, <<kafka-streams-StateStore-CachingSessionStore.adoc#close, CachingSessionStore>> and <<kafka-streams-StateStore-CachingWindowStore.adoc#close, CachingWindowStore>> are requested to close state stores
 
@@ -63,9 +63,9 @@ Used when:
 
 * `AbstractStateManager` is requested to <<kafka-streams-AbstractStateManager.adoc#reinitializeStateStoresForPartitions, reinitializeStateStoresForPartitions>>
 
-* `AbstractTask` is requested to <<kafka-streams-AbstractTask.adoc#registerStateStores, registerStateStores>>
+* `AbstractTask` is requested to <<kafka-streams-internals-AbstractTask.adoc#registerStateStores, registerStateStores>>
 
-* `GlobalStateManagerImpl` is requested to <<kafka-streams-GlobalStateManagerImpl.adoc#initialize, initialize>>
+* `GlobalStateManagerImpl` is requested to <<kafka-streams-internals-GlobalStateManagerImpl.adoc#initialize, initialize>>
 
 | isOpen
 a| [[isOpen]]
@@ -107,7 +107,7 @@ Indicates whether the state store is persistent (`true`) or not (`false`)
 
 Used when:
 
-* `GlobalStateManagerImpl` is <<kafka-streams-GlobalStateManagerImpl.adoc#creating-instance, created>>
+* `GlobalStateManagerImpl` is <<kafka-streams-internals-GlobalStateManagerImpl.adoc#creating-instance, created>>
 
 * `ProcessorStateManager` is requested to <<kafka-streams-ProcessorStateManager.adoc#register, register a state store>> and <<kafka-streams-ProcessorStateManager.adoc#checkpoint, checkpoint>>
 |===

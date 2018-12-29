@@ -209,7 +209,7 @@ a| [[globalStateRestoreListener]] A user-defined global <<kafka-streams-StateRes
 Set using <<setGlobalStateRestoreListener, setGlobalStateRestoreListener>> method
 
 | globalStreamThread
-a| [[globalStreamThread]] link:kafka-streams-GlobalStreamThread.adoc[GlobalStreamThread]
+a| [[globalStreamThread]] link:kafka-streams-internals-GlobalStreamThread.adoc[GlobalStreamThread]
 
 * Initialized exclusively when <<internalTopologyBuilder, InternalTopologyBuilder>> could link:kafka-streams-internals-InternalTopologyBuilder.adoc#buildGlobalStateTopology[build a global ProcessorTopology]
 

@@ -2,7 +2,7 @@
 
 `GlobalStateUpdateTask` is the one and only link:kafka-streams-internals-GlobalStateMaintainer.adoc[GlobalStateMaintainer] that...FIXME
 
-`GlobalStateUpdateTask` is <<creating-instance, created>> exclusively when `GlobalStreamThread` is requested to link:kafka-streams-GlobalStreamThread.adoc#initialize[initialize] (and creates a link:kafka-streams-StateConsumer.adoc#stateMaintainer[StateConsumer]).
+`GlobalStateUpdateTask` is <<creating-instance, created>> exclusively when `GlobalStreamThread` is requested to link:kafka-streams-internals-GlobalStreamThread.adoc#initialize[initialize] (and creates a link:kafka-streams-StateConsumer.adoc#stateMaintainer[StateConsumer]).
 
 [[offsets]]
 `GlobalStateUpdateTask` keeps track of the *offsets* of the records (by the topics and the partitions) that have already been <<update, processed>>. The offsets are then <<flushState, flushed to the global store>> when requested.
@@ -74,7 +74,7 @@ NOTE: `close` is part of link:kafka-streams-StateManager.adoc#close[StateManager
 
 `GlobalStateUpdateTask` takes the following when created:
 
-* [[topology]] `ProcessorTopology`
+* [[topology]] <<kafka-streams-internals-ProcessorTopology.adoc#, ProcessorTopology>>
 * [[processorContext]] link:kafka-streams-internals-InternalProcessorContext.adoc[InternalProcessorContext]
 * [[stateMgr]] link:kafka-streams-GlobalStateManager.adoc[GlobalStateManager]
 * [[deserializationExceptionHandler]] `DeserializationExceptionHandler`
