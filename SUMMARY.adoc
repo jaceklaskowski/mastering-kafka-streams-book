@@ -215,7 +215,7 @@
 .. link:kafka-streams-internals-SourceNode.adoc[SourceNode]
 .. link:kafka-streams-internals-SinkNode.adoc[SinkNode]
 
-. link:kafka-streams-ProcessorTopology.adoc[ProcessorTopology]
+. link:kafka-streams-internals-ProcessorTopology.adoc[ProcessorTopology]
 . link:kafka-streams-TopologyDescription.adoc[TopologyDescription]
 
 . link:kafka-streams-internals-InternalStreamsBuilder.adoc[InternalStreamsBuilder]

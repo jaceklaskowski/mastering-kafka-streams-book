@@ -82,7 +82,7 @@ NOTE: `closeStateManager` is used when...FIXME
 
 * [[id]] `TaskId`
 * [[partitions]] Assigned Kafka https://kafka.apache.org/20/javadoc/org/apache/kafka/common/TopicPartition.html[TopicPartitions]
-* [[topology]] <<kafka-streams-ProcessorTopology.adoc#, ProcessorTopology>>
+* [[topology]] <<kafka-streams-internals-ProcessorTopology.adoc#, ProcessorTopology>>
 * [[consumer]] Kafka https://kafka.apache.org/20/javadoc/org/apache/kafka/clients/consumer/KafkaConsumer.html[Consumer] (`Consumer<byte[], byte[]>`)
 * [[changelogReader]] <<kafka-streams-ChangelogReader.adoc#, ChangelogReader>>
 * [[isStandby]] `isStandby` flag
@@ -102,7 +102,7 @@ boolean hasStateStores()
 
 NOTE: `hasStateStores` is part of link:kafka-streams-Task.adoc#hasStateStores[Task Contract] to...FIXME.
 
-`hasStateStores` is positive (and returns `true`) when <<topology, ProcessorTopology>> has at least one link:kafka-streams-ProcessorTopology.adoc#stateStores[local state store].
+`hasStateStores` is positive (and returns `true`) when <<topology, ProcessorTopology>> has at least one link:kafka-streams-internals-ProcessorTopology.adoc#stateStores[local state store].
 
 === [[flushState]] Flushing All State Stores -- `flushState` Method
 

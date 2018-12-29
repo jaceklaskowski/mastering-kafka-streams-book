@@ -111,7 +111,7 @@ NOTE: `resume` is part of the <<kafka-streams-Task.adoc#resume, Task Contract>> 
 
 * [[id]] `TaskId`
 * [[partitions]] Assigned Kafka https://kafka.apache.org/20/javadoc/org/apache/kafka/common/TopicPartition.html[TopicPartitions]
-* [[topology]] <<kafka-streams-ProcessorTopology.adoc#, ProcessorTopology>>
+* [[topology]] <<kafka-streams-internals-ProcessorTopology.adoc#, ProcessorTopology>>
 * [[consumer]] Kafka https://kafka.apache.org/20/javadoc/org/apache/kafka/clients/consumer/KafkaConsumer.html[Consumer] (`Consumer<byte[], byte[]>`)
 * [[changelogReader]] <<kafka-streams-ChangelogReader.adoc#, ChangelogReader>>
 * [[config]] <<kafka-streams-StreamsConfig.adoc#, StreamsConfig>>

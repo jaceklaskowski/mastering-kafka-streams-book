@@ -57,7 +57,7 @@ Used exclusively when `ProcessorStateManager` is requested to <<getPartition, fi
 * [[sources]] Source Kafka https://kafka.apache.org/20/javadoc/org/apache/kafka/common/TopicPartition.html[TopicPartitions]
 * [[isStandby]] `isStandby` flag (to indicate whether used by <<kafka-streams-StandbyTask.adoc#, StandbyTask>>, i.e. `true` or <<kafka-streams-StreamTask.adoc#, StreamTask>>, i.e. `false` that is used exclusively when <<register, registering a state store>>)
 * [[stateDirectory]] link:kafka-streams-internals-StateDirectory.adoc[StateDirectory]
-* [[storeToChangelogTopic]] Names of the state stores and the names of the corresponding changelog topics (from the <<kafka-streams-ProcessorTopology.adoc#storeToChangelogTopic, ProcessorTopology>>)
+* [[storeToChangelogTopic]] Names of the state stores and the names of the corresponding changelog topics (from the <<kafka-streams-internals-ProcessorTopology.adoc#storeToChangelogTopic, ProcessorTopology>>)
 * [[changelogReader]] <<kafka-streams-ChangelogReader.adoc#, ChangelogReader>>
 * [[eosEnabled]] `eosEnabled` Flag (that corresponds to link:kafka-streams-properties.adoc#processing.guarantee[processing.guarantee] configuration property)
 * [[logContext]] `LogContext`

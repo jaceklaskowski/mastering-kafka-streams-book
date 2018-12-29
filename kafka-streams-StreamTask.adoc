@@ -107,7 +107,7 @@ NOTE: `close` is part of link:kafka-streams-Task.adoc#close[Task Contract] to...
 
 * [[id]] `TaskId`
 * [[partitions]] Topic partitions (as Kafka's `TopicPartition`)
-* [[topology]] link:kafka-streams-ProcessorTopology.adoc[ProcessorTopology]
+* [[topology]] link:kafka-streams-internals-ProcessorTopology.adoc[ProcessorTopology]
 * [[consumer]] Kafka https://kafka.apache.org/20/javadoc/org/apache/kafka/clients/consumer/KafkaConsumer.html[Consumer] (`Consumer<byte[], byte[]>`)
 * [[changelogReader]] <<kafka-streams-ChangelogReader.adoc#, ChangelogReader>>
 * [[config]] link:kafka-streams-StreamsConfig.adoc[StreamsConfig]

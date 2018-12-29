@@ -888,7 +888,7 @@ For every `NodeFactory` the private `build` checks if the node (by its link:kafk
 
 . For link:kafka-streams-SinkNodeFactory.adoc[SinkNodeFactories], `build` <<buildSinkNode, buildSinkNode>>
 
-In the end, `build` creates a link:kafka-streams-ProcessorTopology.adoc#creating-instance[ProcessorTopology].
+In the end, `build` creates a link:kafka-streams-internals-ProcessorTopology.adoc#creating-instance[ProcessorTopology].
 
 `build` throws a `TopologyException` for unknown `NodeFactories`.
 
