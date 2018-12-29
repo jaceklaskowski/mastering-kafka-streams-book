@@ -1,6 +1,6 @@
 == [[StoreBuilder]] StoreBuilder Contract -- State Store Builders
 
-`StoreBuilder` is the <<contract, contract>> of <<implementations, state store builders>> that can <<build, build a state store>> (with optional <<withCachingEnabled, caching>> and <<withLoggingEnabled, logging>>).
+`StoreBuilder` is the <<contract, abstraction>> of <<implementations, state store builders>> that can <<build, build a state store>> (with optional <<withCachingEnabled, caching>> and <<withLoggingEnabled, logging>>).
 
 [[implementations]]
 NOTE: <<kafka-streams-internals-AbstractStoreBuilder.adoc#, AbstractStoreBuilder>> is the one and only known base implementation of the <<contract, StoreBuilder Contract>>.
