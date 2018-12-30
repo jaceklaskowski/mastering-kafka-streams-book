@@ -19,7 +19,7 @@ NOTE: Once <<creating-instance, created>>, all internal registries in `Processor
 | Method
 | Description
 
-| <<with-internals, with>>
+| with
 a| [[with]]
 
 [source, java]
@@ -31,7 +31,7 @@ ProcessorTopology with(
   final Map<String, String> storeToChangelogTopic)
 ----
 
-| <<withGlobalStores-internals, withGlobalStores>>
+| withGlobalStores
 a| [[withGlobalStores]]
 
 [source, java]
@@ -41,7 +41,7 @@ ProcessorTopology withGlobalStores(
   final Map<String, String> storeToChangelogTopic)
 ----
 
-| <<withLocalStores-internals, withLocalStores>>
+| withLocalStores
 a| [[withLocalStores]]
 
 [source, java]
@@ -51,7 +51,7 @@ ProcessorTopology withLocalStores(
   final Map<String, String> storeToChangelogTopic)
 ----
 
-| <<withRepartitionTopics-internals, withRepartitionTopics>>
+| withRepartitionTopics
 a| [[withRepartitionTopics]]
 
 [source, java]
@@ -62,7 +62,7 @@ ProcessorTopology withRepartitionTopics(
   final Set<String> repartitionTopics)
 ----
 
-| <<withSources-internals, withSources>>
+| withSources
 a| [[withSources]]
 
 [source, java]
@@ -94,74 +94,6 @@ scala> println(topology)
 ProcessorTopology:
 ----
 
-=== [[with-internals]] `with` Method
-
-[source, java]
-----
-static ProcessorTopology with(
-  final List<ProcessorNode> processorNodes,
-  final Map<String, SourceNode> sourcesByTopic,
-  final List<StateStore> stateStoresByName,
-  final Map<String, String> storeToChangelogTopic)
-----
-
-`with`...FIXME
-
-NOTE: `with` is used when...FIXME
-
-=== [[withGlobalStores-internals]] `withGlobalStores` Method
-
-[source, java]
-----
-static ProcessorTopology withGlobalStores(
-  final List<StateStore> stateStores,
-  final Map<String, String> storeToChangelogTopic)
-----
-
-`withGlobalStores`...FIXME
-
-NOTE: `withGlobalStores` is used when...FIXME
-
-=== [[withLocalStores-internals]] `withLocalStores` Method
-
-[source, java]
-----
-static ProcessorTopology withLocalStores(
-  final List<StateStore> stateStores,
-  final Map<String, String> storeToChangelogTopic)
-----
-
-`withLocalStores`...FIXME
-
-NOTE: `withLocalStores` is used when...FIXME
-
-=== [[withRepartitionTopics-internals]] `withRepartitionTopics` Method
-
-[source, java]
-----
-static ProcessorTopology withRepartitionTopics(
-  final List<ProcessorNode> processorNodes,
-  final Map<String, SourceNode> sourcesByTopic,
-  final Set<String> repartitionTopics)
-----
-
-`withRepartitionTopics`...FIXME
-
-NOTE: `withRepartitionTopics` is used when...FIXME
-
-=== [[withSources-internals]] `withSources` Method
-
-[source, java]
-----
-static ProcessorTopology withSources(
-  final List<ProcessorNode> processorNodes,
-  final Map<String, SourceNode> sourcesByTopic)
-----
-
-`withSources`...FIXME
-
-NOTE: `withSources` is used when...FIXME
-
 === [[creating-instance]] Creating ProcessorTopology Instance
 
 `ProcessorTopology` takes the following when created:
@@ -171,16 +103,5 @@ NOTE: `withSources` is used when...FIXME
 * [[sinksByTopic]] link:kafka-streams-internals-SinkNode.adoc[SinkNodes] by name
 * [[stateStores]] Local link:kafka-streams-StateStore.adoc[StateStores]
 * [[globalStateStores]] Global link:kafka-streams-StateStore.adoc[StateStores]
-* [[stateStoreToChangelogTopic]] Names of the <<kafka-streams-StateStore.adoc#, state stores>> and the names of the corresponding changelog topics (from the <<kafka-streams-internals-InternalTopologyBuilder.adoc#storeToChangelogTopic, InternalTopologyBuilder>>)
+* [[stateStoreToChangelogTopic]][[storeToChangelogTopic]] Names of the <<kafka-streams-StateStore.adoc#, state stores>> and the names of the corresponding changelog topics (from the <<kafka-streams-internals-InternalTopologyBuilder.adoc#storeToChangelogTopic, InternalTopologyBuilder>>)
 * [[repartitionTopics]] Names of repartition topics
-
-=== [[storeToChangelogTopic]] `storeToChangelogTopic` Method
-
-[source, java]
-----
-Map<String, String> storeToChangelogTopic()
-----
-
-`storeToChangelogTopic` simply returns the <<stateStoreToChangelogTopic, stateStoreToChangelogTopic>>.
-
-NOTE: `storeToChangelogTopic` is used when...FIXME
