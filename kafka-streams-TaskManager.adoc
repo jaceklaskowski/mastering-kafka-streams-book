@@ -4,6 +4,8 @@
 
 `TaskManager` <<createTasks, creates new tasks>> when `RebalanceListener` handles link:kafka-streams-StreamThread-RebalanceListener.adoc#onPartitionsAssigned[onPartitionsAssigned] (and requests to <<createTasks, create processor tasks for assigned topic partitions>> that in turn <<addStreamTasks, adds new stream tasks>>).
 
+`TaskManager` uses the <<standbyTaskCreator, StandbyTaskCreator>> to <<kafka-streams-StandbyTaskCreator.adoc#createTasks, create standby tasks>> when requested to <<addStandbyTasks, addStandbyTasks>>.
+
 `TaskManager` is <<creating-instance, created>> when `StreamThread` is link:kafka-streams-StreamThread.adoc#create[created] (with a new <<active, AssignedStreamsTasks>> and <<standby, AssignedStandbyTasks>> for <<active, active>> and <<standby, standby>> tasks, respectively).
 
 .Creating TaskManager
@@ -25,30 +27,49 @@ When <<creating-instance, created>>, `TaskManager` is given a <<streamsMetadataS
 
 [[internal-registries]]
 .TaskManager's Internal Properties (e.g. Registries, Counters and Flags)
-[cols="1,2",options="header",width="100%"]
+[cols="1m,2",options="header",width="100%"]
 |===
 | Name
 | Description
 
-| [[assignedActiveTasks]] `assignedActiveTasks`
-a| Kafka https://kafka.apache.org/20/javadoc/org/apache/kafka/common/TopicPartition.html[TopicPartitions] per task id
+| assignedActiveTasks
+a| [[assignedActiveTasks]]
 
-* Set when `TaskManager` is requested to <<setAssignmentMetadata, setAssignmentMetadata>>
+[source, java]
+----
+Map<TaskId, Set<TopicPartition>> assignedActiveTasks
+----
 
-| [[assignedStandbyTasks]] `assignedStandbyTasks`
-|
+*Assigned active tasks* with the Kafka https://kafka.apache.org/21/javadoc/org/apache/kafka/common/TopicPartition.html[TopicPartitions] per <<kafka-streams-TaskId.adoc#, task id>>
 
-| [[cluster]] `cluster`
-a| *Cluster metadata*, i.e. Kafka https://kafka.apache.org/10/javadoc/org/apache/kafka/common/Cluster.html[Cluster] with topic partitions
+* Set when <<setAssignmentMetadata, setting assignment metadata with active and standby tasks>>
+
+| assignedStandbyTasks
+a| [[assignedStandbyTasks]]
+
+[source, java]
+----
+Map<TaskId, Set<TopicPartition>> assignedStandbyTasks
+----
+
+*Assigned standby tasks* with the Kafka https://kafka.apache.org/21/javadoc/org/apache/kafka/common/TopicPartition.html[TopicPartitions] per <<kafka-streams-TaskId.adoc#, task id>>
+
+* Set when <<setAssignmentMetadata, setting assignment metadata with active and standby tasks>>
+
+* Used when <<createTasks, creating processor tasks for assigned topic partitions>> (and <<addStandbyTasks, addStandbyTasks>>)
+
+| cluster
+a| [[cluster]] *Cluster metadata*, i.e. Kafka https://kafka.apache.org/10/javadoc/org/apache/kafka/common/Cluster.html[Cluster] with topic partitions
 
 [[setClusterMetadata]]
 * Set when `StreamsPartitionAssignor` does link:kafka-streams-StreamsPartitionAssignor.adoc#assign[assign] and link:kafka-streams-StreamsPartitionAssignor.adoc#onAssignment[onAssignment]
 
-| [[consumer]] `consumer`
-a| Kafka https://kafka.apache.org/20/javadoc/org/apache/kafka/clients/consumer/KafkaConsumer.html[Consumer] (`Consumer<byte[], byte[]>`)
+| consumer
+a| [[consumer]] Kafka https://kafka.apache.org/20/javadoc/org/apache/kafka/clients/consumer/KafkaConsumer.html[Consumer] (`Consumer<byte[], byte[]>`)
 
 [[setConsumer]]
 Assigned right when `StreamThread` is link:kafka-streams-StreamThread.adoc#create[created] (and corresponds to the link:kafka-streams-StreamThread.adoc#consumer[Kafka consumer] from the link:kafka-streams-KafkaClientSupplier.adoc#getConsumer[KafkaClientSupplier] that was used to create the link:kafka-streams-KafkaStreams.adoc#creating-instance[KafkaStreams])
+
 |===
 
 [[logging]]
@@ -85,7 +106,7 @@ setAssignmentMetadata(
   final Map<TaskId, Set<TopicPartition>> standbyTasks)
 ----
 
-`setAssignmentMetadata` simply sets the <<assignedActiveTasks, assignedActiveTasks>> and <<assignedStandbyTasks, assignedStandbyTasks>> internal registries with the input `activeTasks` and `standbyTasks`, respectively.
+`setAssignmentMetadata` simply sets the <<assignedActiveTasks, assignedActiveTasks>> and <<assignedStandbyTasks, assignedStandbyTasks>> internal registries with the given `activeTasks` and `standbyTasks`, respectively.
 
 NOTE: `setAssignmentMetadata` is used exclusively when `StreamsPartitionAssignor` is requested to <<kafka-streams-StreamsPartitionAssignor.adoc#onAssignment, handle assignment from the leader>>.
 
@@ -272,7 +293,7 @@ void addStandbyTasks()
 
 `addStandbyTasks` registers new standby tasks.
 
-NOTE: `addStandbyTasks` does nothing and simply exits if <<assignedStandbyTasks, assignedStandbyTasks>> has no task.
+NOTE: `addStandbyTasks` does nothing and simply exits when the <<assignedStandbyTasks, assignedStandbyTasks>> internal registry has no standby tasks assigned.
 
 .TaskManager.addStandbyTasks
 image::images/kafka-streams-TaskManager-addStandbyTasks.png[align="center"]
@@ -283,7 +304,7 @@ image::images/kafka-streams-TaskManager-addStandbyTasks.png[align="center"]
 Adding assigned standby tasks [assignedStandbyTasks]
 ```
 
-For every task (id and partitions) in <<assignedStandbyTasks, assignedStandbyTasks>> registry, `addStandbyTasks` requests <<standby, AssignedStandbyTasks>> to link:kafka-streams-AssignedTasks.adoc#maybeResumeSuspendedTask[maybeResumeSuspendedTask] and, if negative, adds the task to tasks to be created in standby mode.
+For every task (id and partitions) in the <<assignedStandbyTasks, assignedStandbyTasks>> registry, `addStandbyTasks` requests <<standby, AssignedStandbyTasks>> to link:kafka-streams-AssignedTasks.adoc#maybeResumeSuspendedTask[maybeResumeSuspendedTask] and, if negative, adds the task to tasks to be created in standby mode.
 
 If no new tasks should be in standby mode, `addStandbyTasks` simply exits.
 

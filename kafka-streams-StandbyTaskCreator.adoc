@@ -1,8 +1,8 @@
 == [[StandbyTaskCreator]] StandbyTaskCreator -- Factory of Standby Tasks
 
-`StandbyTaskCreator` is a concrete link:kafka-streams-AbstractTaskCreator.adoc[AbstractTaskCreator] that can <<createTask, create standby tasks>>.
+`StandbyTaskCreator` is a concrete <<kafka-streams-AbstractTaskCreator.adoc, AbstractTaskCreator>> of <<createTask, standby tasks>>.
 
-`StandbyTaskCreator` is <<creating-instance, created>> exclusively when `StreamThread` is link:kafka-streams-StreamThread.adoc#create[created] (and only to create a link:kafka-streams-TaskManager.adoc#taskCreator[TaskManager]).
+`StandbyTaskCreator` is <<creating-instance, created>> exclusively when `StreamThread` is link:kafka-streams-StreamThread.adoc#create[created] (just to create a link:kafka-streams-TaskManager.adoc#standbyTaskCreator[TaskManager]).
 
 === [[createTask]] Creating Standby Task -- `createTask` Factory Method
 
