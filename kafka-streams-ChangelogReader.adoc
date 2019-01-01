@@ -30,7 +30,7 @@ a| [[reset]]
 void reset()
 ----
 
-Used exclusively when `TaskManager` is requested to <<kafka-streams-TaskManager.adoc#createTasks, create processor tasks for assigned topic partitions>> (when `RebalanceListener` handles <<kafka-streams-StreamThread-RebalanceListener.adoc#onPartitionsAssigned, onPartitionsAssigned>>)
+Used exclusively when `TaskManager` is requested to <<kafka-streams-internals-TaskManager.adoc#createTasks, create processor tasks for assigned topic partitions>> (when `RebalanceListener` handles <<kafka-streams-StreamThread-RebalanceListener.adoc#onPartitionsAssigned, onPartitionsAssigned>>)
 
 | restore
 a| [[restore]]
@@ -40,7 +40,7 @@ a| [[restore]]
 Collection<TopicPartition> restore(final RestoringTasks active)
 ----
 
-Used exclusively when `TaskManager` is requested to <<kafka-streams-TaskManager.adoc#updateNewAndRestoringTasks, updateNewAndRestoringTasks>> (when the owning `StreamThread` is requested to <<kafka-streams-StreamThread.adoc#runOnce, poll records once>> while <<kafka-streams-StreamThread.adoc#runLoop, running the main record processing loop>>)
+Used exclusively when `TaskManager` is requested to <<kafka-streams-internals-TaskManager.adoc#updateNewAndRestoringTasks, updateNewAndRestoringTasks>> (when the owning `StreamThread` is requested to <<kafka-streams-StreamThread.adoc#runOnce, poll records once>> while <<kafka-streams-StreamThread.adoc#runLoop, running the main record processing loop>>)
 
 | restoredOffsets
 a| [[restoredOffsets]]

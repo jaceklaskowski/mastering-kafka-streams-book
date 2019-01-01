@@ -20,9 +20,9 @@ From the documentation of https://kafka.apache.org/10/javadoc/org/apache/kafka/c
 .Creating RebalanceListener
 image::images/kafka-streams-RebalanceListener-creating-instance.png[align="center"]
 
-At the completion of a successful partition re-assignment (i.e. <<onPartitionsAssigned, onPartitionsAssigned>> event) `RebalanceListener` requests <<taskManager, TaskManager>> to link:kafka-streams-TaskManager.adoc#createTasks[creating processor tasks for assigned topic partitions].
+At the completion of a successful partition re-assignment (i.e. <<onPartitionsAssigned, onPartitionsAssigned>> event) `RebalanceListener` requests <<taskManager, TaskManager>> to link:kafka-streams-internals-TaskManager.adoc#createTasks[creating processor tasks for assigned topic partitions].
 
-At the start of a rebalance operation (i.e. <<onPartitionsRevoked, onPartitionsRevoked>> event) `RebalanceListener` requests <<taskManager, TaskManager>> to link:kafka-streams-TaskManager.adoc#suspendTasksAndState[suspending all stream tasks and state].
+At the start of a rebalance operation (i.e. <<onPartitionsRevoked, onPartitionsRevoked>> event) `RebalanceListener` requests <<taskManager, TaskManager>> to link:kafka-streams-internals-TaskManager.adoc#suspendTasksAndState[suspending all stream tasks and state].
 
 `RebalanceListener` uses <<streamThread, StreamThread>> for the following:
 
@@ -65,7 +65,7 @@ at state [state]: partitions [assignment] assigned at the end of consumer rebala
   current suspended standby tasks: [taskIds]
 ```
 
-`onPartitionsAssigned` requests <<streamThread, StreamThread>> to set the state to `PARTITIONS_ASSIGNED` followed by requesting <<taskManager, TaskManager>> for link:kafka-streams-TaskManager.adoc#createTasks[processor tasks for assigned topic partitions].
+`onPartitionsAssigned` requests <<streamThread, StreamThread>> to set the state to `PARTITIONS_ASSIGNED` followed by requesting <<taskManager, TaskManager>> for link:kafka-streams-internals-TaskManager.adoc#createTasks[processor tasks for assigned topic partitions].
 
 In the end, `onPartitionsAssigned` prints out the following INFO message to the logs:
 
@@ -94,6 +94,6 @@ NOTE: `onPartitionsRevoked` is part of `ConsumerRebalanceListener` Contract in A
 `RebalanceListener` takes the following when created:
 
 * [[time]] `Time`
-* [[taskManager]] link:kafka-streams-TaskManager.adoc[TaskManager]
+* [[taskManager]] link:kafka-streams-internals-TaskManager.adoc[TaskManager]
 * [[streamThread]] link:kafka-streams-StreamThread.adoc[StreamThread]
 * [[log]] `Logger`

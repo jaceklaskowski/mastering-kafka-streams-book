@@ -22,7 +22,7 @@ abstract class StreamThread.AbstractTaskCreator<T extends Task> {
 | `createTask`
 | [[createTask]] Creates a <<kafka-streams-internals-Task.adoc#, Task>>
 
-Used exclusively when `AbstractTaskCreator` is requested to <<createTasks, create tasks>> (when `TaskManager` is requested for link:kafka-streams-TaskManager.adoc#addStandbyTasks[standby] or link:kafka-streams-TaskManager.adoc#addStreamTasks[stream] tasks)
+Used exclusively when `AbstractTaskCreator` is requested to <<createTasks, create tasks>> (when `TaskManager` is requested for link:kafka-streams-internals-TaskManager.adoc#addStandbyTasks[standby] or link:kafka-streams-internals-TaskManager.adoc#addStreamTasks[stream] tasks)
 |===
 
 NOTE: `AbstractTaskCreator` is a Java abstract class and cannot be <<creating-instance, created>> directly. It is created indirectly when the <<implementations, concrete AbstractTaskCreators>> are.
@@ -52,7 +52,7 @@ Collection<T> createTasks(
 
 `createTasks`...FIXME
 
-NOTE: `createTasks` is used when `TaskManager` is requested for <<kafka-streams-TaskManager.adoc#addStandbyTasks, standby>> or <<kafka-streams-TaskManager.adoc#addStreamTasks, stream>> tasks.
+NOTE: `createTasks` is used when `TaskManager` is requested for <<kafka-streams-internals-TaskManager.adoc#addStandbyTasks, standby>> or <<kafka-streams-internals-TaskManager.adoc#addStreamTasks, stream>> tasks.
 
 === [[creating-instance]] Creating AbstractTaskCreator Instance
 

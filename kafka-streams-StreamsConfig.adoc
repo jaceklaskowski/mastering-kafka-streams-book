@@ -205,7 +205,7 @@ client.id = my-client-id-admin
 
 * `KafkaStreams` is <<kafka-streams-KafkaStreams.adoc#adminClient, created>>
 
-* `InternalTopicManager` is <<kafka-streams-InternalTopicManager.adoc#retries, created>>
+* `InternalTopicManager` is <<kafka-streams-internals-InternalTopicManager.adoc#retries, created>>
 ====
 
 === [[clientProps]] Collecting Properties per Key -- `clientProps` Internal Method

@@ -15,7 +15,7 @@ When <<creating-instance, created>>, `TaskManager` is given a Kafka <<adminClien
 
 * `TaskManager` is requested to <<maybePurgeCommitedRecords, maybePurgeCommitedRecords>> (and deletes records)
 
-* `StreamsPartitionAssignor` is requested to <<kafka-streams-StreamsPartitionAssignor.adoc#configure, configure>> (and creates an <<kafka-streams-StreamsPartitionAssignor.adoc#internalTopicManager, InternalTopicManager>>)
+* `StreamsPartitionAssignor` is requested to <<kafka-streams-internals-StreamsPartitionAssignor.adoc#configure, configure>> (and creates an <<kafka-streams-internals-StreamsPartitionAssignor.adoc#internalTopicManager, InternalTopicManager>>)
 
 When <<creating-instance, created>>, `TaskManager` is given a <<streamsMetadataState, StreamsMetadataState>> that is used exclusively to <<setPartitionsByHostState, get notifications about the changes in cluster metadata>>. The <<streamsMetadataState, StreamsMetadataState>> can then be displayed when `TaskManager` is requested for <<toString, text representation>>.
 
@@ -62,7 +62,7 @@ Map<TaskId, Set<TopicPartition>> assignedStandbyTasks
 a| [[cluster]] *Cluster metadata*, i.e. Kafka https://kafka.apache.org/10/javadoc/org/apache/kafka/common/Cluster.html[Cluster] with topic partitions
 
 [[setClusterMetadata]]
-* Set when `StreamsPartitionAssignor` does link:kafka-streams-StreamsPartitionAssignor.adoc#assign[assign] and link:kafka-streams-StreamsPartitionAssignor.adoc#onAssignment[onAssignment]
+* Set when `StreamsPartitionAssignor` does link:kafka-streams-internals-StreamsPartitionAssignor.adoc#assign[assign] and link:kafka-streams-internals-StreamsPartitionAssignor.adoc#onAssignment[onAssignment]
 
 | consumer
 a| [[consumer]] Kafka https://kafka.apache.org/20/javadoc/org/apache/kafka/clients/consumer/KafkaConsumer.html[Consumer] (`Consumer<byte[], byte[]>`)
@@ -95,7 +95,7 @@ void setPartitionsByHostState(final Map<HostInfo, Set<TopicPartition>> partition
 
 `setPartitionsByHostState` simply notifies the <<streamsMetadataState, StreamsMetadataState>> that <<kafka-streams-StreamsMetadataState.adoc#onChange, cluster metadata has changed>>.
 
-NOTE: `setPartitionsByHostState` is used when `StreamsPartitionAssignor` is requested to <<kafka-streams-StreamsPartitionAssignor.adoc#assign, assign>> and <<kafka-streams-StreamsPartitionAssignor.adoc#onAssignment, onAssignment>>.
+NOTE: `setPartitionsByHostState` is used when `StreamsPartitionAssignor` is requested to <<kafka-streams-internals-StreamsPartitionAssignor.adoc#assign, assign>> and <<kafka-streams-internals-StreamsPartitionAssignor.adoc#onAssignment, onAssignment>>.
 
 === [[setAssignmentMetadata]] Setting Assignment Metadata with Active and Standby Tasks -- `setAssignmentMetadata` Method
 
@@ -108,7 +108,7 @@ setAssignmentMetadata(
 
 `setAssignmentMetadata` simply sets the <<assignedActiveTasks, assignedActiveTasks>> and <<assignedStandbyTasks, assignedStandbyTasks>> internal registries with the given `activeTasks` and `standbyTasks`, respectively.
 
-NOTE: `setAssignmentMetadata` is used exclusively when `StreamsPartitionAssignor` is requested to <<kafka-streams-StreamsPartitionAssignor.adoc#onAssignment, handle assignment from the leader>>.
+NOTE: `setAssignmentMetadata` is used exclusively when `StreamsPartitionAssignor` is requested to <<kafka-streams-internals-StreamsPartitionAssignor.adoc#onAssignment, handle assignment from the leader>>.
 
 === [[updateSubscriptionsFromAssignment]] `updateSubscriptionsFromAssignment` Method
 
@@ -119,7 +119,7 @@ void updateSubscriptionsFromAssignment(List<TopicPartition> partitions)
 
 `updateSubscriptionsFromAssignment`...FIXME
 
-NOTE: `updateSubscriptionsFromAssignment` is used exclusively when `StreamsPartitionAssignor` is requested to link:kafka-streams-StreamsPartitionAssignor.adoc#onAssignment[handle assignment from the leader]
+NOTE: `updateSubscriptionsFromAssignment` is used exclusively when `StreamsPartitionAssignor` is requested to link:kafka-streams-internals-StreamsPartitionAssignor.adoc#onAssignment[handle assignment from the leader]
 
 === [[updateSubscriptionsFromMetadata]] `updateSubscriptionsFromMetadata` Method
 
@@ -130,7 +130,7 @@ void updateSubscriptionsFromMetadata(Set<String> topics)
 
 `updateSubscriptionsFromMetadata`...FIXME
 
-NOTE: `updateSubscriptionsFromMetadata` is used when `StreamsPartitionAssignor` is requested to link:kafka-streams-StreamsPartitionAssignor.adoc#subscription[subscription]
+NOTE: `updateSubscriptionsFromMetadata` is used when `StreamsPartitionAssignor` is requested to link:kafka-streams-internals-StreamsPartitionAssignor.adoc#subscription[subscription]
 
 === [[suspendTasksAndState]] Suspending All (Active and Standby) Stream Tasks And State -- `suspendTasksAndState` Method
 

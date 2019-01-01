@@ -20,7 +20,7 @@ TIP: Read https://cwiki.apache.org/confluence/display/KAFKA/Kafka+Client-side+As
 | Description
 
 | internalTopicManager
-| [[internalTopicManager]] <<kafka-streams-InternalTopicManager.adoc#, InternalTopicManager>>
+| [[internalTopicManager]] <<kafka-streams-internals-InternalTopicManager.adoc#, InternalTopicManager>>
 
 Initialized when `StreamsPartitionAssignor` is requested to <<configure, configure>> itself
 
@@ -82,13 +82,13 @@ CAUTION: FIXME Finish me
 
 In the end, `onAssignment` requests the <<taskManager, TaskManager>> for the following:
 
-. <<kafka-streams-TaskManager.adoc#setClusterMetadata, Setting cluster metadata>>
+. <<kafka-streams-internals-TaskManager.adoc#setClusterMetadata, Setting cluster metadata>>
 
-. <<kafka-streams-TaskManager.adoc#setPartitionsByHostState, Notifying StreamsMetadataState about Cluster Metadata Changes>>
+. <<kafka-streams-internals-TaskManager.adoc#setPartitionsByHostState, Notifying StreamsMetadataState about Cluster Metadata Changes>>
 
-. <<kafka-streams-TaskManager.adoc#setAssignmentMetadata, Setting assigned metadata>> with active and standby tasks
+. <<kafka-streams-internals-TaskManager.adoc#setAssignmentMetadata, Setting assigned metadata>> with active and standby tasks
 
-. <<kafka-streams-TaskManager.adoc#updateSubscriptionsFromAssignment, updateSubscriptionsFromAssignment>> with the assigned partitions
+. <<kafka-streams-internals-TaskManager.adoc#updateSubscriptionsFromAssignment, updateSubscriptionsFromAssignment>> with the assigned partitions
 
 `onAssignment` reports an `TaskAssignmentException` if the numbers of partitions and active tasks are not equal.
 

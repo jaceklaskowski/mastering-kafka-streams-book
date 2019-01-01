@@ -66,7 +66,7 @@ int process()
 
 In the end, `process` gives the number of stream tasks that processed a single record successfully.
 
-NOTE: `process` is used exclusively when `TaskManager` is requested to link:kafka-streams-TaskManager.adoc#process[process records].
+NOTE: `process` is used exclusively when `TaskManager` is requested to link:kafka-streams-internals-TaskManager.adoc#process[process records].
 
 ==== [[process-TaskMigratedException]] process and TaskMigratedException
 
@@ -101,7 +101,7 @@ int maybeCommit()
 
 In the end, `maybeCommit` gives the number of running stream tasks that <<kafka-streams-internals-StreamTask.adoc#commitNeeded, needed a commit>>.
 
-NOTE: `maybeCommit` is used exclusively when `TaskManager` is requested to link:kafka-streams-TaskManager.adoc#maybeCommitActiveTasks[maybeCommitActiveTasks].
+NOTE: `maybeCommit` is used exclusively when `TaskManager` is requested to link:kafka-streams-internals-TaskManager.adoc#maybeCommitActiveTasks[maybeCommitActiveTasks].
 
 === [[punctuate]] `punctuate` Method
 
@@ -112,4 +112,4 @@ int punctuate()
 
 `punctuate`...FIXME
 
-NOTE: `punctuate` is used exclusively when `TaskManager` is requested to link:kafka-streams-TaskManager.adoc#punctuate[punctuate].
+NOTE: `punctuate` is used exclusively when `TaskManager` is requested to link:kafka-streams-internals-TaskManager.adoc#punctuate[punctuate].

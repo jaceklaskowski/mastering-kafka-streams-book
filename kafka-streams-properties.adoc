@@ -19,7 +19,7 @@ Use <<kafka-streams-StreamsConfig.adoc#APPLICATION_ID_CONFIG, StreamsConfig.APPL
 | (empty)
 | [[application.server]] A `host:port` pair of a user-defined endpoint of a single instance in <<kafka-streams-multi-instance-kafka-streams-application.adoc#, multi-instance Kafka Streams application>> that can be used for discovering the locations of local state stores
 
-Used exclusively when `StreamPartitionAssignor` is requested to <<kafka-streams-StreamsPartitionAssignor.adoc#configure, configure itself>>.
+Used exclusively when `StreamPartitionAssignor` is requested to <<kafka-streams-internals-StreamsPartitionAssignor.adoc#configure, configure itself>>.
 
 Use <<kafka-streams-StreamsConfig.adoc#APPLICATION_SERVER_CONFIG, StreamsConfig.APPLICATION_SERVER_CONFIG>> to reference the property.
 

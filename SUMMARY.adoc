@@ -279,8 +279,8 @@
 .. link:kafka-streams-internals-StreamTask.adoc[StreamTask]
 .. link:kafka-streams-internals-StandbyTask.adoc[StandbyTask]
 
-. link:kafka-streams-StreamsPartitionAssignor.adoc[StreamsPartitionAssignor -- Partition Assignment Strategy]
-.. link:kafka-streams-InternalTopicManager.adoc[InternalTopicManager]
+. link:kafka-streams-internals-StreamsPartitionAssignor.adoc[StreamsPartitionAssignor -- Partition Assignment Strategy]
+.. link:kafka-streams-internals-InternalTopicManager.adoc[InternalTopicManager]
 .. link:kafka-streams-internals-AssignmentInfo.adoc[AssignmentInfo]
 .. link:kafka-streams-internals-SubscriptionInfo.adoc[SubscriptionInfo]
 .. link:kafka-streams-internals-ClientMetadata.adoc[ClientMetadata]
@@ -289,7 +289,7 @@
 . link:kafka-streams-StreamThread-RebalanceListener.adoc[RebalanceListener -- Kafka ConsumerRebalanceListener for Partition Assignment Among Processor Tasks]
 . link:kafka-streams-StreamsMetadataState.adoc[StreamsMetadataState]
 
-. link:kafka-streams-TaskManager.adoc[TaskManager]
+. link:kafka-streams-internals-TaskManager.adoc[TaskManager]
 . link:kafka-streams-AbstractTaskCreator.adoc[AbstractTaskCreator]
 .. link:kafka-streams-StandbyTaskCreator.adoc[StandbyTaskCreator -- Factory of Standby Tasks]
 .. link:kafka-streams-TaskCreator.adoc[TaskCreator -- Factory of Stream Tasks]

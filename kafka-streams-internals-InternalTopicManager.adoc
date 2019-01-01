@@ -1,6 +1,6 @@
 == [[InternalTopicManager]] InternalTopicManager
 
-`InternalTopicManager` is <<creating-instance, created>> exclusively for the <<kafka-streams-StreamsPartitionAssignor.adoc#internalTopicManager, StreamsPartitionAssignor>> so it can <<makeReady, make repartition and state changelog internal topics ready>>.
+`InternalTopicManager` is <<creating-instance, created>> exclusively for the <<kafka-streams-internals-StreamsPartitionAssignor.adoc#internalTopicManager, StreamsPartitionAssignor>> so it can <<makeReady, make repartition and state changelog internal topics ready>>.
 
 `InternalTopicManager` uses a Kafka <<adminClient, AdminClient>> to <<makeReady, create>> and <<getNumPartitions, describe>> topics.
 
@@ -74,7 +74,7 @@ void makeReady(final Map<String, InternalTopicConfig> topics)
 
 `makeReady`...FIXME
 
-NOTE: `makeReady` is used exclusively when `StreamsPartitionAssignor` is requested to <<kafka-streams-StreamsPartitionAssignor.adoc#prepareTopic, prepareTopic>> (when requested to <<kafka-streams-StreamsPartitionAssignor.adoc#assign, perform group assignment>>).
+NOTE: `makeReady` is used exclusively when `StreamsPartitionAssignor` is requested to <<kafka-streams-internals-StreamsPartitionAssignor.adoc#prepareTopic, prepareTopic>> (when requested to <<kafka-streams-internals-StreamsPartitionAssignor.adoc#assign, perform group assignment>>).
 
 === [[getNumPartitions]] `getNumPartitions` Method
 

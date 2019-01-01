@@ -220,7 +220,7 @@ a| [[globalStreamThread]] link:kafka-streams-internals-GlobalStreamThread.adoc[G
 | adminClient
 a| [[adminClient]] Kafka https://kafka.apache.org/21/javadoc/org/apache/kafka/clients/admin/AdminClient.html[AdminClient] (that allows for managing and inspecting topics, brokers, configurations and ACLs)
 
-* Initialized when `KafkaStreams` is <<creating-instance-adminClient, created>> for the only purpose of <<kafka-streams-StreamThread.adoc#create, creating StreamThreads>> (that simply use it to <<kafka-streams-TaskManager.adoc#adminClient, create a TaskManager>>)
+* Initialized when `KafkaStreams` is <<creating-instance-adminClient, created>> for the only purpose of <<kafka-streams-StreamThread.adoc#create, creating StreamThreads>> (that simply use it to <<kafka-streams-internals-TaskManager.adoc#adminClient, create a TaskManager>>)
 
 * Closed when `KafkaStreams` is <<close, closed>>
 

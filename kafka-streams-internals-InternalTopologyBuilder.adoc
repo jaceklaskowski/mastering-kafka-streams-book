@@ -603,7 +603,7 @@ Map<Integer, TopicsInfo> topicGroups()
 
 `topicGroups`...FIXME
 
-NOTE: `topicGroups` is used exclusively when `StreamsPartitionAssignor` is requested to link:kafka-streams-StreamsPartitionAssignor.adoc#assign[assign].
+NOTE: `topicGroups` is used exclusively when `StreamsPartitionAssignor` is requested to link:kafka-streams-internals-StreamsPartitionAssignor.adoc#assign[assign].
 
 === [[nodeGroups-accessor]] Getting Node Groups by ID -- `nodeGroups` Accessor Method
 
@@ -981,7 +981,7 @@ Before returning the <<topicPattern, source topics pattern>>, `sourceTopicPatter
 
 * `StreamThread` is requested to <<kafka-streams-StreamThread.adoc#runLoop, run the main record processing loop>> and <<kafka-streams-StreamThread.adoc#enforceRebalance, enforceRebalance>>
 
-* `TaskManager` is requested to <<kafka-streams-TaskManager.adoc#updateSubscriptionsFromAssignment, updateSubscriptionsFromAssignment>> and <<kafka-streams-TaskManager.adoc#updateSubscriptionsFromMetadata, updateSubscriptionsFromMetadata>>
+* `TaskManager` is requested to <<kafka-streams-internals-TaskManager.adoc#updateSubscriptionsFromAssignment, updateSubscriptionsFromAssignment>> and <<kafka-streams-internals-TaskManager.adoc#updateSubscriptionsFromMetadata, updateSubscriptionsFromMetadata>>
 ====
 
 === [[buildPatternForOffsetResetTopics]] `buildPatternForOffsetResetTopics` Internal Method
@@ -1030,7 +1030,7 @@ void updateSubscribedTopics(final Set<String> topics, final String logPrefix)
 
 `updateSubscribedTopics`...FIXME
 
-NOTE: `updateSubscribedTopics` is used exclusively when `TaskManager` is requested to <<kafka-streams-TaskManager.adoc#updateSubscriptionsFromAssignment, updateSubscriptionsFromAssignment>> and <<kafka-streams-TaskManager.adoc#updateSubscriptionsFromMetadata, updateSubscriptionsFromMetadata>>.
+NOTE: `updateSubscribedTopics` is used exclusively when `TaskManager` is requested to <<kafka-streams-internals-TaskManager.adoc#updateSubscriptionsFromAssignment, updateSubscriptionsFromAssignment>> and <<kafka-streams-internals-TaskManager.adoc#updateSubscriptionsFromMetadata, updateSubscriptionsFromMetadata>>.
 
 === [[rewriteTopology]] `rewriteTopology` Method
 

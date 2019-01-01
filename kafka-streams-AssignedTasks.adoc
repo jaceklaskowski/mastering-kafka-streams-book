@@ -129,7 +129,7 @@ boolean hasRunningTasks()
 
 `hasRunningTasks` simply checks whether there is at least one task registered in <<running, running>> internal registry or not.
 
-NOTE: `hasRunningTasks` is used exclusively when `TaskManager` is requested to check if there are any link:kafka-streams-TaskManager.adoc#hasActiveRunningTasks[running] or link:kafka-streams-TaskManager.adoc#hasStandbyRunningTasks[standby] tasks registered.
+NOTE: `hasRunningTasks` is used exclusively when `TaskManager` is requested to check if there are any link:kafka-streams-internals-TaskManager.adoc#hasActiveRunningTasks[running] or link:kafka-streams-internals-TaskManager.adoc#hasStandbyRunningTasks[standby] tasks registered.
 
 === [[updateRestored]] `updateRestored` Method
 
@@ -185,7 +185,7 @@ void addNewTask(final T task)
 .AssignedTasks and Adding New Task
 image::images/kafka-streams-AssignedTasks-addNewTask.png[align="center"]
 
-NOTE: `addNewTask` is used exclusively when `TaskManager` is requested to link:kafka-streams-TaskManager.adoc#createTasks[create processor tasks for assigned topic partitions] (that in turn triggers link:kafka-streams-TaskManager.adoc#addStandbyTasks[addStandbyTasks] and link:kafka-streams-TaskManager.adoc#addStreamTasks[addStreamTasks]).
+NOTE: `addNewTask` is used exclusively when `TaskManager` is requested to link:kafka-streams-internals-TaskManager.adoc#createTasks[create processor tasks for assigned topic partitions] (that in turn triggers link:kafka-streams-internals-TaskManager.adoc#addStandbyTasks[addStandbyTasks] and link:kafka-streams-internals-TaskManager.adoc#addStreamTasks[addStreamTasks]).
 
 === [[initializeNewTasks]] Initializing New Tasks -- `initializeNewTasks` Method
 
@@ -227,7 +227,7 @@ In case of `LockException`, `initializeNewTasks` prints out the following TRACE 
 Could not create [taskTypeName] [taskId] due to [message]; will retry
 ```
 
-NOTE: `initializeNewTasks` is used exclusively when `TaskManager` is requested to link:kafka-streams-TaskManager.adoc#updateNewAndRestoringTasks[updateNewAndRestoringTasks].
+NOTE: `initializeNewTasks` is used exclusively when `TaskManager` is requested to link:kafka-streams-internals-TaskManager.adoc#updateNewAndRestoringTasks[updateNewAndRestoringTasks].
 
 === [[closeNonAssignedSuspendedTasks]] Closing Non-Assigned Suspended Tasks -- `closeNonAssignedSuspendedTasks` Method
 
@@ -256,7 +256,7 @@ In case of a `Exception`, `closeNonAssignedSuspendedTasks` prints out the follow
 Failed to remove suspended [taskType] [id] due to the following error
 ```
 
-NOTE: `closeNonAssignedSuspendedTasks` is used exclusively when `TaskManager` is requested to link:kafka-streams-TaskManager.adoc#createTasks[create processor tasks for assigned topic partitions].
+NOTE: `closeNonAssignedSuspendedTasks` is used exclusively when `TaskManager` is requested to link:kafka-streams-internals-TaskManager.adoc#createTasks[create processor tasks for assigned topic partitions].
 
 === [[maybeResumeSuspendedTask]] Resuming Suspended Task -- `maybeResumeSuspendedTask` Method
 
@@ -297,7 +297,7 @@ resuming suspended [taskTypeName] [taskId]
 
 In case of `TaskMigratedException`, `maybeResumeSuspendedTask` <<closeZombieTask, closeZombieTask>>. If it gives a `RuntimeException`, `maybeResumeSuspendedTask` re-throws it. Otherwise, `maybeResumeSuspendedTask` removes the task (by the input `taskId`) from <<suspended, suspended>> registry (_again?!_) and re-throws the initial `TaskMigratedException`.
 
-NOTE: `maybeResumeSuspendedTask` is used when `TaskManager` is requested to link:kafka-streams-TaskManager.adoc#createTasks[create processor tasks for assigned topic partitions] (and register new link:kafka-streams-TaskManager.adoc#addStandbyTasks[standby] and link:kafka-streams-TaskManager.adoc#addStreamTasks[stream] tasks).
+NOTE: `maybeResumeSuspendedTask` is used when `TaskManager` is requested to link:kafka-streams-internals-TaskManager.adoc#createTasks[create processor tasks for assigned topic partitions] (and register new link:kafka-streams-internals-TaskManager.adoc#addStandbyTasks[standby] and link:kafka-streams-internals-TaskManager.adoc#addStreamTasks[stream] tasks).
 
 === [[toString]] Describing Itself (Textual Representation) -- `toString` Method
 
@@ -321,7 +321,7 @@ String toString(final String indent)
 FIXME toString in action
 ----
 
-NOTE: `toString` is used exclusively when `TaskManager` is requested to link:kafka-streams-TaskManager.adoc#toString[describe itself].
+NOTE: `toString` is used exclusively when `TaskManager` is requested to link:kafka-streams-internals-TaskManager.adoc#toString[describe itself].
 
 === [[describe]] `describe` Internal Method
 
@@ -354,7 +354,7 @@ Set<TopicPartition> uninitializedPartitions()
 
 NOTE: `uninitializedPartitions` gives an empty set of partitions if <<created, created>> is empty, i.e. has no tasks registered.
 
-NOTE: `uninitializedPartitions` is used exclusively when `TaskManager` is requested to link:kafka-streams-TaskManager.adoc#createTasks[create processor tasks for assigned topic partitions].
+NOTE: `uninitializedPartitions` is used exclusively when `TaskManager` is requested to link:kafka-streams-internals-TaskManager.adoc#createTasks[create processor tasks for assigned topic partitions].
 
 === [[suspend]] Suspending All Active Tasks -- `suspend` Method
 
@@ -385,7 +385,7 @@ Close created [taskTypeName] [created]
 
 In the end, `suspend` removes all entries from <<running, running>>, <<restoring, restoring>>, <<created, created>>, <<runningByPartition, runningByPartition>> and <<restoringByPartition, restoringByPartition>>.
 
-NOTE: `suspend` is used exclusively when `TaskManager` is requested to link:kafka-streams-TaskManager.adoc#suspendTasksAndState[suspend all active and standby stream tasks and state].
+NOTE: `suspend` is used exclusively when `TaskManager` is requested to link:kafka-streams-internals-TaskManager.adoc#suspendTasksAndState[suspend all active and standby stream tasks and state].
 
 === [[closeNonRunningTasks]] `closeNonRunningTasks` Internal Method
 
@@ -475,4 +475,4 @@ int commit()
 
 `commit`...FIXME
 
-NOTE: `commit` is used exclusively when `TaskManager` is requested to <<kafka-streams-TaskManager.adoc#commitAll, commitAll>>.
+NOTE: `commit` is used exclusively when `TaskManager` is requested to <<kafka-streams-internals-TaskManager.adoc#commitAll, commitAll>>.

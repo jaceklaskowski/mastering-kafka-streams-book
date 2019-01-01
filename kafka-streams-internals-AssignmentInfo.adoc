@@ -11,7 +11,7 @@ static AssignmentInfo decode(ByteBuffer data)
 
 `decode`...FIXME
 
-NOTE: `decode` is used exclusively when `StreamsPartitionAssignor` is requested to <<kafka-streams-StreamsPartitionAssignor.adoc#onAssignment, handle partition assignment from the group leader>>.
+NOTE: `decode` is used exclusively when `StreamsPartitionAssignor` is requested to <<kafka-streams-internals-StreamsPartitionAssignor.adoc#onAssignment, handle partition assignment from the group leader>>.
 
 === [[decodeVersionOneData]] `decodeVersionOneData` Internal Static Method
 

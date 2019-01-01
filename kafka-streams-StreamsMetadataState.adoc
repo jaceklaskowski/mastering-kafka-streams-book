@@ -82,7 +82,7 @@ void onChange(
 
 `onChange` simply records the given `Cluster` as the <<clusterMetadata, Cluster>> and <<rebuildMetadata, rebuildMetadata>> (with the given current state of Kafka https://kafka.apache.org/21/javadoc/org/apache/kafka/common/TopicPartition.html[TopicPartitions] per `HostInfo`).
 
-NOTE: `onChange` is used exclusively when `TaskManager` is requested to <<kafka-streams-TaskManager.adoc#setPartitionsByHostState, notify the StreamsMetadataState about cluster metadata changes>>.
+NOTE: `onChange` is used exclusively when `TaskManager` is requested to <<kafka-streams-internals-TaskManager.adoc#setPartitionsByHostState, notify the StreamsMetadataState about cluster metadata changes>>.
 
 === [[rebuildMetadata]] Rebuilding Internal StreamsMetadata -- `rebuildMetadata` Internal Method
 
@@ -112,7 +112,7 @@ String toString(final String indent)
 
 `toString`...FIXME
 
-NOTE: `toString` is used when `TaskManager` is requested to <<kafka-streams-TaskManager.adoc#toString, describe itself>>.
+NOTE: `toString` is used when `TaskManager` is requested to <<kafka-streams-internals-TaskManager.adoc#toString, describe itself>>.
 
 === [[isInitialized]] `isInitialized` Internal Method
 
