@@ -208,6 +208,10 @@
 .. link:kafka-streams-internals-StreamSinkNode.adoc[StreamSinkNode]
 .. link:kafka-streams-internals-StreamSourceNode.adoc[StreamSourceNode]
 .. link:kafka-streams-internals-StateStoreNode.adoc[StateStoreNode]
+.. link:kafka-streams-internals-GlobalStoreNode.adoc[GlobalStoreNode]
+.. link:kafka-streams-internals-TableSourceNode.adoc[TableSourceNode]
+.. link:kafka-streams-internals-GroupedTableOperationRepartitionNode.adoc[GroupedTableOperationRepartitionNode]
+.. link:kafka-streams-internals-OptimizableRepartitionNode.adoc[OptimizableRepartitionNode]
 
 === Logical Plan of Execution
 

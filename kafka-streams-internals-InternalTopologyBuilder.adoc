@@ -322,11 +322,13 @@ void addSource(
   final String... topics)
 ----
 
-For every topic name in the input `topics`, `addSource`:
+`addSource` registers a <<kafka-streams-SourceNodeFactory.adoc#, SourceNodeFactory>> for the given topics (listed explicitly or using Java's https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/util/regex/Pattern.html[java.util.regex.Pattern]).
 
-1. <<validateTopicNotAlreadyRegistered, validateTopicNotAlreadyRegistered>>
-1. <<maybeAddToResetList, maybeAddToResetList>>
-1. Adds the topic name to <<sourceTopicNames, sourceTopicNames>>
+For every topic name in the given `topics`, `addSource`:
+
+. <<validateTopicNotAlreadyRegistered, validateTopicNotAlreadyRegistered>>
+. <<maybeAddToResetList, maybeAddToResetList>>
+. Adds the topic name to the <<sourceTopicNames, sourceTopicNames>> internal registry
 
 `addSource` registers a link:kafka-streams-SourceNodeFactory.adoc[SourceNodeFactory] under the `name` in <<nodeFactories, nodeFactories>> registry.
 
@@ -340,11 +342,7 @@ For every topic name in the input `topics`, `addSource`:
 
 * `Topology` is requested to link:kafka-streams-Topology.adoc#addSource[add a source node]
 
-* `InternalStreamsBuilder` is requested to link:kafka-streams-internals-InternalStreamsBuilder.adoc#createKTable[createKTable] or link:kafka-streams-internals-InternalStreamsBuilder.adoc#stream[stream]
-
-* `KGroupedTableImpl` is requested to link:kafka-streams-internals-KGroupedTableImpl.adoc#buildAggregate[buildAggregate]
-
-* `KStreamImpl` is requested to link:kafka-streams-internals-KStreamImpl.adoc#createReparitionedSource[createReparitionedSource]
+* <<kafka-streams-internals-GroupedTableOperationRepartitionNode.adoc#writeToTopology, GroupedTableOperationRepartitionNode>>, <<kafka-streams-internals-OptimizableRepartitionNode.adoc#writeToTopology, OptimizableRepartitionNode>>, <<kafka-streams-internals-StreamSourceNode.adoc#writeToTopology, StreamSourceNode>>, and <<kafka-streams-internals-TableSourceNode.adoc#writeToTopology, TableSourceNode>> are requested to `writeToTopology`
 ====
 
 === [[maybeAddToResetList]] `maybeAddToResetList` Internal Method
@@ -413,33 +411,18 @@ void addGlobalStore(
   final Deserializer valueDeserializer,
   final String topic,
   final String processorName,
-  final ProcessorSupplier stateUpdateSupplier)  // <1>
-
-// Private API
-private void addGlobalStore(
-  final String sourceName,
-  final TimestampExtractor timestampExtractor,
-  final Deserializer keyDeserializer,
-  final Deserializer valueDeserializer,
-  final String topic,
-  final String processorName,
-  final ProcessorSupplier stateUpdateSupplier,
-  final String name,
-  final KeyValueStore store)
+  final ProcessorSupplier stateUpdateSupplier)
 ----
-<1> Calls the private `addGlobalStore` after validating arguments
 
-The public `addGlobalStore` <<validateGlobalStoreArguments, validateGlobalStoreArguments>>, <<validateTopicNotAlreadyRegistered, validateTopicNotAlreadyRegistered>> and calls the private `addGlobalStore`.
+`addGlobalStore` first <<validateGlobalStoreArguments, validateGlobalStoreArguments>> followed by <<validateTopicNotAlreadyRegistered, validateTopicNotAlreadyRegistered>>.
 
-NOTE: `StateStoreSupplier` is *deprecated* and therefore the public `addGlobalStore` that accepts it should no longer be used.
-
-The private `addGlobalStore` creates a link:kafka-streams-ProcessorNodeFactory.adoc#creating-instance[ProcessorNodeFactory] with the input `processorName`, `sourceName` (as link:kafka-streams-ProcessorNodeFactory.adoc#predecessors[predecessors]) and `stateUpdateSupplier` (as link:kafka-streams-ProcessorNodeFactory.adoc#supplier[supplier]).
+`addGlobalStore` creates a <<kafka-streams-ProcessorNodeFactory.adoc#, ProcessorNodeFactory>> with the given `processorName`, `sourceName` (as <<kafka-streams-ProcessorNodeFactory.adoc#predecessors, predecessors>>) and `stateUpdateSupplier` (as <<kafka-streams-ProcessorNodeFactory.adoc#supplier, supplier>>).
 
 `addGlobalStore` then does the following housekeeping tasks:
 
-. Adds the `topic` to <<globalTopics, globalTopics>>
+. Adds the given `topic` to <<globalTopics, globalTopics>> internal registry
 
-. Creates a link:kafka-streams-SourceNodeFactory.adoc#creating-instance[SourceNodeFactory] and registers it in <<nodeFactories, nodeFactories>> as `sourceName`
+. Creates a <<kafka-streams-SourceNodeFactory.adoc#, SourceNodeFactory>> and registers it in <<nodeFactories, nodeFactories>> internal registry as `sourceName`
 
 . Associates the `sourceName` with `topic` to <<nodeToSourceTopics, nodeToSourceTopics>>
 
@@ -461,9 +444,9 @@ In the end, `addGlobalStore` <<connectSourceStoreAndTopic, associates the names 
 ====
 `addGlobalStore` is used when:
 
-* `InternalStreamsBuilder` is requested for a link:kafka-streams-internals-InternalStreamsBuilder.adoc#globalTable[globalTable] or link:kafka-streams-internals-InternalStreamsBuilder.adoc#addGlobalStore[addGlobalStore]
+* `Topology` is requested to <<kafka-streams-Topology.adoc#addGlobalStore, addGlobalStore>>
 
-* `Topology` is requested to link:kafka-streams-Topology.adoc#addGlobalStore[addGlobalStore]
+* <<kafka-streams-internals-GlobalStoreNode.adoc#writeToTopology, GlobalStoreNode>> and <<kafka-streams-internals-TableSourceNode.adoc#writeToTopology, TableSourceNode>> are requested to `writeToTopology`
 ====
 
 === [[validateGlobalStoreArguments]] Validating Arguments for Creating Global State Store -- `validateGlobalStoreArguments` Internal Method
@@ -625,7 +608,7 @@ NOTE: `nodeGroups` is used when `InternalTopologyBuilder` is requested to <<buil
 ProcessorTopology buildGlobalStateTopology()
 ----
 
-`buildGlobalStateTopology` <<globalNodeGroups, globalNodeGroups>> and <<build, builds a topology>> with the global node groups.
+`buildGlobalStateTopology` <<globalNodeGroups, globalNodeGroups>> and <<build, builds a processor task topology>> with the global node groups.
 
 `buildGlobalStateTopology` returns `null` if <<globalNodeGroups, globalNodeGroups>> is empty.
 
@@ -683,14 +666,16 @@ Set<String> globalNodeGroups()
 
 NOTE: `globalNodeGroups` is used when `InternalTopologyBuilder` is requested to build a <<build, processor task topology>> and <<buildGlobalStateTopology, global processor task topology>>.
 
-=== [[makeNodeGroups]] Creating Node Groups -- `makeNodeGroups` Internal Method
+=== [[makeNodeGroups]] Building Node Groups -- `makeNodeGroups` Internal Method
 
 [source, java]
 ----
 Map<Integer, Set<String>> makeNodeGroups()
 ----
 
-`makeNodeGroups` starts with no node groups and the local counter of node group IDs as 0.
+`makeNodeGroups` starts with no node groups and the local counter of node group IDs as `0`.
+
+NOTE: `makeNodeGroups` uses Java's https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/util/LinkedHashMap.html[java.util.LinkedHashMap] that is _Hash table and linked list implementation of the Map interface, with predictable iteration order._
 
 `makeNodeGroups` takes the names of registered source nodes (from the <<nodeToSourceTopics, nodeToSourceTopics>> and <<nodeToSourcePatterns, nodeToSourcePatterns>> internal registries).
 
@@ -1030,7 +1015,7 @@ void updateSubscribedTopics(final Set<String> topics, final String logPrefix)
 
 `updateSubscribedTopics`...FIXME
 
-NOTE: `updateSubscribedTopics` is used exclusively when `TaskManager` is requested to <<kafka-streams-internals-TaskManager.adoc#updateSubscriptionsFromAssignment, updateSubscriptionsFromAssignment>> and <<kafka-streams-internals-TaskManager.adoc#updateSubscriptionsFromMetadata, updateSubscriptionsFromMetadata>>.
+NOTE: `updateSubscribedTopics` is used when `TaskManager` is requested to <<kafka-streams-internals-TaskManager.adoc#updateSubscriptionsFromAssignment, updateSubscriptionsFromAssignment>> and <<kafka-streams-internals-TaskManager.adoc#updateSubscriptionsFromMetadata, updateSubscriptionsFromMetadata>>.
 
 === [[rewriteTopology]] `rewriteTopology` Method
 

@@ -1,0 +1,14 @@
+== [[GroupedTableOperationRepartitionNode]] GroupedTableOperationRepartitionNode
+
+`GroupedTableOperationRepartitionNode` is...FIXME
+
+=== [[writeToTopology]] `writeToTopology` Method
+
+[source, java]
+----
+void writeToTopology(final InternalTopologyBuilder topologyBuilder)
+----
+
+NOTE: `writeToTopology` is part of the <<kafka-streams-internals-StreamsGraphNode.adoc#writeToTopology, StreamsGraphNode Contract>> to...FIXME.
+
+`writeToTopology`...FIXME
