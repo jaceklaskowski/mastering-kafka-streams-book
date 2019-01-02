@@ -1,0 +1,30 @@
+== [[TableProcessorNode]] TableProcessorNode
+
+`TableProcessorNode` is a <<kafka-streams-internals-StreamsGraphNode.adoc#, StreamsGraphNode>> (with <<kafka-streams-internals-StreamsGraphNode.adoc#repartitionRequired, repartitionRequired>> flag disabled).
+
+`TableProcessorNode` is <<creating-instance, created>> when `KTableImpl` is requested to <<kafka-streams-internals-KTableImpl.adoc#doFilter, doFilter>>, <<kafka-streams-internals-KTableImpl.adoc#doMapValues, doMapValues>>, and <<kafka-streams-internals-KTableImpl.adoc#doTransformValues, doTransformValues>>.
+
+[[creating-instance]]
+`TableProcessorNode` takes the following when created:
+
+* [[nodeName]] *Name* of the node
+* [[processorParameters]] `ProcessorParameters`
+* [[materializedInternal]] <<kafka-streams-internals-MaterializedInternal.adoc#, MaterializedInternal>>
+* [[storeNames]] *Names* of the state stores
+
+NOTE: <<storeNames, Names of state stores>> can only be specified when `TableProcessorNode` is created when `KTableImpl` is requested to <<kafka-streams-internals-KTableImpl.adoc#doTransformValues, doTransformValues>> (when requested to <<kafka-streams-internals-KTableImpl.adoc#transformValues, transformValues>>).
+
+=== [[writeToTopology]] `writeToTopology` Method
+
+[source, java]
+----
+void writeToTopology(final InternalTopologyBuilder topologyBuilder)
+----
+
+NOTE: `writeToTopology` is part of the <<kafka-streams-internals-StreamsGraphNode.adoc#writeToTopology, StreamsGraphNode Contract>> to...FIXME.
+
+`writeToTopology` requests the given `InternalTopologyBuilder` to <<kafka-streams-internals-InternalTopologyBuilder.adoc#addProcessor, addProcessor>> (with the `processorName` and `processorSupplier` from the given <<processorParameters, ProcessorParameters>>).
+
+`writeToTopology` requests the given `InternalTopologyBuilder` to <<kafka-streams-internals-InternalTopologyBuilder.adoc#connectProcessorAndStateStores, connectProcessorAndStateStores>> if there are <<storeNames, storeNames>> specified.
+
+`writeToTopology` requests the given `InternalTopologyBuilder` to <<kafka-streams-internals-InternalTopologyBuilder.adoc#addStateStore, addStateStore>> as a new <<kafka-streams-internals-KeyValueStoreMaterializer.adoc#, KeyValueStoreMaterializer>> if the <<materializedInternal, MaterializedInternal>> is <<kafka-streams-internals-MaterializedInternal.adoc#isQueryable, queryable>>.

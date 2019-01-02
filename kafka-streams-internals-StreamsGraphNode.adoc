@@ -29,10 +29,10 @@ NOTE: `StreamsGraphNode` is a Java abstract class and cannot be <<creating-insta
 | BaseJoinProcessorNode
 | [[BaseJoinProcessorNode]]
 
-| BaseRepartitionNode
+| <<kafka-streams-internals-BaseRepartitionNode.adoc#, BaseRepartitionNode>>
 | [[BaseRepartitionNode]]
 
-| ProcessorGraphNode
+| <<kafka-streams-internals-ProcessorGraphNode.adoc#, ProcessorGraphNode>>
 | [[ProcessorGraphNode]]
 
 | <<kafka-streams-internals-StateStoreNode.adoc#, StateStoreNode>>
@@ -47,7 +47,7 @@ NOTE: `StreamsGraphNode` is a Java abstract class and cannot be <<creating-insta
 | StreamTableJoinNode
 | [[StreamTableJoinNode]]
 
-| TableProcessorNode
+| <<kafka-streams-internals-TableProcessorNode.adoc#, TableProcessorNode>>
 | [[TableProcessorNode]]
 
 |===

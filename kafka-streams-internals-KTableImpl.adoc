@@ -6,14 +6,14 @@
 
 [source, java]
 ----
-<V1> KTable<K, V1> mapValues(
-  final ValueMapper<? super V, ? extends V1> mapper)
-<VR> KTable<K, VR> mapValues(
+KTable<K, VR> mapValues(
+  final ValueMapper<? super V, ? extends VR> mapper)
+KTable<K, VR> mapValues(
   final ValueMapper<? super V, ? extends VR> mapper,
   final Materialized<K, VR, KeyValueStore<Bytes, byte[]>> materialized)
-<VR> KTable<K, VR> mapValues(
+KTable<K, VR> mapValues(
   final ValueMapperWithKey<? super K, ? super V, ? extends VR> mapper)
-<VR> KTable<K, VR> mapValues(
+KTable<K, VR> mapValues(
   final ValueMapperWithKey<? super K, ? super V, ? extends VR> mapper,
   final Materialized<K, VR, KeyValueStore<Bytes, byte[]>> materialized)
 ----
@@ -93,7 +93,34 @@ KTable<K, V> doFilter(
 
 `doFilter`...FIXME
 
-NOTE: `doFilter` is used when...FIXME
+NOTE: `doFilter` is used when `KTableImpl` is requested to <<filter, filter>> and <<filterNot, filterNot>>.
+
+=== [[doMapValues]] `doMapValues` Internal Method
+
+[source, java]
+----
+KTable<K, VR> doMapValues(
+  final ValueMapperWithKey<? super K, ? super V, ? extends VR> mapper,
+  final MaterializedInternal<K, VR, KeyValueStore<Bytes, byte[]>> materializedInternal)
+----
+
+`doMapValues`...FIXME
+
+NOTE: `doMapValues` is used exclusively when `KTableImpl` is requested to <<mapValues, mapValues>>.
+
+=== [[doTransformValues]] `doTransformValues` Internal Method
+
+[source, java]
+----
+KTable<K, VR> doTransformValues(
+  final ValueTransformerWithKeySupplier<? super K, ? super V, ? extends VR> transformerSupplier,
+  final MaterializedInternal<K, VR, KeyValueStore<Bytes, byte[]>> materialized,
+  final String... stateStoreNames)
+----
+
+`doTransformValues`...FIXME
+
+NOTE: `doTransformValues` is used exclusively when `KTableImpl` is requested to <<transformValues, transformValues>>.
 
 === [[buildJoin]] `buildJoin` Internal Method
 
@@ -151,3 +178,50 @@ void enableSendingOldValues()
 `enableSendingOldValues`...FIXME
 
 NOTE: `enableSendingOldValues` is used when...FIXME
+
+=== [[filter]] `filter` Method
+
+[source, scala]
+----
+KTable<K, V> filter(
+  final Predicate<? super K, ? super V> predicate)
+KTable<K, V> filter(
+  final Predicate<? super K, ? super V> predicate,
+  final Materialized<K, V, KeyValueStore<Bytes, byte[]>> materialized)
+----
+
+NOTE: `filter` is part of the <<kafka-streams-KTable.adoc#filter, KTable Contract>> to...FIXME.
+
+`filter`...FIXME
+
+=== [[filterNot]] `filterNot` Method
+
+[source, scala]
+----
+KTable<K, V> filterNot(
+  final Predicate<? super K, ? super V> predicate)
+KTable<K, V> filterNot(
+  final Predicate<? super K, ? super V> predicate,
+  final Materialized<K, V, KeyValueStore<Bytes, byte[]>> materialized)
+----
+
+NOTE: `filterNot` is part of the <<kafka-streams-KTable.adoc#filterNot, KTable Contract>> to...FIXME.
+
+`filterNot`...FIXME
+
+=== [[transformValues]] `transformValues` Method
+
+[source, scala]
+----
+KTable<K, VR> transformValues(
+  final ValueTransformerWithKeySupplier<? super K, ? super V, ? extends VR> transformerSupplier,
+  final Materialized<K, VR, KeyValueStore<Bytes, byte[]>> materialized,
+  final String... stateStoreNames)
+KTable<K, VR> transformValues(
+  final ValueTransformerWithKeySupplier<? super K, ? super V, ? extends VR> transformerSupplier,
+  final String... stateStoreNames)
+----
+
+NOTE: `transformValues` is part of the <<kafka-streams-KTable.adoc#transformValues, KTable Contract>> to...FIXME.
+
+`transformValues`...FIXME

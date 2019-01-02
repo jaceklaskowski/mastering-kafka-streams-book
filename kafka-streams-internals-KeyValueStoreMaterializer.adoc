@@ -10,7 +10,7 @@
 
 * `KGroupedTableImpl` is requested to <<kafka-streams-internals-KGroupedTableImpl.adoc#doAggregate, doAggregate>> (for <<kafka-streams-internals-KGroupedTableImpl.adoc#aggregate, aggregate>>, <<kafka-streams-internals-KGroupedTableImpl.adoc#count, count>>, and <<kafka-streams-internals-KGroupedTableImpl.adoc#reduce, reduce>> aggregation operators)
 
-* `KTableKTableJoinNode` and `TableProcessorNode` are requested to `writeToTopology`
+* `KTableKTableJoinNode` and <<kafka-streams-internals-TableProcessorNode.adoc#writeToTopology, TableProcessorNode>> are requested to `writeToTopology`
 
 [[materialized]]
 [[creating-instance]]

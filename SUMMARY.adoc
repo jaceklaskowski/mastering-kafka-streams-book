@@ -156,13 +156,15 @@
 .. link:kafka-streams-internals-StateStoreNode.adoc[StateStoreNode]
 .. link:kafka-streams-internals-GlobalStoreNode.adoc[GlobalStoreNode]
 .. link:kafka-streams-internals-TableSourceNode.adoc[TableSourceNode]
+.. link:kafka-streams-internals-TableProcessorNode.adoc[TableProcessorNode]
+.. link:kafka-streams-internals-ProcessorGraphNode.adoc[ProcessorGraphNode]
 
 .. link:kafka-streams-internals-GroupedTableOperationRepartitionNode.adoc[GroupedTableOperationRepartitionNode]
 ... link:kafka-streams-internals-GroupedTableOperationRepartitionNodeBuilder.adoc[GroupedTableOperationRepartitionNodeBuilder]
 
 .. link:kafka-streams-internals-OptimizableRepartitionNode.adoc[OptimizableRepartitionNode]
-.. link:kafka-streams-internals-BaseRepartitionNode.adoc[BaseRepartitionNode]
 
+. link:kafka-streams-internals-BaseRepartitionNode.adoc[BaseRepartitionNode]
 
 === Processors and ProcessorSuppliers
 
