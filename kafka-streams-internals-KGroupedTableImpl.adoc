@@ -71,3 +71,17 @@ KTable<K, VR> aggregate(
 NOTE: `aggregate` is part of the <<kafka-streams-KGroupedTable.adoc#aggregate, KGroupedTable Contract>> to...FIXME.
 
 `aggregate`...FIXME
+
+=== [[createRepartitionNode]] `createRepartitionNode` Internal Method
+
+[source, java]
+----
+GroupedTableOperationRepartitionNode<K, V> createRepartitionNode(
+  final String sinkName,
+  final String sourceName,
+  final String topic)
+----
+
+`createRepartitionNode`...FIXME
+
+NOTE: `createRepartitionNode` is used exclusively when `KGroupedTableImpl` is requested to <<doAggregate, doAggregate>> (when requested to <<reduce, reduce>>, <<count, count>> and <<aggregate, aggregate>>).

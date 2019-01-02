@@ -148,6 +148,22 @@
 
 == Internals of Kafka Streams
 
+=== Logical Streams Graph
+
+. link:kafka-streams-internals-StreamsGraphNode.adoc[StreamsGraphNode]
+.. link:kafka-streams-internals-StreamSinkNode.adoc[StreamSinkNode]
+.. link:kafka-streams-internals-StreamSourceNode.adoc[StreamSourceNode]
+.. link:kafka-streams-internals-StateStoreNode.adoc[StateStoreNode]
+.. link:kafka-streams-internals-GlobalStoreNode.adoc[GlobalStoreNode]
+.. link:kafka-streams-internals-TableSourceNode.adoc[TableSourceNode]
+
+.. link:kafka-streams-internals-GroupedTableOperationRepartitionNode.adoc[GroupedTableOperationRepartitionNode]
+... link:kafka-streams-internals-GroupedTableOperationRepartitionNodeBuilder.adoc[GroupedTableOperationRepartitionNodeBuilder]
+
+.. link:kafka-streams-internals-OptimizableRepartitionNode.adoc[OptimizableRepartitionNode]
+.. link:kafka-streams-internals-BaseRepartitionNode.adoc[BaseRepartitionNode]
+
+
 === Processors and ProcessorSuppliers
 
 . link:kafka-streams-internals-KStreamAggProcessorSupplier.adoc[KStreamAggProcessorSupplier Contract]
@@ -201,17 +217,6 @@
 .. link:kafka-streams-internals-WindowStoreBuilder.adoc[WindowStoreBuilder]
 
 . link:kafka-streams-internals-RocksDbWindowBytesStoreSupplier.adoc[RocksDbWindowBytesStoreSupplier]
-
-=== Logical Streams Graph
-
-. link:kafka-streams-internals-StreamsGraphNode.adoc[StreamsGraphNode]
-.. link:kafka-streams-internals-StreamSinkNode.adoc[StreamSinkNode]
-.. link:kafka-streams-internals-StreamSourceNode.adoc[StreamSourceNode]
-.. link:kafka-streams-internals-StateStoreNode.adoc[StateStoreNode]
-.. link:kafka-streams-internals-GlobalStoreNode.adoc[GlobalStoreNode]
-.. link:kafka-streams-internals-TableSourceNode.adoc[TableSourceNode]
-.. link:kafka-streams-internals-GroupedTableOperationRepartitionNode.adoc[GroupedTableOperationRepartitionNode]
-.. link:kafka-streams-internals-OptimizableRepartitionNode.adoc[OptimizableRepartitionNode]
 
 === Logical Plan of Execution
 

@@ -1,6 +1,69 @@
 == [[GroupedTableOperationRepartitionNode]] GroupedTableOperationRepartitionNode
 
-`GroupedTableOperationRepartitionNode` is...FIXME
+`GroupedTableOperationRepartitionNode` is a <<kafka-streams-internals-StreamsGraphNode.adoc#, StreamsGraphNode>> (indirectly as a <<kafka-streams-internals-BaseRepartitionNode.adoc#, BaseRepartitionNode>>) that is used by `KGroupedTableImpl` for all supported streaming operators, i.e. <<kafka-streams-internals-KGroupedTableImpl.adoc#reduce, reduce>>, <<kafka-streams-internals-KGroupedTableImpl.adoc#count, count>> and <<kafka-streams-internals-KGroupedTableImpl.adoc#aggregate, aggregate>>.
+
+[source, scala]
+----
+// Building a topology using Streams DSL
+// Scala API for Kafka Streams
+import org.apache.kafka.streams.scala._
+import ImplicitConversions._
+import Serdes._
+
+val builder = new StreamsBuilder
+builder
+  .table[String, String]("input")
+  .groupBy[String, String]((k,v) => (k,v)) // creates a KGroupedTableImpl
+  .count // creates a GroupedTableOperationRepartitionNode
+val topology = builder.build
+// Note the "*-repartition" topic
+scala> println(topology.describe)
+Topologies:
+   Sub-topology: 0
+    Source: KSTREAM-SOURCE-0000000001 (topics: [input])
+      --> KTABLE-SOURCE-0000000002
+    Processor: KTABLE-SOURCE-0000000002 (stores: [input-STATE-STORE-0000000000])
+      --> KTABLE-SELECT-0000000003
+      <-- KSTREAM-SOURCE-0000000001
+    Processor: KTABLE-SELECT-0000000003 (stores: [])
+      --> KSTREAM-SINK-0000000005
+      <-- KTABLE-SOURCE-0000000002
+    Sink: KSTREAM-SINK-0000000005 (topic: KTABLE-AGGREGATE-STATE-STORE-0000000004-repartition)
+      <-- KTABLE-SELECT-0000000003
+
+  Sub-topology: 1
+    Source: KSTREAM-SOURCE-0000000006 (topics: [KTABLE-AGGREGATE-STATE-STORE-0000000004-repartition])
+      --> KTABLE-AGGREGATE-0000000007
+    Processor: KTABLE-AGGREGATE-0000000007 (stores: [KTABLE-AGGREGATE-STATE-STORE-0000000004])
+      --> KTABLE-MAPVALUES-0000000008
+      <-- KSTREAM-SOURCE-0000000006
+    Processor: KTABLE-MAPVALUES-0000000008 (stores: [])
+      --> none
+      <-- KTABLE-AGGREGATE-0000000007
+----
+
+`GroupedTableOperationRepartitionNode` is <<creating-instance, created>> exclusively when `GroupedTableOperationRepartitionNodeBuilder` is requested to <<kafka-streams-internals-GroupedTableOperationRepartitionNodeBuilder.adoc#build, build one>>.
+
+[[creating-instance]]
+`GroupedTableOperationRepartitionNode` takes the following when created:
+
+* [[nodeName]] *Name* of the node
+* [[keySerde]] *Key Serde* (Apache Kafka's https://kafka.apache.org/21/javadoc/org/apache/kafka/common/serialization/Serde.html[Serde] for record keys)
+* [[valueSerde]] *Value Serde* (Apache Kafka's https://kafka.apache.org/21/javadoc/org/apache/kafka/common/serialization/Serde.html[Serde] for record values)
+* [[sinkName]] *Sink Name*
+* [[sourceName]] *Source Name*
+* [[repartitionTopic]] *Name of the repartition topic*
+* [[processorParameters]] `ProcessorParameters`
+
+[[groupedTableOperationNodeBuilder]]
+`GroupedTableOperationRepartitionNode` allows creating <<kafka-streams-internals-GroupedTableOperationRepartitionNodeBuilder.adoc#, GroupedTableOperationRepartitionNodeBuilders>> using `groupedTableOperationNodeBuilder` factory method.
+
+[source, java]
+----
+GroupedTableOperationRepartitionNodeBuilder<K1, V1> groupedTableOperationNodeBuilder()
+----
+
+`groupedTableOperationNodeBuilder` is used exclusively when `KGroupedTableImpl` is requested to <<kafka-streams-internals-KGroupedTableImpl.adoc#createRepartitionNode, createRepartitionNode>> (for all supported streaming operators, i.e. <<kafka-streams-internals-KGroupedTableImpl.adoc#reduce, reduce>>, <<kafka-streams-internals-KGroupedTableImpl.adoc#count, count>> and <<kafka-streams-internals-KGroupedTableImpl.adoc#aggregate, aggregate>>).
 
 === [[writeToTopology]] `writeToTopology` Method
 

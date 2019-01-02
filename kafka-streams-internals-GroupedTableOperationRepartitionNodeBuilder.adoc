@@ -1,0 +1,21 @@
+== [[GroupedTableOperationRepartitionNodeBuilder]] GroupedTableOperationRepartitionNodeBuilder
+
+`GroupedTableOperationRepartitionNodeBuilder` is...FIXME
+
+`GroupedTableOperationRepartitionNodeBuilder` is <<creating-instance, created>> when...FIXME
+
+[[creating-instance]]
+`GroupedTableOperationRepartitionNodeBuilder` takes no arguments when created.
+
+NOTE: `GroupedTableOperationRepartitionNodeBuilder` is a Java static inner class of <<kafka-streams-internals-GroupedTableOperationRepartitionNode.adoc#, GroupedTableOperationRepartitionNode>> and can only be created using the <<kafka-streams-internals-GroupedTableOperationRepartitionNode.adoc#groupedTableOperationNodeBuilder, GroupedTableOperationRepartitionNode.groupedTableOperationNodeBuilder>> factory method.
+
+=== [[build]] Creating GroupedTableOperationRepartitionNode Instance -- `build` Method
+
+[source, java]
+----
+GroupedTableOperationRepartitionNode<K, V> build()
+----
+
+`build` simply creates a <<kafka-streams-internals-GroupedTableOperationRepartitionNode.adoc#, GroupedTableOperationRepartitionNode>>.
+
+NOTE: `build` is used exclusively when `KGroupedTableImpl` is requested to <<kafka-streams-internals-KGroupedTableImpl.adoc#createRepartitionNode, createRepartitionNode>> (for all supported streaming operators, i.e. <<kafka-streams-internals-KGroupedTableImpl.adoc#reduce, reduce>>, <<kafka-streams-internals-KGroupedTableImpl.adoc#count, count>> and <<kafka-streams-internals-KGroupedTableImpl.adoc#aggregate, aggregate>>).

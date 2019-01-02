@@ -1,0 +1,3 @@
+== [[BaseRepartitionNode]] BaseRepartitionNode
+
+`BaseRepartitionNode` is the base of <<kafka-streams-internals-StreamsGraphNode.adoc#, StreamsGraphNodes>> that...FIXME
