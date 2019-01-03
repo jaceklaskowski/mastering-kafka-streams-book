@@ -1,0 +1,3 @@
+== [[DefaultPartitionGrouper]] DefaultPartitionGrouper
+
+`DefaultPartitionGrouper` is a concrete <<kafka-streams-PartitionGrouper.adoc#, PartitionGrouper>> that...FIXME

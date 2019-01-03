@@ -1,0 +1,25 @@
+== [[PartitionGrouper]] PartitionGrouper Contract
+
+`PartitionGrouper` is the <<contract, abstraction>> of <<implementations, partition groupers>> that can <<partitionGroups, partitionGroups>>.
+
+[[contract]]
+.PartitionGrouper Contract
+[cols="1m,2",options="header",width="100%"]
+|===
+| Method
+| Description
+
+| partitionGroups
+a| [[partitionGroups]]
+
+[source, java]
+----
+Map<TaskId, Set<TopicPartition>> partitionGroups(
+  Map<Integer, Set<String>> topicGroups, Cluster metadata)
+----
+
+Used exclusively when `StreamsPartitionAssignor` is requested to <<kafka-streams-internals-StreamsPartitionAssignor.adoc#assign, assign tasks to consumer clients>>
+|===
+
+[[implementations]]
+NOTE: <<kafka-streams-DefaultPartitionGrouper.adoc#, DefaultPartitionGrouper>> is the one and only known implementation of the <<contract, PartitionGrouper Contract>>.

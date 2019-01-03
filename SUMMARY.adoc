@@ -101,6 +101,9 @@
 .. link:kafka-streams-ExtractRecordMetadataTimestamp.adoc[ExtractRecordMetadataTimestamp]
 .. link:kafka-streams-FailOnInvalidTimestamp.adoc[FailOnInvalidTimestamp]
 
+. link:kafka-streams-PartitionGrouper.adoc[PartitionGrouper Contract]
+.. link:kafka-streams-DefaultPartitionGrouper.adoc[DefaultPartitionGrouper]
+
 == Developing Stateful Stream Processing Applications with Kafka Streams
 
 . link:kafka-streams-StateStore.adoc[StateStore]
@@ -303,7 +306,7 @@
 .. link:kafka-streams-AssignedStandbyTasks.adoc[AssignedStandbyTasks -- AssignedTasks For StandbyTasks]
 .. link:kafka-streams-AssignedStreamsTasks.adoc[AssignedStreamsTasks -- AssignedTasks For StreamTasks]
 
-. link:kafka-streams-internals-StreamsPartitionAssignor.adoc[StreamsPartitionAssignor -- Partition Assignment Strategy]
+. link:kafka-streams-internals-StreamsPartitionAssignor.adoc[StreamsPartitionAssignor -- Dynamic Partition Assignment Strategy]
 .. link:kafka-streams-internals-InternalTopicManager.adoc[InternalTopicManager]
 .. link:kafka-streams-internals-AssignmentInfo.adoc[AssignmentInfo]
 .. link:kafka-streams-internals-SubscriptionInfo.adoc[SubscriptionInfo]
