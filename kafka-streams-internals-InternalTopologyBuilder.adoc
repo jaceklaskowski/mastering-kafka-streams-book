@@ -906,9 +906,9 @@ When the input `topicGroupId` is undefined (i.e. `null`), `build` takes the node
 
 * `InternalTopologyBuilder` is requested to <<build, build a processor task topology>> (without specifying a group ID)
 
-* `StandbyTaskCreator` is requested to link:kafka-streams-StandbyTaskCreator.adoc#createTask[create a standby task for a given task ID]
+* `StandbyTaskCreator` is requested to link:kafka-streams-internals-StandbyTaskCreator.adoc#createTask[create a standby task for a given task ID]
 
-* `TaskCreator` is requested to link:kafka-streams-TaskCreator.adoc#createTask[create a stream task for a given task ID]
+* `TaskCreator` is requested to link:kafka-streams-internals-TaskCreator.adoc#createTask[create a stream task for a given task ID]
 ====
 
 === [[allStateStoreName]] `allStateStoreName` Method

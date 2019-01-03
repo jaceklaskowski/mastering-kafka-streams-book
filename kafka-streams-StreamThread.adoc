@@ -31,7 +31,7 @@ NOTE: `KafkaStreams` uses <<kafka-streams-KafkaStreams.adoc#threads, num.stream.
 
 `StreamThread` requires an <<builder, InternalTopologyBuilder>> to be <<create, created>> and uses it for the following:
 
-* Creating a <<kafka-streams-TaskCreator.adoc#, TaskCreator>> and a <<kafka-streams-StandbyTaskCreator.adoc#, StandbyTaskCreator>>
+* Creating a <<kafka-streams-internals-TaskCreator.adoc#, TaskCreator>> and a <<kafka-streams-internals-StandbyTaskCreator.adoc#, StandbyTaskCreator>>
 
 * <<runLoop, Running the main record processing loop>> (and subscribing to the <<kafka-streams-internals-InternalTopologyBuilder.adoc#sourceTopicPattern, source topics>>)
 
@@ -541,7 +541,7 @@ NOTE: The input <<kafka-streams-StateRestoreListener.adoc#, StateRestoreListener
 
 `create` creates a <<kafka-streams-ThreadCache.adoc#, ThreadCache>> (with `cacheSizeBytes` for the `maxCacheSizeBytes` and the `StreamsMetricsThreadImpl`).
 
-`create` creates a link:kafka-streams-TaskCreator.adoc#creating-instance[TaskCreator] and a link:kafka-streams-StandbyTaskCreator.adoc#creating-instance[StandbyTaskCreator] that are used exclusively to create a link:kafka-streams-internals-TaskManager.adoc#creating-instance[TaskManager] (with a new link:kafka-streams-AssignedStreamsTasks.adoc#creating-instance[AssignedStreamsTasks] and link:kafka-streams-AssignedStandbyTasks.adoc#creating-instance[AssignedStandbyTasks] as well as the given <<kafka-streams-StreamsMetadataState.adoc#, StreamsMetadataState>>).
+`create` creates a link:kafka-streams-internals-TaskCreator.adoc#creating-instance[TaskCreator] and a link:kafka-streams-internals-StandbyTaskCreator.adoc#creating-instance[StandbyTaskCreator] that are used exclusively to create a link:kafka-streams-internals-TaskManager.adoc#creating-instance[TaskManager] (with a new link:kafka-streams-AssignedStreamsTasks.adoc#creating-instance[AssignedStreamsTasks] and link:kafka-streams-AssignedStandbyTasks.adoc#creating-instance[AssignedStandbyTasks] as well as the given <<kafka-streams-StreamsMetadataState.adoc#, StreamsMetadataState>>).
 
 `create` prints out the following INFO message to the logs:
 

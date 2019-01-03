@@ -4,7 +4,7 @@
 
 `TaskManager` <<createTasks, creates new tasks>> when `RebalanceListener` handles link:kafka-streams-StreamThread-RebalanceListener.adoc#onPartitionsAssigned[onPartitionsAssigned] (and requests to <<createTasks, create processor tasks for assigned topic partitions>> that in turn <<addStreamTasks, adds new stream tasks>>).
 
-`TaskManager` uses the <<standbyTaskCreator, StandbyTaskCreator>> to <<kafka-streams-StandbyTaskCreator.adoc#createTasks, create standby tasks>> when requested to <<addStandbyTasks, addStandbyTasks>>.
+`TaskManager` uses the <<standbyTaskCreator, StandbyTaskCreator>> to <<kafka-streams-internals-StandbyTaskCreator.adoc#createTasks, create standby tasks>> when requested to <<addStandbyTasks, addStandbyTasks>>.
 
 `TaskManager` is <<creating-instance, created>> when `StreamThread` is link:kafka-streams-StreamThread.adoc#create[created] (with a new <<active, AssignedStreamsTasks>> and <<standby, AssignedStandbyTasks>> for <<active, active>> and <<standby, standby>> tasks, respectively).
 
@@ -174,8 +174,8 @@ NOTE: `activeTask` is used exclusively when `StreamThread` is requested to link:
 * [[logPrefix]] `logPrefix`
 * [[restoreConsumer]] Kafka https://kafka.apache.org/20/javadoc/org/apache/kafka/clients/consumer/KafkaConsumer.html[Consumer] (`Consumer<byte[], byte[]>`)
 * [[streamsMetadataState]] <<kafka-streams-StreamsMetadataState.adoc#, StreamsMetadataState>>
-* [[taskCreator]] link:kafka-streams-TaskCreator.adoc[StreamThread.AbstractTaskCreator<StreamTask>]
-* [[standbyTaskCreator]] link:kafka-streams-StandbyTaskCreator.adoc[StreamThread.AbstractTaskCreator<StandbyTask>]
+* [[taskCreator]] link:kafka-streams-internals-TaskCreator.adoc[StreamThread.AbstractTaskCreator<StreamTask>]
+* [[standbyTaskCreator]] link:kafka-streams-internals-StandbyTaskCreator.adoc[StreamThread.AbstractTaskCreator<StandbyTask>]
 * [[adminClient]] Kafka https://kafka.apache.org/21/javadoc/org/apache/kafka/clients/admin/AdminClient.html[AdminClient]
 * [[active]] link:kafka-streams-AssignedStreamsTasks.adoc[AssignedStreamsTasks]
 * [[standby]] link:kafka-streams-AssignedStandbyTasks.adoc[AssignedStandbyTasks]
@@ -280,7 +280,7 @@ When there are new tasks to be created, `addStreamTasks` prints out the followin
 New active tasks to be created: [newTasks]
 ```
 
-`addStreamTasks` then requests <<taskCreator, StreamThread.AbstractTaskCreator<StreamTask&gt;>> to link:kafka-streams-AbstractTaskCreator.adoc#createTasks[createTasks] for every new task (with the <<consumer, Kafka Consumer>>) and requests <<active, AssignedStreamsTasks>> to link:kafka-streams-AssignedTasks.adoc#addNewTask[register a new task].
+`addStreamTasks` then requests <<taskCreator, StreamThread.AbstractTaskCreator<StreamTask&gt;>> to link:kafka-streams-internals-AbstractTaskCreator.adoc#createTasks[createTasks] for every new task (with the <<consumer, Kafka Consumer>>) and requests <<active, AssignedStreamsTasks>> to link:kafka-streams-AssignedTasks.adoc#addNewTask[register a new task].
 
 NOTE: `addStreamTasks` is used exclusively when `TaskManager` is requested to <<createTasks, create processor tasks for assigned topic partitions>>.
 
@@ -314,7 +314,7 @@ When there are new tasks to be in standby mode, `addStandbyTasks` prints out the
 New standby tasks to be created: [newStandbyTasks]
 ```
 
-`addStandbyTasks` then requests <<standbyTaskCreator, StreamThread.AbstractTaskCreator<StandbyTask&gt;>> to link:kafka-streams-AbstractTaskCreator.adoc#createTasks[createTasks] for every new standby task (with the <<consumer, Kafka Consumer>>) and requests <<standby, AssignedStandbyTasks>> to link:kafka-streams-AssignedTasks.adoc#addNewTask[register a new task].
+`addStandbyTasks` then requests <<standbyTaskCreator, StreamThread.AbstractTaskCreator<StandbyTask&gt;>> to link:kafka-streams-internals-AbstractTaskCreator.adoc#createTasks[createTasks] for every new standby task (with the <<consumer, Kafka Consumer>>) and requests <<standby, AssignedStandbyTasks>> to link:kafka-streams-AssignedTasks.adoc#addNewTask[register a new task].
 
 NOTE: `addStandbyTasks` is used exclusively when `TaskManager` is requested to <<createTasks, create tasks for assigned topic partitions>>.
 

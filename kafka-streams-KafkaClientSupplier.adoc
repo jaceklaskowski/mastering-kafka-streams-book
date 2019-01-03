@@ -53,13 +53,13 @@ a| [[getProducer]]
 Producer<byte[], byte[]> getProducer(final Map<String, Object> config);
 ----
 
-A Kafka http://kafka.apache.org/20/javadoc/org/apache/kafka/clients/producer/KafkaProducer.html[Producer] (for <<kafka-streams-StreamThread.adoc#producer, StreamThreads>> and <<kafka-streams-TaskCreator.adoc#threadProducer, TaskCreator>>)
+A Kafka http://kafka.apache.org/20/javadoc/org/apache/kafka/clients/producer/KafkaProducer.html[Producer] (for <<kafka-streams-StreamThread.adoc#producer, StreamThreads>> and <<kafka-streams-internals-TaskCreator.adoc#threadProducer, TaskCreator>>)
 
 Used when:
 
 * `StreamThread` is <<kafka-streams-StreamThread.adoc#create, created>> (with <<kafka-streams-properties.adoc#processing.guarantee, processing.guarantee>> as <<kafka-streams-properties.adoc#at_least_once, at_least_once>>)
 
-* `TaskCreator` is requested to <<kafka-streams-TaskCreator.adoc#createProducer, createProducer>> (with <<kafka-streams-properties.adoc#processing.guarantee, processing.guarantee>> as <<kafka-streams-properties.adoc#exactly-once, exactly-once>>)
+* `TaskCreator` is requested to <<kafka-streams-internals-TaskCreator.adoc#createProducer, createProducer>> (with <<kafka-streams-properties.adoc#processing.guarantee, processing.guarantee>> as <<kafka-streams-properties.adoc#exactly-once, exactly-once>>)
 
 | getRestoreConsumer
 a| [[getRestoreConsumer]]

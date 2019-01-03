@@ -2,7 +2,7 @@
 
 `StreamTask` is a concrete link:kafka-streams-internals-AbstractTask.adoc[stream processor task] that manages a <<partitions, collection of Kafka TopicPartitions>> as a <<partitionGroup, PartitionGroup>>.
 
-`StreamTask` is <<creating-instance, created>> exclusively when `TaskCreator` is requested to <<kafka-streams-TaskCreator.adoc#createTask, create one>>.
+`StreamTask` is <<creating-instance, created>> exclusively when `TaskCreator` is requested to <<kafka-streams-internals-TaskCreator.adoc#createTask, create one>>.
 
 [[commitNeeded]]
 [[commitRequested]]

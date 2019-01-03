@@ -34,10 +34,10 @@ NOTE: `AbstractTaskCreator` is a Java abstract class and cannot be <<creating-in
 | AbstractTaskCreator
 | Description
 
-| link:kafka-streams-StandbyTaskCreator.adoc[StandbyTaskCreator]
+| link:kafka-streams-internals-StandbyTaskCreator.adoc[StandbyTaskCreator]
 | Creates link:kafka-streams-internals-StandbyTask.adoc[standby tasks]
 
-| link:kafka-streams-TaskCreator.adoc[TaskCreator]
+| link:kafka-streams-internals-TaskCreator.adoc[TaskCreator]
 | Creates link:kafka-streams-internals-StreamTask.adoc[stream tasks]
 |===
 

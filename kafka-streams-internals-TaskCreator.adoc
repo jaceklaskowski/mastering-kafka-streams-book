@@ -1,6 +1,6 @@
 == [[TaskCreator]] TaskCreator -- Factory of Stream Tasks
 
-`TaskCreator` is a concrete link:kafka-streams-AbstractTaskCreator.adoc[AbstractTaskCreator] that can <<createTask, create stream tasks>>.
+`TaskCreator` is a concrete link:kafka-streams-internals-AbstractTaskCreator.adoc[AbstractTaskCreator] that can <<createTask, create stream tasks>>.
 
 `TaskCreator` is <<creating-instance, created>> exclusively when `StreamThread` is link:kafka-streams-StreamThread.adoc#create[created] (and only to create a link:kafka-streams-internals-TaskManager.adoc#standbyTaskCreator[TaskManager]).
 
@@ -14,9 +14,9 @@ StreamTask createTask(
   final Set<TopicPartition> partitions)
 ----
 
-NOTE: `createTask` is part of link:kafka-streams-AbstractTaskCreator.adoc#createTask[AbstractTaskCreator Contract] to create a concrete link:kafka-streams-internals-AbstractTask.adoc[stream processor task].
+NOTE: `createTask` is part of link:kafka-streams-internals-AbstractTaskCreator.adoc#createTask[AbstractTaskCreator Contract] to create a concrete link:kafka-streams-internals-AbstractTask.adoc[stream processor task].
 
-`createTask` requests the link:kafka-streams-AbstractTaskCreator.adoc#taskCreatedSensor[taskCreatedSensor] to record this execution.
+`createTask` requests the link:kafka-streams-internals-AbstractTaskCreator.adoc#taskCreatedSensor[taskCreatedSensor] to record this execution.
 
 `createTask` then creates a link:kafka-streams-internals-StreamTask.adoc#creating-instance[StreamTask] (for a given topic group ID and a <<createProducer, producer client for the task>>).
 
