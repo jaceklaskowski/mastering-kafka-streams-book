@@ -1,26 +1,26 @@
 == [[AbstractTaskCreator]] AbstractTaskCreator
 
-`AbstractTaskCreator` is the <<contract, contract>> to <<createTask, create processor tasks>>.
+`AbstractTaskCreator` is the <<contract, base>> of <<implementations, task creators>> (_factories_) that can <<createTask, create stream processor tasks>>.
 
 [[contract]]
-[source, java]
-----
-package org.apache.kafka.streams.processor.internals;
-
-abstract class StreamThread.AbstractTaskCreator<T extends Task> {
-  // only required method that has no implementation
-  T createTask(final Consumer<byte[], byte[]> consumer, final TaskId id, final Set<TopicPartition> partitions);
-}
-----
-
 .AbstractTaskCreator Contract
-[cols="1,2",options="header",width="100%"]
+[cols="1m,2",options="header",width="100%"]
 |===
 | Method
 | Description
 
-| `createTask`
-| [[createTask]] Creates a <<kafka-streams-internals-Task.adoc#, Task>>
+| createTask
+a| [[createTask]]
+
+[source, java]
+----
+T createTask(
+  final Consumer<byte[], byte[]> consumer,
+  final TaskId id,
+  final Set<TopicPartition> partitions)
+----
+
+Creates a <<kafka-streams-internals-Task.adoc#, Task>>
 
 Used exclusively when `AbstractTaskCreator` is requested to <<createTasks, create tasks>> (when `TaskManager` is requested for link:kafka-streams-internals-TaskManager.adoc#addStandbyTasks[standby] or link:kafka-streams-internals-TaskManager.adoc#addStreamTasks[stream] tasks)
 |===

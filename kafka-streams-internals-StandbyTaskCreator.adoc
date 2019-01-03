@@ -1,8 +1,10 @@
 == [[StandbyTaskCreator]] StandbyTaskCreator -- Factory of Standby Tasks
 
-`StandbyTaskCreator` is a concrete <<kafka-streams-internals-AbstractTaskCreator.adoc, AbstractTaskCreator>> of <<createTask, standby tasks>>.
+`StandbyTaskCreator` is a concrete <<kafka-streams-internals-AbstractTaskCreator.adoc, task factory>> of <<createTask, standby tasks>>.
 
-`StandbyTaskCreator` is <<creating-instance, created>> exclusively when `StreamThread` is link:kafka-streams-StreamThread.adoc#create[created] (just to create a link:kafka-streams-internals-TaskManager.adoc#standbyTaskCreator[TaskManager]).
+`StandbyTaskCreator` is <<creating-instance, created>> exclusively when `StreamThread` is <<kafka-streams-StreamThread.adoc#create, created>> (for the only purpose of <<kafka-streams-internals-TaskManager.adoc#standbyTaskCreator, creating a TaskManager>>).
+
+`StandbyTaskCreator` always records when requested to <<createTask, create a task>> for monitoring purposes, but creates a <<kafka-streams-internals-StandbyTask.adoc#, standby task>> only for <<kafka-streams-internals-ProcessorTopology.adoc#, processor task topologies>> (for <<builder, which it was created>>) with at least one <<kafka-streams-internals-ProcessorTopology.adoc#stateStores, state store>>.
 
 === [[createTask]] Creating Standby Task -- `createTask` Factory Method
 
@@ -14,21 +16,30 @@ StandbyTask createTask(
   final Set<TopicPartition> partitions)
 ----
 
-NOTE: `createTask` is part of link:kafka-streams-internals-AbstractTaskCreator.adoc#createTask[AbstractTaskCreator Contract] to create concrete link:kafka-streams-internals-AbstractTask.adoc[stream processor tasks].
+NOTE: `createTask` is part of <<kafka-streams-internals-AbstractTaskCreator.adoc#createTask, AbstractTaskCreator Contract>> to create a <<kafka-streams-internals-AbstractTask.adoc#, stream processor task>>.
 
-`createTask`...FIXME
+`createTask` records execution (occurence) for monitoring purposes and creates a <<kafka-streams-internals-StandbyTask.adoc#, StandbyTask>> only if the processor task topology has at least one <<kafka-streams-internals-ProcessorTopology.adoc#stateStores, state store>>.
 
-NOTE: `createTask` is used when...FIXME
+Internally, `createTask` first requests the <<streamsMetrics, StreamsMetricsThreadImpl>> for the <<kafka-streams-StreamsMetricsThreadImpl.adoc#taskCreatedSensor, taskCreatedSensor>> and records execution (i.e. increments the counter of how many times `createTask` was executed).
+
+`createTask` requests the <<builder, InternalTopologyBuilder>> to <<kafka-streams-internals-InternalTopologyBuilder.adoc#build, build the processor task topology>> for the <<kafka-streams-TaskId.adoc#topicGroupId, topicGroupId>> of the given `TaskId`.
+
+`createTask` creates a <<kafka-streams-internals-StandbyTask.adoc#, StandbyTask>> only if the `ProcessorTopology` has at least one <<kafka-streams-internals-ProcessorTopology.adoc#stateStores, state store>>.
+
+If the `ProcessorTopology` has no <<kafka-streams-internals-ProcessorTopology.adoc#stateStores, state stores>>, `createTask` simply prints out the following TRACE message to the logs and returns `null`.
+
+```
+Skipped standby task [taskId] with assigned partitions [partitions] since it does not have any state stores to materialize
+```
 
 === [[creating-instance]] Creating StandbyTaskCreator Instance
 
 `StandbyTaskCreator` takes the following when created:
 
-* [[builder]] link:kafka-streams-internals-InternalTopologyBuilder.adoc[InternalTopologyBuilder]
-* [[config]] link:kafka-streams-StreamsConfig.adoc[StreamsConfig]
-* [[streamsMetrics]] link:kafka-streams-StreamsMetrics.adoc[StreamsMetrics]
-* [[stateDirectory]] link:kafka-streams-internals-StateDirectory.adoc[StateDirectory]
-* [[taskCreatedSensor]] `Sensor`
+* [[builder]] <<kafka-streams-internals-InternalTopologyBuilder.adoc#, InternalTopologyBuilder>>
+* [[config]] <<kafka-streams-StreamsConfig.adoc#, StreamsConfig>>
+* [[streamsMetrics]] <<kafka-streams-StreamsMetricsThreadImpl.adoc#, StreamsMetricsThreadImpl>>
+* [[stateDirectory]] <<kafka-streams-internals-StateDirectory.adoc#, StateDirectory>>
 * [[storeChangelogReader]] <<kafka-streams-ChangelogReader.adoc#, ChangelogReader>>
 * [[time]] `Time`
 * [[log]] `Logger`
