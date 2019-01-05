@@ -1,0 +1,26 @@
+== [[TaskAssignor]] TaskAssignor Contract
+
+`TaskAssignor` is the <<contract, abstraction>> of <<implementations, task assignors>> that can <<assign, assign>>.
+
+[[contract]]
+.TaskAssignor Contract
+[cols="1m,2",options="header",width="100%"]
+|===
+| Method
+| Description
+
+| assign
+a| [[assign]]
+
+[source, java]
+----
+void assign(int numStandbyReplicas)
+----
+
+Assigns tasks to clients with a given number of standby replicas
+
+Used exclusively when `StreamsPartitionAssignor` is requested to <<kafka-streams-internals-StreamsPartitionAssignor.adoc#assign, perform group assignment>>
+|===
+
+[[implementations]]
+NOTE: <<kafka-streams-internals-StickyTaskAssignor.adoc#, StickyTaskAssignor>> is the one and only known implementation of the <<contract, TaskAssignor Contract>>.

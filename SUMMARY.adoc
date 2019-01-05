@@ -311,6 +311,8 @@
 .. link:kafka-streams-internals-AssignmentInfo.adoc[AssignmentInfo]
 .. link:kafka-streams-internals-SubscriptionInfo.adoc[SubscriptionInfo]
 .. link:kafka-streams-internals-ClientMetadata.adoc[ClientMetadata]
+.. link:kafka-streams-internals-TaskAssignor.adoc[TaskAssignor Contract]
+... link:kafka-streams-internals-StickyTaskAssignor.adoc[StickyTaskAssignor]
 
 . link:kafka-streams-AbstractProcessorContext.adoc[AbstractProcessorContext -- Base Of Internal Processor Contexts]
 .. link:kafka-streams-GlobalProcessorContextImpl.adoc[GlobalProcessorContextImpl]

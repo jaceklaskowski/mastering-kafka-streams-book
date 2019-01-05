@@ -9,9 +9,11 @@
 
 | application.id
 | (empty)
-| [[application.id]] *Application ID* that is the required identifier of a Kafka Streams stream processing application
+a| [[application.id]] *Application ID* that is the required identifier of a Kafka Streams stream processing application
 
 It must be unique within the Kafka cluster as it is used as a namespace for the default client-id prefix, the group-id for membership management, and the prefix for internal topics (that Kafka Streams creates internally).
+
+`application.id` is used as a Kafka consumer group ID (that you can check out using `kafka-consumer-groups.sh` script)
 
 Use <<kafka-streams-StreamsConfig.adoc#APPLICATION_ID_CONFIG, StreamsConfig.APPLICATION_ID_CONFIG>> to reference the property.
 
