@@ -68,6 +68,14 @@ Possible values are:
 
 Use <<kafka-streams-StreamsConfig.adoc#METRICS_RECORDING_LEVEL_CONFIG, StreamsConfig.METRICS_RECORDING_LEVEL_CONFIG>> to reference the property.
 
+| num.standby.replicas
+| `0`
+a| [[num.standby.replicas]] The number of standby replicas per processing task
+
+* Used when `StreamsPartitionAssignor` is requested to <<kafka-streams-internals-StreamsPartitionAssignor.adoc#configure, configure>>
+
+Use <<kafka-streams-StreamsConfig.adoc#NUM_STANDBY_REPLICAS_CONFIG, StreamsConfig.NUM_STANDBY_REPLICAS_CONFIG>> to reference the property.
+
 | num.stream.threads
 | `1`
 | [[num.stream.threads]] The number of <<kafka-streams-StreamThread.adoc#, stream processor threads>> (that <<kafka-streams-KafkaStreams.adoc#threads, KafkaStreams>> uses for stream processing).

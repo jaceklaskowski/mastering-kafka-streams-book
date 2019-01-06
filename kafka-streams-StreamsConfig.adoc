@@ -58,6 +58,9 @@ admin.retries
 | METRICS_RECORDING_LEVEL_CONFIG
 | [[METRICS_RECORDING_LEVEL_CONFIG]] <<kafka-streams-properties.adoc#metrics.recording.level, metrics.recording.level>>
 
+| NUM_STANDBY_REPLICAS_CONFIG
+| [[NUM_STANDBY_REPLICAS_CONFIG]] <<kafka-streams-properties.adoc#num.standby.replicas, num.standby.replicas>>
+
 | NUM_STREAM_THREADS_CONFIG
 | [[NUM_STREAM_THREADS_CONFIG]] <<kafka-streams-properties.adoc#num.stream.threads, num.stream.threads>>
 

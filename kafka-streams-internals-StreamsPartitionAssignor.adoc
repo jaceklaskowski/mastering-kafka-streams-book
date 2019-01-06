@@ -9,6 +9,9 @@ TIP: Read up https://cwiki.apache.org/confluence/display/KAFKA/Kafka+Client-side
 [[creating-instance]]
 `StreamsPartitionAssignor` is a Kafka `Configurable` that is instantiated by reflection and <<configure, takes configuration parameters>>.
 
+[[numStandbyReplicas]]
+`StreamsPartitionAssignor` uses <<kafka-streams-properties.adoc#num.standby.replicas, num.standby.replicas>> configuration property for the number of standby replicas per processing task when <<assign, performing group assignment>> (and requesting `StickyTaskAssignor` to <<kafka-streams-internals-StickyTaskAssignor.adoc#assign, assign tasks>>).
+
 [[logPrefix]]
 `StreamsPartitionAssignor` uses *stream-thread [client.id]* for the `logPrefix`.
 
