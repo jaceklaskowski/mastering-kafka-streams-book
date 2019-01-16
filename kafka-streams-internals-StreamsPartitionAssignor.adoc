@@ -17,7 +17,7 @@ TIP: Read up https://cwiki.apache.org/confluence/display/KAFKA/Kafka+Client-side
 
 [[internal-registries]]
 .StreamsPartitionAssignor's Internal Properties (e.g. Registries, Counters and Flags)
-[cols="1m,2",options="header",width="100%"]
+[cols="1m,3",options="header",width="100%"]
 |===
 | Name
 | Description
@@ -28,6 +28,13 @@ TIP: Read up https://cwiki.apache.org/confluence/display/KAFKA/Kafka+Client-side
 Initialized when `StreamsPartitionAssignor` is requested to <<configure, configure>> itself
 
 Used exclusively when `StreamsPartitionAssignor` is requested to <<prepareTopic, prepareTopic>>
+
+| supportedVersions
+a| [[supportedVersions]] *Supported versions*
+
+All bindings removed (cleared) and then populated in <<assign, assign>>
+
+NOTE: `supportedVersions` does not seem to be used except to hold the entries.
 
 | userEndPoint
 | [[userEndPoint]] User-defined endpoint in the format of `host:port` as <<configure, configured>> by link:kafka-streams-properties.adoc#application.server[application.server] configuration property (default: empty).
@@ -117,9 +124,25 @@ NOTE: `configure` is part of Kafka Consumer's `Configurable` contract for classe
 void prepareTopic(final Map<String, InternalTopicMetadata> topicPartitions)
 ----
 
-`prepareTopic`...FIXME
+`prepareTopic` prints out the following DEBUG message to the logs:
 
-NOTE: `prepareTopic` is used exclusively when `StreamsPartitionAssignor` is requested to <<assign, perform group assignment>>.
+```
+Starting to validate internal topics [topicPartitions] in partition assignor.
+```
+
+For every `InternalTopicMetadata` (in the given `topicPartitions` collection), `prepareTopic` makes sure that the number of partition is defined, i.e. is `0` or more. If not, `prepareTopic` throws a `StreamsException`:
+
+```
+stream-thread [client.id] Topic [[name]] number of partitions not defined
+```
+
+In the end, `prepareTopic` requests the <<internalTopicManager, InternalTopicManager>> to <<kafka-streams-internals-InternalTopicManager.adoc#makeReady, makeReady>> the topics and prints out the following DEBUG message to the logs:
+
+```
+Completed validating internal topics [topicPartitions] in partition assignor.
+```
+
+NOTE: `prepareTopic` is used exclusively when `StreamsPartitionAssignor` is requested to <<assign, perform group assignment>> (and finds repartition source and change log topics).
 
 === [[assign]] Performing Group Assignment (Assigning Tasks To Consumer Clients) -- `assign` Method
 
@@ -132,13 +155,23 @@ Map<String, Assignment> assign(
 
 NOTE: `assign` is part of Kafka Consumer's `PartitionAssignor` contract to perform *group assignment* given the member subscriptions and current cluster metadata.
 
-`assign` takes consumer IDs with subscriptions (from `subscriptions`).
+NOTE: The input `Map<String, Subscription>` contains bindings of a consumer ID and the Kafka `Subscription` with a list of topics (their names) and a user data encoded (as a https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/nio/ByteBuffer.html[java.nio.ByteBuffer]).
 
-`assign` requests `SubscriptionInfo` to link:kafka-streams-internals-SubscriptionInfo.adoc#decode[decode] the user data of the subscription (aka _metadata_) and makes sure that the version is supported, i.e. up to 2 currently.
+`assign` constructs the client metadata (as `Map<UUID, ClientMetadata>`) from the decoded <<kafka-streams-internals-SubscriptionInfo.adoc#, subscription info>> (from the user data).
 
-`assign` finds the client metadata (by the process ID) and creates one if not available.
+. `assign` takes consumer IDs with subscriptions (from `subscriptions`).
 
-`assign` requests the `ClientMetadata` to link:kafka-streams-internals-ClientMetadata.adoc#addConsumer[addConsumer].
+. `assign` requests `SubscriptionInfo` to link:kafka-streams-internals-SubscriptionInfo.adoc#decode[decode] the user data of the subscription (aka _metadata_) and makes sure that the version is supported, i.e. up to 2 currently.
+
+. `assign` finds the client metadata (by the process ID) and creates one if not available.
+
+. `assign` requests the `ClientMetadata` to link:kafka-streams-internals-ClientMetadata.adoc#addConsumer[addConsumer].
+
+`assign` prints out the following INFO message to the logs only if the minimal version received is smaller than the latest supported version (i.e. `4`).
+
+```
+Downgrading metadata to version [minReceivedMetadataVersion]. Latest supported version is 4.
+```
 
 `assign` prints out the following DEBUG message to the logs:
 
