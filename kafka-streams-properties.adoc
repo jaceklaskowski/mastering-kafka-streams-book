@@ -31,6 +31,18 @@ Use <<kafka-streams-StreamsConfig.adoc#APPLICATION_SERVER_CONFIG, StreamsConfig.
 
 Use <<kafka-streams-StreamsConfig.adoc#CACHE_MAX_BYTES_BUFFERING_CONFIG, StreamsConfig.CACHE_MAX_BYTES_BUFFERING_CONFIG>> to reference the property.
 
+| client.id
+| (empty)
+a| [[client.id]] Client ID of internal consumer, producer and restore-consumer, with pattern `<client.id>-StreamThread-<threadSequenceNumber>-<consumer,producer,restore-consumer>`
+
+Used when:
+
+* `KafkaStreams` is <<kafka-streams-KafkaStreams.adoc#, created>> (and initializes the <<kafka-streams-KafkaStreams.adoc#clientId, clientId>> internal property)
+
+* `StreamsPartitionAssignor` is requested to <<kafka-streams-internals-StreamsPartitionAssignor.adoc#configure, configure>>
+
+Use <<kafka-streams-StreamsConfig.adoc#CLIENT_ID_CONFIG, StreamsConfig.CLIENT_ID_CONFIG>> to reference the property.
+
 | commit.interval.ms
 a|
 * `100L` when <<processing.guarantee, processing.guarantee>> is <<exactly_once, exactly_once>> (which is not by default)
@@ -79,6 +91,10 @@ Use <<kafka-streams-StreamsConfig.adoc#NUM_STANDBY_REPLICAS_CONFIG, StreamsConfi
 | num.stream.threads
 | `1`
 | [[num.stream.threads]] The number of <<kafka-streams-StreamThread.adoc#, stream processor threads>> (that <<kafka-streams-KafkaStreams.adoc#threads, KafkaStreams>> uses for stream processing).
+
+| partition.grouper
+|
+a| [[partition.grouper]]
 
 | poll.ms
 | `100`

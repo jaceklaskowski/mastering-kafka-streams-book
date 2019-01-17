@@ -353,6 +353,7 @@
 . link:kafka-streams-internals-InternalProcessorContext.adoc[InternalProcessorContext]
 
 . link:kafka-streams-internals-GroupedStreamAggregateBuilder.adoc[GroupedStreamAggregateBuilder]
+. link:kafka-streams-internals-CopartitionedTopicsValidator.adoc[CopartitionedTopicsValidator]
 
 === State (Store) Management
 

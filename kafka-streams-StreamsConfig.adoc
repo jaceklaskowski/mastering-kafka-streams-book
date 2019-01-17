@@ -1,6 +1,8 @@
 == [[StreamsConfig]] StreamsConfig -- Configuration Properties for Kafka Clients
 
-`StreamsConfig` is a Apache Kafka https://kafka.apache.org/21/javadoc/org/apache/kafka/common/config/AbstractConfig.html[AbstractConfig] for the <<properties, configuration properties>> for a Kafka Streams application.
+`StreamsConfig` is a Apache Kafka https://kafka.apache.org/21/javadoc/org/apache/kafka/common/config/AbstractConfig.html[AbstractConfig] with the <<properties, configuration properties>> for a Kafka Streams application.
+
+`StreamsConfig` is used to reference the <<properties, properties names>> (e.g. to avoid any typos or for type safety).
 
 [source, scala]
 ----
@@ -43,6 +45,9 @@ admin.retries
 | CACHE_MAX_BYTES_BUFFERING_CONFIG
 | [[CACHE_MAX_BYTES_BUFFERING_CONFIG]] <<kafka-streams-properties.adoc#cache.max.bytes.buffering, cache.max.bytes.buffering>>
 
+| CLIENT_ID_CONFIG
+| [[CLIENT_ID_CONFIG]] <<kafka-streams-properties.adoc#client.id, client.id>>
+
 | COMMIT_INTERVAL_MS_CONFIG
 | [[COMMIT_INTERVAL_MS_CONFIG]] <<kafka-streams-properties.adoc#commit.interval.ms, commit.interval.ms>>
 
@@ -63,6 +68,9 @@ admin.retries
 
 | NUM_STREAM_THREADS_CONFIG
 | [[NUM_STREAM_THREADS_CONFIG]] <<kafka-streams-properties.adoc#num.stream.threads, num.stream.threads>>
+
+| PARTITION_GROUPER_CLASS_CONFIG
+| [[PARTITION_GROUPER_CLASS_CONFIG]] <<kafka-streams-properties.adoc#partition.grouper, partition.grouper>>
 
 | POLL_MS_CONFIG
 | [[POLL_MS_CONFIG]] <<kafka-streams-properties.adoc#poll.ms, poll.ms>>
@@ -156,6 +164,12 @@ client.id -> clientId-consumer
 
 [[CONSUMER_PREFIX]]
 `StreamsConfig` uses `consumer` prefix for custom Kafka configurations of a Kafka consumer.
+
+[[eosEnabled]]
+`StreamsConfig` uses `eosEnabled` internal flag for...FIXME
+
+[[InternalStreamsConfig]]
+NOTE: `InternalStreamsConfig` is an extension of `StreamsConfig` that allows for specifying custom <<props, properties>> with the <<doLog, doLog>> flag off.
 
 === [[getProducerConfigs]] `getProducerConfigs` Method
 
@@ -340,3 +354,12 @@ static String adminClientPrefix(final String adminClientProp)
 ----
 
 `adminClientPrefix` simply adds the <<ADMIN_CLIENT_PREFIX, admin.>> prefix to a given `adminClientProp`.
+
+=== [[creating-instance]] Creating StreamsConfig Instance
+
+`StreamsConfig` takes the following to be created:
+
+* [[props]] Configuration properties
+* [[doLog]] `doLog` flag
+
+`StreamsConfig` initializes the <<eosEnabled, eosEnabled>> internal property.

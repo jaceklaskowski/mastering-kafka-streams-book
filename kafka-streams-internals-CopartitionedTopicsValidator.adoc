@@ -1,0 +1,3 @@
+== [[CopartitionedTopicsValidator]] CopartitionedTopicsValidator
+
+`CopartitionedTopicsValidator` is...FIXME
