@@ -1,6 +1,6 @@
 == [[StreamsPartitionAssignor]] StreamsPartitionAssignor -- Dynamic Partition Assignment Strategy
 
-`StreamsPartitionAssignor` is a custom `PartitionAssignor` (from the Kafka Consumer API) that is used to <<assign, assign partitions dynamically>> across the instances of a Kafka Streams application.
+`StreamsPartitionAssignor` is a custom `PartitionAssignor` (from the Kafka Consumer API) that is used to <<assign, assign partitions dynamically>> across the instances of a Kafka Streams application (identified by the required <<kafka-streams-StreamsConfig.adoc#APPLICATION_ID_CONFIG, StreamsConfig.APPLICATION_ID_CONFIG>> configuration property).
 
 [TIP]
 ====
@@ -9,12 +9,26 @@
 Read up https://cwiki.apache.org/confluence/display/KAFKA/Kafka+Client-side+Assignment+Proposal[Kafka Client-side Assignment Proposal] on the group management in Apache Kafka's Consumer API.
 ====
 
+From https://cwiki.apache.org/confluence/display/KAFKA/Kafka+Client-side+Assignment+Proposal[Kafka Client-side Assignment Proposal] (with extra formatting of mine):
+
+> To support client-side assignment, we propose to split the group management protocol into two phases: *group membership* and *state synchronization*.
+
+> *Group Membership* phase is used to set the active members of the group and to elect a group leader.
+
+> *State Synchronization* phase is used to enable the group leader to synchronize member state in the group (in other words to assign each member's state).
+
+> From the perspective of the consumer, group membership phase is used to collect member subscriptions, while state synchronization phase is used to propagate partition assignments.
+
+> The elected leader in the join group phase is responsible for setting the assignments for the whole group.
+
+Given the above, there will be just one elected `StreamsPartitionAssignor` among the members of a Kafka Streams application (so you should see the <<logging, log messages>> from just a single thread).
+
 [[PARTITION_ASSIGNMENT_STRATEGY_CONFIG]]
 [[partition.assignment.strategy]]
-`StreamsPartitionAssignor` is registered under *partition.assignment.strategy* (`ConsumerConfig.PARTITION_ASSIGNMENT_STRATEGY_CONFIG`) configuration property when `StreamsConfig` is requested for the <<kafka-streams-StreamsConfig.adoc#getMainConsumerConfigs, configuration for the main Kafka Consumer>>.
+`StreamsPartitionAssignor` (as a fully-qualified class name) is registered under *partition.assignment.strategy* (`ConsumerConfig.PARTITION_ASSIGNMENT_STRATEGY_CONFIG`) configuration property when `StreamsConfig` is requested for the <<kafka-streams-StreamsConfig.adoc#getMainConsumerConfigs, configuration for the main Kafka Consumer>>.
 
 [[creating-instance]]
-`StreamsPartitionAssignor` is a Kafka `Configurable` that is instantiated by reflection with <<configure, configuration parameters>>.
+`StreamsPartitionAssignor` is a Kafka https://kafka.apache.org/21/javadoc/org/apache/kafka/common/Configurable.html[Configurable] that is instantiated by reflection with <<configure, configuration parameters>>. That is when `StreamsPartitionAssignor` finds the current <<taskManager, TaskManager>> (using <<kafka-streams-StreamsConfig.adoc#TASK_MANAGER_FOR_PARTITION_ASSIGNOR, TASK_MANAGER_FOR_PARTITION_ASSIGNOR>> internal property set when the `StreamThread` is <<kafka-streams-StreamThread.adoc#create, created>>).
 
 [[logPrefix]]
 `StreamsPartitionAssignor` uses *stream-thread [client.id]* for the `logPrefix` (that uses <<kafka-streams-StreamsConfig.adoc#CLIENT_ID_CONFIG, client.id>> configuration property).
@@ -64,7 +78,7 @@ Used when `StreamsPartitionAssignor` is requested to <<subscription, subscriptio
 [[logging]]
 [TIP]
 ====
-Enable `DEBUG` logging level for `org.apache.kafka.streams.processor.internals.StreamsPartitionAssignor` logger to see what happens inside.
+Enable `ERROR`, `WARN`, `INFO`, `DEBUG` logging level for `org.apache.kafka.streams.processor.internals.StreamsPartitionAssignor` logger to see what happens inside.
 
 Add the following line to `log4j.properties`:
 

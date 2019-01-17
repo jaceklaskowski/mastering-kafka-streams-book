@@ -92,6 +92,8 @@ Use <<kafka-streams-StreamsConfig.adoc#NUM_STANDBY_REPLICAS_CONFIG, StreamsConfi
 | `1`
 | [[num.stream.threads]] The number of <<kafka-streams-StreamThread.adoc#, stream processor threads>> (that <<kafka-streams-KafkaStreams.adoc#threads, KafkaStreams>> uses for stream processing).
 
+Use <<kafka-streams-StreamsConfig.adoc#NUM_STREAM_THREADS_CONFIG, StreamsConfig.NUM_STREAM_THREADS_CONFIG>> to reference the property.
+
 | partition.grouper
 |
 a| [[partition.grouper]]
