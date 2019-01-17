@@ -2,7 +2,7 @@
 
 `StreamsConfig` is a Apache Kafka https://kafka.apache.org/21/javadoc/org/apache/kafka/common/config/AbstractConfig.html[AbstractConfig] with the <<properties, configuration properties>> for a Kafka Streams application.
 
-`StreamsConfig` is used to reference the <<properties, properties names>> (e.g. to avoid any typos or for type safety).
+`StreamsConfig` is used to reference the <<properties, properties names>> (e.g. to avoid any typos or a better type safety).
 
 [source, scala]
 ----
@@ -27,7 +27,7 @@ admin.retries
 ----
 
 [[properties]]
-.Configuration Properties
+.Constants for Configuration Properties
 [cols="1m,1",options="header",width="100%"]
 |===
 | Name
@@ -168,8 +168,28 @@ client.id -> clientId-consumer
 [[eosEnabled]]
 `StreamsConfig` uses `eosEnabled` internal flag for...FIXME
 
+[[InternalConfig]]
+`StreamsConfig` defines the `InternalConfig` inner class with the <<internal-properties, internal properties>>.
+
+[[internal-properties]]
+.Constants for Internal Configuration Properties
+[cols="1,1",options="header",width="100%"]
+|===
+| Name
+| Value
+
+| [[ASSIGNMENT_ERROR_CODE]] `ASSIGNMENT_ERROR_CODE`
+a| `++__assignment.error.code__++`
+
+| [[TASK_MANAGER_FOR_PARTITION_ASSIGNOR]] `TASK_MANAGER_FOR_PARTITION_ASSIGNOR`
+a| `++__task.manager.instance__++`
+
+Used to associate the <<kafka-streams-internals-TaskManager.adoc#, TaskManager>> (of <<kafka-streams-StreamThread.adoc#, StreamThread>>) with <<kafka-streams-internals-StreamsPartitionAssignor.adoc#, StreamsPartitionAssignor>> (when <<kafka-streams-internals-StreamsPartitionAssignor.adoc#configure, configured>>)
+
+|===
+
 [[InternalStreamsConfig]]
-NOTE: `InternalStreamsConfig` is an extension of `StreamsConfig` that allows for specifying custom <<props, properties>> with the <<doLog, doLog>> flag off.
+NOTE: `InternalStreamsConfig` is an extension of `StreamsConfig` that is used in <<kafka-streams-internals-StreamsPartitionAssignor.adoc#, StreamsPartitionAssignor>> to specify custom <<props, configuration properties>> and turn the <<doLog, doLog>> flag off.
 
 === [[getProducerConfigs]] `getProducerConfigs` Method
 

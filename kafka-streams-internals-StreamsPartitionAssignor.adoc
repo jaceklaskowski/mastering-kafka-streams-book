@@ -1,19 +1,26 @@
 == [[StreamsPartitionAssignor]] StreamsPartitionAssignor -- Dynamic Partition Assignment Strategy
 
-`StreamsPartitionAssignor` is a Kafka Consumer `PartitionAssignor` for a dynamic partition assignment strategy and distribute partition ownership across the members of a consumer group (that is formed from the instances of a Kafka Streams application).
+`StreamsPartitionAssignor` is a custom `PartitionAssignor` (from the Kafka Consumer API) that is used to <<assign, assign partitions dynamically>> across the instances of a Kafka Streams application.
 
-TIP: Read up https://cwiki.apache.org/confluence/display/KAFKA/Kafka+Client-side+Assignment+Proposal[Kafka Client-side Assignment Proposal] on the group management in Apache Kafka's Consumer API.
+[TIP]
+====
+`PartitionAssignor` is used for a dynamic partition assignment and distributing partition ownership across the members of a consumer group.
 
-`StreamsPartitionAssignor` is registered under *partition.assignment.strategy* (`ConsumerConfig.PARTITION_ASSIGNMENT_STRATEGY_CONFIG`) configuration property when `StreamsConfig` is requested for the link:kafka-streams-StreamsConfig.adoc#getMainConsumerConfigs[configuration for a main Kafka Consumer].
+Read up https://cwiki.apache.org/confluence/display/KAFKA/Kafka+Client-side+Assignment+Proposal[Kafka Client-side Assignment Proposal] on the group management in Apache Kafka's Consumer API.
+====
+
+[[PARTITION_ASSIGNMENT_STRATEGY_CONFIG]]
+[[partition.assignment.strategy]]
+`StreamsPartitionAssignor` is registered under *partition.assignment.strategy* (`ConsumerConfig.PARTITION_ASSIGNMENT_STRATEGY_CONFIG`) configuration property when `StreamsConfig` is requested for the <<kafka-streams-StreamsConfig.adoc#getMainConsumerConfigs, configuration for the main Kafka Consumer>>.
 
 [[creating-instance]]
-`StreamsPartitionAssignor` is a Kafka `Configurable` that is instantiated by reflection and <<configure, takes configuration parameters>>.
-
-[[numStandbyReplicas]]
-`StreamsPartitionAssignor` uses <<kafka-streams-properties.adoc#num.standby.replicas, num.standby.replicas>> configuration property for the number of standby replicas per processing task when <<assign, performing group assignment>> (and requesting `StickyTaskAssignor` to <<kafka-streams-internals-StickyTaskAssignor.adoc#assign, assign tasks>>).
+`StreamsPartitionAssignor` is a Kafka `Configurable` that is instantiated by reflection with <<configure, configuration parameters>>.
 
 [[logPrefix]]
 `StreamsPartitionAssignor` uses *stream-thread [client.id]* for the `logPrefix` (that uses <<kafka-streams-StreamsConfig.adoc#CLIENT_ID_CONFIG, client.id>> configuration property).
+
+[[numStandbyReplicas]]
+`StreamsPartitionAssignor` uses <<kafka-streams-properties.adoc#num.standby.replicas, num.standby.replicas>> configuration property for the number of standby replicas per processing task when <<assign, performing group assignment>> (and requesting `StickyTaskAssignor` to <<kafka-streams-internals-StickyTaskAssignor.adoc#assign, assign tasks>>).
 
 [[internal-registries]]
 .StreamsPartitionAssignor's Internal Properties (e.g. Registries, Counters and Flags)
@@ -133,7 +140,7 @@ NOTE: `configure` is part of Kafka Consumer's `Configurable` contract for classe
 
 `configure` uses `upgrade.from` property for...FIXME
 
-`configure` uses the given `configs` to find the current <<taskManager, TaskManager>> using `__task.manager.instance__` internal property. If not found or of a different type than `TaskManager`, `configure` throws a `KafkaException`:
+`configure` uses the given `configs` to find the current <<taskManager, TaskManager>> using <<kafka-streams-StreamsConfig.adoc#TASK_MANAGER_FOR_PARTITION_ASSIGNOR, TASK_MANAGER_FOR_PARTITION_ASSIGNOR>> internal property. If not found or of a different type than `TaskManager`, `configure` throws a `KafkaException`:
 
 ```
 TaskManager is not specified
@@ -143,7 +150,7 @@ TaskManager is not specified
 [className] is not an instance of org.apache.kafka.streams.processor.internals.TaskManager
 ```
 
-`configure` uses the given `configs` to find the current <<assignmentErrorCode, assignmentErrorCode>> using `__assignment.error.code__` internal property. If not found or of a different type than `AtomicInteger`, `configure` throws a `KafkaException`:
+`configure` uses the given `configs` to find the current <<assignmentErrorCode, assignmentErrorCode>> using <<kafka-streams-StreamsConfig.adoc#ASSIGNMENT_ERROR_CODE, ASSIGNMENT_ERROR_CODE>> internal property. If not found or of a different type than `AtomicInteger`, `configure` throws a `KafkaException`:
 
 ```
 assignmentErrorCode is not specified

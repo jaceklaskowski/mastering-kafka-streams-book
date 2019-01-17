@@ -1,9 +1,14 @@
 == [[StreamThread]] StreamThread -- Stream Processor Thread
 
-`StreamThread` is the <<run, stream processor thread>> (a Java https://docs.oracle.com/javase/9/docs/api/java/lang/Thread.html[Thread]) in a Kafka Streams application that <<runLoop, runs the main record processing loop>>.
+`StreamThread` is the <<run, stream processor thread>> (a Java https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/Thread.html[Thread]) in a Kafka Streams application that <<runLoop, runs the main record processing loop>>.
 
 .StreamThread and Stream Processing
 image::images/kafka-streams-StreamThread.png[align="center"]
+
+`StreamThread` uses a <<consumer, Kafka Consumer>> and a <<taskManager, TaskManager>> that are both created when `StreamThread` is requested to <<create, create an instance of itself>>. That is when the `StreamThread` sets the <<kafka-streams-StreamsConfig.adoc#TASK_MANAGER_FOR_PARTITION_ASSIGNOR, TASK_MANAGER_FOR_PARTITION_ASSIGNOR>> internal property and indirectly associates the <<taskManager, TaskManager>> with <<kafka-streams-internals-StreamsPartitionAssignor.adoc#, StreamsPartitionAssignor>>. `StreamThread` also requests the given <<kafka-streams-KafkaClientSupplier.adoc#, KafkaClientSupplier>> to <<getConsumer, create a KafkaConsumer>> (with the <<taskManager, TaskManager>>) and so when the <<kafka-streams-internals-StreamsPartitionAssignor.adoc#PARTITION_ASSIGNMENT_STRATEGY_CONFIG, partition.assignment.strategy>> configuration property is picked up, `StreamsPartitionAssignor` is <<kafka-streams-internals-StreamsPartitionAssignor.adoc#, created>> and eventually <<kafka-streams-internals-StreamsPartitionAssignor.adoc#configure, configured>> (that will use the <<kafka-streams-StreamsConfig.adoc#TASK_MANAGER_FOR_PARTITION_ASSIGNOR, TASK_MANAGER_FOR_PARTITION_ASSIGNOR>> internal property).
+
+.StreamThread and Registering TaskManager under TASK_MANAGER_FOR_PARTITION_ASSIGNOR
+image::images/kafka-streams-StreamThread-TASK_MANAGER_FOR_PARTITION_ASSIGNOR.png[align="center"]
 
 `StreamThread` uses a <<consumer, Kafka Consumer>> to subscribe to the <<kafka-streams-internals-InternalTopologyBuilder.adoc#sourceTopicPattern, source topics>> (of the <<builder, InternalTopologyBuilder>>).
 
@@ -523,7 +528,7 @@ Creating restore consumer client
 
 `create` requests the input `StreamsConfig` for link:kafka-streams-StreamsConfig.adoc#getRestoreConsumerConfigs[getRestoreConsumerConfigs] for a new `threadClientId` (of the format `[clientId]-StreamThread-[STREAM_THREAD_ID]`).
 
-`create` requests the input `KafkaClientSupplier` for link:kafka-streams-KafkaClientSupplier.adoc#getRestoreConsumer[getRestoreConsumer] for the `restoreConsumerConfigs`.
+`create` requests the given `KafkaClientSupplier` for link:kafka-streams-KafkaClientSupplier.adoc#getRestoreConsumer[getRestoreConsumer] for the `restoreConsumerConfigs`.
 
 [[create-StoreChangelogReader]]
 `create` creates a <<kafka-streams-StoreChangelogReader.adoc#, StoreChangelogReader>> (with the `restoreConsumer`, the given <<kafka-streams-StateRestoreListener.adoc#, StateRestoreListener>> and the configured <<kafka-streams-properties.adoc#poll.ms, poll.ms>>).
@@ -551,15 +556,15 @@ Creating consumer client
 
 `create` requests the input `StreamsConfig` for link:kafka-streams-properties.adoc#application.id[application.id] configuration property.
 
-`create` requests the input `StreamsConfig` for the link:kafka-streams-StreamsConfig.adoc#getMainConsumerConfigs[configuration of a Kafka Consumer] for the application ID and the `threadClientId` (of the format `[clientId]-StreamThread-[STREAM_THREAD_ID]`).
+`create` requests the input `StreamsConfig` for the link:kafka-streams-StreamsConfig.adoc#getMainConsumerConfigs[configuration of a Kafka Consumer] for the application ID and the `threadClientId` (of the format `[clientId]-StreamThread-[STREAM_THREAD_ID]`) and adds the following internal properties:
 
-`create` adds `++__task.manager.instance__++` configuration key that points to the `TaskManager`.
+* <<kafka-streams-StreamsConfig.adoc#TASK_MANAGER_FOR_PARTITION_ASSIGNOR, TASK_MANAGER_FOR_PARTITION_ASSIGNOR>> to be the `TaskManager` just created
+
+* <<kafka-streams-StreamsConfig.adoc#ASSIGNMENT_ERROR_CODE, ASSIGNMENT_ERROR_CODE>> to be a new `AtomicInteger`
 
 (Only with non-empty `latestResetTopicsPattern` and `earliestResetTopicsPattern` patterns) `create`...FIXME
 
-`create` requests the input `KafkaClientSupplier` for a link:kafka-streams-KafkaClientSupplier.adoc#getConsumer[Kafka Consumer] (with the `consumerConfigs`).
-
-`create` link:kafka-streams-internals-TaskManager.adoc#setConsumer[registers] the Kafka `Consumer` with the `TaskManager`.
+`create` requests the given `KafkaClientSupplier` for a link:kafka-streams-KafkaClientSupplier.adoc#getConsumer[Kafka Consumer] (with the `consumerConfigs`) and link:kafka-streams-internals-TaskManager.adoc#setConsumer[associates] it with the `TaskManager`.
 
 In the end, `create` creates a <<creating-instance, StreamThread>>.
 

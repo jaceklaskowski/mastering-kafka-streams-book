@@ -29,7 +29,7 @@ a| [[getConsumer]]
 Consumer<byte[], byte[]> getConsumer(final Map<String, Object> config);
 ----
 
-A Kafka https://kafka.apache.org/20/javadoc/org/apache/kafka/clients/consumer/KafkaConsumer.html[Consumer] (for <<kafka-streams-internals-TaskManager.adoc#consumer, TaskManager>> and <<kafka-streams-StreamThread.adoc#consumer, StreamThread>>)
+A Kafka https://kafka.apache.org/21/javadoc/org/apache/kafka/clients/consumer/KafkaConsumer.html[Consumer] (for <<kafka-streams-internals-TaskManager.adoc#consumer, TaskManager>> and <<kafka-streams-StreamThread.adoc#consumer, StreamThread>>)
 
 Used exclusively when `StreamThread` is <<kafka-streams-StreamThread.adoc#create, created>> (that also <<kafka-streams-internals-TaskManager.adoc#setConsumer, sets the Kafka Consumer>> for the <<kafka-streams-internals-TaskManager.adoc#taskManager, TaskManager>>)
 
