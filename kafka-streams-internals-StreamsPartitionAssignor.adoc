@@ -70,7 +70,7 @@ NOTE: `supportedVersions` does not seem to be used except to hold the entries.
 a| [[taskManager]] <<kafka-streams-internals-TaskManager.adoc#, TaskManager>>
 
 | userEndPoint
-a| [[userEndPoint]] User-defined endpoint in the format of `host:port` as <<configure, configured>> by link:kafka-streams-properties.adoc#application.server[application.server] configuration property (default: empty).
+a| [[userEndPoint]] *User-defined endpoint* in the format of `host:port` as <<configure, configured>> by link:kafka-streams-properties.adoc#application.server[application.server] configuration property (default: empty).
 
 Used when `StreamsPartitionAssignor` is requested to <<subscription, subscription>> (and create a `SubscriptionInfo`)
 |===

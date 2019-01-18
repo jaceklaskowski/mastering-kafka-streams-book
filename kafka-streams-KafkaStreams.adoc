@@ -193,6 +193,9 @@ ks.setGlobalStateRestoreListener(userRestoreListener)
 
 * Requesting a <<kafka-streams-internals-InternalTopologyBuilder.adoc#buildGlobalStateTopology, global processor topology>> (for a <<globalStreamThread, GlobalStreamThread>>)
 
+[[log]]
+`KafkaStreams` uses *stream-client [client.id]* for the log prefix (with the <<clientId, clientId>>).
+
 [[internal-registries]]
 .KafkaStreams's Internal Properties (e.g. Registries, Counters and Flags)
 [cols="1m,2",options="header",width="100%"]
@@ -201,7 +204,23 @@ ks.setGlobalStateRestoreListener(userRestoreListener)
 | Description
 
 | clientId
-| [[clientId]]
+a| [[clientId]] *Client ID*
+
+Used for the following:
+
+* <<log, logging>>
+
+* <<metrics, metrics>>
+
+* <<globalStreamThread, Global thread ID>>
+
+* Requesting the <<clientSupplier, KafkaClientSupplier>> for the <<kafka-streams-KafkaClientSupplier.adoc#getGlobalConsumer, global Kafka Consumer>> (when creating the <<globalStreamThread, GlobalStreamThread>>)
+
+* Requesting the <<config, StreamsConfig>> for the <<kafka-streams-StreamsConfig.adoc#getAdminConfigs, KafkaAdmin configuration>> (when creating the <<adminClient, AdminClient>>)
+
+* Creating <<threads, StreamThreads>>
+
+* The name of the <<stateDirCleaner, ScheduledExecutorService>> thread
 
 | globalStateRestoreListener
 a| [[globalStateRestoreListener]] A user-defined global <<kafka-streams-StateRestoreListener.adoc#, StateRestoreListener>> to be notified about the state-related events: <<kafka-streams-DelegatingStateRestoreListener.adoc#onRestoreStart, onRestoreStart>>, <<kafka-streams-DelegatingStateRestoreListener.adoc#onBatchRestored, onBatchRestored>> and <<kafka-streams-DelegatingStateRestoreListener.adoc#onRestoreEnd, onRestoreEnd>> (through <<kafka-streams-DelegatingStateRestoreListener.adoc#, DelegatingStateRestoreListener>>)
@@ -223,6 +242,13 @@ a| [[adminClient]] Kafka https://kafka.apache.org/21/javadoc/org/apache/kafka/cl
 * Initialized when `KafkaStreams` is <<creating-instance-adminClient, created>> for the only purpose of <<kafka-streams-StreamThread.adoc#create, creating StreamThreads>> (that simply use it to <<kafka-streams-internals-TaskManager.adoc#adminClient, create a TaskManager>>)
 
 * Closed when `KafkaStreams` is <<close, closed>>
+
+| clientId
+a| [[clientId]] *Client ID* that is initialized when `KafkaStreams` is <<creating-instance, created>> as follows:
+
+* <<kafka-streams-properties.adoc#client.id, client.id>> if defined
+
+* <<kafka-streams-properties.adoc#application.id, application.id>> followed by `-` and the <<processId, processId>>
 
 | queryableStoreProvider
 | [[queryableStoreProvider]] link:kafka-streams-QueryableStoreProvider.adoc[QueryableStoreProvider]

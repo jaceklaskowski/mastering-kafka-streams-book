@@ -14,7 +14,8 @@ a| [[getAdminClient]]
 
 [source, java]
 ----
-AdminClient getAdminClient(final Map<String, Object> config);
+AdminClient getAdminClient(
+  final Map<String, Object> config)
 ----
 
 A Kafka https://kafka.apache.org/20/javadoc/org/apache/kafka/clients/admin/AdminClient.html[AdminClient] (for <<kafka-streams-KafkaStreams.adoc#adminClient, KafkaStreams>>)
@@ -26,7 +27,8 @@ a| [[getConsumer]]
 
 [source, java]
 ----
-Consumer<byte[], byte[]> getConsumer(final Map<String, Object> config);
+Consumer<byte[], byte[]> getConsumer(
+  final Map<String, Object> config)
 ----
 
 A Kafka https://kafka.apache.org/21/javadoc/org/apache/kafka/clients/consumer/KafkaConsumer.html[Consumer] (for <<kafka-streams-internals-TaskManager.adoc#consumer, TaskManager>> and <<kafka-streams-StreamThread.adoc#consumer, StreamThread>>)
@@ -38,7 +40,8 @@ a| [[getGlobalConsumer]]
 
 [source, java]
 ----
-Consumer<byte[], byte[]> getGlobalConsumer(final Map<String, Object> config);
+Consumer<byte[], byte[]> getGlobalConsumer(
+  final Map<String, Object> config)
 ----
 
 A Kafka https://kafka.apache.org/20/javadoc/org/apache/kafka/clients/consumer/KafkaConsumer.html[Consumer] (for <<kafka-streams-internals-GlobalStreamThread.adoc#globalConsumer, GlobalStreamThread>>)
@@ -50,7 +53,8 @@ a| [[getProducer]]
 
 [source, java]
 ----
-Producer<byte[], byte[]> getProducer(final Map<String, Object> config);
+Producer<byte[], byte[]> getProducer(
+  final Map<String, Object> config)
 ----
 
 A Kafka http://kafka.apache.org/20/javadoc/org/apache/kafka/clients/producer/KafkaProducer.html[Producer] (for <<kafka-streams-StreamThread.adoc#producer, StreamThreads>> and <<kafka-streams-internals-TaskCreator.adoc#threadProducer, TaskCreator>>)
@@ -66,7 +70,8 @@ a| [[getRestoreConsumer]]
 
 [source, java]
 ----
-Consumer<byte[], byte[]> getRestoreConsumer(final Map<String, Object> config);
+Consumer<byte[], byte[]> getRestoreConsumer(
+  final Map<String, Object> config)
 ----
 
 A Kafka https://kafka.apache.org/20/javadoc/org/apache/kafka/clients/consumer/KafkaConsumer.html[Consumer] (for <<kafka-streams-StoreChangelogReader.adoc#restoreConsumer, StoreChangelogReader>>, <<kafka-streams-internals-TaskManager.adoc#restoreConsumer, TaskManager>> and <<kafka-streams-StreamThread.adoc#restoreConsumer, StreamThread>>)
