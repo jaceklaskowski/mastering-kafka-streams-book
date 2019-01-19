@@ -38,12 +38,13 @@ NOTE: `clean` is used when...FIXME
 
 [source, java]
 ----
-synchronized void cleanRemovedTasks(final long cleanupDelayMs)
+void cleanRemovedTasks(final long cleanupDelayMs) // <1>
 // private
 private synchronized void cleanRemovedTasks(
   final long cleanupDelayMs,
   final boolean manualUserCall) throws Exception
 ----
+<1> Turns the `manualUserCall` flag off
 
 `cleanRemovedTasks`...FIXME
 

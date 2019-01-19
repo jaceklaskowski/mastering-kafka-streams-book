@@ -236,6 +236,13 @@ a| [[globalStreamThread]] link:kafka-streams-internals-GlobalStreamThread.adoc[G
 
 * Set to `null` while `KafkaStreams` is being <<close, closed>>
 
+| stateDirCleaner
+a| [[stateDirCleaner]] A single-threaded executor (`java.util.concurrent.ScheduledExecutorService`) that uses a single daemon thread with the name as <<clientId, clientId>> followed by `-CleanupThread`
+
+Used to schedule a periodic action that requests the <<stateDirectory, StateDirectory>> to <<kafka-streams-internals-StateDirectory.adoc#cleanRemovedTasks, cleanRemovedTasks>> after and every <<kafka-streams-properties.adoc#state.cleanup.delay.ms, state.cleanup.delay.ms>> milliseconds (and only when the <<state, state>> is `RUNNING`)
+
+Initialized when `KafkaStreams` is created and shut down when requested to <<close, close>>
+
 | adminClient
 a| [[adminClient]] Kafka https://kafka.apache.org/21/javadoc/org/apache/kafka/clients/admin/AdminClient.html[AdminClient] (that allows for managing and inspecting topics, brokers, configurations and ACLs)
 

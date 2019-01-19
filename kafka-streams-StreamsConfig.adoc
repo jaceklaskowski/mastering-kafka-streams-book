@@ -81,6 +81,9 @@ admin.retries
 | REPLICATION_FACTOR_CONFIG
 | [[REPLICATION_FACTOR_CONFIG]] <<kafka-streams-properties.adoc#replication.factor, replication.factor>>
 
+| STATE_CLEANUP_DELAY_MS_CONFIG
+| [[STATE_CLEANUP_DELAY_MS_CONFIG]] <<kafka-streams-properties.adoc#state.cleanup.delay.ms, state.cleanup.delay.ms>>
+
 | STATE_DIR_CONFIG
 | [[STATE_DIR_CONFIG]] <<kafka-streams-properties.adoc#state.dir, state.dir>>
 
