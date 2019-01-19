@@ -1,0 +1,3 @@
+== [[StatefulProcessorNode]] StatefulProcessorNode
+
+`StatefulProcessorNode` is...FIXME

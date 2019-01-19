@@ -161,6 +161,7 @@
 .. link:kafka-streams-internals-TableSourceNode.adoc[TableSourceNode]
 .. link:kafka-streams-internals-TableProcessorNode.adoc[TableProcessorNode]
 .. link:kafka-streams-internals-ProcessorGraphNode.adoc[ProcessorGraphNode]
+.. link:kafka-streams-internals-StatefulProcessorNode.adoc[StatefulProcessorNode]
 
 .. link:kafka-streams-internals-GroupedTableOperationRepartitionNode.adoc[GroupedTableOperationRepartitionNode]
 ... link:kafka-streams-internals-GroupedTableOperationRepartitionNodeBuilder.adoc[GroupedTableOperationRepartitionNodeBuilder]
@@ -237,6 +238,7 @@
 .. link:kafka-streams-internals-ConsumedInternal.adoc[ConsumedInternal -- Internal Accessors to Consumed Metadata]
 .. link:kafka-streams-internals-ProducedInternal.adoc[ProducedInternal -- Internal Accessors to Produced Metadata]
 .. link:kafka-streams-internals-QuickUnion.adoc[QuickUnion]
+.. link:kafka-streams-internals-TopicsInfo.adoc[TopicsInfo]
 
 . link:kafka-streams-NodeFactory.adoc[NodeFactory]
 .. link:kafka-streams-ProcessorNodeFactory.adoc[ProcessorNodeFactory]

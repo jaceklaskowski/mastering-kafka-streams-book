@@ -487,24 +487,15 @@ void connectSourceStoreAndTopic(
   final String topic)
 ----
 
-`connectSourceStoreAndTopic` registers the `sourceStoreName` with the `topic` in <<storeToChangelogTopic, storeToChangelogTopic>>.
+`connectSourceStoreAndTopic` adds the given `sourceStoreName` with the `topic` to <<storeToChangelogTopic, storeToChangelogTopic>> internal registry.
 
-`connectSourceStoreAndTopic` reports a `TopologyException` when <<storeToChangelogTopic, storeToChangelogTopic>> has `sourceStoreName` already been registered.
+`connectSourceStoreAndTopic` reports a `TopologyException` when <<storeToChangelogTopic, storeToChangelogTopic>> has `sourceStoreName` already registered.
 
 ```
 Source store [sourceStoreName] is already added.
 ```
 
-[NOTE]
-====
-`connectSourceStoreAndTopic` is used when:
-
-* `InternalStreamsBuilder` is requested to link:kafka-streams-internals-InternalStreamsBuilder.adoc#table[create a KTable for a topic]
-
-* `InternalTopologyBuilder` is requested to <<addGlobalStore, add a global state store to a topology>>
-
-* *(deprecated)* `TopologyBuilder` is requested to `connectSourceStoreAndTopic`
-====
+NOTE: `connectSourceStoreAndTopic` is used when `InternalTopologyBuilder` is requested to <<addGlobalStore, add a global state store to a topology>> and <<adjust, adjust>>.
 
 === [[connectProcessorAndStateStore]] Connecting State Store with Processor Node -- `connectProcessorAndStateStore` Internal Method
 
@@ -1027,3 +1018,14 @@ InternalTopologyBuilder rewriteTopology(final StreamsConfig config)
 `rewriteTopology`...FIXME
 
 NOTE: `rewriteTopology` is used exclusively when `KafkaStreams` is <<kafka-streams-KafkaStreams.adoc#creating-instance, created>>.
+
+=== [[adjust]] `adjust` Internal Method
+
+[source, java]
+----
+void adjust(final StreamsConfig config)
+----
+
+`adjust`...FIXME
+
+NOTE: `adjust` is used exclusively when `InternalTopologyBuilder` is requested to <<rewriteTopology, rewriteTopology>>.

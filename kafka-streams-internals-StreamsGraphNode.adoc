@@ -19,6 +19,10 @@ void writeToTopology(final InternalTopologyBuilder topologyBuilder)
 
 NOTE: `StreamsGraphNode` is a Java abstract class and cannot be <<creating-instance, created>> directly. It is created indirectly for the <<implementations, concrete StreamsGraphNodes>> and as the <<kafka-streams-internals-InternalStreamsBuilder.adoc#root, root node of an InternalStreamsBuilder>>.
 
+[[valueChangingOperation]]
+[[setValueChangingOperation]]
+`StreamsGraphNode` uses the `valueChangingOperation` flag for...FIXME
+
 [[implementations]]
 .StreamsGraphNodes (Direct Implementations)
 [cols="1,2",options="header",width="100%"]

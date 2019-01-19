@@ -10,6 +10,9 @@
 [[SINK_NAME]]
 `KStreamImpl` uses *KSTREAM-SINK-* as the prefix for...FIXME
 
+[[TRANSFORMVALUES_NAME]]
+`KStreamImpl` uses *KSTREAM-TRANSFORMVALUES-* as the prefix for...FIXME
+
 [[internal-registries]]
 .KStreamImpl's Internal Properties (e.g. Registries, Counters and Flags)
 [cols="1,2",options="header",width="100%"]
@@ -327,3 +330,27 @@ KStream<K, V> filterNot(final Predicate<? super K, ? super V> predicate)
 NOTE: `filterNot` is part of the <<kafka-streams-KStream.adoc#filterNot, KStream Contract>> to...FIXME.
 
 `filterNot`...FIXME
+
+=== [[doTransformValues]] `doTransformValues` Internal Method
+
+[source, java]
+----
+KStream<K, VR> doTransformValues(
+  final ValueTransformerWithKeySupplier<
+    ? super K,
+    ? super V,
+    ? extends VR> valueTransformerWithKeySupplier,
+  final String... stateStoreNames)
+----
+
+`doTransformValues` requests the <<builder, InternalStreamsBuilder>> for a <<kafka-streams-internals-InternalStreamsBuilder.adoc#newProcessorName, new processor name>> with <<TRANSFORMVALUES_NAME, KSTREAM-TRANSFORMVALUES>> prefix.
+
+`doTransformValues` creates a new <<kafka-streams-internals-StatefulProcessorNode.adoc#, StatefulProcessorNode>> with the new processor name, the given `stateStoreNames` and the <<repartitionRequired, repartitionRequired>> flag.
+
+`doTransformValues` requests the `StatefulProcessorNode` to <<kafka-streams-internals-StreamsGraphNode.adoc#setValueChangingOperation, setValueChangingOperation>>.
+
+`doTransformValues` requests the <<builder, InternalStreamsBuilder>> to <<kafka-streams-internals-InternalStreamsBuilder.adoc#addGraphNode, add>> the `StatefulProcessorNode` (with the <<kafka-streams-AbstractStream.adoc#streamsGraphNode, StreamsGraphNode>> as the parent).
+
+In the end, `doTransformValues` creates a new <<creating-instance, KStreamImpl>> (with the new processor name, the <<sourceNodes, sourceNodes>>, the <<repartitionRequired, repartitionRequired>> flag, the `StatefulProcessorNode` itself and the <<builder, InternalStreamsBuilder>>).
+
+NOTE: `doTransformValues` is used when `KStreamImpl` is requested to <<transformValues, transformValues>>.

@@ -1,0 +1,11 @@
+== [[TopicsInfo]] TopicsInfo
+
+[[creating-instance]]
+`TopicsInfo` is a simple "container" with the following:
+
+* [[sinkTopics]] Names of the sink topics
+* [[sourceTopics]] Names of the source topics
+* [[repartitionSourceTopics]] `Map<String, InternalTopicConfig>`
+* [[stateChangelogTopics]] `Map<String, InternalTopicConfig>`
+
+`TopicsInfo` is <<creating-instance, created>> exclusively when `InternalTopologyBuilder` is requested for the <<kafka-streams-internals-InternalTopologyBuilder.adoc#topicGroups, topic groups>> (when a node group has at least one source topic, incl. repartition or state changelog topics).
