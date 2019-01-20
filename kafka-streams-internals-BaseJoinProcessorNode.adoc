@@ -1,0 +1,3 @@
+== [[BaseJoinProcessorNode]] BaseJoinProcessorNode Contract
+
+`BaseJoinProcessorNode` is...FIXME

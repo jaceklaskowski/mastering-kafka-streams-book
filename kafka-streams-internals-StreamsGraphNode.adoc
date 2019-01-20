@@ -1,4 +1,4 @@
-== [[StreamsGraphNode]] StreamsGraphNode
+== [[StreamsGraphNode]] StreamsGraphNode Contract
 
 `StreamsGraphNode` is the <<contract, abstraction>> of <<implementations, graph nodes>> that can <<writeToTopology, writeToTopology>>.
 
@@ -30,7 +30,7 @@ NOTE: `StreamsGraphNode` is a Java abstract class and cannot be <<creating-insta
 | StreamsGraphNode
 | Description
 
-| BaseJoinProcessorNode
+| <<kafka-streams-internals-BaseJoinProcessorNode.adoc#, BaseJoinProcessorNode>>
 | [[BaseJoinProcessorNode]]
 
 | <<kafka-streams-internals-BaseRepartitionNode.adoc#, BaseRepartitionNode>>
@@ -48,7 +48,7 @@ NOTE: `StreamsGraphNode` is a Java abstract class and cannot be <<creating-insta
 | <<kafka-streams-internals-StreamSourceNode.adoc#, StreamSourceNode>>
 | [[StreamSourceNode]]
 
-| StreamTableJoinNode
+| <<kafka-streams-internals-StreamTableJoinNode.adoc#, StreamTableJoinNode>>
 | [[StreamTableJoinNode]]
 
 | <<kafka-streams-internals-TableProcessorNode.adoc#, TableProcessorNode>>

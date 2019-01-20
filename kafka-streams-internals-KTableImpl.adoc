@@ -181,7 +181,7 @@ NOTE: `enableSendingOldValues` is used when...FIXME
 
 === [[filter]] `filter` Method
 
-[source, scala]
+[source, java]
 ----
 KTable<K, V> filter(
   final Predicate<? super K, ? super V> predicate)
@@ -196,7 +196,7 @@ NOTE: `filter` is part of the <<kafka-streams-KTable.adoc#filter, KTable Contrac
 
 === [[filterNot]] `filterNot` Method
 
-[source, scala]
+[source, java]
 ----
 KTable<K, V> filterNot(
   final Predicate<? super K, ? super V> predicate)
@@ -211,7 +211,7 @@ NOTE: `filterNot` is part of the <<kafka-streams-KTable.adoc#filterNot, KTable C
 
 === [[transformValues]] `transformValues` Method
 
-[source, scala]
+[source, java]
 ----
 KTable<K, VR> transformValues(
   final ValueTransformerWithKeySupplier<? super K, ? super V, ? extends VR> transformerSupplier,
@@ -225,3 +225,15 @@ KTable<K, VR> transformValues(
 NOTE: `transformValues` is part of the <<kafka-streams-KTable.adoc#transformValues, KTable Contract>> to...FIXME.
 
 `transformValues`...FIXME
+
+=== [[suppress]] `suppress` Method
+
+[source, java]
+----
+KTable<K, V> suppress(
+  final Suppressed<? super K> suppressed)
+----
+
+NOTE: `suppress` is part of the <<kafka-streams-KTable.adoc#suppress, KTable Contract>> to...FIXME.
+
+`suppress`...FIXME
