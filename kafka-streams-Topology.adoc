@@ -128,7 +128,7 @@ Topology addProcessor(
   final String... parentNames)
 ----
 
-Adds a new <<kafka-streams-Processor.adoc#, processor node>> (using the <<kafka-streams-ProcessorSupplier.adoc#, ProcessorSupplier>>) to the topology.
+Adds a new <<kafka-streams-Processor.adoc#, processor node>> (with the <<kafka-streams-ProcessorSupplier.adoc#, ProcessorSupplier>>) to the topology
 
 | addSink
 a| [[addSink]]

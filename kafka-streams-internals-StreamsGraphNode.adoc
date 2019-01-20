@@ -1,4 +1,4 @@
-== [[StreamsGraphNode]] StreamsGraphNode Contract
+== [[StreamsGraphNode]] StreamsGraphNode Contract -- Graph Nodes that Write to Topology
 
 `StreamsGraphNode` is the <<contract, abstraction>> of <<implementations, graph nodes>> that can <<writeToTopology, writeToTopology>>.
 

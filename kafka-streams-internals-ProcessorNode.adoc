@@ -4,7 +4,7 @@
 
 NOTE: link:kafka-streams-internals-SourceNode.adoc[SourceNode] and link:kafka-streams-internals-SinkNode.adoc[SinkNode] are specialized `ProcessorNodes`.
 
-`ProcessorNode` is <<creating-instance, created>> exclusively when `ProcessorNodeFactory` is requested to link:kafka-streams-ProcessorNodeFactory.adoc#build[build a processor node].
+`ProcessorNode` is <<creating-instance, created>> exclusively when `ProcessorNodeFactory` is requested to link:kafka-streams-internals-ProcessorNodeFactory.adoc#build[build a processor node].
 
 `ProcessorNode` can be <<init, initialized>> (in a given link:kafka-streams-ProcessorContext.adoc[ProcessorContext]) and <<close, closed>>.
 

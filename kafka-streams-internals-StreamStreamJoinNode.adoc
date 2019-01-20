@@ -1,6 +1,6 @@
-== [[StreamTableJoinNode]] StreamTableJoinNode
+== [[StreamStreamJoinNode]] StreamStreamJoinNode
 
-`StreamTableJoinNode` is...FIXME
+`StreamStreamJoinNode` is...FIXME
 
 === [[writeToTopology]] `writeToTopology` Method
 

@@ -41,12 +41,12 @@ Used exclusively when `InternalTopologyBuilder` is requested to link:kafka-strea
 | NodeFactory
 | Description
 
-| link:kafka-streams-ProcessorNodeFactory.adoc[ProcessorNodeFactory]
+| link:kafka-streams-internals-ProcessorNodeFactory.adoc[ProcessorNodeFactory]
 |
 
 | `SinkNodeFactory`
 |
 
-| link:kafka-streams-SourceNodeFactory.adoc[SourceNodeFactory]
+| link:kafka-streams-internals-SourceNodeFactory.adoc[SourceNodeFactory]
 |
 |===

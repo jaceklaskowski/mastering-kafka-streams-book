@@ -16,23 +16,61 @@ import org.apache.kafka.streams.processor.internals.InternalTopologyBuilder
 val builder = new InternalTopologyBuilder
 ----
 
-`InternalTopologyBuilder` can be <<describe, described>> (using a link:kafka-streams-TopologyDescription.adoc[TopologyDescription]).
+`InternalTopologyBuilder` can have one or more sources that are added (registered) using <<addSource, InternalTopologyBuilder.addSource>> method (that simply registers a <<kafka-streams-internals-SourceNodeFactory.adoc#, SourceNodeFactory>> by name).
 
 [source, scala]
 ----
 scala> :type builder
 org.apache.kafka.streams.processor.internals.InternalTopologyBuilder
 
-// add nodes and stores
+val sourceNodeName = "sourceNode"
 
-val description = builder.describe
-scala> println(description)
-Topologies:
-// ...
+import org.apache.kafka.streams.processor.WallclockTimestampExtractor
+val timestampExtractor = new WallclockTimestampExtractor
+import org.apache.kafka.common.serialization.StringDeserializer
+val keyDeserializer = new StringDeserializer
+val valDeserializer = new StringDeserializer
+val topics = Seq("input")
+import org.apache.kafka.streams.Topology.AutoOffsetReset
+builder.addSource(
+  AutoOffsetReset.LATEST,
+  sourceNodeName,
+  timestampExtractor,
+  keyDeserializer,
+  valDeserializer,
+  topics: _*)
+----
+
+`InternalTopologyBuilder` can have zero or more processors that are added (registered) using <<addProcessor, InternalTopologyBuilder.addProcessor>> method (that simply registers a <<kafka-streams-internals-ProcessorNodeFactory.adoc#, ProcessorNodeFactory>> by name with a <<kafka-streams-ProcessorSupplier.adoc#, ProcessorSupplier>> and one or more predecessors). Since processors require that the predecessors are already added to the topology, a topology has to have at least one <<addSource, source processor added>>.
+
+[source, scala]
+----
+scala> :type builder
+org.apache.kafka.streams.processor.internals.InternalTopologyBuilder
+
+assert(!builder.getSourceTopicNames.isEmpty)
+
+val sourceTopicName = "input"
+
+import collection.JavaConverters._
+assert(builder.getSourceTopicNames.asScala.contains(sourceTopicName))
+
+import org.apache.kafka.streams.processor.{Processor, ProcessorContext, ProcessorSupplier}
+val supplier = new ProcessorSupplier[String, String] {
+  def get = new Processor[String, String] {
+    def init(context: ProcessorContext): Unit = {}
+    def process(key: String, value: String): Unit = {}
+    def close(): Unit = {}
+  }
+}
+val processorNodeName = "processorNode"
+val sourceNodeName = "sourceNode"
+val predecessorNames = Seq(sourceNodeName)
+builder.addProcessor(processorNodeName, supplier, predecessorNames: _*)
 ----
 
 [[applicationId]]
-`InternalTopologyBuilder` uses an *application ID* as a namespace for the internal topics (so they do not clash with other Kafka Streams applications). The application ID is set using <<setApplicationId, setApplicationId>> (and is the <<kafka-streams-StreamsConfig.adoc#APPLICATION_ID_CONFIG, APPLICATION_ID_CONFIG>> configuration property that `KafkaStreams` requires when link:kafka-streams-KafkaStreams.adoc#creating-instance[created]).
+`InternalTopologyBuilder` requires an *application ID*. The application ID is used as a namespace for the internal topics (so they do not clash with other Kafka Streams applications). The application ID is set using <<setApplicationId, setApplicationId>> (and is the <<kafka-streams-StreamsConfig.adoc#APPLICATION_ID_CONFIG, APPLICATION_ID_CONFIG>> configuration property that `KafkaStreams` requires when link:kafka-streams-KafkaStreams.adoc#creating-instance[created]).
 
 [[setApplicationId]]
 [source, java]
@@ -46,8 +84,44 @@ InternalTopologyBuilder setApplicationId(final String applicationId)
 
 * <<decorateTopic, decorateTopic>> to prefix (_decorate_) internal topic names
 
+`InternalTopologyBuilder` has to be optimized using <<rewriteTopology, rewriteTopology>> (that sets the required <<applicationId, application ID>>).
+
+[source, scala]
+----
+scala> :type builder
+org.apache.kafka.streams.processor.internals.InternalTopologyBuilder
+
+import org.apache.kafka.streams.StreamsConfig
+import java.util.Properties
+val props = new Properties
+props.put(StreamsConfig.APPLICATION_ID_CONFIG, "app")
+props.put(StreamsConfig.BOOTSTRAP_SERVERS_CONFIG, ":9092")
+val config = new StreamsConfig(props)
+builder.rewriteTopology(config)
+----
+
+`InternalTopologyBuilder` can be <<describe, described>> (using a <<kafka-streams-TopologyDescription.adoc#, TopologyDescription>>).
+
+[source, scala]
+----
+scala> :type builder
+org.apache.kafka.streams.processor.internals.InternalTopologyBuilder
+
+// add nodes and stores
+
+val description = builder.describe
+scala> println(description)
+Topologies:
+   Sub-topology: 0
+    Source: sourceNode (topics: [input])
+      --> processorNode
+    Processor: processorNode (stores: [])
+      --> none
+      <-- sourceNode
+----
+
 [[global-source-node]]
-*Global Source Node* is a node from a link:kafka-streams-SourceNodeFactory.adoc[SourceNodeFactory] with exactly one link:kafka-streams-SourceNodeFactory.adoc#topics[topic] and registered in <<globalTopics, globalTopics>>. You can use <<isGlobalSource, isGlobalSource>> predicate to check if a name is of a global source node.
+*Global Source Node* is a node from a link:kafka-streams-internals-SourceNodeFactory.adoc[SourceNodeFactory] with exactly one link:kafka-streams-internals-SourceNodeFactory.adoc#topics[topic] and registered in <<globalTopics, globalTopics>>. You can use <<isGlobalSource, isGlobalSource>> predicate to check if a name is of a global source node.
 
 [[internal-registries]]
 .InternalTopologyBuilder's Internal Properties (e.g. Registries, Counters and Flags)
@@ -229,7 +303,7 @@ List<String> maybeDecorateInternalSourceTopics(final Collection<String> sourceTo
 
 * `InternalTopologyBuilder` is requested to <<copartitionGroups, copartitionGroups>>, <<resetTopicsPattern, resetTopicsPattern>>, <<sourceTopicPattern, sourceTopicPattern>> and <<stateStoreNameToSourceTopics, stateStoreNameToSourceTopics>>
 
-* `SourceNodeFactory` is requested to link:kafka-streams-SourceNodeFactory.adoc#build[build a source node]
+* `SourceNodeFactory` is requested to link:kafka-streams-internals-SourceNodeFactory.adoc#build[build a source node]
 ====
 
 === [[resetTopicsPattern]] `resetTopicsPattern` Internal Method
@@ -258,19 +332,38 @@ synchronized Collection<Set<String>> copartitionGroups()
 
 NOTE: `copartitionGroups` is used when...FIXME
 
-=== [[addProcessor]] `addProcessor` Method
+=== [[addProcessor]] Registering Processor Node -- `addProcessor` Method
 
 [source, java]
 ----
-void addProcessor(
+final void addProcessor(
   final String name,
   final ProcessorSupplier supplier,
   final String... predecessorNames)
 ----
 
-`addProcessor`...FIXME
+`addProcessor` simply registers a new <<kafka-streams-internals-ProcessorNodeFactory.adoc#, ProcessorNodeFactory>> by the given name in the <<nodeFactories, nodeFactories>> internal registry.
 
-NOTE: `addProcessor` is used when...FIXME
+`addProcessor` also adds the name to the <<nodeGrouper, nodeGrouper>> and unites the processor name with the predecessors.
+
+In the end, `addProcessor` resets the <<nodeGroups, nodeGroups>> collection (i.e. `null`).
+
+NOTE: A processor has a unique name, a <<kafka-streams-ProcessorSupplier.adoc#, ProcessorSupplier>> and at least one predecessor (that cannot be itself)
+
+`addProcessor` requires that the given name, the <<kafka-streams-ProcessorSupplier.adoc#, ProcessorSupplier>> and the predecessor names are all defined (i.e. not `null`) or throws a `NullPointerException`.
+
+`addProcessor` requires that the given name is unique across all the registered <<nodeFactories, nodeFactories>> or throws a `TopologyException`.
+
+`addProcessor` requires that there is at least one predecessor name given or throws a `TopologyException`.
+
+[NOTE]
+====
+`addProcessor` is used when:
+
+* `Topology` is requested to <<kafka-streams-Topology.adoc#addProcessor, add a processor>>
+
+* <<kafka-streams-internals-StreamsGraphNode.adoc#, StreamsGraphNodes>> (i.e. <<kafka-streams-internals-KTableKTableJoinNode.adoc#, KTableKTableJoinNode>>, <<kafka-streams-internals-OptimizableRepartitionNode.adoc#, OptimizableRepartitionNode>>, <<kafka-streams-internals-ProcessorGraphNode.adoc#, ProcessorGraphNode>>, <<kafka-streams-internals-StreamStreamJoinNode.adoc#, StreamStreamJoinNode>>, <<kafka-streams-internals-StreamTableJoinNode.adoc#, StreamTableJoinNode>>, <<kafka-streams-internals-TableProcessorNode.adoc#, TableProcessorNode>>, and <<kafka-streams-internals-TableSourceNode.adoc#, TableSourceNode>>) are requested to `writeToTopology`
+====
 
 === [[buildProcessorNode]] `buildProcessorNode` Internal Method
 
@@ -285,7 +378,7 @@ void buildProcessorNode(
 
 `buildProcessorNode`...FIXME
 
-NOTE: `buildProcessorNode` is used exclusively when `InternalTopologyBuilder` is requested to <<build, build a ProcessorTopology>> (with <<kafka-streams-ProcessorNodeFactory.adoc#, ProcessorNodeFactories>>).
+NOTE: `buildProcessorNode` is used exclusively when `InternalTopologyBuilder` is requested to <<build, build a ProcessorTopology>> (with <<kafka-streams-internals-ProcessorNodeFactory.adoc#, ProcessorNodeFactories>>).
 
 === [[buildSourceNode]] `buildSourceNode` Internal Method
 
@@ -302,18 +395,18 @@ void buildSourceNode(
 
 NOTE: `buildSourceNode` is used exclusively when `InternalTopologyBuilder` is requested to link:kafka-streams-internals-InternalTopologyBuilder.adoc#build[build a topology of processor tasks] (aka *processor topology*).
 
-=== [[addSource]] Registering Source Node -- `addSource` Method
+=== [[addSource]] Registering Source Processor Node -- `addSource` Method
 
 [source, scala]
 ----
-void addSource(
+final void addSource(
   final Topology.AutoOffsetReset offsetReset,
   final String name,
   final TimestampExtractor timestampExtractor,
   final Deserializer keyDeserializer,
   final Deserializer valDeserializer,
   final Pattern topicPattern)
-void addSource(
+final void addSource(
   final Topology.AutoOffsetReset offsetReset,
   final String name,
   final TimestampExtractor timestampExtractor,
@@ -322,27 +415,38 @@ void addSource(
   final String... topics)
 ----
 
-`addSource` registers a <<kafka-streams-SourceNodeFactory.adoc#, SourceNodeFactory>> for the given topics (listed explicitly or using Java's https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/util/regex/Pattern.html[java.util.regex.Pattern]).
+`addSource` simply registers a new <<kafka-streams-internals-SourceNodeFactory.adoc#, SourceNodeFactory>> by the given name in the <<nodeFactories, nodeFactories>> internal registry.
 
-For every topic name in the given `topics`, `addSource`:
+`addSource` <<maybeAddToResetList, maybeAddToResetList>> every topic in the given topics.
 
-. <<validateTopicNotAlreadyRegistered, validateTopicNotAlreadyRegistered>>
-. <<maybeAddToResetList, maybeAddToResetList>>
-. Adds the topic name to the <<sourceTopicNames, sourceTopicNames>> internal registry
+`addSource` adds few inputs to the following internal registries:
 
-`addSource` registers a link:kafka-streams-SourceNodeFactory.adoc[SourceNodeFactory] under the `name` in <<nodeFactories, nodeFactories>> registry.
+* Topics to <<sourceTopicNames, sourceTopicNames>>
 
-`addSource` registers `topics` under the `name` in <<nodeToSourceTopics, nodeToSourceTopics>> registry.
+* Name with the topics to <<nodeToSourceTopics, nodeToSourceTopics>>
 
-`addSource` requests <<nodeGrouper, QuickUnion of the names of node groups>> to link:kafka-streams-internals-QuickUnion.adoc#add[add] the `name`.
+* Name to <<nodeGrouper, nodeGrouper>>
+
+In the end, `addSource` resets the <<nodeGroups, nodeGroups>> collection (i.e. `null`).
+
+NOTE: A source processor has a unique name, a <<kafka-streams-Topology.adoc#AutoOffsetReset, Topology.AutoOffsetReset>>, a <<kafka-streams-TimestampExtractor.adoc#, TimestampExtractor>>, key and value deserializers, a <<kafka-streams-ProcessorSupplier.adoc#, ProcessorSupplier>> and at least one topic.
+
+`addSource` requires that:
+
+* There is at least one topic or throws a `TopologyException`
+
+* Name is specified (not `null`) and unique across all the registered <<nodeFactories, nodeFactories>> or throws a `TopologyException`
+
+* No topic <<validateTopicNotAlreadyRegistered, has been registered earlier>>
 
 [NOTE]
 ====
 `addSource` is used when:
 
-* `Topology` is requested to link:kafka-streams-Topology.adoc#addSource[add a source node]
+* `Topology` is requested to <<kafka-streams-Topology.adoc#addSource, add a source node>>
 
-* <<kafka-streams-internals-GroupedTableOperationRepartitionNode.adoc#writeToTopology, GroupedTableOperationRepartitionNode>>, <<kafka-streams-internals-OptimizableRepartitionNode.adoc#writeToTopology, OptimizableRepartitionNode>>, <<kafka-streams-internals-StreamSourceNode.adoc#writeToTopology, StreamSourceNode>>, and <<kafka-streams-internals-TableSourceNode.adoc#writeToTopology, TableSourceNode>> are requested to `writeToTopology`
+* <<kafka-streams-internals-StreamsGraphNode.adoc#, StreamsGraphNode>> (i.e. <<kafka-streams-internals-StreamSourceNode.adoc#, StreamSourceNode>>) is requested to `writeToTopology`
+
 ====
 
 === [[maybeAddToResetList]] `maybeAddToResetList` Internal Method
@@ -416,19 +520,19 @@ void addGlobalStore(
 
 `addGlobalStore` first <<validateGlobalStoreArguments, validateGlobalStoreArguments>> followed by <<validateTopicNotAlreadyRegistered, validateTopicNotAlreadyRegistered>>.
 
-`addGlobalStore` creates a <<kafka-streams-ProcessorNodeFactory.adoc#, ProcessorNodeFactory>> with the given `processorName`, `sourceName` (as <<kafka-streams-ProcessorNodeFactory.adoc#predecessors, predecessors>>) and `stateUpdateSupplier` (as <<kafka-streams-ProcessorNodeFactory.adoc#supplier, supplier>>).
+`addGlobalStore` creates a <<kafka-streams-internals-ProcessorNodeFactory.adoc#, ProcessorNodeFactory>> with the given `processorName`, `sourceName` (as <<kafka-streams-internals-ProcessorNodeFactory.adoc#predecessors, predecessors>>) and `stateUpdateSupplier` (as <<kafka-streams-internals-ProcessorNodeFactory.adoc#supplier, supplier>>).
 
 `addGlobalStore` then does the following housekeeping tasks:
 
 . Adds the given `topic` to <<globalTopics, globalTopics>> internal registry
 
-. Creates a <<kafka-streams-SourceNodeFactory.adoc#, SourceNodeFactory>> and registers it in <<nodeFactories, nodeFactories>> internal registry as `sourceName`
+. Creates a <<kafka-streams-internals-SourceNodeFactory.adoc#, SourceNodeFactory>> and registers it in <<nodeFactories, nodeFactories>> internal registry as `sourceName`
 
 . Associates the `sourceName` with `topic` to <<nodeToSourceTopics, nodeToSourceTopics>>
 
 . Requests <<nodeGrouper, QuickUnion of the names of node groups>> to link:kafka-streams-internals-QuickUnion.adoc#add[add] the `sourceName`
 
-. Requests `ProcessorNodeFactory` to link:kafka-streams-ProcessorNodeFactory.adoc#addStateStore[add a state store] as `name`
+. Requests `ProcessorNodeFactory` to link:kafka-streams-internals-ProcessorNodeFactory.adoc#addStateStore[add a state store] as `name`
 
 . Associates the `processorName` with `nodeFactory` in <<nodeFactories, nodeFactories>>
 
@@ -512,7 +616,7 @@ NOTE: `connectProcessorAndStateStore` (singular) is an internal method that is u
 
 `connectProcessorAndStateStore` then unites all link:kafka-streams-internals-StateStoreFactory.adoc#users[users] of the `StateStoreFactory` with the given `processorName`. `connectProcessorAndStateStore` adds the `processorName` to the users.
 
-`connectProcessorAndStateStore` gets the `NodeFactory` for the given `processorName` (in <<nodeFactories, nodeFactories>>). Only when the `NodeFactory` is a `ProcessorNodeFactory`, `connectProcessorAndStateStore` link:kafka-streams-ProcessorNodeFactory.adoc#addStateStore[registers] the `stateStoreName` with the `ProcessorNodeFactory`.
+`connectProcessorAndStateStore` gets the `NodeFactory` for the given `processorName` (in <<nodeFactories, nodeFactories>>). Only when the `NodeFactory` is a `ProcessorNodeFactory`, `connectProcessorAndStateStore` link:kafka-streams-internals-ProcessorNodeFactory.adoc#addStateStore[registers] the `stateStoreName` with the `ProcessorNodeFactory`.
 
 In the end, `connectProcessorAndStateStore` <<connectStateStoreNameToSourceTopicsOrPattern, connectStateStoreNameToSourceTopicsOrPattern>> (with the input `stateStoreName` and the ProcessorNodeFactory).
 
@@ -638,7 +742,7 @@ boolean isGlobalSource(final String nodeName)
 
 `isGlobalSource` is positive (i.e. `true`) when the following all hold:
 
-* `nodeName` is the name of a link:kafka-streams-SourceNodeFactory.adoc[SourceNodeFactory] with exactly one link:kafka-streams-SourceNodeFactory.adoc#topics[topic]
+* `nodeName` is the name of a link:kafka-streams-internals-SourceNodeFactory.adoc[SourceNodeFactory] with exactly one link:kafka-streams-internals-SourceNodeFactory.adoc#topics[topic]
 
 * The single topic is among <<globalTopics, globalTopics>>
 
@@ -858,9 +962,9 @@ For every `NodeFactory` the private `build` checks if the node (by its link:kafk
 
 . Requests the `NodeFactory` to link:kafka-streams-NodeFactory.adoc#build[build a processor node] (and adds it to a local `processorMap` of processors by their names)
 
-. For link:kafka-streams-ProcessorNodeFactory.adoc[ProcessorNodeFactories], `build` <<buildProcessorNode, buildProcessorNode>>
+. For link:kafka-streams-internals-ProcessorNodeFactory.adoc[ProcessorNodeFactories], `build` <<buildProcessorNode, buildProcessorNode>>
 
-. For link:kafka-streams-SourceNodeFactory.adoc[SourceNodeFactories], `build` <<buildSourceNode, buildSourceNode>>
+. For link:kafka-streams-internals-SourceNodeFactory.adoc[SourceNodeFactories], `build` <<buildSourceNode, buildSourceNode>>
 
 . For link:kafka-streams-SinkNodeFactory.adoc[SinkNodeFactories], `build` <<buildSinkNode, buildSinkNode>>
 

@@ -1,6 +1,6 @@
-== [[StreamTableJoinNode]] StreamTableJoinNode
+== [[KTableKTableJoinNode]] KTableKTableJoinNode
 
-`StreamTableJoinNode` is...FIXME
+`KTableKTableJoinNode` is...FIXME
 
 === [[writeToTopology]] `writeToTopology` Method
 
