@@ -1,6 +1,16 @@
 == [[GroupedStreamAggregateBuilder]] GroupedStreamAggregateBuilder
 
-`GroupedStreamAggregateBuilder` is...FIXME
+`GroupedStreamAggregateBuilder` is <<creating-instance, created>> exclusively for a <<kafka-streams-internals-KGroupedStreamImpl.adoc#, KGroupedStreamImpl>> (for <<kafka-streams-internals-KStreamImpl.adoc#groupBy, KStream.groupBy>> and <<kafka-streams-internals-KStreamImpl.adoc#groupByKey, KStream.groupByKey>> streaming operators).
+
+[[creating-instance]]
+`GroupedStreamAggregateBuilder` takes the following to be created:
+
+* [[builder]] <<kafka-streams-internals-InternalStreamsBuilder.adoc#, InternalStreamsBuilder>>
+* [[groupedInternal]] `GroupedInternal<K, V>`
+* [[repartitionRequired]] `repartitionRequired` flag
+* [[sourceNodes]] Names of the source nodes
+* [[name]] Name
+* [[streamsGraphNode]] <<kafka-streams-internals-StreamsGraphNode.adoc#, StreamsGraphNode>>
 
 === [[build]] Creating KTableImpl (For KStreamAggProcessorSupplier And New StatefulProcessorNode) -- `build` Method
 
@@ -19,11 +29,11 @@
 ====
 `build` is used when:
 
-* `KGroupedStreamImpl` is requested to <<kafka-streams-internals-KGroupedStreamImpl.adoc#doAggregate, doAggregate>>
+* `KGroupedStreamImpl` is requested to <<kafka-streams-internals-KGroupedStreamImpl.adoc#doAggregate, doAggregate>> (for <<kafka-streams-internals-KGroupedStreamImpl.adoc#reduce, reduce>>, <<kafka-streams-internals-KGroupedStreamImpl.adoc#aggregate, aggregate>> and <<kafka-streams-internals-KGroupedStreamImpl.adoc#count, count>> operators after <<kafka-streams-internals-KStreamImpl.adoc#groupBy, KStream.groupBy>> and <<kafka-streams-internals-KStreamImpl.adoc#groupByKey, KStream.groupByKey>>)
 
-* `SessionWindowedKStreamImpl` is requested to <<kafka-streams-internals-SessionWindowedKStreamImpl.adoc#doCount, doCount>>, <<kafka-streams-internals-SessionWindowedKStreamImpl.adoc#reduce, reduce>> and <<kafka-streams-internals-SessionWindowedKStreamImpl.adoc#aggregate, aggregate>>
+* `SessionWindowedKStreamImpl` is requested to <<kafka-streams-internals-SessionWindowedKStreamImpl.adoc#doCount, doCount>> (for <<kafka-streams-internals-SessionWindowedKStreamImpl.adoc#count, count>> operator), <<kafka-streams-internals-SessionWindowedKStreamImpl.adoc#reduce, reduce>> and <<kafka-streams-internals-SessionWindowedKStreamImpl.adoc#aggregate, aggregate>>
 
-* `TimeWindowedKStreamImpl` is requested to <<kafka-streams-internals-TimeWindowedKStreamImpl.adoc#doCount, doCount>>, <<kafka-streams-internals-TimeWindowedKStreamImpl.adoc#reduce, reduce>> and <<kafka-streams-internals-TimeWindowedKStreamImpl.adoc#aggregate, aggregate>>
+* `TimeWindowedKStreamImpl` is requested to <<kafka-streams-internals-TimeWindowedKStreamImpl.adoc#doCount, doCount>> (for <<kafka-streams-internals-TimeWindowedKStreamImpl.adoc#count, count>> operator), <<kafka-streams-internals-TimeWindowedKStreamImpl.adoc#reduce, reduce>> and <<kafka-streams-internals-TimeWindowedKStreamImpl.adoc#aggregate, aggregate>>
 ====
 
 === [[repartitionIfRequired]] `repartitionIfRequired` Internal Method

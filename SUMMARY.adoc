@@ -277,7 +277,6 @@
 .. link:kafka-streams-internals-KGroupedTableImpl.adoc[KGroupedTableImpl]
 .. link:kafka-streams-internals-SessionWindowedKStreamImpl.adoc[SessionWindowedKStreamImpl -- Default SessionWindowedKStream]
 .. link:kafka-streams-internals-TimeWindowedKStreamImpl.adoc[TimeWindowedKStreamImpl]
-.. link:kafka-streams-internals-KStreamImplJoin.adoc[KStreamImplJoin]
 
 . link:kafka-streams-internals-MaterializedInternal.adoc[MaterializedInternal]
 . link:kafka-streams-internals-KeyValueStoreMaterializer.adoc[KeyValueStoreMaterializer]
@@ -286,6 +285,9 @@
 
 . link:kafka-streams-internals-RecordCollector.adoc[RecordCollector Contract]
 .. link:kafka-streams-RecordCollectorImpl.adoc[RecordCollectorImpl]
+
+. link:kafka-streams-internals-GroupedStreamAggregateBuilder.adoc[GroupedStreamAggregateBuilder]
+. link:kafka-streams-internals-KStreamImpl-KStreamImplJoin.adoc[KStreamImplJoin]
 
 === Execution Environment
 
@@ -355,7 +357,6 @@
 . link:kafka-streams-internals-ProcessorRecordContext.adoc[ProcessorRecordContext]
 . link:kafka-streams-internals-InternalProcessorContext.adoc[InternalProcessorContext]
 
-. link:kafka-streams-internals-GroupedStreamAggregateBuilder.adoc[GroupedStreamAggregateBuilder]
 . link:kafka-streams-internals-CopartitionedTopicsValidator.adoc[CopartitionedTopicsValidator]
 
 === State (Store) Management

@@ -280,7 +280,7 @@ In the end, `createReparitionedSource` returns the source name.
 
 `createWindowedStateStore`...FIXME
 
-NOTE: `createWindowedStateStore` is used exclusively when `KStreamImplJoin` is requested to <<kafka-streams-internals-KStreamImplJoin.adoc#join, join>>.
+NOTE: `createWindowedStateStore` is used exclusively when `KStreamImplJoin` is requested to <<kafka-streams-internals-KStreamImpl-KStreamImplJoin.adoc#join, join>>.
 
 === [[groupBy]] `groupBy` Method
 
@@ -354,3 +354,15 @@ KStream<K, VR> doTransformValues(
 In the end, `doTransformValues` creates a new <<creating-instance, KStreamImpl>> (with the new processor name, the <<sourceNodes, sourceNodes>>, the <<repartitionRequired, repartitionRequired>> flag, the `StatefulProcessorNode` itself and the <<builder, InternalStreamsBuilder>>).
 
 NOTE: `doTransformValues` is used when `KStreamImpl` is requested to <<transformValues, transformValues>>.
+
+=== [[internalSelectKey]] `internalSelectKey` Internal Method
+
+[source, java]
+----
+ProcessorGraphNode<K, V> internalSelectKey(
+  final KeyValueMapper<? super K, ? super V, ? extends KR> mapper)
+----
+
+`internalSelectKey`...FIXME
+
+NOTE: `internalSelectKey` is used when `KStreamImpl` is requested to <<selectKey, selectKey>> and <<groupBy, groupBy>>.

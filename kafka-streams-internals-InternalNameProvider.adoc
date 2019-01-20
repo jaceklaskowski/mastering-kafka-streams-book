@@ -29,7 +29,7 @@ Used when:
 
 * `KStreamImpl` is requested to <<kafka-streams-internals-KStreamImpl.adoc#filter, filter>>, etc.
 
-* `KStreamImplJoin` is requested to <<kafka-streams-internals-KStreamImplJoin.adoc#join, join>>
+* `KStreamImplJoin` is requested to <<kafka-streams-internals-KStreamImpl-KStreamImplJoin.adoc#join, join>>
 
 * `KTableImpl` is requested to <<kafka-streams-internals-KTableImpl.adoc#doFilter, doFilter>>, etc.
 

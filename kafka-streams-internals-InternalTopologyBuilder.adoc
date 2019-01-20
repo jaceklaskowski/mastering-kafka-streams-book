@@ -563,7 +563,7 @@ void addStateStore(
 
 * `KGroupedTableImpl` is requested to link:kafka-streams-internals-KGroupedTableImpl.adoc#doAggregate[doAggregate]
 
-* `KStreamImplJoin` is requested to link:kafka-streams-internals-KStreamImplJoin.adoc#join[join]
+* `KStreamImplJoin` is requested to link:kafka-streams-internals-KStreamImpl-KStreamImplJoin.adoc#join[join]
 
 * `KTableImpl` is requested to link:kafka-streams-internals-KTableImpl.adoc#doFilter[doFilter], link:kafka-streams-internals-KTableImpl.adoc#doJoin[doJoin] and link:kafka-streams-internals-KTableImpl.adoc#mapValues[mapValues]
 ====

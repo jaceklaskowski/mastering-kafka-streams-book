@@ -1,0 +1,19 @@
+== [[KStreamImplJoin]] KStreamImplJoin
+
+`KStreamImplJoin` is...FIXME
+
+=== [[join]] `join` Method
+
+[source, java]
+----
+KStream<K1, R> join(
+  final KStream<K1, V1> lhs,
+  final KStream<K1, V2> other,
+  final ValueJoiner<? super V1, ? super V2, ? extends R> joiner,
+  final JoinWindows windows,
+  final Joined<K1, V1, V2> joined)
+----
+
+`join`...FIXME
+
+NOTE: `join` is used exclusively when `KStreamImpl` is requested to <<kafka-streams-internals-KStreamImpl.adoc#doJoin, doJoin>> (for <<kafka-streams-internals-KStreamImpl.adoc#join, join>>, <<kafka-streams-internals-KStreamImpl.adoc#outerJoin, outerJoin>> and <<kafka-streams-internals-KStreamImpl.adoc#leftJoin, leftJoin>> join operators).

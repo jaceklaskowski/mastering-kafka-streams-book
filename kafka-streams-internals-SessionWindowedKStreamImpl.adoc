@@ -2,7 +2,7 @@
 
 `SessionWindowedKStreamImpl` is a concrete link:kafka-streams-AbstractStream.adoc[AbstractStream] and a link:kafka-streams-SessionWindowedKStream.adoc[SessionWindowedKStream] (with the default implementation of <<aggregate, aggregate>>, <<count, count>> and <<reduce, reduce>> operators).
 
-`SessionWindowedKStreamImpl` is <<creating-instance, created>> exclusively when `KGroupedStreamImpl` is requested to link:kafka-streams-internals-KGroupedStreamImpl.adoc#windowedBy[windowedBy].
+`SessionWindowedKStreamImpl` is <<creating-instance, created>> exclusively when `KGroupedStreamImpl` is requested to <<kafka-streams-internals-KGroupedStreamImpl.adoc#windowedBy-SessionWindows, windowedBy (with a SessionWindows)>>.
 
 [[internal-registries]]
 .SessionWindowedKStreamImpl's Internal Properties (e.g. Registries, Counters and Flags)

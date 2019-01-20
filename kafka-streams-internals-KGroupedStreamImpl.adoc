@@ -1,6 +1,16 @@
 == [[KGroupedStreamImpl]] KGroupedStreamImpl
 
-`KGroupedStreamImpl` is a concrete <<kafka-streams-AbstractStream.adoc#, stream>> of <<kafka-streams-KGroupedStream.adoc#, grouped records>> as a result of <<kafka-streams-internals-KStreamImpl.adoc#groupBy, KStream.groupBy>> and <<kafka-streams-internals-KStreamImpl.adoc#groupByKey, KStream.groupByKey>> streaming operators.
+`KGroupedStreamImpl` is a concrete <<kafka-streams-AbstractStream.adoc#, stream>> of <<kafka-streams-KGroupedStream.adoc#, grouped records>> that is <<creating-instance, created>> for <<kafka-streams-internals-KStreamImpl.adoc#groupBy, KStream.groupBy>> and <<kafka-streams-internals-KStreamImpl.adoc#groupByKey, KStream.groupByKey>> streaming operators.
+
+[[creating-instance]]
+`KGroupedStreamImpl` takes the following to be created:
+
+* [[name]] Name
+* [[sourceNodes]] Names of the source nodes
+* [[groupedInternal]] `GroupedInternal<K, V>`
+* [[repartitionRequired]] `repartitionRequired` flag
+* [[streamsGraphNode]] <<kafka-streams-internals-StreamsGraphNode.adoc#, StreamsGraphNode>>
+* [[builder]] <<kafka-streams-internals-InternalStreamsBuilder.adoc#, InternalStreamsBuilder>>
 
 [[aggregateBuilder]]
 [[internal-registries]]
@@ -48,7 +58,7 @@ NOTE: `windowedBy` is part of link:kafka-streams-KGroupedStream.adoc#windowedBy[
 
 `windowedBy`...FIXME
 
-=== [[windowedBy]][[windowedBy-Windows]] Creating TimeWindowedKStream Instance -- `windowedBy` Method
+=== [[windowedBy-Windows]] Creating TimeWindowedKStream Instance -- `windowedBy` Method
 
 [source, java]
 ----
@@ -71,7 +81,7 @@ KTable<K, T> doAggregate(
 
 `doAggregate`...FIXME
 
-NOTE: `doAggregate` is used when `KGroupedStreamImpl` is requested to <<reduce, reduce>>, <<aggregate, aggregate>> and <<doCount, doCount>>.
+NOTE: `doAggregate` is used when `KGroupedStreamImpl` is requested to <<reduce, reduce>>, <<aggregate, aggregate>> and <<doCount, doCount>> (when <<count, count>>).
 
 === [[doCount]] `doCount` Internal Method
 
@@ -99,16 +109,3 @@ KTable<K, Long> count(final Materialized<K, Long, KeyValueStore<Bytes, byte[]>> 
 NOTE: `count` is part of the <<kafka-streams-KGroupedStream.adoc#count, KGroupedStream Contract>> to...FIXME.
 
 `count` simply <<doCount, doCount>> with the given <<kafka-streams-Materialized.adoc#, Materialized>> or <<kafka-streams-Materialized.adoc#with, one>> with no state store name, the key serde and `Long` serde for values.
-
-=== [[creating-instance]] Creating KGroupedStreamImpl Instance
-
-`KGroupedStreamImpl` takes the following when created:
-
-* [[name]] Name
-* [[sourceNodes]] Names of the source nodes
-* [[groupedInternal]] `GroupedInternal` (of `K` keys and `V` values)
-* [[repartitionRequired]] `repartitionRequired` flag
-* [[streamsGraphNode]] `StreamsGraphNode`
-* [[builder]] <<kafka-streams-internals-InternalStreamsBuilder.adoc#, InternalStreamsBuilder>>
-
-`KGroupedStreamImpl` initializes the <<internal-registries, internal registries and counters>>.

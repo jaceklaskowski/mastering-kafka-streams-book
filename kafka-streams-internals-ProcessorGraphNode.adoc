@@ -1,3 +1,31 @@
 == [[ProcessorGraphNode]] ProcessorGraphNode
 
-`ProcessorGraphNode` is...FIXME
+`ProcessorGraphNode` is a <<kafka-streams-internals-StreamsGraphNode.adoc#, graph node>> for stateless operators in <<kafka-streams-internals-KStreamImpl.adoc#, KStreamImpl>> and <<kafka-streams-internals-KTableImpl.adoc#, KTableImpl>>.
+
+When requested to <<writeToTopology, writeToTopology>>, `ProcessorGraphNode` simply requests the given <<kafka-streams-internals-InternalTopologyBuilder.adoc#, InternalTopologyBuilder>> to <<kafka-streams-internals-InternalTopologyBuilder.adoc#addProcessor, add a processor>> (with the name and the <<kafka-streams-ProcessorSupplier.adoc#, ProcessorSupplier>> as defined by the given <<processorParameters, ProcessorParameters>>).
+
+`ProcessorGraphNode` is <<creating-instance, created>> when:
+
+* `KStreamImpl` is requested to <<kafka-streams-internals-KStreamImpl.adoc#filter, filter>>, <<kafka-streams-internals-KStreamImpl.adoc#filterNot, filterNot>>, <<kafka-streams-internals-KStreamImpl.adoc#internalSelectKey, internalSelectKey>> (for <<kafka-streams-internals-KStreamImpl.adoc#selectKey, selectKey>> and <<kafka-streams-internals-KStreamImpl.adoc#groupBy, groupBy>> operators), <<kafka-streams-internals-KStreamImpl.adoc#map, map>>, <<kafka-streams-internals-KStreamImpl.adoc#mapValues, mapValues>>, <<kafka-streams-internals-KStreamImpl.adoc#print, print>>, <<kafka-streams-internals-KStreamImpl.adoc#flatMap, flatMap>>, <<kafka-streams-internals-KStreamImpl.adoc#flatMapValues, flatMapValues>>, <<kafka-streams-internals-KStreamImpl.adoc#branch, branch>>, <<kafka-streams-internals-KStreamImpl.adoc#merge, merge>>, <<kafka-streams-internals-KStreamImpl.adoc#foreach, foreach>>, <<kafka-streams-internals-KStreamImpl.adoc#peek, peek>>
+
+* `KTableImpl` is requested to <<kafka-streams-internals-KTableImpl.adoc#toStream, toStream>> and <<kafka-streams-internals-KTableImpl.adoc#groupBy, groupBy>>
+
+* `KStreamImplJoin` is requested to <<kafka-streams-internals-KStreamImpl-KStreamImplJoin.adoc#join, join>> (when `KStreamImpl` is requested to <<kafka-streams-internals-KStreamImpl.adoc#doJoin, doJoin>> for <<kafka-streams-internals-KStreamImpl.adoc#join, join>>, <<kafka-streams-internals-KStreamImpl.adoc#outerJoin, outerJoin>> and <<kafka-streams-internals-KStreamImpl.adoc#leftJoin, leftJoin>> join operators)
+
+[[creating-instance]]
+`ProcessorGraphNode` takes the following to be created:
+
+* [[nodeName]] Node name
+* [[processorParameters]] `ProcessorParameters<K, V>`
+* [[repartitionRequired]] `repartitionRequired` flag (default: `false`)
+
+=== [[writeToTopology]] `writeToTopology` Method
+
+[source, java]
+----
+void writeToTopology(final InternalTopologyBuilder topologyBuilder)
+----
+
+NOTE: `writeToTopology` is part of the <<kafka-streams-internals-StreamsGraphNode.adoc#writeToTopology, StreamsGraphNode Contract>> to...FIXME.
+
+`writeToTopology` requests the given `InternalTopologyBuilder` to <<kafka-streams-internals-InternalTopologyBuilder.adoc#addProcessor, add a processor>> with the name and the <<kafka-streams-ProcessorSupplier.adoc#, ProcessorSupplier>> as defined by the given <<processorParameters, ProcessorParameters>>.
