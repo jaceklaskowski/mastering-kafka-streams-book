@@ -2,14 +2,14 @@
 
 `InternalStreamsBuilder` is a façade of <<internalTopologyBuilder, InternalTopologyBuilder>> (to add sources and state stores to a topology) and link:kafka-streams-internals-KTableImpl.adoc[KTableImpl] for <<table, table>>, link:kafka-streams-GlobalKTableImpl.adoc[GlobalKTableImpl] for <<globalTable, globalTable>>, and link:kafka-streams-internals-KStreamImpl.adoc[KStreamImpl] for <<stream, stream>> operators.
 
-`InternalStreamsBuilder` is <<creating-instance, created>> for <<kafka-streams-StreamsBuilder.adoc#internalStreamsBuilder, StreamsBuilder>>.
+`InternalStreamsBuilder` is <<creating-instance, created>> exclusively for <<kafka-streams-StreamsBuilder.adoc#internalStreamsBuilder, StreamsBuilder>>.
 
 .Creating InternalStreamsBuilder
 image::images/kafka-streams-InternalStreamsBuilder.png[align="center"]
 
 [[creating-instance]]
 [[internalTopologyBuilder]]
-`InternalStreamsBuilder` takes a link:kafka-streams-internals-InternalTopologyBuilder.adoc[InternalTopologyBuilder] when created (that all the methods are based on).
+`InternalStreamsBuilder` takes a link:kafka-streams-internals-InternalTopologyBuilder.adoc[InternalTopologyBuilder] to be created (that all the methods are based on).
 
 `InternalStreamsBuilder` is an link:kafka-streams-internals-InternalNameProvider.adoc[InternalNameProvider] and so can be requested for a new name for a <<newProcessorName, processor>> or a <<newStoreName, store>>.
 

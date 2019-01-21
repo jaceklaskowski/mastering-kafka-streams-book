@@ -1,6 +1,9 @@
 == [[InternalTopologyBuilder]] InternalTopologyBuilder
 
-`InternalTopologyBuilder` is used to <<build, build a processor task topology>>.
+`InternalTopologyBuilder` is used to <<build, build a processor task topology>> (for <<kafka-streams-internals-StandbyTaskCreator.adoc#, StreamThread.StandbyTaskCreators>> and <<kafka-streams-internals-TaskCreator.adoc#, StreamThread.TaskCreator>>).
+
+.InternalTopologyBuilder and ProcessorTopology
+image::images/kafka-streams-InternalTopologyBuilder-build.png[align="center"]
 
 `InternalTopologyBuilder` is <<creating-instance, created>> exclusively for a <<kafka-streams-Topology.adoc#internalTopologyBuilder, Topology>>.
 
@@ -950,6 +953,7 @@ void addInternalTopic(final String topicName)
 ----
 ProcessorTopology build() // <1>
 ProcessorTopology build(final Integer topicGroupId) // <2>
+
 // PRIVATE
 private ProcessorTopology build(final Set<String> nodeGroup)
 ----
@@ -980,7 +984,7 @@ NOTE: `nodeGroup` can be either <<globalNodeGroups, global node groups>> (aka _g
 
 NOTE: The private `build` is used when `InternalTopologyBuilder` is requested to <<build-topicGroupId, build a processor task topology>> (for a group ID) and <<buildGlobalStateTopology, build a global processor task topology>>.
 
-NOTE: The parameter-less `build` is used exclusively when `KafkaStreams` is link:kafka-streams-KafkaStreams.adoc#creating-instance[created] (as a sanity check to fail-fast in case a `ProcessorTopology` could not be built due to some exception).
+NOTE: The parameter-less `build` is used exclusively when `KafkaStreams` is <<kafka-streams-KafkaStreams.adoc#, created>> (as a sanity check to fail-fast in case a `ProcessorTopology` could not be built due to some exception).
 
 ==== [[build-topicGroupId]] Building Processor Task Topology For Group ID -- `build` Factory Method
 
@@ -997,13 +1001,13 @@ When the input `topicGroupId` is undefined (i.e. `null`), `build` takes the node
 
 [NOTE]
 ====
-`build` is used when:
+`build` (with a topic group ID) is used when:
 
-* `InternalTopologyBuilder` is requested to <<build, build a processor task topology>> (without specifying a group ID)
+* `InternalTopologyBuilder` is requested to <<build, build a processor task topology>> (with no group ID)
 
-* `StandbyTaskCreator` is requested to link:kafka-streams-internals-StandbyTaskCreator.adoc#createTask[create a standby task for a given task ID]
+* `StandbyTaskCreator` is requested to <<kafka-streams-internals-StandbyTaskCreator.adoc#createTask, create a standby task for a given task ID>>
 
-* `TaskCreator` is requested to link:kafka-streams-internals-TaskCreator.adoc#createTask[create a stream task for a given task ID]
+* `TaskCreator` is requested to <<kafka-streams-internals-TaskCreator.adoc#createTask, create a stream task for a given task ID>>
 ====
 
 === [[allStateStoreName]] `allStateStoreName` Method

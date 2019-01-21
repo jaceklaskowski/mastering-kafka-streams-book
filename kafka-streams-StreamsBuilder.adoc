@@ -8,7 +8,7 @@ TIP: Use <<kafka-streams-scala.adoc#, Scala API for Kafka Streams>> to make your
 
 [[operators]]
 .StreamsBuilder API / Operators
-[cols="1,2",options="header",width="100%"]
+[cols="1,3",options="header",width="100%"]
 |===
 | Operator
 | Description
@@ -121,7 +121,7 @@ import org.apache.kafka.streams.StreamsBuilder
 val builder = new StreamsBuilder
 ----
 
-A typical Kafka Streams application looks as follows:
+A typical Kafka Streams application (that uses <<kafka-streams-streams-dsl.adoc#, Streams DSL>> and <<kafka-streams-scala.adoc#, Scala API for Kafka Streams>>) looks as follows:
 
 [source, scala]
 ----
@@ -151,7 +151,11 @@ val topology = builder.build
 
 [[topology]]
 [[internalStreamsBuilder]]
-When <<creating-instance, created>>, `StreamsBuilder` creates an empty <<kafka-streams-Topology.adoc#, Topology>> (that you enrich using the <<operators, operators>>). The topology is then requested for the <<kafka-streams-Topology.adoc#internalTopologyBuilder, InternalTopologyBuilder>> that is in turn used to create an <<kafka-streams-internals-InternalStreamsBuilder.adoc#, InternalStreamsBuilder>>.
+[[internalTopologyBuilder]]
+When <<creating-instance, created>>, `StreamsBuilder` creates an empty <<kafka-streams-Topology.adoc#, Topology>> (that you enrich using the <<operators, operators>>). The topology is immediately requested for the <<kafka-streams-Topology.adoc#internalTopologyBuilder, InternalTopologyBuilder>> that is in turn used to create an <<kafka-streams-internals-InternalStreamsBuilder.adoc#, InternalStreamsBuilder>>.
+
+.StreamsBuilder, Topology and InternalStreamsBuilder
+image::images/kafka-streams-StreamsBuilder.png[align="center"]
 
 All <<operators, operators>> use the <<internalStreamsBuilder, InternalStreamsBuilder>> behind the scenes. In other words, `StreamsBuilder` offers a more <<operators, developer-friendly high-level API>> for developing Kafka Streams applications than using the <<kafka-streams-internals-InternalStreamsBuilder.adoc#, InternalStreamsBuilder>> API directly (and is a façade of `InternalStreamsBuilder`).
 
