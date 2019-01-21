@@ -4,7 +4,7 @@
 
 === [[partitionGroups]] `partitionGroups` Method
 
-[source, scala]
+[source, java]
 ----
 Map<TaskId, Set<TopicPartition>> partitionGroups(
   final Map<Integer, Set<String>> topicGroups,
@@ -14,3 +14,16 @@ Map<TaskId, Set<TopicPartition>> partitionGroups(
 NOTE: `partitionGroups` is part of the <<kafka-streams-PartitionGrouper.adoc#partitionGroups, PartitionGrouper Contract>> to...FIXME.
 
 `partitionGroups`...FIXME
+
+=== [[maxNumPartitions]] Finding Maximum Number Of Partitions For Topics -- `maxNumPartitions` Method
+
+[source, java]
+----
+int maxNumPartitions(
+  final Cluster metadata,
+  final Set<String> topics)
+----
+
+`maxNumPartitions`...FIXME
+
+NOTE: `maxNumPartitions` is used exclusively when `DefaultPartitionGrouper` is requested to <<partitionGroups, partitionGroups>>.

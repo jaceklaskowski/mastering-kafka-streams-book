@@ -35,7 +35,7 @@ void encodeActiveAndStandbyTaskAssignment(final DataOutputStream out)
 
 `encodeActiveAndStandbyTaskAssignment`...FIXME
 
-NOTE: `encodeActiveAndStandbyTaskAssignment` is used when...FIXME
+NOTE: `encodeActiveAndStandbyTaskAssignment` is used when `AssignmentInfo` is requested to <<encodeVersionOne, encodeVersionOne>>, <<encodeVersionTwo, encodeVersionTwo>>, <<encodeVersionThree, encodeVersionThree>>, and <<encodeVersionFour, encodeVersionFour>>.
 
 === [[decodeActiveTasks]] `decodeActiveTasks` Internal Factory Method
 
@@ -62,3 +62,58 @@ static void decodeStandbyTasks(
 `decodeStandbyTasks`...FIXME
 
 NOTE: `decodeStandbyTasks` is used when...FIXME
+
+=== [[encodeVersionFour]] `encodeVersionFour` Internal Method
+
+[source, java]
+----
+void encodeVersionFour(final DataOutputStream out)
+----
+
+`encodeVersionFour`...FIXME
+
+NOTE: `encodeVersionFour` is used exclusively when `AssignmentInfo` is requested to <<encode, encode>> (for the <<usedVersion, metadata version>> as `4`).
+
+=== [[encodeVersionThree]] `encodeVersionThree` Internal Method
+
+[source, java]
+----
+void encodeVersionThree(final DataOutputStream out)
+----
+
+`encodeVersionThree`...FIXME
+
+NOTE: `encodeVersionThree` is used when...FIXME
+
+=== [[encodeVersionTwo]] `encodeVersionTwo` Internal Method
+
+[source, java]
+----
+void encodeVersionTwo(final DataOutputStream out)
+----
+
+`encodeVersionTwo`...FIXME
+
+NOTE: `encodeVersionTwo` is used when...FIXME
+
+=== [[encodeVersionOne]] `encodeVersionOne` Internal Method
+
+[source, java]
+----
+void encodeVersionOne(final DataOutputStream out)
+----
+
+`encodeVersionOne`...FIXME
+
+NOTE: `encodeVersionOne` is used when...FIXME
+
+=== [[encode]] `encode` Method
+
+[source, java]
+----
+ByteBuffer encode()
+----
+
+`encode`...FIXME
+
+NOTE: `encode` is used exclusively when `StreamsPartitionAssignor` is requested to <<kafka-streams-internals-StreamsPartitionAssignor.adoc#errorAssignment, errorAssignment>>, <<kafka-streams-internals-StreamsPartitionAssignor.adoc#computeNewAssignment, computeNewAssignment>>, and <<kafka-streams-internals-StreamsPartitionAssignor.adoc#versionProbingAssignment, versionProbingAssignment>>.
