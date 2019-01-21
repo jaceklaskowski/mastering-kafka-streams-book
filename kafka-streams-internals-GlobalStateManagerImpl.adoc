@@ -48,7 +48,7 @@ void reinitializeStateStoresForPartitions(
   final InternalProcessorContext processorContext)
 ----
 
-NOTE: `reinitializeStateStoresForPartitions` is part of <<kafka-streams-StateManager.adoc#reinitializeStateStoresForPartitions, StateManager Contract>> to...FIXME.
+NOTE: `reinitializeStateStoresForPartitions` is part of <<kafka-streams-internals-StateManager.adoc#reinitializeStateStoresForPartitions, StateManager Contract>> to...FIXME.
 
 `reinitializeStateStoresForPartitions`...FIXME
 
@@ -59,7 +59,7 @@ NOTE: `reinitializeStateStoresForPartitions` is part of <<kafka-streams-StateMan
 void flush()
 ----
 
-NOTE: `flush` is part of the <<kafka-streams-StateManager.adoc#flush, StateManager Contract>> to flush all <<kafka-streams-StateStore.adoc#, state stores>> registered with the state manager.
+NOTE: `flush` is part of the <<kafka-streams-internals-StateManager.adoc#flush, StateManager Contract>> to flush all <<kafka-streams-StateStore.adoc#, state stores>> registered with the state manager.
 
 `flush`...FIXME
 
@@ -87,7 +87,7 @@ void register(
   final StateRestoreCallback stateRestoreCallback)
 ----
 
-NOTE: `register` is part of the <<kafka-streams-StateManager.adoc#register, StateManager Contract>> to register a <<kafka-streams-StateStore.adoc#, state store>>.
+NOTE: `register` is part of the <<kafka-streams-internals-StateManager.adoc#register, StateManager Contract>> to register a <<kafka-streams-StateStore.adoc#, state store>>.
 
 `register`...FIXME
 
@@ -98,6 +98,6 @@ NOTE: `register` is part of the <<kafka-streams-StateManager.adoc#register, Stat
 void close(final Map<TopicPartition, Long> offsets) throws IOException
 ----
 
-NOTE: `close` is part of the <<kafka-streams-StateManager.adoc#close, StateManager Contract>> to close the state manager.
+NOTE: `close` is part of the <<kafka-streams-internals-StateManager.adoc#close, StateManager Contract>> to close the state manager.
 
 `close`...FIXME

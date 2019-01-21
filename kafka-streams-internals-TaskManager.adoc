@@ -418,3 +418,14 @@ Set<TaskId> standbyTaskIds()
 `standbyTaskIds`...FIXME
 
 NOTE: `standbyTaskIds` is used when...FIXME
+
+=== [[cachedTasksIds]] `cachedTasksIds` Method
+
+[source, java]
+----
+Set<TaskId> cachedTasksIds()
+----
+
+`cachedTasksIds`...FIXME
+
+NOTE: `cachedTasksIds` is used when...FIXME

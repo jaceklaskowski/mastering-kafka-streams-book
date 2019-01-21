@@ -3,7 +3,7 @@
 `Checkpointable` is the internal <<contract, contract>> for <<implementations, objects>> with associated partition offsets that can be <<checkpoint, checkpointed>>.
 
 [[implementations]]
-NOTE: <<kafka-streams-StateManager.adoc#, StateManager>> is the one and only known direct extension contract of the <<contract, Checkpointable Contract>>.
+NOTE: <<kafka-streams-internals-StateManager.adoc#, StateManager>> is the one and only known direct extension contract of the <<contract, Checkpointable Contract>>.
 
 [[contract]]
 .Checkpointable Contract

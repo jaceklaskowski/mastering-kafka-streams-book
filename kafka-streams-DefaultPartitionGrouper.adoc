@@ -1,3 +1,16 @@
 == [[DefaultPartitionGrouper]] DefaultPartitionGrouper
 
 `DefaultPartitionGrouper` is a concrete <<kafka-streams-PartitionGrouper.adoc#, PartitionGrouper>> that...FIXME
+
+=== [[partitionGroups]] `partitionGroups` Method
+
+[source, scala]
+----
+Map<TaskId, Set<TopicPartition>> partitionGroups(
+  final Map<Integer, Set<String>> topicGroups,
+  final Cluster metadata)
+----
+
+NOTE: `partitionGroups` is part of the <<kafka-streams-PartitionGrouper.adoc#partitionGroups, PartitionGrouper Contract>> to...FIXME.
+
+`partitionGroups`...FIXME

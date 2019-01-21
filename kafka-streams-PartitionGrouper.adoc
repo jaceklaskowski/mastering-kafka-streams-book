@@ -4,7 +4,7 @@
 
 [[contract]]
 .PartitionGrouper Contract
-[cols="1m,2",options="header",width="100%"]
+[cols="1m,3",options="header",width="100%"]
 |===
 | Method
 | Description

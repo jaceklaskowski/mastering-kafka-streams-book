@@ -1,6 +1,6 @@
 == [[GlobalStateManager]] GlobalStateManager
 
-`GlobalStateManager` is the <<contract, contract>> for custom link:kafka-streams-StateManager.adoc[StateManagers] that are link:kafka-streams-Checkpointable.adoc[checkpointable] and...FIXME
+`GlobalStateManager` is the <<contract, contract>> for custom link:kafka-streams-internals-StateManager.adoc[StateManagers] that are link:kafka-streams-Checkpointable.adoc[checkpointable] and...FIXME
 
 [[contract]]
 [source, java]

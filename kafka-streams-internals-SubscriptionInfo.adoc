@@ -12,3 +12,29 @@ SubscriptionInfo decode(final ByteBuffer data)
 `decode`...FIXME
 
 NOTE: `decode` is used when...FIXME
+
+=== [[encodeTasks]] `encodeTasks` Method
+
+[source, java]
+----
+void encodeTasks(
+  final ByteBuffer buf,
+  final Collection<TaskId> taskIds)
+----
+
+`encodeTasks`...FIXME
+
+NOTE: `encodeTasks` is used when...FIXME
+
+=== [[decodeTasks]] `decodeTasks` Factory Method
+
+[source, java]
+----
+static void decodeTasks(
+  final SubscriptionInfo subscriptionInfo,
+  final ByteBuffer data)
+----
+
+`decodeTasks`...FIXME
+
+NOTE: `decodeTasks` is used when...FIXME

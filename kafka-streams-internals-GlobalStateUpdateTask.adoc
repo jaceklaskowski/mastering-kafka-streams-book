@@ -57,7 +57,7 @@ void flushState()
 
 NOTE: `flushState` is part of link:kafka-streams-internals-GlobalStateMaintainer.adoc#flushState[GlobalStateMaintainer Contract] to...FIXME.
 
-`flushState` requests <<stateMgr, GlobalStateManager>> to link:kafka-streams-StateManager.adoc#flush[flush] followed by link:kafka-streams-Checkpointable.adoc#checkpoint[checkpointing] the <<offsets, offsets>>.
+`flushState` requests <<stateMgr, GlobalStateManager>> to link:kafka-streams-internals-StateManager.adoc#flush[flush] followed by link:kafka-streams-Checkpointable.adoc#checkpoint[checkpointing] the <<offsets, offsets>>.
 
 === [[close]] Closing State Manager -- `close` Method
 
@@ -66,9 +66,9 @@ NOTE: `flushState` is part of link:kafka-streams-internals-GlobalStateMaintainer
 void close() throws IOException
 ----
 
-NOTE: `close` is part of link:kafka-streams-StateManager.adoc#close[StateManager Contract] to...FIXME.
+NOTE: `close` is part of link:kafka-streams-internals-StateManager.adoc#close[StateManager Contract] to...FIXME.
 
-`close` simply requests <<stateMgr, GlobalStateManager>> to link:kafka-streams-StateManager.adoc#close[close] (passing on the <<offsets, offsets>>).
+`close` simply requests <<stateMgr, GlobalStateManager>> to link:kafka-streams-internals-StateManager.adoc#close[close] (passing on the <<offsets, offsets>>).
 
 === [[creating-instance]] Creating GlobalStateUpdateTask Instance
 

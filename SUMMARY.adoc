@@ -291,14 +291,20 @@
 . link:kafka-streams-internals-GroupedStreamAggregateBuilder.adoc[GroupedStreamAggregateBuilder]
 . link:kafka-streams-internals-KStreamImpl-KStreamImplJoin.adoc[KStreamImplJoin]
 
-=== Execution Environment
+=== Physical Plan of Execution
 
 . link:kafka-streams-internals-ProcessorTopology.adoc[ProcessorTopology -- Physical Processor Task Topology]
 
 . link:kafka-streams-internals-Task.adoc[Task Contract -- Stream Processor Tasks]
 .. link:kafka-streams-internals-AbstractTask.adoc[AbstractTask -- Base Processor Task]
-.. link:kafka-streams-internals-StreamTask.adoc[StreamTask]
 .. link:kafka-streams-internals-StandbyTask.adoc[StandbyTask]
+.. link:kafka-streams-internals-StreamTask.adoc[StreamTask]
+
+. link:kafka-streams-AssignedTasks.adoc[AssignedTasks]
+.. link:kafka-streams-AssignedStandbyTasks.adoc[AssignedStandbyTasks -- AssignedTasks For StandbyTasks]
+.. link:kafka-streams-AssignedStreamsTasks.adoc[AssignedStreamsTasks -- AssignedTasks For StreamTasks]
+
+=== Kafka Streams Execution Engine
 
 . link:kafka-streams-internals-TaskManager.adoc[TaskManager]
 .. link:kafka-streams-internals-TaskCreator.adoc[TaskCreator -- Factory of Stream Tasks]
@@ -309,10 +315,6 @@
 . link:kafka-streams-StreamThread-RebalanceListener.adoc[RebalanceListener -- Kafka ConsumerRebalanceListener for Partition Assignment Among Processor Tasks]
 . link:kafka-streams-StreamsMetadataState.adoc[StreamsMetadataState]
 
-. link:kafka-streams-AssignedTasks.adoc[AssignedTasks]
-.. link:kafka-streams-AssignedStandbyTasks.adoc[AssignedStandbyTasks -- AssignedTasks For StandbyTasks]
-.. link:kafka-streams-AssignedStreamsTasks.adoc[AssignedStreamsTasks -- AssignedTasks For StreamTasks]
-
 . link:kafka-streams-internals-StreamsPartitionAssignor.adoc[StreamsPartitionAssignor -- Dynamic Partition Assignment Strategy]
 .. link:kafka-streams-internals-InternalTopicManager.adoc[InternalTopicManager]
 .. link:kafka-streams-internals-AssignmentInfo.adoc[AssignmentInfo]
@@ -322,7 +324,7 @@
 ... link:kafka-streams-internals-StickyTaskAssignor.adoc[StickyTaskAssignor]
 
 . link:kafka-streams-AbstractProcessorContext.adoc[AbstractProcessorContext -- Base Of Internal Processor Contexts]
-.. link:kafka-streams-GlobalProcessorContextImpl.adoc[GlobalProcessorContextImpl]
+.. link:kafka-streams-internals-GlobalProcessorContextImpl.adoc[GlobalProcessorContextImpl]
 .. link:kafka-streams-ProcessorContextImpl.adoc[ProcessorContextImpl]
 .. link:kafka-streams-StandbyContextImpl.adoc[StandbyContextImpl]
 
@@ -363,7 +365,7 @@
 
 === State (Store) Management
 
-. link:kafka-streams-StateManager.adoc[StateManager Contract -- State Store Managers]
+. link:kafka-streams-internals-StateManager.adoc[StateManager Contract -- State Store Managers]
 .. link:kafka-streams-AbstractStateManager.adoc[AbstractStateManager]
 
 . link:kafka-streams-ProcessorStateManager.adoc[ProcessorStateManager]

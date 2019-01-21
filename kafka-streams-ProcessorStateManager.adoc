@@ -1,6 +1,6 @@
 == [[ProcessorStateManager]] ProcessorStateManager
 
-`ProcessorStateManager` is a concrete <<kafka-streams-StateManager.adoc#, StateManager>> (as a <<kafka-streams-AbstractStateManager.adoc#, AbstractStateManager>>) that...FIXME
+`ProcessorStateManager` is a concrete <<kafka-streams-internals-StateManager.adoc#, StateManager>> (as a <<kafka-streams-AbstractStateManager.adoc#, AbstractStateManager>>) that...FIXME
 
 `ProcessorStateManager` is <<creating-instance, created>> exclusively when `AbstractTask` is <<kafka-streams-internals-AbstractTask.adoc#stateMgr, created>> (for <<kafka-streams-internals-StandbyTask.adoc#, StandbyTask>> and <<kafka-streams-internals-StreamTask.adoc#, StreamTask>> tasks).
 
@@ -73,7 +73,7 @@ void register(
   final StateRestoreCallback stateRestoreCallback)
 ----
 
-NOTE: `register` is part of link:kafka-streams-StateManager.adoc#register[StateManager Contract] to register a <<kafka-streams-StateStore.adoc#, state store>> and the associated `StateRestoreCallback`.
+NOTE: `register` is part of link:kafka-streams-internals-StateManager.adoc#register[StateManager Contract] to register a <<kafka-streams-StateStore.adoc#, state store>> and the associated `StateRestoreCallback`.
 
 `register` prints out the following DEBUG message to the logs:
 
@@ -118,7 +118,7 @@ Store [storeName] has already been registered.
 void close(final Map<TopicPartition, Long> ackedOffsets) throws ProcessorStateException
 ----
 
-NOTE: `close` is part of link:kafka-streams-StateManager.adoc#close[StateManager Contract] to...FIXME.
+NOTE: `close` is part of link:kafka-streams-internals-StateManager.adoc#close[StateManager Contract] to...FIXME.
 
 `close`...FIXME
 
@@ -129,7 +129,7 @@ NOTE: `close` is part of link:kafka-streams-StateManager.adoc#close[StateManager
 void flush()
 ----
 
-NOTE: `flush` is part of the <<kafka-streams-StateManager.adoc#flush, StateManager Contract>> to flush all <<kafka-streams-StateStore.adoc#, state stores>> registered with the state manager.
+NOTE: `flush` is part of the <<kafka-streams-internals-StateManager.adoc#flush, StateManager Contract>> to flush all <<kafka-streams-StateStore.adoc#, state stores>> registered with the state manager.
 
 `flush`...FIXME
 
@@ -140,7 +140,7 @@ NOTE: `flush` is part of the <<kafka-streams-StateManager.adoc#flush, StateManag
 StateStore getGlobalStore(final String name)
 ----
 
-NOTE: `getGlobalStore` is part of link:kafka-streams-StateManager.adoc#getGlobalStore[StateManager Contract] to...FIXME.
+NOTE: `getGlobalStore` is part of link:kafka-streams-internals-StateManager.adoc#getGlobalStore[StateManager Contract] to...FIXME.
 
 `getGlobalStore`...FIXME
 
@@ -151,7 +151,7 @@ NOTE: `getGlobalStore` is part of link:kafka-streams-StateManager.adoc#getGlobal
 StateStore getStore(final String name)
 ----
 
-NOTE: `getStore` is part of link:kafka-streams-StateManager.adoc#getStore[StateManager Contract] to...FIXME.
+NOTE: `getStore` is part of link:kafka-streams-internals-StateManager.adoc#getStore[StateManager Contract] to...FIXME.
 
 `getStore`...FIXME
 
@@ -164,7 +164,7 @@ void reinitializeStateStoresForPartitions(
   final InternalProcessorContext processorContext)
 ----
 
-NOTE: `reinitializeStateStoresForPartitions` is part of <<kafka-streams-StateManager.adoc#reinitializeStateStoresForPartitions, StateManager Contract>> to...FIXME.
+NOTE: `reinitializeStateStoresForPartitions` is part of <<kafka-streams-internals-StateManager.adoc#reinitializeStateStoresForPartitions, StateManager Contract>> to...FIXME.
 
 `reinitializeStateStoresForPartitions`...FIXME
 

@@ -25,3 +25,40 @@ static void decodeVersionOneData(
 `decodeVersionOneData`...FIXME
 
 NOTE: `decodeVersionOneData` is used exclusively when `AssignmentInfo` is requested to <<decode, decode the user data>>.
+
+=== [[encodeActiveAndStandbyTaskAssignment]] `encodeActiveAndStandbyTaskAssignment` Internal Method
+
+[source, java]
+----
+void encodeActiveAndStandbyTaskAssignment(final DataOutputStream out)
+----
+
+`encodeActiveAndStandbyTaskAssignment`...FIXME
+
+NOTE: `encodeActiveAndStandbyTaskAssignment` is used when...FIXME
+
+=== [[decodeActiveTasks]] `decodeActiveTasks` Internal Factory Method
+
+[source, java]
+----
+static void decodeActiveTasks(
+  final AssignmentInfo assignmentInfo,
+  final DataInputStream in)
+----
+
+`decodeActiveTasks`...FIXME
+
+NOTE: `decodeActiveTasks` is used when...FIXME
+
+=== [[decodeStandbyTasks]] `decodeStandbyTasks` Internal Factory Method
+
+[source, java]
+----
+static void decodeStandbyTasks(
+  final AssignmentInfo assignmentInfo,
+  final DataInputStream in)
+----
+
+`decodeStandbyTasks`...FIXME
+
+NOTE: `decodeStandbyTasks` is used when...FIXME

@@ -4,7 +4,7 @@
 
 [[contract]]
 .StateManager Contract
-[cols="1m,2",options="header",width="100%"]
+[cols="1m,3",options="header",width="100%"]
 |===
 | Method
 | Description
@@ -63,7 +63,7 @@ Accessing the global <<kafka-streams-StateStore.adoc#, state store>> by name
 
 Used when:
 
-* <<kafka-streams-GlobalProcessorContextImpl.adoc#getStateStore, GlobalProcessorContextImpl>> and <<kafka-streams-ProcessorContextImpl.adoc#getStateStore, ProcessorContextImpl>> are requested to get the global <<kafka-streams-StateStore.adoc#, state store>> by name
+* <<kafka-streams-internals-GlobalProcessorContextImpl.adoc#getStateStore, GlobalProcessorContextImpl>> and <<kafka-streams-ProcessorContextImpl.adoc#getStateStore, ProcessorContextImpl>> are requested to get the global <<kafka-streams-StateStore.adoc#, state store>> by name
 
 * `GlobalStateManagerImpl` is requested to <<kafka-streams-internals-GlobalStateManagerImpl.adoc#getStore, get state store by name>>
 

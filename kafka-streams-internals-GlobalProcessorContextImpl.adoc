@@ -6,9 +6,9 @@
 
 [source, java]
 ----
-FIXME
+StateStore getStateStore(final String name)
 ----
 
 NOTE: `getStateStore` is part of the <<kafka-streams-ProcessorContext.adoc#getStateStore, ProcessorContext Contract>> to...FIXME.
 
-`getStateStore`...FIXME
+`getStateStore` simply requests the <<kafka-streams-AbstractProcessorContext.adoc#stateManager, StateManager>> to <<kafka-streams-internals-StateManager.adoc#getGlobalStore, get the global state store>> by the given name.

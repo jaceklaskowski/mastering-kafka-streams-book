@@ -1,3 +1,96 @@
 == [[TaskId]] TaskId
 
-`TaskId` is...FIXME
+[[creating-instance]]
+`TaskId` takes the following to be created:
+
+* [[topicGroupId]] Topic group ID
+* [[partition]] Assigned partition ID
+
+`TaskId` is <<creating-instance, created>> when:
+
+* `DefaultPartitionGrouper` is requested to <<kafka-streams-DefaultPartitionGrouper.adoc#partitionGroups, partitionGroups>>
+
+* `GlobalProcessorContextImpl` is <<kafka-streams-internals-GlobalProcessorContextImpl.adoc#, created>>
+
+* `TaskId` is requested to <<parse, parse>> and <<readFrom, readFrom>>
+
+[[toString]]
+When requested for a textual representation (`toString`), `TaskId` simply returns the <<topicGroupId, topic group ID>> and the <<partition, assigned partition ID>> separated by `_` (underscore), e.g. `0_0`.
+
+[source, scala]
+----
+import org.apache.kafka.streams.processor.TaskId
+val topicGroupId = 0
+val partition = 0
+val tid = new TaskId(topicGroupId, partition)
+scala> println(tid)
+0_0
+----
+
+=== [[parse]] Creating TaskId from Textual Representation -- `parse` Factory Method
+
+[source, java]
+----
+TaskId parse(final String taskIdStr)
+----
+
+`parse` <<creating-instance, creates>> a `TaskId` from the given textual representation.
+
+`parse` throws a `TaskIdFormatException` if the given `taskIdStr` is of incorrect format.
+
+[source, scala]
+----
+import org.apache.kafka.streams.processor.TaskId
+val incorrectTaskId = "hello_world"
+scala> TaskId.parse(incorrectTaskId)
+org.apache.kafka.streams.errors.TaskIdFormatException: Task id cannot be parsed correctly from hello_world
+  at org.apache.kafka.streams.processor.TaskId.parse(TaskId.java:58)
+  ... 36 elided
+----
+
+[NOTE]
+====
+`parse` is used when:
+
+* `StateDirectory` is requested to <<kafka-streams-internals-StateDirectory.adoc#cleanRemovedTasks, cleanRemovedTasks>>
+
+* `TaskManager` is requested to <<kafka-streams-internals-TaskManager.adoc#cachedTasksIds, cachedTasksIds>>
+====
+
+=== [[writeTo]] Serializing TaskId -- `writeTo` Method
+
+[source, java]
+----
+void writeTo(final ByteBuffer buf)
+void writeTo(final DataOutputStream out)
+----
+
+`writeTo` simply writes the <<topicGroupId, topicGroupId>> and the <<partition, partition>> out to the given output (either `buf` or `out`).
+
+[NOTE]
+====
+`writeTo` is used when:
+
+* `SubscriptionInfo` is requested to <<kafka-streams-internals-SubscriptionInfo.adoc#encodeTasks, encodeTasks>>
+
+* `AssignmentInfo` is requested to <<kafka-streams-internals-AssignmentInfo.adoc#encodeActiveAndStandbyTaskAssignment, encodeActiveAndStandbyTaskAssignment>>
+====
+
+=== [[readFrom]] Creating TaskId from Encoded Representation (Deserialization) -- `readFrom` Factory Method
+
+[source, java]
+----
+TaskId readFrom(final ByteBuffer buf)
+TaskId readFrom(final DataInputStream in)
+----
+
+`readFrom` simply creates a `TaskId` from (the numbers) from the given input (either `buf` or `in`).
+
+[NOTE]
+====
+`readFrom` is used when:
+
+* `SubscriptionInfo` is requested to <<kafka-streams-internals-SubscriptionInfo.adoc#decodeTasks, decodeTasks>>
+
+* `AssignmentInfo` is requested to <<kafka-streams-internals-AssignmentInfo.adoc#decodeActiveTasks, decodeActiveTasks>> and <<kafka-streams-internals-AssignmentInfo.adoc#decodeStandbyTasks, decodeStandbyTasks>>
+====
