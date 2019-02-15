@@ -78,15 +78,15 @@ NOTE: `closeTopology` is used exclusively when `StreamTask` is requested to <<su
 void suspend()  // <1>
 
 // PRIVATE API
-void suspend(final boolean clean)
+suspend(boolean clean, boolean isZombie)
 ----
-<1> Uses `clean` flag enabled, i.e. `true`
+<1> Uses the private `suspend` with `clean` enabled and `isZombie` disabled
 
 NOTE: `suspend` is part of <<kafka-streams-internals-Task.adoc#suspend, Task Contract>> to...FIXME
 
 `suspend`...FIXME
 
-NOTE: The private `suspend` is used exclusively when `StreamTask` is requested to <<close, close>>.
+NOTE: The private `suspend` is used when `StreamTask` is requested to <<close, close>>.
 
 === [[close]] `close` Method
 
@@ -128,7 +128,7 @@ void initTopology()
 
 `initTopology`...FIXME
 
-NOTE: `initTopology` is used when...FIXME
+NOTE: `initTopology` is used exclusively when `StreamTask` is requested to <<initializeTopology, initializeTopology>>.
 
 === [[initializeTopology]] `initializeTopology` Method
 

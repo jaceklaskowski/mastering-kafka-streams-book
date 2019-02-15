@@ -81,3 +81,14 @@ NOTE: `close` is part of link:kafka-streams-internals-StateManager.adoc#close[St
 * [[logContext]] `LogContext`
 
 `GlobalStateUpdateTask` initializes the <<offsets, offsets>> and <<deserializers, deserializers>> internal registries.
+
+=== [[initTopology]] `initTopology` Internal Method
+
+[source, java]
+----
+void initTopology()
+----
+
+`initTopology`...FIXME
+
+NOTE: `initTopology` is used exclusively when `GlobalStateUpdateTask` is requested to <<initialize, initialize>>.

@@ -1,12 +1,12 @@
 == [[AssignedStreamsTasks]] AssignedStreamsTasks -- AssignedTasks For StreamTasks
 
-`AssignedStreamsTasks` is a concrete <<kafka-streams-AssignedTasks.adoc#, AssignedTasks>> of <<kafka-streams-internals-StreamTask.adoc#, StreamTasks>> that...FIXME
+`AssignedStreamsTasks` is a concrete <<kafka-streams-internals-AssignedTasks.adoc#, AssignedTasks>> of <<kafka-streams-internals-StreamTask.adoc#, StreamTasks>> that...FIXME
 
 `AssignedStreamsTasks` is <<creating-instance, created>> for a <<kafka-streams-StreamThread.adoc#create, StreamThread>> (when `KafkaStreams` is <<kafka-streams-KafkaStreams.adoc#creating-instance, created>>).
 
 `AssignedStreamsTasks` is a `RestoringTasks` that...FIXME
 
-It _appears_ that `AssignedStreamsTasks` simply operates on the running tasks (i.e. the tasks that are in link:kafka-streams-AssignedTasks.adoc#running[running] internal registry). When requested to <<process, process>> or <<punctuate, punctuate>> `AssignedStreamsTasks` simply walks over the `running` internal registry and triggers execution of every task.
+It _appears_ that `AssignedStreamsTasks` simply operates on the running tasks (i.e. the tasks that are in link:kafka-streams-internals-AssignedTasks.adoc#running[running] internal registry). When requested to <<process, process>> or <<punctuate, punctuate>> `AssignedStreamsTasks` simply walks over the `running` internal registry and triggers execution of every task.
 
 [[maybeCommitAction]]
 `AssignedStreamsTasks` uses the *maybeCommit* task action (`TaskAction<StreamTask>`) that is used in <<maybeCommit, maybeCommit>>. The task action takes a <<kafka-streams-internals-StreamTask.adoc#, stream task>> and checks if the task link:kafka-streams-internals-StreamTask.adoc#commitNeeded[needs a commit]. If so, the action does the following:
@@ -25,7 +25,7 @@ Committed active task [id] per user request in
 [[creating-instance]]
 `AssignedStreamsTasks` takes a `LogContext` when created.
 
-`AssignedStreamsTasks` uses *stream task* for link:kafka-streams-AssignedTasks.adoc#taskTypeName[taskTypeName].
+`AssignedStreamsTasks` uses *stream task* for link:kafka-streams-internals-AssignedTasks.adoc#taskTypeName[taskTypeName].
 
 [[internal-registries]]
 .AssignedStreamsTasks's Internal Properties (e.g. Registries, Counters and Flags)
@@ -62,7 +62,7 @@ Refer to link:kafka-logging.adoc#log4j.properties[Application Logging Using log4
 int process()
 ----
 
-`process` requests every link:kafka-streams-AssignedTasks.adoc#running[running] stream task to link:kafka-streams-internals-StreamTask.adoc#process[process a single record].
+`process` requests every link:kafka-streams-internals-AssignedTasks.adoc#running[running] stream task to link:kafka-streams-internals-StreamTask.adoc#process[process a single record].
 
 In the end, `process` gives the number of stream tasks that processed a single record successfully.
 
@@ -76,9 +76,9 @@ In case of a `TaskMigratedException`, `process` prints out the following INFO me
 Failed to process stream task [id] since it got migrated to another thread already. Closing it as zombie before triggering a new rebalance.
 ```
 
-`process` then link:kafka-streams-AssignedTasks.adoc#closeZombieTask[closes the task] (considering the task a zombie). If this reports a `RuntimeException`, `process` re-throws it.
+`process` then link:kafka-streams-internals-AssignedTasks.adoc#closeZombieTask[closes the task] (considering the task a zombie). If this reports a `RuntimeException`, `process` re-throws it.
 
-`process` removes the task from link:kafka-streams-AssignedTasks.adoc#running[running] and throws the `TaskMigratedException`.
+`process` removes the task from link:kafka-streams-internals-AssignedTasks.adoc#running[running] and throws the `TaskMigratedException`.
 
 ==== [[process-RuntimeException]] process and RuntimeException
 
@@ -97,7 +97,7 @@ Failed to process stream task [id] due to the following error:
 int maybeCommit()
 ----
 
-`maybeCommit` resets the <<committed, committed>> internal counter (to `0`) and <<kafka-streams-AssignedTasks.adoc#applyToRunningTasks, executes>> the <<maybeCommitAction, maybeCommitAction>> task action to every <<kafka-streams-AssignedTasks.adoc#running, running task>> (that modifies <<committed, committed>>).
+`maybeCommit` resets the <<committed, committed>> internal counter (to `0`) and <<kafka-streams-internals-AssignedTasks.adoc#applyToRunningTasks, executes>> the <<maybeCommitAction, maybeCommitAction>> task action to every <<kafka-streams-internals-AssignedTasks.adoc#running, running task>> (that modifies <<committed, committed>>).
 
 In the end, `maybeCommit` gives the number of running stream tasks that <<kafka-streams-internals-StreamTask.adoc#commitNeeded, needed a commit>>.
 

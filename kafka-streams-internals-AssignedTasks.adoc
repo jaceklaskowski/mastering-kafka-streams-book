@@ -118,7 +118,7 @@ RuntimeException suspendTasks(final Collection<T> tasks)
 
 `suspendTasks`...FIXME
 
-NOTE: `suspendTasks` is used when...FIXME
+NOTE: `suspendTasks` is used exclusively when `AssignedTasks` is requested to <<suspend, suspend all active tasks>>.
 
 === [[hasRunningTasks]] Checking If There Is At Least One Running Task -- `hasRunningTasks` Method
 
@@ -385,7 +385,7 @@ Close created [taskTypeName] [created]
 
 In the end, `suspend` removes all entries from <<running, running>>, <<restoring, restoring>>, <<created, created>>, <<runningByPartition, runningByPartition>> and <<restoringByPartition, restoringByPartition>>.
 
-NOTE: `suspend` is used exclusively when `TaskManager` is requested to link:kafka-streams-internals-TaskManager.adoc#suspendTasksAndState[suspend all active and standby stream tasks and state].
+NOTE: `suspend` is used exclusively when `TaskManager` is requested to <<kafka-streams-internals-TaskManager.adoc#suspendTasksAndState, suspend all active and standby stream tasks and state>>.
 
 === [[closeNonRunningTasks]] `closeNonRunningTasks` Internal Method
 

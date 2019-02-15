@@ -1,6 +1,6 @@
 == [[AssignedStandbyTasks]] AssignedStandbyTasks -- AssignedTasks For StandbyTasks
 
-`AssignedStandbyTasks` is a link:kafka-streams-AssignedTasks.adoc[AssignedTasks] for link:kafka-streams-internals-StandbyTask.adoc[StandbyTasks] that...FIXME
+`AssignedStandbyTasks` is a link:kafka-streams-internals-AssignedTasks.adoc[AssignedTasks] for link:kafka-streams-internals-StandbyTask.adoc[StandbyTasks] that...FIXME
 
 `AssignedStandbyTasks` is <<creating-instance, created>> along with a link:kafka-streams-StreamThread.adoc#create[StreamThread] (when `KafkaStreams` is link:kafka-streams-KafkaStreams.adoc#creating-instance[created]).
 
@@ -8,7 +8,7 @@
 [[creating-instance]]
 `AssignedStandbyTasks` takes a `LogContext` when created.
 
-`AssignedStandbyTasks` uses *standby task* for link:kafka-streams-AssignedTasks.adoc#taskTypeName[taskTypeName].
+`AssignedStandbyTasks` uses *standby task* for link:kafka-streams-internals-AssignedTasks.adoc#taskTypeName[taskTypeName].
 
 [[logging]]
 [TIP]

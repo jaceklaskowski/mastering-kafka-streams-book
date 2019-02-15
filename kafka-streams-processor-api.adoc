@@ -2,7 +2,7 @@
 
 Kafka Streams offers *Processor API* with the following low-level data processing abstractions:
 
-* <<kafka-streams-Processor.adoc#, Processor>> for build-in and user-defined processors
+* <<kafka-streams-Processor.adoc#, Processor>> for stream processing nodes
 
 * <<kafka-streams-ProcessorContext.adoc#, ProcessorContext>> to access the topology and record metadata
 

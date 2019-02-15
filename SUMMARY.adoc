@@ -76,7 +76,7 @@
 
 . link:kafka-streams-processor-api.adoc[Low-Level Processor API]
 
-. link:kafka-streams-Processor.adoc[Processor Contract -- Stream Processing Nodes]
+. link:kafka-streams-Processor.adoc[Processor Contract -- Stream Processing Node]
 .. link:kafka-streams-AbstractProcessor.adoc[AbstractProcessor -- Base for Stream Processors]
 
 . link:kafka-streams-ProcessorContext.adoc[ProcessorContext]
@@ -300,7 +300,7 @@
 .. link:kafka-streams-internals-StandbyTask.adoc[StandbyTask]
 .. link:kafka-streams-internals-StreamTask.adoc[StreamTask]
 
-. link:kafka-streams-AssignedTasks.adoc[AssignedTasks]
+. link:kafka-streams-internals-AssignedTasks.adoc[AssignedTasks]
 .. link:kafka-streams-AssignedStandbyTasks.adoc[AssignedStandbyTasks -- AssignedTasks For StandbyTasks]
 .. link:kafka-streams-AssignedStreamsTasks.adoc[AssignedStreamsTasks -- AssignedTasks For StreamTasks]
 

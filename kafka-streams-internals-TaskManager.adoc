@@ -130,7 +130,7 @@ void updateSubscriptionsFromMetadata(Set<String> topics)
 
 `updateSubscriptionsFromMetadata`...FIXME
 
-NOTE: `updateSubscriptionsFromMetadata` is used when `StreamsPartitionAssignor` is requested to link:kafka-streams-internals-StreamsPartitionAssignor.adoc#subscription[subscription]
+NOTE: `updateSubscriptionsFromMetadata` is used when `StreamsPartitionAssignor` is requested to link:kafka-streams-internals-StreamsPartitionAssignor.adoc#subscription[subscription].
 
 === [[suspendTasksAndState]] Suspending All (Active and Standby) Stream Tasks And State -- `suspendTasksAndState` Method
 
@@ -189,7 +189,7 @@ NOTE: `activeTask` is used exclusively when `StreamThread` is requested to link:
 boolean hasActiveRunningTasks()
 ----
 
-`hasActiveRunningTasks` simply asks <<active, AssignedStreamsTasks>> whether it link:kafka-streams-AssignedTasks.adoc#hasRunningTasks[has any tasks registered or not].
+`hasActiveRunningTasks` simply asks <<active, AssignedStreamsTasks>> whether it link:kafka-streams-internals-AssignedTasks.adoc#hasRunningTasks[has any tasks registered or not].
 
 .TaskManager and AssignedStreamsTasks
 image::images/kafka-streams-TaskManager-hasActiveRunningTasks.png[align="center"]
@@ -203,7 +203,7 @@ NOTE: `hasActiveRunningTasks` is used exclusively when `StreamThread` is request
 boolean hasStandbyRunningTasks()
 ----
 
-`hasStandbyRunningTasks` simply asks <<standby, AssignedStandbyTasks>> whether it link:kafka-streams-AssignedTasks.adoc#hasRunningTasks[has any tasks registered or not].
+`hasStandbyRunningTasks` simply asks <<standby, AssignedStandbyTasks>> whether it link:kafka-streams-internals-AssignedTasks.adoc#hasRunningTasks[has any tasks registered or not].
 
 .TaskManager and AssignedStandbyTasks
 image::images/kafka-streams-TaskManager-hasStandbyRunningTasks.png[align="center"]
@@ -222,13 +222,13 @@ image::images/kafka-streams-TaskManager-createTasks.png[align="center"]
 
 `createTasks` requests the <<changelogReader, ChangelogReader>> to <<kafka-streams-ChangelogReader.adoc#reset, reset>>.
 
-`createTasks` requests the <<standby, AssignedStandbyTasks>> and <<active, AssignedStreamsTasks>> to link:kafka-streams-AssignedTasks.adoc#closeNonAssignedSuspendedTasks[closeNonAssignedSuspendedTasks] (with <<assignedStandbyTasks, assignedStandbyTasks>> and <<assignedActiveTasks, assignedActiveTasks>>, respectively).
+`createTasks` requests the <<standby, AssignedStandbyTasks>> and <<active, AssignedStreamsTasks>> to link:kafka-streams-internals-AssignedTasks.adoc#closeNonAssignedSuspendedTasks[closeNonAssignedSuspendedTasks] (with <<assignedStandbyTasks, assignedStandbyTasks>> and <<assignedActiveTasks, assignedActiveTasks>>, respectively).
 
 `createTasks` <<addStreamTasks, addStreamTasks>> for the input `assignment` partitions.
 
 `createTasks` <<addStandbyTasks, addStandbyTasks>>.
 
-`createTasks` requests <<active, AssignedStreamsTasks>> for the link:kafka-streams-AssignedTasks.adoc#uninitializedPartitions[partitions of the new tasks with a state store] and requests the <<consumer, Kafka consumer>> to pause them.
+`createTasks` requests <<active, AssignedStreamsTasks>> for the link:kafka-streams-internals-AssignedTasks.adoc#uninitializedPartitions[partitions of the new tasks with a state store] and requests the <<consumer, Kafka consumer>> to pause them.
 
 NOTE: `createTasks` triggers `Consumer.pause` method that suspends fetching records from partitions until they have been resumed using `Consumer.resume`.
 
@@ -280,7 +280,7 @@ When there are new tasks to be created, `addStreamTasks` prints out the followin
 New active tasks to be created: [newTasks]
 ```
 
-`addStreamTasks` then requests <<taskCreator, StreamThread.AbstractTaskCreator<StreamTask&gt;>> to link:kafka-streams-internals-AbstractTaskCreator.adoc#createTasks[createTasks] for every new task (with the <<consumer, Kafka Consumer>>) and requests <<active, AssignedStreamsTasks>> to link:kafka-streams-AssignedTasks.adoc#addNewTask[register a new task].
+`addStreamTasks` then requests <<taskCreator, StreamThread.AbstractTaskCreator<StreamTask&gt;>> to link:kafka-streams-internals-AbstractTaskCreator.adoc#createTasks[createTasks] for every new task (with the <<consumer, Kafka Consumer>>) and requests <<active, AssignedStreamsTasks>> to link:kafka-streams-internals-AssignedTasks.adoc#addNewTask[register a new task].
 
 NOTE: `addStreamTasks` is used exclusively when `TaskManager` is requested to <<createTasks, create processor tasks for assigned topic partitions>>.
 
@@ -304,7 +304,7 @@ image::images/kafka-streams-TaskManager-addStandbyTasks.png[align="center"]
 Adding assigned standby tasks [assignedStandbyTasks]
 ```
 
-For every task (id and partitions) in the <<assignedStandbyTasks, assignedStandbyTasks>> registry, `addStandbyTasks` requests <<standby, AssignedStandbyTasks>> to link:kafka-streams-AssignedTasks.adoc#maybeResumeSuspendedTask[maybeResumeSuspendedTask] and, if negative, adds the task to tasks to be created in standby mode.
+For every task (id and partitions) in the <<assignedStandbyTasks, assignedStandbyTasks>> registry, `addStandbyTasks` requests <<standby, AssignedStandbyTasks>> to link:kafka-streams-internals-AssignedTasks.adoc#maybeResumeSuspendedTask[maybeResumeSuspendedTask] and, if negative, adds the task to tasks to be created in standby mode.
 
 If no new tasks should be in standby mode, `addStandbyTasks` simply exits.
 
@@ -314,7 +314,7 @@ When there are new tasks to be in standby mode, `addStandbyTasks` prints out the
 New standby tasks to be created: [newStandbyTasks]
 ```
 
-`addStandbyTasks` then requests <<standbyTaskCreator, StreamThread.AbstractTaskCreator<StandbyTask&gt;>> to link:kafka-streams-internals-AbstractTaskCreator.adoc#createTasks[createTasks] for every new standby task (with the <<consumer, Kafka Consumer>>) and requests <<standby, AssignedStandbyTasks>> to link:kafka-streams-AssignedTasks.adoc#addNewTask[register a new task].
+`addStandbyTasks` then requests <<standbyTaskCreator, StreamThread.AbstractTaskCreator<StandbyTask&gt;>> to link:kafka-streams-internals-AbstractTaskCreator.adoc#createTasks[createTasks] for every new standby task (with the <<consumer, Kafka Consumer>>) and requests <<standby, AssignedStandbyTasks>> to link:kafka-streams-internals-AssignedTasks.adoc#addNewTask[register a new task].
 
 NOTE: `addStandbyTasks` is used exclusively when `TaskManager` is requested to <<createTasks, create tasks for assigned topic partitions>>.
 
@@ -327,9 +327,9 @@ String toString(final String indent)
 
 `toString` gives a text representation with the following:
 
-* "Active tasks:" followed by the link:kafka-streams-AssignedTasks.adoc#toString[text representation] of <<active, AssignedStreamsTasks>>
+* "Active tasks:" followed by the link:kafka-streams-internals-AssignedTasks.adoc#toString[text representation] of <<active, AssignedStreamsTasks>>
 
-* "Standby tasks:" followed by the link:kafka-streams-AssignedTasks.adoc#toString[text representation] of <<standby, AssignedStandbyTasks>>
+* "Standby tasks:" followed by the link:kafka-streams-internals-AssignedTasks.adoc#toString[text representation] of <<standby, AssignedStandbyTasks>>
 
 [source, scala]
 ----

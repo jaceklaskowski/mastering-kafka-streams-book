@@ -44,9 +44,16 @@ void init(ProcessorContext context)
 
 `init`...FIXME
 
-NOTE: `init` is used when...FIXME
+[NOTE]
+====
+`init` is used when:
 
-=== [[process]] `process` Method
+* `GlobalStateUpdateTask` is requested to <<kafka-streams-internals-GlobalStateUpdateTask.adoc#initTopology, initTopology>>
+
+* `StreamTask` is requested to <<kafka-streams-internals-StreamTask.adoc#initTopology, initTopology>>
+====
+
+=== [[process]] Processing Record -- `process` Method
 
 [source, java]
 ----
@@ -55,7 +62,16 @@ void process(final K key, final V value)
 
 `process`...FIXME
 
-NOTE: `process` is used when...FIXME
+[NOTE]
+====
+`process` is used when:
+
+* <<kafka-streams-internals-GlobalProcessorContextImpl.adoc#forward, GlobalProcessorContextImpl>> and <<kafka-streams-ProcessorContextImpl.adoc#forward, ProcessorContextImpl>> are requested to forward
+
+* `GlobalStateUpdateTask` is requested to <<kafka-streams-internals-GlobalStateUpdateTask.adoc#update, update>>
+
+* `StreamTask` is requested to <<kafka-streams-internals-StreamTask.adoc#process, process>>
+====
 
 === [[creating-instance]] Creating ProcessorNode Instance
 
@@ -87,7 +103,7 @@ void close()
 
 `close`...FIXME
 
-NOTE: `close` is used when...FIXME
+NOTE: `close` is used exclusively when `StreamTask` is requested to <<kafka-streams-internals-StreamTask.adoc#closeTopology, closeTopology>> (when `StreamTask` is requested to <<kafka-streams-internals-StreamTask.adoc#suspend, suspend>>).
 
 === [[toString]] Describing Itself (Textual Representation) -- `toString` Method
 
