@@ -86,7 +86,7 @@
 . link:kafka-streams-Punctuator.adoc[Punctuator -- Contract for Scheduled Periodic Actions]
 . link:kafka-streams-Cancellable.adoc[Cancellable]
 
-. link:kafka-streams-ProcessorSupplier.adoc[ProcessorSupplier]
+. link:kafka-streams-ProcessorSupplier.adoc[ProcessorSupplier Contract]
 . link:kafka-streams-StateRestoreCallback.adoc[StateRestoreCallback]
 
 . link:kafka-streams-StateRestoreListener.adoc[StateRestoreListener]
@@ -172,14 +172,20 @@
 . link:kafka-streams-internals-TableProcessorNode.adoc[TableProcessorNode]
 . link:kafka-streams-internals-TableSourceNode.adoc[TableSourceNode]
 
-
 === Processors and ProcessorSuppliers
 
 . link:kafka-streams-internals-KStreamAggProcessorSupplier.adoc[KStreamAggProcessorSupplier Contract]
 
-. link:kafka-streams-internals-KStreamFilter.adoc[KStreamFilter -- ProcessorSupplier of KStreamFilterProcessors for filter and filterNot Streaming Operators]
+. link:kafka-streams-internals-KStreamBranch.adoc[KStreamBranch]
+
+. link:kafka-streams-internals-KStreamFilterProcessor.adoc[KStreamFilterProcessor]
+.. link:kafka-streams-internals-KStreamFilter.adoc[KStreamFilter -- ProcessorSupplier of KStreamFilterProcessors for filter and filterNot Streaming Operators]
 
 . link:kafka-streams-internals-KStreamJoinWindowProcessor.adoc[KStreamJoinWindowProcessor]
+
+. link:kafka-streams-internals-KStreamPeek.adoc[KStreamPeek]
+
+. link:kafka-streams-internals-KStreamPassThrough.adoc[KStreamPassThrough]
 
 . link:kafka-streams-internals-KStreamSessionWindowAggregateProcessor.adoc[KStreamSessionWindowAggregateProcessor]
 .. link:kafka-streams-internals-KStreamSessionWindowAggregate.adoc[KStreamSessionWindowAggregate -- ProcessorSupplier of KStreamSessionWindowAggregateProcessors]
@@ -188,6 +194,7 @@
 .. link:kafka-streams-internals-KStreamTransform.adoc[KStreamTransform -- Supplier of KStreamTransformProcessors]
 
 . link:kafka-streams-internals-KStreamTransformValuesProcessor.adoc[KStreamTransformValuesProcessor]
+.. link:kafka-streams-internals-KStreamTransformValues.adoc[KStreamTransformValues]
 
 . link:kafka-streams-internals-KStreamWindowAggregateProcessor.adoc[KStreamWindowAggregateProcessor]
 .. link:kafka-streams-internals-KStreamWindowAggregate.adoc[KStreamWindowAggregate]
@@ -247,8 +254,6 @@
 .. link:kafka-streams-internals-ProcessorNodeFactory.adoc[ProcessorNodeFactory]
 .. link:kafka-streams-SinkNodeFactory.adoc[SinkNodeFactory]
 .. link:kafka-streams-internals-SourceNodeFactory.adoc[SourceNodeFactory -- NodeFactory With No Predecessors]
-
-. link:kafka-streams-KStreamTransformValues.adoc[KStreamTransformValues]
 
 . link:kafka-streams-ProcessorNodePunctuator.adoc[ProcessorNodePunctuator]
 . link:kafka-streams-NodeMetrics.adoc[NodeMetrics]

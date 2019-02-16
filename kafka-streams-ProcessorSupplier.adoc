@@ -1,18 +1,77 @@
-== [[ProcessorSupplier]] ProcessorSupplier
+== [[ProcessorSupplier]] ProcessorSupplier Contract
 
-`ProcessorSupplier` is the <<contract, contract>> for factory objects that can <<get, create>> (aka _supply_) <<kafka-streams-Processor.adoc#, record stream processors>>.
+`ProcessorSupplier` is the <<contract, abstraction>> of <<implementations, processor factories>> that can <<get, create>> (aka _supply_) one or more <<kafka-streams-Processor.adoc#, record stream processors>>.
 
 [[contract]]
+[[get]]
+`ProcessorSupplier` defines a single `get` method that <<kafka-streams-Processor.adoc#, creates a stream processor>>.
+
 [source, java]
 ----
-package org.apache.kafka.streams.processor;
-
-interface ProcessorSupplier<K, V> {
-  Processor<K, V> get();
-}
+Processor<K, V> get()
 ----
 
-[[get]]
-`ProcessorSupplier` has a single `get` method that link:kafka-streams-Processor.adoc#creating-instance[creates a stream processor].
+`get` is used when `ProcessorNodeFactory` is requested to <<kafka-streams-internals-ProcessorNodeFactory.adoc#build, build a ProcessorNode>> (and also for a description of `ProcessorParameters`).
 
-CAUTION: FIXME Could `get` give the same processor every time it is called?
+[[implementations]]
+.ProcessorSuppliers (Direct Implementations)
+[cols="1,3",options="header",width="100%"]
+|===
+| ProcessorSupplier
+| Description
+
+| <<kafka-streams-internals-KStreamAggProcessorSupplier.adoc#, KStreamAggProcessorSupplier>>
+| [[KStreamAggProcessorSupplier]]
+
+| <<kafka-streams-internals-KStreamBranch.adoc#, KStreamBranch>>
+| [[KStreamBranch]]
+
+| <<kafka-streams-internals-KStreamFilter.adoc#, KStreamFilter>>
+| [[KStreamFilter]]
+
+| KStreamFlatMap
+| [[KStreamFlatMap]]
+
+| KStreamFlatMapValues
+| [[KStreamFlatMapValues]]
+
+| KStreamGlobalKTableJoin
+| [[KStreamGlobalKTableJoin]]
+
+| KStreamJoinWindow
+| [[KStreamJoinWindow]]
+
+| KStreamKStreamJoin
+| [[KStreamKStreamJoin]]
+
+| KStreamKTableJoin
+| [[KStreamKTableJoin]]
+
+| KStreamMap
+| [[KStreamMap]]
+
+| KStreamMapValues
+| [[KStreamMapValues]]
+
+| <<kafka-streams-internals-KStreamPassThrough.adoc#, KStreamPassThrough>>
+| [[KStreamPassThrough]]
+
+| <<kafka-streams-internals-KStreamPeek.adoc#, KStreamPeek>>
+| [[KStreamPeek]]
+
+| KStreamPrint
+| [[KStreamPrint]]
+
+| <<kafka-streams-internals-KStreamTransform.adoc#, KStreamTransform>>
+| [[KStreamTransform]]
+
+| <<kafka-streams-internals-KStreamTransformValues.adoc#, KStreamTransformValues>>
+| [[KStreamTransformValues]]
+
+| KTableProcessorSupplier
+| [[KTableProcessorSupplier]]
+
+| <<kafka-streams-internals-KTableSource.adoc#, KTableSource>>
+| [[KTableSource]]
+
+|===

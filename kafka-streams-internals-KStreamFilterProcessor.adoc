@@ -1,0 +1,3 @@
+== [[KStreamFilterProcessor]] KStreamFilterProcessor
+
+`KStreamFilterProcessor` is...FIXME
