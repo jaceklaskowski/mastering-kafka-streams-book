@@ -43,7 +43,7 @@ When <<kafka-streams-ProcessorSupplier.adoc#get, requested for a Processor>>, `K
 
 === [[KStreamPeekProcessor]] KStreamPeekProcessor
 
-`KStreamPeekProcessor` is a custom <<kafka-streams-Processor.adoc#, record processor>> (indirectly as <<kafka-streams-AbstractProcessor.adoc#, AbstractProcessor>>) that allows for <<process, executing an action with records>> (_peek at them_).
+`KStreamPeekProcessor` is a custom <<kafka-streams-Processor.adoc#, record processor>> (indirectly as <<kafka-streams-AbstractProcessor.adoc#, AbstractProcessor>>) that allows for <<process, executing an action with records>> (_peeks at them_).
 
 [[process]]
 When requested to <<kafka-streams-Processor.adoc#process, process a record>>, `KStreamPeekProcessor` executes the <<action, ForeachAction>> with the record. If the <<forwardDownStream, forwardDownStream>> flag is enabled, `KStreamPeekProcessor` requests the `ProcessorContext` to <<kafka-streams-ProcessorContext.adoc#forward, forward the record downstreams>>.

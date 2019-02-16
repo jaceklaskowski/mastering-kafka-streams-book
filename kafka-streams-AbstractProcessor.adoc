@@ -15,8 +15,8 @@
 | KStreamAggregateProcessor
 | [[KStreamAggregateProcessor]]
 
-| KStreamBranchProcessor
-| [[KStreamBranchProcessor]]
+| <<kafka-streams-internals-KStreamBranch.adoc#KStreamBranchProcessor, KStreamBranchProcessor>>
+| [[KStreamBranchProcessor]] Forwards a record to exactly one of the child processors
 
 | <<kafka-streams-internals-KStreamFilter.adoc#KStreamFilterProcessor, KStreamFilterProcessor>>
 | [[KStreamFilterProcessor]]
@@ -46,7 +46,7 @@
 | [[KStreamPassThroughProcessor]]
 
 | <<kafka-streams-internals-KStreamPeek.adoc#KStreamPeekProcessor, KStreamPeekProcessor>>
-| [[KStreamPeekProcessor]]
+| [[KStreamPeekProcessor]] Executes an action with records (_peeks at them_)
 
 | KStreamPrintProcessor
 | [[KStreamPrintProcessor]]

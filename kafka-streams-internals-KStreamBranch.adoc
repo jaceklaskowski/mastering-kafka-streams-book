@@ -1,3 +1,51 @@
-== [[KStreamBranch]] KStreamBranch
+== [[KStreamBranch]] KStreamBranch -- ProcessorSupplier of KStreamBranchProcessors
 
-`KStreamBranch` is...FIXME
+`KStreamBranch` is a custom <<kafka-streams-ProcessorSupplier.adoc#, ProcessorSupplier>> of <<KStreamBranchProcessor, KStreamBranchProcessors>> for <<kafka-streams-KStream.adoc#branch, KStream.branch>> operator.
+
+[source, scala]
+----
+// Scala API for Kafka Streams
+import org.apache.kafka.streams.scala._
+import ImplicitConversions._
+import Serdes._
+
+val builder = new StreamsBuilder
+def alwaysTrue(k: String, v: String) = true
+builder
+  .stream[String, String]("input")
+  .branch(alwaysTrue)
+val topology = builder.build
+scala> println(topology.describe)
+Topologies:
+   Sub-topology: 0
+    Source: KSTREAM-SOURCE-0000000000 (topics: [input])
+      --> KSTREAM-BRANCH-0000000001
+    Processor: KSTREAM-BRANCH-0000000001 (stores: [])
+      --> KSTREAM-BRANCHCHILD-0000000002
+      <-- KSTREAM-SOURCE-0000000000
+    Processor: KSTREAM-BRANCHCHILD-0000000002 (stores: [])
+      --> none
+      <-- KSTREAM-BRANCH-0000000001
+----
+
+[[creating-instance]]
+`KStreamBranch` takes the following to be created:
+
+* [[predicates]] `Predicate<K, V>[]`
+* [[childNodes]] Child nodes
+
+`KStreamBranch` is <<creating-instance, created>> exclusively when `KStreamImpl` is requested to <<kafka-streams-internals-KStreamImpl.adoc#branch, branch>>.
+
+NOTE: `KStreamImpl` is the default <<kafka-streams-KStream.adoc#, KStream>>.
+
+[[get]]
+When <<kafka-streams-ProcessorSupplier.adoc#get, requested for a Processor>>, `KStreamBranch` gives a new <<KStreamBranchProcessor, KStreamBranchProcessor>>.
+
+=== [[KStreamBranchProcessor]] KStreamBranchProcessor
+
+`KStreamBranchProcessor` is a custom <<kafka-streams-Processor.adoc#, record processor>> (indirectly as <<kafka-streams-AbstractProcessor.adoc#, AbstractProcessor>>) that allows for <<process, forwarding a record to exactly one of the child processors>> (_branching on them_).
+
+[[process]]
+When requested to <<kafka-streams-Processor.adoc#process, process a record>>, `KStreamBranchProcessor` walks over the <<predicates, predicates>> and requests each and every predicate to test the record. When `true`, `process` requests the `ProcessorContext` to <<kafka-streams-ProcessorContext.adoc#forward, forward the record>> to a corresponding <<kafka-streams-To.adoc#child, child processor>>.
+
+NOTE: `process` requests the predicates until positive is found or finishes without forwarding a record.
