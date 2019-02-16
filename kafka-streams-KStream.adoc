@@ -8,7 +8,7 @@ TIP: Use <<kafka-streams-scala.adoc#, Scala API for Kafka Streams>> to make your
 
 [source, scala]
 ----
-// Required imports for Scala API for Kafka Streams
+// Scala API for Kafka Streams
 import org.apache.kafka.streams.scala._
 import ImplicitConversions._
 import Serdes._

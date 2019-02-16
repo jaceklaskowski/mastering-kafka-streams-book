@@ -57,7 +57,7 @@ Processor<K, V> get()
 | [[KStreamPassThrough]]
 
 | <<kafka-streams-internals-KStreamPeek.adoc#, KStreamPeek>>
-| [[KStreamPeek]]
+| [[KStreamPeek]] <<kafka-streams-internals-KStreamPeek.adoc#KStreamPeekProcessor, KStreamPeekProcessors>> for <<kafka-streams-KStream.adoc#foreach, KStream.foreach>> and <<kafka-streams-KStream.adoc#peek, KStream.peek>> operators
 
 | KStreamPrint
 | [[KStreamPrint]]

@@ -45,7 +45,7 @@
 | KStreamPassThroughProcessor
 | [[KStreamPassThroughProcessor]]
 
-| KStreamPeekProcessor
+| <<kafka-streams-internals-KStreamPeek.adoc#KStreamPeekProcessor, KStreamPeekProcessor>>
 | [[KStreamPeekProcessor]]
 
 | KStreamPrintProcessor

@@ -183,7 +183,7 @@
 
 . link:kafka-streams-internals-KStreamJoinWindowProcessor.adoc[KStreamJoinWindowProcessor]
 
-. link:kafka-streams-internals-KStreamPeek.adoc[KStreamPeek]
+. link:kafka-streams-internals-KStreamPeek.adoc[KStreamPeek -- ProcessorSupplier of KStreamPeekProcessors]
 
 . link:kafka-streams-internals-KStreamPassThrough.adoc[KStreamPassThrough]
 

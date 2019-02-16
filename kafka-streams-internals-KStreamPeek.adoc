@@ -1,3 +1,49 @@
-== [[KStreamPeek]] KStreamPeek
+== [[KStreamPeek]] KStreamPeek -- ProcessorSupplier of KStreamPeekProcessors
 
-`KStreamPeek` is...FIXME
+`KStreamPeek` is a custom <<kafka-streams-ProcessorSupplier.adoc#, ProcessorSupplier>> of <<KStreamPeekProcessor, KStreamPeekProcessors>> for <<kafka-streams-KStream.adoc#foreach, KStream.foreach>> and <<kafka-streams-KStream.adoc#peek, KStream.peek>> operators.
+
+[source, scala]
+----
+// Scala API for Kafka Streams
+import org.apache.kafka.streams.scala._
+import ImplicitConversions._
+import Serdes._
+
+val builder = new StreamsBuilder
+builder
+  .stream[String, String]("input")
+  .peek { (k,v) => println(s"($k, $v)") }
+  .foreach { (k,v) => println(s"($k, $v)") }
+val topology = builder.build
+scala> println(topology.describe)
+Topologies:
+   Sub-topology: 0
+    Source: KSTREAM-SOURCE-0000000000 (topics: [input])
+      --> KSTREAM-PEEK-0000000001
+    Processor: KSTREAM-PEEK-0000000001 (stores: [])
+      --> KSTREAM-FOREACH-0000000002
+      <-- KSTREAM-SOURCE-0000000000
+    Processor: KSTREAM-FOREACH-0000000002 (stores: [])
+      --> none
+      <-- KSTREAM-PEEK-0000000001
+----
+
+[[creating-instance]]
+`KStreamPeek` takes the following to be created:
+
+* [[action]] `ForeachAction`
+* [[forwardDownStream]] `forwardDownStream` flag
+
+`KStreamPeek` is <<creating-instance, created>> when `KStreamImpl` is requested to <<kafka-streams-internals-KStreamImpl.adoc#foreach, foreach>> (the <<forwardDownStream, forwardDownStream>> flag is disabled) and <<kafka-streams-internals-KStreamImpl.adoc#peek, peek>> (the <<forwardDownStream, forwardDownStream>> flag is enabled).
+
+NOTE: `KStreamImpl` is the default <<kafka-streams-KStream.adoc#, KStream>>.
+
+[[get]]
+When <<kafka-streams-ProcessorSupplier.adoc#get, requested for a Processor>>, `KStreamPeek` gives a new <<KStreamPeekProcessor, KStreamPeekProcessor>>.
+
+=== [[KStreamPeekProcessor]] KStreamPeekProcessor
+
+`KStreamPeekProcessor` is a custom <<kafka-streams-Processor.adoc#, record processor>> (indirectly as <<kafka-streams-AbstractProcessor.adoc#, AbstractProcessor>>) that allows for <<process, executing an action with records>> (_peek at them_).
+
+[[process]]
+When requested to <<kafka-streams-Processor.adoc#process, process a record>>, `KStreamPeekProcessor` executes the <<action, ForeachAction>> with the record. If the <<forwardDownStream, forwardDownStream>> flag is enabled, `KStreamPeekProcessor` requests the `ProcessorContext` to <<kafka-streams-ProcessorContext.adoc#forward, forward the record downstreams>>.

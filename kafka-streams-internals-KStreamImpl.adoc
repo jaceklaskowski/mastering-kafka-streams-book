@@ -1,6 +1,6 @@
 == [[KStreamImpl]] KStreamImpl
 
-`KStreamImpl` is a concrete <<kafka-streams-AbstractStream.adoc#, stream>> and the one and only <<kafka-streams-KStream.adoc#, KStream>>.
+`KStreamImpl` is a concrete <<kafka-streams-AbstractStream.adoc#, stream>> and the default <<kafka-streams-KStream.adoc#, KStream>>.
 
 `KStreamImpl` is <<creating-instance, created>> every time a transformation is executed and when...FIXME
 
