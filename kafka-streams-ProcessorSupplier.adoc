@@ -1,10 +1,10 @@
 == [[ProcessorSupplier]] ProcessorSupplier Contract
 
-`ProcessorSupplier` is the <<contract, abstraction>> of <<implementations, processor factories>> that can <<get, create>> (aka _supply_) one or more <<kafka-streams-Processor.adoc#, record stream processors>>.
+`ProcessorSupplier` is the <<contract, abstraction>> of <<implementations, processor factories>> that can <<get, create>> (aka _supply_) a <<kafka-streams-Processor.adoc#, record processor>>.
 
 [[contract]]
 [[get]]
-`ProcessorSupplier` defines a single `get` method that <<kafka-streams-Processor.adoc#, creates a stream processor>>.
+`ProcessorSupplier` defines a single `get` method that can <<kafka-streams-Processor.adoc#, supply a record processor>>.
 
 [source, java]
 ----

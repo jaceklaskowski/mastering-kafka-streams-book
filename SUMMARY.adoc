@@ -234,7 +234,7 @@
 
 . link:kafka-streams-internals-RocksDbWindowBytesStoreSupplier.adoc[RocksDbWindowBytesStoreSupplier]
 
-=== Logical Plan of Execution
+=== Logical Plan of Stream Processing Execution
 
 . link:kafka-streams-internals-ProcessorNode.adoc[ProcessorNode]
 .. link:kafka-streams-internals-SourceNode.adoc[SourceNode]
@@ -250,17 +250,17 @@
 .. link:kafka-streams-internals-QuickUnion.adoc[QuickUnion]
 .. link:kafka-streams-internals-TopicsInfo.adoc[TopicsInfo]
 
-. link:kafka-streams-internals-InternalTopologyBuilder-NodeFactory.adoc[NodeFactory]
+. link:kafka-streams-internals-InternalTopologyBuilder-NodeFactory.adoc[NodeFactory Contract]
 .. link:kafka-streams-internals-InternalTopologyBuilder-ProcessorNodeFactory.adoc[ProcessorNodeFactory]
 .. link:kafka-streams-internals-InternalTopologyBuilder-SinkNodeFactory.adoc[SinkNodeFactory]
 .. link:kafka-streams-internals-InternalTopologyBuilder-SourceNodeFactory.adoc[SourceNodeFactory -- NodeFactory With No Predecessors]
+
+. link:kafka-streams-AbstractNode.adoc[AbstractNode]
 
 . link:kafka-streams-ProcessorNodePunctuator.adoc[ProcessorNodePunctuator]
 . link:kafka-streams-NodeMetrics.adoc[NodeMetrics]
 
 . link:kafka-streams-GlobalStore.adoc[GlobalStore]
-
-. link:kafka-streams-AbstractNode.adoc[AbstractNode]
 
 . link:kafka-streams-InternalTopicConfig.adoc[InternalTopicConfig]
 .. link:kafka-streams-WindowedChangelogTopicConfig.adoc[WindowedChangelogTopicConfig]

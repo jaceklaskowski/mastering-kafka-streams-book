@@ -947,7 +947,7 @@ void addInternalTopic(final String topicName)
 * `KGroupedTableImpl` is requested to <<kafka-streams-internals-KGroupedTableImpl.adoc#buildAggregate, buildAggregate>> (for <<kafka-streams-internals-KGroupedTableImpl.adoc#reduce, reduce>>, <<kafka-streams-internals-KGroupedTableImpl.adoc#count, count>> and <<kafka-streams-internals-KGroupedTableImpl.adoc#aggregate, aggregate>> operators)
 ====
 
-=== [[build]] Building Processor Task Topology -- `build` Factory Method
+=== [[build]] Building Topology of Processor Nodes -- `build` Method
 
 [source, java]
 ----
