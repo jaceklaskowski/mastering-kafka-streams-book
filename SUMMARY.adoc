@@ -255,7 +255,7 @@
 .. link:kafka-streams-internals-InternalTopologyBuilder-SinkNodeFactory.adoc[SinkNodeFactory]
 .. link:kafka-streams-internals-InternalTopologyBuilder-SourceNodeFactory.adoc[SourceNodeFactory -- NodeFactory With No Predecessors]
 
-. link:kafka-streams-AbstractNode.adoc[AbstractNode]
+. link:kafka-streams-internals-InternalTopologyBuilder-AbstractNode.adoc[AbstractNode]
 
 . link:kafka-streams-ProcessorNodePunctuator.adoc[ProcessorNodePunctuator]
 . link:kafka-streams-NodeMetrics.adoc[NodeMetrics]

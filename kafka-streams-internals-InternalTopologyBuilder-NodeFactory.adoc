@@ -36,7 +36,7 @@ a| [[describe]]
 AbstractNode describe()
 ----
 
-Describes a <<kafka-streams-internals-ProcessorNode.adoc#, processor node>> (using <<kafka-streams-AbstractNode.adoc#, AbstractNode>>)
+Describes a <<kafka-streams-internals-ProcessorNode.adoc#, processor node>> (using <<kafka-streams-internals-InternalTopologyBuilder-AbstractNode.adoc#, AbstractNode>>)
 
 Used exclusively when `InternalTopologyBuilder` is requested to <<kafka-streams-internals-InternalTopologyBuilder.adoc#describeSubtopology, describeSubtopology>> (when requested to <<kafka-streams-internals-InternalTopologyBuilder.adoc#describe, describe a topology>>).
 
