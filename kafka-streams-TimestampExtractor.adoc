@@ -65,4 +65,4 @@ props.setProperty(StreamsConfig.DEFAULT_TIMESTAMP_EXTRACTOR_CLASS_CONFIG, ...)
 
 NOTE: `TimestampExtractor` is an `Evolving` contract which means that compatibility may be broken at a minor release.
 
-`TimestampExtractor` is used to create a <<kafka-streams-internals-SourceNodeFactory.adoc#, SourceNodeFactory>>, <<kafka-streams-RecordQueue.adoc#, RecordQueue>>, <<kafka-streams-internals-SourceNodeFactory.adoc#, SourceNodeFactory>>.
+`TimestampExtractor` is used to create a <<kafka-streams-internals-InternalTopologyBuilder-SourceNodeFactory.adoc#, SourceNodeFactory>>, <<kafka-streams-RecordQueue.adoc#, RecordQueue>>, <<kafka-streams-internals-InternalTopologyBuilder-SourceNodeFactory.adoc#, SourceNodeFactory>>.

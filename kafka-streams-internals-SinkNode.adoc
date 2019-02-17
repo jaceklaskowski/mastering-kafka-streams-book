@@ -2,7 +2,7 @@
 
 `SinkNode` is a link:kafka-streams-internals-ProcessorNode.adoc[ProcessorNode] with no <<addChild, child processor nodes>>.
 
-`SinkNode` is <<creating-instance, created>> exclusively when `SinkNodeFactory` is requested to link:kafka-streams-SinkNodeFactory.adoc#build[build a processor node] (when `InternalTopologyBuilder` is requested to link:kafka-streams-internals-InternalTopologyBuilder.adoc#build[build a processor task topology] for specified node groups).
+`SinkNode` is <<creating-instance, created>> exclusively when `SinkNodeFactory` is requested to link:kafka-streams-internals-InternalTopologyBuilder-SinkNodeFactory.adoc#build[build a processor node] (when `InternalTopologyBuilder` is requested to link:kafka-streams-internals-InternalTopologyBuilder.adoc#build[build a processor task topology] for specified node groups).
 
 === [[process]] `process` Method
 

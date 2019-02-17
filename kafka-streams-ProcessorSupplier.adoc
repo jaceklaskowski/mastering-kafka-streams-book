@@ -11,7 +11,7 @@
 Processor<K, V> get()
 ----
 
-`get` is used when `ProcessorNodeFactory` is requested to <<kafka-streams-internals-ProcessorNodeFactory.adoc#build, build a ProcessorNode>> (and also for a description of `ProcessorParameters`).
+`get` is used when `ProcessorNodeFactory` is requested to <<kafka-streams-internals-InternalTopologyBuilder-ProcessorNodeFactory.adoc#build, build a ProcessorNode>> (and also for a description of `ProcessorParameters`).
 
 [[implementations]]
 .ProcessorSuppliers (Direct Implementations)

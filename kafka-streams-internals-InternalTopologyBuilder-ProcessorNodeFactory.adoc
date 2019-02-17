@@ -1,6 +1,6 @@
 == [[ProcessorNodeFactory]] ProcessorNodeFactory
 
-`ProcessorNodeFactory` is a concrete link:kafka-streams-NodeFactory.adoc[NodeFactory] that can <<build, build a processor node>> for a <<supplier, ProcessorSupplier>> and optional <<stateStoreNames, state stores>>.
+`ProcessorNodeFactory` is a concrete link:kafka-streams-internals-InternalTopologyBuilder-NodeFactory.adoc[NodeFactory] that can <<build, build a processor node>> for a <<supplier, ProcessorSupplier>> and optional <<stateStoreNames, state stores>>.
 
 NOTE: `ProcessorNodeFactory` is a private class.
 
@@ -19,7 +19,7 @@ NOTE: `ProcessorNodeFactory` is a private class.
 ProcessorNode build()
 ----
 
-NOTE: `build` is part of link:kafka-streams-NodeFactory.adoc#build[NodeFactory Contract] to...FIXME.
+NOTE: `build` is part of link:kafka-streams-internals-InternalTopologyBuilder-NodeFactory.adoc#build[NodeFactory Contract] to...FIXME.
 
 `build` requests <<supplier, ProcessorSupplier>> to link:kafka-streams-ProcessorSupplier.adoc#get[get a Processor] and then creates a link:kafka-streams-internals-ProcessorNode.adoc#creating-instance[ProcessorNode] with the <<name, name>>, the processor and the <<stateStoreNames, stateStoreNames>>.
 

@@ -250,10 +250,10 @@
 .. link:kafka-streams-internals-QuickUnion.adoc[QuickUnion]
 .. link:kafka-streams-internals-TopicsInfo.adoc[TopicsInfo]
 
-. link:kafka-streams-NodeFactory.adoc[NodeFactory]
-.. link:kafka-streams-internals-ProcessorNodeFactory.adoc[ProcessorNodeFactory]
-.. link:kafka-streams-SinkNodeFactory.adoc[SinkNodeFactory]
-.. link:kafka-streams-internals-SourceNodeFactory.adoc[SourceNodeFactory -- NodeFactory With No Predecessors]
+. link:kafka-streams-internals-InternalTopologyBuilder-NodeFactory.adoc[NodeFactory]
+.. link:kafka-streams-internals-InternalTopologyBuilder-ProcessorNodeFactory.adoc[ProcessorNodeFactory]
+.. link:kafka-streams-internals-InternalTopologyBuilder-SinkNodeFactory.adoc[SinkNodeFactory]
+.. link:kafka-streams-internals-InternalTopologyBuilder-SourceNodeFactory.adoc[SourceNodeFactory -- NodeFactory With No Predecessors]
 
 . link:kafka-streams-ProcessorNodePunctuator.adoc[ProcessorNodePunctuator]
 . link:kafka-streams-NodeMetrics.adoc[NodeMetrics]
