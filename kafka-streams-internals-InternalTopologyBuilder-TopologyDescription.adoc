@@ -1,0 +1,5 @@
+== [[InternalTopologyBuilder.TopologyDescription]] InternalTopologyBuilder.TopologyDescription
+
+`InternalTopologyBuilder.TopologyDescription` is...FIXME
+
+NOTE: Don't get confused with <<kafka-streams-TopologyDescription.adoc#, TopologyDescription>> that is the contract of `InternalTopologyBuilder.TopologyDescription`.

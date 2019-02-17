@@ -13,6 +13,7 @@
 
 . link:kafka-streams-KafkaStreams.adoc[KafkaStreams -- Streams Client]
 . link:kafka-streams-Topology.adoc[Topology -- Logical Processor Node Topology]
+. link:kafka-streams-TopologyDescription.adoc[TopologyDescription -- Meta Representation of Topology]
 . link:kafka-streams-StreamsConfig.adoc[StreamsConfig -- Configuration Properties for Kafka Clients]
 . link:kafka-streams-properties.adoc[Configuration Properties]
 . link:kafka-logging.adoc[Logging]
@@ -240,8 +241,6 @@
 .. link:kafka-streams-internals-SourceNode.adoc[SourceNode]
 .. link:kafka-streams-internals-SinkNode.adoc[SinkNode]
 
-. link:kafka-streams-TopologyDescription.adoc[TopologyDescription]
-
 . link:kafka-streams-internals-InternalStreamsBuilder.adoc[InternalStreamsBuilder]
 
 . link:kafka-streams-internals-InternalTopologyBuilder.adoc[InternalTopologyBuilder]
@@ -254,6 +253,8 @@
 .. link:kafka-streams-internals-InternalTopologyBuilder-ProcessorNodeFactory.adoc[ProcessorNodeFactory]
 .. link:kafka-streams-internals-InternalTopologyBuilder-SinkNodeFactory.adoc[SinkNodeFactory]
 .. link:kafka-streams-internals-InternalTopologyBuilder-SourceNodeFactory.adoc[SourceNodeFactory -- NodeFactory With No Predecessors]
+
+. link:kafka-streams-internals-InternalTopologyBuilder-TopologyDescription.adoc[InternalTopologyBuilder.TopologyDescription]
 
 . link:kafka-streams-internals-InternalTopologyBuilder-AbstractNode.adoc[AbstractNode]
 

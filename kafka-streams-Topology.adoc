@@ -292,7 +292,7 @@ a| [[describe]]
 TopologyDescription describe()
 ----
 
-Describes the topology.
+<<kafka-streams-TopologyDescription.adoc#, Meta representation>> of the topology
 
 |===
 

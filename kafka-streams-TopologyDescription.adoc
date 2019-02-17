@@ -1,3 +1,64 @@
-== [[TopologyDescription]] TopologyDescription
+== [[TopologyDescription]] TopologyDescription -- Meta Representation of Topology
 
-`TopologyDescription` is...FIXME
+`TopologyDescription` is the <<contract, abstraction>> of <<implementations, meta representations>> that Kafka Streams developers use to know (_describe_) the <<globalStores, global stores>> and <<subtopologies, subtopologies>> of a <<kafka-streams-Topology.adoc#, topology>>.
+
+[[implementations]]
+NOTE: <<kafka-streams-internals-InternalTopologyBuilder-TopologyDescription.adoc#, InternalTopologyBuilder.TopologyDescription>> is the only available implementation of the <<contract, TopologyDescription Contract>> in Kafka Streams.
+
+`TopologyDescription` is available using <<kafka-streams-Topology.adoc#describe, Topology.describe>> method.
+
+[source, scala]
+----
+// Scala API for Kafka Streams
+import org.apache.kafka.streams.scala._
+import ImplicitConversions._
+import Serdes._
+
+val builder = new StreamsBuilder
+builder
+  .stream[String, String]("records")
+  .groupByKey
+  .count
+  .toStream
+  .to("counts")
+val topology = builder.build
+
+val meta = topology.describe
+scala> :type meta
+org.apache.kafka.streams.TopologyDescription
+
+scala> println(meta.globalStores)
+[]
+
+scala> println(meta.subtopologies.size)
+1
+----
+
+[[contract]]
+.TopologyDescription Contract
+[cols="1m,3",options="header",width="100%"]
+|===
+| Method
+| Description
+
+| globalStores
+a| [[globalStores]]
+
+[source, java]
+----
+Set<GlobalStore> globalStores()
+----
+
+The global stores of a <<kafka-streams-Topology.adoc#, topology>>
+
+| subtopologies
+a| [[subtopologies]]
+
+[source, java]
+----
+Set<Subtopology> subtopologies()
+----
+
+The subtopologies of a <<kafka-streams-Topology.adoc#, topology>>
+
+|===
