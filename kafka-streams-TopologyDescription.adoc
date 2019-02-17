@@ -1,6 +1,6 @@
 == [[TopologyDescription]] TopologyDescription -- Meta Representation of Topology
 
-`TopologyDescription` is the <<contract, abstraction>> of <<implementations, meta representations>> that Kafka Streams developers use to know (_describe_) the <<globalStores, global stores>> and <<subtopologies, subtopologies>> of a <<kafka-streams-Topology.adoc#, topology>>.
+`TopologyDescription` is the <<contract, abstraction>> of <<implementations, meta representations>> (_topology descriptions_) that Kafka Streams developers use to know (_describe_) the <<globalStores, global stores>> and <<subtopologies, subtopologies>> of a <<kafka-streams-Topology.adoc#, topology>>.
 
 [[implementations]]
 NOTE: <<kafka-streams-internals-InternalTopologyBuilder-TopologyDescription.adoc#, InternalTopologyBuilder.TopologyDescription>> is the only available implementation of the <<contract, TopologyDescription Contract>> in Kafka Streams.

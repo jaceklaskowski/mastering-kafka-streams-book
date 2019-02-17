@@ -95,7 +95,7 @@
 .. link:kafka-streams-AbstractNotifyingRestoreCallback.adoc[AbstractNotifyingRestoreCallback]
 
 . link:kafka-streams-StreamPartitioner.adoc[StreamPartitioner]
-. link:kafka-streams-TopicNameExtractor.adoc[TopicNameExtractor]
+. link:kafka-streams-TopicNameExtractor.adoc[TopicNameExtractor -- Dynamic Routing of Records]
 
 . link:kafka-streams-TimestampExtractor.adoc[TimestampExtractor Contract]
 .. link:kafka-streams-WallclockTimestampExtractor.adoc[WallclockTimestampExtractor]
@@ -296,6 +296,8 @@
 
 . link:kafka-streams-internals-GroupedStreamAggregateBuilder.adoc[GroupedStreamAggregateBuilder]
 . link:kafka-streams-internals-KStreamImpl-KStreamImplJoin.adoc[KStreamImplJoin]
+
+. link:kafka-streams-internals-StaticTopicNameExtractor.adoc[StaticTopicNameExtractor]
 
 === Physical Plan of Execution
 

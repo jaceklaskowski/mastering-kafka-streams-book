@@ -2,12 +2,12 @@
 
 `NodeFactory` is the <<contract, abstraction>> of <<implementations, processor node factories>> that can <<build, build>> and <<describe, describe>> a processor node.
 
-`NodeFactory` is a Java private static abstract class of <<kafka-streams-internals-InternalTopologyBuilder.adoc#, InternalTopologyBuilder>> and cannot be <<creating-instance, created>> directly. It is created indirectly for the <<implementations, concrete processor node factories>> and only for and by `InternalTopologyBuilder`.
-
 `NodeFactory` takes the following to be created:
 
 * [[name]] Name of a processor to be built
 * [[predecessors]] Node predecessors (by their names) that a processor will be a child of
+
+NOTE: `NodeFactory` is a Java private static abstract class of <<kafka-streams-internals-InternalTopologyBuilder.adoc#, InternalTopologyBuilder>> and cannot be <<creating-instance, created>> directly. It is created indirectly for the <<implementations, concrete processor node factories>> and only for and by `InternalTopologyBuilder`.
 
 [[contract]]
 .NodeFactory Contract
