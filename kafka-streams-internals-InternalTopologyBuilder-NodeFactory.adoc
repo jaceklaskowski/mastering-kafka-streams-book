@@ -26,7 +26,7 @@ ProcessorNode build()
 
 Builds a <<kafka-streams-internals-ProcessorNode.adoc#, processor node>>
 
-Used exclusively when `InternalTopologyBuilder` is requested to <<kafka-streams-internals-InternalTopologyBuilder.adoc#build, build a topology of processor nodes>> (aka *processor topology*) for specified node groups.
+Used exclusively when `InternalTopologyBuilder` is requested to <<kafka-streams-internals-InternalTopologyBuilder.adoc#build, build a topology of processor nodes>> (aka _processor topology_)
 
 | describe
 a| [[describe]]
@@ -38,7 +38,7 @@ AbstractNode describe()
 
 Describes a <<kafka-streams-internals-ProcessorNode.adoc#, processor node>> (using <<kafka-streams-internals-InternalTopologyBuilder-AbstractNode.adoc#, AbstractNode>>)
 
-Used exclusively when `InternalTopologyBuilder` is requested to <<kafka-streams-internals-InternalTopologyBuilder.adoc#describeSubtopology, describeSubtopology>> (when requested to <<kafka-streams-internals-InternalTopologyBuilder.adoc#describe, describe a topology>>).
+Used exclusively when `InternalTopologyBuilder` is requested to <<kafka-streams-internals-InternalTopologyBuilder.adoc#describeSubtopology, describeSubtopology>> (when requested to <<kafka-streams-internals-InternalTopologyBuilder.adoc#describe, describe a topology>>)
 
 |===
 
@@ -53,7 +53,7 @@ Used exclusively when `InternalTopologyBuilder` is requested to <<kafka-streams-
 | [[ProcessorNodeFactory]]
 
 | <<kafka-streams-internals-InternalTopologyBuilder-SinkNodeFactory.adoc#, SinkNodeFactory>>
-| [[SinkNodeFactory]]
+| [[SinkNodeFactory]] Factory of <<kafka-streams-internals-SinkNode.adoc#, SinkNodes>>
 
 | <<kafka-streams-internals-InternalTopologyBuilder-SourceNodeFactory.adoc#, SourceNodeFactory>>
 | [[SourceNodeFactory]]

@@ -1,17 +1,19 @@
-== [[SinkNode]] SinkNode
+== [[SinkNode]] SinkNode -- ProcessorNode with no Child Nodes
 
-`SinkNode` is a link:kafka-streams-internals-ProcessorNode.adoc[ProcessorNode] with no <<addChild, child processor nodes>>.
+`SinkNode` is a custom <<kafka-streams-internals-ProcessorNode.adoc#, ProcessorNode>> with no <<addChild, child processor nodes>>.
 
-`SinkNode` is <<creating-instance, created>> exclusively when `SinkNodeFactory` is requested to link:kafka-streams-internals-InternalTopologyBuilder-SinkNodeFactory.adoc#build[build a processor node] (when `InternalTopologyBuilder` is requested to link:kafka-streams-internals-InternalTopologyBuilder.adoc#build[build a processor task topology] for specified node groups).
+`SinkNode` is <<creating-instance, created>> exclusively when `SinkNodeFactory` is requested to <<kafka-streams-internals-InternalTopologyBuilder-SinkNodeFactory.adoc#build, build a processor node>> (when `InternalTopologyBuilder` is requested to <<kafka-streams-internals-InternalTopologyBuilder.adoc#build, build a topology of processor nodes>>).
 
-=== [[process]] `process` Method
+`SinkNode` uses a <<topicExtractor, TopicNameExtractor>> for *dynamic routing* when <<process, processing a record>>.
+
+=== [[process]] Processing Record -- `process` Method
 
 [source, java]
 ----
 void process(final K key, final V value)
 ----
 
-NOTE: `process` is part of link:kafka-streams-internals-ProcessorNode.adoc#process[ProcessorNode Contract] to...FIXME.
+NOTE: `process` is part of <<kafka-streams-internals-ProcessorNode.adoc#process, ProcessorNode Contract>> to process a record.
 
 `process`...FIXME
 
@@ -19,11 +21,11 @@ NOTE: `process` is part of link:kafka-streams-internals-ProcessorNode.adoc#proce
 
 `SinkNode` takes the following when created:
 
-* [[name]] Name of the sink (topic)
-* [[topic]] Name of the topic
-* [[keySerializer]] Key `Serializer`
-* [[valSerializer]] Value `Serializer`
-* [[partitioner]] link:kafka-streams-StreamPartitioner.adoc[StreamPartitioner]
+* [[name]] Name of the sink
+* [[topicExtractor]] <<kafka-streams-TopicNameExtractor.adoc#, TopicNameExtractor>>
+* [[keySerializer]] Kafka `Serializer` for keys
+* [[valSerializer]] Kafka `Serializer` for values
+* [[partitioner]] <<kafka-streams-StreamPartitioner.adoc#, StreamPartitioner>>
 
 === [[addChild]] Adding Child Processor Node -- `addChild` Method
 
@@ -32,7 +34,7 @@ NOTE: `process` is part of link:kafka-streams-internals-ProcessorNode.adoc#proce
 void addChild(final ProcessorNode<?, ?> child)
 ----
 
-NOTE: `addChild` is part of link:kafka-streams-internals-ProcessorNode.adoc#addChild[ProcessorNode Contract] to...FIXME.
+NOTE: `addChild` is part of link:kafka-streams-internals-ProcessorNode.adoc#addChild[ProcessorNode Contract] to add a child processor node.
 
 `addChild` simply throws an `UnsupportedOperationException` with the following message:
 

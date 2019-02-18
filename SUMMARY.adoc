@@ -95,7 +95,7 @@
 .. link:kafka-streams-AbstractNotifyingRestoreCallback.adoc[AbstractNotifyingRestoreCallback]
 
 . link:kafka-streams-StreamPartitioner.adoc[StreamPartitioner]
-. link:kafka-streams-TopicNameExtractor.adoc[TopicNameExtractor -- Dynamic Routing of Records]
+. link:kafka-streams-TopicNameExtractor.adoc[TopicNameExtractor -- Dynamic Routing of Output Records]
 
 . link:kafka-streams-TimestampExtractor.adoc[TimestampExtractor Contract]
 .. link:kafka-streams-WallclockTimestampExtractor.adoc[WallclockTimestampExtractor]
@@ -239,7 +239,7 @@
 
 . link:kafka-streams-internals-ProcessorNode.adoc[ProcessorNode]
 .. link:kafka-streams-internals-SourceNode.adoc[SourceNode]
-.. link:kafka-streams-internals-SinkNode.adoc[SinkNode]
+.. link:kafka-streams-internals-SinkNode.adoc[SinkNode -- ProcessorNode with no Child Nodes]
 
 . link:kafka-streams-internals-InternalStreamsBuilder.adoc[InternalStreamsBuilder]
 

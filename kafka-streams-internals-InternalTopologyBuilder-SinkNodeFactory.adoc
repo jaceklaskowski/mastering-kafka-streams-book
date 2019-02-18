@@ -1,17 +1,17 @@
 == [[SinkNodeFactory]] SinkNodeFactory
 
-`SinkNodeFactory` is a link:kafka-streams-internals-InternalTopologyBuilder-NodeFactory.adoc[NodeFactory] that...FIXME
+`SinkNodeFactory` is a custom <<kafka-streams-internals-InternalTopologyBuilder-NodeFactory.adoc#, NodeFactory>> that can <<build, build>> and <<describe, describe>> a <<kafka-streams-internals-SinkNode.adoc#, SinkNode>>.
 
-`SinkNodeFactory` is <<creating-instance, created>> exclusively when `InternalTopologyBuilder` is requested to link:kafka-streams-internals-InternalTopologyBuilder.adoc#addSink[register a sink].
+`SinkNodeFactory` is <<creating-instance, created>> exclusively when `InternalTopologyBuilder` is requested to <<kafka-streams-internals-InternalTopologyBuilder.adoc#addSink, register a sink>>.
 
-=== [[build]] Building ProcessorNode -- `build` Method
+=== [[build]] Building SinkNode -- `build` Method
 
 [source, java]
 ----
 ProcessorNode build()
 ----
 
-NOTE: `build` is part of link:kafka-streams-internals-InternalTopologyBuilder-NodeFactory.adoc#build[NodeFactory Contract] to build a processor node.
+NOTE: `build` is part of link:kafka-streams-internals-InternalTopologyBuilder-NodeFactory.adoc#build[NodeFactory Contract] to build a <<kafka-streams-internals-ProcessorNode.adoc#, processor node>>.
 
 `build` simply creates a link:kafka-streams-internals-SinkNode.adoc#creating-instance[SinkNode] (with the link:kafka-streams-internals-InternalTopologyBuilder-NodeFactory.adoc#name[name], the <<keySerializer, key serializer>>, the <<valSerializer, value serializer>> and the <<partitioner, StreamPartitioner>>).
 
@@ -28,13 +28,13 @@ NOTE: The link:kafka-streams-internals-SinkNode.adoc#name[name of the topic] of 
 * [[valSerializer]] Value `Serializer`
 * [[partitioner]] link:kafka-streams-StreamPartitioner.adoc[StreamPartitioner]
 
-=== [[describe]] `describe` Method
+=== [[describe]] Describing SinkNode -- `describe` Method
 
 [source, java]
 ----
 Sink describe()
 ----
 
-NOTE: `describe` is part of link:kafka-streams-internals-InternalTopologyBuilder-NodeFactory.adoc#describe[NodeFactory Contract] to...FIXME.
+NOTE: `describe` is part of link:kafka-streams-internals-InternalTopologyBuilder-NodeFactory.adoc#describe[NodeFactory Contract] to describe a <<kafka-streams-internals-ProcessorNode.adoc#, processor node>>.
 
 `describe`...FIXME

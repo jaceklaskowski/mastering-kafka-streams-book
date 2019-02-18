@@ -281,7 +281,9 @@ void to(
   final Produced<K, V> produced)
 ----
 
-The specified `topic` should be manually created before the Kafka Streams application is started.
+Produces records to a given topic or using *dynamic routing* based on <<kafka-streams-TopicNameExtractor.adoc#, TopicNameExtractor>>
+
+NOTE: Topics should be created manually before the Kafka Streams application is started.
 
 | transform
 a| [[transform]]

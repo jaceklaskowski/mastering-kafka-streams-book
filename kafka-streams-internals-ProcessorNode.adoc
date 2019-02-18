@@ -83,7 +83,7 @@ void process(final K key, final V value)
 
 `ProcessorNode` initializes the <<internal-registries, internal registries and counters>>.
 
-=== [[addChild]] `addChild` Method
+=== [[addChild]] Adding Child Processor Node -- `addChild` Method
 
 [source, java]
 ----
@@ -92,7 +92,7 @@ void addChild(ProcessorNode<?, ?> child)
 
 `addChild`...FIXME
 
-NOTE: `addChild` is used when...FIXME
+NOTE: `addChild` is used when `InternalTopologyBuilder` is requested to build a <<kafka-streams-internals-InternalTopologyBuilder.adoc#buildSinkNode, SinkNode>> and <<kafka-streams-internals-InternalTopologyBuilder.adoc#buildProcessorNode, ProcessorNode>> (when requested to <<kafka-streams-internals-InternalTopologyBuilder.adoc#build, build a topology of processor nodes>>).
 
 === [[close]] `close` Method
 

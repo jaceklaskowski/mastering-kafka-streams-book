@@ -1,6 +1,8 @@
-== [[TopicNameExtractor]] TopicNameExtractor -- Dynamic Routing of Records
+== [[TopicNameExtractor]] TopicNameExtractor -- Dynamic Routing of Output Records
 
 `TopicNameExtractor` is the <<contract, abstraction>> of <<implementations, topic name extractors>> that Kafka Streams developers use for *dynamic routing of records* by <<extract, extracting the name of the topic to publish a record to>>.
+
+NOTE: `TopicNameExtractor` can be specified using the high-level <<kafka-streams-KStream.adoc#to, KStream.to>> or the low-level <<kafka-streams-Topology.adoc#addSink, Topology.addSink>> operators.
 
 [[contract]]
 .TopicNameExtractor Contract

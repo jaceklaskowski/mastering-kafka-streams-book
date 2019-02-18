@@ -1,11 +1,11 @@
 == [[InternalTopologyBuilder]] InternalTopologyBuilder
 
-`InternalTopologyBuilder` is used to <<build, build a processor task topology>> (for <<kafka-streams-internals-StandbyTaskCreator.adoc#, StreamThread.StandbyTaskCreators>> and <<kafka-streams-internals-TaskCreator.adoc#, StreamThread.TaskCreator>>).
+`InternalTopologyBuilder` is used to <<build, build a topology of processor nodes>> (for <<kafka-streams-internals-StandbyTaskCreator.adoc#, StreamThread.StandbyTaskCreators>> and <<kafka-streams-internals-TaskCreator.adoc#, StreamThread.TaskCreator>>).
 
 .InternalTopologyBuilder and ProcessorTopology
 image::images/kafka-streams-InternalTopologyBuilder-build.png[align="center"]
 
-`InternalTopologyBuilder` is <<creating-instance, created>> exclusively for a <<kafka-streams-Topology.adoc#internalTopologyBuilder, Topology>>.
+`InternalTopologyBuilder` is <<creating-instance, created>> exclusively for a <<kafka-streams-Topology.adoc#internalTopologyBuilder, Topology>> (and acts as a developer-friendly frontend).
 
 .InternalTopologyBuilder and Topology
 image::images/kafka-streams-InternalTopologyBuilder-Topology.png[align="center"]
@@ -19,7 +19,9 @@ import org.apache.kafka.streams.processor.internals.InternalTopologyBuilder
 val builder = new InternalTopologyBuilder
 ----
 
-`InternalTopologyBuilder` can have one or more sources that are added (registered) using <<addSource, InternalTopologyBuilder.addSource>> method (that simply registers a <<kafka-streams-internals-InternalTopologyBuilder-SourceNodeFactory.adoc#, SourceNodeFactory>> by name).
+`InternalTopologyBuilder` uses <<nodeFactories, node factories>> to <<build, build a topology>>. `InternalTopologyBuilder` supports <<kafka-streams-internals-InternalTopologyBuilder-ProcessorNodeFactory.adoc#, ProcessorNodeFactory>>, <<kafka-streams-internals-InternalTopologyBuilder-SourceNodeFactory.adoc#, SourceNodeFactory>>, and <<kafka-streams-internals-InternalTopologyBuilder-SinkNodeFactory.adoc#, SinkNodeFactory>> factory types only (and throws a `TopologyException` for unknown factories).
+
+`InternalTopologyBuilder` can have one or more sources that are added (_registered_) using <<addSource, addSource>> method (which simply registers a <<kafka-streams-internals-InternalTopologyBuilder-SourceNodeFactory.adoc#, SourceNodeFactory>> under a name).
 
 [source, scala]
 ----
@@ -44,7 +46,7 @@ builder.addSource(
   topics: _*)
 ----
 
-`InternalTopologyBuilder` can have zero or more processors that are added (registered) using <<addProcessor, InternalTopologyBuilder.addProcessor>> method (that simply registers a <<kafka-streams-internals-InternalTopologyBuilder-ProcessorNodeFactory.adoc#, ProcessorNodeFactory>> by name with a <<kafka-streams-ProcessorSupplier.adoc#, ProcessorSupplier>> and one or more predecessors). Since processors require that the predecessors are already added to the topology, a topology has to have at least one <<addSource, source processor added>>.
+`InternalTopologyBuilder` can have zero or more processor nodes that are added (registered) using <<addProcessor, addProcessor>> method (which simply registers a <<kafka-streams-internals-InternalTopologyBuilder-ProcessorNodeFactory.adoc#, ProcessorNodeFactory>> under a name with a <<kafka-streams-ProcessorSupplier.adoc#, ProcessorSupplier>> and one or more predecessors). Since processors require that the predecessors are already added to the topology, a topology has to have at least one <<addSource, source processor already added>>.
 
 [source, scala]
 ----
@@ -72,8 +74,18 @@ val predecessorNames = Seq(sourceNodeName)
 builder.addProcessor(processorNodeName, supplier, predecessorNames: _*)
 ----
 
+`InternalTopologyBuilder` can have zero or more sink nodes that are added (registered) using <<addSink, addSink>> method (which simply registers a <<kafka-streams-internals-InternalTopologyBuilder-SinkNodeFactory.adoc#, SinkNodeFactory>> under a name).
+
+[source, scala]
+----
+scala> :type builder
+org.apache.kafka.streams.processor.internals.InternalTopologyBuilder
+
+// FIXME: Finish the demo
+----
+
 [[applicationId]]
-`InternalTopologyBuilder` requires an *application ID*. The application ID is used as a namespace for the internal topics (so they do not clash with other Kafka Streams applications). The application ID is set using <<setApplicationId, setApplicationId>> (and is the <<kafka-streams-StreamsConfig.adoc#APPLICATION_ID_CONFIG, APPLICATION_ID_CONFIG>> configuration property that `KafkaStreams` requires when link:kafka-streams-KafkaStreams.adoc#creating-instance[created]).
+`InternalTopologyBuilder` requires an *application ID*. The application ID is used as a namespace for the internal topics (so they do not clash with the topics of other Kafka Streams applications). The application ID is set using <<setApplicationId, setApplicationId>> (and is the <<kafka-streams-StreamsConfig.adoc#APPLICATION_ID_CONFIG, APPLICATION_ID_CONFIG>> configuration property that `KafkaStreams` requires when link:kafka-streams-KafkaStreams.adoc#creating-instance[created]).
 
 [[setApplicationId]]
 [source, java]
@@ -289,7 +301,7 @@ void buildSinkNode(
 
 `buildSinkNode`...FIXME
 
-NOTE: `buildSinkNode` is used exclusively when `InternalTopologyBuilder` is requested to <<build, build a processor task topology>>.
+NOTE: `buildSinkNode` is used exclusively when `InternalTopologyBuilder` is requested to <<build, build a topology of processor nodes>>.
 
 === [[maybeDecorateInternalSourceTopics]] `maybeDecorateInternalSourceTopics` Internal Method
 
@@ -381,7 +393,7 @@ void buildProcessorNode(
 
 `buildProcessorNode`...FIXME
 
-NOTE: `buildProcessorNode` is used exclusively when `InternalTopologyBuilder` is requested to <<build, build a ProcessorTopology>> (with <<kafka-streams-internals-InternalTopologyBuilder-ProcessorNodeFactory.adoc#, ProcessorNodeFactories>>).
+NOTE: `buildProcessorNode` is used exclusively when `InternalTopologyBuilder` is requested to <<build, build a topology of processor nodes>>.
 
 === [[buildSourceNode]] `buildSourceNode` Internal Method
 
@@ -899,7 +911,7 @@ void describeGlobalStore(
 
 NOTE: `describeGlobalStore` is used exclusively when `InternalTopologyBuilder` is requested to <<describe, describe>>.
 
-=== [[addSink]] Adding Sink Node -- `addSink` Method
+=== [[addSink]] Adding Sink Node to Topology -- `addSink` Method
 
 [source, java]
 ----
@@ -909,10 +921,18 @@ void addSink(
   final Serializer<K> keySerializer,
   final Serializer<V> valSerializer,
   final StreamPartitioner<? super K, ? super V> partitioner,
+  final String... predecessorNames) // <1>
+void addSink(
+  final String name,
+  final TopicNameExtractor<K, V> topicExtractor,
+  final Serializer<K> keySerializer,
+  final Serializer<V> valSerializer,
+  final StreamPartitioner<? super K, ? super V> partitioner,
   final String... predecessorNames)
 ----
+<1> Uses <<kafka-streams-internals-StaticTopicNameExtractor.adoc#, StaticTopicNameExtractor>>
 
-`addSink` creates a link:kafka-streams-internals-InternalTopologyBuilder-SinkNodeFactory.adoc#creating-instance[SinkNodeFactory] (passing on all the inputs) and registers it in the <<nodeFactories, nodeFactories>> internal registry (under the input `name`).
+`addSink` creates a link:kafka-streams-internals-InternalTopologyBuilder-SinkNodeFactory.adoc#creating-instance[SinkNodeFactory] (passing all the inputs along) and registers (_adds_) it in the <<nodeFactories, nodeFactories>> internal registry (under the input `name`).
 
 `addSink` registers the input `topic` with the input `name` in the <<nodeToSinkTopic, nodeToSinkTopic>> internal registry.
 
@@ -922,11 +942,11 @@ void addSink(
 ====
 `addSink` is used when:
 
-* `KGroupedTableImpl` is requested to link:kafka-streams-internals-KGroupedTableImpl.adoc#buildAggregate[buildAggregate]
+* `GroupedTableOperationRepartitionNode` is requested to <<kafka-streams-internals-GroupedTableOperationRepartitionNode.adoc#writeToTopology, writeToTopology>>
 
-* `KStreamImpl` is requested to link:kafka-streams-internals-KStreamImpl.adoc#to[register a sink node] and link:kafka-streams-internals-KStreamImpl.adoc#createReparitionedSource[createReparitionedSource]
+* `OptimizableRepartitionNode` is requested to <<kafka-streams-internals-OptimizableRepartitionNode.adoc#writeToTopology, writeToTopology>>
 
-* `Topology` is requested to link:kafka-streams-Topology.adoc#addSink[add a sink]
+* `Topology` is requested to <<kafka-streams-Topology.adoc#addSink, add a sink>>
 ====
 
 === [[addInternalTopic]] Registering Internal Topic Name -- `addInternalTopic` Method
