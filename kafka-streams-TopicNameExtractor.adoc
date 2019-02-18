@@ -30,3 +30,5 @@ Used exclusively when `SinkNode` is requested to <<kafka-streams-internals-SinkN
 
 [[implementations]]
 NOTE: <<kafka-streams-internals-StaticTopicNameExtractor.adoc#, StaticTopicNameExtractor>> is an internal implementation of the <<contract, TopicNameExtractor Contract>> in Kafka Streams.
+
+TIP: Read up on the feature in https://cwiki.apache.org/confluence/display/KAFKA/KIP-303%3A+Add+Dynamic+Routing+in+Streams+Sink[KIP-303: Add Dynamic Routing in Streams Sink].

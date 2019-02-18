@@ -35,4 +35,4 @@ interface InternalProcessorContext extends ProcessorContext {
 |===
 
 [[extensions]]
-NOTE: <<kafka-streams-AbstractProcessorContext.adoc#, AbstractProcessorContext>> is the one and only base of the <<contract, InternalProcessorContext Contract>>.
+NOTE: <<kafka-streams-internals-AbstractProcessorContext.adoc#, AbstractProcessorContext>> is the one and only base of the <<contract, InternalProcessorContext Contract>>.

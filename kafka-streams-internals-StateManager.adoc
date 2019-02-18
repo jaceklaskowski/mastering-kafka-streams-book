@@ -17,7 +17,7 @@ a| [[baseDir]]
 File baseDir()
 ----
 
-Used exclusively when `AbstractProcessorContext` is requested for <<kafka-streams-AbstractProcessorContext.adoc#stateDir, stateDir>>
+Used exclusively when `AbstractProcessorContext` is requested for <<kafka-streams-internals-AbstractProcessorContext.adoc#stateDir, stateDir>>
 
 | close
 a| [[close]]
@@ -91,7 +91,7 @@ void register(
 
 Registering a <<kafka-streams-StateStore.adoc#, state store>> (with a <<kafka-streams-StateRestoreCallback.adoc#, StateRestoreCallback>>)
 
-Used exclusively when `AbstractProcessorContext` is requested to <<kafka-streams-AbstractProcessorContext.adoc#register, register a state store>>
+Used exclusively when `AbstractProcessorContext` is requested to <<kafka-streams-internals-AbstractProcessorContext.adoc#register, register a state store>>
 
 | reinitializeStateStoresForPartitions
 a| [[reinitializeStateStoresForPartitions]]

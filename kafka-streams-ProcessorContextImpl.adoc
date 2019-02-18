@@ -1,6 +1,6 @@
 == [[ProcessorContextImpl]] ProcessorContextImpl
 
-`ProcessorContextImpl` is a concrete <<kafka-streams-AbstractProcessorContext.adoc#, AbstractProcessorContext>> that...FIXME
+`ProcessorContextImpl` is a concrete <<kafka-streams-internals-AbstractProcessorContext.adoc#, AbstractProcessorContext>> that...FIXME
 
 `ProcessorContextImpl` is <<creating-instance, created>> exclusively for a <<kafka-streams-internals-StreamTask.adoc#processorContext, StreamTask>> (that is available as the <<task, StreamTask>>).
 

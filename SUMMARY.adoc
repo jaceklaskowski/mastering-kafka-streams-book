@@ -333,7 +333,7 @@
 .. link:kafka-streams-internals-TaskAssignor.adoc[TaskAssignor Contract]
 ... link:kafka-streams-internals-StickyTaskAssignor.adoc[StickyTaskAssignor]
 
-. link:kafka-streams-AbstractProcessorContext.adoc[AbstractProcessorContext -- Base Of Internal Processor Contexts]
+. link:kafka-streams-internals-AbstractProcessorContext.adoc[AbstractProcessorContext -- Base Of Internal Processor Contexts]
 .. link:kafka-streams-internals-GlobalProcessorContextImpl.adoc[GlobalProcessorContextImpl]
 .. link:kafka-streams-ProcessorContextImpl.adoc[ProcessorContextImpl]
 .. link:kafka-streams-StandbyContextImpl.adoc[StandbyContextImpl]

@@ -1,6 +1,6 @@
 == [[GlobalProcessorContextImpl]] GlobalProcessorContextImpl
 
-`GlobalProcessorContextImpl` is a concrete <<kafka-streams-AbstractProcessorContext.adoc#, AbstractProcessorContext>> that...FIXME
+`GlobalProcessorContextImpl` is a concrete <<kafka-streams-internals-AbstractProcessorContext.adoc#, AbstractProcessorContext>> that...FIXME
 
 === [[getStateStore]] `getStateStore` Method
 
@@ -11,7 +11,7 @@ StateStore getStateStore(final String name)
 
 NOTE: `getStateStore` is part of the <<kafka-streams-ProcessorContext.adoc#getStateStore, ProcessorContext Contract>> to...FIXME.
 
-`getStateStore` simply requests the <<kafka-streams-AbstractProcessorContext.adoc#stateManager, StateManager>> to <<kafka-streams-internals-StateManager.adoc#getGlobalStore, get the global state store>> by the given name.
+`getStateStore` simply requests the <<kafka-streams-internals-AbstractProcessorContext.adoc#stateManager, StateManager>> to <<kafka-streams-internals-StateManager.adoc#getGlobalStore, get the global state store>> by the given name.
 
 === [[forward]] `forward` Method
 

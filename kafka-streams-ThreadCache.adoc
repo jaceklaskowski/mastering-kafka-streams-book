@@ -6,7 +6,7 @@
 
 * `GlobalStreamThread` is <<kafka-streams-internals-GlobalStreamThread.adoc#cache, created>>
 
-* `StandbyContextImpl` is <<kafka-streams-StandbyContextImpl.adoc#, created>> (as a <<kafka-streams-AbstractProcessorContext.adoc#cache, AbstractProcessorContext>>)
+* `StandbyContextImpl` is <<kafka-streams-StandbyContextImpl.adoc#, created>> (as a <<kafka-streams-internals-AbstractProcessorContext.adoc#cache, AbstractProcessorContext>>)
 
 * `StreamThread` is <<kafka-streams-StreamThread.adoc#create, created>> (and creates a <<kafka-streams-internals-TaskCreator.adoc#cache, TaskCreator>>)
 
