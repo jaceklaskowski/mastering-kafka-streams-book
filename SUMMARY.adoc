@@ -95,7 +95,9 @@
 .. link:kafka-streams-AbstractNotifyingRestoreCallback.adoc[AbstractNotifyingRestoreCallback]
 
 . link:kafka-streams-StreamPartitioner.adoc[StreamPartitioner]
+
 . link:kafka-streams-TopicNameExtractor.adoc[TopicNameExtractor -- Dynamic Routing of Output Records]
+.. link:kafka-streams-RecordContext.adoc[RecordContext -- Record Metadata]
 
 . link:kafka-streams-TimestampExtractor.adoc[TimestampExtractor Contract]
 .. link:kafka-streams-WallclockTimestampExtractor.adoc[WallclockTimestampExtractor]

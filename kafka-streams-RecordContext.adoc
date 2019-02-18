@@ -1,0 +1,65 @@
+== [[RecordContext]] RecordContext -- Record Metadata
+
+`RecordContext` is the <<contract, abstraction>> of <<implementations, record contexts>> that Kafka Streams developers use for *dynamic routing of output records* (using <<kafka-streams-TopicNameExtractor.adoc#, TopicNameExtractor>>) based on the metadata of a record, i.e. <<headers, headers>>, <<offset, offset>>, <<partition, partition>>, <<timestamp, timestamp>>, and <<topic, topic>>.
+
+[[implementations]]
+NOTE: <<kafka-streams-internals-ProcessorRecordContext.adoc#, ProcessorRecordContext>> is the default implementation of the <<contract, RecordContext Contract>> in Kafka Streams.
+
+[[contract]]
+.RecordContext Contract
+[cols="1m,3",options="header",width="100%"]
+|===
+| Method
+| Description
+
+| headers
+a| [[headers]]
+
+[source, java]
+----
+Headers headers()
+----
+
+The https://kafka.apache.org/21/javadoc/org/apache/kafka/common/header/Headers.html[headers] of the record
+
+| offset
+a| [[offset]]
+
+[source, java]
+----
+long offset()
+----
+
+The position of the record in the corresponding Kafka partition
+
+| partition
+a| [[partition]]
+
+[source, java]
+----
+int partition()
+----
+
+The partition the record has been received from
+
+| timestamp
+a| [[timestamp]]
+
+[source, java]
+----
+long timestamp()
+----
+
+The timestamp of the record
+
+| topic
+a| [[topic]]
+
+[source, java]
+----
+String topic()
+----
+
+The topic the record has been received from
+
+|===
