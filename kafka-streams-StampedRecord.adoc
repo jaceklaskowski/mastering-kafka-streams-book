@@ -6,7 +6,7 @@ In other words, `StampedRecord` represents a <<record, Kafka ConsumerRecord>> at
 
 `StampedRecord` is <<creating-instance, created>> when:
 
-* `RecordQueue` is requested to link:kafka-streams-RecordQueue.adoc#addRawRecords[add Kafka ConsumerRecords (as StampedRecords)]
+* `RecordQueue` is requested to link:kafka-streams-internals-RecordQueue.adoc#addRawRecords[add Kafka ConsumerRecords (as StampedRecords)]
 
 * `StreamTask` is requested to link:kafka-streams-internals-StreamTask.adoc#punctuate[punctuate]
 

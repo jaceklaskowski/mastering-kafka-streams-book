@@ -95,7 +95,7 @@ In the end, `addRawRecords` returns the <<size, number of ConsumerRecords>> in t
 * Extracted timestamp is negative (and hence invalid)
 ====
 
-NOTE: `addRawRecords` is used exclusively when `PartitionGroup` is requested to link:kafka-streams-PartitionGroup.adoc#addRawRecords[add records to a RecordQueue for a Kafka partition].
+NOTE: `addRawRecords` is used exclusively when `PartitionGroup` is requested to link:kafka-streams-internals-PartitionGroup.adoc#addRawRecords[add records to a RecordQueue for a Kafka partition].
 
 === [[clear]] Clearing (Resetting) RecordQueue -- `clear` Method
 
@@ -108,7 +108,7 @@ void clear()
 
 In the end, `clear` (re)sets the <<partitionTime, partitionTime>> to `NOT_KNOWN`.
 
-NOTE: `clear` is used exclusively when `PartitionGroup` is requested to link:kafka-streams-PartitionGroup.adoc#clear[clear].
+NOTE: `clear` is used exclusively when `PartitionGroup` is requested to link:kafka-streams-internals-PartitionGroup.adoc#clear[clear].
 
 === [[size]] Requesting Number of Records in Queue -- `size` Method
 
@@ -123,7 +123,7 @@ int size()
 ====
 `size` is used when:
 
-* `PartitionGroup` is requested to link:kafka-streams-PartitionGroup.adoc#addRawRecords[add records to a RecordQueue for a Kafka partition] and link:kafka-streams-PartitionGroup.adoc#numBuffered[numBuffered]
+* `PartitionGroup` is requested to link:kafka-streams-internals-PartitionGroup.adoc#addRawRecords[add records to a RecordQueue for a Kafka partition] and link:kafka-streams-internals-PartitionGroup.adoc#numBuffered[numBuffered]
 
 * `RecordQueue` is requested to <<addRawRecords, add Kafka ConsumerRecords (as StampedRecords)>>
 

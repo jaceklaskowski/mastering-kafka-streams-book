@@ -1,38 +1,133 @@
-== [[InternalProcessorContext]] InternalProcessorContext
+== [[InternalProcessorContext]] InternalProcessorContext Contract
 
-`InternalProcessorContext` is the <<contract, extension>> of the <<kafka-streams-ProcessorContext.adoc#, ProcessorContext contract>> for <<extensions, processor contexts>> that <<FIXME, FIXME>>.
+`InternalProcessorContext` is the <<contract, extension>> of the <<kafka-streams-ProcessorContext.adoc#, ProcessorContext contract>> for <<extensions, internal processor contexts>>.
 
 [[contract]]
-[source, java]
-----
-package org.apache.kafka.streams.processor.internals;
-
-interface InternalProcessorContext extends ProcessorContext {
-  RecordContext recordContext();
-  void setRecordContext(RecordContext recordContext);
-  void setCurrentNode(ProcessorNode currentNode);
-  ProcessorNode currentNode();
-  ThreadCache getCache();
-  void initialized();
-  void uninitialize();
-}
-----
-
 .InternalProcessorContext Contract
-[cols="1,2",options="header",width="100%"]
+[cols="1m,3",options="header",width="100%"]
 |===
 | Method
 | Description
 
-| [[initialized]] `initialized`
-|
+| currentNode
+a| [[currentNode]]
 
-| [[setCurrentNode]] `setCurrentNode`
-|
+[source, java]
+----
+ProcessorNode currentNode()
+----
 
-| [[setRecordContext]] `setRecordContext`
-|
+<<kafka-streams-internals-ProcessorNode.adoc#, ProcessorNode>>
+
+Used when...FIXME
+
+| getCache
+a| [[getCache]]
+
+[source, java]
+----
+ThreadCache getCache()
+----
+
+<<kafka-streams-internals-ThreadCache.adoc#, ThreadCache>>
+
+Used when...FIXME
+
+| initialize
+a| [[initialize]]
+
+[source, java]
+----
+void initialize()
+----
+
+Initializes the processor context
+
+Used when:
+
+* `GlobalStateUpdateTask` is requested to <<kafka-streams-internals-GlobalStateUpdateTask.adoc#initialize, initialize>>
+
+* `StandbyTask` is requested to <<kafka-streams-internals-StandbyTask.adoc#initializeStateStores, initialize state stores>>
+
+* `StreamTask` is requested to <<kafka-streams-internals-StreamTask.adoc#initializeTopology, initialize a topology>>
+
+| metrics
+a| [[metrics]]
+
+[source, java]
+----
+StreamsMetricsImpl metrics()
+----
+
+<<kafka-streams-internals-StreamsMetricsImpl.adoc#, StreamsMetricsImpl>>
+
+Used when...FIXME
+
+| recordContext
+a| [[recordContext]]
+
+[source, java]
+----
+ProcessorRecordContext recordContext()
+----
+
+<<kafka-streams-internals-ProcessorRecordContext.adoc#, ProcessorRecordContext>>
+
+Used when...FIXME
+
+| setCurrentNode
+a| [[setCurrentNode]]
+
+[source, java]
+----
+void setCurrentNode(ProcessorNode currentNode)
+----
+
+Sets the current <<kafka-streams-internals-ProcessorNode.adoc#, ProcessorNode>>
+
+Used when...FIXME
+
+| setRecordContext
+a| [[setRecordContext]]
+
+[source, java]
+----
+void setRecordContext(ProcessorRecordContext recordContext)
+----
+
+Sets the current <<kafka-streams-internals-ProcessorRecordContext.adoc#, ProcessorRecordContext>>
+
+Used when...FIXME
+
+| streamTime
+a| [[streamTime]]
+
+[source, java]
+----
+long streamTime()
+----
+
+Stream time
+
+Used when...FIXME
+
+| uninitialize
+a| [[uninitialize]]
+
+[source, java]
+----
+void uninitialize()
+----
+
+Uninitializes the processor context
+
+Used when:
+
+* `AbstractStateManager` is requested to <<kafka-streams-internals-AbstractStateManager.adoc#reinitializeStateStoresForPartitions, reinitializeStateStoresForPartitions>>
+
+* `AbstractTask` is requested to <<kafka-streams-internals-AbstractTask.adoc#registerStateStores, registerStateStores>>
+
 |===
 
 [[extensions]]
-NOTE: <<kafka-streams-internals-AbstractProcessorContext.adoc#, AbstractProcessorContext>> is the one and only base of the <<contract, InternalProcessorContext Contract>>.
+NOTE: <<kafka-streams-internals-AbstractProcessorContext.adoc#, AbstractProcessorContext>> is the base implementation of the <<contract, InternalProcessorContext Contract>>.

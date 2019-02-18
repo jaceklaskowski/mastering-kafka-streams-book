@@ -140,7 +140,7 @@
 . link:kafka-streams-internals-CacheFlushListener.adoc[CacheFlushListener]
 
 . link:kafka-streams-StreamsMetrics.adoc[StreamsMetrics]
-.. link:kafka-streams-StreamsMetricsImpl.adoc[StreamsMetricsImpl]
+.. link:kafka-streams-internals-StreamsMetricsImpl.adoc[StreamsMetricsImpl]
 .. link:kafka-streams-StreamsMetricsThreadImpl.adoc[StreamsMetricsThreadImpl]
 
 . link:kafka-streams-StreamTask-TaskMetrics.adoc[TaskMetrics]
@@ -333,12 +333,13 @@
 .. link:kafka-streams-internals-TaskAssignor.adoc[TaskAssignor Contract]
 ... link:kafka-streams-internals-StickyTaskAssignor.adoc[StickyTaskAssignor]
 
-. link:kafka-streams-internals-AbstractProcessorContext.adoc[AbstractProcessorContext -- Base Of Internal Processor Contexts]
+. link:kafka-streams-internals-InternalProcessorContext.adoc[InternalProcessorContext Contract]
+.. link:kafka-streams-internals-AbstractProcessorContext.adoc[AbstractProcessorContext -- Base Of Internal Processor Contexts]
 .. link:kafka-streams-internals-GlobalProcessorContextImpl.adoc[GlobalProcessorContextImpl]
-.. link:kafka-streams-ProcessorContextImpl.adoc[ProcessorContextImpl]
-.. link:kafka-streams-StandbyContextImpl.adoc[StandbyContextImpl]
+.. link:kafka-streams-internals-ProcessorContextImpl.adoc[ProcessorContextImpl]
+.. link:kafka-streams-internals-StandbyContextImpl.adoc[StandbyContextImpl]
 
-. link:kafka-streams-ThreadCache.adoc[ThreadCache]
+. link:kafka-streams-internals-ThreadCache.adoc[ThreadCache]
 
 . link:kafka-streams-internals-GlobalStreamThread.adoc[GlobalStreamThread]
 .. link:kafka-streams-StateConsumer.adoc[StateConsumer]
@@ -350,7 +351,7 @@
 . link:kafka-streams-TimestampTracker.adoc[TimestampTracker]
 .. link:kafka-streams-MinTimestampTracker.adoc[MinTimestampTracker]
 
-. link:kafka-streams-RecordQueue.adoc[RecordQueue]
+. link:kafka-streams-internals-RecordQueue.adoc[RecordQueue]
 .. link:kafka-streams-StampedRecord.adoc[StampedRecord -- Orderable Kafka ConsumerRecords At Timestamp]
 
 . link:kafka-streams-PunctuationQueue.adoc[PunctuationQueue]
@@ -364,19 +365,18 @@
 
 . link:kafka-streams-RecordDeserializer.adoc[RecordDeserializer]
 
-. link:kafka-streams-PartitionGroup.adoc[PartitionGroup]
+. link:kafka-streams-internals-PartitionGroup.adoc[PartitionGroup]
 .. link:kafka-streams-internals-RecordInfo.adoc[RecordInfo]
 
 . link:kafka-streams-internals-StateDirectory.adoc[StateDirectory]
 . link:kafka-streams-internals-ProcessorRecordContext.adoc[ProcessorRecordContext]
-. link:kafka-streams-internals-InternalProcessorContext.adoc[InternalProcessorContext]
 
 . link:kafka-streams-internals-CopartitionedTopicsValidator.adoc[CopartitionedTopicsValidator]
 
 === State (Store) Management
 
 . link:kafka-streams-internals-StateManager.adoc[StateManager Contract -- State Store Managers]
-.. link:kafka-streams-AbstractStateManager.adoc[AbstractStateManager]
+.. link:kafka-streams-internals-AbstractStateManager.adoc[AbstractStateManager]
 
 . link:kafka-streams-ProcessorStateManager.adoc[ProcessorStateManager]
 . link:kafka-streams-GlobalStateManager.adoc[GlobalStateManager]

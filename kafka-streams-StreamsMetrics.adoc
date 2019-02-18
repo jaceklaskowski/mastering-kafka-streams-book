@@ -57,4 +57,4 @@ Used when...FIXME
 |===
 
 [[implementations]]
-NOTE: link:kafka-streams-StreamsMetricsImpl.adoc[StreamsMetricsImpl] is the one and only known direct implementation of <<contract, StreamsMetrics Contract>> in Kafka Streams {{ book.kafka_version }}.
+NOTE: link:kafka-streams-internals-StreamsMetricsImpl.adoc[StreamsMetricsImpl] is the one and only known direct implementation of <<contract, StreamsMetrics Contract>> in Kafka Streams {{ book.kafka_version }}.

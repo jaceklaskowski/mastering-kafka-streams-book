@@ -1,6 +1,6 @@
 == [[GlobalStateManagerImpl]] GlobalStateManagerImpl
 
-`GlobalStateManagerImpl` is a concrete <<kafka-streams-GlobalStateManager.adoc#, GlobalStateManager>> (and a <<kafka-streams-AbstractStateManager.adoc#, AbstractStateManager>>) that...FIXME
+`GlobalStateManagerImpl` is a concrete <<kafka-streams-GlobalStateManager.adoc#, GlobalStateManager>> (and a <<kafka-streams-internals-AbstractStateManager.adoc#, AbstractStateManager>>) that...FIXME
 
 `GlobalStateManagerImpl` is <<creating-instance, created>> exclusively when `GlobalStreamThread` is requested to <<kafka-streams-internals-GlobalStreamThread.adoc#initialize, initialize>> (when `GlobalStreamThread` is <<kafka-streams-internals-GlobalStreamThread.adoc#run, started>> with <<kafka-streams-KafkaStreams.adoc#start, KafkaStreams>>).
 

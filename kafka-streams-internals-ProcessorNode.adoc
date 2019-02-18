@@ -66,7 +66,7 @@ void process(final K key, final V value)
 ====
 `process` is used when:
 
-* <<kafka-streams-internals-GlobalProcessorContextImpl.adoc#forward, GlobalProcessorContextImpl>> and <<kafka-streams-ProcessorContextImpl.adoc#forward, ProcessorContextImpl>> are requested to forward
+* <<kafka-streams-internals-GlobalProcessorContextImpl.adoc#forward, GlobalProcessorContextImpl>> and <<kafka-streams-internals-ProcessorContextImpl.adoc#forward, ProcessorContextImpl>> are requested to forward
 
 * `GlobalStateUpdateTask` is requested to <<kafka-streams-internals-GlobalStateUpdateTask.adoc#update, update>>
 
@@ -127,6 +127,6 @@ void punctuate(final long timestamp, final Punctuator punctuator)
 
 `punctuate` creates a Java https://docs.oracle.com/javase/8/docs/api/java/lang/Runnable.html[Runnable] that simply requests the input `Punctuator` to link:kafka-streams-Punctuator.adoc#punctuate[punctuate] with the input `timestamp`.
 
-`punctuate` requests the <<nodeMetrics, NodeMetrics>> for the link:kafka-streams-NodeMetrics.adoc#metrics[StreamsMetricsImpl] that is requested to link:kafka-streams-StreamsMetricsImpl.adoc#measureLatencyNs[measureLatencyNs] (that records it with the link:kafka-streams-NodeMetrics.adoc#nodePunctuateTimeSensor[nodePunctuateTimeSensor] of the <<nodeMetrics, NodeMetrics>>).
+`punctuate` requests the <<nodeMetrics, NodeMetrics>> for the link:kafka-streams-NodeMetrics.adoc#metrics[StreamsMetricsImpl] that is requested to link:kafka-streams-internals-StreamsMetricsImpl.adoc#measureLatencyNs[measureLatencyNs] (that records it with the link:kafka-streams-NodeMetrics.adoc#nodePunctuateTimeSensor[nodePunctuateTimeSensor] of the <<nodeMetrics, NodeMetrics>>).
 
 NOTE: `punctuate` is used exclusively when `StreamTask` is requested to link:kafka-streams-internals-StreamTask.adoc#punctuate[execute a scheduled periodic action].

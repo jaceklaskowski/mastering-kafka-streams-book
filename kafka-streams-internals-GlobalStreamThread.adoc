@@ -12,7 +12,7 @@
 | Description
 
 | cache
-| [[cache]] <<kafka-streams-ThreadCache.adoc#, ThreadCache>>
+| [[cache]] <<kafka-streams-internals-ThreadCache.adoc#, ThreadCache>>
 |===
 
 === [[initialize]] `initialize` Internal Method

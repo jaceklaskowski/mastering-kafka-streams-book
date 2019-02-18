@@ -21,7 +21,7 @@ Closing the state store
 
 Used when:
 
-* `AbstractStateManager` is requested to <<kafka-streams-AbstractStateManager.adoc#reinitializeStateStoresForPartitions, reinitializeStateStoresForPartitions>>
+* `AbstractStateManager` is requested to <<kafka-streams-internals-AbstractStateManager.adoc#reinitializeStateStoresForPartitions, reinitializeStateStoresForPartitions>>
 
 * <<kafka-streams-internals-GlobalStateManagerImpl.adoc#close, GlobalStateManagerImpl>> and <<kafka-streams-ProcessorStateManager.adoc#close, ProcessorStateManager>> are requested to close
 
@@ -61,7 +61,7 @@ Initializes the state store
 
 Used when:
 
-* `AbstractStateManager` is requested to <<kafka-streams-AbstractStateManager.adoc#reinitializeStateStoresForPartitions, reinitializeStateStoresForPartitions>>
+* `AbstractStateManager` is requested to <<kafka-streams-internals-AbstractStateManager.adoc#reinitializeStateStoresForPartitions, reinitializeStateStoresForPartitions>>
 
 * `AbstractTask` is requested to <<kafka-streams-internals-AbstractTask.adoc#registerStateStores, registerStateStores>>
 

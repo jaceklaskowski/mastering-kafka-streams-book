@@ -4,7 +4,7 @@
 
 `OffsetCheckpoint` is <<creating-instance, created>> when:
 
-1. `AbstractStateManager` is link:kafka-streams-AbstractStateManager.adoc#creating-instance[created]
+1. `AbstractStateManager` is link:kafka-streams-internals-AbstractStateManager.adoc#creating-instance[created]
 
 1. `ProcessorStateManager` is requested to link:kafka-streams-ProcessorStateManager.adoc#checkpoint[checkpoint]
 
@@ -12,7 +12,7 @@
 [[file]]
 `OffsetCheckpoint` only takes the *offset checkpoint file* when created.
 
-NOTE: The default name of the file is link:kafka-streams-AbstractStateManager.adoc#CHECKPOINT_FILE_NAME[.checkpoint].
+NOTE: The default name of the file is link:kafka-streams-internals-AbstractStateManager.adoc#CHECKPOINT_FILE_NAME[.checkpoint].
 
 [[VERSION]]
 `OffsetCheckpoint` uses the internal *version* to maintain compatibility between checkpointing protocols. The current version is 0.
@@ -47,7 +47,7 @@ void write(final Map<TopicPartition, Long> offsets) throws IOException
 ====
 `write` is used when:
 
-* `AbstractStateManager` is requested to link:kafka-streams-AbstractStateManager.adoc#reinitializeStateStoresForPartitions[reinitializeStateStoresForPartitions]
+* `AbstractStateManager` is requested to link:kafka-streams-internals-AbstractStateManager.adoc#reinitializeStateStoresForPartitions[reinitializeStateStoresForPartitions]
 * `GlobalStateManagerImpl` is requested to link:kafka-streams-internals-GlobalStateManagerImpl.adoc#checkpoint[checkpoint]
 * `ProcessorStateManager` is requested to link:kafka-streams-ProcessorStateManager.adoc#checkpoint[checkpoint]
 ====

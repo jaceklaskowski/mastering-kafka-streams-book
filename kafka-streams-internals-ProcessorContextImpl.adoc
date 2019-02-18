@@ -35,8 +35,8 @@ NOTE: `schedule` is part of link:kafka-streams-ProcessorContext.adoc#schedule[Pr
 * [[config]] <<kafka-streams-StreamsConfig.adoc#, StreamsConfig>>
 * [[collector]] <<kafka-streams-internals-RecordCollector.adoc#, RecordCollector>>
 * [[stateMgr]] <<kafka-streams-ProcessorStateManager.adoc#, ProcessorStateManager>>
-* [[metrics]] <<kafka-streams-StreamsMetricsImpl.adoc#, StreamsMetricsImpl>>
-* [[cache]] <<kafka-streams-ThreadCache.adoc#, ThreadCache>>
+* [[metrics]] <<kafka-streams-internals-StreamsMetricsImpl.adoc#, StreamsMetricsImpl>>
+* [[cache]] <<kafka-streams-internals-ThreadCache.adoc#, ThreadCache>>
 
 `ProcessorContextImpl` initializes the <<internal-registries, internal registries and counters>>.
 

@@ -7,7 +7,7 @@
 [[commitNeeded]]
 [[commitRequested]]
 [[needCommit]]
-`StreamTask` may need a commit (after `ProcessorContextImpl` is requested to <<kafka-streams-ProcessorContextImpl.adoc#commit, commit>>).
+`StreamTask` may need a commit (after `ProcessorContextImpl` is requested to <<kafka-streams-internals-ProcessorContextImpl.adoc#commit, commit>>).
 
 [[commitOffsetNeeded]]
 `StreamTask` uses `commitOffsetNeeded` flag to...FIXME
@@ -23,7 +23,7 @@
 | Description
 
 | partitionGroup
-a| [[partitionGroup]] <<kafka-streams-PartitionGroup.adoc#, PartitionGroup>> (with a <<kafka-streams-RecordQueue.adoc#, RecordQueue>> for every assigned Kafka <<partitions, TopicPartition>>)
+a| [[partitionGroup]] <<kafka-streams-internals-PartitionGroup.adoc#, PartitionGroup>> (with a <<kafka-streams-internals-RecordQueue.adoc#, RecordQueue>> for every assigned Kafka <<partitions, TopicPartition>>)
 
 Used when `StreamTask` is requested for the following:
 
@@ -113,7 +113,7 @@ NOTE: `close` is part of link:kafka-streams-internals-Task.adoc#close[Task Contr
 * [[config]] link:kafka-streams-StreamsConfig.adoc[StreamsConfig]
 * [[metrics]] link:kafka-streams-StreamsMetrics.adoc[StreamsMetrics]
 * [[stateDirectory]] link:kafka-streams-internals-StateDirectory.adoc[StateDirectory]
-* [[cache]] <<kafka-streams-ThreadCache.adoc#, ThreadCache>>
+* [[cache]] <<kafka-streams-internals-ThreadCache.adoc#, ThreadCache>>
 * [[time]] `Time`
 * [[producer]] Kafka `Producer` (of keys and values as array of bytes)
 
@@ -159,7 +159,7 @@ NOTE: `updateProcessorContext` is used when...FIXME
 boolean process()
 ----
 
-`process` requests <<partitionGroup, PartitionGroup>> for link:kafka-streams-PartitionGroup.adoc#nextRecord[nextRecord] (with <<recordInfo, RecordInfo>>).
+`process` requests <<partitionGroup, PartitionGroup>> for link:kafka-streams-internals-PartitionGroup.adoc#nextRecord[nextRecord] (with <<recordInfo, RecordInfo>>).
 
 `process` prints out the following TRACE message to the logs:
 
@@ -229,7 +229,7 @@ int addRecords(
   final Iterable<ConsumerRecord<byte[], byte[]>> records)
 ----
 
-`addRecords` requests <<partitionGroup, PartitionGroup>> to link:kafka-streams-PartitionGroup.adoc#addRawRecords[add records to a RecordQueue for a Kafka partition].
+`addRecords` requests <<partitionGroup, PartitionGroup>> to link:kafka-streams-internals-PartitionGroup.adoc#addRawRecords[add records to a RecordQueue for a Kafka partition].
 
 You should see the following TRACE message in the logs:
 
@@ -310,7 +310,7 @@ Cancellable schedule(
 
 `schedule`...FIXME
 
-NOTE: `schedule` is used exclusively when `ProcessorContextImpl` is requested to link:kafka-streams-ProcessorContextImpl.adoc#schedule[schedule].
+NOTE: `schedule` is used exclusively when `ProcessorContextImpl` is requested to link:kafka-streams-internals-ProcessorContextImpl.adoc#schedule[schedule].
 
 === [[initializeStateStores]] Initializing State Stores -- `initializeStateStores` Method
 

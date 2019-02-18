@@ -14,10 +14,10 @@ NOTE: `AbstractProcessorContext` is a Java abstract class and cannot be <<creati
 | <<kafka-streams-internals-GlobalProcessorContextImpl.adoc#, GlobalProcessorContextImpl>>
 | [[GlobalProcessorContextImpl]]
 
-| <<kafka-streams-ProcessorContextImpl.adoc#, ProcessorContextImpl>>
+| <<kafka-streams-internals-ProcessorContextImpl.adoc#, ProcessorContextImpl>>
 | [[ProcessorContextImpl]]
 
-| <<kafka-streams-StandbyContextImpl.adoc#, StandbyContextImpl>>
+| <<kafka-streams-internals-StandbyContextImpl.adoc#, StandbyContextImpl>>
 | [[StandbyContextImpl]]
 |===
 
@@ -92,9 +92,9 @@ NOTE: `uninitialize` is part of the <<kafka-streams-internals-InternalProcessorC
 
 * [[taskId]] <<kafka-streams-TaskId.adoc#, TaskId>>
 * [[config]] <<kafka-streams-StreamsConfig.adoc#, StreamsConfig>>
-* [[metrics]] <<kafka-streams-StreamsMetricsImpl.adoc#, StreamsMetricsImpl>>
+* [[metrics]] <<kafka-streams-internals-StreamsMetricsImpl.adoc#, StreamsMetricsImpl>>
 * [[stateManager]] <<kafka-streams-internals-StateManager.adoc#, StateManager>>
-* [[cache]] <<kafka-streams-ThreadCache.adoc#, ThreadCache>>
+* [[cache]] <<kafka-streams-internals-ThreadCache.adoc#, ThreadCache>>
 
 `AbstractProcessorContext` initializes the <<internal-registries, internal registries and counters>>.
 

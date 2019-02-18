@@ -4,7 +4,7 @@
 
 [[creating-instance]]
 [[partitionQueues]]
-`PartitionGroup` takes a collection of <<kafka-streams-RecordQueue.adoc#, RecordQueues>> per Kafka https://kafka.apache.org/20/javadoc/org/apache/kafka/common/TopicPartition.html[TopicPartition] when created.
+`PartitionGroup` takes a collection of <<kafka-streams-internals-RecordQueue.adoc#, RecordQueues>> per Kafka https://kafka.apache.org/20/javadoc/org/apache/kafka/common/TopicPartition.html[TopicPartition] when created.
 
 [[internal-registries]]
 .PartitionGroup's Internal Properties (e.g. Registries, Counters and Flags)
@@ -14,7 +14,7 @@
 | Description
 
 | `queuesByTime`
-| [[queuesByTime]] A Java https://docs.oracle.com/javase/8/docs/api/java/util/PriorityQueue.html[PriorityQueue] that is an unbounded priority queue that uses link:kafka-streams-RecordQueue.adoc#timestamp[partition timestamps] for ordering.
+| [[queuesByTime]] A Java https://docs.oracle.com/javase/8/docs/api/java/util/PriorityQueue.html[PriorityQueue] that is an unbounded priority queue that uses link:kafka-streams-internals-RecordQueue.adoc#timestamp[partition timestamps] for ordering.
 
 | `totalBuffered`
 | [[totalBuffered]]
@@ -40,9 +40,9 @@ int addRawRecords(
   final Iterable<ConsumerRecord<byte[], byte[]>> rawRecords)
 ----
 
-`addRawRecords` looks up the <<kafka-streams-RecordQueue.adoc#, RecordQueue>> for the input Kafka link:https://kafka.apache.org/20/javadoc/org/apache/kafka/common/TopicPartition.html[TopicPartition] (in the <<partitionQueues, partitionQueues>>).
+`addRawRecords` looks up the <<kafka-streams-internals-RecordQueue.adoc#, RecordQueue>> for the input Kafka link:https://kafka.apache.org/20/javadoc/org/apache/kafka/common/TopicPartition.html[TopicPartition] (in the <<partitionQueues, partitionQueues>>).
 
-`addRawRecords` requests the `RecordQueue` for the link:kafka-streams-RecordQueue.adoc#size[size] and to link:kafka-streams-RecordQueue.adoc#addRawRecords[add Kafka ConsumerRecords (as StampedRecords)].
+`addRawRecords` requests the `RecordQueue` for the link:kafka-streams-internals-RecordQueue.adoc#size[size] and to link:kafka-streams-internals-RecordQueue.adoc#addRawRecords[add Kafka ConsumerRecords (as StampedRecords)].
 
 `addRawRecords` inserts the `RecordQueue` into the <<queuesByTime, queuesByTime>> priority queue only if the `RecordQueue` was empty before.
 
@@ -59,7 +59,7 @@ NOTE: `addRawRecords` is used exclusively when `StreamTask` is requested to link
 void clear()
 ----
 
-`clear` removes all of the elements from the <<queuesByTime, queuesByTime>> and requests every link:kafka-streams-RecordQueue.adoc[RecordQueue] (in the internal <<partitionQueues, partitionQueues>> registry) to link:kafka-streams-RecordQueue.adoc#clear[clear itself].
+`clear` removes all of the elements from the <<queuesByTime, queuesByTime>> and requests every link:kafka-streams-internals-RecordQueue.adoc[RecordQueue] (in the internal <<partitionQueues, partitionQueues>> registry) to link:kafka-streams-internals-RecordQueue.adoc#clear[clear itself].
 
 NOTE: `clear` is used exclusively when `StreamTask` is requested to link:kafka-streams-internals-StreamTask.adoc#closeTopology[closeTopology].
 
@@ -81,7 +81,7 @@ NOTE: `numBuffered` is used when...FIXME
 long timestamp()
 ----
 
-`timestamp` simply iterates over the <<partitionQueues, TopicPartitions>> and requests every `RecordQueue` for the <<kafka-streams-RecordQueue.adoc#timestamp, partition timestamp>>.
+`timestamp` simply iterates over the <<partitionQueues, TopicPartitions>> and requests every `RecordQueue` for the <<kafka-streams-internals-RecordQueue.adoc#timestamp, partition timestamp>>.
 
 In the end, `timestamp` returns the oldest partition timestamp (time-wise).
 

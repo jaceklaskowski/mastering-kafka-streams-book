@@ -12,7 +12,7 @@ interface TimestampExtractor {
 }
 ----
 
-The extracted timestamp is in milliseconds and can never be negative (or <<kafka-streams-RecordQueue.adoc#addRawRecords, will be dropped>>).
+The extracted timestamp is in milliseconds and can never be negative (or <<kafka-streams-internals-RecordQueue.adoc#addRawRecords, will be dropped>>).
 
 You can define a custom timestamp extractor for reading a topic as a <<kafka-streams-StreamsBuilder.adoc#stream, KStream>> or a <<kafka-streams-StreamsBuilder.adoc#table, KTable>> in an <<kafka-streams-Consumed.adoc#, Consumed>> object (using <<kafka-streams-Consumed.adoc#with, with>> or <<kafka-streams-Consumed.adoc#withTimestampExtractor, withTimestampExtractor>>).
 
@@ -46,7 +46,7 @@ props.setProperty(StreamsConfig.DEFAULT_TIMESTAMP_EXTRACTOR_CLASS_CONFIG, ...)
 | Description
 
 | `extract`
-| [[extract]] Used exclusively when `RecordQueue` is requested to link:kafka-streams-RecordQueue.adoc#addRawRecords[add Kafka ConsumerRecords (as StampedRecords)].
+| [[extract]] Used exclusively when `RecordQueue` is requested to link:kafka-streams-internals-RecordQueue.adoc#addRawRecords[add Kafka ConsumerRecords (as StampedRecords)].
 |===
 
 [[implementations]]
@@ -65,4 +65,4 @@ props.setProperty(StreamsConfig.DEFAULT_TIMESTAMP_EXTRACTOR_CLASS_CONFIG, ...)
 
 NOTE: `TimestampExtractor` is an `Evolving` contract which means that compatibility may be broken at a minor release.
 
-`TimestampExtractor` is used to create a <<kafka-streams-internals-InternalTopologyBuilder-SourceNodeFactory.adoc#, SourceNodeFactory>>, <<kafka-streams-RecordQueue.adoc#, RecordQueue>>, <<kafka-streams-internals-InternalTopologyBuilder-SourceNodeFactory.adoc#, SourceNodeFactory>>.
+`TimestampExtractor` is used to create a <<kafka-streams-internals-InternalTopologyBuilder-SourceNodeFactory.adoc#, SourceNodeFactory>>, <<kafka-streams-internals-RecordQueue.adoc#, RecordQueue>>, <<kafka-streams-internals-InternalTopologyBuilder-SourceNodeFactory.adoc#, SourceNodeFactory>>.

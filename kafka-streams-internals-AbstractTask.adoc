@@ -47,9 +47,9 @@ The `taskInitialized` flag is used by the <<implementations, concrete AbstractTa
 | processorContext
 a| [[processorContext]] <<kafka-streams-internals-InternalProcessorContext.adoc#, InternalProcessorContext>>, i.e.
 
-* <<kafka-streams-ProcessorContextImpl.adoc#, ProcessorContextImpl>> for <<kafka-streams-internals-StreamTask.adoc#, StreamTask>>
+* <<kafka-streams-internals-ProcessorContextImpl.adoc#, ProcessorContextImpl>> for <<kafka-streams-internals-StreamTask.adoc#, StreamTask>>
 
-* <<kafka-streams-StandbyContextImpl.adoc#, StandbyContextImpl>> for <<kafka-streams-internals-StandbyTask.adoc#, StandbyTask>>
+* <<kafka-streams-internals-StandbyContextImpl.adoc#, StandbyContextImpl>> for <<kafka-streams-internals-StandbyTask.adoc#, StandbyTask>>
 
 | stateMgr
 a| [[stateMgr]] <<kafka-streams-ProcessorStateManager.adoc#, ProcessorStateManager>>

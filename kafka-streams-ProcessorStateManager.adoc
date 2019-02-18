@@ -1,6 +1,6 @@
 == [[ProcessorStateManager]] ProcessorStateManager
 
-`ProcessorStateManager` is a concrete <<kafka-streams-internals-StateManager.adoc#, StateManager>> (as a <<kafka-streams-AbstractStateManager.adoc#, AbstractStateManager>>) that...FIXME
+`ProcessorStateManager` is a concrete <<kafka-streams-internals-StateManager.adoc#, StateManager>> (as a <<kafka-streams-internals-AbstractStateManager.adoc#, AbstractStateManager>>) that...FIXME
 
 `ProcessorStateManager` is <<creating-instance, created>> exclusively when `AbstractTask` is <<kafka-streams-internals-AbstractTask.adoc#stateMgr, created>> (for <<kafka-streams-internals-StandbyTask.adoc#, StandbyTask>> and <<kafka-streams-internals-StreamTask.adoc#, StreamTask>> tasks).
 
@@ -81,7 +81,7 @@ NOTE: `register` is part of link:kafka-streams-internals-StateManager.adoc#regis
 Registering state store [storeName] to its state manager
 ```
 
-`register` finds the <<kafka-streams-StateStore.adoc#, StateStore>> in the <<storeToChangelogTopic, storeToChangelogTopic>> internal registry. If not found, `register` registers the `StateStore` (in the <<kafka-streams-AbstractStateManager.adoc#stores, stores>> registry) and returns.
+`register` finds the <<kafka-streams-StateStore.adoc#, StateStore>> in the <<storeToChangelogTopic, storeToChangelogTopic>> internal registry. If not found, `register` registers the `StateStore` (in the <<kafka-streams-internals-AbstractStateManager.adoc#stores, stores>> registry) and returns.
 
 If found however, `register` uses the topic to create a Kafka `TopicPartition` (with the <<getPartition, partition>>).
 
@@ -97,7 +97,7 @@ If the `ProcessorStateManager` is not in <<isStandby, standby>> mode, `register`
 Restoring state store [storeName] from changelog topic [topic]
 ```
 
-`register` adds the (store) partition to the <<changelogPartitions, changelogPartitions>> and registers the `StateStore` (in the <<kafka-streams-AbstractStateManager.adoc#stores, stores>> registry).
+`register` adds the (store) partition to the <<changelogPartitions, changelogPartitions>> and registers the `StateStore` (in the <<kafka-streams-internals-AbstractStateManager.adoc#stores, stores>> registry).
 
 `register` throws an `IllegalArgumentException` if the name of the <<kafka-streams-StateStore.adoc#, StateStore>> is *.checkpoint*.
 
@@ -105,7 +105,7 @@ Restoring state store [storeName] from changelog topic [topic]
 Illegal store name: .checkpoint
 ```
 
-`register` throws an `IllegalArgumentException` if the <<kafka-streams-StateStore.adoc#, StateStore>> is already registered (in the <<kafka-streams-AbstractStateManager.adoc#stores, stores>> registry).
+`register` throws an `IllegalArgumentException` if the <<kafka-streams-StateStore.adoc#, StateStore>> is already registered (in the <<kafka-streams-internals-AbstractStateManager.adoc#stores, stores>> registry).
 
 ```
 Store [storeName] has already been registered.
@@ -236,11 +236,11 @@ void checkpoint(final Map<TopicPartition, Long> checkpointableOffsets)
 
 NOTE: `checkpoint` is part of the <<kafka-streams-Checkpointable.adoc#checkpoint, Checkpointable Contract>> to checkpoint offsets.
 
-`checkpoint` requests the <<changelogReader, ChangelogReader>> for <<kafka-streams-ChangelogReader.adoc#restoredOffsets, restoredOffsets>> and adds them to the <<kafka-streams-AbstractStateManager.adoc#checkpointableOffsets, checkpointableOffsets>> registry.
+`checkpoint` requests the <<changelogReader, ChangelogReader>> for <<kafka-streams-ChangelogReader.adoc#restoredOffsets, restoredOffsets>> and adds them to the <<kafka-streams-internals-AbstractStateManager.adoc#checkpointableOffsets, checkpointableOffsets>> registry.
 
-For every <<kafka-streams-StateStore.adoc#, state store>> (in the <<kafka-streams-AbstractStateManager.adoc#stores, stores>> internal registry), `checkpoint`...FIXME
+For every <<kafka-streams-StateStore.adoc#, state store>> (in the <<kafka-streams-internals-AbstractStateManager.adoc#stores, stores>> internal registry), `checkpoint`...FIXME
 
-`checkpoint` creates a new <<kafka-streams-internals-OffsetCheckpoint.adoc#, OffsetCheckpoint>> (with the <<kafka-streams-AbstractStateManager.adoc#CHECKPOINT_FILE_NAME, .checkpoint>> file in the <<kafka-streams-AbstractStateManager.adoc#baseDir, base directory>>) unless <<kafka-streams-AbstractStateManager.adoc#checkpoint, it was done already>>.
+`checkpoint` creates a new <<kafka-streams-internals-OffsetCheckpoint.adoc#, OffsetCheckpoint>> (with the <<kafka-streams-internals-AbstractStateManager.adoc#CHECKPOINT_FILE_NAME, .checkpoint>> file in the <<kafka-streams-internals-AbstractStateManager.adoc#baseDir, base directory>>) unless <<kafka-streams-internals-AbstractStateManager.adoc#checkpoint, it was done already>>.
 
 `checkpoint` prints out the following TRACE message to the logs:
 
@@ -248,7 +248,7 @@ For every <<kafka-streams-StateStore.adoc#, state store>> (in the <<kafka-stream
 Writing checkpoint: [checkpointableOffsets]
 ```
 
-In the end, `checkpoint` requests the <<kafka-streams-AbstractStateManager.adoc#checkpoint, OffsetCheckpoint>> to <<kafka-streams-internals-OffsetCheckpoint.adoc#write, write>> the <<kafka-streams-AbstractStateManager.adoc#checkpointableOffsets, checkpointableOffsets>>.
+In the end, `checkpoint` requests the <<kafka-streams-internals-AbstractStateManager.adoc#checkpoint, OffsetCheckpoint>> to <<kafka-streams-internals-OffsetCheckpoint.adoc#write, write>> the <<kafka-streams-internals-AbstractStateManager.adoc#checkpointableOffsets, checkpointableOffsets>>.
 
 === [[registerGlobalStateStores]] `registerGlobalStateStores` Method
 
