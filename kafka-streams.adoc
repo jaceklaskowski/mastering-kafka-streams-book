@@ -31,7 +31,7 @@ object KafkaStreamsApp extends App {
   val sysout = Printed
     .toSysOut[String, String]
     .withLabel("stdout")
-  upper.print(sysout)
+  uppers.print(sysout)
 
   // Step 2. Build Topology
   val topology = builder.build
@@ -48,6 +48,7 @@ object KafkaStreamsApp extends App {
   import org.apache.kafka.streams.StreamsConfig
   val appId = this.getClass.getSimpleName.replace("$", "")
   props.put(StreamsConfig.APPLICATION_ID_CONFIG, appId)
+  props.put(StreamsConfig.CLIENT_ID_CONFIG, appId)
   props.put(StreamsConfig.BOOTSTRAP_SERVERS_CONFIG, ":9092")
 
   // Step 4. Create Kafka Streams Client
