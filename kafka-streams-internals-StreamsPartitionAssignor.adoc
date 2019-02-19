@@ -7,6 +7,8 @@
 `PartitionAssignor` is used for a dynamic partition assignment and distributing partition ownership across the members of a consumer group.
 
 Read up https://cwiki.apache.org/confluence/display/KAFKA/Kafka+Client-side+Assignment+Proposal[Kafka Client-side Assignment Proposal] on the group management in Apache Kafka's Consumer API.
+
+Read up on `PartitionAssignor` Contract in https://jaceklaskowski.gitbooks.io/apache-kafka/kafka-consumer-internals-PartitionAssignor.html[The Internals of Apache Kafka].
 ====
 
 From https://cwiki.apache.org/confluence/display/KAFKA/Kafka+Client-side+Assignment+Proposal[Kafka Client-side Assignment Proposal] (with extra formatting of mine):
@@ -139,7 +141,7 @@ In the end, `onAssignment` requests the <<taskManager, TaskManager>> for the fol
 Number of assigned partitions [partitions] is not equal to the number of active taskIds [activeTasks], assignmentInfo=[info]
 ```
 
-=== [[configure]] Configuring Partition Assignor -- `configure` Method
+=== [[configure]] Initialization (Configuring Partition Assignor) -- `configure` Method
 
 [source, java]
 ----
@@ -150,11 +152,11 @@ NOTE: `configure` is part of Kafka Consumer's `Configurable` contract for classe
 
 `configure` creates a <<kafka-streams-StreamsConfig.adoc#InternalStreamsConfig, InternalStreamsConfig>> for the given `configs`.
 
-`configure` initializes the <<logPrefix, logPrefix>> (with <<kafka-streams-properties.adoc#client.id, client.id>> configuration property).
+`configure` initializes the <<logPrefix, logPrefix>> (with <<kafka-streams-StreamsConfig.adoc#CLIENT_ID_CONFIG, CLIENT_ID_CONFIG>> configuration property).
 
-`configure` uses `upgrade.from` property for...FIXME
+`configure` uses <<kafka-streams-StreamsConfig.adoc#UPGRADE_FROM_CONFIG, UPGRADE_FROM_CONFIG>> configuration property for...FIXME
 
-`configure` uses the given `configs` to find the current <<taskManager, TaskManager>> using <<kafka-streams-StreamsConfig.adoc#TASK_MANAGER_FOR_PARTITION_ASSIGNOR, TASK_MANAGER_FOR_PARTITION_ASSIGNOR>> internal property. If not found or of a different type than `TaskManager`, `configure` throws a `KafkaException`:
+`configure` sets the <<taskManager, TaskManager>> per <<kafka-streams-StreamsConfig.adoc#TASK_MANAGER_FOR_PARTITION_ASSIGNOR, TASK_MANAGER_FOR_PARTITION_ASSIGNOR>> internal property (in the given `configs`). If not found or of a different type than <<kafka-streams-internals-TaskManager.adoc#, TaskManager>>, `configure` throws a `KafkaException`:
 
 ```
 TaskManager is not specified
@@ -164,7 +166,7 @@ TaskManager is not specified
 [className] is not an instance of org.apache.kafka.streams.processor.internals.TaskManager
 ```
 
-`configure` uses the given `configs` to find the current <<assignmentErrorCode, assignmentErrorCode>> using <<kafka-streams-StreamsConfig.adoc#ASSIGNMENT_ERROR_CODE, ASSIGNMENT_ERROR_CODE>> internal property. If not found or of a different type than `AtomicInteger`, `configure` throws a `KafkaException`:
+`configure` sets the <<assignmentErrorCode, assignmentErrorCode>> per <<kafka-streams-StreamsConfig.adoc#ASSIGNMENT_ERROR_CODE, ASSIGNMENT_ERROR_CODE>> internal property (in the given `configs`). If not found or of a different type than `AtomicInteger`, `configure` throws a `KafkaException`:
 
 ```
 assignmentErrorCode is not specified
@@ -174,15 +176,15 @@ assignmentErrorCode is not specified
 [className] is not an instance of java.util.concurrent.atomic.AtomicInteger
 ```
 
-`configure` uses the given `configs` to find the current <<numStandbyReplicas, numStandbyReplicas>> using the <<kafka-streams-properties.adoc#num.standby.replicas, num.standby.replicas>> configuration property.
+`configure` sets the <<numStandbyReplicas, numStandbyReplicas>> per <<kafka-streams-StreamsConfig.adoc#NUM_STANDBY_REPLICAS_CONFIG, NUM_STANDBY_REPLICAS_CONFIG>> configuration property (in the given `configs`).
 
-`configure` uses the given `configs` to find the current <<partitionGrouper, partitionGrouper>> using the <<kafka-streams-properties.adoc#partition.grouper, partition.grouper>> configuration property.
+`configure` sets the <<partitionGrouper, PartitionGrouper>> per <<kafka-streams-StreamsConfig.adoc#PARTITION_GROUPER_CLASS_CONFIG, PARTITION_GROUPER_CLASS_CONFIG>> configuration property (in the given `configs`).
 
-`configure` uses the given `configs` to find the current <<userEndPoint, userEndPoint>> using the <<kafka-streams-properties.adoc#application.server, application.server>> configuration property if defined.
+`configure` sets the <<userEndPoint, userEndPoint>> if <<kafka-streams-StreamsConfig.adoc#APPLICATION_SERVER_CONFIG, APPLICATION_SERVER_CONFIG>> configuration property was defined.
 
-`configure` creates the <<internalTopicManager, InternalTopicManager>> (with the Kafka <<kafka-streams-internals-TaskManager.adoc#adminClient, AdminClient>> of the <<taskManager, TaskManager>> and the `InternalStreamsConfig`).
+`configure` creates a new <<internalTopicManager, InternalTopicManager>> (with the Kafka <<kafka-streams-internals-TaskManager.adoc#adminClient, AdminClient>> of the <<taskManager, TaskManager>> and the `InternalStreamsConfig` created earlier).
 
-`configure` creates the <<copartitionedTopicsValidator, CopartitionedTopicsValidator>> (with the <<logPrefix, logPrefix>>).
+`configure` creates a new <<copartitionedTopicsValidator, CopartitionedTopicsValidator>> (with the <<logPrefix, logPrefix>>).
 
 === [[prepareTopic]] `prepareTopic` Internal Method
 
