@@ -1,6 +1,6 @@
 == [[StreamsPartitionAssignor]] StreamsPartitionAssignor -- Dynamic Partition Assignment Strategy
 
-`StreamsPartitionAssignor` is a custom `PartitionAssignor` (from the Kafka Consumer API) that is used to <<assign, assign partitions dynamically>> across the instances of a Kafka Streams application (identified by the required <<kafka-streams-StreamsConfig.adoc#APPLICATION_ID_CONFIG, StreamsConfig.APPLICATION_ID_CONFIG>> configuration property).
+`StreamsPartitionAssignor` is a custom `PartitionAssignor` (from the Kafka Consumer API) that is used to <<assign, assign partitions dynamically>> to the stream processor threads of a Kafka Streams application (identified by the required <<kafka-streams-StreamsConfig.adoc#APPLICATION_ID_CONFIG, StreamsConfig.APPLICATION_ID_CONFIG>> configuration property with the number of stream processor threads per <<kafka-streams-StreamsConfig.adoc#NUM_STREAM_THREADS_CONFIG, StreamsConfig.NUM_STREAM_THREADS_CONFIG>> configuration property).
 
 [TIP]
 ====
@@ -25,7 +25,7 @@ Given the above, there will be just one elected `StreamsPartitionAssignor` among
 
 [[PARTITION_ASSIGNMENT_STRATEGY_CONFIG]]
 [[partition.assignment.strategy]]
-`StreamsPartitionAssignor` (as a fully-qualified class name) is registered under *partition.assignment.strategy* (`ConsumerConfig.PARTITION_ASSIGNMENT_STRATEGY_CONFIG`) configuration property when `StreamsConfig` is requested for the <<kafka-streams-StreamsConfig.adoc#getMainConsumerConfigs, configuration for the main Kafka Consumer>>.
+`StreamsPartitionAssignor` (as a fully-qualified class name) is registered under *partition.assignment.strategy* (`ConsumerConfig.PARTITION_ASSIGNMENT_STRATEGY_CONFIG`) configuration property when `StreamsConfig` is requested for the <<kafka-streams-StreamsConfig.adoc#getMainConsumerConfigs, configuration for the main Kafka Consumer>> (when `StreamThread` is requested to <<kafka-streams-StreamThread.adoc#create, create a new StreamThread instance>> and requests the `KafkaClientSupplier` for a <<kafka-streams-KafkaClientSupplier.adoc#getConsumer, Kafka Consumer>>).
 
 [[creating-instance]]
 `StreamsPartitionAssignor` is a Kafka https://kafka.apache.org/21/javadoc/org/apache/kafka/common/Configurable.html[Configurable] that is instantiated by reflection with <<configure, configuration parameters>>. That is when `StreamsPartitionAssignor` finds the current <<taskManager, TaskManager>> (using <<kafka-streams-StreamsConfig.adoc#TASK_MANAGER_FOR_PARTITION_ASSIGNOR, TASK_MANAGER_FOR_PARTITION_ASSIGNOR>> internal property set when the `StreamThread` is <<kafka-streams-StreamThread.adoc#create, created>>).
@@ -141,7 +141,7 @@ Number of assigned partitions [partitions] is not equal to the number of active 
 
 === [[configure]] Configuring Partition Assignor -- `configure` Method
 
-[source, scala]
+[source, java]
 ----
 void configure(final Map<String, ?> configs)
 ----

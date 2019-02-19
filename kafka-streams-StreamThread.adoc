@@ -568,7 +568,7 @@ Creating consumer client
 
 In the end, `create` creates a <<creating-instance, StreamThread>>.
 
-NOTE: `create` is used exclusively when `KafkaStreams` is link:kafka-streams-KafkaStreams.adoc#creating-instance[created].
+NOTE: `create` is used exclusively when `KafkaStreams` is <<kafka-streams-KafkaStreams.adoc#, created>>.
 
 === [[punctuate]] `punctuate` Internal Method
 
