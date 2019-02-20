@@ -2,6 +2,20 @@
 
 `ClientMetadata` is...FIXME
 
+[[internal-registries]]
+.ClientMetadata's Internal Properties (e.g. Registries, Counters and Flags)
+[cols="1m,3",options="header",width="100%"]
+|===
+| Name
+| Description
+
+| consumers
+| [[consumers]] Member IDs
+
+Used when...FIXME
+
+|===
+
 === [[addConsumer]] `addConsumer` Method
 
 [source, java]

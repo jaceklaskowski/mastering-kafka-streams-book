@@ -256,7 +256,7 @@ CAUTION: FIXME
 Unknown metadata version: [usedVersion]; latest supported version: " + SubscriptionInfo.LATEST_SUPPORTED_VERSION
 ```
 
-=== [[errorAssignment]] `errorAssignment` Method
+=== [[errorAssignment]] Creating Empty Partition Assignment with Error Code -- `errorAssignment` Method
 
 [source, java]
 ----
@@ -266,7 +266,13 @@ Map<String, Assignment> errorAssignment(
   final int errorCode)
 ----
 
-`errorAssignment`...FIXME
+`errorAssignment` prints out the following ERROR message to the logs:
+
+```
+[topic] is unknown yet during rebalance, please make sure they have been pre-created before starting the Streams application.
+```
+
+In the end, `errorAssignment` returns a new map of client IDs with empty `Assignment` per <<kafka-streams-internals-ClientMetadata.adoc#consumers, consumers>> in the <<kafka-streams-internals-ClientMetadata.adoc#, ClientMetadata>> from the input `clientsMetadata`.
 
 NOTE: `errorAssignment` is used exclusively when `StreamsPartitionAssignor` is requested to <<assign, perform partition assignment>>.
 
