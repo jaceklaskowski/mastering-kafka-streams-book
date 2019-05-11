@@ -193,7 +193,9 @@ a| [[initializeTopology]]
 void initializeTopology()
 ----
 
-Used exclusively when `AssignedTasks` is requested to link:kafka-streams-internals-AssignedTasks.adoc#transitionToRunning[schedule a task for execution]
+Initializes a <<topology, topology>>
+
+Used exclusively when `AssignedTasks` is requested to <<kafka-streams-internals-AssignedTasks.adoc#transitionToRunning, schedule a task for execution (processing records)>>
 
 | partitions
 a| [[partitions]]
@@ -228,6 +230,8 @@ a| [[topology]]
 ----
 ProcessorTopology topology()
 ----
+
+<<kafka-streams-internals-ProcessorTopology.adoc#, ProcessorTopology>> of the task
 
 | toString
 a| [[toString]]

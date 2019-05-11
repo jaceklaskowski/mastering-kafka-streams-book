@@ -4,6 +4,8 @@
 
 `StreamTask` is <<creating-instance, created>> exclusively when `TaskCreator` is requested to <<kafka-streams-internals-TaskCreator.adoc#createTask, create one>>.
 
+When requested to <<initializeTopology, initialize a processor topology>> (as a <<kafka-streams-internals-Task.adoc#, task>>), `StreamTask`...FIXME
+
 [[commitNeeded]]
 [[commitRequested]]
 [[needCommit]]
@@ -15,49 +17,18 @@
 [[maxBufferedSize]]
 `StreamTask` uses link:kafka-streams-StreamsConfig.adoc#buffered.records.per.partition[buffered.records.per.partition] configuration property to control when to resume a partition (when <<process, processing a single record>>).
 
-[[internal-registries]]
-.StreamTask's Internal Properties (e.g. Registries, Counters and Flags)
-[cols="1m,2",options="header",width="100%"]
-|===
-| Name
-| Description
-
-| partitionGroup
-a| [[partitionGroup]] <<kafka-streams-internals-PartitionGroup.adoc#, PartitionGroup>> (with a <<kafka-streams-internals-RecordQueue.adoc#, RecordQueue>> for every assigned Kafka <<partitions, TopicPartition>>)
-
-Used when `StreamTask` is requested for the following:
-
-* <<addRecords, addRecords>>
-
-* <<closeSuspended, closeSuspended>>
-
-* <<closeTopology, closeTopology>>
-
-* <<maybePunctuateStreamTime, maybePunctuateStreamTime>>
-
-* <<numBuffered, numBuffered>>
-
-* <<process, Process a single record>>
-
-| consumedOffsets
-| [[consumedOffsets]] Offsets by https://kafka.apache.org/20/javadoc/org/apache/kafka/common/TopicPartition.html[TopicPartitions] (`Map<TopicPartition, Long>`) that `StreamTask` has <<process, processed>> successfully
-
-| taskMetrics
-| [[taskMetrics]] <<kafka-streams-StreamTask-TaskMetrics.adoc#, TaskMetrics>>
-|===
-
 [[logging]]
 [TIP]
 ====
-Enable `TRACE` logging level for `org.apache.kafka.streams.processor.internals.StreamTask` logger to see what happens inside.
+Enable `ALL` logging level for `org.apache.kafka.streams.processor.internals.StreamTask` logger to see what happens inside.
 
 Add the following line to `log4j.properties`:
 
 ```
-log4j.logger.org.apache.kafka.streams.processor.internals.StreamTask=TRACE
+log4j.logger.org.apache.kafka.streams.processor.internals.StreamTask=ALL
 ```
 
-Refer to link:kafka-logging.adoc#log4j.properties[Application Logging Using log4j].
+Refer to <<kafka-logging.adoc#log4j.properties, Application Logging Using log4j>>.
 ====
 
 === [[closeTopology]] `closeTopology` Internal Method
@@ -107,7 +78,7 @@ NOTE: `close` is part of link:kafka-streams-internals-Task.adoc#close[Task Contr
 
 * [[id]] `TaskId`
 * [[partitions]] Topic partitions (as Kafka's `TopicPartition`)
-* [[topology]] link:kafka-streams-internals-ProcessorTopology.adoc[ProcessorTopology]
+* [[topology]] <<kafka-streams-internals-ProcessorTopology.adoc#, ProcessorTopology>>
 * [[consumer]] Kafka https://kafka.apache.org/20/javadoc/org/apache/kafka/clients/consumer/KafkaConsumer.html[Consumer] (`Consumer<byte[], byte[]>`)
 * [[changelogReader]] <<kafka-streams-ChangelogReader.adoc#, ChangelogReader>>
 * [[config]] link:kafka-streams-StreamsConfig.adoc[StreamsConfig]
@@ -115,9 +86,9 @@ NOTE: `close` is part of link:kafka-streams-internals-Task.adoc#close[Task Contr
 * [[stateDirectory]] link:kafka-streams-internals-StateDirectory.adoc[StateDirectory]
 * [[cache]] <<kafka-streams-internals-ThreadCache.adoc#, ThreadCache>>
 * [[time]] `Time`
-* [[producer]] Kafka `Producer` (of keys and values as array of bytes)
+* [[producer]] Kafka `Producer` (`Producer<byte[], byte[]>`)
 
-`StreamTask` initializes the <<internal-registries, internal registries and counters>>.
+`StreamTask` initializes the <<internal-properties, internal properties>>.
 
 === [[initTopology]] `initTopology` Internal Method
 
@@ -130,16 +101,22 @@ void initTopology()
 
 NOTE: `initTopology` is used exclusively when `StreamTask` is requested to <<initializeTopology, initializeTopology>>.
 
-=== [[initializeTopology]] `initializeTopology` Method
+=== [[initializeTopology]] Initializing Processor Topology -- `initializeTopology` Method
 
 [source, java]
 ----
 void initializeTopology()
 ----
 
-NOTE: `initializeTopology` is part of link:kafka-streams-internals-Task.adoc#initializeTopology[Task Contract] to...FIXME.
+NOTE: `initializeTopology` is part of <<kafka-streams-internals-Task.adoc#initializeTopology, Task Contract>> to initialize a <<kafka-streams-internals-ProcessorTopology.adoc#, ProcessorTopology>>.
 
-`initializeTopology` <<initTopology, initTopology>>. It then requests link:kafka-streams-internals-AbstractTask.adoc#processorContext[InternalProcessorContext] to link:kafka-streams-internals-InternalProcessorContext.adoc#initialized[initialized] and in the end sets link:kafka-streams-internals-AbstractTask.adoc#taskInitialized[taskInitialized] to `true`.
+`initializeTopology` <<initTopology, initTopology>>.
+
+With <<kafka-streams-internals-AbstractTask.adoc#eosEnabled, exactly-once support enabled>>, `initializeTopology` requests the <<producer, Kafka Producer>> to start a new transaction (`Producer.beginTransaction`) and turns the <<transactionInFlight, transactionInFlight>> flag on.
+
+`initializeTopology` then requests the <<kafka-streams-internals-AbstractTask.adoc#processorContext, InternalProcessorContext>> to <<kafka-streams-internals-InternalProcessorContext.adoc#initialize, initialize>>.
+
+In the end, `initializeTopology` turns the <<kafka-streams-internals-AbstractTask.adoc#taskInitialized, taskInitialized>> flag on (`true`) and the <<idleStartTime, idleStartTime>> to `UNKNOWN`.
 
 === [[updateProcessorContext]] `updateProcessorContext` Internal Method
 
@@ -407,3 +384,41 @@ Flushing state and producer
 `flushState` <<kafka-streams-internals-AbstractTask.adoc#flushState, flushes state stores>>.
 
 `flushState` requests the <<recordCollector, RecordCollector>> to <<kafka-streams-internals-RecordCollector.adoc#flush, flush>>.
+
+=== [[internal-properties]] Internal Properties
+
+.StreamTask's Internal Properties (e.g. Registries, Counters and Flags)
+[cols="30m,70",options="header",width="100%"]
+|===
+| Name
+| Description
+
+| partitionGroup
+a| [[partitionGroup]] <<kafka-streams-internals-PartitionGroup.adoc#, PartitionGroup>> (with a <<kafka-streams-internals-RecordQueue.adoc#, RecordQueue>> for every assigned Kafka <<partitions, TopicPartition>>)
+
+Used when `StreamTask` is requested for the following:
+
+* <<addRecords, addRecords>>
+
+* <<closeSuspended, closeSuspended>>
+
+* <<closeTopology, closeTopology>>
+
+* <<maybePunctuateStreamTime, maybePunctuateStreamTime>>
+
+* <<numBuffered, numBuffered>>
+
+* <<process, Process a single record>>
+
+| consumedOffsets
+| [[consumedOffsets]] Offsets by https://kafka.apache.org/20/javadoc/org/apache/kafka/common/TopicPartition.html[TopicPartitions] (`Map<TopicPartition, Long>`) that `StreamTask` has <<process, processed>> successfully
+
+| idleStartTime
+a| [[idleStartTime]]
+
+| taskMetrics
+| [[taskMetrics]] <<kafka-streams-StreamTask-TaskMetrics.adoc#, TaskMetrics>>
+
+| transactionInFlight
+a| [[transactionInFlight]] Controls whether...FIXME
+|===

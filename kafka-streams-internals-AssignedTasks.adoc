@@ -142,14 +142,16 @@ Set<TopicPartition> updateRestored(final Collection<TopicPartition> restored)
 
 NOTE: `updateRestored` is used when...FIXME
 
-=== [[transitionToRunning]] Scheduling Task For Execution (and Processing Records) -- `transitionToRunning` Internal Method
+=== [[transitionToRunning]] Scheduling Task For Execution (Processing Records) -- `transitionToRunning` Internal Method
 
 [source, java]
 ----
-void transitionToRunning(final T task, final Set<TopicPartition> readyPartitions)
+void transitionToRunning(
+  final T task,
+  final Set<TopicPartition> readyPartitions)
 ----
 
-`transitionToRunning` simply makes a task available for processing records.
+`transitionToRunning` simply makes a task available for processing records (_transitions a task to running state_).
 
 Internally, `transitionToRunning` prints out the following DEBUG message to the logs:
 
@@ -157,11 +159,11 @@ Internally, `transitionToRunning` prints out the following DEBUG message to the 
 transitioning [taskTypeName] [taskId] to running
 ```
 
-`transitionToRunning` registers the input `task` in <<running, running>> internal registry.
+`transitionToRunning` registers the input `task` in the <<running, running>> internal registry.
 
 NOTE: Registering a task in <<running, running>> internal registry is the only way to mark the task as running (and link:kafka-streams-AssignedStreamsTasks.adoc#process[processing records]).
 
-`transitionToRunning` requests the input `task` to link:kafka-streams-internals-Task.adoc#initializeTopology[initializeTopology].
+`transitionToRunning` requests the input `task` to <<kafka-streams-internals-Task.adoc#initializeTopology, initializeTopology>>.
 
 `transitionToRunning` registers the link:kafka-streams-internals-Task.adoc#partitions[partitions] of the input `task` with the `task` (in <<runningByPartition, runningByPartition>> internal registry).
 
@@ -171,7 +173,7 @@ NOTE: The input `readyPartitions` could really be an output.
 
 `transitionToRunning` registers the link:kafka-streams-internals-Task.adoc#changelogPartitions[changelog partitions] of the input `task` with the `task` (in <<runningByPartition, runningByPartition>> internal registry).
 
-NOTE: `transitionToRunning` is used when `AssignedTasks` is requested to <<initializeNewTasks, initializeNewTasks>>, <<maybeResumeSuspendedTask, maybeResumeSuspendedTask>> and <<updateRestored, updateRestored>>.
+NOTE: `transitionToRunning` is used when `AssignedTasks` is requested to <<initializeNewTasks, initializeNewTasks>>, <<maybeResumeSuspendedTask, resume a suspended task>> and <<updateRestored, updateRestored>>.
 
 === [[addNewTask]] Adding New Task -- `addNewTask` Method
 
@@ -191,7 +193,7 @@ NOTE: `addNewTask` is used exclusively when `TaskManager` is requested to link:k
 
 [source, java]
 ----
-Set<TopicPartition> initializeNewTasks()
+void initializeNewTasks()
 ----
 
 `initializeNewTasks` initializes new tasks, i.e. moves tasks from <<created, created>> registry to either <<restoring, restoring>> or <<running, running>> per whether a task has state stores that may need restoring or not, respectively. In the end `initializeNewTasks` gives the Kafka `TopicPartitions` of the tasks that have state stores.
@@ -227,7 +229,7 @@ In case of `LockException`, `initializeNewTasks` prints out the following TRACE 
 Could not create [taskTypeName] [taskId] due to [message]; will retry
 ```
 
-NOTE: `initializeNewTasks` is used exclusively when `TaskManager` is requested to link:kafka-streams-internals-TaskManager.adoc#updateNewAndRestoringTasks[updateNewAndRestoringTasks].
+NOTE: `initializeNewTasks` is used exclusively when `TaskManager` is requested to <<kafka-streams-internals-TaskManager.adoc#updateNewAndRestoringTasks, updateNewAndRestoringTasks>>.
 
 === [[closeNonAssignedSuspendedTasks]] Closing Non-Assigned Suspended Tasks -- `closeNonAssignedSuspendedTasks` Method
 
