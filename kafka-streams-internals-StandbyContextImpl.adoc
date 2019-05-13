@@ -1,3 +1,6 @@
 == [[StandbyContextImpl]] StandbyContextImpl
 
 `StandbyContextImpl` is...FIXME
+
+[[NO_OP_COLLECTOR]]
+`StandbyContextImpl` creates a <<kafka-streams-internals-RecordCollector.adoc#, RecordCollector>> that simply does nothing when executed (i.e. all methods are no-ops).

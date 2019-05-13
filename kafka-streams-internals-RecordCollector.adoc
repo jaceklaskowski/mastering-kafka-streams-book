@@ -3,70 +3,104 @@
 `RecordCollector` is the <<contract, contract>> of <<implementations, record collectors>> that <<FIXME, FIXME>>.
 
 [[contract]]
-[source, java]
-----
-package org.apache.kafka.streams.processor.internals;
-
-interface RecordCollector {
-  void close();
-  void flush();
-  Map<TopicPartition, Long> offsets();
-  <K, V> void send(
-    final String topic,
-    final K key,
-    final V value,
-    final Integer partition,
-    final Long timestamp,
-    final Serializer<K> keySerializer,
-    final Serializer<V> valueSerializer);
-  <K, V> void send(
-    final String topic,
-    final K key,
-    final V value,
-    final Long timestamp,
-    final Serializer<K> keySerializer,
-    final Serializer<V> valueSerializer,
-    final StreamPartitioner<? super K, ? super V> partitioner);
-}
-----
-
 .RecordCollector Contract
-[cols="1,2",options="header",width="100%"]
+[cols="1m,3",options="header",width="100%"]
 |===
 | Method
 | Description
 
-| `close`
-| [[close]] Used exclusively when `StreamTask` is requested to link:kafka-streams-internals-StreamTask.adoc#closeSuspended[closeSuspended]
+| close
+a| [[close]]
 
-| `flush`
-| [[flush]] Used exclusively when `StreamTask` is requested to link:kafka-streams-internals-StreamTask.adoc#flushState[flushState]
+[source, java]
+----
+void close()
+----
 
-| `offsets`
-| [[offsets]] Used exclusively when `StreamTask` is requested to link:kafka-streams-internals-StreamTask.adoc#recordCollectorOffsets[recordCollectorOffsets]
+Closes the `RecordCollector`
 
-| `send`
-a| [[send]] Used when:
+Used when...FIXME
 
-* `RecordCollectorImpl` is requested to link:kafka-streams-RecordCollectorImpl.adoc#send[send]
+| flush
+a| [[flush]]
 
-* `StoreChangeLogger` is requested to link:kafka-streams-StoreChangeLogger.adoc#logChange[logChange]
+[source, java]
+----
+void flush()
+----
 
-* `SinkNode` is requested to link:kafka-streams-internals-SinkNode.adoc#process[process]
+Used exclusively when `StreamTask` is requested to <<kafka-streams-internals-StreamTask.adoc#flushState, flushState>>
 
-NOTE: There are two `send` methods with a partition ID or a link:kafka-streams-StreamPartitioner.adoc[StreamPartitioner].
+| init
+a| [[init]]
+
+[source, java]
+----
+void init(final Producer<byte[], byte[]> producer)
+----
+
+Initializes the `RecordCollector` (with a specified Kafka `Producer`)
+
+Used when `StreamTask` is <<kafka-streams-internals-StreamTask.adoc#, created>> and <<kafka-streams-internals-StreamTask.adoc#resume, resumed>>
+
+| offsets
+a| [[offsets]]
+
+[source, java]
+----
+Map<TopicPartition, Long> offsets()
+----
+
+Used exclusively when `StreamTask` is requested to <<kafka-streams-internals-StreamTask.adoc#activeTaskCheckpointableOffsets, activeTaskCheckpointableOffsets>>
+
+| send
+a| [[send]]
+
+[source, java]
+----
+<K, V> void send(
+  final String topic,
+  final K key,
+  final V value,
+  final Headers headers,
+  final Integer partition,
+  final Long timestamp,
+  final Serializer<K> keySerializer,
+  final Serializer<V> valueSerializer)
+<K, V> void send(
+  final String topic,
+  final K key,
+  final V value,
+  final Headers headers,
+  final Long timestamp,
+  final Serializer<K> keySerializer,
+  final Serializer<V> valueSerializer,
+  final StreamPartitioner<? super K, ? super V> partitioner)
+----
+
+Used when:
+
+* `RecordCollectorImpl` is requested to <<kafka-streams-RecordCollectorImpl.adoc#send, send a record>>
+
+* `InMemoryTimeOrderedKeyValueBuffer` is requested to `flush`
+
+* `StoreChangeLogger` is requested to <<kafka-streams-StoreChangeLogger.adoc#logChange, logChange>>
+
+* `SinkNode` is requested to <<kafka-streams-internals-SinkNode.adoc#process, process a record>>
+
 |===
 
 [[implementations]]
 .RecordCollectors
-[cols="1,2",options="header",width="100%"]
+[cols="30m,70",options="header",width="100%"]
 |===
 | RecordCollector
 | Description
 
-| link:kafka-streams-RecordCollectorImpl.adoc[RecordCollectorImpl]
+| <<kafka-streams-internals-StandbyContextImpl.adoc#NO_OP_COLLECTOR, NO_OP_COLLECTOR>>
+| [[NO_OP_COLLECTOR]]
+
+| <<kafka-streams-RecordCollectorImpl.adoc#, RecordCollectorImpl>>
 | [[RecordCollectorImpl]]
 
-| `NO_OP_COLLECTOR`
-| [[NO_OP_COLLECTOR]]
 |===

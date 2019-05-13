@@ -37,9 +37,20 @@ Used when...FIXME
 
 [source, java]
 ----
-void logChange(final K key, final V value)
+void logChange(
+  final K key,
+  final V value)
 ----
 
 `logChange`...FIXME
 
-NOTE: `logChange` is used when...FIXME
+[NOTE]
+====
+`logChange` is used when:
+
+* `ChangeLoggingKeyValueBytesStore` is requested to <<kafka-streams-StateStore-ChangeLoggingKeyValueBytesStore.adoc#init, init>>, <<kafka-streams-StateStore-ChangeLoggingKeyValueBytesStore.adoc#put, put>>, <<kafka-streams-StateStore-ChangeLoggingKeyValueBytesStore.adoc#putAll, putAll>>, and <<kafka-streams-StateStore-ChangeLoggingKeyValueBytesStore.adoc#delete, delete>>
+
+* `ChangeLoggingSessionBytesStore` is requested to <<kafka-streams-StateStore-ChangeLoggingSessionBytesStore.adoc#remove, remove>> and <<kafka-streams-StateStore-ChangeLoggingSessionBytesStore.adoc#put, put>>
+
+* `ChangeLoggingWindowBytesStore` is requested to <<kafka-streams-StateStore-ChangeLoggingWindowBytesStore.adoc#put, put>>
+====
