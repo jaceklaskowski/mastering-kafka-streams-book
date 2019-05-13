@@ -1,6 +1,6 @@
 == [[RecordCollector]] RecordCollector Contract
 
-`RecordCollector` is the <<contract, contract>> of <<implementations, record collectors>> that <<FIXME, FIXME>>.
+`RecordCollector` is the <<contract, contract>> of <<implementations, record collectors>> that can <<send, send a record to a topic>>.
 
 [[contract]]
 .RecordCollector Contract
@@ -80,6 +80,8 @@ a| [[send]]
   final StreamPartitioner<? super K, ? super V> partitioner)
 ----
 
+Sends a record to a topic
+
 Used when:
 
 * `RecordCollectorImpl` is requested to <<kafka-streams-internals-RecordCollectorImpl.adoc#send, send a record>>
@@ -106,3 +108,23 @@ Used when:
 | [[RecordCollectorImpl]]
 
 |===
+
+=== [[Supplier]][[recordCollector]] Supplier Contract and `recordCollector` Method
+
+`RecordCollector` defines a `Supplier` that is used to access the <<kafka-streams-internals-RecordCollector.adoc#, RecordCollector>>.
+
+[source, java]
+----
+RecordCollector recordCollector()
+----
+
+[NOTE]
+====
+`recordCollector` is used when:
+
+* `SinkNode` is requested to <<kafka-streams-internals-SinkNode.adoc#process, process a record>>
+
+* `InMemoryTimeOrderedKeyValueBuffer` is requested to `init`
+
+* StoreChangeLogger is <<kafka-streams-StoreChangeLogger.adoc#, created>>
+====
