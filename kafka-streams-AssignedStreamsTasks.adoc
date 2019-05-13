@@ -2,7 +2,7 @@
 
 `AssignedStreamsTasks` is a concrete <<kafka-streams-internals-AssignedTasks.adoc#, AssignedTasks>> of <<kafka-streams-internals-StreamTask.adoc#, StreamTasks>> that...FIXME
 
-`AssignedStreamsTasks` is <<creating-instance, created>> for a <<kafka-streams-StreamThread.adoc#create, StreamThread>> (when `KafkaStreams` is <<kafka-streams-KafkaStreams.adoc#creating-instance, created>>).
+`AssignedStreamsTasks` is <<creating-instance, created>> for a <<kafka-streams-internals-StreamThread.adoc#create, StreamThread>> (when `KafkaStreams` is <<kafka-streams-KafkaStreams.adoc#creating-instance, created>>).
 
 `AssignedStreamsTasks` is a `RestoringTasks` that...FIXME
 

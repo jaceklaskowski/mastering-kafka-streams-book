@@ -15,7 +15,7 @@ From the documentation of https://kafka.apache.org/10/javadoc/org/apache/kafka/c
 
 > It is guaranteed that all consumer processes will invoke `onPartitionsRevoked` prior to any process invoking `onPartitionsAssigned`.
 
-`RebalanceListener` is <<creating-instance, created>> exclusively when `StreamThread` is link:kafka-streams-StreamThread.adoc#rebalanceListener[created].
+`RebalanceListener` is <<creating-instance, created>> exclusively when `StreamThread` is link:kafka-streams-internals-StreamThread.adoc#rebalanceListener[created].
 
 .Creating RebalanceListener
 image::images/kafka-streams-RebalanceListener-creating-instance.png[align="center"]
@@ -35,7 +35,7 @@ At the start of a rebalance operation (i.e. <<onPartitionsRevoked, onPartitionsR
 [[logging]]
 [TIP]
 ====
-`RebalanceListener` uses the <<log, logger>> from the owning <<kafka-streams-StreamThread.adoc#, StreamThread>> for logging.
+`RebalanceListener` uses the <<log, logger>> from the owning <<kafka-streams-internals-StreamThread.adoc#, StreamThread>> for logging.
 
 Enable `DEBUG` logging level for `org.apache.kafka.streams.processor.internals.StreamThread` logger to see what happens inside.
 
@@ -95,5 +95,5 @@ NOTE: `onPartitionsRevoked` is part of `ConsumerRebalanceListener` Contract in A
 
 * [[time]] `Time`
 * [[taskManager]] link:kafka-streams-internals-TaskManager.adoc[TaskManager]
-* [[streamThread]] link:kafka-streams-StreamThread.adoc[StreamThread]
+* [[streamThread]] link:kafka-streams-internals-StreamThread.adoc[StreamThread]
 * [[log]] `Logger`

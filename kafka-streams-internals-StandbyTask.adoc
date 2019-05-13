@@ -170,4 +170,4 @@ Updating standby replicas of its state store for partition [partition]
 
 `update` then simply requests the <<stateMgr, ProcessorStateManager>> to <<kafka-streams-ProcessorStateManager.adoc#updateStandbyStates, updateStandbyStates>> and returns the result.
 
-NOTE: `update` is used exclusively when `StreamThread` is requested to <<kafka-streams-StreamThread.adoc#maybeUpdateStandbyTasks, maybeUpdateStandbyTasks>>.
+NOTE: `update` is used exclusively when `StreamThread` is requested to <<kafka-streams-internals-StreamThread.adoc#maybeUpdateStandbyTasks, maybeUpdateStandbyTasks>>.

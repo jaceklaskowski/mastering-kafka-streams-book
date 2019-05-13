@@ -8,7 +8,7 @@
 
 * `StandbyContextImpl` is <<kafka-streams-internals-StandbyContextImpl.adoc#, created>> (as a <<kafka-streams-internals-AbstractProcessorContext.adoc#cache, AbstractProcessorContext>>)
 
-* `StreamThread` is <<kafka-streams-StreamThread.adoc#create, created>> (and creates a <<kafka-streams-internals-TaskCreator.adoc#cache, TaskCreator>>)
+* `StreamThread` is <<kafka-streams-internals-StreamThread.adoc#create, created>> (and creates a <<kafka-streams-internals-TaskCreator.adoc#cache, TaskCreator>>)
 
 === [[creating-instance]] Creating ThreadCache Instance
 

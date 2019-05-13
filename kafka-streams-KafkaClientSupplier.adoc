@@ -31,9 +31,9 @@ Consumer<byte[], byte[]> getConsumer(
   final Map<String, Object> config)
 ----
 
-A Kafka https://kafka.apache.org/21/javadoc/org/apache/kafka/clients/consumer/KafkaConsumer.html[Consumer] (for <<kafka-streams-internals-TaskManager.adoc#consumer, TaskManager>> and <<kafka-streams-StreamThread.adoc#consumer, StreamThread>>)
+A Kafka https://kafka.apache.org/21/javadoc/org/apache/kafka/clients/consumer/KafkaConsumer.html[Consumer] (for <<kafka-streams-internals-TaskManager.adoc#consumer, TaskManager>> and <<kafka-streams-internals-StreamThread.adoc#consumer, StreamThread>>)
 
-Used exclusively when `StreamThread` is <<kafka-streams-StreamThread.adoc#create, created>> (that also <<kafka-streams-internals-TaskManager.adoc#setConsumer, sets the Kafka Consumer>> for the <<kafka-streams-internals-TaskManager.adoc#taskManager, TaskManager>>)
+Used exclusively when `StreamThread` is <<kafka-streams-internals-StreamThread.adoc#create, created>> (that also <<kafka-streams-internals-TaskManager.adoc#setConsumer, sets the Kafka Consumer>> for the <<kafka-streams-internals-TaskManager.adoc#taskManager, TaskManager>>)
 
 | getGlobalConsumer
 a| [[getGlobalConsumer]]
@@ -57,11 +57,11 @@ Producer<byte[], byte[]> getProducer(
   final Map<String, Object> config)
 ----
 
-A Kafka http://kafka.apache.org/20/javadoc/org/apache/kafka/clients/producer/KafkaProducer.html[Producer] (for <<kafka-streams-StreamThread.adoc#producer, StreamThreads>> and <<kafka-streams-internals-TaskCreator.adoc#threadProducer, TaskCreator>>)
+A Kafka http://kafka.apache.org/20/javadoc/org/apache/kafka/clients/producer/KafkaProducer.html[Producer] (for <<kafka-streams-internals-StreamThread.adoc#producer, StreamThreads>> and <<kafka-streams-internals-TaskCreator.adoc#threadProducer, TaskCreator>>)
 
 Used when:
 
-* `StreamThread` is <<kafka-streams-StreamThread.adoc#create, created>> (with <<kafka-streams-properties.adoc#processing.guarantee, processing.guarantee>> as <<kafka-streams-properties.adoc#at_least_once, at_least_once>>)
+* `StreamThread` is <<kafka-streams-internals-StreamThread.adoc#create, created>> (with <<kafka-streams-properties.adoc#processing.guarantee, processing.guarantee>> as <<kafka-streams-properties.adoc#at_least_once, at_least_once>>)
 
 * `TaskCreator` is requested to <<kafka-streams-internals-TaskCreator.adoc#createProducer, createProducer>> (with <<kafka-streams-properties.adoc#processing.guarantee, processing.guarantee>> as <<kafka-streams-properties.adoc#exactly-once, exactly-once>>)
 
@@ -74,9 +74,9 @@ Consumer<byte[], byte[]> getRestoreConsumer(
   final Map<String, Object> config)
 ----
 
-A Kafka https://kafka.apache.org/20/javadoc/org/apache/kafka/clients/consumer/KafkaConsumer.html[Consumer] (for <<kafka-streams-StoreChangelogReader.adoc#restoreConsumer, StoreChangelogReader>>, <<kafka-streams-internals-TaskManager.adoc#restoreConsumer, TaskManager>> and <<kafka-streams-StreamThread.adoc#restoreConsumer, StreamThread>>)
+A Kafka https://kafka.apache.org/20/javadoc/org/apache/kafka/clients/consumer/KafkaConsumer.html[Consumer] (for <<kafka-streams-StoreChangelogReader.adoc#restoreConsumer, StoreChangelogReader>>, <<kafka-streams-internals-TaskManager.adoc#restoreConsumer, TaskManager>> and <<kafka-streams-internals-StreamThread.adoc#restoreConsumer, StreamThread>>)
 
-Used exclusively when `StreamThread` is <<kafka-streams-StreamThread.adoc#create, created>>
+Used exclusively when `StreamThread` is <<kafka-streams-internals-StreamThread.adoc#create, created>>
 
 |===
 

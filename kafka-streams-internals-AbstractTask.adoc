@@ -194,7 +194,7 @@ void reinitializeStateStoresForPartitions(final Collection<TopicPartition> parti
 
 * `StoreChangelogReader` is requested to <<kafka-streams-StoreChangelogReader.adoc#restore, restore>>
 
-* `StreamThread` is requested to <<kafka-streams-StreamThread.adoc#maybeUpdateStandbyTasks, maybeUpdateStandbyTasks>>
+* `StreamThread` is requested to <<kafka-streams-internals-StreamThread.adoc#maybeUpdateStandbyTasks, maybeUpdateStandbyTasks>>
 ====
 
 === [[activeTaskCheckpointableOffsets]] Checkpointable Offsets -- `activeTaskCheckpointableOffsets` Method

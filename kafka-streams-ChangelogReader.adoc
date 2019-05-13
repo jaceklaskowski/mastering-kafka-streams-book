@@ -40,7 +40,7 @@ a| [[restore]]
 Collection<TopicPartition> restore(final RestoringTasks active)
 ----
 
-Used exclusively when `TaskManager` is requested to <<kafka-streams-internals-TaskManager.adoc#updateNewAndRestoringTasks, updateNewAndRestoringTasks>> (when the owning `StreamThread` is requested to <<kafka-streams-StreamThread.adoc#runOnce, poll records once>> while <<kafka-streams-StreamThread.adoc#runLoop, running the main record processing loop>>)
+Used exclusively when `TaskManager` is requested to <<kafka-streams-internals-TaskManager.adoc#updateNewAndRestoringTasks, updateNewAndRestoringTasks>> (when the owning `StreamThread` is requested to <<kafka-streams-internals-StreamThread.adoc#runOnce, poll records once>> while <<kafka-streams-internals-StreamThread.adoc#runLoop, running the main record processing loop>>)
 
 | restoredOffsets
 a| [[restoredOffsets]]

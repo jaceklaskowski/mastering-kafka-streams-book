@@ -246,7 +246,7 @@ Initialized when `KafkaStreams` is created and shut down when requested to <<clo
 | adminClient
 a| [[adminClient]] Kafka https://kafka.apache.org/21/javadoc/org/apache/kafka/clients/admin/AdminClient.html[AdminClient] (that allows for managing and inspecting topics, brokers, configurations and ACLs)
 
-* Initialized when `KafkaStreams` is <<creating-instance-adminClient, created>> for the only purpose of <<kafka-streams-StreamThread.adoc#create, creating StreamThreads>> (that simply use it to <<kafka-streams-internals-TaskManager.adoc#adminClient, create a TaskManager>>)
+* Initialized when `KafkaStreams` is <<creating-instance-adminClient, created>> for the only purpose of <<kafka-streams-internals-StreamThread.adoc#create, creating StreamThreads>> (that simply use it to <<kafka-streams-internals-TaskManager.adoc#adminClient, create a TaskManager>>)
 
 * Closed when `KafkaStreams` is <<close, closed>>
 
@@ -277,10 +277,10 @@ a| [[streamsMetadataState]] <<kafka-streams-StreamsMetadataState.adoc#, StreamsM
 
 * <<metadataForKey, metadataForKey>>
 
-Initialized when `KafkaStreams` is <<creating-instance, created>> to <<kafka-streams-StreamThread.adoc#create, create StreamThreads>>
+Initialized when `KafkaStreams` is <<creating-instance, created>> to <<kafka-streams-internals-StreamThread.adoc#create, create StreamThreads>>
 
 | threads
-a| [[threads]] <<kafka-streams-StreamThread.adoc#, Stream processor threads>>
+a| [[threads]] <<kafka-streams-internals-StreamThread.adoc#, Stream processor threads>>
 
 NOTE: The number of stream processor threads per KafkaStreams instance is controlled by <<kafka-streams-properties.adoc#num.stream.threads, num.stream.threads>> configuration property (default: `1` processing thread).
 

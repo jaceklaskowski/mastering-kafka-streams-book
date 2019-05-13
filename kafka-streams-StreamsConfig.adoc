@@ -190,7 +190,7 @@ a| [[ASSIGNMENT_ERROR_CODE]] `++__assignment.error.code__++`
 | TASK_MANAGER_FOR_PARTITION_ASSIGNOR
 a| [[TASK_MANAGER_FOR_PARTITION_ASSIGNOR]] `++__task.manager.instance__++`
 
-Used to associate the <<kafka-streams-internals-TaskManager.adoc#, TaskManager>> (of <<kafka-streams-StreamThread.adoc#, StreamThread>>) with <<kafka-streams-internals-StreamsPartitionAssignor.adoc#, StreamsPartitionAssignor>> (when <<kafka-streams-internals-StreamsPartitionAssignor.adoc#configure, configured>>)
+Used to associate the <<kafka-streams-internals-TaskManager.adoc#, TaskManager>> (of <<kafka-streams-internals-StreamThread.adoc#, StreamThread>>) with <<kafka-streams-internals-StreamsPartitionAssignor.adoc#, StreamsPartitionAssignor>> (when <<kafka-streams-internals-StreamsPartitionAssignor.adoc#configure, configured>>)
 
 |===
 
@@ -337,7 +337,7 @@ Map<String, Object> getMainConsumerConfigs(
 
 `getMainConsumerConfigs` then...FIXME
 
-NOTE: `getMainConsumerConfigs` is used exclusively when `StreamThread` is requested to <<kafka-streams-StreamThread.adoc#create, create a StreamThread instance>> (and requests the `KafkaClientSupplier` for a <<kafka-streams-KafkaClientSupplier.adoc#getConsumer, Kafka Consumer>>).
+NOTE: `getMainConsumerConfigs` is used exclusively when `StreamThread` is requested to <<kafka-streams-internals-StreamThread.adoc#create, create a StreamThread instance>> (and requests the `KafkaClientSupplier` for a <<kafka-streams-KafkaClientSupplier.adoc#getConsumer, Kafka Consumer>>).
 
 === [[defaultValueSerde]] `defaultValueSerde` Method
 

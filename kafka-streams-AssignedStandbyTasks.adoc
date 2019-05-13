@@ -2,7 +2,7 @@
 
 `AssignedStandbyTasks` is a link:kafka-streams-internals-AssignedTasks.adoc[AssignedTasks] for link:kafka-streams-internals-StandbyTask.adoc[StandbyTasks] that...FIXME
 
-`AssignedStandbyTasks` is <<creating-instance, created>> along with a link:kafka-streams-StreamThread.adoc#create[StreamThread] (when `KafkaStreams` is link:kafka-streams-KafkaStreams.adoc#creating-instance[created]).
+`AssignedStandbyTasks` is <<creating-instance, created>> along with a link:kafka-streams-internals-StreamThread.adoc#create[StreamThread] (when `KafkaStreams` is link:kafka-streams-KafkaStreams.adoc#creating-instance[created]).
 
 [[logContext]]
 [[creating-instance]]

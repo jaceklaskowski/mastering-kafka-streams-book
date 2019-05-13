@@ -2,7 +2,7 @@
 
 `TaskCreator` is a concrete link:kafka-streams-internals-AbstractTaskCreator.adoc[AbstractTaskCreator] that can <<createTask, create stream tasks>>.
 
-`TaskCreator` is <<creating-instance, created>> exclusively when `StreamThread` is link:kafka-streams-StreamThread.adoc#create[created] (and only to create a link:kafka-streams-internals-TaskManager.adoc#standbyTaskCreator[TaskManager]).
+`TaskCreator` is <<creating-instance, created>> exclusively when `StreamThread` is link:kafka-streams-internals-StreamThread.adoc#create[created] (and only to create a link:kafka-streams-internals-TaskManager.adoc#standbyTaskCreator[TaskManager]).
 
 === [[createTask]] Creating Stream Processor Task -- `createTask` Factory Method
 

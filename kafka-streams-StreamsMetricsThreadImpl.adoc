@@ -2,7 +2,7 @@
 
 `StreamsMetricsThreadImpl` is a concrete <<kafka-streams-internals-StreamsMetricsImpl.adoc#, StreamsMetricsImpl>>.
 
-`StreamsMetricsThreadImpl` is <<creating-instance, created>> for a link:kafka-streams-StreamThread.adoc#create[StreamThread] (when `KafkaStreams` is link:kafka-streams-KafkaStreams.adoc#creating-instance[created]).
+`StreamsMetricsThreadImpl` is <<creating-instance, created>> for a link:kafka-streams-internals-StreamThread.adoc#create[StreamThread] (when `KafkaStreams` is link:kafka-streams-KafkaStreams.adoc#creating-instance[created]).
 
 [[internal-registries]]
 [[sensors]]

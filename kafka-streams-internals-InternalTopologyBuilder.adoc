@@ -1083,7 +1083,7 @@ Before returning the <<topicPattern, source topics pattern>>, `sourceTopicPatter
 ====
 `sourceTopicPattern` is used when:
 
-* `StreamThread` is requested to <<kafka-streams-StreamThread.adoc#runLoop, run the main record processing loop>> and <<kafka-streams-StreamThread.adoc#enforceRebalance, enforceRebalance>>
+* `StreamThread` is requested to <<kafka-streams-internals-StreamThread.adoc#runLoop, run the main record processing loop>> and <<kafka-streams-internals-StreamThread.adoc#enforceRebalance, enforceRebalance>>
 
 * `TaskManager` is requested to <<kafka-streams-internals-TaskManager.adoc#updateSubscriptionsFromAssignment, updateSubscriptionsFromAssignment>> and <<kafka-streams-internals-TaskManager.adoc#updateSubscriptionsFromMetadata, updateSubscriptionsFromMetadata>>
 ====

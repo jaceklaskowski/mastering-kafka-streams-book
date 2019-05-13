@@ -6,7 +6,7 @@
 
 `TaskManager` uses the <<standbyTaskCreator, StandbyTaskCreator>> to <<kafka-streams-internals-StandbyTaskCreator.adoc#createTasks, create standby tasks>> when requested to <<addStandbyTasks, addStandbyTasks>>.
 
-`TaskManager` is <<creating-instance, created>> when `StreamThread` is link:kafka-streams-StreamThread.adoc#create[created] (with a new <<active, AssignedStreamsTasks>> and <<standby, AssignedStandbyTasks>> for <<active, active>> and <<standby, standby>> tasks, respectively).
+`TaskManager` is <<creating-instance, created>> when `StreamThread` is link:kafka-streams-internals-StreamThread.adoc#create[created] (with a new <<active, AssignedStreamsTasks>> and <<standby, AssignedStandbyTasks>> for <<active, active>> and <<standby, standby>> tasks, respectively).
 
 .Creating TaskManager
 image::images/kafka-streams-TaskManager.png[align="center"]
@@ -68,7 +68,7 @@ a| [[cluster]] *Cluster metadata*, i.e. Kafka https://kafka.apache.org/10/javado
 a| [[consumer]] Kafka https://kafka.apache.org/20/javadoc/org/apache/kafka/clients/consumer/KafkaConsumer.html[Consumer] (`Consumer<byte[], byte[]>`)
 
 [[setConsumer]]
-Assigned right when `StreamThread` is link:kafka-streams-StreamThread.adoc#create[created] (and corresponds to the link:kafka-streams-StreamThread.adoc#consumer[Kafka consumer] from the link:kafka-streams-KafkaClientSupplier.adoc#getConsumer[KafkaClientSupplier] that was used to create the link:kafka-streams-KafkaStreams.adoc#creating-instance[KafkaStreams])
+Assigned right when `StreamThread` is link:kafka-streams-internals-StreamThread.adoc#create[created] (and corresponds to the link:kafka-streams-internals-StreamThread.adoc#consumer[Kafka consumer] from the link:kafka-streams-KafkaClientSupplier.adoc#getConsumer[KafkaClientSupplier] that was used to create the link:kafka-streams-KafkaStreams.adoc#creating-instance[KafkaStreams])
 
 |===
 
@@ -152,7 +152,7 @@ boolean updateNewAndRestoringTasks()
 
 `updateNewAndRestoringTasks`...FIXME
 
-NOTE: `updateNewAndRestoringTasks` is used exclusively when `StreamThread` is requested to <<kafka-streams-StreamThread.adoc#runOnce, poll records once>> (while <<kafka-streams-StreamThread.adoc#runLoop, running the main record processing loop>>).
+NOTE: `updateNewAndRestoringTasks` is used exclusively when `StreamThread` is requested to <<kafka-streams-internals-StreamThread.adoc#runOnce, poll records once>> (while <<kafka-streams-internals-StreamThread.adoc#runLoop, running the main record processing loop>>).
 
 === [[activeTask]] Getting Active Stream Processor Task for Topic Partition -- `activeTask` Method
 
@@ -163,7 +163,7 @@ StreamTask activeTask(final TopicPartition partition)
 
 `activeTask`...FIXME
 
-NOTE: `activeTask` is used exclusively when `StreamThread` is requested to link:kafka-streams-StreamThread.adoc#addRecordsToTasks[addRecordsToTasks].
+NOTE: `activeTask` is used exclusively when `StreamThread` is requested to link:kafka-streams-internals-StreamThread.adoc#addRecordsToTasks[addRecordsToTasks].
 
 === [[creating-instance]] Creating TaskManager Instance
 
@@ -194,7 +194,7 @@ boolean hasActiveRunningTasks()
 .TaskManager and AssignedStreamsTasks
 image::images/kafka-streams-TaskManager-hasActiveRunningTasks.png[align="center"]
 
-NOTE: `hasActiveRunningTasks` is used exclusively when `StreamThread` is requested to link:kafka-streams-StreamThread.adoc#runOnce[consume records once] (and there are records to be processed).
+NOTE: `hasActiveRunningTasks` is used exclusively when `StreamThread` is requested to link:kafka-streams-internals-StreamThread.adoc#runOnce[consume records once] (and there are records to be processed).
 
 === [[hasStandbyRunningTasks]] `hasStandbyRunningTasks` Method
 
@@ -208,7 +208,7 @@ boolean hasStandbyRunningTasks()
 .TaskManager and AssignedStandbyTasks
 image::images/kafka-streams-TaskManager-hasStandbyRunningTasks.png[align="center"]
 
-NOTE: `hasStandbyRunningTasks` is used exclusively when `StreamThread` is requested to link:kafka-streams-StreamThread.adoc#maybeUpdateStandbyTasks[maybeUpdateStandbyTasks] (while link:kafka-streams-StreamThread.adoc#runOnce[consuming records once]).
+NOTE: `hasStandbyRunningTasks` is used exclusively when `StreamThread` is requested to link:kafka-streams-internals-StreamThread.adoc#maybeUpdateStandbyTasks[maybeUpdateStandbyTasks] (while link:kafka-streams-internals-StreamThread.adoc#runOnce[consuming records once]).
 
 === [[createTasks]] Creating Processor Tasks for Assigned Topic Partitions -- `createTasks` Method
 
@@ -336,7 +336,7 @@ String toString(final String indent)
 FIXME toString in action
 ----
 
-NOTE: `toString` is used exclusively when `StreamThread` is requested to <<kafka-streams-StreamThread.adoc#toString, describe itself>>.
+NOTE: `toString` is used exclusively when `StreamThread` is requested to <<kafka-streams-internals-StreamThread.adoc#toString, describe itself>>.
 
 === [[maybePurgeCommitedRecords]] `maybePurgeCommitedRecords` Method
 
@@ -347,7 +347,7 @@ void maybePurgeCommitedRecords()
 
 `maybePurgeCommitedRecords`...FIXME
 
-NOTE: `maybePurgeCommitedRecords` is used exclusively when `StreamThread` is requested to <<kafka-streams-StreamThread.adoc#maybeCommit, maybeCommit>> (when `StreamThread` is requested to <<kafka-streams-StreamThread.adoc#runOnce, poll records once>> in the <<kafka-streams-StreamThread.adoc#runLoop, main record processing loop>>).
+NOTE: `maybePurgeCommitedRecords` is used exclusively when `StreamThread` is requested to <<kafka-streams-internals-StreamThread.adoc#maybeCommit, maybeCommit>> (when `StreamThread` is requested to <<kafka-streams-internals-StreamThread.adoc#runOnce, poll records once>> in the <<kafka-streams-internals-StreamThread.adoc#runLoop, main record processing loop>>).
 
 === [[process]] Processing Records by Active Stream Tasks -- `process` Method
 
@@ -360,7 +360,7 @@ int process()
 
 In the end, `process` gives the number of stream tasks that processed a single record successfully.
 
-NOTE: `process` is used exclusively when `StreamThread` is requested to link:kafka-streams-StreamThread.adoc#processAndMaybeCommit[processAndMaybeCommit].
+NOTE: `process` is used exclusively when `StreamThread` is requested to link:kafka-streams-internals-StreamThread.adoc#processAndMaybeCommit[processAndMaybeCommit].
 
 === [[maybeCommitActiveTasks]] Committing Active Running Stream Tasks that Requested It -- `maybeCommitActiveTasks` Method
 
@@ -373,7 +373,7 @@ int maybeCommitActiveTasks()
 
 In the end, `maybeCommitActiveTasks` gives the number of running stream tasks that link:kafka-streams-internals-StreamTask.adoc#commitNeeded[needed a commit].
 
-NOTE: `maybeCommitActiveTasks` is used exclusively when `StreamThread` is requested to link:kafka-streams-StreamThread.adoc#processAndMaybeCommit[processAndMaybeCommit].
+NOTE: `maybeCommitActiveTasks` is used exclusively when `StreamThread` is requested to link:kafka-streams-internals-StreamThread.adoc#processAndMaybeCommit[processAndMaybeCommit].
 
 === [[punctuate]] `punctuate` Method
 
@@ -384,7 +384,7 @@ int punctuate()
 
 `punctuate` simply requests <<active, AssignedStreamsTasks>> to link:kafka-streams-AssignedStreamsTasks.adoc#punctuate[punctuate].
 
-NOTE: `punctuate` is used exclusively when `StreamThread` is requested to link:kafka-streams-StreamThread.adoc#punctuate[punctuate].
+NOTE: `punctuate` is used exclusively when `StreamThread` is requested to link:kafka-streams-internals-StreamThread.adoc#punctuate[punctuate].
 
 === [[commitAll]] Committing Active and Standby Tasks -- `commitAll` Method
 
@@ -395,7 +395,7 @@ int commitAll()
 
 `commitAll`...FIXME
 
-NOTE: `commitAll` is used exclusively when `StreamThread` is requested to <<kafka-streams-StreamThread.adoc#maybeCommit, commit all tasks (when commit interval elapsed)>>.
+NOTE: `commitAll` is used exclusively when `StreamThread` is requested to <<kafka-streams-internals-StreamThread.adoc#maybeCommit, commit all tasks (when commit interval elapsed)>>.
 
 === [[activeTaskIds]] `activeTaskIds` Method
 

@@ -47,7 +47,7 @@ Used when:
 Use <<kafka-streams-StreamsConfig.adoc#CLIENT_ID_CONFIG, StreamsConfig.CLIENT_ID_CONFIG>> to reference the property.
 
 | commit.interval.ms
-a| [[commit.interval.ms]] *Flush interval* or *commit interval* (in millis), i.e. how often `StreamThread` <<kafka-streams-StreamThread.adoc#maybeCommit, tries to commit>> the position of processors and _flush_ state stores
+a| [[commit.interval.ms]] *Flush interval* or *commit interval* (in millis), i.e. how often `StreamThread` <<kafka-streams-internals-StreamThread.adoc#maybeCommit, tries to commit>> the position of processors and _flush_ state stores
 
 Default:
 
@@ -56,7 +56,7 @@ Default:
 
 Use <<kafka-streams-StreamsConfig.adoc#COMMIT_INTERVAL_MS_CONFIG, StreamsConfig.COMMIT_INTERVAL_MS_CONFIG>> to reference the property.
 
-If the commit interval is negative, `StreamThread` will never <<kafka-streams-StreamThread.adoc#maybeCommit, commit tasks>>.
+If the commit interval is negative, `StreamThread` will never <<kafka-streams-internals-StreamThread.adoc#maybeCommit, commit tasks>>.
 
 | default.windowed.key.serde.inner
 a| [[default.windowed.key.serde.inner]] Inner serde class that implements the `org.apache.kafka.common.serialization.Serde` interface
@@ -99,7 +99,7 @@ Default: `0`
 Use <<kafka-streams-StreamsConfig.adoc#NUM_STANDBY_REPLICAS_CONFIG, StreamsConfig.NUM_STANDBY_REPLICAS_CONFIG>> to reference the property.
 
 | num.stream.threads
-a| [[num.stream.threads]] The number of <<kafka-streams-StreamThread.adoc#, stream processor threads>> (that <<kafka-streams-KafkaStreams.adoc#threads, KafkaStreams>> uses for stream processing)
+a| [[num.stream.threads]] The number of <<kafka-streams-internals-StreamThread.adoc#, stream processor threads>> (that <<kafka-streams-KafkaStreams.adoc#threads, KafkaStreams>> uses for stream processing)
 
 Default: `1`
 
@@ -115,7 +115,7 @@ Default: `100`
 
 * Used when `GlobalStreamThread` is requested to link:kafka-streams-internals-GlobalStreamThread.adoc#initialize[initialize] (which is right after `KafkaStreams` has been link:kafka-streams-KafkaStreams.adoc#start[started]) and creates a link:kafka-streams-StateConsumer.adoc#pollMs[StateConsumer]
 
-* Used when `StreamThread` is link:kafka-streams-StreamThread.adoc#pollTimeMs[created]
+* Used when `StreamThread` is link:kafka-streams-internals-StreamThread.adoc#pollTimeMs[created]
 
 Use <<kafka-streams-StreamsConfig.adoc#POLL_MS_CONFIG, StreamsConfig.POLL_MS_CONFIG>> to reference the property.
 

@@ -7,7 +7,7 @@ image::images/kafka-streams-StreamsMetadataState-onChange.png[align="center"]
 
 `StreamsMetadataState` comes with <<getAllMetadata, getAllMetadata>> method that returns <<allMetadata, StreamsMetadatas>> for all streams client instances in a <<kafka-streams-multi-instance-kafka-streams-application.adoc#, multi-instance Kafka Streams application>>.
 
-`StreamsMetadataState` is <<creating-instance, created>> exclusively for the <<kafka-streams-StreamThread.adoc#taskManager, TaskManager>> of the <<kafka-streams-KafkaStreams.adoc#threads, stream processor threads>> of a <<kafka-streams-KafkaStreams.adoc#streamsMetadataState, KafkaStreams>> instance.
+`StreamsMetadataState` is <<creating-instance, created>> exclusively for the <<kafka-streams-internals-StreamThread.adoc#taskManager, TaskManager>> of the <<kafka-streams-KafkaStreams.adoc#threads, stream processor threads>> of a <<kafka-streams-KafkaStreams.adoc#streamsMetadataState, KafkaStreams>> instance.
 
 [[StreamsMetadata]]
 `StreamsMetadata` represents the metadata of a <<kafka-streams-KafkaStreams.adoc#, KafkaStreams>> stream processing node (process) in a Kafka Streams application:

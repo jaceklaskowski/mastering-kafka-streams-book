@@ -2,7 +2,7 @@
 
 `StandbyTaskCreator` is a concrete <<kafka-streams-internals-AbstractTaskCreator.adoc, task factory>> of <<createTask, standby tasks>>.
 
-`StandbyTaskCreator` is <<creating-instance, created>> exclusively when `StreamThread` is <<kafka-streams-StreamThread.adoc#create, created>> (for the only purpose of <<kafka-streams-internals-TaskManager.adoc#standbyTaskCreator, creating a TaskManager>>).
+`StandbyTaskCreator` is <<creating-instance, created>> exclusively when `StreamThread` is <<kafka-streams-internals-StreamThread.adoc#create, created>> (for the only purpose of <<kafka-streams-internals-TaskManager.adoc#standbyTaskCreator, creating a TaskManager>>).
 
 `StandbyTaskCreator` always records when requested to <<createTask, create a task>> for monitoring purposes, but creates a <<kafka-streams-internals-StandbyTask.adoc#, standby task>> only for <<kafka-streams-internals-ProcessorTopology.adoc#, processor task topologies>> (for <<builder, which it was created>>) with at least one <<kafka-streams-internals-ProcessorTopology.adoc#stateStores, state store>>.
 
