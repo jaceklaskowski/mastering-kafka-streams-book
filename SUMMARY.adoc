@@ -293,9 +293,6 @@
 
 . link:kafka-streams-internals-InternalNameProvider.adoc[InternalNameProvider Contract]
 
-. link:kafka-streams-internals-RecordCollector.adoc[RecordCollector Contract]
-.. link:kafka-streams-RecordCollectorImpl.adoc[RecordCollectorImpl]
-
 . link:kafka-streams-internals-GroupedStreamAggregateBuilder.adoc[GroupedStreamAggregateBuilder]
 . link:kafka-streams-internals-KStreamImpl-KStreamImplJoin.adoc[KStreamImplJoin]
 
@@ -309,6 +306,9 @@
 .. link:kafka-streams-internals-AbstractTask.adoc[AbstractTask -- Base Processor Task]
 .. link:kafka-streams-internals-StandbyTask.adoc[StandbyTask]
 .. link:kafka-streams-internals-StreamTask.adoc[StreamTask]
+
+. link:kafka-streams-internals-RecordCollector.adoc[RecordCollector Contract]
+.. link:kafka-streams-internals-RecordCollectorImpl.adoc[RecordCollectorImpl]
 
 . link:kafka-streams-internals-ProducerSupplier.adoc[ProducerSupplier]
 

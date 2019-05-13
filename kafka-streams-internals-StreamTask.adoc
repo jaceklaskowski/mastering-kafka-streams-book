@@ -43,7 +43,7 @@ The <<recordCollector, RecordCollector>> is requested to <<kafka-streams-interna
 
 * <<kafka-streams-internals-RecordCollector.adoc#offsets, Getting offsets>> when <<activeTaskCheckpointableOffsets, activeTaskCheckpointableOffsets>>
 
-* <<kafka-streams-internals-RecordCollector.adoc#flush, Flushing>> when <<flushState, flushState>>
+* <<kafka-streams-internals-RecordCollector.adoc#flush, Flushing the internal Kafka producer>> when <<flushState, flushState>>
 
 * <<suspend, suspend>> and <<maybeAbortTransactionAndCloseRecordCollector, maybeAbortTransactionAndCloseRecordCollector>>
 
@@ -403,7 +403,7 @@ Flushing state and producer
 
 `flushState` <<kafka-streams-internals-AbstractTask.adoc#flushState, flushes state stores>>.
 
-`flushState` requests the <<recordCollector, RecordCollector>> to <<kafka-streams-internals-RecordCollector.adoc#flush, flush>>.
+`flushState` requests the <<recordCollector, RecordCollector>> to <<kafka-streams-internals-RecordCollector.adoc#flush, flush the internal Kafka producer>>.
 
 === [[isProcessable]] `isProcessable` Method
 

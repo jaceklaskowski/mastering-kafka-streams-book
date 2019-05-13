@@ -29,7 +29,9 @@ a| [[flush]]
 void flush()
 ----
 
-Used exclusively when `StreamTask` is requested to <<kafka-streams-internals-StreamTask.adoc#flushState, flushState>>
+Flushing the internal Kafka producer
+
+Used exclusively when `StreamTask` is requested to <<kafka-streams-internals-StreamTask.adoc#flushState, flush state stores and the internal Kafka producer>>
 
 | init
 a| [[init]]
@@ -80,7 +82,7 @@ a| [[send]]
 
 Used when:
 
-* `RecordCollectorImpl` is requested to <<kafka-streams-RecordCollectorImpl.adoc#send, send a record>>
+* `RecordCollectorImpl` is requested to <<kafka-streams-internals-RecordCollectorImpl.adoc#send, send a record>>
 
 * `InMemoryTimeOrderedKeyValueBuffer` is requested to `flush`
 
@@ -100,7 +102,7 @@ Used when:
 | <<kafka-streams-internals-StandbyContextImpl.adoc#NO_OP_COLLECTOR, NO_OP_COLLECTOR>>
 | [[NO_OP_COLLECTOR]]
 
-| <<kafka-streams-RecordCollectorImpl.adoc#, RecordCollectorImpl>>
+| <<kafka-streams-internals-RecordCollectorImpl.adoc#, RecordCollectorImpl>>
 | [[RecordCollectorImpl]]
 
 |===

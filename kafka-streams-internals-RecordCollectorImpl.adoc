@@ -1,0 +1,95 @@
+== [[RecordCollectorImpl]] RecordCollectorImpl
+
+`RecordCollectorImpl` is a concrete <<kafka-streams-internals-RecordCollector.adoc#, RecordCollector>> that is <<creating-instance, created>> exclusively for <<kafka-streams-internals-StreamTask.adoc#recordCollector, StreamTask>>.
+
+[[logPrefix]]
+`RecordCollectorImpl` uses *task [streamTaskId]* for the `logPrefix` (that uses the specified <<streamTaskId, streamTaskId>>).
+
+=== [[send]] `send` Method
+
+[source, java]
+----
+<K, V> void send(
+  final String topic,
+  final K key,
+  final V value,
+  final Long timestamp,
+  final Serializer<K> keySerializer,
+  final Serializer<V> valueSerializer,
+  final StreamPartitioner<? super K, ? super V> partitioner)
+----
+
+NOTE: `send` is part of link:kafka-streams-internals-RecordCollector.adoc#send[RecordCollector Contract] to...FIXME.
+
+`send`...FIXME
+
+=== [[flush]] Flushing Kafka Producer -- `flush` Method
+
+[source, java]
+----
+void flush()
+----
+
+NOTE: `flush` is part of the <<kafka-streams-internals-RecordCollector.adoc#flush, RecordCollector Contract>> to flush the internal Kafka producer.
+
+`flush` prints out the following DEBUG message to the logs:
+
+```
+Flushing producer
+```
+
+`flush` requests the <<producer, Kafka Producer>> to flush the buffered (_accumulated_) records (via `Producer.flush`).
+
+In the end, `flush` <<checkForException, checkForException>>.
+
+== [[checkForException]] `checkForException` Internal Method
+
+[source, java]
+----
+void checkForException()
+----
+
+`checkForException` checks the internal <<sendException, sendException>> registry and throws the exception if defined.
+
+NOTE: `checkForException` is used when...FIXME
+
+=== [[creating-instance]] Creating RecordCollectorImpl Instance
+
+`RecordCollectorImpl` takes the following to be created:
+
+* [[streamTaskId]] StreamTask ID
+* [[logContext]] `LogContext`
+* [[productionExceptionHandler]] `ProductionExceptionHandler`
+* [[skippedRecordsSensor]] *skippedRecords* sensor
+
+`RecordCollectorImpl` initializes the <<internal-properties, internal properties>>.
+
+=== [[internal-properties]] Internal Properties
+
+.RecordCollectorImpl's Internal Properties (e.g. Registries, Counters and Flags)
+[cols="30m,70",options="header",width="100%"]
+|===
+| Name
+| Description
+
+| sendException
+a| [[sendException]] `KafkaException`
+
+| offsets
+a| [[offsets]]
+
+[source, java]
+----
+Map<TopicPartition, Long> offsets
+----
+
+Initialized (as empty) when `RecordCollectorImpl` is <<creating-instance, created>>
+
+A new pair of a Kafka `TopicPartition` with the offset added (or updated) after `RecordCollectorImpl` has finished <<send, sending a record>>
+
+| producer
+a| [[producer]] Kafka Producer (`Producer<byte[], byte[]>`)
+
+Used when...FIXME
+
+|===
