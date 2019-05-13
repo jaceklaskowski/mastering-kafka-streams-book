@@ -31,6 +31,24 @@ log4j.logger.org.apache.kafka.streams.processor.internals.StreamTask=ALL
 Refer to <<kafka-logging.adoc#log4j.properties, Application Logging Using log4j>>.
 ====
 
+=== StreamTask and RecordCollector
+
+`StreamTask` creates a new <<recordCollector, RecordCollector>> or is given one (when <<creating-instance, created>>).
+
+The <<recordCollector, RecordCollector>> is requested to <<kafka-streams-internals-RecordCollector.adoc#init, initialize>> (with a <<producer, Kafka Producer>>) when `StreamTask` is <<creating-instance, created>> and <<resume, resumed>>.
+
+`StreamTask` uses the <<recordCollector, RecordCollector>> for the following:
+
+* Creating an <<kafka-streams-internals-AbstractTask.adoc#processorContext, InternalProcessorContext>> (when <<creating-instance, created>>)
+
+* <<kafka-streams-internals-RecordCollector.adoc#offsets, Getting offsets>> when <<activeTaskCheckpointableOffsets, activeTaskCheckpointableOffsets>>
+
+* <<kafka-streams-internals-RecordCollector.adoc#flush, Flushing>> when <<flushState, flushState>>
+
+* <<suspend, suspend>> and <<maybeAbortTransactionAndCloseRecordCollector, maybeAbortTransactionAndCloseRecordCollector>>
+
+The <<recordCollector, RecordCollector>> is requested to <<kafka-streams-internals-RecordCollector.adoc#close, close>> when `StreamTask` is requested to <<suspend, suspend>> and <<maybeAbortTransactionAndCloseRecordCollector, maybeAbortTransactionAndCloseRecordCollector>>.
+
 === [[closeTopology]] `closeTopology` Internal Method
 
 [source, java]
@@ -74,19 +92,21 @@ NOTE: `close` is part of link:kafka-streams-internals-Task.adoc#close[Task Contr
 
 === [[creating-instance]] Creating StreamTask Instance
 
-`StreamTask` takes the following when created:
+`StreamTask` takes the following to be created:
 
-* [[id]] `TaskId`
-* [[partitions]] Topic partitions (as Kafka's `TopicPartition`)
+* [[id]] <<kafka-streams-TaskId.adoc#, TaskId>>
+* [[partitions]] Topic partitions (Kafka `TopicPartition`)
 * [[topology]] <<kafka-streams-internals-ProcessorTopology.adoc#, ProcessorTopology>>
 * [[consumer]] Kafka https://kafka.apache.org/20/javadoc/org/apache/kafka/clients/consumer/KafkaConsumer.html[Consumer] (`Consumer<byte[], byte[]>`)
 * [[changelogReader]] <<kafka-streams-ChangelogReader.adoc#, ChangelogReader>>
-* [[config]] link:kafka-streams-StreamsConfig.adoc[StreamsConfig]
-* [[metrics]] link:kafka-streams-StreamsMetrics.adoc[StreamsMetrics]
-* [[stateDirectory]] link:kafka-streams-internals-StateDirectory.adoc[StateDirectory]
+* [[config]] <<kafka-streams-StreamsConfig.adoc#, StreamsConfig>>
+* [[metrics]] <<kafka-streams-internals-StreamsMetricsImpl.adoc#, StreamsMetricsImpl>>
+* [[stateDirectory]] <<kafka-streams-internals-StateDirectory.adoc#, StateDirectory>>
 * [[cache]] <<kafka-streams-internals-ThreadCache.adoc#, ThreadCache>>
 * [[time]] `Time`
-* [[producer]] Kafka `Producer` (`Producer<byte[], byte[]>`)
+* [[producerSupplier]] <<kafka-streams-internals-ProducerSupplier.adoc#, ProducerSupplier>>
+* [[recordCollector]] <<kafka-streams-internals-RecordCollector.adoc#, RecordCollector>>
+* [[closeSensor]] `closeSensor` Kafka `Sensor`
 
 `StreamTask` initializes the <<internal-properties, internal properties>>.
 
@@ -385,6 +405,61 @@ Flushing state and producer
 
 `flushState` requests the <<recordCollector, RecordCollector>> to <<kafka-streams-internals-RecordCollector.adoc#flush, flush>>.
 
+=== [[isProcessable]] `isProcessable` Method
+
+[source, java]
+----
+boolean isProcessable(final long now)
+----
+
+`isProcessable`...FIXME
+
+NOTE: `isProcessable` is used when...FIXME
+
+=== [[resume]] `resume` Method
+
+[source, java]
+----
+void resume()
+----
+
+NOTE: `resume` is part of the <<kafka-streams-internals-Task.adoc#resume, Task Contract>> to resume the task.
+
+`resume`...FIXME
+
+== [[maybeAbortTransactionAndCloseRecordCollector]] `maybeAbortTransactionAndCloseRecordCollector` Internal Method
+
+[source, java]
+----
+void maybeAbortTransactionAndCloseRecordCollector(final boolean isZombie)
+----
+
+`maybeAbortTransactionAndCloseRecordCollector`...FIXME
+
+NOTE: `maybeAbortTransactionAndCloseRecordCollector` is used when...FIXME
+
+== [[initializeTransactions]] `initializeTransactions` Internal Method
+
+[source, java]
+----
+void initializeTransactions()
+----
+
+`initializeTransactions`...FIXME
+
+NOTE: `initializeTransactions` is used when...FIXME
+
+== [[producerMetrics]] `producerMetrics` Method
+
+[source, java]
+----
+Map<MetricName, Metric> producerMetrics()
+----
+
+`producerMetrics`...FIXME
+
+NOTE: `producerMetrics` is used when...FIXME
+
 === [[internal-properties]] Internal Properties
 
 .StreamTask's Internal Properties (e.g. Registries, Counters and Flags)
@@ -416,8 +491,31 @@ Used when `StreamTask` is requested for the following:
 | idleStartTime
 a| [[idleStartTime]]
 
+| producer
+a| [[producer]][[getProducer]] Kafka xref:https://kafka.apache.org/22/javadoc/org/apache/kafka/clients/producer/KafkaProducer.html#[Producer] (`Producer<byte[], byte[]>`)
+
+Created when `StreamTask` is <<creating-instance, created>> and <<resume, resumed>> by requesting the <<producerSupplier, ProducerSupplier>> to <<kafka-streams-internals-ProducerSupplier.adoc#get, supply a Producer>>
+
+Cleared (_nullified_) when `StreamTask` is requested to <<suspend, suspend>> and <<maybeAbortTransactionAndCloseRecordCollector, maybeAbortTransactionAndCloseRecordCollector>>
+
+Used for the following:
+
+* Requesting the <<recordCollector, RecordCollector>> to <<kafka-streams-internals-RecordCollector.adoc#init, initialize>> (when `StreamTask` is <<creating-instance, created>> and <<resume, resumed>>)
+
+* <<initializeTopology, initializeTopology>>, <<initializeTransactions, initializeTransactions>>, <<maybeAbortTransactionAndCloseRecordCollector, maybeAbortTransactionAndCloseRecordCollector>>, and <<commit, commit>> for <<kafka-streams-exactly-once-support-eos.adoc#, exactly-once support>>
+
+* <<producerMetrics, producerMetrics>>
+
 | taskMetrics
-| [[taskMetrics]] <<kafka-streams-StreamTask-TaskMetrics.adoc#, TaskMetrics>>
+a| [[taskMetrics]] <<kafka-streams-StreamTask-TaskMetrics.adoc#, TaskMetrics>> for the <<id, TaskId>> and the <<metrics, StreamsMetricsImpl>>
+
+Used when `StreamTask` is requested for the following:
+
+* <<isProcessable, isProcessable>> (to record an occurence of <<kafka-streams-StreamTask-TaskMetrics.adoc#taskEnforcedProcessSensor, taskEnforcedProcessSensor>> sensor)
+
+* <<commit, commit>> (to record a value of <<kafka-streams-StreamTask-TaskMetrics.adoc#taskCommitTimeSensor, taskCommitTimeSensor>> sensor)
+
+* <<closeSuspended, closeSuspended>> (to <<kafka-streams-StreamTask-TaskMetrics.adoc#removeAllSensors, remove all task sensors>>)
 
 | transactionInFlight
 a| [[transactionInFlight]] Controls whether...FIXME

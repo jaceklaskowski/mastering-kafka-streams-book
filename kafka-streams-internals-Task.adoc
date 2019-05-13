@@ -213,6 +213,8 @@ a| [[resume]]
 void resume()
 ----
 
+Resumes the task
+
 | suspend
 a| [[suspend]]
 

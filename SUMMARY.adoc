@@ -310,6 +310,8 @@
 .. link:kafka-streams-internals-StandbyTask.adoc[StandbyTask]
 .. link:kafka-streams-internals-StreamTask.adoc[StreamTask]
 
+. link:kafka-streams-internals-ProducerSupplier.adoc[ProducerSupplier]
+
 . link:kafka-streams-internals-AssignedTasks.adoc[AssignedTasks]
 .. link:kafka-streams-AssignedStandbyTasks.adoc[AssignedStandbyTasks -- AssignedTasks For StandbyTasks]
 .. link:kafka-streams-AssignedStreamsTasks.adoc[AssignedStreamsTasks -- AssignedTasks For StreamTasks]
