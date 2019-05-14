@@ -161,9 +161,9 @@ NOTE: `updateNewAndRestoringTasks` is used exclusively when `StreamThread` is re
 StreamTask activeTask(final TopicPartition partition)
 ----
 
-`activeTask`...FIXME
+`activeTask` simply looks up the <<kafka-streams-internals-StreamTask.adoc#, StreamTask>> for the given Kafka `TopicPartition` (in the internal <<active, active>> registry).
 
-NOTE: `activeTask` is used exclusively when `StreamThread` is requested to link:kafka-streams-internals-StreamThread.adoc#addRecordsToTasks[addRecordsToTasks].
+NOTE: `activeTask` is used exclusively when `StreamThread` is requested to <<kafka-streams-internals-StreamThread.adoc#addRecordsToTasks, add records to active stream tasks>>.
 
 === [[creating-instance]] Creating TaskManager Instance
 

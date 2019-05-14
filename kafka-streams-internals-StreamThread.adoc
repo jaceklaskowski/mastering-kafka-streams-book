@@ -5,7 +5,7 @@
 .StreamThread and Stream Processing
 image::images/kafka-streams-StreamThread.png[align="center"]
 
-`StreamThread` uses a <<consumer, Kafka Consumer>> and a <<taskManager, TaskManager>> that are both created when `StreamThread` is requested to <<create, create an instance of itself>>. That is when the `StreamThread` sets the <<kafka-streams-StreamsConfig.adoc#TASK_MANAGER_FOR_PARTITION_ASSIGNOR, TASK_MANAGER_FOR_PARTITION_ASSIGNOR>> internal property and indirectly associates the <<taskManager, TaskManager>> with <<kafka-streams-internals-StreamsPartitionAssignor.adoc#, StreamsPartitionAssignor>>. `StreamThread` also requests the given <<kafka-streams-KafkaClientSupplier.adoc#, KafkaClientSupplier>> to <<getConsumer, create a KafkaConsumer>> (with the <<taskManager, TaskManager>>) and so when the <<kafka-streams-internals-StreamsPartitionAssignor.adoc#PARTITION_ASSIGNMENT_STRATEGY_CONFIG, partition.assignment.strategy>> configuration property is picked up, `StreamsPartitionAssignor` is <<kafka-streams-internals-StreamsPartitionAssignor.adoc#, created>> and eventually <<kafka-streams-internals-StreamsPartitionAssignor.adoc#configure, configured>> (that will use the <<kafka-streams-StreamsConfig.adoc#TASK_MANAGER_FOR_PARTITION_ASSIGNOR, TASK_MANAGER_FOR_PARTITION_ASSIGNOR>> internal property).
+`StreamThread` uses a <<consumer, Kafka Consumer>> and a <<taskManager, TaskManager>> that are both created when `StreamThread` object is requested to <<create, create an instance of itself>>. That is when the `StreamThread` sets the <<kafka-streams-StreamsConfig.adoc#TASK_MANAGER_FOR_PARTITION_ASSIGNOR, TASK_MANAGER_FOR_PARTITION_ASSIGNOR>> internal property and indirectly associates the <<taskManager, TaskManager>> with <<kafka-streams-internals-StreamsPartitionAssignor.adoc#, StreamsPartitionAssignor>>. `StreamThread` also requests the given <<kafka-streams-KafkaClientSupplier.adoc#, KafkaClientSupplier>> to <<getConsumer, create a KafkaConsumer>> (with the <<taskManager, TaskManager>>) and so when the <<kafka-streams-internals-StreamsPartitionAssignor.adoc#PARTITION_ASSIGNMENT_STRATEGY_CONFIG, partition.assignment.strategy>> configuration property is picked up, `StreamsPartitionAssignor` is <<kafka-streams-internals-StreamsPartitionAssignor.adoc#, created>> and eventually <<kafka-streams-internals-StreamsPartitionAssignor.adoc#configure, configured>> (that will use the <<kafka-streams-StreamsConfig.adoc#TASK_MANAGER_FOR_PARTITION_ASSIGNOR, TASK_MANAGER_FOR_PARTITION_ASSIGNOR>> internal property).
 
 .StreamThread and Registering TaskManager under TASK_MANAGER_FOR_PARTITION_ASSIGNOR
 image::images/kafka-streams-StreamThread-TASK_MANAGER_FOR_PARTITION_ASSIGNOR.png[align="center"]
@@ -97,6 +97,7 @@ Refer to link:kafka-logging.adoc#log4j.properties[Application Logging Using log4
 * <<run, run>>
 * <<runOnce, runOnce>> when `StreamThread` is in <<PARTITIONS_ASSIGNED, PARTITIONS_ASSIGNED>> state and <<taskManager, TaskManager>> was positive after link:kafka-streams-internals-TaskManager.adoc#updateNewAndRestoringTasks[updateNewAndRestoringTasks]
 * <<runOnce, runOnce>> when `StreamThread` polled for records and happened to transition to <<PARTITIONS_ASSIGNED, PARTITIONS_ASSIGNED>> state, but (again) only when <<taskManager, TaskManager>> was positive after link:kafka-streams-internals-TaskManager.adoc#updateNewAndRestoringTasks[updateNewAndRestoringTasks]
+1. [[STARTING]] `STARTING`
 1. [[PARTITIONS_REVOKED]] `PARTITIONS_REVOKED` - `RebalanceListener` was requested to link:kafka-streams-StreamThread-RebalanceListener.adoc#onPartitionsRevoked[handle partition revocation]
 1. [[PARTITIONS_ASSIGNED]] `PARTITIONS_ASSIGNED` - `RebalanceListener` was requested to link:kafka-streams-StreamThread-RebalanceListener.adoc#onPartitionsAssigned[handle partition assignment]
 1. [[PENDING_SHUTDOWN]] `PENDING_SHUTDOWN` - `StreamThread` was requested to <<shutdown, shutdown>> or <<completeShutdown, completeShutdown>>
@@ -463,6 +464,7 @@ boolean isRunning()
 `isRunning` is `true` when `StreamThread` is in one of the following <<state, states>>:
 
 * <<RUNNING, RUNNING>>
+* <<STARTING, STARTING>>
 * <<PARTITIONS_REVOKED, PARTITIONS_REVOKED>>
 * <<PARTITIONS_ASSIGNED, PARTITIONS_ASSIGNED>>
 

@@ -1,61 +1,40 @@
-== [[RecordQueue]] RecordQueue
+== [[RecordQueue]] RecordQueue -- FIFO Queue of StampedRecords
 
-`RecordQueue` is a <<fifoQueue, FIFO queue of StampedRecords>> that a `StreamTask` uses for...FIXME
+`RecordQueue` is a <<fifoQueue, FIFO queue of StampedRecords>> from a <<partition, Kafka partition>> (associated with a <<source, SourceNode>>).
 
-`RecordQueue` is <<creating-instance, created>> along with a link:kafka-streams-internals-StreamTask.adoc#creating-instance[StreamTask] exclusively.
+`RecordQueue` is <<creating-instance, created>> along with a <<kafka-streams-internals-StreamTask.adoc#, StreamTask>> exclusively (for every <<kafka-streams-internals-StreamTask.adoc#partitions, partition assigned>>).
 
 .RecordQueue, StreamTask and TaskCreator
 image::images/kafka-streams-RecordQueue.png[align="center"]
 
-[[internal-registries]]
-.RecordQueue's Internal Properties (e.g. Registries, Counters and Flags)
-[cols="1,2",options="header",width="100%"]
-|===
-| Name
-| Description
-
-| `fifoQueue`
-| [[fifoQueue]] Java's https://docs.oracle.com/javase/8/docs/api/index.html?java/util/ArrayDeque.html[java.util.ArrayDeque] of link:kafka-streams-StampedRecord.adoc[StampedRecords] (i.e. orderable Kafka `ConsumerRecords` with a timestamp)
-
-Used when...FIXME
-
-| `recordDeserializer`
-| [[recordDeserializer]] link:kafka-streams-RecordDeserializer.adoc[RecordDeserializer] (for the <<source, SourceNode>> and <<deserializationExceptionHandler, DeserializationExceptionHandler>>)
-
-Used when...FIXME
-
-| `timeTracker`
-| [[timeTracker]] link:kafka-streams-TimestampTracker.adoc[TimestampTracker]
-
-Used when...FIXME
-|===
+NOTE: `StreamTask` uses a <<kafka-streams-internals-PartitionGroup.adoc#, PartitionGroup>> to manage the `RecordQueues` per partition assigned.
 
 [[logging]]
 [TIP]
 ====
-Enable `TRACE` logging level for `org.apache.kafka.streams.processor.internals.RecordQueue` logger to see what happens inside.
+Enable `ALL` logging level for `org.apache.kafka.streams.processor.internals.RecordQueue` logger to see what happens inside.
 
 Add the following line to `log4j.properties`:
 
 ```
-log4j.logger.org.apache.kafka.streams.processor.internals.RecordQueue=TRACE
+log4j.logger.org.apache.kafka.streams.processor.internals.RecordQueue=ALL
 ```
 
-Refer to link:kafka-logging.adoc#log4j.properties[Application Logging Using log4j].
+Refer to <<kafka-logging.adoc#log4j.properties, Application Logging Using log4j>>.
 ====
 
 === [[creating-instance]] Creating RecordQueue Instance
 
-`RecordQueue` takes the following when created:
+`RecordQueue` takes the following to be created:
 
 * [[partition]] Kafka https://kafka.apache.org/11/javadoc/org/apache/kafka/common/TopicPartition.html[TopicPartition]
-* [[source]] link:kafka-streams-internals-SourceNode.adoc[SourceNode]
+* [[source]] <<kafka-streams-internals-SourceNode.adoc#, SourceNode>>
 * [[timestampExtractor]] <<kafka-streams-TimestampExtractor.adoc#, TimestampExtractor>>
 * [[deserializationExceptionHandler]] `DeserializationExceptionHandler`
-* [[processorContext]] link:kafka-streams-ProcessorContext.adoc[ProcessorContext]
+* [[processorContext]] <<kafka-streams-internals-InternalProcessorContext.adoc#, InternalProcessorContext>>
 * [[logContext]] `LogContext`
 
-`RecordQueue` initializes the <<internal-registries, internal registries and counters>>.
+`RecordQueue` initializes the <<internal-properties, internal properties>>.
 
 === [[addRawRecords]] Adding Kafka ConsumerRecords (as StampedRecords) -- `addRawRecords` Method
 
@@ -129,3 +108,27 @@ int size()
 
 * `StreamTask` is requested to link:kafka-streams-internals-StreamTask.adoc#process[process a single record]
 ====
+
+=== [[internal-properties]] Internal Properties
+
+.RecordQueue's Internal Properties (e.g. Registries, Counters and Flags)
+[cols="30m,70",options="header",width="100%"]
+|===
+| Name
+| Description
+
+| fifoQueue
+| [[fifoQueue]] Java's https://docs.oracle.com/javase/8/docs/api/index.html?java/util/ArrayDeque.html[java.util.ArrayDeque] of link:kafka-streams-StampedRecord.adoc[StampedRecords] (i.e. orderable Kafka `ConsumerRecords` with a timestamp)
+
+Used when...FIXME
+
+| recordDeserializer
+| [[recordDeserializer]] link:kafka-streams-RecordDeserializer.adoc[RecordDeserializer] (for the <<source, SourceNode>> and <<deserializationExceptionHandler, DeserializationExceptionHandler>>)
+
+Used when...FIXME
+
+| timeTracker
+| [[timeTracker]] link:kafka-streams-TimestampTracker.adoc[TimestampTracker]
+
+Used when...FIXME
+|===
