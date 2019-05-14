@@ -49,7 +49,7 @@ For every Kafka https://kafka.apache.org/20/javadoc/org/apache/kafka/clients/con
 
 . Requests the <<timeTracker, TimestampTracker>> for the link:kafka-streams-TimestampTracker.adoc#get[currently-tracked timestamp] and uses it to request the <<timestampExtractor, TimestampExtractor>> to link:kafka-streams-TimestampExtractor.adoc#extract[extract the timestamp from the record]
 
-. Creates a link:kafka-streams-StampedRecord.adoc#creating-instance[StampedRecord] for the record and the record timestamp
+. Creates a link:kafka-streams-internals-StampedRecord.adoc#creating-instance[StampedRecord] for the record and the record timestamp
 
 . Inserts the `StampedRecord` at the end of the <<fifoQueue, fifoQueue>>
 
@@ -118,7 +118,7 @@ int size()
 | Description
 
 | fifoQueue
-| [[fifoQueue]] Java's https://docs.oracle.com/javase/8/docs/api/index.html?java/util/ArrayDeque.html[java.util.ArrayDeque] of link:kafka-streams-StampedRecord.adoc[StampedRecords] (i.e. orderable Kafka `ConsumerRecords` with a timestamp)
+| [[fifoQueue]] Java's https://docs.oracle.com/javase/8/docs/api/index.html?java/util/ArrayDeque.html[java.util.ArrayDeque] of link:kafka-streams-internals-StampedRecord.adoc[StampedRecords] (i.e. orderable Kafka `ConsumerRecords` with a timestamp)
 
 Used when...FIXME
 

@@ -176,7 +176,7 @@ Start processing one record [record]
 Completed processing one record [record]
 ```
 
-`process` requests <<recordInfo, RecordInfo>> for the link:kafka-streams-internals-RecordInfo.adoc#partition[topic partition] and stores the partition and the record's link:kafka-streams-StampedRecord.adoc#offset[offset] in <<consumedOffsets, consumedOffsets>>.
+`process` requests <<recordInfo, RecordInfo>> for the link:kafka-streams-internals-RecordInfo.adoc#partition[topic partition] and stores the partition and the record's link:kafka-streams-internals-StampedRecord.adoc#offset[offset] in <<consumedOffsets, consumedOffsets>>.
 
 `process` turns <<commitOffsetNeeded, commitOffsetNeeded>> flag on.
 

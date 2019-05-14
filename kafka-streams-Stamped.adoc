@@ -36,7 +36,7 @@ assert(stampeds.asScala == Set(s1, s2, s3))
 | Stamped
 | Description
 
-| link:kafka-streams-StampedRecord.adoc[StampedRecord]
+| link:kafka-streams-internals-StampedRecord.adoc[StampedRecord]
 | [[StampedRecord]] Uses Kafka `ConsumerRecords` for <<value, values>>
 
 | link:kafka-streams-PunctuationSchedule.adoc[PunctuationSchedule]

@@ -354,7 +354,7 @@
 .. link:kafka-streams-MinTimestampTracker.adoc[MinTimestampTracker]
 
 . link:kafka-streams-internals-RecordQueue.adoc[RecordQueue]
-.. link:kafka-streams-StampedRecord.adoc[StampedRecord -- Orderable Kafka ConsumerRecords At Timestamp]
+.. link:kafka-streams-internals-StampedRecord.adoc[StampedRecord -- Orderable Kafka ConsumerRecords At Timestamp]
 
 . link:kafka-streams-PunctuationQueue.adoc[PunctuationQueue]
 .. link:kafka-streams-PunctuationSchedule.adoc[PunctuationSchedule -- Orderable ProcessorNodes At Timestamp]
