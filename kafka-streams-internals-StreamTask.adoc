@@ -98,7 +98,7 @@ NOTE: `close` is part of link:kafka-streams-internals-Task.adoc#close[Task Contr
 * [[id]] <<kafka-streams-TaskId.adoc#, TaskId>>
 * [[partitions]] Topic partitions (Kafka `TopicPartition`)
 * [[topology]] <<kafka-streams-internals-ProcessorTopology.adoc#, ProcessorTopology>>
-* [[consumer]] Kafka https://kafka.apache.org/20/javadoc/org/apache/kafka/clients/consumer/KafkaConsumer.html[Consumer] (`Consumer<byte[], byte[]>`)
+* [[consumer]] Kafka https://kafka.apache.org/22/javadoc/org/apache/kafka/clients/consumer/KafkaConsumer.html[Consumer] (`Consumer<byte[], byte[]>`)
 * [[changelogReader]] <<kafka-streams-ChangelogReader.adoc#, ChangelogReader>>
 * [[config]] <<kafka-streams-StreamsConfig.adoc#, StreamsConfig>>
 * [[metrics]] <<kafka-streams-internals-StreamsMetricsImpl.adoc#, StreamsMetricsImpl>>
@@ -499,7 +499,7 @@ Used when `StreamTask` is requested for the following:
 * <<maybePunctuateStreamTime, maybePunctuateStreamTime>>
 
 | consumedOffsets
-| [[consumedOffsets]] Offsets by https://kafka.apache.org/20/javadoc/org/apache/kafka/common/TopicPartition.html[TopicPartitions] (`Map<TopicPartition, Long>`) that `StreamTask` has <<process, processed>> successfully
+| [[consumedOffsets]] Offsets by https://kafka.apache.org/22/javadoc/org/apache/kafka/common/TopicPartition.html[TopicPartitions] (`Map<TopicPartition, Long>`) that `StreamTask` has <<process, processed>> successfully
 
 | idleStartTime
 a| [[idleStartTime]]

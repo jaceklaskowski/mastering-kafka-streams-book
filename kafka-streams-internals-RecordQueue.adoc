@@ -32,7 +32,7 @@ Refer to <<kafka-logging.adoc#log4j.properties, Application Logging Using log4j>
 
 `RecordQueue` takes the following to be created:
 
-* [[partition]] Kafka https://kafka.apache.org/11/javadoc/org/apache/kafka/common/TopicPartition.html[TopicPartition]
+* [[partition]] Kafka https://kafka.apache.org/22/javadoc/org/apache/kafka/common/TopicPartition.html[TopicPartition]
 * [[source]] <<kafka-streams-internals-SourceNode.adoc#, SourceNode>>
 * [[timestampExtractor]] <<kafka-streams-TimestampExtractor.adoc#, TimestampExtractor>>
 * [[deserializationExceptionHandler]] `DeserializationExceptionHandler`
@@ -48,7 +48,7 @@ Refer to <<kafka-logging.adoc#log4j.properties, Application Logging Using log4j>
 int addRawRecords(final Iterable<ConsumerRecord<byte[], byte[]>> rawRecords)
 ----
 
-For every Kafka https://kafka.apache.org/20/javadoc/org/apache/kafka/clients/consumer/ConsumerRecord.html[ConsumerRecord] in the input `rawRecords`, `addRawRecords` does the following:
+For every Kafka https://kafka.apache.org/22/javadoc/org/apache/kafka/clients/consumer/ConsumerRecord.html[ConsumerRecord] in the input `rawRecords`, `addRawRecords` does the following:
 
 . Requests the <<recordDeserializer, RecordDeserializer>> to link:kafka-streams-RecordDeserializer.adoc#deserialize[deserialize the record] (with the <<processorContext, ProcessorContext>>)
 

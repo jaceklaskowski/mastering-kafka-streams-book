@@ -54,7 +54,7 @@ NOTE: `restore` is used exclusively when `StoreChangelogReader` is requested to 
 
 `StateRestorer` takes the following when created:
 
-* [[partition]] Kafka https://kafka.apache.org/20/javadoc/index.html?org/apache/kafka/common/TopicPartition.html[TopicPartition]
+* [[partition]] Kafka https://kafka.apache.org/22/javadoc/index.html?org/apache/kafka/common/TopicPartition.html[TopicPartition]
 * [[compositeRestoreListener]] <<kafka-streams-CompositeRestoreListener.adoc#, CompositeRestoreListener>>
 * [[checkpoint]] `checkpoint`
 * [[offsetLimit]] `offsetLimit`

@@ -41,7 +41,7 @@ NOTE: link:kafka-streams-internals-StreamThread.adoc[StreamThread] uses a `Store
 
 `StoreChangelogReader` takes the following when created:
 
-* [[restoreConsumer]] Kafka https://kafka.apache.org/20/javadoc/org/apache/kafka/clients/consumer/KafkaConsumer.html[Consumer] (`Consumer<byte[], byte[]>`)
+* [[restoreConsumer]] Kafka https://kafka.apache.org/22/javadoc/org/apache/kafka/clients/consumer/KafkaConsumer.html[Consumer] (`Consumer<byte[], byte[]>`)
 * [[userStateRestoreListener]] <<kafka-streams-StateRestoreListener.adoc#, StateRestoreListener>>
 * [[logContext]] `LogContext`
 

@@ -13,7 +13,7 @@ NOTE: Kafka Streams supports consuming from and producing records to a single Ap
 
 === [[ConsumerRebalanceListener]] Writing Kafka ConsumerRebalanceListener Is Tricky
 
-Quoting the documentation of https://kafka.apache.org/10/javadoc/org/apache/kafka/clients/consumer/ConsumerRebalanceListener.html[org.apache.kafka.clients.consumer.ConsumerRebalanceListener]:
+Quoting the documentation of https://kafka.apache.org/22/javadoc/org/apache/kafka/clients/consumer/ConsumerRebalanceListener.html[org.apache.kafka.clients.consumer.ConsumerRebalanceListener]:
 
 > *ConsumerRebalanceListener* is a callback interface that the user can implement to trigger custom actions when the set of partitions assigned to the consumer changes.
 

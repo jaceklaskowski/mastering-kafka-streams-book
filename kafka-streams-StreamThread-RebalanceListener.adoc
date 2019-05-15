@@ -1,13 +1,13 @@
 == [[RebalanceListener]] RebalanceListener -- Kafka ConsumerRebalanceListener for Partition Assignment Among Processor Tasks
 
-`RebalanceListener` is a Apache Kafka https://kafka.apache.org/10/javadoc/org/apache/kafka/clients/consumer/ConsumerRebalanceListener.html[ConsumerRebalanceListener] callback interface that listens to changes to the partitions assigned to a single <<streamThread, stream processor thread>> (aka `StreamThread`).
+`RebalanceListener` is a Apache Kafka https://kafka.apache.org/22/javadoc/org/apache/kafka/clients/consumer/ConsumerRebalanceListener.html[ConsumerRebalanceListener] callback interface that listens to changes to the partitions assigned to a single <<streamThread, stream processor thread>> (aka `StreamThread`).
 
 .RebalanceListener, StreamThread and KafkaStreams
 image::images/kafka-streams-RebalanceListener.png[align="center"]
 
 NOTE: The number of stream processor threads per link:kafka-streams-KafkaStreams.adoc#threads[KafkaStreams] instance is controlled by link:kafka-streams-properties.adoc#num.stream.threads[num.stream.threads] configuration property with the default being 1 thread.
 
-From the documentation of https://kafka.apache.org/10/javadoc/org/apache/kafka/clients/consumer/ConsumerRebalanceListener.html[org.apache.kafka.clients.consumer.ConsumerRebalanceListener]:
+From the documentation of https://kafka.apache.org/22/javadoc/org/apache/kafka/clients/consumer/ConsumerRebalanceListener.html[org.apache.kafka.clients.consumer.ConsumerRebalanceListener]:
 
 > `ConsumerRebalanceListener` is a callback interface that the user can implement to trigger custom actions when the set of partitions assigned to the consumer changes.
 

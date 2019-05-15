@@ -13,7 +13,7 @@ In other words, `StampedRecord` represents a <<record, Kafka ConsumerRecord>> at
 [[creating-instance]]
 `StampedRecord` takes the following when created:
 
-* [[record]] Kafka https://kafka.apache.org/11/javadoc/org/apache/kafka/clients/consumer/ConsumerRecord.html[ConsumerRecord]
+* [[record]] Kafka https://kafka.apache.org/22/javadoc/org/apache/kafka/clients/consumer/ConsumerRecord.html[ConsumerRecord]
 * [[timestamp]] Timestamp
 
 `StampedRecord` gives access to the properties of a <<record, ConsumerRecord>>:

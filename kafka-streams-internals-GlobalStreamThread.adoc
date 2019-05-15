@@ -45,7 +45,7 @@ NOTE: `run` is used exclusively when `KafkaStreams` is <<kafka-streams-KafkaStre
 
 * [[topology]] <<kafka-streams-internals-ProcessorTopology.adoc#, ProcessorTopology>>
 * [[config]] link:kafka-streams-StreamsConfig.adoc[StreamsConfig]
-* [[globalConsumer]] Kafka https://kafka.apache.org/20/javadoc/org/apache/kafka/clients/consumer/KafkaConsumer.html[Consumer] (`Consumer<byte[], byte[]>`)
+* [[globalConsumer]] Kafka https://kafka.apache.org/22/javadoc/org/apache/kafka/clients/consumer/KafkaConsumer.html[Consumer] (`Consumer<byte[], byte[]>`)
 * [[stateDirectory]] link:kafka-streams-internals-StateDirectory.adoc[StateDirectory]
 * [[cacheSizeBytes]] `cacheSizeBytes`
 * [[metrics]] `Metrics`

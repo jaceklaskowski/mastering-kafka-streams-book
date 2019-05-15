@@ -1,6 +1,6 @@
 == [[WindowedSerializer]] WindowedSerializer Contract
 
-`WindowedSerializer` is the <<contract, extension>> of the https://kafka.apache.org/21/javadoc/org/apache/kafka/common/serialization/Serializer.html[Serializer] contract in Apache Kafka for <<implementations, serializers>> that can <<serializeBaseKey, serialize Windowed keys>>.
+`WindowedSerializer` is the <<contract, extension>> of the https://kafka.apache.org/22/javadoc/org/apache/kafka/common/serialization/Serializer.html[Serializer] contract in Apache Kafka for <<implementations, serializers>> that can <<serializeBaseKey, serialize Windowed keys>>.
 
 [[contract]]
 [[serializeBaseKey]]

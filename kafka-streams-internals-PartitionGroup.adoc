@@ -31,7 +31,7 @@ int addRawRecords(
   final Iterable<ConsumerRecord<byte[], byte[]>> rawRecords)
 ----
 
-`addRawRecords` looks up the <<kafka-streams-internals-RecordQueue.adoc#, RecordQueue>> for the input Kafka link:https://kafka.apache.org/20/javadoc/org/apache/kafka/common/TopicPartition.html[TopicPartition] (in the <<partitionQueues, partitionQueues>>).
+`addRawRecords` looks up the <<kafka-streams-internals-RecordQueue.adoc#, RecordQueue>> for the input Kafka link:https://kafka.apache.org/22/javadoc/org/apache/kafka/common/TopicPartition.html[TopicPartition] (in the <<partitionQueues, partitionQueues>>).
 
 `addRawRecords` requests the `RecordQueue` for the link:kafka-streams-internals-RecordQueue.adoc#size[size] and to link:kafka-streams-internals-RecordQueue.adoc#addRawRecords[add Kafka ConsumerRecords (as StampedRecords)].
 

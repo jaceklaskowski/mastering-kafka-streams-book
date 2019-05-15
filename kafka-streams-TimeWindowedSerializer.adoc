@@ -4,7 +4,7 @@
 
 [[creating-instance]]
 [[inner]]
-`TimeWindowedSerializer` takes a Kafka https://kafka.apache.org/21/javadoc/org/apache/kafka/common/serialization/Serializer.html[Serializer] when created.
+`TimeWindowedSerializer` takes a Kafka https://kafka.apache.org/22/javadoc/org/apache/kafka/common/serialization/Serializer.html[Serializer] when created.
 
 [[configure]]
 When requested to configure, `TimeWindowedSerializer` uses <<kafka-streams-StreamsConfig.adoc#DEFAULT_WINDOWED_KEY_SERDE_INNER_CLASS, DEFAULT_WINDOWED_KEY_SERDE_INNER_CLASS>> and <<kafka-streams-StreamsConfig.adoc#DEFAULT_WINDOWED_VALUE_SERDE_INNER_CLASS, DEFAULT_WINDOWED_VALUE_SERDE_INNER_CLASS>> configuration properties for the serde of keys and values, respectively, unless the <<inner, Serializer>> is defined already.

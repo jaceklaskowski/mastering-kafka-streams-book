@@ -13,7 +13,7 @@ NOTE: `ProcessorStateManager` is <<creating-instance, created>> with the <<isSta
 `ProcessorStateManager` uses...FIXME...for the base directory.
 
 [[changelogPartitions]]
-`ProcessorStateManager` tracks *changelog partitions* that are the Kafka https://kafka.apache.org/20/javadoc/org/apache/kafka/common/TopicPartition.html[TopicPartitions] of the <<register, registered StateStores>>.
+`ProcessorStateManager` tracks *changelog partitions* that are the Kafka https://kafka.apache.org/22/javadoc/org/apache/kafka/common/TopicPartition.html[TopicPartitions] of the <<register, registered StateStores>>.
 
 [[logging]]
 [TIP]
@@ -42,7 +42,7 @@ Refer to link:kafka-logging.adoc#log4j.properties[Application Logging Using log4
 Used when...FIXME
 
 | partitionForTopic
-| [[partitionForTopic]] Kafka https://kafka.apache.org/20/javadoc/org/apache/kafka/common/TopicPartition.html[TopicPartitions] by changelog topic name (`Map<String, TopicPartition>`)
+| [[partitionForTopic]] Kafka https://kafka.apache.org/22/javadoc/org/apache/kafka/common/TopicPartition.html[TopicPartitions] by changelog topic name (`Map<String, TopicPartition>`)
 
 Initialized and filled in when `ProcessorStateManager` is <<sources, created>>
 
@@ -54,7 +54,7 @@ Used exclusively when `ProcessorStateManager` is requested to <<getPartition, fi
 `ProcessorStateManager` takes the following when created:
 
 * [[taskId]] Task ID
-* [[sources]] Source Kafka https://kafka.apache.org/20/javadoc/org/apache/kafka/common/TopicPartition.html[TopicPartitions]
+* [[sources]] Source Kafka https://kafka.apache.org/22/javadoc/org/apache/kafka/common/TopicPartition.html[TopicPartitions]
 * [[isStandby]] `isStandby` flag (to indicate whether used by <<kafka-streams-internals-StandbyTask.adoc#, StandbyTask>>, i.e. `true` or <<kafka-streams-internals-StreamTask.adoc#, StreamTask>>, i.e. `false` that is used exclusively when <<register, registering a state store>>)
 * [[stateDirectory]] link:kafka-streams-internals-StateDirectory.adoc[StateDirectory]
 * [[storeToChangelogTopic]] Names of the state stores and the names of the corresponding changelog topics (from the <<kafka-streams-internals-ProcessorTopology.adoc#storeToChangelogTopic, ProcessorTopology>>)
@@ -195,9 +195,9 @@ static String storeChangelogTopic(final String applicationId, final String store
 int getPartition(final String topic)
 ----
 
-`getPartition` tries to find the https://kafka.apache.org/20/javadoc/org/apache/kafka/common/TopicPartition.html[TopicPartition] for the input `topic` name (in the <<partitionForTopic, partitionForTopic>> internal registry).
+`getPartition` tries to find the https://kafka.apache.org/22/javadoc/org/apache/kafka/common/TopicPartition.html[TopicPartition] for the input `topic` name (in the <<partitionForTopic, partitionForTopic>> internal registry).
 
-If found, `getPartition` returns the link:++https://kafka.apache.org/20/javadoc/org/apache/kafka/common/TopicPartition.html#partition--++[partition] of the https://kafka.apache.org/20/javadoc/org/apache/kafka/common/TopicPartition.html[TopicPartition].
+If found, `getPartition` returns the link:++https://kafka.apache.org/22/javadoc/org/apache/kafka/common/TopicPartition.html#partition--++[partition] of the https://kafka.apache.org/22/javadoc/org/apache/kafka/common/TopicPartition.html[TopicPartition].
 
 Otherwise, `getPartition` returns the partition of the <<taskId, TaskId>>.
 

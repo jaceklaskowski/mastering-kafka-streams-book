@@ -6,7 +6,7 @@
 
 `StateConsumer` uses <<globalConsumer, global Kafka consumer>> that is the link:kafka-streams-KafkaClientSupplier.adoc#getRestoreConsumer[restore Kafka consumer] from `KafkaClientSupplier` (which by default is link:kafka-streams-internals-DefaultKafkaClientSupplier.adoc[DefaultKafkaClientSupplier]).
 
-`StateConsumer` uses Kafka Consumer's *manual topic assignment* feature when <<initialize, initializing>> itself, i.e. uses link:++https://kafka.apache.org/10/javadoc/org/apache/kafka/clients/consumer/Consumer.html#assign-java.util.Collection-++[Consumer.assign] and link:++https://kafka.apache.org/10/javadoc/org/apache/kafka/clients/consumer/Consumer.html#seek-org.apache.kafka.common.TopicPartition-long-++[Consumer.seek] methods to assign topics and seek to offsets, respectively.
+`StateConsumer` uses Kafka Consumer's *manual topic assignment* feature when <<initialize, initializing>> itself, i.e. uses link:++https://kafka.apache.org/22/javadoc/org/apache/kafka/clients/consumer/Consumer.html#assign-java.util.Collection-++[Consumer.assign] and link:++https://kafka.apache.org/22/javadoc/org/apache/kafka/clients/consumer/Consumer.html#seek-org.apache.kafka.common.TopicPartition-long-++[Consumer.seek] methods to assign topics and seek to offsets, respectively.
 
 `StateConsumer` uses link:kafka-streams-properties.adoc#poll.ms[poll.ms] configuration property as the <<pollMs, polling interval>> while <<pollAndUpdate, polling the topics assigned for records>>.
 
@@ -55,7 +55,7 @@ NOTE: `initialize` is used exclusively when `GlobalStreamThread` is requested to
 `StateConsumer` takes the following when created:
 
 * [[logContext]] `LogContext`
-* [[globalConsumer]] (Global) Kafka https://kafka.apache.org/20/javadoc/org/apache/kafka/clients/consumer/KafkaConsumer.html[Consumer] (`Consumer<byte[], byte[]>`)
+* [[globalConsumer]] (Global) Kafka https://kafka.apache.org/22/javadoc/org/apache/kafka/clients/consumer/KafkaConsumer.html[Consumer] (`Consumer<byte[], byte[]>`)
 * [[stateMaintainer]] link:kafka-streams-internals-GlobalStateMaintainer.adoc[GlobalStateMaintainer]
 * [[time]] `Time`
 * [[pollMs]] Polling interval (in milliseconds)

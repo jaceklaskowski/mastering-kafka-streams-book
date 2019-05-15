@@ -48,8 +48,8 @@ Topologies:
 `GroupedTableOperationRepartitionNode` takes the following when created:
 
 * [[nodeName]] *Name* of the node
-* [[keySerde]] *Key Serde* (Apache Kafka's https://kafka.apache.org/21/javadoc/org/apache/kafka/common/serialization/Serde.html[Serde] for record keys)
-* [[valueSerde]] *Value Serde* (Apache Kafka's https://kafka.apache.org/21/javadoc/org/apache/kafka/common/serialization/Serde.html[Serde] for record values)
+* [[keySerde]] *Key Serde* (Apache Kafka's https://kafka.apache.org/22/javadoc/org/apache/kafka/common/serialization/Serde.html[Serde] for record keys)
+* [[valueSerde]] *Value Serde* (Apache Kafka's https://kafka.apache.org/22/javadoc/org/apache/kafka/common/serialization/Serde.html[Serde] for record values)
 * [[sinkName]] *Sink Name*
 * [[sourceName]] *Source Name*
 * [[repartitionTopic]] *Name of the repartition topic*

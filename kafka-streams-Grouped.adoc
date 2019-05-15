@@ -4,8 +4,8 @@
 `Grouped` provides the optional parameters that describe how to aggregate streams in the <<kafka-streams-StreamsBuilder.adoc#, High-Level Stream Processing DSL>>:
 
 * [[name]] *Repartition topic name*
-* [[keySerde]] *Key Serde* (Apache Kafka's https://kafka.apache.org/21/javadoc/org/apache/kafka/common/serialization/Serde.html[Serde] for record keys)
-* [[valueSerde]] *Value Serde* (Apache Kafka's https://kafka.apache.org/21/javadoc/org/apache/kafka/common/serialization/Serde.html[Serde] for record values)
+* [[keySerde]] *Key Serde* (Apache Kafka's https://kafka.apache.org/22/javadoc/org/apache/kafka/common/serialization/Serde.html[Serde] for record keys)
+* [[valueSerde]] *Value Serde* (Apache Kafka's https://kafka.apache.org/22/javadoc/org/apache/kafka/common/serialization/Serde.html[Serde] for record values)
 
 `Grouped` is used as an optional parameter in the following streaming aggregation operators:
 

@@ -93,7 +93,7 @@ a| [[metrics]]
 Map<MetricName, ? extends Metric> metrics()
 ----
 
-Kafka http://kafka.apache.org/21/javadoc/index.html?org/apache/kafka/common/Metric.html[monitoring metrics] of the `KafkaStreams` instance (incl. the Kafka `Producer`, `Consumers`, and `AdminClient` used by the <<threads, StreamThreads>>)
+Kafka http://kafka.apache.org/22/javadoc/index.html?org/apache/kafka/common/Metric.html[monitoring metrics] of the `KafkaStreams` instance (incl. the Kafka `Producer`, `Consumers`, and `AdminClient` used by the <<threads, StreamThreads>>)
 
 | <<setGlobalStateRestoreListener-internals, setGlobalStateRestoreListener>>
 a| [[setGlobalStateRestoreListener]]
@@ -244,7 +244,7 @@ Used to schedule a periodic action that requests the <<stateDirectory, StateDire
 Initialized when `KafkaStreams` is created and shut down when requested to <<close, close>>
 
 | adminClient
-a| [[adminClient]] Kafka https://kafka.apache.org/21/javadoc/org/apache/kafka/clients/admin/AdminClient.html[AdminClient] (that allows for managing and inspecting topics, brokers, configurations and ACLs)
+a| [[adminClient]] Kafka https://kafka.apache.org/22/javadoc/org/apache/kafka/clients/admin/AdminClient.html[AdminClient] (that allows for managing and inspecting topics, brokers, configurations and ACLs)
 
 * Initialized when `KafkaStreams` is <<creating-instance-adminClient, created>> for the only purpose of <<kafka-streams-internals-StreamThread.adoc#create, creating StreamThreads>> (that simply use it to <<kafka-streams-internals-TaskManager.adoc#adminClient, create a TaskManager>>)
 

@@ -42,7 +42,7 @@ Used when:
 * `ProcessorStateManager` is <<kafka-streams-ProcessorStateManager.adoc#, created>> and requested to <<kafka-streams-ProcessorStateManager.adoc#checkpoint, checkpoint>>
 
 | checkpointableOffsets
-a| [[checkpointableOffsets]] Collection of Kafka https://kafka.apache.org/20/javadoc/index.html?org/apache/kafka/common/TopicPartition.html[TopicPartitions] with offsets (`Map<TopicPartition, Long>`)
+a| [[checkpointableOffsets]] Collection of Kafka https://kafka.apache.org/22/javadoc/index.html?org/apache/kafka/common/TopicPartition.html[TopicPartitions] with offsets (`Map<TopicPartition, Long>`)
 
 Entries (partitions with offsets) added when:
 

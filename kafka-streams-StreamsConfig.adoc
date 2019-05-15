@@ -1,6 +1,6 @@
 == [[StreamsConfig]] StreamsConfig -- Configuration Properties for Kafka Clients
 
-`StreamsConfig` is a Apache Kafka https://kafka.apache.org/21/javadoc/org/apache/kafka/common/config/AbstractConfig.html[AbstractConfig] with the <<properties, configuration properties>> for a Kafka Streams application.
+`StreamsConfig` is a Apache Kafka https://kafka.apache.org/22/javadoc/org/apache/kafka/common/config/AbstractConfig.html[AbstractConfig] with the <<properties, configuration properties>> for a Kafka Streams application.
 
 `StreamsConfig` is used to reference the <<properties, properties names>> (e.g. to avoid any typos or a better type safety).
 
@@ -282,7 +282,7 @@ Internally, `getClientPropsWithPrefix` <<clientProps, collects the configuration
 
 `getClientPropsWithPrefix` then copies all original settings with the given `prefix` (stripping the prefix before adding them) to the collected properties (and possibly overwriting some).
 
-NOTE: `getClientPropsWithPrefix` uses link:++https://kafka.apache.org/10/javadoc/org/apache/kafka/common/config/AbstractConfig.html#originals--++[AbstractConfig.originals] to get the original values of Kafka properties as passed in by the user.
+NOTE: `getClientPropsWithPrefix` uses link:++https://kafka.apache.org/22/javadoc/org/apache/kafka/common/config/AbstractConfig.html#originals--++[AbstractConfig.originals] to get the original values of Kafka properties as passed in by the user.
 
 NOTE: `getClientPropsWithPrefix` is used when `StreamsConfig` is requested for <<getAdminConfigs, getAdminConfigs>>, <<getCommonConsumerConfigs, getCommonConsumerConfigs>>, <<getMainConsumerConfigs, getMainConsumerConfigs>> and <<getProducerConfigs, getProducerConfigs>>.
 
@@ -295,7 +295,7 @@ Map<String, Object> getCommonConsumerConfigs()
 
 `getCommonConsumerConfigs` <<getClientPropsWithPrefix, gets a subset of user configuration>> for a Kafka consumer as well as the properties with <<CONSUMER_PREFIX, consumer>> prefix.
 
-NOTE: `getCommonConsumerConfigs` uses https://kafka.apache.org/10/javadoc/org/apache/kafka/clients/consumer/ConsumerConfig.html[ConsumerConfig.configNames] for the list of the Kafka Consumer-specific configuration keys.
+NOTE: `getCommonConsumerConfigs` uses https://kafka.apache.org/22/javadoc/org/apache/kafka/clients/consumer/ConsumerConfig.html[ConsumerConfig.configNames] for the list of the Kafka Consumer-specific configuration keys.
 
 CAUTION: FIXME
 

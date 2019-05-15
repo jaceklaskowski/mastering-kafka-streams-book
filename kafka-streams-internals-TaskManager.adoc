@@ -40,7 +40,7 @@ a| [[assignedActiveTasks]]
 Map<TaskId, Set<TopicPartition>> assignedActiveTasks
 ----
 
-*Assigned active tasks* with the Kafka https://kafka.apache.org/21/javadoc/org/apache/kafka/common/TopicPartition.html[TopicPartitions] per <<kafka-streams-TaskId.adoc#, task id>>
+*Assigned active tasks* with the Kafka https://kafka.apache.org/22/javadoc/org/apache/kafka/common/TopicPartition.html[TopicPartitions] per <<kafka-streams-TaskId.adoc#, task id>>
 
 * Set when <<setAssignmentMetadata, setting assignment metadata with active and standby tasks>>
 
@@ -52,20 +52,20 @@ a| [[assignedStandbyTasks]]
 Map<TaskId, Set<TopicPartition>> assignedStandbyTasks
 ----
 
-*Assigned standby tasks* (as Kafka https://kafka.apache.org/21/javadoc/org/apache/kafka/common/TopicPartition.html[TopicPartitions] per <<kafka-streams-TaskId.adoc#, task id>>)
+*Assigned standby tasks* (as Kafka https://kafka.apache.org/22/javadoc/org/apache/kafka/common/TopicPartition.html[TopicPartitions] per <<kafka-streams-TaskId.adoc#, task id>>)
 
 * Set when <<setAssignmentMetadata, setting assignment metadata with active and standby tasks>>
 
 * Used when <<createTasks, creating processor tasks for assigned topic partitions>> (and <<addStandbyTasks, addStandbyTasks>>)
 
 | cluster
-a| [[cluster]] *Cluster metadata*, i.e. Kafka https://kafka.apache.org/10/javadoc/org/apache/kafka/common/Cluster.html[Cluster] with topic partitions
+a| [[cluster]] *Cluster metadata*, i.e. Kafka https://kafka.apache.org/22/javadoc/org/apache/kafka/common/Cluster.html[Cluster] with topic partitions
 
 [[setClusterMetadata]]
 * Set when `StreamsPartitionAssignor` does link:kafka-streams-internals-StreamsPartitionAssignor.adoc#assign[assign] and link:kafka-streams-internals-StreamsPartitionAssignor.adoc#onAssignment[onAssignment]
 
 | consumer
-a| [[consumer]] Kafka https://kafka.apache.org/20/javadoc/org/apache/kafka/clients/consumer/KafkaConsumer.html[Consumer] (`Consumer<byte[], byte[]>`)
+a| [[consumer]] Kafka https://kafka.apache.org/22/javadoc/org/apache/kafka/clients/consumer/KafkaConsumer.html[Consumer] (`Consumer<byte[], byte[]>`)
 
 [[setConsumer]]
 Assigned right when `StreamThread` is link:kafka-streams-internals-StreamThread.adoc#create[created] (and corresponds to the link:kafka-streams-internals-StreamThread.adoc#consumer[Kafka consumer] from the link:kafka-streams-KafkaClientSupplier.adoc#getConsumer[KafkaClientSupplier] that was used to create the link:kafka-streams-KafkaStreams.adoc#creating-instance[KafkaStreams])
@@ -172,11 +172,11 @@ NOTE: `activeTask` is used exclusively when `StreamThread` is requested to <<kaf
 * [[changelogReader]] <<kafka-streams-ChangelogReader.adoc#, ChangelogReader>>
 * [[processId]] `UUID`
 * [[logPrefix]] `logPrefix`
-* [[restoreConsumer]] Kafka https://kafka.apache.org/20/javadoc/org/apache/kafka/clients/consumer/KafkaConsumer.html[Consumer] (`Consumer<byte[], byte[]>`)
+* [[restoreConsumer]] Kafka https://kafka.apache.org/22/javadoc/org/apache/kafka/clients/consumer/KafkaConsumer.html[Consumer] (`Consumer<byte[], byte[]>`)
 * [[streamsMetadataState]] <<kafka-streams-StreamsMetadataState.adoc#, StreamsMetadataState>>
 * [[taskCreator]] link:kafka-streams-internals-TaskCreator.adoc[StreamThread.AbstractTaskCreator<StreamTask>]
 * [[standbyTaskCreator]] <<kafka-streams-internals-AbstractTaskCreator.adoc#, AbstractTaskCreator>> of <<kafka-streams-internals-StandbyTask.adoc#, StandbyTasks>> (i.e. <<kafka-streams-internals-StandbyTaskCreator.adoc#, StandbyTaskCreator>> by default)
-* [[adminClient]] Kafka https://kafka.apache.org/21/javadoc/org/apache/kafka/clients/admin/AdminClient.html[AdminClient]
+* [[adminClient]] Kafka https://kafka.apache.org/22/javadoc/org/apache/kafka/clients/admin/AdminClient.html[AdminClient]
 * [[active]] link:kafka-streams-AssignedStreamsTasks.adoc[AssignedStreamsTasks]
 * [[standby]] link:kafka-streams-AssignedStandbyTasks.adoc[AssignedStandbyTasks]
 

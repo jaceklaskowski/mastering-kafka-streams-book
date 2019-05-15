@@ -49,7 +49,7 @@ Refer to link:kafka-logging.adoc#log4j.properties[Application Logging Using log4
 
 `InternalTopicManager` takes the following when created:
 
-* [[adminClient]] Kafka https://kafka.apache.org/21/javadoc/org/apache/kafka/clients/admin/AdminClient.html[AdminClient]
+* [[adminClient]] Kafka https://kafka.apache.org/22/javadoc/org/apache/kafka/clients/admin/AdminClient.html[AdminClient]
 * [[streamsConfig]] <<kafka-streams-StreamsConfig.adoc#, StreamsConfig>>
 
 `InternalTopicManager` initializes the <<internal-registries, internal registries and counters>>.

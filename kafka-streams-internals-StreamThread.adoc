@@ -263,9 +263,9 @@ NOTE: `maybeUpdateStandbyTasks` is used exclusively when `StreamThread` is reque
 
 * [[time]] `Time`
 * [[config]] <<kafka-streams-StreamsConfig.adoc#, StreamsConfig>>
-* [[producer]] Kafka http://kafka.apache.org/20/javadoc/org/apache/kafka/clients/producer/KafkaProducer.html[Producer] (`Producer<byte[], byte[]>`)
-* [[restoreConsumer]] Kafka https://kafka.apache.org/20/javadoc/org/apache/kafka/clients/consumer/KafkaConsumer.html[Consumer] (`Consumer<byte[], byte[]>`)
-* [[consumer]] Kafka https://kafka.apache.org/20/javadoc/org/apache/kafka/clients/consumer/KafkaConsumer.html[Consumer] (`Consumer<byte[], byte[]>`)
+* [[producer]] Kafka http://kafka.apache.org/22/javadoc/org/apache/kafka/clients/producer/KafkaProducer.html[Producer] (`Producer<byte[], byte[]>`)
+* [[restoreConsumer]] Kafka https://kafka.apache.org/22/javadoc/org/apache/kafka/clients/consumer/KafkaConsumer.html[Consumer] (`Consumer<byte[], byte[]>`)
+* [[consumer]] Kafka https://kafka.apache.org/22/javadoc/org/apache/kafka/clients/consumer/KafkaConsumer.html[Consumer] (`Consumer<byte[], byte[]>`)
 * [[originalReset]] `originalReset`
 * [[taskManager]] <<kafka-streams-internals-TaskManager.adoc#, TaskManager>>
 * [[streamsMetrics]] <<kafka-streams-StreamsMetricsThreadImpl.adoc#, StreamsMetricsThreadImpl>>
@@ -488,15 +488,15 @@ NOTE: `isRunning` is simply a pass-through variant of <<State, State.isRunning>>
 void addRecordsToTasks(final ConsumerRecords<byte[], byte[]> records)
 ----
 
-For every Kafka https://kafka.apache.org/11/javadoc/org/apache/kafka/common/TopicPartition.html[TopicPartition] in the input Kafka link:++https://kafka.apache.org/11/javadoc/org/apache/kafka/clients/consumer/ConsumerRecords.html#partitions--++[ConsumerRecords] `addRecordsToTasks` requests the <<taskManager, TaskManager>> for the link:kafka-streams-internals-TaskManager.adoc#activeTask[active stream processor task] (for the partition).
+For every Kafka https://kafka.apache.org/22/javadoc/org/apache/kafka/common/TopicPartition.html[TopicPartition] in the input Kafka link:++https://kafka.apache.org/22/javadoc/org/apache/kafka/clients/consumer/ConsumerRecords.html#partitions--++[ConsumerRecords] `addRecordsToTasks` requests the <<taskManager, TaskManager>> for the link:kafka-streams-internals-TaskManager.adoc#activeTask[active stream processor task] (for the partition).
 
-With the `StreamTask`, `addRecordsToTasks` requests the `ConsumerRecords` for the link:++https://kafka.apache.org/11/javadoc/org/apache/kafka/clients/consumer/ConsumerRecords.html#records-org.apache.kafka.common.TopicPartition-++[records for the given partition] followed by requesting the `StreamTask` to link:kafka-streams-internals-StreamTask.adoc#addRecords[addRecords] (with the partition and the records).
+With the `StreamTask`, `addRecordsToTasks` requests the `ConsumerRecords` for the link:++https://kafka.apache.org/22/javadoc/org/apache/kafka/clients/consumer/ConsumerRecords.html#records-org.apache.kafka.common.TopicPartition-++[records for the given partition] followed by requesting the `StreamTask` to link:kafka-streams-internals-StreamTask.adoc#addRecords[addRecords] (with the partition and the records).
 
 `addRecordsToTasks` counts the total number of added records to every `StreamTask` (per partition).
 
 In the end, `addRecordsToTasks` requests <<streamsMetrics, StreamsMetricsThreadImpl>> for the link:kafka-streams-StreamsMetricsThreadImpl.adoc#skippedRecordsSensor[skippedRecordsSensor] and requests it to record the number of records that were not added to any of the active `StreamTasks` (and hence skipped) at <<timerStartedMs, timerStartedMs>> time.
 
-NOTE: https://kafka.apache.org/11/javadoc/org/apache/kafka/clients/consumer/ConsumerRecords.html[ConsumerRecords] is a container that holds the list of `ConsumerRecord` per partition for a particular topic. There is one `ConsumerRecord` list for every topic partition returned by a `Consumer.poll(long)` operation.
+NOTE: https://kafka.apache.org/22/javadoc/org/apache/kafka/clients/consumer/ConsumerRecords.html[ConsumerRecords] is a container that holds the list of `ConsumerRecord` per partition for a particular topic. There is one `ConsumerRecord` list for every topic partition returned by a `Consumer.poll(long)` operation.
 
 NOTE: `addRecordsToTasks` is used exclusively when `StreamThread` is requested to <<runOnce, consume records once>>.
 

@@ -14,7 +14,7 @@ image::images/kafka-streams-StreamsMetadataState-onChange.png[align="center"]
 
 * [[hostInfo]] A user-defined endpoint (as a pair of a host and a port)
 * [[stateStoreNames]] Names of state stores
-* [[topicPartitions]] Kafka https://kafka.apache.org/21/javadoc/org/apache/kafka/common/TopicPartition.html[TopicPartitions] (that this instance is assigned to)
+* [[topicPartitions]] Kafka https://kafka.apache.org/22/javadoc/org/apache/kafka/common/TopicPartition.html[TopicPartitions] (that this instance is assigned to)
 
 [[internal-registries]]
 .StreamsMetadataState's Internal Properties (e.g. Registries, Counters and Flags)
@@ -31,7 +31,7 @@ a| [[allMetadata]] <<StreamsMetadata, StreamsMetadatas>> for all instances in a 
 `allMetadata` is accessed when `StreamsMetadataState` is requested for a <<toString, textual representation>>, <<getAllMetadataForStore, getAllMetadataForStore>>, <<getMetadataWithKey, getMetadataWithKey>>, <<getStreamsMetadataForKey, getStreamsMetadataForKey>>
 
 | clusterMetadata
-a| [[clusterMetadata]] Cluster metadata, i.e. a subset of the nodes, topics, and partitions in the Kafka cluster (as a Kafka https://kafka.apache.org/21/javadoc/org/apache/kafka/common/Cluster.html[Cluster]) that is given when `StreamsMetadataState` is requested to <<onChange, handle cluster metadata changes>>
+a| [[clusterMetadata]] Cluster metadata, i.e. a subset of the nodes, topics, and partitions in the Kafka cluster (as a Kafka https://kafka.apache.org/22/javadoc/org/apache/kafka/common/Cluster.html[Cluster]) that is given when `StreamsMetadataState` is requested to <<onChange, handle cluster metadata changes>>
 
 Used when:
 
@@ -80,7 +80,7 @@ void onChange(
   final Cluster clusterMetadata)
 ----
 
-`onChange` simply records the given `Cluster` as the <<clusterMetadata, Cluster>> and <<rebuildMetadata, rebuildMetadata>> (with the given current state of Kafka https://kafka.apache.org/21/javadoc/org/apache/kafka/common/TopicPartition.html[TopicPartitions] per `HostInfo`).
+`onChange` simply records the given `Cluster` as the <<clusterMetadata, Cluster>> and <<rebuildMetadata, rebuildMetadata>> (with the given current state of Kafka https://kafka.apache.org/22/javadoc/org/apache/kafka/common/TopicPartition.html[TopicPartitions] per `HostInfo`).
 
 NOTE: `onChange` is used exclusively when `TaskManager` is requested to <<kafka-streams-internals-TaskManager.adoc#setPartitionsByHostState, notify the StreamsMetadataState about cluster metadata changes>>.
 

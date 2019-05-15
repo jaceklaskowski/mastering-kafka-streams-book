@@ -20,7 +20,7 @@ a| [[headers]]
 Headers headers()
 ----
 
-The https://kafka.apache.org/21/javadoc/org/apache/kafka/common/header/Headers.html[headers] of the record
+The https://kafka.apache.org/22/javadoc/org/apache/kafka/common/header/Headers.html[headers] of the record
 
 | offset
 a| [[offset]]
