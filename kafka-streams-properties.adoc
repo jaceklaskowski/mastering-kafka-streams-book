@@ -26,6 +26,15 @@ Used exclusively when `StreamPartitionAssignor` is requested to <<kafka-streams-
 
 Use <<kafka-streams-StreamsConfig.adoc#APPLICATION_SERVER_CONFIG, StreamsConfig.APPLICATION_SERVER_CONFIG>> to reference the property.
 
+| buffered.records.per.partition
+| [[buffered.records.per.partition]] Maximum number of records to buffer per partition
+
+Default: `1000`
+
+Used exclusively when `StreamTask` is requested to <<kafka-streams-internals-StreamTask.adoc#process, process a single record>> and <<kafka-streams-internals-StreamTask.adoc#addRecords, buffer new records>> to resume and pause a partition, respectively
+
+Use <<kafka-streams-StreamsConfig.adoc#BUFFERED_RECORDS_PER_PARTITION_CONFIG, StreamsConfig.BUFFERED_RECORDS_PER_PARTITION_CONFIG>> to reference the property.
+
 | cache.max.bytes.buffering
 | [[cache.max.bytes.buffering]] Maximum number of memory bytes to be used for buffering across all (processor and global) threads
 

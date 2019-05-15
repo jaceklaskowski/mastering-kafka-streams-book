@@ -353,6 +353,9 @@
 . link:kafka-streams-TimestampTracker.adoc[TimestampTracker]
 .. link:kafka-streams-MinTimestampTracker.adoc[MinTimestampTracker]
 
+. link:kafka-streams-internals-PartitionGroup.adoc[PartitionGroup]
+.. link:kafka-streams-internals-RecordInfo.adoc[RecordInfo]
+
 . link:kafka-streams-internals-RecordQueue.adoc[RecordQueue]
 .. link:kafka-streams-internals-StampedRecord.adoc[StampedRecord -- Orderable Kafka ConsumerRecords At Timestamp]
 
@@ -366,9 +369,6 @@
 .. link:kafka-streams-WrappingStoreProvider.adoc[WrappingStoreProvider]
 
 . link:kafka-streams-RecordDeserializer.adoc[RecordDeserializer]
-
-. link:kafka-streams-internals-PartitionGroup.adoc[PartitionGroup]
-.. link:kafka-streams-internals-RecordInfo.adoc[RecordInfo]
 
 . link:kafka-streams-internals-StateDirectory.adoc[StateDirectory]
 . link:kafka-streams-internals-ProcessorRecordContext.adoc[ProcessorRecordContext]

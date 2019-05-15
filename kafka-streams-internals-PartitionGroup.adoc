@@ -1,24 +1,15 @@
 == [[PartitionGroup]] PartitionGroup
 
-`PartitionGroup` manages <<partitionQueues, RecordQueues per Kafka TopicPartition>> (as given when <<creating-instance, created>> for a <<kafka-streams-internals-StreamTask.adoc#partitionGroup, StreamTask>>).
+`PartitionGroup` manages <<partitionQueues, RecordQueues per Kafka partition>> assigned to a <<kafka-streams-internals-StreamTask.adoc#partitionGroup, StreamTask>>.
 
-[[creating-instance]]
-[[partitionQueues]]
-`PartitionGroup` takes a collection of <<kafka-streams-internals-RecordQueue.adoc#, RecordQueues>> per Kafka https://kafka.apache.org/20/javadoc/org/apache/kafka/common/TopicPartition.html[TopicPartition] when created.
+=== [[creating-instance]] Creating PartitionGroup Instance
 
-[[internal-registries]]
-.PartitionGroup's Internal Properties (e.g. Registries, Counters and Flags)
-[cols="1,2",options="header",width="100%"]
-|===
-| Name
-| Description
+`PartitionGroup` takes the following to be created:
 
-| `queuesByTime`
-| [[queuesByTime]] A Java https://docs.oracle.com/javase/8/docs/api/java/util/PriorityQueue.html[PriorityQueue] that is an unbounded priority queue that uses link:kafka-streams-internals-RecordQueue.adoc#timestamp[partition timestamps] for ordering.
+* [[partitionQueues]] <<kafka-streams-internals-RecordQueue.adoc#, RecordQueues>> per Kafka https://kafka.apache.org/22/javadoc/org/apache/kafka/common/TopicPartition.html[TopicPartition] (`Map<TopicPartition, RecordQueue>`)
+* [[recordLatenessSensor]] `recordLateness` sensor
 
-| `totalBuffered`
-| [[totalBuffered]]
-|===
+`PartitionGroup` initializes the <<internal-properties, internal properties>>.
 
 === [[nextRecord]] `nextRecord` Method
 
@@ -48,9 +39,9 @@ int addRawRecords(
 
 `addRawRecords` adds the difference between the old and current sizes to <<totalBuffered, totalBuffered>>.
 
-`addRawRecords` returns the current (new) size of the `RecordQueue`.
+In the end, `addRawRecords` returns the current size of the `RecordQueue`.
 
-NOTE: `addRawRecords` is used exclusively when `StreamTask` is requested to link:kafka-streams-internals-StreamTask.adoc#addRecords[addRecords].
+NOTE: `addRawRecords` is used exclusively when `StreamTask` is requested to <<kafka-streams-internals-StreamTask.adoc#addRecords, buffer new records>>.
 
 === [[clear]] `clear` Method
 
@@ -86,3 +77,41 @@ long timestamp()
 In the end, `timestamp` returns the oldest partition timestamp (time-wise).
 
 NOTE: `timestamp` is used exclusively when `StreamTask` is requested to <<kafka-streams-internals-StreamTask.adoc#maybePunctuateStreamTime, maybePunctuateStreamTime>>
+
+== [[internal-properties]] Internal Properties
+
+.PartitionGroup's Internal Properties (e.g. Registries, Counters and Flags)
+[cols="30m,70",options="header",width="100%"]
+|===
+| Name
+| Description
+
+| allBuffered
+a| [[allBuffered]]
+
+Default: `false`
+
+| nonEmptyQueuesByTime
+| [[nonEmptyQueuesByTime]] Java https://docs.oracle.com/javase/8/docs/api/java/util/PriorityQueue.html[PriorityQueue] that orders <<kafka-streams-internals-RecordQueue.adoc#, RecordQueues>> per <<kafka-streams-internals-RecordQueue.adoc#partitionTime, tracked partition timestamp>> (and the initial capacity as the number of partitions in the <<partitionQueues, partitionQueues>>) (`PriorityQueue<RecordQueue>`)
+
+Used when `PartitionGroup` is requested for the following:
+
+* <<nextRecord, Next record>>
+
+* <<addRawRecords, Add row records>>
+
+Cleared when `PartitionGroup` is requested to <<clear, clear>>
+
+| queuesByTime
+| [[queuesByTime]] Java https://docs.oracle.com/javase/8/docs/api/java/util/PriorityQueue.html[PriorityQueue] that is an unbounded priority queue that uses <<kafka-streams-internals-RecordQueue.adoc#timestamp, partition timestamps>> for ordering.
+
+| streamTime
+a| [[streamTime]]
+
+Default: <<kafka-streams-internals-RecordQueue.adoc#UNKNOWN, UNKNOWN>>
+
+| totalBuffered
+a| [[totalBuffered]] Number of...FIXME
+
+Default: `0`
+|===

@@ -42,6 +42,9 @@ admin.retries
 | BOOTSTRAP_SERVERS_CONFIG
 | [[BOOTSTRAP_SERVERS_CONFIG]] Kafka Client's `bootstrap.servers`
 
+| BUFFERED_RECORDS_PER_PARTITION_CONFIG
+| [[BUFFERED_RECORDS_PER_PARTITION_CONFIG]] <<kafka-streams-properties.adoc#buffered.records.per.partition, buffered.records.per.partition>>
+
 | CACHE_MAX_BYTES_BUFFERING_CONFIG
 | [[CACHE_MAX_BYTES_BUFFERING_CONFIG]] <<kafka-streams-properties.adoc#cache.max.bytes.buffering, cache.max.bytes.buffering>>
 

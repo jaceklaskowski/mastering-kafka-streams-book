@@ -55,7 +55,7 @@ log4j.logger.org.apache.kafka.streams.processor.internals.AssignedStreamsTasks=T
 Refer to link:kafka-logging.adoc#log4j.properties[Application Logging Using log4j].
 ====
 
-=== [[process]] Requesting Stream Tasks to Process Records -- `process` Method
+=== [[process]] Requesting Running Stream Tasks to Process One Record -- `process` Method
 
 [source, java]
 ----

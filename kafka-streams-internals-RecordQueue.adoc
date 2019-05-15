@@ -1,4 +1,4 @@
-== [[RecordQueue]] RecordQueue -- FIFO Queue of StampedRecords
+== [[RecordQueue]] RecordQueue -- FIFO Queue of Buffered Stamped Records
 
 `RecordQueue` is a <<fifoQueue, FIFO queue of StampedRecords>> from a <<partition, Kafka partition>> (associated with a <<source, SourceNode>>).
 
@@ -7,7 +7,12 @@
 .RecordQueue, StreamTask and TaskCreator
 image::images/kafka-streams-RecordQueue.png[align="center"]
 
+`RecordQueue` acts as a buffer of Kafka https://kafka.apache.org/22/javadoc/org/apache/kafka/clients/consumer/ConsumerRecord.html[ConsumerRecords].
+
 NOTE: `StreamTask` uses a <<kafka-streams-internals-PartitionGroup.adoc#, PartitionGroup>> to manage the `RecordQueues` per partition assigned.
+
+[[UNKNOWN]]
+`RecordQueue` defines the *UNKNOWN* constant to be `ConsumerRecord.NO_TIMESTAMP`.
 
 [[logging]]
 [TIP]
@@ -121,6 +126,9 @@ int size()
 | [[fifoQueue]] Java's https://docs.oracle.com/javase/8/docs/api/index.html?java/util/ArrayDeque.html[java.util.ArrayDeque] of link:kafka-streams-internals-StampedRecord.adoc[StampedRecords] (i.e. orderable Kafka `ConsumerRecords` with a timestamp)
 
 Used when...FIXME
+
+| partitionTime
+a| [[partitionTime]][[timestamp]]
 
 | recordDeserializer
 | [[recordDeserializer]] link:kafka-streams-RecordDeserializer.adoc[RecordDeserializer] (for the <<source, SourceNode>> and <<deserializationExceptionHandler, DeserializationExceptionHandler>>)

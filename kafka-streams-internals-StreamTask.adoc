@@ -1,6 +1,6 @@
 == [[StreamTask]] StreamTask
 
-`StreamTask` is a concrete link:kafka-streams-internals-AbstractTask.adoc[stream processor task] that manages a <<partitions, collection of Kafka TopicPartitions>> as a <<partitionGroup, PartitionGroup>>.
+`StreamTask` is a concrete link:kafka-streams-internals-AbstractTask.adoc[stream processor task] that manages the <<partitions, partitions assigned>> as a <<partitionGroup, PartitionGroup>>.
 
 `StreamTask` is <<creating-instance, created>> exclusively when `TaskCreator` is requested to <<kafka-streams-internals-TaskCreator.adoc#createTask, create one>>.
 
@@ -15,7 +15,8 @@ When requested to <<initializeTopology, initialize a processor topology>> (as a 
 `StreamTask` uses `commitOffsetNeeded` flag to...FIXME
 
 [[maxBufferedSize]]
-`StreamTask` uses link:kafka-streams-StreamsConfig.adoc#buffered.records.per.partition[buffered.records.per.partition] configuration property to control when to resume a partition (when <<process, processing a single record>>).
+[[buffered.records.per.partition]]
+`StreamTask` uses <<kafka-streams-properties.adoc#buffered.records.per.partition, buffered.records.per.partition>> configuration property (default: `1000`) to control whether to pause or resume a partition (when <<process, processing a single record>> or <<addRecords, bufferring new records>>, respectively).
 
 [[logging]]
 [TIP]
@@ -168,7 +169,7 @@ Start processing one record [record]
 
 `process` <<updateProcessorContext, updateProcessorContext>> (with the current record and the source processor node).
 
-`process` requests the source processor node to link:kafka-streams-internals-ProcessorNode.adoc#process[process] the key and the value of the record.
+`process` requests the source processor node to <<kafka-streams-internals-ProcessorNode.adoc#process, process>> the key and the value of the record.
 
 `process` prints out the following TRACE message to the logs:
 
@@ -190,7 +191,7 @@ In case of a `KafkaException`, `process` reports a `StreamsException`.
 
 In the end, `process` gives `true` when processing a single record was successful, and `false` when there were no records to process.
 
-NOTE: `process` is used exclusively when `AssignedStreamsTasks` is requested to link:kafka-streams-AssignedStreamsTasks.adoc#process[process].
+NOTE: `process` is used exclusively when `AssignedStreamsTasks` is requested to <<kafka-streams-AssignedStreamsTasks.adoc#process, process>>.
 
 === [[numBuffered]] `numBuffered` Method
 
@@ -217,28 +218,38 @@ NOTE: `closeSuspended` is part of link:kafka-streams-internals-Task.adoc#closeSu
 
 `closeSuspended`...FIXME
 
-=== [[addRecords]] `addRecords` Method
+=== [[addRecords]] Buffering New Records (From TopicPartition) -- `addRecords` Method
 
 [source, java]
 ----
-int addRecords(
+void addRecords(
   final TopicPartition partition,
   final Iterable<ConsumerRecord<byte[], byte[]>> records)
 ----
 
-`addRecords` requests <<partitionGroup, PartitionGroup>> to link:kafka-streams-internals-PartitionGroup.adoc#addRawRecords[add records to a RecordQueue for a Kafka partition].
+`addRecords` simply requests the <<partitionGroup, PartitionGroup>> to <<kafka-streams-internals-PartitionGroup.adoc#addRawRecords, add the new records to the RecordQueue for the specified partition>>.
 
-You should see the following TRACE message in the logs:
+.StreamTask and Buffering New Records
+image::images/kafka-streams-StreamTask-addRecords.png[align="center"]
+
+`addRecords` prints out the following TRACE message to the logs:
 
 ```
-Added records into the buffered queue of partition [partition], new queue size is [newQueueSize]"
+Added records into the buffered queue of partition [partition], new queue size is [newQueueSize]
 ```
 
-`addRecords` requests the <<consumer, Kafka Consumer>> to pause the partition if the queue size of the partition exceeded <<maxBufferedSize, buffered.records.per.partition>> configuration property.
+When the size of the buffered record queue exceeds <<buffered.records.per.partition, buffered.records.per.partition>> configuration property, `addRecords` requests the <<consumer, Kafka Consumer>> to pause the partition.
 
-In the end, `addRecords` returns the number of records added.
+NOTE: `addRecords` uses link:++https://kafka.apache.org/22/javadoc/org/apache/kafka/clients/consumer/KafkaConsumer.html#pause-java.util.Collection-++[Consumer.pause] method to _"pause the partition"_, i.e. to suspend fetching from the requested partitions. Future calls to link:++https://kafka.apache.org/22/javadoc/org/apache/kafka/clients/consumer/KafkaConsumer.html#poll-java.time.Duration-++[KafkaConsumer.poll] will not return any records from these partitions until they have been resumed using link:++https://kafka.apache.org/22/javadoc/org/apache/kafka/clients/consumer/KafkaConsumer.html#resume-java.util.Collection-++[KafkaConsumer.resume].
 
-NOTE: `addRecords` is used exclusively when `StreamThread` is requested to link:kafka-streams-internals-StreamThread.adoc#addRecordsToTasks[add records to active stream tasks (and report skipped records)].
+[NOTE]
+====
+`addRecords` is used when:
+
+* `StreamThread` is requested to <<kafka-streams-internals-StreamThread.adoc#addRecordsToTasks, add records to active stream tasks (and report skipped records)>>
+
+* `TopologyTestDriver` is requested to <<kafka-streams-TopologyTestDriver.adoc#pipeInput, pipeInput>>
+====
 
 === [[recordCollectorOffsets]] `recordCollectorOffsets` Method
 
@@ -469,21 +480,23 @@ NOTE: `producerMetrics` is used when...FIXME
 | Description
 
 | partitionGroup
-a| [[partitionGroup]] <<kafka-streams-internals-PartitionGroup.adoc#, PartitionGroup>> (with a <<kafka-streams-internals-RecordQueue.adoc#, RecordQueue>> for every assigned Kafka <<partitions, TopicPartition>>)
+a| [[partitionGroup]] <<kafka-streams-internals-PartitionGroup.adoc#, PartitionGroup>> (with <<kafka-streams-internals-RecordQueue.adoc#, RecordQueues>> for every <<partitions, Kafka partition assigned>>)
 
 Used when `StreamTask` is requested for the following:
 
-* <<addRecords, addRecords>>
+* <<isProcessable, isProcessable>>
 
-* <<closeSuspended, closeSuspended>>
+* <<process, Process a single record>>
 
 * <<closeTopology, closeTopology>>
 
-* <<maybePunctuateStreamTime, maybePunctuateStreamTime>>
+* <<closeSuspended, closeSuspended>>
+
+* <<addRecords, addRecords>>
 
 * <<numBuffered, numBuffered>>
 
-* <<process, Process a single record>>
+* <<maybePunctuateStreamTime, maybePunctuateStreamTime>>
 
 | consumedOffsets
 | [[consumedOffsets]] Offsets by https://kafka.apache.org/20/javadoc/org/apache/kafka/common/TopicPartition.html[TopicPartitions] (`Map<TopicPartition, Long>`) that `StreamTask` has <<process, processed>> successfully
