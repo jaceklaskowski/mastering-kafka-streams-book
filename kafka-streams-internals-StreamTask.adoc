@@ -4,6 +4,9 @@
 
 When requested to <<process, process a single record>>, `StreamTask` requests the <<partitionGroup, PartitionGroup>> for the <<kafka-streams-internals-PartitionGroup.adoc#nextRecord, next stamped record (record with timestamp) and the RecordQueue>>. `StreamTask` uses a <<recordInfo, RecordInfo>> to hold the <<kafka-streams-internals-RecordQueue.adoc#, RecordQueue>> (with the source <<kafka-streams-internals-ProcessorNode.adoc#, processor node>> and the partition) of the currently-processed stamped record. Eventually, `StreamTask` requests the source processor node (of the `RecordQueue` and the partition) to <<kafka-streams-internals-ProcessorNode.adoc#process, process the record>>.
 
+.StreamTask and Processing Single Record
+image::images/kafka-streams-StreamTask-process.png[align="center"]
+
 NOTE: It is at the discretion of a processor node (incl. a source processor node) to <<kafka-streams-ProcessorContext.adoc#forward, forward the record downstream>> (to child processors if there are any).
 
 `StreamTask` is <<creating-instance, created>> exclusively when `TaskCreator` is requested to <<kafka-streams-internals-TaskCreator.adoc#createTask, create one>>.
@@ -147,16 +150,20 @@ With <<kafka-streams-internals-AbstractTask.adoc#eosEnabled, exactly-once suppor
 
 In the end, `initializeTopology` turns the <<kafka-streams-internals-AbstractTask.adoc#taskInitialized, taskInitialized>> flag on (`true`) and the <<idleStartTime, idleStartTime>> to `UNKNOWN`.
 
-=== [[updateProcessorContext]] `updateProcessorContext` Internal Method
+=== [[updateProcessorContext]] Updating InternalProcessorContext -- `updateProcessorContext` Internal Method
 
 [source, java]
 ----
-void updateProcessorContext(final StampedRecord record, final ProcessorNode currNode)
+void updateProcessorContext(
+  final StampedRecord record,
+  final ProcessorNode currNode)
 ----
 
-`updateProcessorContext`...FIXME
+`updateProcessorContext` requests the <<processorContext, InternalProcessorContext>> to <<kafka-streams-internals-InternalProcessorContext.adoc#setRecordContext, set the current ProcessorRecordContext>> to a new <<kafka-streams-internals-ProcessorRecordContext.adoc#, ProcessorRecordContext>> (per the input <<kafka-streams-internals-StampedRecord.adoc#, StampedRecord>>).
 
-NOTE: `updateProcessorContext` is used when...FIXME
+`updateProcessorContext` then requests the <<processorContext, InternalProcessorContext>> to <<kafka-streams-internals-InternalProcessorContext.adoc#setCurrentNode, set the current ProcessorNode>> to the input <<kafka-streams-internals-ProcessorNode.adoc#, ProcessorNode>>.
+
+NOTE: `updateProcessorContext` is used when `StreamTask` is requested to <<process, process a single record>> and <<punctuate, execute a scheduled periodic action (aka punctuate)>>.
 
 === [[process]] Processing Single Record -- `process` Method
 
@@ -166,6 +173,9 @@ boolean process()
 ----
 
 `process` requests the <<partitionGroup, PartitionGroup>> for the <<kafka-streams-internals-PartitionGroup.adoc#nextRecord, next stamped record (record with timestamp) and the RecordQueue>> (with the <<recordInfo, RecordInfo>>).
+
+.StreamTask and Processing Single Record
+image::images/kafka-streams-StreamTask-process.png[align="center"]
 
 `process` prints out the following TRACE message to the logs:
 
@@ -185,7 +195,7 @@ Start processing one record [record]
 Completed processing one record [record]
 ```
 
-`process` requests the <<recordInfo, RecordInfo>> for the link:kafka-streams-internals-RecordInfo.adoc#partition, partition>> and stores it and the record's <<kafka-streams-internals-StampedRecord.adoc#offset, offset>> in the <<consumedOffsets, consumedOffsets>> internal registry.
+`process` requests the <<recordInfo, RecordInfo>> for the <<kafka-streams-internals-RecordInfo.adoc#partition, partition>> and stores it and the record's <<kafka-streams-internals-StampedRecord.adoc#offset, offset>> in the <<consumedOffsets, consumedOffsets>> internal registry.
 
 `process` turns the <<commitOffsetNeeded, commitOffsetNeeded>> flag on.
 
@@ -200,17 +210,6 @@ In case of a `KafkaException`, `process` throws a `StreamsException`.
 In the end, `process` returns `true` when the single record was processed successfully, and `false` when there were no records to process.
 
 NOTE: `process` is used exclusively when `AssignedStreamsTasks` is requested to <<kafka-streams-AssignedStreamsTasks.adoc#process, request the running stream tasks to process records (one record per task)>>.
-
-=== [[numBuffered]] `numBuffered` Method
-
-[source, java]
-----
-int numBuffered()
-----
-
-`numBuffered`...FIXME
-
-NOTE: `numBuffered` is used when...FIXME
 
 === [[closeSuspended]] `closeSuspended` Method
 
@@ -272,7 +271,7 @@ NOTE: `recordCollectorOffsets` is part of link:kafka-streams-internals-AbstractT
 
 === [[punctuate]] Executing Scheduled Periodic Action -- `punctuate` Method
 
-[source, scala]
+[source, java]
 ----
 void punctuate(
   final ProcessorNode node,
@@ -309,7 +308,7 @@ NOTE: `maybePunctuateSystemTime` is used exclusively when `AssignedStreamsTasks`
 
 === [[schedule]] `schedule` Method
 
-[source, scala]
+[source, java]
 ----
 // PUBLIC API
 Cancellable schedule(
@@ -494,6 +493,17 @@ Map<MetricName, Metric> producerMetrics()
 `producerMetrics`...FIXME
 
 NOTE: `producerMetrics` is used when...FIXME
+
+=== [[numBuffered]] `numBuffered` Method
+
+[source, java]
+----
+int numBuffered()
+----
+
+`numBuffered` simply requests the <<partitionGroup, PartitionGroup>> for the <<kafka-streams-internals-PartitionGroup.adoc#numBuffered, numBuffered>>.
+
+NOTE: `numBuffered` seems to be used for tests only.
 
 === [[internal-properties]] Internal Properties
 
