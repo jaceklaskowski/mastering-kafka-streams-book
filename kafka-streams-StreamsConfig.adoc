@@ -63,6 +63,9 @@ admin.retries
 | DEFAULT_TIMESTAMP_EXTRACTOR_CLASS_CONFIG
 | [[DEFAULT_TIMESTAMP_EXTRACTOR_CLASS_CONFIG]] <<kafka-streams-properties.adoc#default.timestamp.extractor, default.timestamp.extractor>>
 
+| MAX_TASK_IDLE_MS_CONFIG
+| [[MAX_TASK_IDLE_MS_CONFIG]] <<kafka-streams-properties.adoc#max.task.idle.ms, max.task.idle.ms>>
+
 | METRICS_RECORDING_LEVEL_CONFIG
 | [[METRICS_RECORDING_LEVEL_CONFIG]] <<kafka-streams-properties.adoc#metrics.recording.level, metrics.recording.level>>
 

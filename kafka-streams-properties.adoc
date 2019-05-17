@@ -86,6 +86,13 @@ a| [[default.timestamp.extractor]] Default timestamp extractor class that implem
 
 Default: <<kafka-streams-FailOnInvalidTimestamp.adoc#, FailOnInvalidTimestamp>>
 
+| max.task.idle.ms
+a| [[max.task.idle.ms]] How long a <<kafka-streams-internals-StreamTask.adoc#, stream task>> will stay idle when not all of its partition buffers contain records, to avoid potential out-of-order record processing across multiple input streams.
+
+Default: `0L`
+
+Use <<kafka-streams-StreamsConfig.adoc#MAX_TASK_IDLE_MS_CONFIG, StreamsConfig.MAX_TASK_IDLE_MS_CONFIG>> to reference the property.
+
 | metrics.recording.level
 a| [[metrics.recording.level]] The highest recording level for <<kafka-streams-StreamsMetrics.adoc#, metrics>>
 

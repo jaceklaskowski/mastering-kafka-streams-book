@@ -260,20 +260,22 @@ Failed to remove suspended [taskType] [id] due to the following error
 
 NOTE: `closeNonAssignedSuspendedTasks` is used exclusively when `TaskManager` is requested to link:kafka-streams-internals-TaskManager.adoc#createTasks[create processor tasks for assigned topic partitions].
 
-=== [[maybeResumeSuspendedTask]] Resuming Suspended Task -- `maybeResumeSuspendedTask` Method
+=== [[maybeResumeSuspendedTask]] Attempting to Resume Suspended Task -- `maybeResumeSuspendedTask` Method
 
 [source, java]
 ----
-boolean maybeResumeSuspendedTask(final TaskId taskId, final Set<TopicPartition> partitions)
+boolean maybeResumeSuspendedTask(
+  final TaskId taskId,
+  final Set<TopicPartition> partitions)
 ----
 
-`maybeResumeSuspendedTask` is positive (and gives `true`) after successful transitioning a task (by its `taskId`) from suspended to running state when the partitions of the suspended task and the input ones are equal. Otherwise, `maybeResumeSuspendedTask` reports an exception (`RuntimeException` or `TaskMigratedException`) or is negative (and gives `false`).
+`maybeResumeSuspendedTask` returns `true` after successful transitioning a task (by its `taskId`) from suspended to running state when the partitions of the suspended task and the input ones are equal. Otherwise, `maybeResumeSuspendedTask` reports an exception (`RuntimeException` or `TaskMigratedException`) or returns `false`.
 
-Internally, `maybeResumeSuspendedTask` branches off per whether the task (given `taskId`) is <<suspended, suspended>> or not.
+Internally, `maybeResumeSuspendedTask` branches off per whether the task (for the given <<kafka-streams-TaskId.adoc#, TaskId>>) is <<suspended, suspended>> or not.
 
-If not, `maybeResumeSuspendedTask` is negative (i.e. returns `false`).
+If not, `maybeResumeSuspendedTask` returns `false`.
 
-If the task is suspended, `maybeResumeSuspendedTask` prints out the following TRACE message to the logs:
+If the task is <<suspended, suspended>>, `maybeResumeSuspendedTask` prints out the following TRACE message to the logs:
 
 ```
 found suspended [taskTypeName] [taskId]

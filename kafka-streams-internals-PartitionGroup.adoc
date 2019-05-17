@@ -87,7 +87,7 @@ NOTE: `timestamp` is used exclusively when `StreamTask` is requested to <<kafka-
 | Description
 
 | allBuffered
-a| [[allBuffered]]
+a| [[allBuffered]][[allPartitionsBuffered]]
 
 Default: `false`
 

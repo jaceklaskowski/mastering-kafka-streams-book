@@ -169,6 +169,8 @@ a| [[id]]
 TaskId id()
 ----
 
+<<kafka-streams-TaskId.adoc#, TaskId>> of the task
+
 | initializeStateStores
 a| [[initializeStateStores]]
 
@@ -177,7 +179,7 @@ a| [[initializeStateStores]]
 boolean initializeStateStores()
 ----
 
-Initializing <<kafka-streams-StateStore.adoc#, state stores>>
+Initializes <<kafka-streams-StateStore.adoc#, state stores>>
 
 Enabled (`true`) if the task has no state stores that need restoring.
 
@@ -193,7 +195,7 @@ a| [[initializeTopology]]
 void initializeTopology()
 ----
 
-Initializes a <<topology, topology>>
+Initializes a <<topology, processor topology>>
 
 Used exclusively when `AssignedTasks` is requested to <<kafka-streams-internals-AssignedTasks.adoc#transitionToRunning, schedule a task for execution (processing records)>>
 
@@ -214,6 +216,8 @@ void resume()
 ----
 
 Resumes the task
+
+Used exclusively when `AssignedTasks` is requested to <<kafka-streams-internals-AssignedTasks.adoc#maybeResumeSuspendedTask, attempt to resume suspended task>> (when the task has actually been <<kafka-streams-internals-AssignedTasks.adoc#suspended, suspended>>)
 
 | suspend
 a| [[suspend]]

@@ -5,7 +5,7 @@
 NOTE: `AbstractTask` is a Java abstract class and cannot be <<creating-instance, created>> directly. It is created indirectly for the <<implementations, concrete AbstractTasks>>.
 
 [[eosEnabled]]
-`AbstractTask` uses link:kafka-streams-properties.adoc#processing.guarantee[processing.guarantee] configuration property to enable link:kafka-streams-exactly-once-support-eos.adoc[Exactly-Once Support] for...FIXME
+`AbstractTask` uses <<kafka-streams-properties.adoc#processing.guarantee, processing.guarantee>> configuration property to enable <<kafka-streams-exactly-once-support-eos.adoc#, Exactly-Once Support>> for...FIXME
 
 [[taskInitialized]]
 `AbstractTask` has `taskInitialized` flag that is on (i.e. `true`) to mark when:

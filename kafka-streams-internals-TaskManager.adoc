@@ -300,18 +300,18 @@ void maybePurgeCommitedRecords()
 
 NOTE: `maybePurgeCommitedRecords` is used exclusively when `StreamThread` is requested to <<kafka-streams-internals-StreamThread.adoc#maybeCommit, maybeCommit>> (when `StreamThread` is requested to <<kafka-streams-internals-StreamThread.adoc#runOnce, poll records once>> in the <<kafka-streams-internals-StreamThread.adoc#runLoop, main record processing loop>>).
 
-=== [[process]] Processing Records by Active Stream Tasks -- `process` Method
+=== [[process]] Processing Records by Running Stream Tasks (One Record Per Task) -- `process` Method
 
 [source, java]
 ----
 int process()
 ----
 
-`process` simply requests <<active, AssignedStreamsTasks>> to link:kafka-streams-AssignedStreamsTasks.adoc#process[process].
+`process` simply requests <<active, AssignedStreamsTasks>> to <<kafka-streams-AssignedStreamsTasks.adoc#process, request the running stream tasks to process a single record (per task)>>.
 
-In the end, `process` gives the number of stream tasks that processed a single record successfully.
+In the end, `process` gives the number of <<kafka-streams-internals-StreamTask.adoc#, stream tasks>> that processed a record.
 
-NOTE: `process` is used exclusively when `StreamThread` is requested to link:kafka-streams-internals-StreamThread.adoc#processAndMaybeCommit[processAndMaybeCommit].
+NOTE: `process` is used exclusively when `StreamThread` is requested to <<kafka-streams-internals-StreamThread.adoc#processAndMaybeCommit, process records (with optional commit)>> (when requested to <<kafka-streams-internals-StreamThread.adoc#runOnce, poll records once>>).
 
 === [[maybeCommitActiveTasks]] Committing Active Running Stream Tasks that Requested It -- `maybeCommitActiveTasks` Method
 
