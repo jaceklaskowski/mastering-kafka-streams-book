@@ -5,6 +5,10 @@
 .StreamThread and Stream Processing
 image::images/kafka-streams-StreamThread.png[align="center"]
 
+`StreamThread` uses a <<rebalanceListener, custom ConsumerRebalanceListener>> (that has access to the <<taskManager, TaskManager>>) when subscribing to source topics (when requested to <<runLoop, run the main record processing loop>> and <<enforceRebalance, enforceRebalance>>).
+
+NOTE: When <<kafka-streams-StreamThread-RebalanceListener.adoc#onPartitionsAssigned, partitions get assigned>>, the <<rebalanceListener, custom ConsumerRebalanceListener>> requests the `TaskManager` to <<kafka-streams-internals-TaskManager.adoc#createTasks, create tasks for the assigned partitions>>.
+
 `StreamThread` uses a <<consumer, Kafka Consumer>> and a <<taskManager, TaskManager>> that are both created when `StreamThread` object is requested to <<create, create an instance of itself>>. That is when the `StreamThread` sets the <<kafka-streams-StreamsConfig.adoc#TASK_MANAGER_FOR_PARTITION_ASSIGNOR, TASK_MANAGER_FOR_PARTITION_ASSIGNOR>> internal property and indirectly associates the <<taskManager, TaskManager>> with <<kafka-streams-internals-StreamsPartitionAssignor.adoc#, StreamsPartitionAssignor>>. `StreamThread` also requests the given <<kafka-streams-KafkaClientSupplier.adoc#, KafkaClientSupplier>> to <<getConsumer, create a KafkaConsumer>> (with the <<taskManager, TaskManager>>) and so when the <<kafka-streams-internals-StreamsPartitionAssignor.adoc#PARTITION_ASSIGNMENT_STRATEGY_CONFIG, partition.assignment.strategy>> configuration property is picked up, `StreamsPartitionAssignor` is <<kafka-streams-internals-StreamsPartitionAssignor.adoc#, created>> and eventually <<kafka-streams-internals-StreamsPartitionAssignor.adoc#configure, configured>> (that will use the <<kafka-streams-StreamsConfig.adoc#TASK_MANAGER_FOR_PARTITION_ASSIGNOR, TASK_MANAGER_FOR_PARTITION_ASSIGNOR>> internal property).
 
 .StreamThread and Registering TaskManager under TASK_MANAGER_FOR_PARTITION_ASSIGNOR
@@ -49,15 +53,15 @@ NOTE: `KafkaStreams` uses <<kafka-streams-KafkaStreams.adoc#threads, num.stream.
 [[logging]]
 [TIP]
 ====
-Enable any of `WARN`, `ERROR`, `INFO`, `DEBUG`, `TRACE` logging levels for `org.apache.kafka.streams.processor.internals.StreamThread` logger to see what happens inside.
+Enable any of `ALL` logging levels for `org.apache.kafka.streams.processor.internals.StreamThread` logger to see what happens inside.
 
 Add the following line to `log4j.properties`:
 
 ```
-log4j.logger.org.apache.kafka.streams.processor.internals.StreamThread=TRACE
+log4j.logger.org.apache.kafka.streams.processor.internals.StreamThread=ALL
 ```
 
-Refer to link:kafka-logging.adoc#log4j.properties[Application Logging Using log4j].
+Refer to <<kafka-logging.adoc#log4j.properties, Application Logging Using log4j>>.
 ====
 
 === [[state]][[State]] Life Cycle of StreamThread -- StreamThread's States
