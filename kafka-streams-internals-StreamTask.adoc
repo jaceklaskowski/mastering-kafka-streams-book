@@ -1,6 +1,6 @@
 == [[StreamTask]] StreamTask
 
-`StreamTask` is a concrete <<kafka-streams-internals-AbstractTask.adoc#, stream processor task>> that manages a <<partitionGroup, PartitionGroup>> (of the <<partitions, partitions assigned>>).
+`StreamTask` is a concrete <<kafka-streams-internals-AbstractTask.adoc#, stream processor task>> that uses a <<partitionGroup, PartitionGroup>> (with the <<partitions, partitions assigned>>) to <<process, process records>> (one at a time) ordered by partition timestamp.
 
 `StreamTask` is <<creating-instance, created>> exclusively when `TaskCreator` is requested to <<kafka-streams-internals-TaskCreator.adoc#createTask, create one>>.
 
@@ -161,7 +161,7 @@ NOTE: `updateProcessorContext` is used when...FIXME
 boolean process()
 ----
 
-`process` requests the <<partitionGroup, PartitionGroup>> for <<kafka-streams-internals-PartitionGroup.adoc#nextRecord, nextRecord>> (with <<recordInfo, RecordInfo>>).
+`process` requests the <<partitionGroup, PartitionGroup>> for the <<kafka-streams-internals-PartitionGroup.adoc#nextRecord, next stamped record (record with timestamp) and the RecordQueue>> (with the <<recordInfo, RecordInfo>>).
 
 `process` prints out the following TRACE message to the logs:
 
@@ -222,7 +222,7 @@ NOTE: `closeSuspended` is part of link:kafka-streams-internals-Task.adoc#closeSu
 
 `closeSuspended`...FIXME
 
-=== [[addRecords]] Buffering New Records (From TopicPartition) -- `addRecords` Method
+=== [[addRecords]] Buffering New Records (From Partition) -- `addRecords` Method
 
 [source, java]
 ----
@@ -429,7 +429,7 @@ boolean isProcessable(final long now)
 
 `isProcessable` returns `true` when one of the following is met:
 
-* <<kafka-streams-internals-PartitionGroup.adoc#allPartitionsBuffered, allPartitionsBuffered>> of the <<partitionGroup, PartitionGroup>> (default: `false`)
+* <<kafka-streams-internals-PartitionGroup.adoc#allPartitionsBuffered, All RecordQueues have at least one record buffered>> of the <<partitionGroup, PartitionGroup>>
 
 * The task is enforced to be processable, i.e. the time between `now` and the <<idleStartTime, idleStartTime>> is at least or larger than the <<maxTaskIdleMs, max.task.idle.ms>> configuration property (default: `0L`)
 
@@ -499,8 +499,14 @@ NOTE: `producerMetrics` is used when...FIXME
 | Name
 | Description
 
+| consumedOffsets
+| [[consumedOffsets]] Offsets by https://kafka.apache.org/22/javadoc/org/apache/kafka/common/TopicPartition.html[TopicPartitions] (`Map<TopicPartition, Long>`) that `StreamTask` has <<process, processed>> successfully
+
+| idleStartTime
+a| [[idleStartTime]]
+
 | partitionGroup
-a| [[partitionGroup]] <<kafka-streams-internals-PartitionGroup.adoc#, PartitionGroup>> with <<kafka-streams-internals-RecordQueue.adoc#, RecordQueues>> (for every <<partitions, Kafka partition assigned>>)
+a| [[partitionGroup]] <<kafka-streams-internals-PartitionGroup.adoc#, PartitionGroup>> (with <<kafka-streams-internals-RecordQueue.adoc#, RecordQueues>> per <<partitions, partition assigned>>)
 
 Used when `StreamTask` is requested for the following:
 
@@ -512,17 +518,14 @@ Used when `StreamTask` is requested for the following:
 
 * <<closeSuspended, closeSuspended>>
 
-* <<addRecords, addRecords>>
+* <<addRecords, Buffer new records (from a partition)>>
 
 * <<numBuffered, numBuffered>>
 
 * <<maybePunctuateStreamTime, maybePunctuateStreamTime>>
 
-| consumedOffsets
-| [[consumedOffsets]] Offsets by https://kafka.apache.org/22/javadoc/org/apache/kafka/common/TopicPartition.html[TopicPartitions] (`Map<TopicPartition, Long>`) that `StreamTask` has <<process, processed>> successfully
-
-| idleStartTime
-a| [[idleStartTime]]
+| processorContext
+a| [[processorContext]] <<kafka-streams-internals-ProcessorContextImpl.adoc#, ProcessorContextImpl>>
 
 | producer
 a| [[producer]][[getProducer]] Kafka xref:https://kafka.apache.org/22/javadoc/org/apache/kafka/clients/producer/KafkaProducer.html#[Producer] (`Producer<byte[], byte[]>`)
@@ -538,9 +541,6 @@ Used for the following:
 * <<initializeTopology, initializeTopology>>, <<initializeTransactions, initializeTransactions>>, <<maybeAbortTransactionAndCloseRecordCollector, maybeAbortTransactionAndCloseRecordCollector>>, and <<commit, commit>> for <<kafka-streams-exactly-once-support-eos.adoc#, exactly-once support>>
 
 * <<producerMetrics, producerMetrics>>
-
-| processorContext
-a| [[processorContext]] <<kafka-streams-internals-ProcessorContextImpl.adoc#, ProcessorContextImpl>>
 
 | recordInfo
 a| [[recordInfo]] <<kafka-streams-internals-RecordInfo.adoc#, RecordInfo>>

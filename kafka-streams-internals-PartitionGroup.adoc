@@ -1,6 +1,8 @@
 == [[PartitionGroup]] PartitionGroup
 
-`PartitionGroup` manages <<partitionQueues, RecordQueues per Kafka partition>> assigned to a <<kafka-streams-internals-StreamTask.adoc#partitionGroup, StreamTask>>.
+`PartitionGroup` manages <<partitionQueues, RecordQueues per partition>> assigned to a <<kafka-streams-internals-StreamTask.adoc#, StreamTask>>.
+
+`PartitionGroup` is <<creating-instance, created>> exclusively for a <<kafka-streams-internals-StreamTask.adoc#partitionGroup, StreamTask>>.
 
 === [[creating-instance]] Creating PartitionGroup Instance
 
@@ -11,7 +13,7 @@
 
 `PartitionGroup` initializes the <<internal-properties, internal properties>>.
 
-=== [[nextRecord]] `nextRecord` Method
+=== [[nextRecord]] Retrieving Next Stamped Record (Record with Timestamp) and RecordQueue -- `nextRecord` Method
 
 [source, java]
 ----
@@ -20,11 +22,11 @@ StampedRecord nextRecord(final RecordInfo info)
 
 `nextRecord`...FIXME
 
-NOTE: `nextRecord` is used exclusively when `StreamTask` is link:kafka-streams-internals-StreamTask.adoc#process[processing]...FIXME
+NOTE: `nextRecord` is used exclusively when `StreamTask` is requested to <<kafka-streams-internals-StreamTask.adoc#process, process a single record>>.
 
-=== [[addRawRecords]] Adding Records to RecordQueue (For Kafka Partition) -- `addRawRecords` Method
+=== [[addRawRecords]] Adding Records to RecordQueue For Given Partition -- `addRawRecords` Method
 
-[source, scala]
+[source, java]
 ----
 int addRawRecords(
   final TopicPartition partition,
@@ -78,18 +80,23 @@ In the end, `timestamp` returns the oldest partition timestamp (time-wise).
 
 NOTE: `timestamp` is used exclusively when `StreamTask` is requested to <<kafka-streams-internals-StreamTask.adoc#maybePunctuateStreamTime, maybePunctuateStreamTime>>
 
-== [[internal-properties]] Internal Properties
+=== [[internal-properties]] Internal Properties
 
-.PartitionGroup's Internal Properties (e.g. Registries, Counters and Flags)
 [cols="30m,70",options="header",width="100%"]
 |===
 | Name
 | Description
 
 | allBuffered
-a| [[allBuffered]][[allPartitionsBuffered]]
+a| [[allBuffered]][[allPartitionsBuffered]] Flag that indicates whether all the <<nonEmptyQueuesByTime, RecordQueues>> have at least one record buffered (`true`) or not (`false`)
 
 Default: `false`
+
+Enabled (`true`) when the size of the <<nonEmptyQueuesByTime, nonEmptyQueuesByTime>> is exactly the size of the <<partitionQueues, partitionQueues>> (when requested to <<addRawRecords, add records to the RecordQueue for a given partition>>)
+
+Disabled (`false`) when one of the <<nonEmptyQueuesByTime, RecordQueues>> has been drained (when requested for the <<nextRecord, next record>>)
+
+Used (as `allPartitionsBuffered` method) exclusively when `StreamTask` is requested to <<kafka-streams-internals-StreamTask.adoc#isProcessable, isProcessable>>
 
 | nonEmptyQueuesByTime
 | [[nonEmptyQueuesByTime]] Java https://docs.oracle.com/javase/8/docs/api/java/util/PriorityQueue.html[PriorityQueue] that orders <<kafka-streams-internals-RecordQueue.adoc#, RecordQueues>> per <<kafka-streams-internals-RecordQueue.adoc#partitionTime, tracked partition timestamp>> (and the initial capacity as the number of partitions in the <<partitionQueues, partitionQueues>>) (`PriorityQueue<RecordQueue>`)
@@ -98,7 +105,7 @@ Used when `PartitionGroup` is requested for the following:
 
 * <<nextRecord, Next record>>
 
-* <<addRawRecords, Add row records>>
+* <<addRawRecords, Add records to the RecordQueue for a given partition>>
 
 Cleared when `PartitionGroup` is requested to <<clear, clear>>
 
