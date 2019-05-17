@@ -35,9 +35,9 @@ a| [[init]]
 void init(ProcessorContext context)
 ----
 
-Initializes the processor (with a <<kafka-streams-ProcessorContext.adoc#, ProcessorContext>>)
+Initializes the processor with a <<kafka-streams-ProcessorContext.adoc#, ProcessorContext>> (that can be used to decide whether a record should be <<kafka-streams-ProcessorContext.adoc#forward, forwarded downstream>> to child processors if there are any)
 
-Used exclusively when `ProcessorNode` is requested to <<kafka-streams-internals-ProcessorNode.adoc#init, init>>.
+Used exclusively when `ProcessorNode` is requested to <<kafka-streams-internals-ProcessorNode.adoc#init, init>>
 
 | process
 a| [[process]]
@@ -47,9 +47,9 @@ a| [[process]]
 void process(K key, V value)
 ----
 
-Processes a single record
+Processes a single record (as a pair of a `K` key and a `V` value)
 
-Used exclusively when `ProcessorNode` is requested to <<kafka-streams-internals-ProcessorNode.adoc#process, process>>.
+Used exclusively when `ProcessorNode` is requested to <<kafka-streams-internals-ProcessorNode.adoc#process, process a single record (as a key and value pair)>>.
 
 |===
 

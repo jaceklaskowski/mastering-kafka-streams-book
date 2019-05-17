@@ -1,6 +1,6 @@
 == [[PartitionGroup]] PartitionGroup
 
-`PartitionGroup` manages <<partitionQueues, RecordQueues per partition>> assigned to a <<kafka-streams-internals-StreamTask.adoc#, StreamTask>>.
+`PartitionGroup` is a collection of <<partitionQueues, RecordQueues>> (one per every <<kafka-streams-internals-StreamTask.adoc#partitions, partition>> assigned to a <<kafka-streams-internals-StreamTask.adoc#, StreamTask>>).
 
 `PartitionGroup` is <<creating-instance, created>> exclusively for a <<kafka-streams-internals-StreamTask.adoc#partitionGroup, StreamTask>>.
 

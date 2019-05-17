@@ -60,7 +60,7 @@ void forward(final K key, final V value)
 void forward(final K key, final V value, final To to)
 ----
 
-Forwards a record to downstream processors
+Forwards a record downstream (to child processors if there are any)
 
 | getStateStore
 a| [[getStateStore]]

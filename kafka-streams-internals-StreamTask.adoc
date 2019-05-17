@@ -1,6 +1,10 @@
 == [[StreamTask]] StreamTask
 
-`StreamTask` is a concrete <<kafka-streams-internals-AbstractTask.adoc#, stream processor task>> that uses a <<partitionGroup, PartitionGroup>> (with the <<partitions, partitions assigned>>) to <<process, process records>> (one at a time) ordered by partition timestamp.
+`StreamTask` is a concrete <<kafka-streams-internals-AbstractTask.adoc#, stream processor task>> that uses a <<partitionGroup, PartitionGroup>> (with the <<partitions, partitions assigned>>) to determine which record should be <<process, processed>> (as ordered by partition timestamp).
+
+When requested to <<process, process a single record>>, `StreamTask` requests the <<partitionGroup, PartitionGroup>> for the <<kafka-streams-internals-PartitionGroup.adoc#nextRecord, next stamped record (record with timestamp) and the RecordQueue>>. `StreamTask` uses a <<recordInfo, RecordInfo>> to hold the <<kafka-streams-internals-RecordQueue.adoc#, RecordQueue>> (with the source <<kafka-streams-internals-ProcessorNode.adoc#, processor node>> and the partition) of the currently-processed stamped record. Eventually, `StreamTask` requests the source processor node (of the `RecordQueue` and the partition) to <<kafka-streams-internals-ProcessorNode.adoc#process, process the record>>.
+
+NOTE: It is at the discretion of a processor node (incl. a source processor node) to <<kafka-streams-ProcessorContext.adoc#forward, forward the record downstream>> (to child processors if there are any).
 
 `StreamTask` is <<creating-instance, created>> exclusively when `TaskCreator` is requested to <<kafka-streams-internals-TaskCreator.adoc#createTask, create one>>.
 
@@ -100,7 +104,7 @@ NOTE: `close` is part of link:kafka-streams-internals-Task.adoc#close[Task Contr
 `StreamTask` takes the following to be created:
 
 * [[id]] <<kafka-streams-TaskId.adoc#, TaskId>>
-* [[partitions]] Topic partitions (Kafka `TopicPartition`)
+* [[partitions]] Partitions (Kafka https://kafka.apache.org/22/javadoc/org/apache/kafka/common/TopicPartition.html[TopicPartition])
 * [[topology]] <<kafka-streams-internals-ProcessorTopology.adoc#, ProcessorTopology>>
 * [[consumer]] Kafka https://kafka.apache.org/22/javadoc/org/apache/kafka/clients/consumer/KafkaConsumer.html[Consumer] (`Consumer<byte[], byte[]>`)
 * [[changelogReader]] <<kafka-streams-ChangelogReader.adoc#, ChangelogReader>>
@@ -493,7 +497,6 @@ NOTE: `producerMetrics` is used when...FIXME
 
 === [[internal-properties]] Internal Properties
 
-.StreamTask's Internal Properties (e.g. Registries, Counters and Flags)
 [cols="30m,70",options="header",width="100%"]
 |===
 | Name
@@ -506,9 +509,11 @@ NOTE: `producerMetrics` is used when...FIXME
 a| [[idleStartTime]]
 
 | partitionGroup
-a| [[partitionGroup]] <<kafka-streams-internals-PartitionGroup.adoc#, PartitionGroup>> (with <<kafka-streams-internals-RecordQueue.adoc#, RecordQueues>> per <<partitions, partition assigned>>)
+a| [[partitionGroup]] <<kafka-streams-internals-PartitionGroup.adoc#, PartitionGroup>> (with <<kafka-streams-internals-RecordQueue.adoc#, RecordQueues>> per every <<partitions, partition assigned>>)
 
 Used when `StreamTask` is requested for the following:
+
+* <<addRecords, Buffer new records (from a partition)>>
 
 * <<isProcessable, isProcessable>>
 
@@ -517,8 +522,6 @@ Used when `StreamTask` is requested for the following:
 * <<closeTopology, closeTopology>>
 
 * <<closeSuspended, closeSuspended>>
-
-* <<addRecords, Buffer new records (from a partition)>>
 
 * <<numBuffered, numBuffered>>
 
@@ -543,7 +546,9 @@ Used for the following:
 * <<producerMetrics, producerMetrics>>
 
 | recordInfo
-a| [[recordInfo]] <<kafka-streams-internals-RecordInfo.adoc#, RecordInfo>>
+a| [[recordInfo]] <<kafka-streams-internals-RecordInfo.adoc#, RecordInfo>> (that holds a <<kafka-streams-internals-RecordQueue.adoc#, RecordQueue>> with the source <<kafka-streams-internals-ProcessorNode.adoc#, processor node>> and the partition the <<process, currently-processed stamped record>> came from)
+
+Created empty alongside the <<StreamTask, StreamTask>> and _"fill up"_ with the <<kafka-streams-internals-RecordQueue.adoc#, RecordQueue>> when requested to <<process, process a single record>>
 
 | streamTimePunctuationQueue
 a| [[streamTimePunctuationQueue]] <<kafka-streams-PunctuationQueue.adoc#, PunctuationQueue>>

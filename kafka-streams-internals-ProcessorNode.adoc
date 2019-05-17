@@ -1,6 +1,6 @@
 == [[ProcessorNode]] ProcessorNode
 
-`ProcessorNode` is a <<process, processing node>> in a topology that is identified by a <<name, name>> and have zero or more <<children, child processor nodes>>.
+`ProcessorNode` is a <<process, processing node>> in a processor topology that is identified by a <<name, name>> and have zero or more <<children, child processor nodes>>.
 
 NOTE: link:kafka-streams-internals-SourceNode.adoc[SourceNode] and link:kafka-streams-internals-SinkNode.adoc[SinkNode] are specialized `ProcessorNodes`.
 
@@ -11,29 +11,6 @@ NOTE: link:kafka-streams-internals-SourceNode.adoc[SourceNode] and link:kafka-st
 `ProcessorNode` can be <<punctuate, punctuated>>.
 
 `ProcessorNode` has a <<toString, human-friendly / textual representation>> that is particularly helpful for debugging.
-
-[[internal-registries]]
-.ProcessorNode's Internal Properties (e.g. Registries, Counters and Flags)
-[cols="1,2",options="header",width="100%"]
-|===
-| Name
-| Description
-
-| `children`
-| [[children]] Child `ProcessorNodes`
-
-Used when...FIXME
-
-| `nodeMetrics`
-| [[nodeMetrics]] link:kafka-streams-NodeMetrics.adoc[NodeMetrics]
-
-Used when...FIXME
-
-| `time`
-| [[time]] `Time`
-
-Used when...FIXME
-|===
 
 === [[init]] `init` Method
 
@@ -53,14 +30,16 @@ void init(ProcessorContext context)
 * `StreamTask` is requested to <<kafka-streams-internals-StreamTask.adoc#initTopology, initTopology>>
 ====
 
-=== [[process]] Processing Record -- `process` Method
+=== [[process]] Processing Single Record (As Key and Value Pair) -- `process` Method
 
 [source, java]
 ----
 void process(final K key, final V value)
 ----
 
-`process`...FIXME
+`process` requests the <<processor, Processor>> to <<kafka-streams-Processor.adoc#process, process the given key and value pair>>.
+
+In the end, `process` requests the <<nodeMetrics, NodeMetrics>> for the <<kafka-streams-NodeMetrics.adoc#nodeProcessTimeSensor, nodeProcessTimeSensor>> to record the processing time.
 
 [NOTE]
 ====
@@ -70,18 +49,18 @@ void process(final K key, final V value)
 
 * `GlobalStateUpdateTask` is requested to <<kafka-streams-internals-GlobalStateUpdateTask.adoc#update, update>>
 
-* `StreamTask` is requested to <<kafka-streams-internals-StreamTask.adoc#process, process>>
+* `StreamTask` is requested to <<kafka-streams-internals-StreamTask.adoc#process, process a single record>>
 ====
 
 === [[creating-instance]] Creating ProcessorNode Instance
 
-`ProcessorNode` takes the following when created:
+`ProcessorNode` takes the following to be created:
 
 * [[name]] Name
-* [[processor]] link:kafka-streams-Processor.adoc[Processor] (of `K` keys and `V` values)
+* [[processor]] <<kafka-streams-Processor.adoc#, Processor>> (`Processor<K, V>` of `K` keys and `V` values)
 * [[stateStores]] Names of the associated state stores
 
-`ProcessorNode` initializes the <<internal-registries, internal registries and counters>>.
+`ProcessorNode` initializes the <<internal-properties, internal properties>>.
 
 === [[addChild]] Adding Child Processor Node -- `addChild` Method
 
@@ -130,3 +109,26 @@ void punctuate(final long timestamp, final Punctuator punctuator)
 `punctuate` requests the <<nodeMetrics, NodeMetrics>> for the link:kafka-streams-NodeMetrics.adoc#metrics[StreamsMetricsImpl] that is requested to link:kafka-streams-internals-StreamsMetricsImpl.adoc#measureLatencyNs[measureLatencyNs] (that records it with the link:kafka-streams-NodeMetrics.adoc#nodePunctuateTimeSensor[nodePunctuateTimeSensor] of the <<nodeMetrics, NodeMetrics>>).
 
 NOTE: `punctuate` is used exclusively when `StreamTask` is requested to link:kafka-streams-internals-StreamTask.adoc#punctuate[execute a scheduled periodic action].
+
+=== [[internal-properties]] Internal Properties
+
+[cols="30m,70",options="header",width="100%"]
+|===
+| Name
+| Description
+
+| children
+| [[children]] Child `ProcessorNodes`
+
+Used when...FIXME
+
+| nodeMetrics
+| [[nodeMetrics]] <<kafka-streams-NodeMetrics.adoc#, NodeMetrics>>
+
+Used when...FIXME
+
+| time
+| [[time]] `Time`
+
+Used when...FIXME
+|===
