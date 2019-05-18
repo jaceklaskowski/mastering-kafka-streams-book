@@ -197,7 +197,7 @@ void initializeTopology()
 
 Initializes a <<topology, processor topology>>
 
-Used exclusively when `AssignedTasks` is requested to <<kafka-streams-internals-AssignedTasks.adoc#transitionToRunning, schedule a task for execution (processing records)>>
+Used exclusively when `AssignedTasks` is requested to <<kafka-streams-internals-AssignedTasks.adoc#transitionToRunning, mark the specified task as ready for execution and processing records>>
 
 | partitions
 a| [[partitions]]

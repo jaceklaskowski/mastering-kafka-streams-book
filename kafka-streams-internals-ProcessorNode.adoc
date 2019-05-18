@@ -12,7 +12,7 @@ NOTE: link:kafka-streams-internals-SourceNode.adoc[SourceNode] and link:kafka-st
 
 `ProcessorNode` has a <<toString, human-friendly / textual representation>> that is particularly helpful for debugging.
 
-=== [[init]] `init` Method
+=== [[init]] Initializing ProcessorNode -- `init` Method
 
 [source, java]
 ----
@@ -27,7 +27,7 @@ void init(ProcessorContext context)
 
 * `GlobalStateUpdateTask` is requested to <<kafka-streams-internals-GlobalStateUpdateTask.adoc#initTopology, initTopology>>
 
-* `StreamTask` is requested to <<kafka-streams-internals-StreamTask.adoc#initTopology, initTopology>>
+* `StreamTask` is requested to <<kafka-streams-internals-StreamTask.adoc#initTopology, initialize the ProcessorNodes in a ProcessorTopology>>
 ====
 
 === [[process]] Processing Single Record (As Key and Value Pair) -- `process` Method

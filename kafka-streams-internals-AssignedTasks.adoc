@@ -1,79 +1,33 @@
 == [[AssignedTasks]] AssignedTasks
 
-`AssignedTasks` is the <<implementations, base for tasks>> that...FIXME
+`AssignedTasks` is the <<contract, abstraction>> of <<implementations, collections of tasks>> to manage status of multiple tasks as a whole.
 
-`AssignedTasks` manages tasks in the following internal registries (that are the only way of assigning a status to a task, i.e. a task is in a given status if it is in the following registries):
+`AssignedTasks` uses the following <<internal-properties, internal registries>> to determine the status of a task:
 
-1. <<running, running>> for tasks that are considered *running* (that `AssignedStreamsTasks` uses when requested to link:kafka-streams-AssignedStreamsTasks.adoc#process[process])
+* <<running, running>> for tasks that are considered *running* (that `AssignedStreamsTasks` uses when requested to link:kafka-streams-AssignedStreamsTasks.adoc#process[process])
 
-1. <<created, created>> for tasks that are considered *new*
+* <<created, created>> for tasks that are considered *new*
 
-1. <<suspended, suspended>> for tasks that are considered *suspended*
+* <<suspended, suspended>> for tasks that are considered *suspended*
 
-1. <<restoring, restoring>> for tasks that are considered *restoring*
+* <<restoring, restoring>> for tasks that are considered *restoring*
 
-NOTE: Use <<toString, toString>> method to list the tasks by status.
+`AssignedTasks` gives the <<toString, toString>> method to list the tasks by their status.
 
 NOTE: `AssignedTasks` is a Java abstract class and cannot be <<creating-instance, created>> directly. It is created indirectly when the <<implementations, concrete AssignedTasks>> are.
 
 [[implementations]]
 .AssignedTasks
-[cols="1,2",options="header",width="100%"]
+[cols="30m,70",options="header",width="100%"]
 |===
 | Task
 | Description
 
-| link:kafka-streams-AssignedStandbyTasks.adoc[AssignedStandbyTasks]
-|
+| <<kafka-streams-AssignedStandbyTasks.adoc#, AssignedStandbyTasks>>
+| Manages <<kafka-streams-internals-StandbyTask.adoc#, StandbyTasks>>
 
-| link:kafka-streams-AssignedStreamsTasks.adoc[AssignedStreamsTasks]
-|
-|===
-
-[[internal-registries]]
-.AssignedTasks's Internal Properties (e.g. Registries, Counters and Flags)
-[cols="1m,2",options="header",width="100%"]
-|===
-| Name
-| Description
-
-| commitAction
-| [[commitAction]] `TaskAction` that requests <<running, running tasks>> to <<kafka-streams-internals-Task.adoc#commit, commit>> at <<commit, commit>>
-
-| created
-a| [[created]] *New tasks* by their ids
-
-* Tasks are added when `AssignedTasks` is requested to <<addNewTask, addNewTask>>
-
-* Tasks are removed when `AssignedTasks` is requested to <<initializeNewTasks, initializeNewTasks>>, <<suspend, suspend>> or <<clear, clear>>
-
-| previousActiveTasks
-| [[previousActiveTasks]]
-
-| restoring
-| [[restoring]]
-
-| log
-| [[log]]
-
-| running
-a| [[running]] Running tasks by their ids
-
-`running` is a https://docs.oracle.com/javase/9/docs/api/java/util/concurrent/ConcurrentHashMap.html[java.util.concurrent.ConcurrentHashMap], i.e. `ConcurrentHashMap<TaskId, Task>`.
-
-Used when...FIXME
-
-Tasks IDs are added or removed as follows:
-
-* Added when `AssignedTasks` is requested to <<transitionToRunning, transition a task to a running state>>
-
-* Removed when `AssignedTasks` is requested to <<suspend, suspend>> or <<clear, clear>>
-
-| runningByPartition
-| [[runningByPartition]] Kafka's `TopicPartitions` by the task
-
-| suspended
-a| [[suspended]]
+| <<kafka-streams-AssignedStreamsTasks.adoc#, AssignedStreamsTasks>>
+| Manages <<kafka-streams-internals-StreamTask.adoc#, StreamTasks>>
 |===
 
 === [[close]] `close` Method
@@ -142,38 +96,37 @@ Set<TopicPartition> updateRestored(final Collection<TopicPartition> restored)
 
 NOTE: `updateRestored` is used when...FIXME
 
-=== [[transitionToRunning]] Scheduling Task For Execution (Processing Records) -- `transitionToRunning` Internal Method
+=== [[transitionToRunning]] Marking Task As Ready For Execution and Processing Records -- `transitionToRunning` Internal Method
 
 [source, java]
 ----
-void transitionToRunning(
-  final T task,
-  final Set<TopicPartition> readyPartitions)
+void transitionToRunning(final T task)
 ----
 
-`transitionToRunning` simply makes a task available for processing records (_transitions a task to running state_).
+`transitionToRunning` simply makes the given task available for processing records (_transitions a task to running state_).
 
 Internally, `transitionToRunning` prints out the following DEBUG message to the logs:
 
 ```
-transitioning [taskTypeName] [taskId] to running
+Transitioning [taskTypeName] [taskId] to running
 ```
 
-`transitionToRunning` registers the input `task` in the <<running, running>> internal registry.
+`transitionToRunning` marks the task as running (by adding it to the <<running, running>> internal registry).
 
-NOTE: Registering a task in <<running, running>> internal registry is the only way to mark the task as running (and link:kafka-streams-AssignedStreamsTasks.adoc#process[processing records]).
+NOTE: Registering a task in the <<running, running>> internal registry is the only way to mark the task as running (and <<kafka-streams-AssignedStreamsTasks.adoc#process, processing records>>).
 
-`transitionToRunning` requests the input `task` to <<kafka-streams-internals-Task.adoc#initializeTopology, initializeTopology>>.
+`transitionToRunning` requests the task to <<kafka-streams-internals-Task.adoc#initializeTopology, initialize a processor topology>>.
 
-`transitionToRunning` registers the link:kafka-streams-internals-Task.adoc#partitions[partitions] of the input `task` with the `task` (in <<runningByPartition, runningByPartition>> internal registry).
+`transitionToRunning` registers the <<kafka-streams-internals-Task.adoc#partitions, partitions>> and the <<kafka-streams-internals-Task.adoc#changelogPartitions, changelog partitions>> of the task (in the <<runningByPartition, runningByPartition>> internal registry).
 
-If the input `task` link:kafka-streams-internals-Task.adoc#[has state stores] `transitionToRunning` adds the partitions to the input `readyPartitions`.
+[NOTE]
+====
+`transitionToRunning` is used when:
 
-NOTE: The input `readyPartitions` could really be an output.
+* `AssignedStreamsTasks` is requested to <<kafka-streams-AssignedStreamsTasks.adoc#updateRestored, updateRestored>>
 
-`transitionToRunning` registers the link:kafka-streams-internals-Task.adoc#changelogPartitions[changelog partitions] of the input `task` with the `task` (in <<runningByPartition, runningByPartition>> internal registry).
-
-NOTE: `transitionToRunning` is used when `AssignedTasks` is requested to <<initializeNewTasks, initializeNewTasks>>, <<maybeResumeSuspendedTask, resume a suspended task>> and <<updateRestored, updateRestored>>.
+* `AssignedTasks` is requested to <<initializeNewTasks, initializeNewTasks>> and <<maybeResumeSuspendedTask, resume a suspended task>>
+====
 
 === [[addNewTask]] Adding New Task -- `addNewTask` Method
 
@@ -455,7 +408,7 @@ Failed to [actionName] [taskTypeName] [taskId] due to the following error:
 * [[logContext]] `LogContext`
 * [[taskTypeName]] `taskTypeName`
 
-`AssignedTasks` initializes the <<internal-registries, internal registries and counters>>.
+`AssignedTasks` initializes the <<internal-properties, internal properties>>.
 
 === [[addToRestoring]] Registering Task for (State Store) Restoring -- `addToRestoring` Internal Method
 
@@ -480,3 +433,49 @@ int commit()
 `commit`...FIXME
 
 NOTE: `commit` is used exclusively when `TaskManager` is requested to <<kafka-streams-internals-TaskManager.adoc#commitAll, commitAll>>.
+
+=== [[internal-properties]] Internal Properties
+
+[cols="30m,70",options="header",width="100%"]
+|===
+| Name
+| Description
+
+| commitAction
+a| [[commitAction]] `TaskAction` that requests <<running, running tasks>> to <<kafka-streams-internals-Task.adoc#commit, commit>> at <<commit, commit>>
+
+| created
+a| [[created]] *New tasks* by their ids
+
+* Tasks are added when `AssignedTasks` is requested to <<addNewTask, addNewTask>>
+
+* Tasks are removed when `AssignedTasks` is requested to <<initializeNewTasks, initializeNewTasks>>, <<suspend, suspend>> or <<clear, clear>>
+
+| previousActiveTasks
+a| [[previousActiveTasks]]
+
+| restoring
+a| [[restoring]]
+
+| log
+a| [[log]]
+
+| running
+a| [[running]] Running tasks by their ids
+
+`running` is a https://docs.oracle.com/javase/9/docs/api/java/util/concurrent/ConcurrentHashMap.html[java.util.concurrent.ConcurrentHashMap], i.e. `ConcurrentHashMap<TaskId, Task>`.
+
+Used when...FIXME
+
+Tasks IDs are added or removed as follows:
+
+* Added when `AssignedTasks` is requested to <<transitionToRunning, transition a task to a running state>>
+
+* Removed when `AssignedTasks` is requested to <<suspend, suspend>> or <<clear, clear>>
+
+| runningByPartition
+a| [[runningByPartition]] Kafka https://kafka.apache.org/22/javadoc/org/apache/kafka/common/TopicPartition.html[partitions] per <<kafka-streams-internals-Task.adoc#, task>> (that processes records)
+
+| suspended
+a| [[suspended]]
+|===

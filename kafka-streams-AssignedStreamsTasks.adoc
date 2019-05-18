@@ -113,3 +113,14 @@ int punctuate()
 `punctuate`...FIXME
 
 NOTE: `punctuate` is used exclusively when `TaskManager` is requested to link:kafka-streams-internals-TaskManager.adoc#punctuate[punctuate].
+
+=== [[updateRestored]] `updateRestored` Method
+
+[source, java]
+----
+void updateRestored(final Collection<TopicPartition> restored)
+----
+
+`updateRestored`...FIXME
+
+NOTE: `updateRestored` is used when...FIXME

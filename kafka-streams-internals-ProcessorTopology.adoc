@@ -98,7 +98,7 @@ ProcessorTopology:
 
 `ProcessorTopology` takes the following when created:
 
-* [[processorNodes]] link:kafka-streams-internals-ProcessorNode.adoc[ProcessorNodes]
+* [[processorNodes]][[processors]] link:kafka-streams-internals-ProcessorNode.adoc[ProcessorNodes]
 * [[sourcesByTopic]] link:kafka-streams-internals-SourceNode.adoc[SourceNodes] by name
 * [[sinksByTopic]] link:kafka-streams-internals-SinkNode.adoc[SinkNodes] by name
 * [[stateStores]] Local link:kafka-streams-StateStore.adoc[StateStores]

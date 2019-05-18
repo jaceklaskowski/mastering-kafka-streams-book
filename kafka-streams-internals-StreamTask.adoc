@@ -122,27 +122,33 @@ NOTE: `close` is part of link:kafka-streams-internals-Task.adoc#close[Task Contr
 
 `StreamTask` initializes the <<internal-properties, internal properties>>.
 
-=== [[initTopology]] `initTopology` Internal Method
+=== [[initTopology]] Initializing ProcessorNodes (in ProcessorTopology) -- `initTopology` Internal Method
 
 [source, java]
 ----
 void initTopology()
 ----
 
-`initTopology`...FIXME
+`initTopology` prints out the following TRACE message to the logs:
 
-NOTE: `initTopology` is used exclusively when `StreamTask` is requested to <<initializeTopology, initializeTopology>>.
+```
+Initializing processor nodes of the topology
+```
 
-=== [[initializeTopology]] Initializing Processor Topology -- `initializeTopology` Method
+`initTopology` then walks over all the <<kafka-streams-internals-ProcessorTopology.adoc#processors, processor nodes>> in the <<topology, topology>> and requests them to <<kafka-streams-internals-ProcessorNode.adoc#init, initialize>> (one by one). While doing this node initialization, `initTopology` requests the <<processorContext, InternalProcessorContext>> to <<kafka-streams-internals-InternalProcessorContext.adoc#setCurrentNode, set the current node>> to the processor node that is currently initialized and, after initialization, <<kafka-streams-internals-InternalProcessorContext.adoc#setCurrentNode, resets the current node>> (to `null`).
+
+NOTE: `initTopology` is used exclusively when `StreamTask` is requested to <<initializeTopology, initialize the topology>>.
+
+=== [[initializeTopology]] Initializing Topology (of Processor Nodes) -- `initializeTopology` Method
 
 [source, java]
 ----
 void initializeTopology()
 ----
 
-NOTE: `initializeTopology` is part of <<kafka-streams-internals-Task.adoc#initializeTopology, Task Contract>> to initialize a <<kafka-streams-internals-ProcessorTopology.adoc#, ProcessorTopology>>.
+NOTE: `initializeTopology` is part of <<kafka-streams-internals-Task.adoc#initializeTopology, Task Contract>> to initialize a <<kafka-streams-internals-ProcessorTopology.adoc#, processor topology>>.
 
-`initializeTopology` <<initTopology, initTopology>>.
+`initializeTopology` <<initTopology, initialize the ProcessorNodes>> in the <<topology, ProcessorTopology>>.
 
 With <<kafka-streams-internals-AbstractTask.adoc#eosEnabled, exactly-once support enabled>>, `initializeTopology` requests the <<producer, Kafka Producer>> to start a new transaction (using link:++https://kafka.apache.org/22/javadoc/org/apache/kafka/clients/producer/KafkaProducer.html#beginTransaction--++[Producer.beginTransaction]) and turns the <<transactionInFlight, transactionInFlight>> flag on.
 
