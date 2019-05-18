@@ -105,6 +105,9 @@ boolean updateNewAndRestoringTasks()
 
 `updateNewAndRestoringTasks` returns `true` only when the <<active, AssignedStreamsTasks>> tasks are <<kafka-streams-AssignedStreamsTasks.adoc#allTasksRunning, all running>> in the end. Otherwise, `updateNewAndRestoringTasks` returns `false`.
 
+.TaskManager and updateNewAndRestoringTasks
+image::images/kafka-streams-TaskManager-updateNewAndRestoringTasks.png[align="center"]
+
 Internally, `updateNewAndRestoringTasks` requests the <<active, AssignedStreamsTasks>> and the <<standby, AssignedStandbyTasks>> tasks to <<kafka-streams-internals-AssignedTasks.adoc#initializeNewTasks, initialize new tasks>>.
 
 `updateNewAndRestoringTasks` requests the <<changelogReader, ChangelogReader>> to <<kafka-streams-ChangelogReader.adoc#restore, restore>> the <<active, AssignedStreamsTasks>> tasks.
