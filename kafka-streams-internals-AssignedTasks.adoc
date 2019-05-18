@@ -149,7 +149,7 @@ NOTE: `addNewTask` is used exclusively when `TaskManager` is requested to link:k
 void initializeNewTasks()
 ----
 
-`initializeNewTasks` initializes new tasks, i.e. moves tasks from <<created, created>> registry to either <<restoring, restoring>> or <<running, running>> per whether a task has state stores that may need restoring or not, respectively. In the end `initializeNewTasks` gives the Kafka `TopicPartitions` of the tasks that have state stores.
+`initializeNewTasks` initializes new tasks (that are in the <<created, created>> state), i.e. moves tasks from the <<created, created>> internal registry to either <<restoring, restoring>> or <<running, running>> registeries per whether a task has state stores that may need restoring or not, respectively.
 
 .AssignedTasks.initializeNewTasks
 image::images/kafka-streams-AssignedTasks-initializeNewTasks.png[align="center"]
@@ -433,6 +433,17 @@ int commit()
 `commit`...FIXME
 
 NOTE: `commit` is used exclusively when `TaskManager` is requested to <<kafka-streams-internals-TaskManager.adoc#commitAll, commitAll>>.
+
+=== [[allTasksRunning]] `allTasksRunning` Method
+
+[source, java]
+----
+boolean allTasksRunning()
+----
+
+`allTasksRunning`...FIXME
+
+NOTE: `allTasksRunning` is used when...FIXME
 
 === [[internal-properties]] Internal Properties
 

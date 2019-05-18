@@ -27,20 +27,6 @@ Committed active task [id] per user request in
 
 `AssignedStreamsTasks` uses *stream task* for link:kafka-streams-internals-AssignedTasks.adoc#taskTypeName[taskTypeName].
 
-[[internal-registries]]
-.AssignedStreamsTasks's Internal Properties (e.g. Registries, Counters and Flags)
-[cols="1,2",options="header",width="100%"]
-|===
-| Name
-| Description
-
-| `committed`
-| [[committed]] Number of...FIXME
-
-| `log`
-| [[log]]
-|===
-
 [[logging]]
 [TIP]
 ====
@@ -135,3 +121,28 @@ void addToRestoring(final StreamTask task)
 `addToRestoring`...FIXME
 
 NOTE: `addToRestoring` is used when...FIXME
+
+=== [[allTasksRunning]] `allTasksRunning` Method
+
+[source, java]
+----
+boolean allTasksRunning()
+----
+
+NOTE: `allTasksRunning` is part of the <<kafka-streams-internals-AssignedTasks.adoc#allTasksRunning, AssignedTasks Contract>> to...FIXME.
+
+`allTasksRunning`...FIXME
+
+=== [[internal-properties]] Internal Properties
+
+[cols="30m,70",options="header",width="100%"]
+|===
+| Name
+| Description
+
+| `committed`
+| [[committed]] Number of...FIXME
+
+| `log`
+| [[log]]
+|===

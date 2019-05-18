@@ -392,6 +392,8 @@
 .. link:kafka-streams-StoreChangelogReader.adoc[StoreChangelogReader]
 . link:kafka-streams-StateRestorer.adoc[StateRestorer]
 
+. link:kafka-streams-internals-RestoringTasks.adoc[RestoringTasks]
+
 . link:kafka-streams-internals-StateStoreFactory.adoc[StateStoreFactory]
 .. link:kafka-streams-StoreBuilderFactory.adoc[StoreBuilderFactory]
 .. link:kafka-streams-StateStoreSupplierFactory.adoc[StateStoreSupplierFactory]

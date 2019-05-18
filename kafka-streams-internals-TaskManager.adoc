@@ -103,9 +103,38 @@ NOTE: `suspendTasksAndState` is used exclusively when `RebalanceListener` handle
 boolean updateNewAndRestoringTasks()
 ----
 
-`updateNewAndRestoringTasks`...FIXME
+`updateNewAndRestoringTasks` returns `true` only when the <<active, AssignedStreamsTasks>> tasks are <<kafka-streams-AssignedStreamsTasks.adoc#allTasksRunning, all running>> in the end. Otherwise, `updateNewAndRestoringTasks` returns `false`.
 
-NOTE: `updateNewAndRestoringTasks` is used exclusively when `StreamThread` is requested to <<kafka-streams-internals-StreamThread.adoc#runOnce, poll records once>> (while <<kafka-streams-internals-StreamThread.adoc#runLoop, running the main record processing loop>>).
+Internally, `updateNewAndRestoringTasks` requests the <<active, AssignedStreamsTasks>> and the <<standby, AssignedStandbyTasks>> tasks to <<kafka-streams-internals-AssignedTasks.adoc#initializeNewTasks, initialize new tasks>>.
+
+`updateNewAndRestoringTasks` requests the <<changelogReader, ChangelogReader>> to <<kafka-streams-ChangelogReader.adoc#restore, restore>> the <<active, AssignedStreamsTasks>> tasks.
+
+`updateNewAndRestoringTasks` requests the <<active, AssignedStreamsTasks>> tasks to <<kafka-streams-AssignedStreamsTasks.adoc#updateRestored, updateRestored>>.
+
+`updateNewAndRestoringTasks` requests the <<active, AssignedStreamsTasks>> tasks to <<kafka-streams-AssignedStreamsTasks.adoc#allTasksRunning, check out if allTasksRunning>>.
+
+If not <<kafka-streams-AssignedStreamsTasks.adoc#allTasksRunning, all active tasks are running>>, `updateNewAndRestoringTasks` returns `false`.
+
+Otherwise, if <<kafka-streams-AssignedStreamsTasks.adoc#allTasksRunning, all active tasks are running>>, `updateNewAndRestoringTasks` requests the <<consumer, Kafka consumer>> for the partition assignment (using link:++https://kafka.apache.org/22/javadoc/org/apache/kafka/clients/consumer/KafkaConsumer.html#assignment--++[Consumer.assignment]) and prints out the following TRACE message to the logs:
+
+```
+Resuming partitions [assignment]
+```
+
+`updateNewAndRestoringTasks` then requests the <<consumer, Kafka consumer>> to resume partitions (using link:++https://kafka.apache.org/22/javadoc/org/apache/kafka/clients/consumer/KafkaConsumer.html#resume-java.util.Collection-++[Consumer.resume]), <<assignStandbyPartitions, assignStandbyPartitions>> and returns `true`.
+
+NOTE: `updateNewAndRestoringTasks` is used exclusively when `StreamThread` is requested to <<kafka-streams-internals-StreamThread.adoc#runOnce, poll records once>> (while <<kafka-streams-internals-StreamThread.adoc#runLoop, running the main record processing loop>> and transitioning from <<kafka-streams-internals-StreamThread.adoc#PARTITIONS_ASSIGNED, PARTITIONS_ASSIGNED>> to <<kafka-streams-internals-StreamThread.adoc#RUNNING, RUNNING>> state).
+
+=== [[assignStandbyPartitions]] `assignStandbyPartitions` Internal Method
+
+[source, java]
+----
+void assignStandbyPartitions()
+----
+
+`assignStandbyPartitions`...FIXME
+
+NOTE: `assignStandbyPartitions` is used when...FIXME
 
 === [[activeTask]] Getting Active Stream Processor Task for Topic Partition -- `activeTask` Method
 
