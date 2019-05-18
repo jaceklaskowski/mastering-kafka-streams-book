@@ -126,7 +126,7 @@ Resuming partitions [assignment]
 
 `updateNewAndRestoringTasks` then requests the <<consumer, Kafka consumer>> to resume partitions (using link:++https://kafka.apache.org/22/javadoc/org/apache/kafka/clients/consumer/KafkaConsumer.html#resume-java.util.Collection-++[Consumer.resume]), <<assignStandbyPartitions, assignStandbyPartitions>> and returns `true`.
 
-NOTE: `updateNewAndRestoringTasks` is used exclusively when `StreamThread` is requested to <<kafka-streams-internals-StreamThread.adoc#runOnce, poll records once>> (while <<kafka-streams-internals-StreamThread.adoc#runLoop, running the main record processing loop>> and transitioning from <<kafka-streams-internals-StreamThread.adoc#PARTITIONS_ASSIGNED, PARTITIONS_ASSIGNED>> to <<kafka-streams-internals-StreamThread.adoc#RUNNING, RUNNING>> state).
+NOTE: `updateNewAndRestoringTasks` is used exclusively when `StreamThread` is requested to <<kafka-streams-internals-StreamThread.adoc#runOnce, poll records once and add them to active stream tasks>> (while <<kafka-streams-internals-StreamThread.adoc#runLoop, running the main record processing loop>> and transitioning from <<kafka-streams-internals-StreamThread.adoc#PARTITIONS_ASSIGNED, PARTITIONS_ASSIGNED>> to <<kafka-streams-internals-StreamThread.adoc#RUNNING, RUNNING>> state).
 
 === [[assignStandbyPartitions]] `assignStandbyPartitions` Internal Method
 

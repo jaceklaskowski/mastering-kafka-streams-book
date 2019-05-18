@@ -125,13 +125,15 @@ Use <<kafka-streams-StreamsConfig.adoc#NUM_STREAM_THREADS_CONFIG, StreamsConfig.
 a| [[partition.grouper]]
 
 | poll.ms
-a| [[poll.ms]] *Polling interval* (in milliseconds), i.e. the time spent waiting in `Consumer.poll` (unless data is available in the buffer). If `0`, returns immediately with any records that are available currently in the buffer, else returns empty. Must not be negative.
+a| [[poll.ms]] *Polling interval* (in milliseconds), i.e. the time spent waiting in link:++https://kafka.apache.org/22/javadoc/org/apache/kafka/clients/consumer/KafkaConsumer.html#poll-java.time.Duration-++[Consumer.poll] (unless data is available in the buffer already). If `0`, returns immediately with any records that are available currently in the buffer, else returns empty. Must not be negative.
 
 Default: `100`
 
-* Used when `GlobalStreamThread` is requested to link:kafka-streams-internals-GlobalStreamThread.adoc#initialize[initialize] (which is right after `KafkaStreams` has been link:kafka-streams-KafkaStreams.adoc#start[started]) and creates a link:kafka-streams-StateConsumer.adoc#pollMs[StateConsumer]
+Used when:
 
-* Used when `StreamThread` is link:kafka-streams-internals-StreamThread.adoc#pollTimeMs[created]
+* `GlobalStreamThread` is requested to <<kafka-streams-internals-GlobalStreamThread.adoc#initialize, initialize>> (which is right after `KafkaStreams` has been requested to <<kafka-streams-KafkaStreams.adoc#start, start>>) and creates a <<kafka-streams-StateConsumer.adoc#pollMs, StateConsumer>>
+
+* `StreamThread` is <<kafka-streams-internals-StreamThread.adoc#pollTime, created>>
 
 Use <<kafka-streams-StreamsConfig.adoc#POLL_MS_CONFIG, StreamsConfig.POLL_MS_CONFIG>> to reference the property.
 

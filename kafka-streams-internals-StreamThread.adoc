@@ -20,8 +20,8 @@ image::images/kafka-streams-StreamThread-TASK_MANAGER_FOR_PARTITION_ASSIGNOR.png
 
 NOTE: `KafkaStreams` uses <<kafka-streams-KafkaStreams.adoc#threads, num.stream.threads>> configuration property for the number of `StreamThreads` to create (default: `1` processing thread).
 
-[[pollTimeMs]]
-`StreamThread` uses the link:kafka-streams-properties.adoc#poll.ms[poll.ms] configuration property as the *polling interval* for <<pollRequests, polling the topics for records>>.
+[[pollTime]]
+`StreamThread` uses the <<kafka-streams-properties.adoc#poll.ms, poll.ms>> configuration property (default: `100` ms) as the *polling interval* when requested to <<runOnce, poll records once and adding them to active stream tasks>>.
 
 [[commitTimeMs]]
 `StreamThread` uses the <<kafka-streams-properties.adoc#commit.interval.ms, commit.interval.ms>> configuration property as the *flush interval* for persisting the position of a processor (when <<runOnce, runOnce>> and <<maybeCommit, maybeCommit>>).
@@ -127,7 +127,7 @@ ConsumerRecords<byte[], byte[]> pollRequests(final long pollTimeMs)
 
 * With `0` for `pollTimeMs` when in `PARTITIONS_ASSIGNED` <<state, state>>
 
-* With <<pollTimeMs, pollTimeMs>> in any other state but `PARTITIONS_ASSIGNED`
+* With <<pollTime, pollTime>> in any other state but `PARTITIONS_ASSIGNED`
 ====
 
 === [[resetInvalidOffsets]] `resetInvalidOffsets` Internal Method
@@ -163,63 +163,39 @@ void shutdown()
 
 NOTE: `shutdown` is used exclusively when `KafkaStreams` is requested to link:kafka-streams-KafkaStreams.adoc#close[close].
 
-=== [[runOnce]] Polling Records Once -- `runOnce` Method
+=== [[runOnce]] Polling Records Once and Adding Them to Active Stream Tasks -- `runOnce` Method
 
 [source, java]
 ----
-long runOnce(final long recordsProcessedBeforeCommit)
+void runOnce()
 ----
 
-`runOnce` does...FIXME
+`runOnce` <<pollRequests, pollRequests>> with different poll times as follows:
+
+* `0L` when in <<PARTITIONS_ASSIGNED, PARTITIONS_ASSIGNED>> state
+
+* <<pollTime, pollTime>> when in <<PARTITIONS_REVOKED, PARTITIONS_REVOKED>>, <<STARTING, STARTING>> or <<RUNNING, RUNNING>> state
 
 [NOTE]
 ====
-`recordsProcessedBeforeCommit` starts as `UNLIMITED_RECORDS` (i.e. `-1`) in the <<runLoop, main record processing loop>> (where the record stream processing starts off), and is passed along to every invocation of `runOnce`.
+When in the other <<state, states>> (when <<pollRequests, pollRequests>> above), `runOnce` prints out the following ERROR message to the logs followed by throwing a `StreamsException`:
 
-`runOnce` can <<adjustRecordsProcessedBeforeCommit, adjust>> `recordsProcessedBeforeCommit` (i.e. scale it down or up) given the current processing latency and commit time.
-
-Eventually, `recordsProcessedBeforeCommit` reaches <<processAndMaybeCommit, processAndMaybeCommit>>.
+```
+Unexpected state [state] during normal iteration
+```
 ====
 
-Internally, `runOnce` first <<runOnce-branches-state, branches off>> per <<state, state>>.
+`runOnce` <<advanceNowAndComputeLatency, advanceNowAndComputeLatency>>.
 
-[[runOnce-branches-state]]
-.runOnce's State Branches
-[cols="1,2",options="header",width="100%"]
-|===
-| PARTITIONS_ASSIGNED
-| Other states
+With records polled, `runOnce` requests the <<streamsMetrics, StreamsMetricsThreadImpl>> for the <<kafka-streams-StreamsMetricsThreadImpl.adoc#pollTimeSensor, pollTimeSensor>> and requests it to record the above `pollLatency` followed by <<addRecordsToTasks, adding the records polled to active stream tasks>>.
 
-a|
+If in <<PARTITIONS_ASSIGNED, PARTITIONS_ASSIGNED>> state, `runOnce` requests the <<taskManager, TaskManager>> to <<kafka-streams-internals-TaskManager.adoc#updateNewAndRestoringTasks, updateNewAndRestoringTasks>> and (when all stream tasks are running) changes to the <<RUNNING, RUNNING>> state.
 
-1. `runOnce` <<pollRequests, pollRequests>> with timeout `0`
+`runOnce` <<advanceNowAndComputeLatency, advanceNowAndComputeLatency>>.
 
-1. Requests <<taskManager, TaskManager>> to link:kafka-streams-internals-TaskManager.adoc#updateNewAndRestoringTasks[updateNewAndRestoringTasks]
+`runOnce` requests the <<taskManager, TaskManager>> to <<kafka-streams-internals-TaskManager.adoc#hasActiveRunningTasks, check out if hasActiveRunningTasks>> and if so...FIXME
 
-  i. (optionally) Changes the <<state, state>> to `RUNNING`
-
-a|
-
-1. `runOnce` <<pollRequests, pollRequests>> with timeout as defined by <<pollTimeMs, poll.ms>> configuration property
-
-1. If (for some reason) the <<state, state>> has changed to `PARTITIONS_ASSIGNED` `runOnce` requests <<taskManager, TaskManager>> to link:kafka-streams-internals-TaskManager.adoc#updateNewAndRestoringTasks[updateNewAndRestoringTasks]
-
-  i. (optionally) Changes the <<state, state>> to `RUNNING`
-|===
-
-If there are records to processed (i.e. <<pollRequests, pollRequests>> gave records) and the <<taskManager, TaskManager>> has link:kafka-streams-internals-TaskManager.adoc#hasActiveRunningTasks[active running tasks], `runOnce` requests `pollTimeSensor` to record the current poll latency.
-
-`runOnce` <<addRecordsToTasks, addRecordsToTasks>> followed by <<processAndMaybeCommit, processAndMaybeCommit>> (with the input number of records as `recordsProcessedBeforeCommit`).
-
-With at least one record processed (as computed in <<processAndMaybeCommit, processAndMaybeCommit>>) `runOnce` requests `processTimeSensor` to record the current process latency and <<adjustRecordsProcessedBeforeCommit, adjustRecordsProcessedBeforeCommit>>.
-
-CAUTION: FIXME How would you name the block above with the records polled and `taskManager.hasActiveRunningTasks()`? What's the purpose of the above?
-
-`runOnce` <<punctuate, punctuate>>
-
-`runOnce` <<maybeCommit, maybeCommit>> (with <<timerStartedMs, timerStartedMs>>)
-
-`runOnce` <<maybeUpdateStandbyTasks, maybeUpdateStandbyTasks>> (with <<timerStartedMs, timerStartedMs>>)
+In the end, `runOnce` <<maybeUpdateStandbyTasks, maybeUpdateStandbyTasks>> followed by <<maybeCommit, maybeCommit>>.
 
 NOTE: `runOnce` is used exclusively when `StreamThread` is requested to <<runLoop, run the main record processing loop>>.
 
