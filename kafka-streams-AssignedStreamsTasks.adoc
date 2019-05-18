@@ -124,3 +124,14 @@ void updateRestored(final Collection<TopicPartition> restored)
 `updateRestored`...FIXME
 
 NOTE: `updateRestored` is used when...FIXME
+
+=== [[addToRestoring]] `addToRestoring` Method
+
+[source, java]
+----
+void addToRestoring(final StreamTask task)
+----
+
+`addToRestoring`...FIXME
+
+NOTE: `addToRestoring` is used when...FIXME

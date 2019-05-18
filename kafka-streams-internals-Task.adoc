@@ -185,7 +185,7 @@ Enabled (`true`) if the task has no state stores that need restoring.
 
 * `StandbyTask` always returns <<kafka-streams-internals-StandbyTask.adoc#initializeStateStores, true>>
 
-Used exclusively when `AssignedTasks` is requested to <<kafka-streams-internals-AssignedTasks.adoc#initializeNewTasks, initializeNewTasks>>.
+Used exclusively when `AssignedTasks` is requested to <<kafka-streams-internals-AssignedTasks.adoc#initializeNewTasks, initialize new tasks>>
 
 | initializeTopology
 a| [[initializeTopology]]
@@ -195,7 +195,7 @@ a| [[initializeTopology]]
 void initializeTopology()
 ----
 
-Initializes a <<topology, processor topology>>
+Initializes the <<topology, topology of processor nodes>>
 
 Used exclusively when `AssignedTasks` is requested to <<kafka-streams-internals-AssignedTasks.adoc#transitionToRunning, mark the specified task as ready for execution and processing records>>
 

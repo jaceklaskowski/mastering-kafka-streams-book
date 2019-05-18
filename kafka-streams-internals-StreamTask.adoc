@@ -146,7 +146,7 @@ NOTE: `initTopology` is used exclusively when `StreamTask` is requested to <<ini
 void initializeTopology()
 ----
 
-NOTE: `initializeTopology` is part of <<kafka-streams-internals-Task.adoc#initializeTopology, Task Contract>> to initialize a <<kafka-streams-internals-ProcessorTopology.adoc#, processor topology>>.
+NOTE: `initializeTopology` is part of <<kafka-streams-internals-Task.adoc#initializeTopology, Task Contract>> to initialize a <<kafka-streams-internals-ProcessorTopology.adoc#, topology of processor nodes>>.
 
 `initializeTopology` <<initTopology, initialize the ProcessorNodes>> in the <<topology, ProcessorTopology>>.
 

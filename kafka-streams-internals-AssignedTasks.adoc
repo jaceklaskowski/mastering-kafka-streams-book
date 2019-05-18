@@ -103,7 +103,7 @@ NOTE: `updateRestored` is used when...FIXME
 void transitionToRunning(final T task)
 ----
 
-`transitionToRunning` simply makes the given task available for processing records (_transitions a task to running state_).
+`transitionToRunning` simply records the given task as available for processing records (_transitions the task to the running state_).
 
 Internally, `transitionToRunning` prints out the following DEBUG message to the logs:
 
@@ -113,9 +113,9 @@ Transitioning [taskTypeName] [taskId] to running
 
 `transitionToRunning` marks the task as running (by adding it to the <<running, running>> internal registry).
 
-NOTE: Registering a task in the <<running, running>> internal registry is the only way to mark the task as running (and <<kafka-streams-AssignedStreamsTasks.adoc#process, processing records>>).
+NOTE: Registering a task in the <<running, running>> internal registry is the only way to mark the task as running and ready for <<kafka-streams-AssignedStreamsTasks.adoc#process, processing records>>.
 
-`transitionToRunning` requests the task to <<kafka-streams-internals-Task.adoc#initializeTopology, initialize a processor topology>>.
+`transitionToRunning` requests the task to <<kafka-streams-internals-Task.adoc#initializeTopology, initialize the topology of processor nodes>>.
 
 `transitionToRunning` registers the <<kafka-streams-internals-Task.adoc#partitions, partitions>> and the <<kafka-streams-internals-Task.adoc#changelogPartitions, changelog partitions>> of the task (in the <<runningByPartition, runningByPartition>> internal registry).
 
@@ -125,7 +125,7 @@ NOTE: Registering a task in the <<running, running>> internal registry is the on
 
 * `AssignedStreamsTasks` is requested to <<kafka-streams-AssignedStreamsTasks.adoc#updateRestored, updateRestored>>
 
-* `AssignedTasks` is requested to <<initializeNewTasks, initializeNewTasks>> and <<maybeResumeSuspendedTask, resume a suspended task>>
+* `AssignedTasks` is requested to <<initializeNewTasks, initialize new tasks>> and <<maybeResumeSuspendedTask, attempt to resume a suspended task>>
 ====
 
 === [[addNewTask]] Adding New Task -- `addNewTask` Method
@@ -154,7 +154,7 @@ void initializeNewTasks()
 .AssignedTasks.initializeNewTasks
 image::images/kafka-streams-AssignedTasks-initializeNewTasks.png[align="center"]
 
-NOTE: `initializeNewTasks` does nothing (and simply gives no `TopicPartitions`) unless <<created, created>> registry has at least one task.
+NOTE: `initializeNewTasks` does nothing unless there is at least one task in the <<created, created>> internal registry.
 
 `initializeNewTasks` prints out the following DEBUG message to the logs:
 
@@ -162,19 +162,19 @@ NOTE: `initializeNewTasks` does nothing (and simply gives no `TopicPartitions`) 
 Initializing [taskTypeName]s [created]
 ```
 
-`initializeNewTasks` walks over all tasks in <<created, created>>.
+`initializeNewTasks` walks over all tasks in the <<created, created>> internal registry.
 
-`initializeNewTasks` checks if a task should link:kafka-streams-internals-Task.adoc#initializeStateStores[initializeStateStores].
+`initializeNewTasks` requests a task to <<kafka-streams-internals-Task.adoc#initializeStateStores, initialize state stores>> (if there are any state stores at all).
 
-If a task should link:kafka-streams-internals-Task.adoc#initializeStateStores[initializeStateStores], `initializeNewTasks` simply <<transitionToRunning, schedules the task for execution>> (passing in the collection of Kafka `TopicPartitions` that `initializeNewTasks` gives in the end).
+If the above yielded `true`, `initializeNewTasks` <<transitionToRunning, marks the task as ready for execution and processing records>>.
 
-Otherwise, `initializeNewTasks` prints out the following DEBUG message to the logs and <<addToRestoring, addToRestoring>>.
+Otherwise, when the above <<kafka-streams-internals-Task.adoc#initializeStateStores, state store initialization>> yielded `false`, `initializeNewTasks` prints out the following DEBUG message to the logs and the concrete `AssignedStreamsTasks` is requested to <<kafka-streams-AssignedStreamsTasks.adoc#addToRestoring, register the StreamTask as restoring>>.
 
 ```
 Transitioning [taskTypeName] [taskId] to restoring
 ```
 
-`initializeNewTasks` removes the tasks that have been processed successfully from <<created, created>> registry.
+In the end, `initializeNewTasks` removes the task (after being processed successfully) from the <<created, created>> internal registry.
 
 In case of `LockException`, `initializeNewTasks` prints out the following TRACE message to the logs:
 
