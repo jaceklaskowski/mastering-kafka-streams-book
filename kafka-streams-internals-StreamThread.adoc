@@ -1,11 +1,15 @@
 == [[StreamThread]] StreamThread -- Stream Processor Thread
 
-`StreamThread` is the <<run, stream processor thread>> (a Java https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/Thread.html[Thread]) in a Kafka Streams application that <<runLoop, runs the main record processing loop>>.
+`StreamThread` is a *stream processor thread* (a Java https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/Thread.html[Thread]) that <<runLoop, runs the main record processing loop>> when <<run, started>>.
 
 .StreamThread and Stream Processing
 image::images/kafka-streams-StreamThread.png[align="center"]
 
-`StreamThread` uses a <<rebalanceListener, custom ConsumerRebalanceListener>> (that has access to the <<taskManager, TaskManager>>) when subscribing to source topics (when requested to <<runLoop, run the main record processing loop>> and <<enforceRebalance, enforceRebalance>>).
+`StreamThread` is <<create, created>> exclusively alongside <<kafka-streams-KafkaStreams.adoc#creating-instance, KafkaStreams>> (which is one of the main entities that a Kafka Streams developer uses in a Kafka Streams application).
+
+NOTE: `KafkaStreams` uses <<kafka-streams-KafkaStreams.adoc#threads, num.stream.threads>> configuration property for the number of `StreamThreads` to create (default: `1`).
+
+`StreamThread` uses a <<consumer, Kafka Consumer>> and a custom <<rebalanceListener, ConsumerRebalanceListener>> (with the <<taskManager, TaskManager>>) when subscribing to source topics (when requested to <<runLoop, run the main record processing loop>> and <<enforceRebalance, enforce a rebalance>>). `StreamThread` uses an <<builder, InternalTopologyBuilder>> for the <<kafka-streams-internals-InternalTopologyBuilder.adoc#sourceTopicPattern, source topics>> to subscribe to.
 
 NOTE: When <<kafka-streams-StreamThread-RebalanceListener.adoc#onPartitionsAssigned, partitions get assigned>>, the <<rebalanceListener, custom ConsumerRebalanceListener>> requests the `TaskManager` to <<kafka-streams-internals-TaskManager.adoc#createTasks, create tasks for the assigned partitions>>.
 
@@ -14,17 +18,11 @@ NOTE: When <<kafka-streams-StreamThread-RebalanceListener.adoc#onPartitionsAssig
 .StreamThread and Registering TaskManager under TASK_MANAGER_FOR_PARTITION_ASSIGNOR
 image::images/kafka-streams-StreamThread-TASK_MANAGER_FOR_PARTITION_ASSIGNOR.png[align="center"]
 
-`StreamThread` uses a <<consumer, Kafka Consumer>> to subscribe to the <<kafka-streams-internals-InternalTopologyBuilder.adoc#sourceTopicPattern, source topics>> (of the <<builder, InternalTopologyBuilder>>).
-
-`StreamThread` is <<create, created>> exclusively when `KafkaStreams` is <<kafka-streams-KafkaStreams.adoc#creating-instance, created>>.
-
-NOTE: `KafkaStreams` uses <<kafka-streams-KafkaStreams.adoc#threads, num.stream.threads>> configuration property for the number of `StreamThreads` to create (default: `1` processing thread).
-
 [[pollTime]]
-`StreamThread` uses the <<kafka-streams-properties.adoc#poll.ms, poll.ms>> configuration property (default: `100` ms) as the *polling interval* when requested to <<runOnce, poll records once and adding them to active stream tasks>>.
+`StreamThread` uses the <<kafka-streams-properties.adoc#poll.ms, poll.ms>> configuration property (default: `100` ms) as the *polling interval* when requested to <<runOnce, poll records once and add them to active stream tasks>>.
 
 [[commitTimeMs]]
-`StreamThread` uses the <<kafka-streams-properties.adoc#commit.interval.ms, commit.interval.ms>> configuration property as the *flush interval* for persisting the position of a processor (when <<runOnce, runOnce>> and <<maybeCommit, maybeCommit>>).
+`StreamThread` uses the <<kafka-streams-properties.adoc#commit.interval.ms, commit.interval.ms>> configuration property as the *flush interval* for persisting the position of a processor (when <<runOnce, polling records once and adding them to active stream tasks>> and <<maybeCommit, maybeCommit>>).
 
 `StreamThread` uses the <<consumer, Kafka Consumer>> to:
 
@@ -34,9 +32,7 @@ NOTE: `KafkaStreams` uses <<kafka-streams-KafkaStreams.adoc#threads, num.stream.
 
 * <<resetInvalidOffsets, resetInvalidOffsets>> (when an `InvalidOffsetException` is reported while <<pollRequests, polling the topics for records>>)
 
-`StreamThread` closes the Kafka <<consumer, consumer>> while <<completeShutdown, shuting down>>.
-
-`StreamThread` uses `stream-thread [[clientId]-StreamThread-[STREAM_THREAD_ID]]` logging prefix.
+`StreamThread` uses *stream-thread [[clientId]-StreamThread-[STREAM_THREAD_ID]]* for the logging prefix.
 
 `StreamThread` requires an <<builder, InternalTopologyBuilder>> to be <<create, created>> and uses it for the following:
 
@@ -236,17 +232,29 @@ NOTE: `maybeUpdateStandbyTasks` is used exclusively when `StreamThread` is reque
 void runLoop()
 ----
 
-`runLoop` requests the <<consumer, Consumer>> to subscribe to the link:kafka-streams-internals-InternalTopologyBuilder.adoc#sourceTopicPattern[source topics] (from <<builder, InternalTopologyBuilder>>) with <<rebalanceListener, ConsumerRebalanceListener>>.
+`runLoop` simply requests the <<consumer, Consumer>> to subscribe to the <<kafka-streams-internals-InternalTopologyBuilder.adoc#sourceTopicPattern, source topics>> (with the custom <<rebalanceListener, ConsumerRebalanceListener>>) and keeps <<runOnce, polling records and adding them to active stream tasks>> until the <<isRunning, isRunning>> flag is off.
 
-`runLoop` <<runOnce, runs once>> in a loop (as long as <<isRunning, isRunning>> flag is turned on).
+.StreamThread and Running Main Record Processing Loop
+image::images/kafka-streams-StreamThread-runLoop.png[align="center"]
 
-In case of `TaskMigratedException`, `runLoop` prints out the following WARN message to the logs.
+`runLoop` requests the <<consumer, Consumer>> to subscribe to the <<kafka-streams-internals-InternalTopologyBuilder.adoc#sourceTopicPattern, source topics>> (from the <<builder, InternalTopologyBuilder>>) with the custom <<rebalanceListener, ConsumerRebalanceListener>>.
+
+`runLoop` then keeps <<runOnce, polling records and adding them to active stream tasks>> until the <<isRunning, isRunning>> flag is off.
+
+In case of the <<assignmentErrorCode, assignmentErrorCode>> set to `VERSION_PROBING`, `runLoop` prints out the following INFO message to the logs followed by <<enforceRebalance, enforcing a rebalance>>.
 
 ```
-Detected a task that got migrated to another thread. This implies that this thread missed a rebalance and dropped out of the consumer group. Trying to rejoin the consumer group now.
+Version probing detected. Triggering new rebalance.
 ```
 
-NOTE: `runLoop` is used exclusively when `StreamThread` is <<run, started>>.
+In case of `TaskMigratedException`, `runLoop` prints out the following WARN message to the logs followed by <<enforceRebalance, enforcing a rebalance>>.
+
+```
+Detected task [taskId] that got migrated to another thread. This implies that this thread missed a rebalance and dropped out of the consumer group. Will try to rejoin the consumer group. Below is the detailed description of the task:
+[migratedTask]
+```
+
+NOTE: `runLoop` is used exclusively when `StreamThread` is requested to <<run, start>>.
 
 === [[run]] Starting Stream Processor Thread -- `run` Method
 
@@ -263,19 +271,19 @@ NOTE: `run` is part of Java's https://docs.oracle.com/javase/10/docs/api/java/la
 Starting
 ```
 
-`run` <<setState, sets the state>> to `RUNNING` and <<runLoop, runs the main record processing loop>>.
+`run` <<setState, sets the state>> to <<RUNNING, RUNNING>> and <<runLoop, runs the main record processing loop>>.
 
 At the end, `run` <<completeShutdown, shuts down>> (per `cleanRun` flag that says whether <<runLoop, running the main loop>> stopped cleanly or not).
 
 `run` re-throws any `KafkaException`.
 
-`run` prints out the following ERROR message to the logs for any other `Exception`.
+`run` prints out the following ERROR message to the logs for any other `Exception`:
 
 ```
 Encountered the following error during processing: [exception]
 ```
 
-NOTE: `run` is used exclusively when `KafkaStreams` is requested to link:kafka-streams-KafkaStreams.adoc#start[start].
+NOTE: `run` is used exclusively when `KafkaStreams` is requested to <<kafka-streams-KafkaStreams.adoc#start, start>>.
 
 === [[setState]] Setting New State -- `setState` Method
 
@@ -537,7 +545,7 @@ void punctuate()
 
 NOTE: `punctuate` is used when `StreamThread` is requested to <<run, start>> (and <<runOnce, polls records once>> and <<processAndMaybeCommit, processes records (with optional commit)>>).
 
-=== [[enforceRebalance]] `enforceRebalance` Internal Method
+=== [[enforceRebalance]] Enforcing Rebalance -- `enforceRebalance` Internal Method
 
 [source, java]
 ----
