@@ -87,44 +87,30 @@ NOTE: `StreamThread` defines a Java enumeration `State` with the states above or
 ----
 import org.apache.kafka.streams.processor.internals.StreamThread.State._
 
-scala> CREATED.ordinal
-res1: Int = 0
+// CREATED is the 0th state
+assert(CREATED.ordinal == 0)
 
-scala> CREATED.isValidTransition(RUNNING)
-res2: Boolean = true
+// RUNNING is the next possible state after CREATED
+assert(CREATED.isValidTransition(RUNNING))
 
-scala> CREATED.isValidTransition(DEAD)
-res3: Boolean = false
+// DEAD cannot the next possible state after CREATED
+assert(CREATED.isValidTransition(DEAD) == false)
 ----
 
-=== [[setStateListener]] `setStateListener` Method
+=== [[pollRequests]] Polling Records -- `pollRequests` Internal Method
 
 [source, java]
 ----
-void setStateListener(final StreamThread.StateListener listener)
+ConsumerRecords<byte[], byte[]> pollRequests(Duration pollTime)
 ----
 
-`setStateListener`...FIXME
+`pollRequests` simply requests the <<consumer, Kafka Consumer>> to poll record with the given `pollTime`.
 
-NOTE: `setStateListener` is used when...FIXME
+In case of an `InvalidOffsetException`, `pollRequests` <<resetInvalidOffsets, resetInvalidOffsets>>.
 
-=== [[pollRequests]] Polling for Records -- `pollRequests` Internal Method
+In case of a <<rebalanceException, rebalanceException>>, `pollRequests` re-throws it as a `TaskMigratedException` or a `StreamsException`.
 
-[source, java]
-----
-ConsumerRecords<byte[], byte[]> pollRequests(final long pollTimeMs)
-----
-
-`pollRequests`...FIXME
-
-[NOTE]
-====
-`pollRequests` is used exclusively when `StreamThread` is requested to <<runOnce, consume records once>>:
-
-* With `0` for `pollTimeMs` when in `PARTITIONS_ASSIGNED` <<state, state>>
-
-* With <<pollTime, pollTime>> in any other state but `PARTITIONS_ASSIGNED`
-====
+NOTE: `pollRequests` is used exclusively when `StreamThread` is requested to <<runOnce, poll records once and add them to active stream tasks>>.
 
 === [[resetInvalidOffsets]] `resetInvalidOffsets` Internal Method
 
@@ -208,12 +194,12 @@ NOTE: `maybeUpdateStandbyTasks` is used exclusively when `StreamThread` is reque
 
 === [[creating-instance]] Creating StreamThread Instance
 
-`StreamThread` takes the following when created:
+`StreamThread` takes the following to be created:
 
 * [[time]] `Time`
 * [[config]] <<kafka-streams-StreamsConfig.adoc#, StreamsConfig>>
 * [[producer]] Kafka http://kafka.apache.org/22/javadoc/org/apache/kafka/clients/producer/KafkaProducer.html[Producer] (`Producer<byte[], byte[]>`)
-* [[restoreConsumer]] Kafka https://kafka.apache.org/22/javadoc/org/apache/kafka/clients/consumer/KafkaConsumer.html[Consumer] (`Consumer<byte[], byte[]>`)
+* [[restoreConsumer]] Kafka "restore" https://kafka.apache.org/22/javadoc/org/apache/kafka/clients/consumer/KafkaConsumer.html[Consumer] (`Consumer<byte[], byte[]>`)
 * [[consumer]] Kafka https://kafka.apache.org/22/javadoc/org/apache/kafka/clients/consumer/KafkaConsumer.html[Consumer] (`Consumer<byte[], byte[]>`)
 * [[originalReset]] `originalReset`
 * [[taskManager]] <<kafka-streams-internals-TaskManager.adoc#, TaskManager>>
@@ -221,9 +207,9 @@ NOTE: `maybeUpdateStandbyTasks` is used exclusively when `StreamThread` is reque
 * [[builder]] <<kafka-streams-internals-InternalTopologyBuilder.adoc#, InternalTopologyBuilder>>
 * [[threadClientId]] `threadClientId`
 * [[logContext]] `LogContext`
-* [[versionProbingFlag]] `versionProbingFlag` flag
+* [[assignmentErrorCode]] `assignmentErrorCode`
 
-`StreamThread` initializes the <<internal-registries, internal registries and counters>>.
+`StreamThread` initializes the <<internal-properties, internal properties>>.
 
 === [[runLoop]] Running Main Record Processing Loop -- `runLoop` Internal Method
 
@@ -593,14 +579,24 @@ NOTE: `maybeCommit` is used when `StreamThread` is requested to <<runOnce, poll 
 
 === [[internal-properties]] Internal Properties
 
-.StreamThread's Internal Properties (e.g. Registries, Counters and Flags)
 [cols="30m,70",options="header",width="100%"]
 |===
 | Name
 | Description
 
 | builder
-| [[builder]] <<kafka-streams-internals-InternalTopologyBuilder.adoc#, InternalTopologyBuilder>>
+a| [[builder]] <<kafka-streams-internals-InternalTopologyBuilder.adoc#, InternalTopologyBuilder>>
+
+| lastCommitMs
+a| [[lastCommitMs]] Time of the last <<maybeCommit, commit>>
+
+| numIterations
+a| [[numIterations]]
+
+Default: `1`
+
+| processStandbyRecords
+a| [[processStandbyRecords]] Flag to control whether to <<maybeUpdateStandbyTasks, maybeUpdateStandbyTasks>> after <<maybeCommit, maybeCommit>> was executed
 
 | rebalanceListener
 a| [[rebalanceListener]] <<kafka-streams-StreamThread-RebalanceListener.adoc#, RebalanceListener>>
@@ -609,12 +605,19 @@ a| [[rebalanceListener]] <<kafka-streams-StreamThread-RebalanceListener.adoc#, R
 
 NOTE: `StreamThread` requests <<builder, InternalTopologyBuilder>> for the link:kafka-streams-internals-InternalTopologyBuilder.adoc#sourceTopicPattern[source topic pattern] to subscribe to.
 
-| lastCommitMs
-| [[lastCommitMs]] Time of the last <<maybeCommit, commit>>
+| stateListener
+a| [[stateListener]][[setStateListener]] <<kafka-streams-StreamThread-StateListener.adoc#, StateListener>>
 
-| processStandbyRecords
-| [[processStandbyRecords]] Flag to control whether to <<maybeUpdateStandbyTasks, maybeUpdateStandbyTasks>> after <<maybeCommit, maybeCommit>> was executed
+Used when `StreamThread` is requested to <<setState, change a state>>
+
+Set when `KafkaStreams` is <<kafka-streams-KafkaStreams.adoc#creating-instance, created>>
+
+Reset (`null`) when:
+
+* `KafkaStreams` is requested to <<kafka-streams-KafkaStreams.adoc#close, close>>
+
+* `RebalanceListener` is requested to <<kafka-streams-StreamThread-RebalanceListener.adoc#onPartitionsAssigned, handle a partition assignment>> (and there was `INCOMPLETE_SOURCE_TOPIC_METADATA` error)
 
 | timerStartedMs
-| [[timerStartedMs]] The timestamp when the timer has started
+a| [[timerStartedMs]] The timestamp when the timer has started
 |===

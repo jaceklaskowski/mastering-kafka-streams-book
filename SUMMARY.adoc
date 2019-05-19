@@ -325,6 +325,7 @@
 
 . link:kafka-streams-internals-StreamThread.adoc[StreamThread -- Stream Processor Thread]
 . link:kafka-streams-StreamThread-RebalanceListener.adoc[RebalanceListener -- Kafka ConsumerRebalanceListener for Partition Assignment Among Processor Tasks]
+. link:kafka-streams-StreamThread-StateListener.adoc[StateListener]
 . link:kafka-streams-StreamsMetadataState.adoc[StreamsMetadataState]
 
 . link:kafka-streams-internals-StreamsPartitionAssignor.adoc[StreamsPartitionAssignor -- Dynamic Partition Assignment Strategy]
