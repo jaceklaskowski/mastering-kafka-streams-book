@@ -286,7 +286,7 @@ void punctuate(
   final Punctuator punctuator)
 ----
 
-NOTE: `punctuate` is part of link:kafka-streams-ProcessorNodePunctuator.adoc#punctuate[ProcessorNodePunctuator Contract] to execute a scheduled periodic action.
+NOTE: `punctuate` is part of link:kafka-streams-internals-ProcessorNodePunctuator.adoc#punctuate[ProcessorNodePunctuator Contract] to execute a scheduled periodic action.
 
 `punctuate`...FIXME
 

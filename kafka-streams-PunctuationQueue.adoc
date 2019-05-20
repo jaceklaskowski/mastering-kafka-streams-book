@@ -15,7 +15,7 @@ boolean mayPunctuate(
 
 `mayPunctuate` takes the <<kafka-streams-PunctuationSchedule.adoc#, PunctuationSchedules>> off the <<pq, PriorityQueue>> for which the <<kafka-streams-Stamped.adoc#timestamp, timestamp>> is older (_smaller_) than the given `timestamp`.
 
-`mayPunctuate` then requests the given <<kafka-streams-ProcessorNodePunctuator.adoc#, ProcessorNodePunctuator>> to <<kafka-streams-ProcessorNodePunctuator.adoc#punctuate, punctuate>> (with the <<kafka-streams-PunctuationSchedule.adoc#node, node>> and the <<kafka-streams-PunctuationSchedule.adoc#punctuator, punctuator>> of every `PunctuationSchedule`, the given `timestamp` and the `PunctuationType`).
+`mayPunctuate` then requests the given <<kafka-streams-internals-ProcessorNodePunctuator.adoc#, ProcessorNodePunctuator>> to <<kafka-streams-internals-ProcessorNodePunctuator.adoc#punctuate, punctuate>> (with the <<kafka-streams-PunctuationSchedule.adoc#node, node>> and the <<kafka-streams-PunctuationSchedule.adoc#punctuator, punctuator>> of every `PunctuationSchedule`, the given `timestamp` and the `PunctuationType`).
 
 In the end, `mayPunctuate` returns whether a `PunctuationSchedule` was punctuated (`true`) or not (`false`).
 

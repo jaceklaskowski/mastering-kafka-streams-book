@@ -260,7 +260,7 @@
 
 . link:kafka-streams-internals-InternalTopologyBuilder-AbstractNode.adoc[AbstractNode]
 
-. link:kafka-streams-ProcessorNodePunctuator.adoc[ProcessorNodePunctuator]
+. link:kafka-streams-internals-ProcessorNodePunctuator.adoc[ProcessorNodePunctuator]
 . link:kafka-streams-NodeMetrics.adoc[NodeMetrics]
 
 . link:kafka-streams-GlobalStore.adoc[GlobalStore]
