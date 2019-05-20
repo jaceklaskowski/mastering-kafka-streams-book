@@ -290,18 +290,24 @@ NOTE: `punctuate` is part of link:kafka-streams-ProcessorNodePunctuator.adoc#pun
 
 `punctuate`...FIXME
 
-=== [[maybePunctuateStreamTime]] `maybePunctuateStreamTime` Method
+=== [[maybePunctuateStreamTime]] Attempting to Punctuate by Stream Time -- `maybePunctuateStreamTime` Method
 
 [source, java]
 ----
 boolean maybePunctuateStreamTime()
 ----
 
-`maybePunctuateStreamTime`...FIXME
+`maybePunctuateStreamTime` requests the <<partitionGroup, PartitionGroup>> for the <<kafka-streams-internals-PartitionGroup.adoc#timestamp, minimum partition timestamp across all partitions>>.
 
-NOTE: `maybePunctuateStreamTime` is used exclusively when `AssignedStreamsTasks` is requested to link:kafka-streams-AssignedStreamsTasks.adoc#punctuate[punctuate].
+`maybePunctuateStreamTime` requests the <<streamTimePunctuationQueue, stream-time PunctuationQueue>> to <<kafka-streams-PunctuationQueue.adoc#mayPunctuate, mayPunctuate>> with the minimum timestamp.
 
-=== [[maybePunctuateSystemTime]] `maybePunctuateSystemTime` Method
+In the end, `maybePunctuateStreamTime` returns whatever the stream-time `PunctuationQueue` returned.
+
+If the minimum timestamp is <<kafka-streams-internals-RecordQueue.adoc#UNKNOWN, UNKNOWN>>, `maybePunctuateStreamTime` returns `false`.
+
+NOTE: `maybePunctuateStreamTime` is used exclusively when `AssignedStreamsTasks` is requested to <<kafka-streams-AssignedStreamsTasks.adoc#punctuate, punctuate running stream tasks>>.
+
+=== [[maybePunctuateSystemTime]] Attempting to Punctuate by System Time -- `maybePunctuateSystemTime` Method
 
 [source, java]
 ----
@@ -310,7 +316,7 @@ boolean maybePunctuateSystemTime()
 
 `maybePunctuateSystemTime`...FIXME
 
-NOTE: `maybePunctuateSystemTime` is used exclusively when `AssignedStreamsTasks` is requested to link:kafka-streams-AssignedStreamsTasks.adoc#punctuate[punctuate].
+NOTE: `maybePunctuateSystemTime` is used exclusively when `AssignedStreamsTasks` is requested to <<kafka-streams-AssignedStreamsTasks.adoc#punctuate, punctuate running stream tasks>>.
 
 === [[schedule]] `schedule` Method
 

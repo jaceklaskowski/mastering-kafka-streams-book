@@ -89,16 +89,32 @@ In the end, `maybeCommit` gives the number of running stream tasks that <<kafka-
 
 NOTE: `maybeCommit` is used exclusively when `TaskManager` is requested to link:kafka-streams-internals-TaskManager.adoc#maybeCommitActiveTasks[maybeCommitActiveTasks].
 
-=== [[punctuate]] `punctuate` Method
+=== [[punctuate]] Punctuating Running Stream Tasks (by Stream and System Time) -- `punctuate` Method
 
 [source, java]
 ----
 int punctuate()
 ----
 
-`punctuate`...FIXME
+`punctuate` walks over the <<kafka-streams-internals-AssignedTasks.adoc#running, running stream tasks>> and requests them to <<kafka-streams-internals-StreamTask.adoc#maybePunctuateStreamTime, maybePunctuateStreamTime>> and <<kafka-streams-internals-StreamTask.adoc#maybePunctuateSystemTime, maybePunctuateSystemTime>>.
 
-NOTE: `punctuate` is used exclusively when `TaskManager` is requested to link:kafka-streams-internals-TaskManager.adoc#punctuate[punctuate].
+For every positive response (<<kafka-streams-internals-StreamTask.adoc#maybePunctuateStreamTime, maybePunctuateStreamTime>> or <<kafka-streams-internals-StreamTask.adoc#maybePunctuateSystemTime, maybePunctuateSystemTime>> returned `true`), an internal `punctuated` counter is incremented.
+
+In the end, `punctuate` returns the internal `punctuated` counter.
+
+In case of a `TaskMigratedException`, `punctuate` prints out the following INFO message to the logs, <<kafka-streams-internals-AssignedTasks.adoc#closeZombieTask, closes the zombie task>>, and possibly removes the task from the <<kafka-streams-internals-AssignedTasks.adoc#running, running stream tasks>>.
+
+```
+Failed to punctuate stream task [taskId] since it got migrated to another thread already. Closing it as zombie before triggering a new rebalance.
+```
+
+In case of a `KafkaException`, `punctuate` prints out the following ERROR message to the logs and re-throws the exception.
+
+```
+Failed to punctuate stream task [taskId] due to the following error:
+```
+
+NOTE: `punctuate` is used exclusively when `TaskManager` is requested to <<kafka-streams-internals-TaskManager.adoc#punctuate, punctuate stream tasks>>.
 
 === [[updateRestored]] `updateRestored` Method
 

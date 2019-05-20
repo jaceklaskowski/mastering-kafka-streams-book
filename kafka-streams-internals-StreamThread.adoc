@@ -520,17 +520,6 @@ In the end, `create` creates a <<creating-instance, StreamThread>>.
 
 NOTE: `create` is used exclusively when `KafkaStreams` is <<kafka-streams-KafkaStreams.adoc#, created>>.
 
-=== [[punctuate]] `punctuate` Internal Method
-
-[source, java]
-----
-void punctuate()
-----
-
-`punctuate`...FIXME
-
-NOTE: `punctuate` is used when `StreamThread` is requested to <<run, start>> (and <<runOnce, polls records once>> and <<processAndMaybeCommit, processes records (with optional commit)>>).
-
 === [[enforceRebalance]] Enforcing Rebalance -- `enforceRebalance` Internal Method
 
 [source, java]
@@ -577,6 +566,21 @@ Committed all active tasks [activeTaskIds] and standby tasks [standbyTaskIds] in
 
 NOTE: `maybeCommit` is used when `StreamThread` is requested to <<runOnce, poll records once>> (directly and indirectly in <<processAndMaybeCommit, processAndMaybeCommit>>).
 
+=== [[maybePunctuate]] Attempting to Punctuate (Running Stream Tasks) -- `maybePunctuate` Internal Method
+
+[source, java]
+----
+boolean maybePunctuate()
+----
+
+`maybePunctuate` requests the <<taskManager, TaskManager>> to <<kafka-streams-internals-TaskManager.adoc#punctuate, punctuate>>.
+
+If the punctuate returned a positive number (greater than `0`), `maybePunctuate` <<advanceNowAndComputeLatency, advanceNowAndComputeLatency>> and requests the <<streamsMetrics, StreamsMetricsThreadImpl>> for the <<kafka-streams-StreamsMetricsThreadImpl.adoc#punctuateTimeSensor, punctuateTimeSensor>> to record the punctuate time.
+
+In the end, `maybePunctuate` returns whether the punctuate returned a positive number (`true`) or not (`false`).
+
+NOTE: `maybePunctuate` is used exclusively when `StreamThread` is requested to <<runOnce, poll records once and add them to active stream tasks>>.
+
 === [[internal-properties]] Internal Properties
 
 [cols="30m,70",options="header",width="100%"]
@@ -591,9 +595,13 @@ a| [[builder]] <<kafka-streams-internals-InternalTopologyBuilder.adoc#, Internal
 a| [[lastCommitMs]] Time of the last <<maybeCommit, commit>>
 
 | numIterations
-a| [[numIterations]]
+a| [[numIterations]] Number of iterations when the <<taskManager, TaskManager>> is requested to <<kafka-streams-internals-TaskManager.adoc#process, process records by running stream tasks (one record per task)>> while `StreamThread` is <<runOnce, polling records once and adding them to active stream tasks>>
 
 Default: `1`
+
+Incremented while <<runOnce, polling records once and adding them to active stream tasks>>
+
+Decremented by half while <<runOnce, polling records once and adding them to active stream tasks>>
 
 | processStandbyRecords
 a| [[processStandbyRecords]] Flag to control whether to <<maybeUpdateStandbyTasks, maybeUpdateStandbyTasks>> after <<maybeCommit, maybeCommit>> was executed

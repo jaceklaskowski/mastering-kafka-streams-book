@@ -358,16 +358,16 @@ In the end, `maybeCommitActiveTasks` gives the number of running stream tasks th
 
 NOTE: `maybeCommitActiveTasks` is used exclusively when `StreamThread` is requested to link:kafka-streams-internals-StreamThread.adoc#processAndMaybeCommit[processAndMaybeCommit].
 
-=== [[punctuate]] `punctuate` Method
+=== [[punctuate]] Punctuating Stream Tasks -- `punctuate` Method
 
 [source, java]
 ----
 int punctuate()
 ----
 
-`punctuate` simply requests <<active, AssignedStreamsTasks>> to link:kafka-streams-AssignedStreamsTasks.adoc#punctuate[punctuate].
+`punctuate` simply requests the <<active, AssignedStreamsTasks>> to <<kafka-streams-AssignedStreamsTasks.adoc#punctuate, punctuate>>.
 
-NOTE: `punctuate` is used exclusively when `StreamThread` is requested to link:kafka-streams-internals-StreamThread.adoc#punctuate[punctuate].
+NOTE: `punctuate` is used exclusively when `StreamThread` is requested to <<kafka-streams-internals-StreamThread.adoc#maybePunctuate, attempt to punctuate>>.
 
 === [[commitAll]] Committing Active and Standby Tasks -- `commitAll` Method
 

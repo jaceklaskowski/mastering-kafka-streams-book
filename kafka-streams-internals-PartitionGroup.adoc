@@ -67,7 +67,7 @@ int numBuffered(final TopicPartition partition)
 
 NOTE: `numBuffered` is used when...FIXME
 
-=== [[timestamp]] Minimum Partition Timestamp Across All TopicPartitions -- `timestamp` Method
+=== [[timestamp]] Minimum Partition Timestamp Across All Partitions -- `timestamp` Method
 
 [source, java]
 ----
