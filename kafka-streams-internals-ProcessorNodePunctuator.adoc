@@ -1,32 +1,19 @@
-== [[ProcessorNodePunctuator]] ProcessorNodePunctuator
+== [[ProcessorNodePunctuator]] ProcessorNodePunctuator Contract
 
-`ProcessorNodePunctuator` is the <<contract, contract>> of <<implementations, stream punctuator nodes>> that can <<punctuate, punctuate>>.
+`ProcessorNodePunctuator` is the <<contract, abstraction>> of <<implementations, processor node punctuators>> that can <<punctuate, punctuate>>, i.e. execute a scheduled periodic action.
 
 [[contract]]
+[[punctuate]]
 [source, java]
 ----
-package org.apache.kafka.streams.processor.internals;
-
-interface ProcessorNodePunctuator {
-  void punctuate(
-    ProcessorNode node,
-    long streamTime,
-    PunctuationType type,
-    Punctuator punctuator);
-}
+void punctuate(
+  ProcessorNode node,
+  long streamTime,
+  PunctuationType type,
+  Punctuator punctuator)
 ----
 
-.ProcessorNodePunctuator Contract
-[cols="1,2",options="header",width="100%"]
-|===
-| Method
-| Description
-
-| `punctuate`
-| [[punctuate]] Executing a scheduled periodic action
-
-Used exclusively when `PunctuationQueue` is requested to link:kafka-streams-PunctuationQueue.adoc#mayPunctuate[mayPunctuate] (when `StreamTask` is requested to link:kafka-streams-internals-StreamTask.adoc#maybePunctuateStreamTime[maybePunctuateStreamTime] and link:kafka-streams-internals-StreamTask.adoc#maybePunctuateSystemTime[maybePunctuateSystemTime]).
-|===
+`punctuate` is used exclusively when `PunctuationQueue` is requested to <<kafka-streams-PunctuationQueue.adoc#mayPunctuate, attempt to punctuate>> (for `StreamTask` that attempts to punctuate by <<kafka-streams-internals-StreamTask.adoc#maybePunctuateStreamTime, stream>> and <<kafka-streams-internals-StreamTask.adoc#maybePunctuateSystemTime, system>> time).
 
 [[implementations]]
-NOTE: link:kafka-streams-internals-StreamTask.adoc[StreamTask] is the one and only known implementation of <<contract, ProcessorNodePunctuator Contract>> in Kafka Streams {{ book.kafka_version }}.
+NOTE: <<kafka-streams-internals-StreamTask.adoc#, StreamTask>> is the default and only known implementation of the <<contract, ProcessorNodePunctuator Contract>> in Kafka Streams.

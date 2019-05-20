@@ -365,7 +365,7 @@ NOTE: `maybeCommitActiveTasks` is used exclusively when `StreamThread` is reques
 int punctuate()
 ----
 
-`punctuate` simply requests the <<active, AssignedStreamsTasks>> to <<kafka-streams-AssignedStreamsTasks.adoc#punctuate, punctuate>>.
+`punctuate` simply requests the <<active, AssignedStreamsTasks>> to <<kafka-streams-AssignedStreamsTasks.adoc#punctuate, punctuate running stream tasks (by stream and system time)>>.
 
 NOTE: `punctuate` is used exclusively when `StreamThread` is requested to <<kafka-streams-internals-StreamThread.adoc#maybePunctuate, attempt to punctuate>>.
 

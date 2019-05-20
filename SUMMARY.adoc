@@ -260,7 +260,6 @@
 
 . link:kafka-streams-internals-InternalTopologyBuilder-AbstractNode.adoc[AbstractNode]
 
-. link:kafka-streams-internals-ProcessorNodePunctuator.adoc[ProcessorNodePunctuator]
 . link:kafka-streams-NodeMetrics.adoc[NodeMetrics]
 
 . link:kafka-streams-GlobalStore.adoc[GlobalStore]
@@ -315,6 +314,8 @@
 . link:kafka-streams-internals-AssignedTasks.adoc[AssignedTasks]
 .. link:kafka-streams-AssignedStandbyTasks.adoc[AssignedStandbyTasks -- AssignedTasks For StandbyTasks]
 .. link:kafka-streams-AssignedStreamsTasks.adoc[AssignedStreamsTasks -- AssignedTasks For StreamTasks]
+
+. link:kafka-streams-internals-ProcessorNodePunctuator.adoc[ProcessorNodePunctuator Contract]
 
 === Kafka Streams Execution Engine
 

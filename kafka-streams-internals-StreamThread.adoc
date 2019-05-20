@@ -573,7 +573,7 @@ NOTE: `maybeCommit` is used when `StreamThread` is requested to <<runOnce, poll 
 boolean maybePunctuate()
 ----
 
-`maybePunctuate` requests the <<taskManager, TaskManager>> to <<kafka-streams-internals-TaskManager.adoc#punctuate, punctuate>>.
+`maybePunctuate` requests the <<taskManager, TaskManager>> to <<kafka-streams-internals-TaskManager.adoc#punctuate, punctuate stream tasks>>.
 
 If the punctuate returned a positive number (greater than `0`), `maybePunctuate` <<advanceNowAndComputeLatency, advanceNowAndComputeLatency>> and requests the <<streamsMetrics, StreamsMetricsThreadImpl>> for the <<kafka-streams-StreamsMetricsThreadImpl.adoc#punctuateTimeSensor, punctuateTimeSensor>> to record the punctuate time.
 

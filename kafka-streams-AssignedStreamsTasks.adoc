@@ -96,9 +96,9 @@ NOTE: `maybeCommit` is used exclusively when `TaskManager` is requested to link:
 int punctuate()
 ----
 
-`punctuate` walks over the <<kafka-streams-internals-AssignedTasks.adoc#running, running stream tasks>> and requests them to <<kafka-streams-internals-StreamTask.adoc#maybePunctuateStreamTime, maybePunctuateStreamTime>> and <<kafka-streams-internals-StreamTask.adoc#maybePunctuateSystemTime, maybePunctuateSystemTime>>.
+`punctuate` walks over the <<kafka-streams-internals-AssignedTasks.adoc#running, running stream tasks>> and requests them to attempt to punctuate by <<kafka-streams-internals-StreamTask.adoc#maybePunctuateStreamTime, stream>> and <<kafka-streams-internals-StreamTask.adoc#maybePunctuateSystemTime, system>> time.
 
-For every positive response (<<kafka-streams-internals-StreamTask.adoc#maybePunctuateStreamTime, maybePunctuateStreamTime>> or <<kafka-streams-internals-StreamTask.adoc#maybePunctuateSystemTime, maybePunctuateSystemTime>> returned `true`), an internal `punctuated` counter is incremented.
+For every successfully executed punctuation, `punctuate` increments an internal `punctuated` counter.
 
 In the end, `punctuate` returns the internal `punctuated` counter.
 

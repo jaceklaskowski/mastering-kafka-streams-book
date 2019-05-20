@@ -19,4 +19,4 @@ boolean mayPunctuate(
 
 In the end, `mayPunctuate` returns whether a `PunctuationSchedule` was punctuated (`true`) or not (`false`).
 
-NOTE: `mayPunctuate` is used when `StreamTask` is requested to attempt to punctuate by <<kafka-streams-internals-StreamTask.adoc#maybePunctuateStreamTime, stream>> and <<kafka-streams-internals-StreamTask.adoc#maybePunctuateSystemTime, system>> time.
+NOTE: `mayPunctuate` is used when `StreamTask` is requested to attempt to punctuate by <<kafka-streams-internals-StreamTask.adoc#maybePunctuateStreamTime, stream>> and <<kafka-streams-internals-StreamTask.adoc#maybePunctuateSystemTime, system>> time (with itself as the <<kafka-streams-internals-ProcessorNodePunctuator.adoc#, ProcessorNodePunctuator>>).
