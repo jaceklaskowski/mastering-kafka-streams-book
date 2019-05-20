@@ -139,8 +139,6 @@ Cancellable schedule(
   final Punctuator callback)
 ----
 
-Used exclusively when `KStreamTransformValuesProcessor` is requested to link:kafka-streams-internals-KStreamTransformValuesProcessor.adoc#init[initialize]
-
 | stateDir
 a| [[stateDir]]
 
@@ -183,4 +181,16 @@ Serde<?> valueSerde()
 |===
 
 [[implementations]]
-NOTE: <<kafka-streams-internals-InternalProcessorContext.adoc#, InternalProcessorContext>> is the one and only extension contract of the <<contract, ProcessorContext Contract>>.
+.ProcessorContexts (Direct Implementations and Extensions)
+[cols="30m,70",options="header",width="100%"]
+|===
+| ProcessorContext
+| Description
+
+| <<kafka-streams-internals-ForwardingDisabledProcessorContext.adoc#, ForwardingDisabledProcessorContext>>
+| [[ForwardingDisabledProcessorContext]]
+
+| <<kafka-streams-internals-InternalProcessorContext.adoc#, InternalProcessorContext>>
+| [[InternalProcessorContext]] Extension of `ProcessorContext`
+
+|===

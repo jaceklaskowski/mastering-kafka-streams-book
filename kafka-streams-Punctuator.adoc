@@ -1,25 +1,14 @@
-== [[Punctuator]] Punctuator -- Contract for Scheduled Periodic Actions
+== [[Punctuator]] Punctuator Contract -- Scheduled Periodic Actions
 
-`Punctuator` is the <<contract, contract>> to <<punctuate, perform a scheduled periodic action>> (aka *punctuate*) on a record stream.
+`Punctuator` is the <<contract, abstraction>> that Kafka Streams developers use to <<punctuate, execute scheduled periodic actions>> (aka *punctuate*) on a record stream.
 
 [[contract]]
+[[punctuate]]
 [source, java]
 ----
-package org.apache.kafka.streams.processor;
-
-interface Punctuator {
-  void punctuate(long timestamp);
-}
+void punctuate(long timestamp)
 ----
 
-.Punctuator Contract
-[cols="1,2",options="header",width="100%"]
-|===
-| Method
-| Description
+`punctuate` is used exclusively when `ProcessorNode` is requested to <<kafka-streams-internals-ProcessorNode.adoc#punctuate, execute a Punctuator>>.
 
-| `punctuate`
-| [[punctuate]] Used exclusively when `ProcessorNode` is requested to link:kafka-streams-internals-ProcessorNode.adoc#punctuate[punctuate].
-|===
-
-`Punctuator` can be link:kafka-streams-ProcessorContext.adoc#schedule[scheduled] (registered) on a link:kafka-streams-ProcessorContext.adoc[ProcessorContext].
+`Punctuator` is scheduled (registered) using <<kafka-streams-ProcessorContext.adoc#schedule, ProcessorContext.schedule>> method.

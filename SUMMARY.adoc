@@ -84,7 +84,7 @@
 .. link:kafka-streams-TaskId.adoc[TaskId]
 .. link:kafka-streams-To.adoc[To]
 
-. link:kafka-streams-Punctuator.adoc[Punctuator -- Contract for Scheduled Periodic Actions]
+. link:kafka-streams-Punctuator.adoc[Punctuator Contract -- Scheduled Periodic Actions]
 . link:kafka-streams-Cancellable.adoc[Cancellable]
 
 . link:kafka-streams-ProcessorSupplier.adoc[ProcessorSupplier Contract]
@@ -342,6 +342,8 @@
 .. link:kafka-streams-internals-GlobalProcessorContextImpl.adoc[GlobalProcessorContextImpl]
 .. link:kafka-streams-internals-ProcessorContextImpl.adoc[ProcessorContextImpl]
 .. link:kafka-streams-internals-StandbyContextImpl.adoc[StandbyContextImpl]
+
+. link:kafka-streams-internals-ForwardingDisabledProcessorContext.adoc[ForwardingDisabledProcessorContext]
 
 . link:kafka-streams-internals-ThreadCache.adoc[ThreadCache]
 

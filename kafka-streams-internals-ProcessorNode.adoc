@@ -101,14 +101,16 @@ NOTE: `toString` is part of Java's link:++https://docs.oracle.com/javase/8/docs/
 
 [source, java]
 ----
-void punctuate(final long timestamp, final Punctuator punctuator)
+void punctuate(
+  long timestamp,
+  Punctuator punctuator)
 ----
 
-`punctuate` creates a Java https://docs.oracle.com/javase/8/docs/api/java/lang/Runnable.html[Runnable] that simply requests the input `Punctuator` to link:kafka-streams-Punctuator.adoc#punctuate[punctuate] with the input `timestamp`.
+`punctuate` requests the given <<kafka-streams-Punctuator.adoc#, Punctuator>> to <<kafka-streams-Punctuator.adoc#punctuate, punctuate>> with the given `timestamp`.
 
-`punctuate` requests the <<nodeMetrics, NodeMetrics>> for the link:kafka-streams-NodeMetrics.adoc#metrics[StreamsMetricsImpl] that is requested to link:kafka-streams-internals-StreamsMetricsImpl.adoc#measureLatencyNs[measureLatencyNs] (that records it with the link:kafka-streams-NodeMetrics.adoc#nodePunctuateTimeSensor[nodePunctuateTimeSensor] of the <<nodeMetrics, NodeMetrics>>).
+In the end, `punctuate` requests the <<nodeMetrics, NodeMetrics>> for the <<kafka-streams-NodeMetrics.adoc#nodePunctuateTimeSensor, nodePunctuateTimeSensor>> to record the time for node punctuation.
 
-NOTE: `punctuate` is used exclusively when `StreamTask` is requested to link:kafka-streams-internals-StreamTask.adoc#punctuate[execute a scheduled periodic action].
+NOTE: `punctuate` is used exclusively when `StreamTask` is requested to <<kafka-streams-internals-StreamTask.adoc#punctuate, punctuate a processor>>.
 
 === [[internal-properties]] Internal Properties
 
