@@ -1,6 +1,6 @@
 == [[ProcessorNodePunctuator]] ProcessorNodePunctuator Contract
 
-`ProcessorNodePunctuator` is the <<contract, abstraction>> of <<implementations, processor node punctuators>> that can <<punctuate, punctuate>>, i.e. execute a scheduled periodic action.
+`ProcessorNodePunctuator` is the <<contract, abstraction>> of <<implementations, processor node punctuators>> that can <<punctuate, punctuate a processor>>, i.e. execute scheduled periodic actions.
 
 [[contract]]
 [[punctuate]]

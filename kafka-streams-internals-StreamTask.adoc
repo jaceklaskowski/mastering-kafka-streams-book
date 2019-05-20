@@ -1,5 +1,6 @@
 == [[StreamTask]] StreamTask
 
+[[AbstractTask]]
 `StreamTask` is a concrete <<kafka-streams-internals-AbstractTask.adoc#, stream processor task>> that uses a <<partitionGroup, PartitionGroup>> (with the <<partitions, partitions assigned>>) to determine which record should be <<process, processed>> (as ordered by partition timestamp).
 
 When requested to <<process, process a single record>>, `StreamTask` requests the <<partitionGroup, PartitionGroup>> for the <<kafka-streams-internals-PartitionGroup.adoc#nextRecord, next stamped record (record with timestamp) and the RecordQueue>>. `StreamTask` uses a <<recordInfo, RecordInfo>> to hold the <<kafka-streams-internals-RecordQueue.adoc#, RecordQueue>> (with the source <<kafka-streams-internals-ProcessorNode.adoc#, processor node>> and the partition) of the currently-processed stamped record. Eventually, `StreamTask` requests the source processor node (of the `RecordQueue` and the partition) to <<kafka-streams-internals-ProcessorNode.adoc#process, process the record>>.
@@ -10,6 +11,9 @@ image::images/kafka-streams-StreamTask-process.png[align="center"]
 NOTE: It is at the discretion of a processor node (incl. a source processor node) to <<kafka-streams-ProcessorContext.adoc#forward, forward the record downstream>> (to child processors if there are any).
 
 `StreamTask` is <<creating-instance, created>> exclusively when `TaskCreator` is requested to <<kafka-streams-internals-TaskCreator.adoc#createTask, create one>>.
+
+[[ProcessorNodePunctuator]]
+`StreamTask` is a concrete <<kafka-streams-internals-ProcessorNodePunctuator.adoc#, ProcessorNodePunctuator>> that can <<punctuate, punctuate processors>> (_execute scheduled periodic actions_).
 
 When requested to <<initializeTopology, initialize a processor topology>> (as a <<kafka-streams-internals-Task.adoc#, task>>), `StreamTask`...FIXME
 
@@ -275,20 +279,36 @@ NOTE: `recordCollectorOffsets` is part of link:kafka-streams-internals-AbstractT
 
 `recordCollectorOffsets`...FIXME
 
-=== [[punctuate]] Executing Scheduled Periodic Action -- `punctuate` Method
+=== [[punctuate]] Punctuating Processor (Executing Scheduled Periodic Action) -- `punctuate` Method
 
 [source, java]
 ----
 void punctuate(
-  final ProcessorNode node,
-  final long timestamp,
-  final PunctuationType type,
-  final Punctuator punctuator)
+  ProcessorNode node,
+  long timestamp,
+  PunctuationType type,
+  Punctuator punctuator)
 ----
 
-NOTE: `punctuate` is part of link:kafka-streams-internals-ProcessorNodePunctuator.adoc#punctuate[ProcessorNodePunctuator Contract] to execute a scheduled periodic action.
+NOTE: `punctuate` is part of <<kafka-streams-internals-ProcessorNodePunctuator.adoc#punctuate, ProcessorNodePunctuator Contract>> to punctuate a <<kafka-streams-internals-ProcessorNode.adoc#, processor>>.
 
-`punctuate`...FIXME
+`punctuate` <<updateProcessorContext, updateProcessorContext>> with a "dummy" stamped record and the given <<kafka-streams-internals-ProcessorNode.adoc#, ProcessorNode>>.
+
+`punctuate` prints out the following TRACE message to the logs:
+
+```
+Punctuating processor [name] with timestamp [timestamp] and punctuation type [type]
+```
+
+In the end, `punctuate` requests the given <<kafka-streams-internals-ProcessorNode.adoc#, ProcessorNode>> to <<kafka-streams-internals-ProcessorNode.adoc#punctuate, punctuate>>.
+
+In case of a `ProducerFencedException`, `punctuate` throws a `TaskMigratedException`.
+
+In case of a `KafkaException`, `punctuate` throws a `StreamsException`:
+
+```
+[logPrefix]Exception caught while punctuating processor '[name]'
+```
 
 === [[maybePunctuateStreamTime]] Attempting to Punctuate by Stream Time -- `maybePunctuateStreamTime` Method
 
