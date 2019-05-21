@@ -1,14 +1,34 @@
-== [[TableSourceNode]] TableSourceNode
+== [[TableSourceNode]] TableSourceNode -- StreamSourceNode for KTable and GlobalKTable
 
-`TableSourceNode` is...FIXME
+`TableSourceNode` is a custom <<kafka-streams-internals-StreamSourceNode.adoc#, StreamSourceNode>> that is <<creating-instance, created>> when `InternalStreamsBuilder` is requested to add a <<kafka-streams-internals-InternalStreamsBuilder.adoc#table, KTable>> and a <<kafka-streams-internals-InternalStreamsBuilder.adoc#globalTable, GlobalKTable>> to a topology (using the internal `TableSourceNodeBuilder`).
+
+NOTE: Key-value stores are supported only.
 
 === [[writeToTopology]] `writeToTopology` Method
 
 [source, java]
 ----
-void writeToTopology(final InternalTopologyBuilder topologyBuilder)
+void writeToTopology(InternalTopologyBuilder topologyBuilder)
 ----
 
 NOTE: `writeToTopology` is part of the <<kafka-streams-internals-StreamsGraphNode.adoc#writeToTopology, StreamsGraphNode Contract>> to...FIXME.
 
-`writeToTopology`...FIXME
+`writeToTopology` creates a <<kafka-streams-internals-KeyValueStoreMaterializer.adoc#, KeyValueStoreMaterializer>> and requests it to <<kafka-streams-internals-KeyValueStoreMaterializer.adoc#materialize, materialize>> (to a <<kafka-streams-StoreBuilder.adoc#, StoreBuilder>> of <<kafka-streams-StateStore-KeyValueStore.adoc#, KeyValueStore>>).
+
+`writeToTopology` branches off per <<isGlobalKTable, isGlobalKTable>> flag.
+
+When the <<isGlobalKTable, isGlobalKTable>> flag is enabled (`true`), `writeToTopology` requests the given <<kafka-streams-internals-InternalTopologyBuilder.adoc#, InternalTopologyBuilder>> to <<kafka-streams-internals-InternalTopologyBuilder.adoc#addGlobalStore, add a global key-value state store (to a topology)>>.
+
+When the <<isGlobalKTable, isGlobalKTable>> flag is disabled (`false`), `writeToTopology`...FIXME
+
+=== [[creating-instance]] Creating TableSourceNode Instance
+
+`TableSourceNode` takes the following to be created:
+
+* [[nodeName]] Name of the node
+* [[sourceName]] Name of the source
+* [[topic]] Name of the topic
+* [[consumedInternal]] <<kafka-streams-internals-ConsumedInternal.adoc#, ConsumedInternal>>
+* [[materializedInternal]] <<kafka-streams-internals-MaterializedInternal.adoc#, MaterializedInternal>>
+* [[processorParameters]] `ProcessorParameters`
+* [[isGlobalKTable]] `isGlobalKTable` flag

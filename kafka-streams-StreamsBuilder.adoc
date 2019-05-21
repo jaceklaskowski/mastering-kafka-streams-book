@@ -19,10 +19,10 @@ a| [[addGlobalStore]]
 [source, java]
 ----
 StreamsBuilder addGlobalStore(
-  final StoreBuilder storeBuilder,
-  final String topic,
-  final Consumed consumed,
-  final ProcessorSupplier stateUpdateSupplier)
+  StoreBuilder storeBuilder,
+  String topic,
+  Consumed consumed,
+  ProcessorSupplier stateUpdateSupplier)
 ----
 
 Adds a global <<kafka-streams-StateStore.adoc#, StateStore>> (given <<kafka-streams-StoreBuilder.adoc#, StoreBuilder>>, <<kafka-streams-Consumed.adoc#, Consumed>> and <<kafka-streams-ProcessorSupplier.adoc#, ProcessorSupplier>>) to the topology.
@@ -32,7 +32,7 @@ a| [[addStateStore]]
 
 [source, java]
 ----
-StreamsBuilder addStateStore(final StoreBuilder builder)
+StreamsBuilder addStateStore(StoreBuilder builder)
 ----
 
 Adds a <<kafka-streams-StateStore.adoc#, StateStore>> to the topology (given <<kafka-streams-StoreBuilder.adoc#, StoreBuilder>>).
@@ -43,7 +43,7 @@ a| [[build]]
 [source, java]
 ----
 Topology build()  // <1>
-Topology build(final Properties props)
+Topology build(Properties props)
 ----
 <1> Uses `null` for the `Properties`
 
@@ -54,17 +54,18 @@ a| [[globalTable]]
 
 [source, java]
 ----
-GlobalKTable<K, V> globalTable(final String topic)
 GlobalKTable<K, V> globalTable(
-  final String topic,
-  final Consumed<K, V> consumed)
+  String topic)
 GlobalKTable<K, V> globalTable(
-  final String topic,
-  final Materialized<K, V, KeyValueStore<Bytes, byte[]>> materialized)
+  String topic,
+  Consumed<K, V> consumed)
 GlobalKTable<K, V> globalTable(
-  final String topic,
-  final Consumed<K, V> consumed,
-  final Materialized<K, V, KeyValueStore<Bytes, byte[]>> materialized)
+  String topic,
+  Materialized<K, V, KeyValueStore<Bytes, byte[]>> materialized)
+GlobalKTable<K, V> globalTable(
+  String topic,
+  Consumed<K, V> consumed,
+  Materialized<K, V, KeyValueStore<Bytes, byte[]>> materialized)
 ----
 
 Creates a <<kafka-streams-GlobalKTable.adoc#, GlobalKTable>> for the given topic (and <<kafka-streams-Consumed.adoc#, Consumed>>, <<kafka-streams-Materialized.adoc#, Materialized>> or both).
@@ -74,18 +75,21 @@ a| [[stream]]
 
 [source, java]
 ----
-KStream<K, V> stream(final Collection<String> topics)
 KStream<K, V> stream(
-  final Collection<String> topics,
-  final Consumed<K, V> consumed)
-KStream<K, V> stream(final Pattern topicPattern)
+  Collection<String> topics)
 KStream<K, V> stream(
-  final Pattern topicPattern,
-  final Consumed<K, V> consumed)
-KStream<K, V> stream(final String topic)
+  Collection<String> topics,
+  Consumed<K, V> consumed)
 KStream<K, V> stream(
-  final String topic,
-  final Consumed<K, V> consumed)
+  Pattern topicPattern)
+KStream<K, V> stream(
+  Pattern topicPattern,
+  Consumed<K, V> consumed)
+KStream<K, V> stream(
+  String topic)
+KStream<K, V> stream(
+  String topic,
+  Consumed<K, V> consumed)
 ----
 
 Creates a <<kafka-streams-KStream.adoc#, KStream>> for the given topic(s) (and <<kafka-streams-Consumed.adoc#, Consumed>>).
@@ -95,17 +99,18 @@ a| [[table]]
 
 [source, java]
 ----
-KTable<K, V> table(final String topic)
 KTable<K, V> table(
-  final String topic,
-  final Consumed<K, V> consumed)
+  String topic)
 KTable<K, V> table(
-  final String topic,
-  final Materialized<K, V, KeyValueStore<Bytes, byte[]>> materialized)
+  String topic,
+  Consumed<K, V> consumed)
 KTable<K, V> table(
-  final String topic,
-  final Consumed<K, V> consumed,
-  final Materialized<K, V, KeyValueStore<Bytes, byte[]>> materialized)
+  String topic,
+  Materialized<K, V, KeyValueStore<Bytes, byte[]>> materialized)
+KTable<K, V> table(
+  String topic,
+  Consumed<K, V> consumed,
+  Materialized<K, V, KeyValueStore<Bytes, byte[]>> materialized)
 ----
 
 Creates a <<kafka-streams-KTable.adoc#, KTable>> for the given topic (and <<kafka-streams-Consumed.adoc#, Consumed>>, <<kafka-streams-Materialized.adoc#, Materialized>> or both).
@@ -163,17 +168,18 @@ All <<operators, operators>> use the <<internalStreamsBuilder, InternalStreamsBu
 
 [source, java]
 ----
-KTable<K, V> table(final String topic)
 KTable<K, V> table(
-  final String topic,
-  final Consumed<K, V> consumed)
+  String topic)
 KTable<K, V> table(
-  final String topic,
-  final Materialized<K, V, KeyValueStore<Bytes, byte[]>> materialized)
+  String topic,
+  Consumed<K, V> consumed)
 KTable<K, V> table(
-  final String topic,
-  final Consumed<K, V> consumed,
-  final Materialized<K, V, KeyValueStore<Bytes, byte[]>> materialized)
+  String topic,
+  Materialized<K, V, KeyValueStore<Bytes, byte[]>> materialized)
+KTable<K, V> table(
+  String topic,
+  Consumed<K, V> consumed,
+  Materialized<K, V, KeyValueStore<Bytes, byte[]>> materialized)
 ----
 
 `table`...FIXME
@@ -182,17 +188,18 @@ KTable<K, V> table(
 
 [source, java]
 ----
-GlobalKTable<K, V> globalTable(final String topic)
 GlobalKTable<K, V> globalTable(
-  final String topic,
-  final Consumed<K, V> consumed)
+  String topic)
 GlobalKTable<K, V> globalTable(
-  final String topic,
-  final Materialized<K, V, KeyValueStore<Bytes, byte[]>> materialized)
+  String topic,
+  Consumed<K, V> consumed)
 GlobalKTable<K, V> globalTable(
-  final String topic,
-  final Consumed<K, V> consumed,
-  final Materialized<K, V, KeyValueStore<Bytes, byte[]>> materialized)
+  String topic,
+  Materialized<K, V, KeyValueStore<Bytes, byte[]>> materialized)
+GlobalKTable<K, V> globalTable(
+  String topic,
+  Consumed<K, V> consumed,
+  Materialized<K, V, KeyValueStore<Bytes, byte[]>> materialized)
 ----
 
 `globalTable` creates an <<kafka-streams-internals-ConsumedInternal.adoc#, ConsumedInternal>> for the given <<kafka-streams-Consumed.adoc#, Consumed>>.
@@ -270,10 +277,10 @@ Topologies:
 [source, java]
 ----
 StreamsBuilder addGlobalStore(
-  final StoreBuilder storeBuilder,
-  final String topic,
-  final Consumed consumed,
-  final ProcessorSupplier stateUpdateSupplier)
+  StoreBuilder storeBuilder,
+  String topic,
+  Consumed consumed,
+  ProcessorSupplier stateUpdateSupplier)
 ----
 
 `addGlobalStore`...FIXME
@@ -282,7 +289,7 @@ StreamsBuilder addGlobalStore(
 
 [source, java]
 ----
-StreamsBuilder addStateStore(final StoreBuilder builder)
+StreamsBuilder addStateStore(StoreBuilder builder)
 ----
 
 `addStateStore`...FIXME
@@ -291,18 +298,21 @@ StreamsBuilder addStateStore(final StoreBuilder builder)
 
 [source, java]
 ----
-KStream<K, V> stream(final Collection<String> topics)
 KStream<K, V> stream(
-  final Collection<String> topics,
-  final Consumed<K, V> consumed)
-KStream<K, V> stream(final Pattern topicPattern)
+  Collection<String> topics)
 KStream<K, V> stream(
-  final Pattern topicPattern,
-  final Consumed<K, V> consumed)
-KStream<K, V> stream(final String topic)
+  Collection<String> topics,
+  Consumed<K, V> consumed)
 KStream<K, V> stream(
-  final String topic,
-  final Consumed<K, V> consumed)
+  Pattern topicPattern)
+KStream<K, V> stream(
+  Pattern topicPattern,
+  Consumed<K, V> consumed)
+KStream<K, V> stream(
+  String topic)
+KStream<K, V> stream(
+  String topic,
+  Consumed<K, V> consumed)
 ----
 
 `stream` creates a link:kafka-streams-KStream.adoc[KStream] (of keys of type `K` and values of type `V`) for the defined topic(s) and the parameters in the input link:kafka-streams-Consumed.adoc[Consumed].
@@ -327,7 +337,7 @@ Internally, `stream` creates a <<kafka-streams-internals-ConsumedInternal.adoc#,
 [source, java]
 ----
 Topology build()
-Topology build(final Properties props)
+Topology build(Properties props)
 ----
 
 `build` requests the <<internalStreamsBuilder, InternalStreamsBuilder>> to <<kafka-streams-internals-InternalStreamsBuilder.adoc#buildAndOptimizeTopology, buildAndOptimizeTopology>> (with the given `Properties`) and returns the underlying <<topology, topology>>.

@@ -38,7 +38,7 @@ a| [[allMetadataForStore]]
 [source, java]
 ----
 Collection<StreamsMetadata> allMetadataForStore(
-  final String storeName)
+  String storeName)
 ----
 
 | <<cleanUp-internals, cleanUp>>
@@ -56,11 +56,12 @@ a| [[close]]
 
 [source, java]
 ----
-void close()
-boolean close(final Duration timeout)
+void close() // <1>
+boolean close(Duration timeout)
 ----
+<1> Uses `Long.MAX_VALUE` for the `timeout`
 
-Closes the `KafkaStreams`
+Closes the `KafkaStreams` instance
 
 | localThreadsMetadata
 a| [[localThreadsMetadata]]
@@ -76,13 +77,13 @@ a| [[metadataForKey]]
 [source, java]
 ----
 StreamsMetadata metadataForKey(
-  final String storeName,
-  final K key,
-  final Serializer<K> keySerializer)
+  String storeName,
+  K key,
+  Serializer<K> keySerializer)
 StreamsMetadata metadataForKey(
-  final String storeName,
-  final K key,
-  final StreamPartitioner<? super K, ?> partitioner)
+  String storeName,
+  K key,
+  StreamPartitioner<? super K, ?> partitioner)
 ----
 
 | metrics
@@ -101,7 +102,7 @@ a| [[setGlobalStateRestoreListener]]
 [source, java]
 ----
 void setGlobalStateRestoreListener(
-  final StateRestoreListener globalStateRestoreListener)
+  StateRestoreListener globalStateRestoreListener)
 ----
 
 Registers a global <<kafka-streams-StateRestoreListener.adoc#, StateRestoreListener>>
@@ -112,8 +113,10 @@ a| [[setStateListener]]
 [source, java]
 ----
 void setStateListener(
-  final KafkaStreams.StateListener listener)
+  KafkaStreams.StateListener listener)
 ----
+
+Registers a <<kafka-streams-StateListener.adoc#, KafkaStreams.StateListener>>
 
 | setUncaughtExceptionHandler
 a| [[setUncaughtExceptionHandler]]
@@ -121,8 +124,10 @@ a| [[setUncaughtExceptionHandler]]
 [source, java]
 ----
 void setUncaughtExceptionHandler(
-  final Thread.UncaughtExceptionHandler eh)
+  Thread.UncaughtExceptionHandler eh)
 ----
+
+Registers a https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/Thread.UncaughtExceptionHandler.html[java.lang.UncaughtExceptionHandler]
 
 | <<start-internals, start>>
 a| [[start]]
@@ -132,7 +137,7 @@ a| [[start]]
 void start()
 ----
 
-Starts the `KafkaStreams` (and the <<topology, Topology>>)
+Starts the `KafkaStreams` instance (and the <<topology, Topology>>)
 
 | state
 a| [[state]]
@@ -150,8 +155,8 @@ a| [[store]]
 [source, java]
 ----
 T store(
-  final String storeName,
-  final QueryableStoreType<T> queryableStoreType)
+  String storeName,
+  QueryableStoreType<T> queryableStoreType)
 ----
 |===
 
@@ -196,111 +201,18 @@ ks.setGlobalStateRestoreListener(userRestoreListener)
 [[log]]
 `KafkaStreams` uses *stream-client [client.id]* for the log prefix (with the <<clientId, clientId>>).
 
-[[internal-registries]]
-.KafkaStreams's Internal Properties (e.g. Registries, Counters and Flags)
-[cols="1m,2",options="header",width="100%"]
-|===
-| Name
-| Description
-
-| clientId
-a| [[clientId]] *Client ID*
-
-Used for the following:
-
-* <<log, logging>>
-
-* <<metrics, metrics>>
-
-* <<globalStreamThread, Global thread ID>>
-
-* Requesting the <<clientSupplier, KafkaClientSupplier>> for the <<kafka-streams-KafkaClientSupplier.adoc#getGlobalConsumer, global Kafka Consumer>> (when creating the <<globalStreamThread, GlobalStreamThread>>)
-
-* Requesting the <<config, StreamsConfig>> for the <<kafka-streams-StreamsConfig.adoc#getAdminConfigs, KafkaAdmin configuration>> (when creating the <<adminClient, AdminClient>>)
-
-* Creating <<threads, StreamThreads>>
-
-* The name of the <<stateDirCleaner, ScheduledExecutorService>> thread
-
-| globalStateRestoreListener
-a| [[globalStateRestoreListener]] A user-defined global <<kafka-streams-StateRestoreListener.adoc#, StateRestoreListener>> to be notified about the state-related events: <<kafka-streams-DelegatingStateRestoreListener.adoc#onRestoreStart, onRestoreStart>>, <<kafka-streams-DelegatingStateRestoreListener.adoc#onBatchRestored, onBatchRestored>> and <<kafka-streams-DelegatingStateRestoreListener.adoc#onRestoreEnd, onRestoreEnd>> (through <<kafka-streams-DelegatingStateRestoreListener.adoc#, DelegatingStateRestoreListener>>)
-
-Set using <<setGlobalStateRestoreListener, setGlobalStateRestoreListener>> method
-
-| globalStreamThread
-a| [[globalStreamThread]] link:kafka-streams-internals-GlobalStreamThread.adoc[GlobalStreamThread]
-
-* Initialized exclusively when <<internalTopologyBuilder, InternalTopologyBuilder>> could link:kafka-streams-internals-InternalTopologyBuilder.adoc#buildGlobalStateTopology[build a global ProcessorTopology]
-
-* Started when `KafkaStreams` is being <<start, started>>
-
-* Set to `null` while `KafkaStreams` is being <<close, closed>>
-
-| stateDirCleaner
-a| [[stateDirCleaner]] A single-threaded executor (`java.util.concurrent.ScheduledExecutorService`) that uses a single daemon thread with the name as <<clientId, clientId>> followed by `-CleanupThread`
-
-Used to schedule a periodic action that requests the <<stateDirectory, StateDirectory>> to <<kafka-streams-internals-StateDirectory.adoc#cleanRemovedTasks, cleanRemovedTasks>> after and every <<kafka-streams-properties.adoc#state.cleanup.delay.ms, state.cleanup.delay.ms>> milliseconds (and only when the <<state, state>> is `RUNNING`)
-
-Initialized when `KafkaStreams` is created and shut down when requested to <<close, close>>
-
-| adminClient
-a| [[adminClient]] Kafka https://kafka.apache.org/22/javadoc/org/apache/kafka/clients/admin/AdminClient.html[AdminClient] (that allows for managing and inspecting topics, brokers, configurations and ACLs)
-
-* Initialized when `KafkaStreams` is <<creating-instance-adminClient, created>> for the only purpose of <<kafka-streams-internals-StreamThread.adoc#create, creating StreamThreads>> (that simply use it to <<kafka-streams-internals-TaskManager.adoc#adminClient, create a TaskManager>>)
-
-* Closed when `KafkaStreams` is <<close, closed>>
-
-| clientId
-a| [[clientId]] *Client ID* that is initialized when `KafkaStreams` is <<creating-instance, created>> as follows:
-
-* <<kafka-streams-properties.adoc#client.id, client.id>> if defined
-
-* <<kafka-streams-properties.adoc#application.id, application.id>> followed by `-` and the <<processId, processId>>
-
-| queryableStoreProvider
-| [[queryableStoreProvider]] link:kafka-streams-QueryableStoreProvider.adoc[QueryableStoreProvider]
-
-| stateDirectory
-| [[stateDirectory]] link:kafka-streams-internals-StateDirectory.adoc[StateDirectory]
-
-| stateLock
-| [[stateLock]] Object lock for...FIXME
-
-| streamsMetadataState
-a| [[streamsMetadataState]] <<kafka-streams-StreamsMetadataState.adoc#, StreamsMetadataState>> (with the <<internalTopologyBuilder, InternalTopologyBuilder>> and <<kafka-streams-properties.adoc#application.server, application.server>> configuration property)
-
-`KafkaStreams` is simply a public facade to expose the <<streamsMetadataState, StreamsMetadataState>> using the following methods:
-
-* <<allMetadata, allMetadata>>
-
-* <<allMetadataForStore, allMetadataForStore>>
-
-* <<metadataForKey, metadataForKey>>
-
-Initialized when `KafkaStreams` is <<creating-instance, created>> to <<kafka-streams-internals-StreamThread.adoc#create, create StreamThreads>>
-
-| threads
-a| [[threads]] <<kafka-streams-internals-StreamThread.adoc#, Stream processor threads>>
-
-NOTE: The number of stream processor threads per KafkaStreams instance is controlled by <<kafka-streams-properties.adoc#num.stream.threads, num.stream.threads>> configuration property (default: `1` processing thread).
-
-* Created when `KafkaStreams` is <<creating-instance, created>>
-* Started when `KafkaStreams` is <<start, started>>
-* Shut down when `KafkaStreams` is <<close, closed>>
-|===
-
 [[logging]]
 [TIP]
 ====
-Enable `DEBUG` logging level for `org.apache.kafka.streams.KafkaStreams` logger to see what happens inside.
+Enable `ALL` logging level for `org.apache.kafka.streams.KafkaStreams` logger to see what happens inside.
 
 Add the following line to `log4j.properties`:
 
 ```
-log4j.logger.org.apache.kafka.streams.KafkaStreams=DEBUG
+log4j.logger.org.apache.kafka.streams.KafkaStreams=ALL
 ```
 
-Refer to link:kafka-logging.adoc#log4j.properties[Application Logging Using log4j].
+Refer to <<kafka-logging.adoc#log4j.properties, Application Logging Using log4j>>.
 ====
 
 === [[cleanUp-internals]] Cleaning Up Local Directory for State Stores -- `cleanUp` Method
@@ -366,14 +278,14 @@ KafkaStreams(
 <1> Calls the internal `KafkaStreams` (5) with a new DefaultKafkaClientSupplier
 <5> Calls the internal `KafkaStreams` (6) with `SystemTime`
 
-`KafkaStreams` takes the following when created:
+`KafkaStreams` takes the following to be created:
 
 * [[internalTopologyBuilder]] link:kafka-streams-internals-InternalTopologyBuilder.adoc[InternalTopologyBuilder]
 * [[config]] link:kafka-streams-StreamsConfig.adoc[StreamsConfig]
 * [[clientSupplier]] link:kafka-streams-KafkaClientSupplier.adoc[KafkaClientSupplier]
 * [[time]] `Time`
 
-`KafkaStreams` initializes the <<internal-registries, internal registries and counters>>.
+`KafkaStreams` initializes the <<internal-properties, internal properties>>.
 
 While being created, `KafkaStreams`...FIXME
 
@@ -467,3 +379,96 @@ KafkaStreams is not running. State is [state].
 ```
 
 NOTE: `validateIsRunning` is used when `KafkaStreams` is requested to <<allMetadata, allMetadata>>, <<allMetadataForStore, allMetadataForStore>>, <<metadataForKey, metadataForKey>>, <<metadataForKey, metadataForKey>>, <<store, store>>, and <<localThreadsMetadata, localThreadsMetadata>>.
+
+=== [[internal-properties]] Internal Properties
+
+[cols="30m,70",options="header",width="100%"]
+|===
+| Name
+| Description
+
+| clientId
+a| [[clientId]] *Client ID*
+
+Used for the following:
+
+* <<log, logging>>
+
+* <<metrics, metrics>>
+
+* <<globalStreamThread, Global thread ID>>
+
+* Requesting the <<clientSupplier, KafkaClientSupplier>> for the <<kafka-streams-KafkaClientSupplier.adoc#getGlobalConsumer, global Kafka Consumer>> (when creating the <<globalStreamThread, GlobalStreamThread>>)
+
+* Requesting the <<config, StreamsConfig>> for the <<kafka-streams-StreamsConfig.adoc#getAdminConfigs, KafkaAdmin configuration>> (when creating the <<adminClient, AdminClient>>)
+
+* Creating <<threads, StreamThreads>>
+
+* The name of the <<stateDirCleaner, ScheduledExecutorService>> thread
+
+| globalStateRestoreListener
+a| [[globalStateRestoreListener]] A user-defined global <<kafka-streams-StateRestoreListener.adoc#, StateRestoreListener>> to be notified about the state-related events: <<kafka-streams-DelegatingStateRestoreListener.adoc#onRestoreStart, onRestoreStart>>, <<kafka-streams-DelegatingStateRestoreListener.adoc#onBatchRestored, onBatchRestored>> and <<kafka-streams-DelegatingStateRestoreListener.adoc#onRestoreEnd, onRestoreEnd>> (through <<kafka-streams-DelegatingStateRestoreListener.adoc#, DelegatingStateRestoreListener>>)
+
+Set using <<setGlobalStateRestoreListener, setGlobalStateRestoreListener>> method
+
+| globalStreamThread
+a| [[globalStreamThread]] link:kafka-streams-internals-GlobalStreamThread.adoc[GlobalStreamThread]
+
+* Initialized exclusively when <<internalTopologyBuilder, InternalTopologyBuilder>> could link:kafka-streams-internals-InternalTopologyBuilder.adoc#buildGlobalStateTopology[build a global ProcessorTopology]
+
+* Started when `KafkaStreams` is being <<start, started>>
+
+* Set to `null` while `KafkaStreams` is being <<close, closed>>
+
+| stateDirCleaner
+a| [[stateDirCleaner]] A single-threaded executor (`java.util.concurrent.ScheduledExecutorService`) that uses a single daemon thread with the name as <<clientId, clientId>> followed by `-CleanupThread`
+
+Used to schedule a periodic action that requests the <<stateDirectory, StateDirectory>> to <<kafka-streams-internals-StateDirectory.adoc#cleanRemovedTasks, cleanRemovedTasks>> after and every <<kafka-streams-properties.adoc#state.cleanup.delay.ms, state.cleanup.delay.ms>> milliseconds (and only when the <<state, state>> is `RUNNING`)
+
+Initialized when `KafkaStreams` is created and shut down when requested to <<close, close>>
+
+| adminClient
+a| [[adminClient]] Kafka https://kafka.apache.org/22/javadoc/org/apache/kafka/clients/admin/AdminClient.html[AdminClient] (that allows for managing and inspecting topics, brokers, configurations and ACLs)
+
+* Initialized when `KafkaStreams` is <<creating-instance-adminClient, created>> for the only purpose of <<kafka-streams-internals-StreamThread.adoc#create, creating StreamThreads>> (that simply use it to <<kafka-streams-internals-TaskManager.adoc#adminClient, create a TaskManager>>)
+
+* Closed when `KafkaStreams` is <<close, closed>>
+
+| clientId
+a| [[clientId]] *Client ID* that is initialized when `KafkaStreams` is <<creating-instance, created>> as follows:
+
+* <<kafka-streams-properties.adoc#client.id, client.id>> if defined
+
+* <<kafka-streams-properties.adoc#application.id, application.id>> followed by `-` and the <<processId, processId>>
+
+| queryableStoreProvider
+| [[queryableStoreProvider]] link:kafka-streams-QueryableStoreProvider.adoc[QueryableStoreProvider]
+
+| stateDirectory
+| [[stateDirectory]] link:kafka-streams-internals-StateDirectory.adoc[StateDirectory]
+
+| stateLock
+| [[stateLock]] Object lock for...FIXME
+
+| streamsMetadataState
+a| [[streamsMetadataState]] <<kafka-streams-StreamsMetadataState.adoc#, StreamsMetadataState>> (with the <<internalTopologyBuilder, InternalTopologyBuilder>> and <<kafka-streams-properties.adoc#application.server, application.server>> configuration property)
+
+`KafkaStreams` is simply a public facade to expose the <<streamsMetadataState, StreamsMetadataState>> using the following methods:
+
+* <<allMetadata, allMetadata>>
+
+* <<allMetadataForStore, allMetadataForStore>>
+
+* <<metadataForKey, metadataForKey>>
+
+Initialized when `KafkaStreams` is <<creating-instance, created>> to <<kafka-streams-internals-StreamThread.adoc#create, create StreamThreads>>
+
+| threads
+a| [[threads]] <<kafka-streams-internals-StreamThread.adoc#, Stream processor threads>>
+
+NOTE: The number of stream processor threads per KafkaStreams instance is controlled by <<kafka-streams-properties.adoc#num.stream.threads, num.stream.threads>> configuration property (default: `1` processing thread).
+
+* Created when `KafkaStreams` is <<creating-instance, created>>
+* Started when `KafkaStreams` is <<start, started>>
+* Shut down when `KafkaStreams` is <<close, closed>>
+|===
