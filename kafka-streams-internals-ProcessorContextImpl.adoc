@@ -16,23 +16,23 @@ NOTE: `getStateStore` is part of link:kafka-streams-ProcessorContext.adoc#getSta
 
 `getStateStore`...FIXME
 
-=== [[schedule]] `schedule` Method
+=== [[schedule]] Scheduling Cancellable Periodic Action (Punctuator) -- `schedule` Method
 
 [source, java]
 ----
 Cancellable schedule(
-  long interval,
+  Duration interval,
   PunctuationType type,
   Punctuator callback)
 ----
 
-NOTE: `schedule` is part of link:kafka-streams-ProcessorContext.adoc#schedule[ProcessorContext Contract] to...FIXME.
+NOTE: `schedule` is part of <<kafka-streams-ProcessorContext.adoc#schedule, ProcessorContext Contract>> to schedule a <<kafka-streams-Punctuator.adoc#, Punctuator>> (a periodic action) that can be <<kafka-streams-Cancellable.adoc#, cancelled>>.
 
-`schedule`...FIXME
+`schedule` simply requests the <<task, StreamTask>> to <<kafka-streams-internals-StreamTask.adoc#schedule, schedule>> the specified <<kafka-streams-Punctuator.adoc#, Punctuator>>.
 
 === [[creating-instance]] Creating ProcessorContextImpl Instance
 
-`ProcessorContextImpl` takes the following to be created:
+`ProcessorContextImpl` takes the following to be created (most for <<kafka-streams-internals-AbstractProcessorContext.adoc#, AbstractProcessorContext>>):
 
 * [[id]] <<kafka-streams-TaskId.adoc#, TaskId>>
 * [[task]] <<kafka-streams-internals-StreamTask.adoc#, StreamTask>>

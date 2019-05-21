@@ -1,6 +1,6 @@
 == [[ProcessorContext]] ProcessorContext Contract
 
-`ProcessorContext` is the <<contract, contract>> of <<implementations, processor contexts>> that allow to access <<kafka-streams-Processor.adoc#, processor>>-specific information.
+`ProcessorContext` is the <<contract, contract>> of <<implementations, processor contexts>> that allow to access to contextual information when a <<kafka-streams-Processor.adoc#, processor>> is executed.
 
 `ProcessorContext` is used when:
 
@@ -32,7 +32,7 @@ a| [[appConfigsWithPrefix]]
 
 [source, java]
 ----
-Map<String, Object> appConfigsWithPrefix(final String prefix)
+Map<String, Object> appConfigsWithPrefix(String prefix)
 ----
 
 | applicationId
@@ -56,21 +56,21 @@ a| [[forward]]
 
 [source, java]
 ----
-void forward(final K key, final V value)
-void forward(final K key, final V value, final To to)
+void forward(K key, V value)
+void forward(K key, V value, To to)
 ----
 
-Forwards a record downstream (to child processors if there are any)
+Forwards a record downstream (to child processors if there are any or <<kafka-streams-To.adoc#, To>> processor)
 
 | getStateStore
 a| [[getStateStore]]
 
 [source, java]
 ----
-StateStore getStateStore(final String name)
+StateStore getStateStore(String name)
 ----
 
-Gets the <<kafka-streams-StateStore.adoc#, state store>> by name
+Retrieves the <<kafka-streams-StateStore.adoc#, state store>> by name
 
 Used when...FIXME
 
@@ -98,6 +98,8 @@ a| [[metrics]]
 StreamsMetrics metrics()
 ----
 
+<<kafka-streams-StreamsMetrics.adoc#, StreamsMetrics>>
+
 | offset
 a| [[offset]]
 
@@ -120,11 +122,11 @@ a| [[register]]
 [source, java]
 ----
 void register(
-  final StateStore store,
-  final StateRestoreCallback stateRestoreCallback)
+  StateStore store,
+  StateRestoreCallback stateRestoreCallback)
 ----
 
-Registers a <<kafka-streams-StateStore.adoc#, state store>> (and an associated <<kafka-streams-StateRestoreCallback.adoc#, StateRestoreCallback>>)
+Registers a <<kafka-streams-StateStore.adoc#, state store>> with a <<kafka-streams-StateRestoreCallback.adoc#, StateRestoreCallback>>
 
 Used when <<kafka-streams-StateStore-InMemoryKeyValueStore.adoc#init, InMemoryKeyValueStore>>, <<kafka-streams-StateStore-MemoryLRUCache.adoc#init, MemoryLRUCache>>, <<kafka-streams-StateStore-RocksDBSegmentedBytesStore.adoc#init, RocksDBSegmentedBytesStore>> and <<kafka-streams-StateStore-RocksDBStore.adoc#init, RocksDBStore>> are requested to initialize itself
 
@@ -134,10 +136,16 @@ a| [[schedule]]
 [source, java]
 ----
 Cancellable schedule(
-  final long intervalMs,
-  final PunctuationType type,
-  final Punctuator callback)
+  Duration interval,
+  PunctuationType type,
+  Punctuator callback)
 ----
+
+Schedules a <<kafka-streams-Punctuator.adoc#, Punctuator>> (a periodic action) to be executed at stream (`STREAM_TIME`) or system (`WALL_CLOCK_TIME`) time and that can be <<kafka-streams-Cancellable.adoc#, cancelled>>
+
+* `STREAM_TIME` advances by the processing of messages in accordance with the timestamp as extracted by the <<kafka-streams-TimestampExtractor.adoc#, TimestampExtractor>>
+
+* `WALL_CLOCK_TIME` uses the system time which advances at the <<kafka-streams-properties.adoc#poll.ms, polling interval>>
 
 | stateDir
 a| [[stateDir]]
@@ -182,7 +190,7 @@ Serde<?> valueSerde()
 
 [[implementations]]
 .ProcessorContexts (Direct Implementations and Extensions)
-[cols="30m,70",options="header",width="100%"]
+[cols="30,70",options="header",width="100%"]
 |===
 | ProcessorContext
 | Description

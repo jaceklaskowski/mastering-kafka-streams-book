@@ -333,26 +333,34 @@ boolean maybePunctuateSystemTime()
 
 NOTE: `maybePunctuateSystemTime` is used exclusively when `AssignedStreamsTasks` is requested to <<kafka-streams-AssignedStreamsTasks.adoc#punctuate, punctuate running stream tasks>>.
 
-=== [[schedule]] `schedule` Method
+=== [[schedule]] Scheduling Cancellable Periodic Action (Punctuator) -- `schedule` Method
 
 [source, java]
 ----
 // PUBLIC API
 Cancellable schedule(
-  final long interval,
-  final PunctuationType type,
-  final Punctuator punctuator)
+  long interval,
+  PunctuationType type,
+  Punctuator punctuator)
 // PACKAGE PROTECTED
 Cancellable schedule(
-  final long startTime,
-  final long interval,
-  final PunctuationType type,
-  final Punctuator punctuator)
+  long startTime,
+  long interval,
+  PunctuationType type,
+  Punctuator punctuator)
 ----
 
-`schedule`...FIXME
+`schedule` chooses the `PunctuationQueue` and the `startTime` per the specified `PunctuationType` that can either be `STREAM_TIME` or `WALL_CLOCK_TIME`.
 
-NOTE: `schedule` is used exclusively when `ProcessorContextImpl` is requested to link:kafka-streams-internals-ProcessorContextImpl.adoc#schedule[schedule].
+[[schedule-STREAM_TIME]]
+For `STREAM_TIME`, `schedule` always uses `0L` as the `startTime` and the <<streamTimePunctuationQueue, stream-time PunctuationQueue>>.
+
+[[schedule-WALL_CLOCK_TIME]]
+For `WALL_CLOCK_TIME`, `schedule` uses the current time and the specified `interval` as the `startTime` and the <<systemTimePunctuationQueue, system-time PunctuationQueue>>.
+
+`schedule` then creates a new <<kafka-streams-PunctuationSchedule.adoc#, PunctuationSchedule>> (with the <<kafka-streams-internals-InternalProcessorContext.adoc#currentNode, current processor>> of the <<kafka-streams-internals-AbstractTask.adoc#processorContext, InternalProcessorContext>>) and requests the appropriate `PunctuationQueue` to <<kafka-streams-PunctuationQueue.adoc#schedule, schedule>> it.
+
+NOTE: `schedule` is used exclusively when `ProcessorContextImpl` is requested to <<kafka-streams-internals-ProcessorContextImpl.adoc#schedule, schedule a cancellable periodic action>>.
 
 === [[initializeStateStores]] Initializing State Stores -- `initializeStateStores` Method
 
@@ -490,7 +498,7 @@ Resuming
 
 `resume`...FIXME
 
-== [[maybeAbortTransactionAndCloseRecordCollector]] `maybeAbortTransactionAndCloseRecordCollector` Internal Method
+=== [[maybeAbortTransactionAndCloseRecordCollector]] `maybeAbortTransactionAndCloseRecordCollector` Internal Method
 
 [source, java]
 ----
@@ -501,7 +509,7 @@ void maybeAbortTransactionAndCloseRecordCollector(final boolean isZombie)
 
 NOTE: `maybeAbortTransactionAndCloseRecordCollector` is used when...FIXME
 
-== [[initializeTransactions]] `initializeTransactions` Internal Method
+=== [[initializeTransactions]] `initializeTransactions` Internal Method
 
 [source, java]
 ----
@@ -512,7 +520,7 @@ void initializeTransactions()
 
 NOTE: `initializeTransactions` is used when...FIXME
 
-== [[producerMetrics]] `producerMetrics` Method
+=== [[producerMetrics]] `producerMetrics` Method
 
 [source, java]
 ----
