@@ -1,15 +1,15 @@
-== [[ProcessorContextImpl]] ProcessorContextImpl
+== [[ProcessorContextImpl]] ProcessorContextImpl -- ProcessorContext for StreamTask
 
-`ProcessorContextImpl` is a concrete <<kafka-streams-internals-AbstractProcessorContext.adoc#, AbstractProcessorContext>> that is <<creating-instance, created>> exclusively for a <<kafka-streams-internals-StreamTask.adoc#processorContext, StreamTask>>.
+`ProcessorContextImpl` is a concrete <<kafka-streams-ProcessorContext.adoc#, ProcessorContext>> (as a <<kafka-streams-internals-AbstractProcessorContext.adoc#, AbstractProcessorContext>>) that is <<creating-instance, created>> exclusively for a <<task, StreamTask>>.
 
 [[recordCollector]]
 `ProcessorContextImpl` is a concrete <<kafka-streams-internals-RecordCollector.adoc#Supplier, RecordCollector.Supplier>> that supplies the given <<collector, RecordCollector>> when <<kafka-streams-internals-RecordCollector.adoc#recordCollector, requested>>.
 
 === [[getStateStore]] Accessing State Store by Name -- `getStateStore` Method
 
-[source, scala]
+[source, java]
 ----
-StateStore getStateStore(final String name)
+StateStore getStateStore(String name)
 ----
 
 NOTE: `getStateStore` is part of link:kafka-streams-ProcessorContext.adoc#getStateStore[ProcessorContext Contract] to access the <<kafka-streams-StateStore.adoc#, state store>> by name.
@@ -20,7 +20,10 @@ NOTE: `getStateStore` is part of link:kafka-streams-ProcessorContext.adoc#getSta
 
 [source, java]
 ----
-Cancellable schedule(final long interval, final PunctuationType type, final Punctuator callback)
+Cancellable schedule(
+  long interval,
+  PunctuationType type,
+  Punctuator callback)
 ----
 
 NOTE: `schedule` is part of link:kafka-streams-ProcessorContext.adoc#schedule[ProcessorContext Contract] to...FIXME.
@@ -29,7 +32,7 @@ NOTE: `schedule` is part of link:kafka-streams-ProcessorContext.adoc#schedule[Pr
 
 === [[creating-instance]] Creating ProcessorContextImpl Instance
 
-`ProcessorContextImpl` takes the following when created:
+`ProcessorContextImpl` takes the following to be created:
 
 * [[id]] <<kafka-streams-TaskId.adoc#, TaskId>>
 * [[task]] <<kafka-streams-internals-StreamTask.adoc#, StreamTask>>
@@ -39,11 +42,11 @@ NOTE: `schedule` is part of link:kafka-streams-ProcessorContext.adoc#schedule[Pr
 * [[metrics]] <<kafka-streams-internals-StreamsMetricsImpl.adoc#, StreamsMetricsImpl>>
 * [[cache]] <<kafka-streams-internals-ThreadCache.adoc#, ThreadCache>>
 
-`ProcessorContextImpl` initializes the <<internal-registries, internal registries and counters>>.
+`ProcessorContextImpl` initializes the <<internal-properties, internal properties>>.
 
 === [[forward]] `forward` Method
 
-[source, scala]
+[source, java]
 ----
 void forward(final K key, final V value)
 void forward(final K key, final V value, final int childIndex)
@@ -59,3 +62,14 @@ void forward(
 NOTE: `forward` is part of the <<kafka-streams-ProcessorContext.adoc#forward, ProcessorContext Contract>> to...FIXME.
 
 `forward`...FIXME
+
+== [[commit]] Committing StreamTask -- `commit` Method
+
+[source, java]
+----
+void commit()
+----
+
+NOTE: `commit` is part of the <<kafka-streams-ProcessorContext.adoc#commit, ProcessorContext Contract>> to request a commit.
+
+`commit` simply requests the <<task, StreamTask>> to <<kafka-streams-internals-StreamTask.adoc#requestCommit, commit>>.

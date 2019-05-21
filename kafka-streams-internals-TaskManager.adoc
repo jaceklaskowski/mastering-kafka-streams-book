@@ -413,9 +413,19 @@ Set<TaskId> cachedTasksIds()
 
 NOTE: `cachedTasksIds` is used when...FIXME
 
+=== [[maybeCommitActiveTasksPerUserRequested]] `maybeCommitActiveTasksPerUserRequested` Method
+
+[source, java]
+----
+int maybeCommitActiveTasksPerUserRequested()
+----
+
+`maybeCommitActiveTasksPerUserRequested` simply requests the <<active, AssignedStreamsTasks>> to <<kafka-streams-AssignedStreamsTasks.adoc#maybeCommitPerUserRequested, maybeCommitPerUserRequested>>.
+
+NOTE: `maybeCommitActiveTasksPerUserRequested` is used when `StreamThread` is requested to <<kafka-streams-internals-StreamThread.adoc#runOnce, poll records once and add them to active stream tasks>> and <<kafka-streams-internals-StreamThread.adoc#maybeCommit, commit all tasks (when commit interval elapsed)>>.
+
 === [[internal-properties]] Internal Properties
 
-.TaskManager's Internal Properties (e.g. Registries, Counters and Flags)
 [cols="30m,70",options="header",width="100%"]
 |===
 | Name

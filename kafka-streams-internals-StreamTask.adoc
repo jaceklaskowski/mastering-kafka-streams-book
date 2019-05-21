@@ -17,11 +17,6 @@ NOTE: It is at the discretion of a processor node (incl. a source processor node
 
 When requested to <<initializeTopology, initialize a processor topology>> (as a <<kafka-streams-internals-Task.adoc#, task>>), `StreamTask`...FIXME
 
-[[commitNeeded]]
-[[commitRequested]]
-[[needCommit]]
-`StreamTask` may need a commit (after `ProcessorContextImpl` is requested to <<kafka-streams-internals-ProcessorContextImpl.adoc#commit, commit>>).
-
 [[commitOffsetNeeded]]
 `StreamTask` uses `commitOffsetNeeded` flag to...FIXME
 
@@ -393,8 +388,10 @@ NOTE: `commitOffsets` is used exclusively when `StreamTask` is requested to <<co
 
 [source, java]
 ----
-void commit()
+void commit() // <1>
+void commit(final boolean startNewTransaction)
 ----
+<1> Uses the other `commit` with the `startNewTransaction` flag on
 
 NOTE: `commit` is part of <<kafka-streams-internals-Task.adoc#commit, Task Contract>> to commit the task.
 
@@ -537,12 +534,30 @@ int numBuffered()
 
 NOTE: `numBuffered` seems to be used for tests only.
 
+=== [[requestCommit]] `requestCommit` Method
+
+[source, java]
+----
+void requestCommit()
+----
+
+`requestCommit` simply turns the <<commitRequested, commitRequested>> internal flag on (`true`).
+
+NOTE: `requestCommit` is used exclusively when `ProcessorContextImpl` is requested to <<kafka-streams-internals-ProcessorContextImpl.adoc#commit, commit>>.
+
 === [[internal-properties]] Internal Properties
 
 [cols="30m,70",options="header",width="100%"]
 |===
 | Name
 | Description
+
+| commitRequested
+a| [[commitRequested]] Flag that indicates whether a <<requestCommit, commit was requested>> (`true`) or not (`false`)
+
+Default: `false`
+
+Disabled after <<commit, commit>>
 
 | consumedOffsets
 | [[consumedOffsets]] Offsets by https://kafka.apache.org/22/javadoc/org/apache/kafka/common/TopicPartition.html[TopicPartitions] (`Map<TopicPartition, Long>`) that `StreamTask` has <<process, processed>> successfully

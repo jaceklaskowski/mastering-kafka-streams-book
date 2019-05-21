@@ -304,7 +304,9 @@
 . link:kafka-streams-internals-Task.adoc[Task Contract -- Stream Processor Tasks]
 .. link:kafka-streams-internals-AbstractTask.adoc[AbstractTask -- Base Processor Task]
 .. link:kafka-streams-internals-StandbyTask.adoc[StandbyTask]
-.. link:kafka-streams-internals-StreamTask.adoc[StreamTask]
+
+. link:kafka-streams-internals-StreamTask.adoc[StreamTask]
+.. link:kafka-streams-internals-ProcessorContextImpl.adoc[ProcessorContextImpl]
 
 . link:kafka-streams-internals-RecordCollector.adoc[RecordCollector Contract]
 .. link:kafka-streams-internals-RecordCollectorImpl.adoc[RecordCollectorImpl]
@@ -340,7 +342,6 @@
 . link:kafka-streams-internals-InternalProcessorContext.adoc[InternalProcessorContext Contract]
 .. link:kafka-streams-internals-AbstractProcessorContext.adoc[AbstractProcessorContext -- Base Of Internal Processor Contexts]
 .. link:kafka-streams-internals-GlobalProcessorContextImpl.adoc[GlobalProcessorContextImpl]
-.. link:kafka-streams-internals-ProcessorContextImpl.adoc[ProcessorContextImpl]
 .. link:kafka-streams-internals-StandbyContextImpl.adoc[StandbyContextImpl]
 
 . link:kafka-streams-internals-ForwardingDisabledProcessorContext.adoc[ForwardingDisabledProcessorContext]

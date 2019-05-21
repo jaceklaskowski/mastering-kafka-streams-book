@@ -595,7 +595,7 @@ a| [[builder]] <<kafka-streams-internals-InternalTopologyBuilder.adoc#, Internal
 a| [[lastCommitMs]] Time of the last <<maybeCommit, commit>>
 
 | numIterations
-a| [[numIterations]] Number of iterations when the <<taskManager, TaskManager>> is requested to <<kafka-streams-internals-TaskManager.adoc#process, process records by running stream tasks (one record per task)>> while `StreamThread` is <<runOnce, polling records once and adding them to active stream tasks>>
+a| [[numIterations]] Number of iterations when the <<taskManager, TaskManager>> is requested to <<kafka-streams-internals-TaskManager.adoc#process, process records by running stream tasks (one record per task)>> (while `StreamThread` is <<runOnce, polling records once and adding them to active stream tasks>>)
 
 Default: `1`
 

@@ -9,7 +9,7 @@
 It _appears_ that `AssignedStreamsTasks` simply operates on the running tasks (i.e. the tasks that are in link:kafka-streams-internals-AssignedTasks.adoc#running[running] internal registry). When requested to <<process, process>> or <<punctuate, punctuate>> `AssignedStreamsTasks` simply walks over the `running` internal registry and triggers execution of every task.
 
 [[maybeCommitAction]]
-`AssignedStreamsTasks` uses the *maybeCommit* task action (`TaskAction<StreamTask>`) that is used in <<maybeCommit, maybeCommit>>. The task action takes a <<kafka-streams-internals-StreamTask.adoc#, stream task>> and checks if the task link:kafka-streams-internals-StreamTask.adoc#commitNeeded[needs a commit]. If so, the action does the following:
+`AssignedStreamsTasks` uses the *maybeCommit* task action (`TaskAction<StreamTask>`) that is used in <<maybeCommit, maybeCommit>>. The task action takes a <<kafka-streams-internals-StreamTask.adoc#, stream task>> and checks if the task <<kafka-streams-internals-AbstractTask.adoc#commitNeeded, needs a commit>>. If so, the action does the following:
 
 . Increments the <<committed, committed>> internal counter
 
@@ -85,7 +85,7 @@ int maybeCommit()
 
 `maybeCommit` resets the <<committed, committed>> internal counter (to `0`) and <<kafka-streams-internals-AssignedTasks.adoc#applyToRunningTasks, executes>> the <<maybeCommitAction, maybeCommitAction>> task action to every <<kafka-streams-internals-AssignedTasks.adoc#running, running task>> (that modifies <<committed, committed>>).
 
-In the end, `maybeCommit` gives the number of running stream tasks that <<kafka-streams-internals-StreamTask.adoc#commitNeeded, needed a commit>>.
+In the end, `maybeCommit` gives the number of running stream tasks that <<kafka-streams-internals-AbstractTask.adoc#commitNeeded, needed a commit>>.
 
 NOTE: `maybeCommit` is used exclusively when `TaskManager` is requested to link:kafka-streams-internals-TaskManager.adoc#maybeCommitActiveTasks[maybeCommitActiveTasks].
 
@@ -148,6 +148,39 @@ boolean allTasksRunning()
 NOTE: `allTasksRunning` is part of the <<kafka-streams-internals-AssignedTasks.adoc#allTasksRunning, AssignedTasks Contract>> to...FIXME.
 
 `allTasksRunning`...FIXME
+
+=== [[maybeCommitPerUserRequested]] `maybeCommitPerUserRequested` Method
+
+[source, java]
+----
+int maybeCommitPerUserRequested()
+----
+
+`maybeCommitPerUserRequested` returns how many <<kafka-streams-internals-AssignedTasks.adoc#running, running stream tasks>> have been requested to <<kafka-streams-internals-StreamTask.adoc#commit, commit>>.
+
+Internally, `maybeCommitPerUserRequested` walks over the <<kafka-streams-internals-AssignedTasks.adoc#running, running stream tasks>> and requests them to <<kafka-streams-internals-StreamTask.adoc#commit, commit>> when the commit was <<kafka-streams-internals-StreamTask.adoc#commitRequested, requested>> or <<kafka-streams-internals-AbstractTask.adoc#commitNeeded, needed>>.
+
+For every commit, `maybeCommitPerUserRequested` increments an internal `committed` counter and prints out the following DEBUG message to the logs:
+
+```
+Committed active task [taskId] per user request in
+```
+
+In the end, `maybeCommitPerUserRequested` returns the internal `committed` counter.
+
+In case of a `TaskMigratedException`, `maybeCommitPerUserRequested` prints out the following INFO message to the logs, <<kafka-streams-internals-AssignedTasks.adoc#closeZombieTask, closes the zombie task>>, and possibly removes the task from the <<kafka-streams-internals-AssignedTasks.adoc#running, running stream tasks>>.
+
+```
+Failed to commit [taskId] since it got migrated to another thread already. Closing it as zombie before triggering a new rebalance.
+```
+
+In case of a `RuntimeException`, `maybeCommitPerUserRequested` prints out the following ERROR message to the logs and re-throws the exception.
+
+```
+Failed to commit StreamTask [taskId] due to the following error:
+```
+
+NOTE: `maybeCommitPerUserRequested` is used exclusively when `TaskManager` is requested to <<kafka-streams-internals-TaskManager.adoc#maybeCommitActiveTasksPerUserRequested, maybeCommitActiveTasksPerUserRequested>>.
 
 === [[internal-properties]] Internal Properties
 
