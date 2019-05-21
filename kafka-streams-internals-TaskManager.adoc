@@ -1,15 +1,15 @@
 == [[TaskManager]] TaskManager
 
-`TaskManager` manages <<active, active>> and <<standby, standby>> tasks of a KafkaStreams application.
+`TaskManager` manages <<active, active>> and <<standby, standby>> tasks of a <<kafka-streams-internals-StreamThread.adoc#, StreamThread>>.
+
+`TaskManager` is <<creating-instance, created>> alongside a <<kafka-streams-internals-StreamThread.adoc#create, StreamThread>> (with empty <<active, AssignedStreamsTasks>> and <<standby, AssignedStandbyTasks>>).
+
+.Creating TaskManager
+image::images/kafka-streams-TaskManager.png[align="center"]
 
 `TaskManager` <<createTasks, creates new tasks>> when `RebalanceListener` handles link:kafka-streams-StreamThread-RebalanceListener.adoc#onPartitionsAssigned[onPartitionsAssigned] (and requests to <<createTasks, create processor tasks for assigned topic partitions>> that in turn <<addStreamTasks, adds new stream tasks>>).
 
 `TaskManager` uses the <<standbyTaskCreator, StandbyTaskCreator>> to <<kafka-streams-internals-StandbyTaskCreator.adoc#createTasks, create standby tasks>> when requested to <<addStandbyTasks, addStandbyTasks>>.
-
-`TaskManager` is <<creating-instance, created>> along with a <<kafka-streams-internals-StreamThread.adoc#create, StreamThread>> (with empty <<active, AssignedStreamsTasks>> and <<standby, AssignedStandbyTasks>>).
-
-.Creating TaskManager
-image::images/kafka-streams-TaskManager.png[align="center"]
 
 When <<creating-instance, created>>, `TaskManager` is given a Kafka <<adminClient, AdminClient>> that is used for the following:
 
@@ -28,22 +28,22 @@ When <<creating-instance, created>>, `TaskManager` is given a <<streamsMetadataS
 [[logging]]
 [TIP]
 ====
-Enable one of `ERROR`, `WARN`, `DEBUG`, `TRACE` logging levels for `org.apache.kafka.streams.processor.internals.TaskManager` logger to see what happens inside.
+Enable `ALL` logging level for `org.apache.kafka.streams.processor.internals.TaskManager` logger to see what happens inside.
 
 Add the following line to `log4j.properties`:
 
 ```
-log4j.logger.org.apache.kafka.streams.processor.internals.TaskManager=TRACE
+log4j.logger.org.apache.kafka.streams.processor.internals.TaskManager=ALL
 ```
 
-Refer to link:kafka-logging.adoc#log4j.properties[Application Logging Using log4j].
+Refer to <<kafka-logging.adoc#log4j.properties, Application Logging Using log4j>>.
 ====
 
 === [[setPartitionsByHostState]] Notifying StreamsMetadataState About Changes in Cluster Metadata -- `setPartitionsByHostState` Method
 
 [source, java]
 ----
-void setPartitionsByHostState(final Map<HostInfo, Set<TopicPartition>> partitionsByHostState)
+void setPartitionsByHostState(Map<HostInfo, Set<TopicPartition>> partitionsByHostState)
 ----
 
 `setPartitionsByHostState` simply notifies the <<streamsMetadataState, StreamsMetadataState>> that <<kafka-streams-StreamsMetadataState.adoc#onChange, cluster metadata has changed>>.
@@ -55,8 +55,8 @@ NOTE: `setPartitionsByHostState` is used when `StreamsPartitionAssignor` is requ
 [source, java]
 ----
 setAssignmentMetadata(
-  final Map<TaskId, Set<TopicPartition>> activeTasks,
-  final Map<TaskId, Set<TopicPartition>> standbyTasks)
+  Map<TaskId, Set<TopicPartition>> activeTasks,
+  Map<TaskId, Set<TopicPartition>> standbyTasks)
 ----
 
 `setAssignmentMetadata` simply initializes the <<assignedActiveTasks, assignedActiveTasks>> and <<assignedStandbyTasks, assignedStandbyTasks>> internal registries with the given `activeTasks` and `standbyTasks`, respectively.
