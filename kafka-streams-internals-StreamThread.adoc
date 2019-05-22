@@ -152,7 +152,14 @@ NOTE: `shutdown` is used exclusively when `KafkaStreams` is requested to link:ka
 void runOnce()
 ----
 
-`runOnce` <<pollRequests, pollRequests>> with different poll times as follows:
+In essence, `runOnce` requests the <<consumer, Consumer>> to poll records, <<addRecordsToTasks, adds the records to active stream tasks>> and requests the <<taskManager, TaskManager>> to <<kafka-streams-internals-TaskManager.adoc#process, process the records by running stream tasks>>.
+
+.StreamThread and Polling Records Once and Adding Them to Active Stream Tasks
+image::images/kafka-streams-StreamThread-runOnce.png[align="center"]
+
+NOTE: `runOnce` uses the <<streamsMetrics, StreamsMetricsThreadImpl>> to access <<kafka-streams-StreamsMetricsThreadImpl.adoc#sensors, sensors>> and record metrics.
+
+Internally, `runOnce` <<pollRequests, pollRequests>> with different poll times as follows:
 
 * `0L` when in <<PARTITIONS_ASSIGNED, PARTITIONS_ASSIGNED>> state
 
@@ -581,6 +588,17 @@ In the end, `maybePunctuate` returns whether the punctuate returned a positive n
 
 NOTE: `maybePunctuate` is used exclusively when `StreamThread` is requested to <<runOnce, poll records once and add them to active stream tasks>>.
 
+== [[advanceNowAndComputeLatency]] Computing Latency -- `advanceNowAndComputeLatency` Internal Method
+
+[source, java]
+----
+long advanceNowAndComputeLatency()
+----
+
+`advanceNowAndComputeLatency` updates (_advances_) the <<now, "now" timestamp>> to be the current timestamp and returns the timestamp difference (_latency_).
+
+NOTE: `advanceNowAndComputeLatency` is used when `StreamThread` is requested to <<runOnce, runOnce>>, <<maybePunctuate, maybePunctuate>>, <<maybeCommit, maybeCommit>>, and <<maybeUpdateStandbyTasks, maybeUpdateStandbyTasks>>.
+
 === [[internal-properties]] Internal Properties
 
 [cols="30m,70",options="header",width="100%"]
@@ -605,6 +623,9 @@ Decremented by half while <<runOnce, polling records once and adding them to act
 
 | processStandbyRecords
 a| [[processStandbyRecords]] Flag to control whether to <<maybeUpdateStandbyTasks, maybeUpdateStandbyTasks>> after <<maybeCommit, maybeCommit>> was executed
+
+| now
+a| [[now]] *"now" timestamp*
 
 | rebalanceListener
 a| [[rebalanceListener]] <<kafka-streams-StreamThread-RebalanceListener.adoc#, RebalanceListener>>
