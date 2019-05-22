@@ -19,10 +19,10 @@ NOTE: When <<kafka-streams-StreamThread-RebalanceListener.adoc#onPartitionsAssig
 image::images/kafka-streams-StreamThread-TASK_MANAGER_FOR_PARTITION_ASSIGNOR.png[align="center"]
 
 [[pollTime]]
-`StreamThread` uses the <<kafka-streams-properties.adoc#poll.ms, poll.ms>> configuration property (default: `100` ms) as the *polling interval* when requested to <<runOnce, poll records once and add them to active stream tasks>>.
+`StreamThread` uses the <<kafka-streams-properties.adoc#poll.ms, poll.ms>> configuration property (default: `100` ms) as the *polling interval* when requested to <<runOnce, poll records once and process them using active stream tasks>>.
 
 [[commitTimeMs]]
-`StreamThread` uses the <<kafka-streams-properties.adoc#commit.interval.ms, commit.interval.ms>> configuration property as the *flush interval* for persisting the position of a processor (when <<runOnce, polling records once and adding them to active stream tasks>> and <<maybeCommit, maybeCommit>>).
+`StreamThread` uses the <<kafka-streams-properties.adoc#commit.interval.ms, commit.interval.ms>> configuration property as the *flush interval* for persisting the position of a processor (when <<runOnce, polling records once and processing them using active stream tasks>> and <<maybeCommit, maybeCommit>>).
 
 `StreamThread` uses the <<consumer, Kafka Consumer>> to:
 
@@ -68,8 +68,8 @@ Refer to <<kafka-logging.adoc#log4j.properties, Application Logging Using log4j>
 1. [[CREATED]] `CREATED` - The initial state of `StreamThread` right after it was <<creating-instance, created>>
 1. [[RUNNING]] `RUNNING` - `StreamThread` was requested for the following:
 * <<run, run>>
-* <<runOnce, runOnce>> when `StreamThread` is in <<PARTITIONS_ASSIGNED, PARTITIONS_ASSIGNED>> state and <<taskManager, TaskManager>> was positive after link:kafka-streams-internals-TaskManager.adoc#updateNewAndRestoringTasks[updateNewAndRestoringTasks]
-* <<runOnce, runOnce>> when `StreamThread` polled for records and happened to transition to <<PARTITIONS_ASSIGNED, PARTITIONS_ASSIGNED>> state, but (again) only when <<taskManager, TaskManager>> was positive after link:kafka-streams-internals-TaskManager.adoc#updateNewAndRestoringTasks[updateNewAndRestoringTasks]
+* <<runOnce, Polling records once and processing them using active stream tasks>> when `StreamThread` is in <<PARTITIONS_ASSIGNED, PARTITIONS_ASSIGNED>> state and <<taskManager, TaskManager>> was positive after link:kafka-streams-internals-TaskManager.adoc#updateNewAndRestoringTasks[updateNewAndRestoringTasks]
+* <<runOnce, Polling records once and processing them using active stream tasks>> when `StreamThread` polled for records and happened to transition to <<PARTITIONS_ASSIGNED, PARTITIONS_ASSIGNED>> state, but (again) only when <<taskManager, TaskManager>> was positive after link:kafka-streams-internals-TaskManager.adoc#updateNewAndRestoringTasks[updateNewAndRestoringTasks]
 1. [[STARTING]] `STARTING`
 1. [[PARTITIONS_REVOKED]] `PARTITIONS_REVOKED` - `RebalanceListener` was requested to link:kafka-streams-StreamThread-RebalanceListener.adoc#onPartitionsRevoked[handle partition revocation]
 1. [[PARTITIONS_ASSIGNED]] `PARTITIONS_ASSIGNED` - `RebalanceListener` was requested to link:kafka-streams-StreamThread-RebalanceListener.adoc#onPartitionsAssigned[handle partition assignment]
@@ -110,7 +110,7 @@ In case of an `InvalidOffsetException`, `pollRequests` <<resetInvalidOffsets, re
 
 In case of a <<rebalanceException, rebalanceException>>, `pollRequests` re-throws it as a `TaskMigratedException` or a `StreamsException`.
 
-NOTE: `pollRequests` is used exclusively when `StreamThread` is requested to <<runOnce, poll records once and add them to active stream tasks>>.
+NOTE: `pollRequests` is used exclusively when `StreamThread` is requested to <<runOnce, poll records once and process them using active stream tasks>>.
 
 === [[resetInvalidOffsets]] `resetInvalidOffsets` Internal Method
 
@@ -145,7 +145,7 @@ void shutdown()
 
 NOTE: `shutdown` is used exclusively when `KafkaStreams` is requested to link:kafka-streams-KafkaStreams.adoc#close[close].
 
-=== [[runOnce]] Polling Records Once and Adding Them to Active Stream Tasks -- `runOnce` Method
+=== [[runOnce]] Polling Records Once And Processing Them Using Active Stream Tasks -- `runOnce` Method
 
 [source, java]
 ----
@@ -154,7 +154,7 @@ void runOnce()
 
 In essence, `runOnce` requests the <<consumer, Consumer>> to poll records, <<addRecordsToTasks, adds the records to active stream tasks>> and requests the <<taskManager, TaskManager>> to <<kafka-streams-internals-TaskManager.adoc#process, process the records by running stream tasks>>.
 
-.StreamThread and Polling Records Once and Adding Them to Active Stream Tasks
+.StreamThread and Polling Records Once And Processing Them Using Active Stream Tasks
 image::images/kafka-streams-StreamThread-runOnce.png[align="center"]
 
 NOTE: `runOnce` uses the <<streamsMetrics, StreamsMetricsThreadImpl>> to access <<kafka-streams-StreamsMetricsThreadImpl.adoc#sensors, sensors>> and record metrics.
@@ -197,7 +197,7 @@ void maybeUpdateStandbyTasks(final long now)
 
 `maybeUpdateStandbyTasks`...FIXME
 
-NOTE: `maybeUpdateStandbyTasks` is used exclusively when `StreamThread` is requested to <<runOnce, consume records once>>.
+NOTE: `maybeUpdateStandbyTasks` is used exclusively when `StreamThread` is requested to <<runOnce, poll records once and process them using active stream tasks>>.
 
 === [[creating-instance]] Creating StreamThread Instance
 
@@ -225,14 +225,14 @@ NOTE: `maybeUpdateStandbyTasks` is used exclusively when `StreamThread` is reque
 void runLoop()
 ----
 
-`runLoop` simply requests the <<consumer, Consumer>> to subscribe to the <<kafka-streams-internals-InternalTopologyBuilder.adoc#sourceTopicPattern, source topics>> (with the custom <<rebalanceListener, ConsumerRebalanceListener>>) and keeps <<runOnce, polling records and adding them to active stream tasks>> until the <<isRunning, isRunning>> flag is off.
+`runLoop` simply requests the <<consumer, Consumer>> to subscribe to the <<kafka-streams-internals-InternalTopologyBuilder.adoc#sourceTopicPattern, source topics>> (with the custom <<rebalanceListener, ConsumerRebalanceListener>>) and keeps <<runOnce, polling records and processing them using active stream tasks>> until the <<isRunning, isRunning>> flag is off.
 
 .StreamThread and Running Main Record Processing Loop
 image::images/kafka-streams-StreamThread-runLoop.png[align="center"]
 
 `runLoop` requests the <<consumer, Consumer>> to subscribe to the <<kafka-streams-internals-InternalTopologyBuilder.adoc#sourceTopicPattern, source topics>> (from the <<builder, InternalTopologyBuilder>>) with the custom <<rebalanceListener, ConsumerRebalanceListener>>.
 
-`runLoop` then keeps <<runOnce, polling records and adding them to active stream tasks>> until the <<isRunning, isRunning>> flag is off.
+`runLoop` then keeps <<runOnce, polling records and processing them using active stream tasks>> until the <<isRunning, isRunning>> flag is off.
 
 In case of the <<assignmentErrorCode, assignmentErrorCode>> set to `VERSION_PROBING`, `runLoop` prints out the following INFO message to the logs followed by <<enforceRebalance, enforcing a rebalance>>.
 
@@ -325,7 +325,7 @@ If however `prevRecordsProcessedBeforeCommit` is available (measured) and `proce
 processing latency [processLatency] < commit time [commitTime] for [totalProcessed] records. Adjusting up recordsProcessedBeforeCommit=[recordsProcessedBeforeCommit]
 ```
 
-NOTE: `adjustRecordsProcessedBeforeCommit` is used exclusively when `StreamThread` is requested to <<runOnce, poll records once>> (and there have been records available).
+NOTE: `adjustRecordsProcessedBeforeCommit` is used exclusively when `StreamThread` is requested to <<runOnce, poll records once and process them using active stream tasks>> (and there have been records available).
 
 === [[toString]] Describing Itself (Textual Representation) -- `toString` Method
 
@@ -355,7 +355,7 @@ long processAndMaybeCommit(final long recordsProcessedBeforeCommit)
 .StreamThread.processAndMaybeCommit, TaskManager and Sensors
 image::images/kafka-streams-StreamThread-processAndMaybeCommit.png[align="center"]
 
-NOTE: `processAndMaybeCommit` is used exclusively when `StreamThread` is requested to <<runOnce, poll records once>> (and there have been records to be processed).
+NOTE: `processAndMaybeCommit` is used exclusively when `StreamThread` is requested to <<runOnce, poll records once and process them using active stream tasks>> (and there have been records to be processed).
 
 ==== [[processAndMaybeCommit-processing-loop]] Processing Loop of `processAndMaybeCommit`
 
@@ -393,7 +393,7 @@ private final static int UNLIMITED_RECORDS = -1;
 
 When `StreamThread` is <<run, started>> (and <<runLoop, runs the main record processing loop>>), the number of records processed before commit is `UNLIMITED_RECORDS` (which makes it clear that the `StreamThread` has just been started and there has been no way that any record could have been processed).
 
-The main event loop <<runOnce, polls records once>> and gives the number of records processed in this one-off poll that becomes the number of records processed before commit from the moment in time on.
+The main event loop <<runOnce, polls records once and processes them using active stream tasks>> and gives the number of records processed in this one-off poll that becomes the number of records processed before commit from the moment in time on.
 
 The number of records processed before commit may have changed but could still be `UNLIMITED_RECORDS` for the following:
 
@@ -406,7 +406,7 @@ At some point `StreamThread` <<processAndMaybeCommit, may want to commit>> the r
 
 When requested for <<adjustRecordsProcessedBeforeCommit, adjusting the number of records processed before commit>>, `StreamThread` uses `UNLIMITED_RECORDS` for a local `recordsProcessedBeforeCommit` that is then scaled up or down per the current processing and commit times.
 
-NOTE: <<adjustRecordsProcessedBeforeCommit, Adjusting the number of records processed before commit>> can only scale up when the current number of records processed before commit (while <<runOnce, polling records once>>) is not `UNLIMITED_RECORDS` (and the processing time is not greater than commit time).
+NOTE: <<adjustRecordsProcessedBeforeCommit, Adjusting the number of records processed before commit>> can only scale up when the current number of records processed before commit (while <<runOnce, polling records once and processing them using active stream tasks>>) is not `UNLIMITED_RECORDS` (and the processing time is not greater than commit time).
 
 === [[isRunning]] Checking If StreamThread Is Running -- `isRunning` Method
 
@@ -453,7 +453,7 @@ image::images/kafka-streams-StreamThread-addRecordsToTasks.png[align="center"]
 
 NOTE: https://kafka.apache.org/22/javadoc/org/apache/kafka/clients/consumer/ConsumerRecords.html[ConsumerRecords] is a container that holds the list of `ConsumerRecord` per partition for a particular topic. There is one `ConsumerRecord` list for every topic partition returned by a `Consumer.poll(long)` operation.
 
-NOTE: `addRecordsToTasks` is used exclusively when `StreamThread` is requested to <<runOnce, consume records once>>.
+NOTE: `addRecordsToTasks` is used exclusively when `StreamThread` is requested to <<runOnce, poll records once and process them using active stream tasks>>.
 
 === [[create]] Creating StreamThread Instance -- `create` Factory Method
 
@@ -571,7 +571,7 @@ Committed all active tasks [activeTaskIds] and standby tasks [standbyTaskIds] in
 
 `maybeCommit` turns the <<processStandbyRecords, processStandbyRecords>> flag on.
 
-NOTE: `maybeCommit` is used when `StreamThread` is requested to <<runOnce, poll records once>> (directly and indirectly in <<processAndMaybeCommit, processAndMaybeCommit>>).
+NOTE: `maybeCommit` is used when `StreamThread` is requested to <<runOnce, poll records once and process them using active stream tasks>> (directly and indirectly in <<processAndMaybeCommit, processAndMaybeCommit>>).
 
 === [[maybePunctuate]] Attempting to Punctuate (Running Stream Tasks) -- `maybePunctuate` Internal Method
 
@@ -586,7 +586,7 @@ If the punctuate returned a positive number (greater than `0`), `maybePunctuate`
 
 In the end, `maybePunctuate` returns whether the punctuate returned a positive number (`true`) or not (`false`).
 
-NOTE: `maybePunctuate` is used exclusively when `StreamThread` is requested to <<runOnce, poll records once and add them to active stream tasks>>.
+NOTE: `maybePunctuate` is used exclusively when `StreamThread` is requested to <<runOnce, poll records once and process them using active stream tasks>>.
 
 == [[advanceNowAndComputeLatency]] Computing Latency -- `advanceNowAndComputeLatency` Internal Method
 
@@ -597,7 +597,7 @@ long advanceNowAndComputeLatency()
 
 `advanceNowAndComputeLatency` updates (_advances_) the <<now, "now" timestamp>> to be the current timestamp and returns the timestamp difference (_latency_).
 
-NOTE: `advanceNowAndComputeLatency` is used when `StreamThread` is requested to <<runOnce, runOnce>>, <<maybePunctuate, maybePunctuate>>, <<maybeCommit, maybeCommit>>, and <<maybeUpdateStandbyTasks, maybeUpdateStandbyTasks>>.
+NOTE: `advanceNowAndComputeLatency` is used when `StreamThread` is requested to <<runOnce, poll records once and process them using active stream tasks>>, <<maybePunctuate, maybePunctuate>>, <<maybeCommit, maybeCommit>>, and <<maybeUpdateStandbyTasks, maybeUpdateStandbyTasks>>.
 
 === [[internal-properties]] Internal Properties
 
@@ -613,13 +613,13 @@ a| [[builder]] <<kafka-streams-internals-InternalTopologyBuilder.adoc#, Internal
 a| [[lastCommitMs]] Time of the last <<maybeCommit, commit>>
 
 | numIterations
-a| [[numIterations]] Number of iterations when the <<taskManager, TaskManager>> is requested to <<kafka-streams-internals-TaskManager.adoc#process, process records by running stream tasks (one record per task)>> (while `StreamThread` is <<runOnce, polling records once and adding them to active stream tasks>>)
+a| [[numIterations]] Number of iterations when the <<taskManager, TaskManager>> is requested to <<kafka-streams-internals-TaskManager.adoc#process, process records by running stream tasks (one record per task)>> (while `StreamThread` is <<runOnce, polling records once and processing them using active stream tasks>>)
 
 Default: `1`
 
-Incremented while <<runOnce, polling records once and adding them to active stream tasks>>
+Incremented while <<runOnce, polling records once and processing them using active stream tasks>>
 
-Decremented by half while <<runOnce, polling records once and adding them to active stream tasks>>
+Decremented by half while <<runOnce, polling records once and processing them using active stream tasks>>
 
 | processStandbyRecords
 a| [[processStandbyRecords]] Flag to control whether to <<maybeUpdateStandbyTasks, maybeUpdateStandbyTasks>> after <<maybeCommit, maybeCommit>> was executed
