@@ -56,16 +56,16 @@ Used when:
 Use <<kafka-streams-StreamsConfig.adoc#CLIENT_ID_CONFIG, StreamsConfig.CLIENT_ID_CONFIG>> to reference the property.
 
 | commit.interval.ms
-a| [[commit.interval.ms]] *Flush interval* or *commit interval* (in millis), i.e. how often `StreamThread` <<kafka-streams-internals-StreamThread.adoc#maybeCommit, tries to commit>> the position of processors and _flush_ state stores
+a| [[commit.interval.ms]] *Flush interval* or *commit interval* (in millis), i.e. how often `StreamThread` <<kafka-streams-internals-StreamThread.adoc#maybeCommit, attempts to commit>> the position of processors and _flush_ state stores
 
 Default:
 
 * `100L` when <<processing.guarantee, processing.guarantee>> is <<exactly_once, exactly_once>> (which is not by default)
-* `30000L` otherwise
+* `30000L` (`30s`) otherwise
+
+Must be at least `0L`
 
 Use <<kafka-streams-StreamsConfig.adoc#COMMIT_INTERVAL_MS_CONFIG, StreamsConfig.COMMIT_INTERVAL_MS_CONFIG>> to reference the property.
-
-If the commit interval is negative, `StreamThread` will never <<kafka-streams-internals-StreamThread.adoc#maybeCommit, commit tasks>>.
 
 | default.windowed.key.serde.inner
 a| [[default.windowed.key.serde.inner]] Inner serde class that implements the `org.apache.kafka.common.serialization.Serde` interface

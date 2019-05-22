@@ -6,31 +6,18 @@
 
 `StandbyTask` is a concrete <<kafka-streams-internals-AbstractTask.adoc#, AbstractTask>> with <<kafka-streams-internals-AbstractTask.adoc#isStandby, isStandby>> flag on.
 
-[[internal-registries]]
-.StandbyTask's Internal Properties (e.g. Registries, Counters and Flags)
-[cols="1m,2",options="header",width="100%"]
-|===
-| Name
-| Description
-
-| processorContext
-| [[processorContext]] <<kafka-streams-internals-InternalProcessorContext.adoc#, InternalProcessorContext>>
-
-Used when...FIXME
-|===
-
 [[logging]]
 [TIP]
 ====
-Enable `DEBUG` logging level for `org.apache.kafka.streams.processor.internals.StandbyTask` logger to see what happens inside.
+Enable `ALL` logging level for `org.apache.kafka.streams.processor.internals.StandbyTask` logger to see what happens inside.
 
 Add the following line to `log4j.properties`:
 
 ```
-log4j.logger.org.apache.kafka.streams.processor.internals.StandbyTask=DEBUG
+log4j.logger.org.apache.kafka.streams.processor.internals.StandbyTask=ALL
 ```
 
-Refer to link:kafka-logging.adoc#log4j.properties[Application Logging Using log4j].
+Refer to <<kafka-logging.adoc#log4j.properties, Application Logging Using log4j>>.
 ====
 
 === [[closeSuspended]] `closeSuspended` Method
@@ -107,7 +94,7 @@ NOTE: `resume` is part of the <<kafka-streams-internals-Task.adoc#resume, Task C
 
 === [[creating-instance]] Creating StandbyTask Instance
 
-`StandbyTask` takes the following when created:
+`StandbyTask` takes the following to be created:
 
 * [[id]] `TaskId`
 * [[partitions]] Assigned Kafka https://kafka.apache.org/22/javadoc/org/apache/kafka/common/TopicPartition.html[TopicPartitions]
@@ -118,7 +105,7 @@ NOTE: `resume` is part of the <<kafka-streams-internals-Task.adoc#resume, Task C
 * [[metrics]] <<kafka-streams-internals-StreamsMetricsImpl.adoc#, StreamsMetricsImpl>>
 * [[stateDirectory]] <<kafka-streams-internals-StateDirectory.adoc#, StateDirectory>>
 
-`StandbyTask` initializes the <<internal-registries, internal registries and counters>>.
+`StandbyTask` initializes the <<internal-properties, internal properties>>.
 
 === [[flushAndCheckpointState]] `flushAndCheckpointState` Internal Method
 
@@ -155,7 +142,7 @@ NOTE: `suspend` is part of <<kafka-streams-internals-Task.adoc#suspend, Task Con
 
 === [[update]] Updating Standby Replicas Of State Store (From Single Change Log Partition) -- `update` Method
 
-[source, scala]
+[source, java]
 ----
 List<ConsumerRecord<byte[], byte[]>> update(
   final TopicPartition partition,
@@ -171,3 +158,16 @@ Updating standby replicas of its state store for partition [partition]
 `update` then simply requests the <<stateMgr, ProcessorStateManager>> to <<kafka-streams-ProcessorStateManager.adoc#updateStandbyStates, updateStandbyStates>> and returns the result.
 
 NOTE: `update` is used exclusively when `StreamThread` is requested to <<kafka-streams-internals-StreamThread.adoc#maybeUpdateStandbyTasks, maybeUpdateStandbyTasks>>.
+
+=== [[internal-properties]] Internal Properties
+
+[cols="30m,70",options="header",width="100%"]
+|===
+| Name
+| Description
+
+| processorContext
+| [[processorContext]] <<kafka-streams-internals-InternalProcessorContext.adoc#, InternalProcessorContext>>
+
+Used when...FIXME
+|===

@@ -192,7 +192,7 @@ NOTE: `runOnce` is used exclusively when `StreamThread` is requested to <<runLoo
 
 [source, java]
 ----
-void maybeUpdateStandbyTasks(final long now)
+void maybeUpdateStandbyTasks()
 ----
 
 `maybeUpdateStandbyTasks`...FIXME
@@ -622,7 +622,13 @@ Incremented while <<runOnce, polling records once and processing them using acti
 Decremented by half while <<runOnce, polling records once and processing them using active stream tasks>>
 
 | processStandbyRecords
-a| [[processStandbyRecords]] Flag to control whether to <<maybeUpdateStandbyTasks, maybeUpdateStandbyTasks>> after <<maybeCommit, maybeCommit>> was executed
+a| [[processStandbyRecords]] Flag to control whether to <<maybeUpdateStandbyTasks, maybeUpdateStandbyTasks>> after <<maybeCommit, maybeCommit>>
+
+Default: `false`
+
+Turned off (`false`) in <<maybeUpdateStandbyTasks, maybeUpdateStandbyTasks>> (after requesting the `StandbyTasks` to <<kafka-streams-internals-StandbyTask.adoc#update, update>>)
+
+Turned on (`true`) when <<maybeCommit, attempting to commit>> (and the time to commit has come per <<commitTimeMs, commit.interval.ms>> configuration property)
 
 | now
 a| [[now]] *"now" timestamp*
