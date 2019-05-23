@@ -174,7 +174,7 @@ NOTE: `activeTask` is used exclusively when `StreamThread` is requested to <<kaf
 boolean hasActiveRunningTasks()
 ----
 
-`hasActiveRunningTasks` simply asks <<active, AssignedStreamsTasks>> whether it link:kafka-streams-internals-AssignedTasks.adoc#hasRunningTasks[has any tasks registered or not].
+`hasActiveRunningTasks` simply asks the <<active, AssignedStreamsTasks>> whether it <<kafka-streams-internals-AssignedTasks.adoc#hasRunningTasks, has any running tasks or not>>.
 
 .TaskManager and AssignedStreamsTasks
 image::images/kafka-streams-TaskManager-hasActiveRunningTasks.png[align="center"]
@@ -188,12 +188,12 @@ NOTE: `hasActiveRunningTasks` is used exclusively when `StreamThread` is request
 boolean hasStandbyRunningTasks()
 ----
 
-`hasStandbyRunningTasks` simply asks <<standby, AssignedStandbyTasks>> whether it link:kafka-streams-internals-AssignedTasks.adoc#hasRunningTasks[has any tasks registered or not].
+`hasStandbyRunningTasks` simply asks the <<standby, AssignedStandbyTasks>> whether it <<kafka-streams-internals-AssignedTasks.adoc#hasRunningTasks, has any running tasks or not>>.
 
 .TaskManager and AssignedStandbyTasks
 image::images/kafka-streams-TaskManager-hasStandbyRunningTasks.png[align="center"]
 
-NOTE: `hasStandbyRunningTasks` is used exclusively when `StreamThread` is requested to link:kafka-streams-internals-StreamThread.adoc#maybeUpdateStandbyTasks[maybeUpdateStandbyTasks] (while <<kafka-streams-internals-StreamThread.adoc#runOnce, poll records once and process them using active stream tasks>>).
+NOTE: `hasStandbyRunningTasks` is used exclusively when `StreamThread` is requested to <<kafka-streams-internals-StreamThread.adoc#maybeUpdateStandbyTasks, maybeUpdateStandbyTasks>> (while <<kafka-streams-internals-StreamThread.adoc#runOnce, poll records once and process them using active stream tasks>>).
 
 === [[createTasks]] Creating Tasks for Assigned Partitions -- `createTasks` Method
 

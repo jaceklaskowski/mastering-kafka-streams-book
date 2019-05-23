@@ -197,6 +197,8 @@ void maybeUpdateStandbyTasks()
 
 `maybeUpdateStandbyTasks`...FIXME
 
+`maybeUpdateStandbyTasks` does nothing and simply returns when `StreamThread` is not in <<RUNNING, RUNNING>> state or the <<taskManager, TaskManager>> has no <<kafka-streams-internals-TaskManager.adoc#hasStandbyRunningTasks, hasStandbyRunningTasks>>.
+
 NOTE: `maybeUpdateStandbyTasks` is used exclusively when `StreamThread` is requested to <<runOnce, poll records once and process them using active stream tasks>>.
 
 === [[creating-instance]] Creating StreamThread Instance
