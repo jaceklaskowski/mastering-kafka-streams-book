@@ -553,6 +553,19 @@ void requestCommit()
 
 NOTE: `requestCommit` is used exclusively when `ProcessorContextImpl` is requested to <<kafka-streams-internals-ProcessorContextImpl.adoc#commit, commit>>.
 
+=== [[purgableOffsets]] `purgableOffsets` Method
+
+[source, java]
+----
+Map<TopicPartition, Long> purgableOffsets()
+----
+
+In essence, `purgableOffsets` returns the partition-offset pairs for the <<consumedOffsets, consumedOffsets>> of the repartition topics (i.e. the <<topology, ProcessorTopology>> uses as <<kafka-streams-internals-ProcessorTopology.adoc#isRepartitionTopic, repartition topics>>).
+
+`purgableOffsets`...FIXME
+
+NOTE: `purgableOffsets` is used when...FIXME
+
 === [[internal-properties]] Internal Properties
 
 [cols="30m,70",options="header",width="100%"]

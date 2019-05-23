@@ -25,10 +25,10 @@ a| [[with]]
 [source, java]
 ----
 ProcessorTopology with(
-  final List<ProcessorNode> processorNodes,
-  final Map<String, SourceNode> sourcesByTopic,
-  final List<StateStore> stateStoresByName,
-  final Map<String, String> storeToChangelogTopic)
+  List<ProcessorNode> processorNodes,
+  Map<String, SourceNode> sourcesByTopic,
+  List<StateStore> stateStoresByName,
+  Map<String, String> storeToChangelogTopic)
 ----
 
 | withGlobalStores
@@ -37,8 +37,8 @@ a| [[withGlobalStores]]
 [source, java]
 ----
 ProcessorTopology withGlobalStores(
-  final List<StateStore> stateStores,
-  final Map<String, String> storeToChangelogTopic)
+  List<StateStore> stateStores,
+  Map<String, String> storeToChangelogTopic)
 ----
 
 | withLocalStores
@@ -47,8 +47,8 @@ a| [[withLocalStores]]
 [source, java]
 ----
 ProcessorTopology withLocalStores(
-  final List<StateStore> stateStores,
-  final Map<String, String> storeToChangelogTopic)
+  List<StateStore> stateStores,
+  Map<String, String> storeToChangelogTopic)
 ----
 
 | withRepartitionTopics
@@ -57,9 +57,9 @@ a| [[withRepartitionTopics]]
 [source, java]
 ----
 ProcessorTopology withRepartitionTopics(
-  final List<ProcessorNode> processorNodes,
-  final Map<String, SourceNode> sourcesByTopic,
-  final Set<String> repartitionTopics)
+  List<ProcessorNode> processorNodes,
+  Map<String, SourceNode> sourcesByTopic,
+  Set<String> repartitionTopics)
 ----
 
 | withSources
@@ -68,8 +68,8 @@ a| [[withSources]]
 [source, java]
 ----
 ProcessorTopology withSources(
-  final List<ProcessorNode> processorNodes,
-  final Map<String, SourceNode> sourcesByTopic)
+  List<ProcessorNode> processorNodes,
+  Map<String, SourceNode> sourcesByTopic)
 ----
 
 |===
@@ -78,6 +78,7 @@ ProcessorTopology withSources(
 ----
 // Using Scala with the Java-centric API of Kafka Streams
 import collection.JavaConverters._
+
 import org.apache.kafka.streams.processor.internals.ProcessorNode
 val processorNodes = Seq.empty[ProcessorNode[_, _]].asJava
 import org.apache.kafka.streams.processor.internals.SourceNode
@@ -98,10 +99,10 @@ ProcessorTopology:
 
 `ProcessorTopology` takes the following when created:
 
-* [[processorNodes]][[processors]] link:kafka-streams-internals-ProcessorNode.adoc[ProcessorNodes]
-* [[sourcesByTopic]] link:kafka-streams-internals-SourceNode.adoc[SourceNodes] by name
-* [[sinksByTopic]] link:kafka-streams-internals-SinkNode.adoc[SinkNodes] by name
-* [[stateStores]] Local link:kafka-streams-StateStore.adoc[StateStores]
-* [[globalStateStores]] Global link:kafka-streams-StateStore.adoc[StateStores]
+* [[processorNodes]][[processors]] <<kafka-streams-internals-ProcessorNode.adoc#, ProcessorNodes>>
+* [[sourcesByTopic]] <<kafka-streams-internals-SourceNode.adoc#, SourceNodes>> by name
+* [[sinksByTopic]] <<kafka-streams-internals-SinkNode.adoc#, SinkNodes>> by name
+* [[stateStores]] Local <<kafka-streams-StateStore.adoc#, state stores>>
+* [[globalStateStores]] Global <<kafka-streams-StateStore.adoc#, state stores>>
 * [[stateStoreToChangelogTopic]][[storeToChangelogTopic]] Names of the <<kafka-streams-StateStore.adoc#, state stores>> and the names of the corresponding changelog topics (from the <<kafka-streams-internals-InternalTopologyBuilder.adoc#storeToChangelogTopic, InternalTopologyBuilder>>)
-* [[repartitionTopics]] Names of repartition topics
+* [[repartitionTopics]][[isRepartitionTopic]] Names of repartition topics

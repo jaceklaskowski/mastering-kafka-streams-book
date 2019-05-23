@@ -182,6 +182,17 @@ Failed to commit StreamTask [taskId] due to the following error:
 
 NOTE: `maybeCommitPerUserRequested` is used exclusively when `TaskManager` is requested to <<kafka-streams-internals-TaskManager.adoc#maybeCommitActiveTasksPerUserRequested, maybeCommitActiveTasksPerUserRequested>>.
 
+=== [[recordsToDelete]] `recordsToDelete` Method
+
+[source, java]
+----
+Map<TopicPartition, Long> recordsToDelete()
+----
+
+`recordsToDelete` requests the <<running, running StreamTasks>> for the <<kafka-streams-internals-StreamTask.adoc#purgableOffsets, purgableOffsets>> and returns them.
+
+NOTE: `recordsToDelete` is used exclusively when `TaskManager` is requested to <<maybePurgeCommitedRecords, maybePurgeCommitedRecords>>.
+
 === [[internal-properties]] Internal Properties
 
 [cols="30m,70",options="header",width="100%"]

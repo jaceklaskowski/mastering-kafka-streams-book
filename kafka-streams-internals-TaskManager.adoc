@@ -315,7 +315,7 @@ New standby tasks to be created: [newStandbyTasks]
 
 `addStandbyTasks` then requests <<standbyTaskCreator, StreamThread.AbstractTaskCreator<StandbyTask&gt;>> to <<kafka-streams-internals-AbstractTaskCreator.adoc#createTasks, createTasks>> for every new standby task (with the <<consumer, Kafka Consumer>>) and requests <<standby, AssignedStandbyTasks>> to link:kafka-streams-internals-AssignedTasks.adoc#addNewTask[register a new task].
 
-NOTE: `addStandbyTasks` is used exclusively when `TaskManager` is requested to <<createTasks, create tasks for assigned topic partitions>>.
+NOTE: `addStandbyTasks` is used exclusively when `TaskManager` is requested to <<createTasks, create tasks for assigned partitions>>.
 
 === [[toString]] Describing Itself (Textual Representation) -- `toString` Method
 
@@ -344,9 +344,11 @@ NOTE: `toString` is used exclusively when `StreamThread` is requested to <<kafka
 void maybePurgeCommitedRecords()
 ----
 
+In essence, `maybePurgeCommitedRecords` requests the <<active, AssignedStreamsTasks>> for the <<kafka-streams-AssignedStreamsTasks.adoc#recordsToDelete, recordsToDelete>> and then the <<adminClient, AdminClient>> to delete the records (whose offset is smaller than the given offset of the corresponding partition).
+
 `maybePurgeCommitedRecords`...FIXME
 
-NOTE: `maybePurgeCommitedRecords` is used exclusively when `StreamThread` is requested to <<kafka-streams-internals-StreamThread.adoc#maybeCommit, maybeCommit>> (when `StreamThread` is requested to <<kafka-streams-internals-StreamThread.adoc#runOnce, poll records once and process them using active stream tasks>> in the <<kafka-streams-internals-StreamThread.adoc#runLoop, main record processing loop>>).
+NOTE: `maybePurgeCommitedRecords` is used exclusively when `StreamThread` is requested to <<kafka-streams-internals-StreamThread.adoc#maybeCommit, commit all tasks (when commit interval elapsed)>> (when `StreamThread` is requested to <<kafka-streams-internals-StreamThread.adoc#runOnce, poll records once and process them using active stream tasks>> in the <<kafka-streams-internals-StreamThread.adoc#runLoop, main record processing loop>>).
 
 === [[process]] Processing Records by Running Stream Tasks (One Record Per Task) -- `process` Method
 
@@ -508,5 +510,10 @@ a| [[consumer]] Kafka https://kafka.apache.org/22/javadoc/org/apache/kafka/clien
 
 [[setConsumer]]
 Assigned right when `StreamThread` is link:kafka-streams-internals-StreamThread.adoc#create[created] (and corresponds to the link:kafka-streams-internals-StreamThread.adoc#consumer[Kafka consumer] from the link:kafka-streams-KafkaClientSupplier.adoc#getConsumer[KafkaClientSupplier] that was used to create the link:kafka-streams-KafkaStreams.adoc#creating-instance[KafkaStreams])
+
+| deleteRecordsResult
+a| [[deleteRecordsResult]] Kafka's `DeleteRecordsResult` (after <<maybePurgeCommitedRecords, maybePurgeCommitedRecords>> and requesting the <<adminClient, AdminClient>> to delete records)
+
+Used in <<maybePurgeCommitedRecords, maybePurgeCommitedRecords>> for informatory purposes
 
 |===
