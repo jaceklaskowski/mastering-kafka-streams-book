@@ -11,6 +11,22 @@ image::images/kafka-streams-TaskManager.png[align="center"]
 
 `TaskManager` uses the <<standbyTaskCreator, StandbyTaskCreator>> to <<kafka-streams-internals-StandbyTaskCreator.adoc#createTasks, create standby tasks>> when requested to <<addStandbyTasks, addStandbyTasks>>.
 
+`TaskManager` is given a <<standby, AssignedStandbyTasks>> when <<creating-instance, created>> for the following:
+
+* <<createTasks, createTasks>> (and <<addStandbyTasks, addStandbyTasks>> in particular)
+
+* <<suspendTasksAndState, suspendTasksAndState>>
+
+* <<standbyTask, Looking up a StandbyTask per partition>>
+
+* <<updateNewAndRestoringTasks, updateNewAndRestoringTasks>>
+
+* <<assignStandbyPartitions, assignStandbyPartitions>>
+
+* <<commitAll, commitAll>>
+
+* <<shutdown, shutdown>>
+
 When <<creating-instance, created>>, `TaskManager` is given a Kafka <<adminClient, AdminClient>> that is used for the following:
 
 * `TaskManager` is requested to <<maybePurgeCommitedRecords, maybePurgeCommitedRecords>> (and deletes records)
@@ -139,14 +155,14 @@ void assignStandbyPartitions()
 
 NOTE: `assignStandbyPartitions` is used when...FIXME
 
-=== [[activeTask]] Getting Active Stream Processor Task for Topic Partition -- `activeTask` Method
+=== [[activeTask]] Looking Up Stream Task Per Partition -- `activeTask` Method
 
 [source, java]
 ----
-StreamTask activeTask(final TopicPartition partition)
+StreamTask activeTask(TopicPartition partition)
 ----
 
-`activeTask` simply looks up the <<kafka-streams-internals-StreamTask.adoc#, StreamTask>> for the input https://kafka.apache.org/22/javadoc/org/apache/kafka/common/TopicPartition.html[partition] (in the internal <<active, active>> registry).
+`activeTask` simply requests the <<active, AssignedStreamsTasks>> for the <<kafka-streams-internals-AssignedTasks.adoc#runningTaskFor, running StreamTask>> for the input https://kafka.apache.org/22/javadoc/org/apache/kafka/common/TopicPartition.html[partition].
 
 NOTE: `activeTask` is used exclusively when `StreamThread` is requested to <<kafka-streams-internals-StreamThread.adoc#addRecordsToTasks, add records to active stream tasks>>.
 
@@ -174,7 +190,7 @@ NOTE: `activeTask` is used exclusively when `StreamThread` is requested to <<kaf
 boolean hasActiveRunningTasks()
 ----
 
-`hasActiveRunningTasks` simply asks the <<active, AssignedStreamsTasks>> whether it <<kafka-streams-internals-AssignedTasks.adoc#hasRunningTasks, has any running tasks or not>>.
+`hasActiveRunningTasks` simply asks the <<active, AssignedStreamsTasks>> whether it <<kafka-streams-internals-AssignedTasks.adoc#hasRunningTasks, has any running stream tasks>> or not.
 
 .TaskManager and AssignedStreamsTasks
 image::images/kafka-streams-TaskManager-hasActiveRunningTasks.png[align="center"]
@@ -188,7 +204,7 @@ NOTE: `hasActiveRunningTasks` is used exclusively when `StreamThread` is request
 boolean hasStandbyRunningTasks()
 ----
 
-`hasStandbyRunningTasks` simply asks the <<standby, AssignedStandbyTasks>> whether it <<kafka-streams-internals-AssignedTasks.adoc#hasRunningTasks, has any running tasks or not>>.
+`hasStandbyRunningTasks` simply asks the <<standby, AssignedStandbyTasks>> whether it <<kafka-streams-internals-AssignedTasks.adoc#hasRunningTasks, has any running standby tasks>> or not.
 
 .TaskManager and AssignedStandbyTasks
 image::images/kafka-streams-TaskManager-hasStandbyRunningTasks.png[align="center"]
@@ -267,7 +283,7 @@ New active tasks to be created: [newTasks]
 
 NOTE: `addStreamTasks` is used exclusively when `TaskManager` is requested to <<createTasks, create processor tasks for assigned topic partitions>>.
 
-=== [[addStandbyTasks]] Adding Standby Tasks -- `addStandbyTasks` Internal Method
+=== [[addStandbyTasks]] Adding Assigned Standby Tasks -- `addStandbyTasks` Internal Method
 
 [source, java]
 ----
@@ -369,7 +385,7 @@ int punctuate()
 
 NOTE: `punctuate` is used exclusively when `StreamThread` is requested to <<kafka-streams-internals-StreamThread.adoc#maybePunctuate, attempt to punctuate>>.
 
-=== [[commitAll]] Committing Active and Standby Tasks -- `commitAll` Method
+=== [[commitAll]] Committing All Active (Stream and Standby) Tasks -- `commitAll` Method
 
 [source, java]
 ----
@@ -423,6 +439,28 @@ int maybeCommitActiveTasksPerUserRequested()
 `maybeCommitActiveTasksPerUserRequested` simply requests the <<active, AssignedStreamsTasks>> to <<kafka-streams-AssignedStreamsTasks.adoc#maybeCommitPerUserRequested, maybeCommitPerUserRequested>>.
 
 NOTE: `maybeCommitActiveTasksPerUserRequested` is used when `StreamThread` is requested to <<kafka-streams-internals-StreamThread.adoc#runOnce, poll records once and process them using active stream tasks>> and <<kafka-streams-internals-StreamThread.adoc#maybeCommit, commit all tasks (when commit interval elapsed)>>.
+
+=== [[shutdown]] Shutting Down -- `shutdown` Method
+
+[source, java]
+----
+void shutdown(boolean clean)
+----
+
+`shutdown`...FIXME
+
+NOTE: `shutdown` is used when...FIXME
+
+=== [[standbyTask]] Looking Up StandbyTask Per Partition -- `standbyTask` Method
+
+[source, java]
+----
+StandbyTask standbyTask(TopicPartition partition)
+----
+
+`standbyTask` simply requests the <<standby, AssignedStandbyTasks>> for the <<kafka-streams-internals-AssignedTasks.adoc#runningTaskFor, running StandbyTask>> for the input https://kafka.apache.org/22/javadoc/org/apache/kafka/common/TopicPartition.html[partition].
+
+NOTE: `standbyTask` is used exclusively when `StreamThread` is requested to <<kafka-streams-internals-StreamThread.adoc#maybeUpdateStandbyTasks, attempt to update running StandbyTasks>>.
 
 === [[internal-properties]] Internal Properties
 

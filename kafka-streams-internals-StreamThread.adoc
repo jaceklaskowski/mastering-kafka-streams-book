@@ -188,7 +188,7 @@ In the end, `runOnce` <<maybeUpdateStandbyTasks, maybeUpdateStandbyTasks>> follo
 
 NOTE: `runOnce` is used exclusively when `StreamThread` is requested to <<runLoop, run the main record processing loop>>.
 
-=== [[maybeUpdateStandbyTasks]] `maybeUpdateStandbyTasks` Internal Method
+=== [[maybeUpdateStandbyTasks]] Attempting to Update Running StandbyTasks -- `maybeUpdateStandbyTasks` Internal Method
 
 [source, java]
 ----
@@ -441,7 +441,7 @@ NOTE: `isRunning` is simply a pass-through variant of <<State, State.isRunning>>
 
 [source, java]
 ----
-void addRecordsToTasks(final ConsumerRecords<byte[], byte[]> records)
+void addRecordsToTasks(ConsumerRecords<byte[], byte[]> records)
 ----
 
 For every https://kafka.apache.org/22/javadoc/org/apache/kafka/common/TopicPartition.html[partition] of the input link:++https://kafka.apache.org/22/javadoc/org/apache/kafka/clients/consumer/ConsumerRecords.html#partitions--++[records] `addRecordsToTasks` requests the <<taskManager, TaskManager>> for the <<kafka-streams-internals-TaskManager.adoc#activeTask, active stream processor task>> responsible for the partition.

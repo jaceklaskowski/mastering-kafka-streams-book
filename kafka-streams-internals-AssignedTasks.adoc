@@ -445,6 +445,17 @@ boolean allTasksRunning()
 
 NOTE: `allTasksRunning` is used when...FIXME
 
+=== [[runningTaskFor]] `runningTaskFor` Method
+
+[source, java]
+----
+T runningTaskFor(TopicPartition partition)
+----
+
+`runningTaskFor` simply looks up the task (`T`) for the given https://kafka.apache.org/22/javadoc/org/apache/kafka/common/TopicPartition.html[partition] (in the <<runningByPartition, runningByPartition>> internal registry).
+
+NOTE: `runningTaskFor` is used when `TaskManager` is requested to look up the <<kafka-streams-internals-TaskManager.adoc#activeTask, StreamTask>> and <<kafka-streams-internals-TaskManager.adoc#standbyTask, StandbyTask>> for a given partition.
+
 === [[internal-properties]] Internal Properties
 
 [cols="30m,70",options="header",width="100%"]
