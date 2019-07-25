@@ -17,7 +17,7 @@ a| [[close]]
 void close()
 ----
 
-Closing the state store
+Closes the state store
 
 Used when:
 
@@ -54,7 +54,9 @@ a| [[init]]
 
 [source, java]
 ----
-void init(ProcessorContext context, StateStore root)
+void init(
+  ProcessorContext context,
+  StateStore root)
 ----
 
 Initializes the state store
@@ -74,6 +76,8 @@ a| [[isOpen]]
 ----
 boolean isOpen()
 ----
+
+Indicates whether the state store is open or not
 
 Used when:
 

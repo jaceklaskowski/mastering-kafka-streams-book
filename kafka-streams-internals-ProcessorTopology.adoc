@@ -106,3 +106,14 @@ ProcessorTopology:
 * [[globalStateStores]] Global <<kafka-streams-StateStore.adoc#, state stores>>
 * [[stateStoreToChangelogTopic]][[storeToChangelogTopic]] Names of the <<kafka-streams-StateStore.adoc#, state stores>> and the names of the corresponding changelog topics (from the <<kafka-streams-internals-InternalTopologyBuilder.adoc#storeToChangelogTopic, InternalTopologyBuilder>>)
 * [[repartitionTopics]][[isRepartitionTopic]] Names of repartition topics
+
+=== [[hasPersistentLocalStore]] `hasPersistentLocalStore` Method
+
+[source, java]
+----
+boolean hasPersistentLocalStore()
+----
+
+`hasPersistentLocalStore` is positive (`true`) when any of the <<kafka-streams-StateStore.adoc#, StateStore>> in the <<stateStores, stateStores>> internal registry is <<kafka-streams-StateStore.adoc#persistent, persistent>>.
+
+NOTE: `hasPersistentLocalStore` is used exclusively when `KafkaStreams` is <<kafka-streams-KafkaStreams.adoc#creating-instance, created>> (to create a <<kafka-streams-internals-StateDirectory.adoc#, StateDirectory>>).
