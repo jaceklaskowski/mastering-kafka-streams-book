@@ -136,6 +136,9 @@ Used when:
 | <<kafka-streams-StateStore-SessionStore.adoc#, SessionStore>>
 | [[SessionStore]]
 
+| <<kafka-streams-StateStore-TimeOrderedKeyValueBuffer.adoc#, TimeOrderedKeyValueBuffer>>
+| [[TimeOrderedKeyValueBuffer]]
+
 | <<kafka-streams-StateStore-WindowStore.adoc#, WindowStore>>
 | [[WindowStore]]
 

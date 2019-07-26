@@ -1,0 +1,93 @@
+== [[TimeOrderedKeyValueBuffer]] TimeOrderedKeyValueBuffer
+
+`TimeOrderedKeyValueBuffer` is the <<contract, extension>> of the <<kafka-streams-StateStore.adoc#, StateStore contract>> for <<implementations, time-ordered key-value state stores>> that <<FIXME, FIXME>>.
+
+[[contract]]
+.TimeOrderedKeyValueBuffer Contract
+[cols="30m,70",options="header",width="100%"]
+|===
+| Method
+| Description
+
+| bufferSize
+a| [[bufferSize]]
+
+[source, java]
+----
+long bufferSize()
+----
+
+Used when...FIXME
+
+| evictWhile
+a| [[evictWhile]]
+
+[source, java]
+----
+void evictWhile(
+  Supplier<Boolean> predicate,
+  Consumer<Eviction<K, V>> callback)
+----
+
+Used when...FIXME
+
+| minTimestamp
+a| [[minTimestamp]]
+
+[source, java]
+----
+long minTimestamp()
+----
+
+Used when...FIXME
+
+| numRecords
+a| [[numRecords]]
+
+[source, java]
+----
+int numRecords()
+----
+
+Used when...FIXME
+
+| priorValueForBuffered
+a| [[priorValueForBuffered]]
+
+[source, java]
+----
+Maybe<ValueAndTimestamp<V>> priorValueForBuffered(K key)
+----
+
+Used when...FIXME
+
+| put
+a| [[put]]
+
+[source, java]
+----
+void put(
+  long time,
+  K key,
+  Change<V> value,
+  ProcessorRecordContext recordContext)
+----
+
+Used when...FIXME
+
+| setSerdesIfNull
+a| [[setSerdesIfNull]]
+
+[source, java]
+----
+void setSerdesIfNull(
+  Serde<K> keySerde,
+  Serde<V> valueSerde)
+----
+
+Used when...FIXME
+
+|===
+
+[[implementations]]
+NOTE: <<kafka-streams-StateStore-InMemoryTimeOrderedKeyValueBuffer.adoc#, InMemoryTimeOrderedKeyValueBuffer>> is the default and only known implementation of the <<contract, TimeOrderedKeyValueBuffer Contract>> in Kafka Streams.

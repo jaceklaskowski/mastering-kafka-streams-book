@@ -214,6 +214,7 @@
 .. link:kafka-streams-StateStore-InMemoryKeyValueLoggedStore.adoc[InMemoryKeyValueLoggedStore]
 .. link:kafka-streams-StateStore-MemoryLRUCache.adoc[MemoryLRUCache]
 .. link:kafka-streams-StateStore-SegmentedBytesStore.adoc[SegmentedBytesStore]
+.. link:kafka-streams-StateStore-TimeOrderedKeyValueBuffer.adoc[TimeOrderedKeyValueBuffer]
 .. link:kafka-streams-StateStore-WrappedStateStore.adoc[WrappedStateStore]
 .. link:kafka-streams-StateStore-CachingKeyValueStore.adoc[CachingKeyValueStore]
 .. link:kafka-streams-StateStore-CachingSessionStore.adoc[CachingSessionStore]
@@ -240,6 +241,8 @@
 . link:kafka-streams-StateStore-AbstractRocksDBSegmentedBytesStore.adoc[AbstractRocksDBSegmentedBytesStore]
 . link:kafka-streams-StateStore-KeyValueToTimestampedKeyValueByteStoreAdapter.adoc[KeyValueToTimestampedKeyValueByteStoreAdapter]
 . link:kafka-streams-StateStore-WindowToTimestampedWindowByteStoreAdapter.adoc[WindowToTimestampedWindowByteStoreAdapter]
+
+. link:kafka-streams-StateStore-InMemoryTimeOrderedKeyValueBuffer.adoc[InMemoryTimeOrderedKeyValueBuffer]
 
 === Logical Plan of Stream Processing Execution
 

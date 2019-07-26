@@ -231,7 +231,7 @@ NOTE: `transformValues` is part of the <<kafka-streams-KTable.adoc#transformValu
 [source, java]
 ----
 KTable<K, V> suppress(
-  final Suppressed<? super K> suppressed)
+  Suppressed<? super K> suppressed)
 ----
 
 NOTE: `suppress` is part of the <<kafka-streams-KTable.adoc#suppress, KTable Contract>> to...FIXME.

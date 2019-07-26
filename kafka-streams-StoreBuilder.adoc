@@ -26,7 +26,7 @@ a| [[build]]
 T build()
 ----
 
-Builds a <<kafka-streams-StateStore.adoc#, state store>>
+Creates (_builds_) a <<kafka-streams-StateStore.adoc#, state store>>
 
 Used when:
 
