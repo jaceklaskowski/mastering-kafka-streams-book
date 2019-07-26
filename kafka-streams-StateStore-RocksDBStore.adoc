@@ -1,6 +1,9 @@
 == [[RocksDBStore]] RocksDBStore
 
-`RocksDBStore` is...FIXME
+`RocksDBStore` is a concrete <<kafka-streams-StateStore-KeyValueStore.adoc#, KeyValueStore>> that...FIXME
+
+[[persistent]]
+`RocksDBStore` is always <<kafka-streams-StateStore.adoc#persistent, persistent>>.
 
 === [[init]] Initialize State Store -- `init` Method
 

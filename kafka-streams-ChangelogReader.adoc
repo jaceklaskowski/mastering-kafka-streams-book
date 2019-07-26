@@ -52,5 +52,8 @@ a| [[restoredOffsets]]
 Map<TopicPartition, Long> restoredOffsets()
 ----
 
+Restores offsets (for <<kafka-streams-StateStore.adoc#persistent, persistent state stores>>)
+
 Used exclusively when `ProcessorStateManager` is requested to <<kafka-streams-ProcessorStateManager.adoc#checkpoint, checkpoint offsets>>
+
 |===

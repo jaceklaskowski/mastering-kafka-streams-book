@@ -237,6 +237,10 @@
 
 . link:kafka-streams-internals-RocksDbWindowBytesStoreSupplier.adoc[RocksDbWindowBytesStoreSupplier]
 
+. link:kafka-streams-StateStore-AbstractRocksDBSegmentedBytesStore.adoc[AbstractRocksDBSegmentedBytesStore]
+. link:kafka-streams-StateStore-KeyValueToTimestampedKeyValueByteStoreAdapter.adoc[KeyValueToTimestampedKeyValueByteStoreAdapter]
+. link:kafka-streams-StateStore-WindowToTimestampedWindowByteStoreAdapter.adoc[WindowToTimestampedWindowByteStoreAdapter]
+
 === Logical Plan of Stream Processing Execution
 
 . link:kafka-streams-internals-ProcessorNode.adoc[ProcessorNode]

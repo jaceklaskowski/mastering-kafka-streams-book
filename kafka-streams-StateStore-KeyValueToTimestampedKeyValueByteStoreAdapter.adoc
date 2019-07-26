@@ -1,0 +1,6 @@
+== [[KeyValueToTimestampedKeyValueByteStoreAdapter]] KeyValueToTimestampedKeyValueByteStoreAdapter
+
+`KeyValueToTimestampedKeyValueByteStoreAdapter` is a concrete <<kafka-streams-StateStore-KeyValueStore.adoc#, KeyValueStore>> that...FIXME
+
+[[persistent]]
+`KeyValueToTimestampedKeyValueByteStoreAdapter` is always <<kafka-streams-StateStore.adoc#persistent, persistent>>.

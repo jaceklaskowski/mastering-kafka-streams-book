@@ -87,9 +87,11 @@ NOTE: `restore` is part of the <<kafka-streams-ChangelogReader.adoc#restore, Cha
 Map<TopicPartition, Long> restoredOffsets()
 ----
 
-NOTE: `restoredOffsets` is part of link:kafka-streams-ChangelogReader.adoc#restoredOffsets[ChangelogReader Contract] to...FIXME.
+NOTE: `restoredOffsets` is part of <<kafka-streams-ChangelogReader.adoc#restoredOffsets, ChangelogReader Contract>> to restore offsets.
 
-`restoredOffsets`...FIXME
+`restoredOffsets` returns pairs of `TopicPartition` and <<kafka-streams-StateRestorer.adoc#restoredOffset, restoredOffset>> (from the associated <<kafka-streams-StateRestorer.adoc#, StateRestorer>> that is <<kafka-streams-StateRestorer.adoc#isPersistent, persistent>> for the <<kafka-streams-StateRestorer.adoc#storeName, state store>> that is <<kafka-streams-StateStore.adoc#persistent, persistent>>).
+
+Internally, for every pair of `TopicPartition` and <<kafka-streams-StateRestorer.adoc#, StateRestorer>> (in the <<stateRestorers, stateRestorers>> internal registry), `restoredOffsets` requests the `StateRestorer` to <<kafka-streams-StateRestorer.adoc#restoredOffset, restoredOffset>> when the restorer is <<kafka-streams-StateRestorer.adoc#isPersistent, persistent>> (i.e. when the <<kafka-streams-StateRestorer.adoc#storeName, associated state store>> is <<kafka-streams-StateStore.adoc#persistent, persistent>>).
 
 === [[processNext]] `processNext` Internal Method
 

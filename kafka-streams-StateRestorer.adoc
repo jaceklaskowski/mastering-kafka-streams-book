@@ -6,6 +6,20 @@
 
 `StateRestorer` is <<creating-instance, created>> exclusively when `ProcessorStateManager` is requested to <<kafka-streams-ProcessorStateManager.adoc#register, register a state store>>.
 
+=== [[creating-instance]] Creating StateRestorer Instance
+
+`StateRestorer` takes the following to be created:
+
+* [[partition]] Kafka https://kafka.apache.org/22/javadoc/index.html?org/apache/kafka/common/TopicPartition.html[TopicPartition]
+* [[compositeRestoreListener]] <<kafka-streams-CompositeRestoreListener.adoc#, CompositeRestoreListener>>
+* [[checkpoint]] `checkpoint`
+* [[offsetLimit]] `offsetLimit`
+* [[persistent]] `persistent` flag
+* [[storeName]] Name of the state store
+* [[recordConverter]] `RecordConverter`
+
+`StateRestorer` initializes the <<internal-properties, internal properties>>.
+
 === [[restoreBatchCompleted]] `restoreBatchCompleted` Method
 
 [source, java]
@@ -50,19 +64,6 @@ void restore(final Collection<KeyValue<byte[], byte[]>> records)
 
 NOTE: `restore` is used exclusively when `StoreChangelogReader` is requested to <<kafka-streams-StoreChangelogReader.adoc#restore, restore>>.
 
-=== [[creating-instance]] Creating StateRestorer Instance
-
-`StateRestorer` takes the following when created:
-
-* [[partition]] Kafka https://kafka.apache.org/22/javadoc/index.html?org/apache/kafka/common/TopicPartition.html[TopicPartition]
-* [[compositeRestoreListener]] <<kafka-streams-CompositeRestoreListener.adoc#, CompositeRestoreListener>>
-* [[checkpoint]] `checkpoint`
-* [[offsetLimit]] `offsetLimit`
-* [[persistent]] `persistent` flag
-* [[storeName]] Name of the state store
-
-`StateRestorer` initializes the <<internal-registries, internal registries and counters>>.
-
 === [[setUserRestoreListener]] Setting StateRestoreListener -- `setUserRestoreListener` Method
 
 [source, java]
@@ -73,3 +74,28 @@ void setUserRestoreListener(StateRestoreListener userRestoreListener)
 `setUserRestoreListener` simply requests the <<compositeRestoreListener, CompositeRestoreListener>> to <<kafka-streams-CompositeRestoreListener.adoc#setUserRestoreListener, use>> the input <<kafka-streams-StateRestoreListener.adoc#, StateRestoreListener>>.
 
 NOTE: `setUserRestoreListener` is used exclusively when `StoreChangelogReader` is requested to <<kafka-streams-StoreChangelogReader.adoc#register, register a StateRestorer>>.
+
+=== [[isPersistent]] `isPersistent` Method
+
+[source, java]
+----
+boolean isPersistent()
+----
+
+`isPersistent` returns the <<persistent, persistent>> flag.
+
+NOTE: `isPersistent` is used exclusively when `StoreChangelogReader` is requested to <<kafka-streams-StoreChangelogReader.adoc#restoredOffsets, restoredOffsets>>.
+
+=== [[internal-properties]] Internal Properties
+
+[cols="30m,70",options="header",width="100%"]
+|===
+| Name
+| Description
+
+| checkpointOffset
+a| [[checkpointOffset]]
+
+Used when...FIXME
+
+|===

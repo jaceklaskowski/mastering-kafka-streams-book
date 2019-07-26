@@ -114,6 +114,17 @@ ProcessorTopology:
 boolean hasPersistentLocalStore()
 ----
 
-`hasPersistentLocalStore` is positive (`true`) when any of the <<kafka-streams-StateStore.adoc#, StateStore>> in the <<stateStores, stateStores>> internal registry is <<kafka-streams-StateStore.adoc#persistent, persistent>>.
+`hasPersistentLocalStore` is positive (`true`) when one of the <<kafka-streams-StateStore.adoc#, local StateStores>> (in the <<stateStores, stateStores>> internal registry) is <<kafka-streams-StateStore.adoc#persistent, persistent>>.
 
 NOTE: `hasPersistentLocalStore` is used exclusively when `KafkaStreams` is <<kafka-streams-KafkaStreams.adoc#creating-instance, created>> (to create a <<kafka-streams-internals-StateDirectory.adoc#, StateDirectory>>).
+
+=== [[hasPersistentGlobalStore]] `hasPersistentGlobalStore` Method
+
+[source, java]
+----
+boolean hasPersistentGlobalStore()
+----
+
+`hasPersistentGlobalStore` is positive (`true`) when one of the <<kafka-streams-StateStore.adoc#, global StateStores>> (in the <<globalStateStores, globalStateStores>> internal registry) is <<kafka-streams-StateStore.adoc#persistent, persistent>>.
+
+NOTE: `hasPersistentGlobalStore` is used exclusively when `KafkaStreams` is <<kafka-streams-KafkaStreams.adoc#creating-instance, created>> (to create a <<kafka-streams-internals-StateDirectory.adoc#, StateDirectory>>).

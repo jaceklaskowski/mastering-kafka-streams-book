@@ -2,6 +2,10 @@
 
 `StateStore` is the <<contract, contract>> of <<implementations, state storage engines>> that manage a state.
 
+`StateStore` can be <<persistent, persistent>> or not. Among persistent stores are <<kafka-streams-StateStore-AbstractRocksDBSegmentedBytesStore.adoc#, AbstractRocksDBSegmentedBytesStore>>, <<kafka-streams-StateStore-KeyValueToTimestampedKeyValueByteStoreAdapter.adoc#, KeyValueToTimestampedKeyValueByteStoreAdapter>>, <<kafka-streams-StateStore-RocksDBStore.adoc#, RocksDBStore>>, <<kafka-streams-StateStore-WindowToTimestampedWindowByteStoreAdapter.adoc#, WindowToTimestampedWindowByteStoreAdapter>>.
+
+NOTE: A `StateStore` can be *local* or *global* (although it is a property of a <<kafka-streams-internals-ProcessorTopology.adoc#, ProcessorTopology>>).
+
 [[contract]]
 .StateStore Contract
 [cols="1m,3",options="header",width="100%"]
@@ -107,7 +111,7 @@ a| [[persistent]]
 boolean persistent()
 ----
 
-Indicates whether the state store is persistent (`true`) or not (`false`)
+Indicates whether the state store is *persistent* (`true`) or not (`false`)
 
 Used when:
 
