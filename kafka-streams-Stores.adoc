@@ -73,7 +73,7 @@ SessionBytesStoreSupplier persistentSessionStore(
   final Duration retentionPeriod)
 ----
 
-Creates a `RocksDbSessionBytesStoreSupplier` (with `retentionPeriod`)
+Creates a <<kafka-streams-internals-RocksDbSessionBytesStoreSupplier.adoc#, RocksDbSessionBytesStoreSupplier>> (with `retentionPeriod`)
 
 | persistentWindowStore
 a| [[persistentWindowStore]]

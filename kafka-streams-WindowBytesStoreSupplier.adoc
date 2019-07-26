@@ -1,4 +1,4 @@
-== [[WindowBytesStoreSupplier]] WindowBytesStoreSupplier Contract -- StoreSuppliers of WindowStore<Bytes, byte[]>
+== [[WindowBytesStoreSupplier]] WindowBytesStoreSupplier Contract -- StoreSuppliers of WindowStores
 
 [[get]]
 `WindowBytesStoreSupplier` is the <<contract, extension>> of the <<kafka-streams-StoreSupplier.adoc#, StoreSupplier contract>> for <<implementations, state store suppliers>> that <<kafka-streams-StoreSupplier.adoc#get, supply WindowStores>> (i.e. <<kafka-streams-StateStore-WindowStore.adoc#, WindowStores>> of type `<Bytes, byte[]>`).

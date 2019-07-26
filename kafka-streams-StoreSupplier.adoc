@@ -39,9 +39,9 @@ Used when:
 
 * <<kafka-streams-StoreBuilder.adoc#, StoreBuilders>> (i.e. <<kafka-streams-internals-KeyValueStoreBuilder.adoc#, KeyValueStoreBuilder>>, <<kafka-streams-internals-SessionStoreBuilder.adoc#, SessionStoreBuilder>> and <<kafka-streams-internals-WindowStoreBuilder.adoc#, WindowStoreBuilder>>) are requested to <<kafka-streams-StoreBuilder.adoc#build, build a KeyValueStore>>
 
-* `RocksDbSessionBytesStoreSupplier` is requested to get a `SessionStore`
+* `RocksDbSessionBytesStoreSupplier` is requested for a <<kafka-streams-internals-RocksDbSessionBytesStoreSupplier.adoc#get, SessionStore>>
 
-* `RocksDbWindowBytesStoreSupplier` is requested to get a `WindowStore`
+* `RocksDbWindowBytesStoreSupplier` is requested for a <<kafka-streams-internals-RocksDbWindowBytesStoreSupplier.adoc#get, WindowStore>>
 
 | name
 a| [[name]]

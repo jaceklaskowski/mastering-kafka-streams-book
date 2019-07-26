@@ -1,47 +1,19 @@
 == [[RocksDBSegmentedBytesStore]] RocksDBSegmentedBytesStore
 
-`RocksDBSegmentedBytesStore` is...FIXME
+`RocksDBSegmentedBytesStore` is a concrete <<kafka-streams-StateStore.adoc#, StateStore>> (as a <<kafka-streams-StateStore-AbstractRocksDBSegmentedBytesStore.adoc#, AbstractRocksDBSegmentedBytesStore>> of `KeyValueSegments`) that...FIXME
 
-=== [[init]] Initialize State Store -- `init` Method
+`RocksDBSegmentedBytesStore` is <<creating-instance, created>> when:
 
-[source, java]
-----
-void init(final ProcessorContext context, final StateStore root)
-----
+* `RocksDbSessionBytesStoreSupplier` is requested for a <<kafka-streams-internals-RocksDbSessionBytesStoreSupplier.adoc#get, SessionStore>>
 
-NOTE: `init` is part of <<kafka-streams-StateStore.adoc#init, StateStore Contract>> to initialize the <<kafka-streams-StateStore.adoc#, state store>>.
+* `RocksDbWindowBytesStoreSupplier` is requested for a <<kafka-streams-internals-RocksDbWindowBytesStoreSupplier.adoc#get, WindowStore>>
 
-`init`...FIXME
+=== [[creating-instance]] Creating RocksDBSegmentedBytesStore Instance
 
-=== [[remove]] `remove` Method
+`RocksDBSegmentedBytesStore` takes the following to be created:
 
-[source, java]
-----
-void remove(final Windowed<Bytes> sessionKey)
-----
-
-NOTE: `remove` is part of link:kafka-streams-StateStore-SessionStore.adoc#remove[SessionStore Contract] to...FIXME.
-
-`remove`...FIXME
-
-=== [[putAndMaybeForward]] `putAndMaybeForward` Internal Method
-
-[source, java]
-----
-void putAndMaybeForward(final ThreadCache.DirtyEntry entry, final InternalProcessorContext context)
-----
-
-`putAndMaybeForward`...FIXME
-
-NOTE: `putAndMaybeForward` is used when...FIXME
-
-=== [[close]] Closing State Store -- `close` Method
-
-[source, java]
-----
-void close()
-----
-
-NOTE: `close` is part of the <<kafka-streams-StateStore-AbstractStateStore.adoc#close, AbstractStateStore Contract>> to close the <<kafka-streams-StateStore.adoc#, state store>>.
-
-`close`...FIXME
+* [[name]] Name
+* [[metricScope]] Metric scope
+* [[retention]] `retention`
+* [[segmentInterval]] `segmentInterval`
+* [[keySchema]] `KeySchema`

@@ -1,3 +1,87 @@
-== [[SegmentedBytesStore]] SegmentedBytesStore
+== [[SegmentedBytesStore]] SegmentedBytesStore Contract
 
-`SegmentedBytesStore` is...FIXME
+`SegmentedBytesStore` is the <<contract, extension>> of the <<kafka-streams-StateStore.adoc#, StateStore contract>> for <<implementations, segmented-bytes state stores>> that <<FIXME, FIXME>>.
+
+[[contract]]
+.SegmentedBytesStore Contract
+[cols="30m,70",options="header",width="100%"]
+|===
+| Method
+| Description
+
+| all
+a| [[all]]
+
+[source, java]
+----
+KeyValueIterator<Bytes, byte[]> all()
+----
+
+Used when...FIXME
+
+| fetch
+a| [[fetch]]
+
+[source, java]
+----
+KeyValueIterator<Bytes, byte[]> fetch(
+  Bytes keyFrom,
+  Bytes keyTo,
+  long from,
+  long to)
+KeyValueIterator<Bytes, byte[]> fetch(
+  Bytes key,
+  long from,
+  long to)
+----
+
+Used when...FIXME
+
+| fetchAll
+a| [[fetchAll]]
+
+[source, java]
+----
+KeyValueIterator<Bytes, byte[]> fetchAll(
+  long from,
+  long to)
+----
+
+Used when...FIXME
+
+| get
+a| [[get]]
+
+[source, java]
+----
+byte[] get(Bytes key)
+----
+
+Used when...FIXME
+
+| put
+a| [[put]]
+
+[source, java]
+----
+void put(
+  Bytes key,
+  byte[] value)
+----
+
+Used when...FIXME
+
+| remove
+a| [[remove]]
+
+[source, java]
+----
+void remove(Bytes key)
+----
+
+Used when...FIXME
+
+|===
+
+[[implementations]]
+NOTE: <<kafka-streams-StateStore-AbstractRocksDBSegmentedBytesStore.adoc#, AbstractRocksDBSegmentedBytesStore>> is the only known direct implementation of the <<contract, SegmentedBytesStore Contract>> in Kafka Streams.

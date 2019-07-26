@@ -21,7 +21,7 @@ import org.apache.kafka.streams.state.internals.RocksDbWindowBytesStoreSupplier
 assert(windowStore.isInstanceOf[RocksDbWindowBytesStoreSupplier])
 ----
 
-=== [[get]] Getting State Store -- `get` Method
+=== [[get]] Creating State Store -- `get` Method
 
 [source, java]
 ----

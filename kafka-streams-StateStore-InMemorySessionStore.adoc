@@ -1,0 +1,16 @@
+== [[InMemorySessionStore]] InMemorySessionStore
+
+`InMemorySessionStore` is...FIXME
+
+=== [[init]] Initialize State Store -- `init` Method
+
+[source, java]
+----
+void init(
+  ProcessorContext context,
+  StateStore root)
+----
+
+NOTE: `init` is part of <<kafka-streams-StateStore-AbstractStateStore.adoc#init, AbstractStateStore Contract>> to initialize the <<kafka-streams-StateStore.adoc#, state store>>.
+
+`init`...FIXME

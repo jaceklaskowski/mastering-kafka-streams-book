@@ -1,0 +1,16 @@
+== [[RocksDbSessionBytesStoreSupplier]] RocksDbSessionBytesStoreSupplier
+
+`RocksDbSessionBytesStoreSupplier` is a concrete <<kafka-streams-SessionBytesStoreSupplier.adoc#, SessionBytesStoreSupplier>> of <<get, RocksDBSessionStores>> (`SessionStore<Bytes, byte[]>`).
+
+`RocksDbSessionBytesStoreSupplier` is <<creating-instance, created>> when `Stores` factory is requested to <<kafka-streams-Stores.adoc#persistentSessionStore, persistentSessionStore>>.
+
+=== [[get]] Creating State Store -- `get` Method
+
+[source, java]
+----
+SessionStore<Bytes, byte[]> get()
+----
+
+NOTE: `get` is part of the <<kafka-streams-StoreSupplier.adoc#get, StoreSupplier Contract>> to get a <<kafka-streams-StateStore.adoc#, state store>>.
+
+`get` simply creates a new <<kafka-streams-StateStore-RocksDBSessionStore.adoc#, RocksDBSessionStore>>.
