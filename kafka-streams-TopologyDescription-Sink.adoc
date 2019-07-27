@@ -1,0 +1,35 @@
+== [[TopologyDescription.Sink]][[Sink]] TopologyDescription.Sink
+
+`TopologyDescription.Sink` is the <<contract, extension>> of the <<kafka-streams-TopologyDescription-Node.adoc#, Node contract>> for <<implementations, sink nodes>> that can have a <<topic, topic>> and <<topicNameExtractor, TopicNameExtractor>>.
+
+[[contract]]
+.TopologyDescription.Sink Contract
+[cols="30m,70",options="header",width="100%"]
+|===
+| Method
+| Description
+
+| topic
+a| [[topic]]
+
+[source, java]
+----
+String topic()
+----
+
+Used when...FIXME
+
+| topicNameExtractor
+a| [[topicNameExtractor]]
+
+[source, java]
+----
+TopicNameExtractor topicNameExtractor()
+----
+
+Used when...FIXME
+
+|===
+
+[[implementations]]
+NOTE: <<kafka-streams-internals-InternalTopologyBuilder-Sink.adoc#, InternalTopologyBuilder.Sink>> is the default and only known implementation of the <<contract, TopologyDescription.Sink Contract>> in Kafka Streams.

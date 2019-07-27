@@ -1,0 +1,63 @@
+== [[TopologyDescription.Node]][[Node]] TopologyDescription.Node
+
+`TopologyDescription.Node` is the <<contract, abstraction>> of <<implementations, topology nodes>> that are identified by <<name, name>>, and have <<predecessors, predecessors>> and <<successors, successors>> nodes.
+
+[[contract]]
+.TopologyDescription.Node Contract
+[cols="30m,70",options="header",width="100%"]
+|===
+| Method
+| Description
+
+| name
+a| [[name]]
+
+[source, java]
+----
+String name()
+----
+
+Used when...FIXME
+
+| predecessors
+a| [[predecessors]]
+
+[source, java]
+----
+Set<Node> predecessors()
+----
+
+Used when...FIXME
+
+| successors
+a| [[successors]]
+
+[source, java]
+----
+Set<Node> successors()
+----
+
+Used when...FIXME
+
+|===
+
+[[implementations]]
+.TopologyDescription.Nodes (Direct Implementations and Extensions)
+[cols="30,70",options="header",width="100%"]
+|===
+| TopologyDescription.Node
+| Description
+
+| <<kafka-streams-internals-InternalTopologyBuilder-AbstractNode.adoc#, AbstractNode>>
+| [[AbstractNode]]
+
+| <<kafka-streams-TopologyDescription-Processor.adoc#, Processor>>
+| [[Processor]]
+
+| <<kafka-streams-TopologyDescription-Sink.adoc#, Sink>>
+| [[Sink]]
+
+| <<kafka-streams-TopologyDescription-Source.adoc#, Source>>
+| [[Source]]
+
+|===

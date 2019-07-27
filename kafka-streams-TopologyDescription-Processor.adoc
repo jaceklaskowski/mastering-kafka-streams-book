@@ -1,0 +1,27 @@
+== [[TopologyDescription.Processor]][[Processor]] TopologyDescription.Processor
+
+`TopologyDescription.Processor` is the <<contract, extension>> of the <<kafka-streams-TopologyDescription-Node.adoc#, Node contract>> for <<implementations, processor nodes>> that can have one or more connected <<stores, stores>>.
+
+[[contract]]
+.TopologyDescription.Processor Contract
+[cols="30m,70",options="header",width="100%"]
+|===
+| Method
+| Description
+
+| stores
+a| [[stores]]
+
+[source, java]
+----
+Set<String> stores()
+----
+
+Names of the connected stores
+
+Used when...FIXME
+
+|===
+
+[[implementations]]
+NOTE: <<kafka-streams-internals-InternalTopologyBuilder-Processor.adoc#, InternalTopologyBuilder.Processor>> is the default and only known implementation of the <<contract, TopologyDescription.Processor Contract>> in Kafka Streams.

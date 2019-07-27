@@ -824,7 +824,7 @@ In the end, `putNodeGroupName` gives the input `nodeGroupId` or a new node group
 
 NOTE: `putNodeGroupName` is used exclusively when `InternalTopologyBuilder` is requested to <<makeNodeGroups, create the node groups>>.
 
-=== [[describe]] `describe` Method
+=== [[describe]] Describing Topology (as TopologyDescription) -- `describe` Method
 
 [source, java]
 ----
@@ -884,21 +884,21 @@ Topologies:
 
 NOTE: `describe` is used exclusively when `Topology` is requested to link:kafka-streams-Topology.adoc#describe[describe].
 
-=== [[describeSubtopology]] `describeSubtopology` Internal Method
+==== [[describeSubtopology]] `describeSubtopology` Internal Method
 
 [source, java]
 ----
 void describeSubtopology(
-  final TopologyDescription description,
-  final Integer subtopologyId,
-  final Set<String> nodeNames)
+  TopologyDescription description,
+  Integer subtopologyId,
+  Set<String> nodeNames)
 ----
 
 `describeSubtopology`...FIXME
 
-NOTE: `describeSubtopology` is used exclusively when `InternalTopologyBuilder` is requested to <<describe, describe>>.
+NOTE: `describeSubtopology` is used exclusively when `InternalTopologyBuilder` is requested to <<describe, describe itself>>.
 
-=== [[describeGlobalStore]] `describeGlobalStore` Internal Method
+==== [[describeGlobalStore]] `describeGlobalStore` Internal Method
 
 [source, java]
 ----
@@ -909,7 +909,7 @@ void describeGlobalStore(
 
 `describeGlobalStore`...FIXME
 
-NOTE: `describeGlobalStore` is used exclusively when `InternalTopologyBuilder` is requested to <<describe, describe>>.
+NOTE: `describeGlobalStore` is used exclusively when `InternalTopologyBuilder` is requested to <<describe, describe itself>>.
 
 === [[addSink]] Adding Sink Node to Topology -- `addSink` Method
 

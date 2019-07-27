@@ -11,13 +11,17 @@
 
 == Developing Stream Processing Applications with Kafka Streams
 
-. link:kafka-streams-KafkaStreams.adoc[KafkaStreams -- Streams Client]
-. link:kafka-streams-Topology.adoc[Topology -- Logical Processor Node Topology]
-. link:kafka-streams-TopologyDescription.adoc[TopologyDescription -- Meta Representation of Topology]
-. link:kafka-streams-StreamsConfig.adoc[StreamsConfig -- Configuration Properties for Kafka Clients]
+. link:kafka-streams-KafkaStreams.adoc[KafkaStreams]
+. link:kafka-streams-Topology.adoc[Topology]
+. link:kafka-streams-TopologyDescription.adoc[TopologyDescription]
+.. link:kafka-streams-TopologyDescription-Node.adoc[Node]
+.. link:kafka-streams-TopologyDescription-Processor.adoc[Processor]
+.. link:kafka-streams-TopologyDescription-Sink.adoc[Sink]
+.. link:kafka-streams-TopologyDescription-Source.adoc[Source]
+. link:kafka-streams-StreamsConfig.adoc[StreamsConfig]
 . link:kafka-streams-properties.adoc[Configuration Properties]
 . link:kafka-logging.adoc[Logging]
-. link:kafka-streams-KafkaClientSupplier.adoc[KafkaClientSupplier Contract -- Suppliers of Kafka AdminClient, Consumers and Producers]
+. link:kafka-streams-KafkaClientSupplier.adoc[KafkaClientSupplier]
 
 == High-Level Streams DSL
 
@@ -256,19 +260,17 @@
 . link:kafka-streams-internals-InternalStreamsBuilder.adoc[InternalStreamsBuilder]
 
 . link:kafka-streams-internals-InternalTopologyBuilder.adoc[InternalTopologyBuilder]
-.. link:kafka-streams-internals-ConsumedInternal.adoc[ConsumedInternal -- Internal Accessors to Consumed Metadata]
-.. link:kafka-streams-internals-ProducedInternal.adoc[ProducedInternal -- Internal Accessors to Produced Metadata]
-.. link:kafka-streams-internals-QuickUnion.adoc[QuickUnion]
-.. link:kafka-streams-internals-TopicsInfo.adoc[TopicsInfo]
+.. link:kafka-streams-internals-InternalTopologyBuilder-AbstractNode.adoc[AbstractNode]
+.. link:kafka-streams-internals-InternalTopologyBuilder-Processor.adoc[Processor]
+.. link:kafka-streams-internals-InternalTopologyBuilder-Sink.adoc[Sink]
+.. link:kafka-streams-internals-InternalTopologyBuilder-Source.adoc[Source]
 
-. link:kafka-streams-internals-InternalTopologyBuilder-NodeFactory.adoc[NodeFactory Contract]
+. link:kafka-streams-internals-InternalTopologyBuilder-NodeFactory.adoc[NodeFactory]
 .. link:kafka-streams-internals-InternalTopologyBuilder-ProcessorNodeFactory.adoc[ProcessorNodeFactory]
 .. link:kafka-streams-internals-InternalTopologyBuilder-SinkNodeFactory.adoc[SinkNodeFactory]
-.. link:kafka-streams-internals-InternalTopologyBuilder-SourceNodeFactory.adoc[SourceNodeFactory -- NodeFactory With No Predecessors]
+.. link:kafka-streams-internals-InternalTopologyBuilder-SourceNodeFactory.adoc[SourceNodeFactory]
 
 . link:kafka-streams-internals-InternalTopologyBuilder-TopologyDescription.adoc[InternalTopologyBuilder.TopologyDescription]
-
-. link:kafka-streams-internals-InternalTopologyBuilder-AbstractNode.adoc[AbstractNode]
 
 . link:kafka-streams-NodeMetrics.adoc[NodeMetrics]
 
@@ -306,6 +308,11 @@
 . link:kafka-streams-internals-KStreamImpl-KStreamImplJoin.adoc[KStreamImplJoin]
 
 . link:kafka-streams-internals-StaticTopicNameExtractor.adoc[StaticTopicNameExtractor]
+
+. link:kafka-streams-internals-ConsumedInternal.adoc[ConsumedInternal]
+. link:kafka-streams-internals-ProducedInternal.adoc[ProducedInternal]
+. link:kafka-streams-internals-QuickUnion.adoc[QuickUnion]
+. link:kafka-streams-internals-TopicsInfo.adoc[TopicsInfo]
 
 === Physical Plan of Execution
 

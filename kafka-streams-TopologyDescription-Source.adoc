@@ -1,0 +1,45 @@
+== [[TopologyDescription.Source]][[Source]] TopologyDescription.Source
+
+`TopologyDescription.Source` is the <<contract, extension>> of the <<kafka-streams-TopologyDescription-Node.adoc#, Node contract>> for <<implementations, source nodes>> that can have <<topics, comma-separated topic names>>, <<topicSet, topic names>>, and <<topicPattern, topic pattern>>.
+
+[[contract]]
+.TopologyDescription.Source Contract
+[cols="30m,70",options="header",width="100%"]
+|===
+| Method
+| Description
+
+| topicPattern
+a| [[topicPattern]]
+
+[source, java]
+----
+Pattern topicPattern()
+----
+
+Used when...FIXME
+
+| topics
+a| [[topics]]
+
+[source, java]
+----
+String topics()
+----
+
+Used when...FIXME
+
+| topicSet
+a| [[topicSet]]
+
+[source, java]
+----
+Set<String> topicSet()
+----
+
+Used when...FIXME
+
+|===
+
+[[implementations]]
+NOTE: <<kafka-streams-internals-InternalTopologyBuilder-Source.adoc#, InternalTopologyBuilder.Source>> is the default and only known implementation of the <<contract, TopologyDescription.Source Contract>> in Kafka Streams.

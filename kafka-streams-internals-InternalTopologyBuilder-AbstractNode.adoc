@@ -1,3 +1,52 @@
-== [[AbstractNode]] AbstractNode
+== [[InternalTopologyBuilder.AbstractNode]][[AbstractNode]] InternalTopologyBuilder.AbstractNode
 
-`AbstractNode` is...FIXME
+`InternalTopologyBuilder.AbstractNode` is the base implementation of the <<kafka-streams-TopologyDescription-Node.adoc#, TopologyDescription.Node contract>> for <<implementations, topology nodes>> with the <<size, size of the (sub)topology rooted at this node (including the node itself)>>.
+
+[[creating-instance]][[name]]
+`InternalTopologyBuilder.AbstractNode` takes a single `name` to be created.
+
+[[size]]
+`InternalTopologyBuilder.AbstractNode` has a *size* which is the size of the (sub)topology rooted at this node (including the node itself).
+
+[[predecessors]][[successors]]
+`InternalTopologyBuilder.AbstractNode` has *predecessors* and *successors* that are `TopologyDescription.Nodes` before and after the node in a topology (a node graph).
+
+[[implementations]]
+.InternalTopologyBuilder.AbstractNodes
+[cols="30,70",options="header",width="100%"]
+|===
+| AbstractNode
+| Description
+
+| <<kafka-streams-internals-InternalTopologyBuilder-Source.adoc#, Source>>
+| [[Source]]
+
+| <<kafka-streams-internals-InternalTopologyBuilder-Processor.adoc#, Processor>>
+| [[Processor]]
+
+| <<kafka-streams-internals-InternalTopologyBuilder-Sink.adoc#, Sink>>
+| [[Sink]]
+
+|===
+
+=== [[addPredecessor]] Adding Predecessor -- `addPredecessor` Method
+
+[source, java]
+----
+void addPredecessor(TopologyDescription.Node predecessor)
+----
+
+`addPredecessor` simply adds a new <<kafka-streams-TopologyDescription-Node.adoc#, predecessor node>> to the <<predecessors, predecessors>> internal registry.
+
+NOTE: `addPredecessor` is used exclusively when `InternalTopologyBuilder` is requested to <<kafka-streams-internals-InternalTopologyBuilder.adoc#describeSubtopology, describe a sub-topology>> (when requested to <<kafka-streams-internals-InternalTopologyBuilder.adoc#describe, describe itself>>).
+
+=== [[addSuccessor]] Adding Successor -- `addSuccessor` Method
+
+[source, java]
+----
+void addSuccessor(TopologyDescription.Node successor)
+----
+
+`addSuccessor` simply adds a new <<kafka-streams-TopologyDescription-Node.adoc#, successor node>> to the <<successors, successors>> internal registry.
+
+NOTE: `addSuccessor` is used exclusively when `InternalTopologyBuilder` is requested to <<kafka-streams-internals-InternalTopologyBuilder.adoc#describeSubtopology, describe a sub-topology>> (when requested to <<kafka-streams-internals-InternalTopologyBuilder.adoc#describe, describe itself>>).
