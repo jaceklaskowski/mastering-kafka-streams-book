@@ -58,10 +58,10 @@ NOTE: `createTasks` is used when `TaskManager` is requested for <<kafka-streams-
 
 `AbstractTaskCreator` takes the following when created:
 
-* [[builder]] link:kafka-streams-internals-InternalTopologyBuilder.adoc[InternalTopologyBuilder]
-* [[config]] link:kafka-streams-StreamsConfig.adoc[StreamsConfig]
-* [[streamsMetrics]] link:kafka-streams-StreamsMetrics.adoc[StreamsMetrics]
-* [[stateDirectory]] link:kafka-streams-internals-StateDirectory.adoc[StateDirectory]
+* [[builder]] <<kafka-streams-internals-InternalTopologyBuilder.adoc#, InternalTopologyBuilder>>
+* [[config]] <<kafka-streams-StreamsConfig.adoc#, StreamsConfig>>
+* [[streamsMetrics]] <<kafka-streams-StreamsMetrics.adoc#, StreamsMetrics>>
+* [[stateDirectory]] <<kafka-streams-internals-StateDirectory.adoc#, StateDirectory>>
 * [[taskCreatedSensor]] Kafka `Sensor` (to monitor task created)
 * [[storeChangelogReader]] <<kafka-streams-ChangelogReader.adoc#, ChangelogReader>>
 * [[time]] `Time`

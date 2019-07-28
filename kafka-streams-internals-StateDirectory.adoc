@@ -12,15 +12,15 @@ NOTE: link:kafka-streams-properties.adoc#state.dir[state.dir] configuration prop
 [[logging]]
 [TIP]
 ====
-Enable any of `ERROR`, `INFO`, `DEBUG`, `TRACE` logging levels for `org.apache.kafka.streams.processor.internals.StateDirectory` logger to see what happens inside.
+Enable `ALL` logging level for `org.apache.kafka.streams.processor.internals.StateDirectory` logger to see what happens inside.
 
 Add the following line to `log4j.properties`:
 
 ```
-log4j.logger.org.apache.kafka.streams.processor.internals.StateDirectory=TRACE
+log4j.logger.org.apache.kafka.streams.processor.internals.StateDirectory=ALL
 ```
 
-Refer to link:kafka-logging.adoc#log4j.properties[Application Logging Using log4j].
+Refer to <<kafka-logging.adoc#log4j.properties, Application Logging Using log4j>>.
 ====
 
 === [[clean]] `clean` Method
@@ -59,3 +59,14 @@ NOTE: `cleanRemovedTasks` is used when...FIXME
 * [[time]] `Time`
 
 `StateDirectory` initializes the <<internal-registries, internal registries and counters>>.
+
+=== [[listTaskDirectories]] `listTaskDirectories` Method
+
+[source, java]
+----
+File[] listTaskDirectories()
+----
+
+`listTaskDirectories`...FIXME
+
+NOTE: `listTaskDirectories` is used when...FIXME
