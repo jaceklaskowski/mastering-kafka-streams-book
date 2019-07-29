@@ -429,7 +429,7 @@ Set<TaskId> cachedTasksIds()
 
 `cachedTasksIds` requests the <<taskCreator, StreamTask creator>> for the <<kafka-streams-internals-AbstractTaskCreator.adoc#stateDirectory, StateDirectory>> that is in turn requested for the <<kafka-streams-internals-StateDirectory.adoc#listTaskDirectories, task directories>>.
 
-`cachedTasksIds` collects the <<kafka-streams-TaskId.adoc#parse, TaskIds>> (from the names of the task directories) that correspond to task directories with <<kafka-streams-internals-AbstractStateManager.adoc#CHECKPOINT_FILE_NAME, .checkpoint>> file.
+`cachedTasksIds` collects the <<kafka-streams-TaskId.adoc#, TaskIds>> (<<kafka-streams-TaskId.adoc#parse, parsing the names of the directories>>) that correspond to task directories with <<kafka-streams-internals-AbstractStateManager.adoc#CHECKPOINT_FILE_NAME, .checkpoint>> file.
 
 NOTE: `cachedTasksIds` is used exclusively when `StreamsPartitionAssignor` is requested to <<kafka-streams-internals-StreamsPartitionAssignor.adoc#subscription, subscription>>.
 
@@ -465,6 +465,17 @@ StandbyTask standbyTask(TopicPartition partition)
 `standbyTask` simply requests the <<standby, AssignedStandbyTasks>> for the <<kafka-streams-internals-AssignedTasks.adoc#runningTaskFor, running StandbyTask>> for the input https://kafka.apache.org/22/javadoc/org/apache/kafka/common/TopicPartition.html[partition].
 
 NOTE: `standbyTask` is used exclusively when `StreamThread` is requested to <<kafka-streams-internals-StreamThread.adoc#maybeUpdateStandbyTasks, attempt to update running StandbyTasks>>.
+
+=== [[prevActiveTaskIds]] Previously Active Tasks -- `prevActiveTaskIds` Method
+
+[source, java]
+----
+Set<TaskId> prevActiveTaskIds()
+----
+
+`prevActiveTaskIds` simply requests the <<active, AssignedStreamsTasks>> for the <<kafka-streams-internals-AssignedTasks.adoc#previousTaskIds, previously active tasks>>.
+
+NOTE: `prevActiveTaskIds` is used when...FIXME
 
 === [[internal-properties]] Internal Properties
 

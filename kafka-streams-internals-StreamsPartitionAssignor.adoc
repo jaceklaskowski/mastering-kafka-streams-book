@@ -38,57 +38,18 @@ Given the above, there will be just one elected `StreamsPartitionAssignor` among
 [[numStandbyReplicas]]
 `StreamsPartitionAssignor` uses <<kafka-streams-properties.adoc#num.standby.replicas, num.standby.replicas>> configuration property for the number of standby replicas per processing task when <<assign, performing partition assignment>> (and requesting `StickyTaskAssignor` to <<kafka-streams-internals-StickyTaskAssignor.adoc#assign, assign tasks>>).
 
-[[internal-registries]]
-.StreamsPartitionAssignor's Internal Properties (e.g. Registries, Counters and Flags)
-[cols="1m,3",options="header",width="100%"]
-|===
-| Name
-| Description
-
-| assignmentErrorCode
-a| [[assignmentErrorCode]] https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/util/concurrent/atomic/AtomicInteger.html[java.util.concurrent.atomic.AtomicInteger]
-
-| copartitionedTopicsValidator
-a| [[copartitionedTopicsValidator]] <<kafka-streams-internals-CopartitionedTopicsValidator.adoc#, CopartitionedTopicsValidator>>
-
-| internalTopicManager
-| [[internalTopicManager]] <<kafka-streams-internals-InternalTopicManager.adoc#, InternalTopicManager>>
-
-Initialized when `StreamsPartitionAssignor` is requested to <<configure, configure>> itself
-
-Used exclusively when `StreamsPartitionAssignor` is requested to <<prepareTopic, prepareTopic>>
-
-| partitionGrouper
-a| [[partitionGrouper]] <<kafka-streams-PartitionGrouper.adoc#, PartitionGrouper>>
-
-| supportedVersions
-a| [[supportedVersions]] *Supported versions*
-
-All bindings removed (cleared) and then populated in <<assign, assign>>
-
-NOTE: `supportedVersions` does not seem to be used except to hold the entries.
-
-| taskManager
-a| [[taskManager]] <<kafka-streams-internals-TaskManager.adoc#, TaskManager>>
-
-| userEndPoint
-a| [[userEndPoint]] *User-defined endpoint* in the format of `host:port` as <<configure, configured>> by link:kafka-streams-properties.adoc#application.server[application.server] configuration property (default: empty).
-
-Used when `StreamsPartitionAssignor` is requested to <<subscription, subscription>> (and create a `SubscriptionInfo`)
-|===
-
 [[logging]]
 [TIP]
 ====
-Enable `ERROR`, `WARN`, `INFO`, `DEBUG` logging level for `org.apache.kafka.streams.processor.internals.StreamsPartitionAssignor` logger to see what happens inside.
+Enable `ALL` logging level for `org.apache.kafka.streams.processor.internals.StreamsPartitionAssignor` logger to see what happens inside.
 
 Add the following line to `log4j.properties`:
 
 ```
-log4j.logger.org.apache.kafka.streams.processor.internals.StreamsPartitionAssignor=DEBUG
+log4j.logger.org.apache.kafka.streams.processor.internals.StreamsPartitionAssignor=ALL
 ```
 
-Refer to link:kafka-logging.adoc#log4j.properties[Application Logging Using log4j].
+Refer to <<kafka-logging.adoc#log4j.properties, Application Logging Using log4j>>.
 ====
 
 === [[subscription]] `subscription` Method
@@ -98,9 +59,15 @@ Refer to link:kafka-logging.adoc#log4j.properties[Application Logging Using log4
 Subscription subscription(Set<String> topics)
 ----
 
-NOTE: `subscription` is part of Kafka Consumer's `PartitionAssignor` contract to...FIXME.
+NOTE: `subscription` is part of Kafka Consumer's `PartitionAssignor` contract to return a local member's subscription for the topics subscribed to (e.g. using `KafkaConsumer.subscribe`).
 
-`subscription`...FIXME
+`subscription` requests the <<taskManager, TaskManager>> for the <<kafka-streams-internals-TaskManager.adoc#prevActiveTaskIds, previously active tasks>>.
+
+`subscription` requests the <<taskManager, TaskManager>> for the <<kafka-streams-internals-TaskManager.adoc#cachedTasksIds, cached task IDs>> (aka _standbyTasks_) and removes all of the previously active tasks.
+
+`subscription` requests the <<taskManager, TaskManager>> to <<kafka-streams-internals-TaskManager.adoc#updateSubscriptionsFromMetadata, updateSubscriptionsFromMetadata>> with the given `topics`.
+
+In the end, `subscription` creates a <<kafka-streams-internals-SubscriptionInfo.adoc#, SubscriptionInfo>> (with the <<usedSubscriptionMetadataVersion, usedSubscriptionMetadataVersion>>, the <<kafka-streams-internals-TaskManager.adoc#processId, process ID>> from the <<taskManager, TaskManager>>, previously active and standby tasks and the <<userEndPoint, userEndPoint>>), requests the `SubscriptionInfo` for the <<kafka-streams-internals-SubscriptionInfo.adoc#encode, encoded version>> and creates a `Subscription` (with the topics and the encoded version).
 
 === [[onAssignment]] Handling Partition Assignment From Group Leader -- `onAssignment` Method
 
@@ -306,3 +273,45 @@ Map<String, Assignment> computeNewAssignment(
 `computeNewAssignment`...FIXME
 
 NOTE: `computeNewAssignment` is used exclusively when `StreamsPartitionAssignor` is requested to <<assign, perform partition assignment>>.
+
+=== [[internal-properties]] Internal Properties
+
+[cols="30m,70",options="header",width="100%"]
+|===
+| Name
+| Description
+
+| assignmentErrorCode
+a| [[assignmentErrorCode]] https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/util/concurrent/atomic/AtomicInteger.html[java.util.concurrent.atomic.AtomicInteger]
+
+| copartitionedTopicsValidator
+a| [[copartitionedTopicsValidator]] <<kafka-streams-internals-CopartitionedTopicsValidator.adoc#, CopartitionedTopicsValidator>>
+
+| internalTopicManager
+| [[internalTopicManager]] <<kafka-streams-internals-InternalTopicManager.adoc#, InternalTopicManager>>
+
+Initialized when `StreamsPartitionAssignor` is requested to <<configure, configure>> itself
+
+Used exclusively when `StreamsPartitionAssignor` is requested to <<prepareTopic, prepareTopic>>
+
+| partitionGrouper
+a| [[partitionGrouper]] <<kafka-streams-PartitionGrouper.adoc#, PartitionGrouper>>
+
+| supportedVersions
+a| [[supportedVersions]] *Supported versions*
+
+All bindings removed (cleared) and then populated in <<assign, assign>>
+
+NOTE: `supportedVersions` does not seem to be used except to hold the entries.
+
+| taskManager
+a| [[taskManager]] <<kafka-streams-internals-TaskManager.adoc#, TaskManager>>
+
+| usedSubscriptionMetadataVersion
+a| [[usedSubscriptionMetadataVersion]]
+
+| userEndPoint
+a| [[userEndPoint]] *User-defined endpoint* in the format of `host:port` as <<configure, configured>> by link:kafka-streams-properties.adoc#application.server[application.server] configuration property (default: empty).
+
+Used when `StreamsPartitionAssignor` is requested to <<subscription, subscription>> (and create a `SubscriptionInfo`)
+|===

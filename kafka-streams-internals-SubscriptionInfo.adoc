@@ -2,6 +2,9 @@
 
 `SubscriptionInfo` is...FIXME
 
+[[LATEST_SUPPORTED_VERSION]]
+`SubscriptionInfo` uses `4`  for the *latest supported subscription version*.
+
 === [[decode]] `decode` Method
 
 [source, java]

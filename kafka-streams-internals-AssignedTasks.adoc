@@ -474,7 +474,7 @@ a| [[created]] *New tasks* by their ids
 * Tasks are removed when `AssignedTasks` is requested to <<initializeNewTasks, initializeNewTasks>>, <<suspend, suspend>> or <<clear, clear>>
 
 | previousActiveTasks
-a| [[previousActiveTasks]]
+a| [[previousActiveTasks]][[previousTaskIds]] *Previously active tasks*
 
 | restoring
 a| [[restoring]]
