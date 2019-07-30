@@ -246,4 +246,7 @@ a| [[toString]]
 ----
 String toString(final String indent)
 ----
+
+Describes the task (*textual representation*)
+
 |===

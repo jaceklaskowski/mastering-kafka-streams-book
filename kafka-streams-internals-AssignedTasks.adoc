@@ -249,7 +249,7 @@ NOTE: `maybeResumeSuspendedTask` is used when `TaskManager` is requested to link
 
 [source, java]
 ----
-String toString(final String indent)
+String toString(String indent)
 ----
 
 `toString` gives a text representation and <<describe, describes>> the following:
@@ -274,10 +274,10 @@ NOTE: `toString` is used exclusively when `TaskManager` is requested to link:kaf
 [source, java]
 ----
 void describe(
-  final StringBuilder builder,
-  final Collection<T> tasks,
-  final String indent,
-  final String name)
+  StringBuilder builder,
+  Collection<T> tasks,
+  String indent,
+  String name)
 ----
 
 `describe` simply requests every task in the input `tasks` to link:kafka-streams-internals-Task.adoc#toString[describe itself] and uses the `indent` and `name` to create a text representation.
@@ -423,16 +423,16 @@ int commit()
 
 NOTE: `commit` is used exclusively when `TaskManager` is requested to <<kafka-streams-internals-TaskManager.adoc#commitAll, commitAll>>.
 
-=== [[allTasksRunning]] `allTasksRunning` Method
+=== [[allTasksRunning]] Checking Whether All Tasks Are Running -- `allTasksRunning` Method
 
 [source, java]
 ----
 boolean allTasksRunning()
 ----
 
-`allTasksRunning`...FIXME
+`allTasksRunning` is positive (`true`) when there are no <<created, created>> and <<suspended, suspended>> tasks. Otherwise, `allTasksRunning` is negative (`false`).
 
-NOTE: `allTasksRunning` is used when...FIXME
+NOTE: `allTasksRunning` is used exclusively when `TaskManager` is requested to <<kafka-streams-internals-TaskManager.adoc#updateNewAndRestoringTasks, updateNewAndRestoringTasks>>.
 
 === [[runningTaskFor]] `runningTaskFor` Method
 
@@ -444,6 +444,28 @@ T runningTaskFor(TopicPartition partition)
 `runningTaskFor` simply looks up the task (`T`) for the given https://kafka.apache.org/22/javadoc/org/apache/kafka/common/TopicPartition.html[partition] (in the <<runningByPartition, runningByPartition>> internal registry).
 
 NOTE: `runningTaskFor` is used when `TaskManager` is requested to look up the <<kafka-streams-internals-TaskManager.adoc#activeTask, StreamTask>> and <<kafka-streams-internals-TaskManager.adoc#standbyTask, StandbyTask>> for a given partition.
+
+=== [[allTasks]] `allTasks` Method
+
+[source, java]
+----
+List<T> allTasks()
+----
+
+`allTasks`...FIXME
+
+NOTE: `allTasks` is used when...FIXME
+
+=== [[allAssignedTaskIds]] `allAssignedTaskIds` Method
+
+[source, java]
+----
+Set<TaskId> allAssignedTaskIds()
+----
+
+`allAssignedTaskIds`...FIXME
+
+NOTE: `allAssignedTaskIds` is used when...FIXME
 
 === [[internal-properties]] Internal Properties
 

@@ -160,16 +160,16 @@ void addToRestoring(final StreamTask task)
 
 NOTE: `addToRestoring` is used when...FIXME
 
-=== [[allTasksRunning]] `allTasksRunning` Method
+=== [[allTasksRunning]] Checking Whether All StreamTasks Are Running -- `allTasksRunning` Method
 
 [source, java]
 ----
 boolean allTasksRunning()
 ----
 
-NOTE: `allTasksRunning` is part of the <<kafka-streams-internals-AssignedTasks.adoc#allTasksRunning, AssignedTasks Contract>> to...FIXME.
+NOTE: `allTasksRunning` is part of the <<kafka-streams-internals-AssignedTasks.adoc#allTasksRunning, AssignedTasks Contract>> to check whether all tasks are running or not.
 
-`allTasksRunning`...FIXME
+`allTasksRunning` is positive (`true`) when <<kafka-streams-internals-AssignedTasks.adoc#allTasksRunning, all StreamTasks are running>> of the parent `AssignedTasks` and there are no <<restoring, restoring>> tasks. Otherwise, `allTasksRunning` is negative (`false`).
 
 === [[maybeCommitPerUserRequested]] `maybeCommitPerUserRequested` Method
 
@@ -239,6 +239,44 @@ In the end, `clear` clears up (removes all elements from) the <<restoring, resto
 
 NOTE: `clear` is used exclusively when `AssignedTasks` is requested to <<kafka-streams-internals-AssignedTasks.adoc#close, close>>.
 
+=== [[toString]] Describing Itself (Textual Representation) -- `toString` Method
+
+[source, java]
+----
+String toString(String indent)
+----
+
+NOTE: `toString` is part of the <<kafka-streams-internals-AssignedTasks.adoc#toString, AssignedTasks Contract>> to describe itself.
+
+`toString` requests the parent `AssignedTasks` to <<kafka-streams-internals-AssignedTasks.adoc#toString, describe itself>> and then <<kafka-streams-internals-AssignedTasks.adoc#describe, describe>> (with the <<kafka-streams-internals-StreamTask.adoc#, StreamTasks>> from the <<restoring, restoring>> registry and `Restoring:` name).
+
+[source, scala]
+----
+FIXME toString in action
+----
+
+=== [[allTasks]] `allTasks` Method
+
+[source, java]
+----
+List<StreamTask> allTasks()
+----
+
+NOTE: `allTasks` is part of the <<kafka-streams-internals-AssignedTasks.adoc#allTasks, AssignedTasks Contract>> to get all <<kafka-streams-internals-AbstractTask.adoc#, stream processor tasks>>.
+
+`allTasks` requests the parent `AssignedTasks` for the <<kafka-streams-internals-AssignedTasks.adoc#allTasks, all tasks>> and then adds the <<restoring, restoring>> tasks.
+
+=== [[allAssignedTaskIds]] `allAssignedTaskIds` Method
+
+[source, java]
+----
+Set<TaskId> allAssignedTaskIds()
+----
+
+NOTE: `allAssignedTaskIds` is part of the <<kafka-streams-internals-AssignedTasks.adoc#allAssignedTaskIds, AssignedTasks Contract>> to get all assigned <<kafka-streams-TaskId.adoc#, TaskIds>>.
+
+`allAssignedTaskIds` requests the parent `AssignedTasks` for the <<kafka-streams-internals-AssignedTasks.adoc#allAssignedTaskIds, assigned task IDs>> and then adds the <<restoring, restoring>> task IDs.
+
 === [[internal-properties]] Internal Properties
 
 [cols="30m,70",options="header",width="100%"]
@@ -262,7 +300,17 @@ a| [[restoredPartitions]] *Restored partitions* (`Set<TopicPartition>`)
 * Cleared up (all partitions removed) in <<closeAllRestoringTasks, closeAllRestoringTasks>>, <<clear, clear>> and in <<updateRestored, updateRestored>> (when <<allTasksRunning, allTasksRunning>>)
 
 | restoring
-a| [[restoring]]
+a| [[restoring]] Lookup table of <<kafka-streams-internals-StreamTask.adoc#, StreamTasks>> by <<kafka-streams-TaskId.adoc#, TaskId>> (`Map<TaskId, StreamTask>`)
+
+* Entries added in <<addToRestoring, addToRestoring>>
+
+* Entries removed in <<updateRestored, updateRestored>>
+
+* Cleared up (all mappings removed) in <<closeAllRestoringTasks, closeAllRestoringTasks>>, <<clear, clear>>
+
+* Printed out in <<toString, toString>>
+
+Used in <<allTasks, allTasks>>, <<allTasksRunning, allTasksRunning>>, <<closeAllRestoringTasks, closeAllRestoringTasks>>, <<allAssignedTaskIds, allAssignedTaskIds>>
 
 | restoringByPartition
 a| [[restoringByPartition]]
