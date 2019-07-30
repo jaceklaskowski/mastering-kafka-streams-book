@@ -18,36 +18,16 @@ NOTE: `ProcessorStateManager` is <<creating-instance, created>> with the <<isSta
 [[logging]]
 [TIP]
 ====
-Enable `ERROR`, `WARN`, `DEBUG` or `TRACE` logging levels for `org.apache.kafka.streams.processor.internals.ProcessorStateManager` logger to see what happens inside.
+Enable `ALL` logging levels for `org.apache.kafka.streams.processor.internals.ProcessorStateManager` logger to see what happens inside.
 
 Add the following line to `log4j.properties`:
 
 ```
-log4j.logger.org.apache.kafka.streams.processor.internals.ProcessorStateManager=TRACE
+log4j.logger.org.apache.kafka.streams.processor.internals.ProcessorStateManager=ALL
 ```
 
-Refer to link:kafka-logging.adoc#log4j.properties[Application Logging Using log4j].
+Refer to <<kafka-logging.adoc#log4j.properties, Application Logging Using log4j>>.
 ====
-
-[[internal-registries]]
-.ProcessorStateManager's Internal Properties (e.g. Registries, Counters and Flags)
-[cols="1m,2",options="header",width="100%"]
-|===
-| Name
-| Description
-
-| restoreCallbacks
-| [[restoreCallbacks]] `StateRestoreCallback` by changelog topic name (`Map<String, StateRestoreCallback>`)
-
-Used when...FIXME
-
-| partitionForTopic
-| [[partitionForTopic]] Kafka https://kafka.apache.org/22/javadoc/org/apache/kafka/common/TopicPartition.html[TopicPartitions] by changelog topic name (`Map<String, TopicPartition>`)
-
-Initialized and filled in when `ProcessorStateManager` is <<sources, created>>
-
-Used exclusively when `ProcessorStateManager` is requested to <<getPartition, find the partition ID for a topic (name)>>.
-|===
 
 === [[creating-instance]] Creating ProcessorStateManager Instance
 
@@ -260,3 +240,24 @@ void registerGlobalStateStores(final List<StateStore> stateStores)
 `registerGlobalStateStores`...FIXME
 
 NOTE: `registerGlobalStateStores` is used exclusively when `StreamTask` is <<kafka-streams-internals-StreamTask.adoc#, created>>.
+
+=== [[internal-properties]] Internal Properties
+
+[cols="30m,70",options="header",width="100%"]
+|===
+| Name
+| Description
+
+| restoreCallbacks
+a| [[restoreCallbacks]] `StateRestoreCallback` by changelog topic name (`Map<String, StateRestoreCallback>`)
+
+Used when...FIXME
+
+| partitionForTopic
+a| [[partitionForTopic]] Kafka https://kafka.apache.org/22/javadoc/org/apache/kafka/common/TopicPartition.html[TopicPartitions] by changelog topic name (`Map<String, TopicPartition>`)
+
+Initialized and filled in when `ProcessorStateManager` is <<sources, created>>
+
+Used exclusively when `ProcessorStateManager` is requested to <<getPartition, find the partition ID for a topic (name)>>.
+
+|===

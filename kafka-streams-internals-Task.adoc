@@ -62,7 +62,7 @@ a| [[changelogPartitions]]
 Collection<TopicPartition> changelogPartitions()
 ----
 
-Changelog partitions associated with the task
+Changelog partitions of the task
 
 Used when:
 

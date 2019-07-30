@@ -30,15 +30,15 @@ Committed active task [id] per user request in
 [[logging]]
 [TIP]
 ====
-Enable any of `ERROR`, `WARN`, `INFO`, `DEBUG`, `TRACE` logging levels for `org.apache.kafka.streams.processor.internals.AssignedStreamsTasks` logger to see what happens inside.
+Enable `ALL` logging level for `org.apache.kafka.streams.processor.internals.AssignedStreamsTasks` logger to see what happens inside.
 
 Add the following line to `log4j.properties`:
 
 ```
-log4j.logger.org.apache.kafka.streams.processor.internals.AssignedStreamsTasks=TRACE
+log4j.logger.org.apache.kafka.streams.processor.internals.AssignedStreamsTasks=ALL
 ```
 
-Refer to link:kafka-logging.adoc#log4j.properties[Application Logging Using log4j].
+Refer to <<kafka-logging.adoc#log4j.properties, Application Logging Using log4j>>.
 ====
 
 === [[process]] Requesting Running Stream Tasks to Process Records (One Record per Task) -- `process` Method
@@ -120,12 +120,34 @@ NOTE: `punctuate` is used exclusively when `TaskManager` is requested to <<kafka
 
 [source, java]
 ----
-void updateRestored(final Collection<TopicPartition> restored)
+void updateRestored(Collection<TopicPartition> restored)
 ----
 
-`updateRestored`...FIXME
+`updateRestored` prints out the following TRACE message to the logs:
 
-NOTE: `updateRestored` is used when...FIXME
+```
+Stream task changelog partitions that have completed restoring so far: [restored]
+```
+
+`updateRestored` adds all of the `restored` partitions to the <<restoredPartitions, restoredPartitions>> internal registry unless they are already present.
+
+For every pair (of <<kafka-streams-TaskId.adoc#, TaskId>> and <<kafka-streams-internals-StreamTask.adoc#, StreamTask>>) in the <<restoring, restoring>> internal registry, `updateRestored` requests the <<kafka-streams-internals-AbstractTask.adoc#changelogPartitions, changelog partitions>> of the `StreamTask` and checks whether they are all in the <<restoredPartitions, restoredPartitions>> internal registry or not.
+
+If the <<kafka-streams-internals-AbstractTask.adoc#changelogPartitions, changelog partitions>> are all in the <<restoredPartitions, restoredPartitions>> registry, `updateRestored` <<transitionToRunning, transitionToRunning the task>>, removes the task from the <<restoring, restoring>> registry and then prints out the following TRACE message to the logs:
+
+```
+Stream task [id] completed restoration as all its changelog partitions [changelogPartitions] have been applied to restore state
+```
+
+If the <<kafka-streams-internals-AbstractTask.adoc#changelogPartitions, changelog partitions>> are not all in the <<restoredPartitions, restoredPartitions>> registry, `updateRestored` simply prints out the following TRACE message to the logs:
+
+```
+Stream task [id] cannot resume processing yet since some of its changelog partitions have not completed restoring: [outstandingPartitions]
+```
+
+In the end, `updateRestored` removes all of the elements from the <<restoredPartitions, restoredPartitions>> internal registry when <<allTasksRunning, allTasksRunning>>.
+
+NOTE: `updateRestored` is used exclusively when `TaskManager` is requested to <<kafka-streams-internals-TaskManager.adoc#updateNewAndRestoringTasks, updateNewAndRestoringTasks>>.
 
 === [[addToRestoring]] `addToRestoring` Method
 
@@ -193,6 +215,30 @@ Map<TopicPartition, Long> recordsToDelete()
 
 NOTE: `recordsToDelete` is used exclusively when `TaskManager` is requested to <<maybePurgeCommitedRecords, maybePurgeCommitedRecords>>.
 
+=== [[closeAllRestoringTasks]] `closeAllRestoringTasks` Method
+
+[source, java]
+----
+RuntimeException closeAllRestoringTasks()
+----
+
+`closeAllRestoringTasks`...FIXME
+
+NOTE: `closeAllRestoringTasks` is used exclusively when `TaskManager` is requested to <<kafka-streams-internals-TaskManager.adoc#suspendTasksAndState, suspend all (active and standby) stream tasks and state>>.
+
+=== [[clear]] `clear` Method
+
+[source, java]
+----
+void clear()
+----
+
+`clear` requests the parent `AssignedTasks` to <<kafka-streams-internals-AssignedTasks.adoc#clear, clear>>.
+
+In the end, `clear` clears up (removes all elements from) the <<restoring, restoring>>, <<restoringByPartition, restoringByPartition>>, and <<restoredPartitions, restoredPartitions>> internal registries.
+
+NOTE: `clear` is used exclusively when `AssignedTasks` is requested to <<kafka-streams-internals-AssignedTasks.adoc#close, close>>.
+
 === [[internal-properties]] Internal Properties
 
 [cols="30m,70",options="header",width="100%"]
@@ -200,9 +246,24 @@ NOTE: `recordsToDelete` is used exclusively when `TaskManager` is requested to <
 | Name
 | Description
 
-| `committed`
-| [[committed]] Number of...FIXME
+| committed
+a| [[committed]] Number of...FIXME
 
-| `log`
-| [[log]]
+| log
+a| [[log]]
+
+| restoredPartitions
+a| [[restoredPartitions]] *Restored partitions* (`Set<TopicPartition>`)
+
+* New partitions added in <<updateRestored, updateRestored>>
+
+* Partitions are removed in <<updateRestored, updateRestored>> (when...FIXME)
+
+* Cleared up (all partitions removed) in <<closeAllRestoringTasks, closeAllRestoringTasks>>, <<clear, clear>> and in <<updateRestored, updateRestored>> (when <<allTasksRunning, allTasksRunning>>)
+
+| restoring
+a| [[restoring]]
+
+| restoringByPartition
+a| [[restoringByPartition]]
 |===

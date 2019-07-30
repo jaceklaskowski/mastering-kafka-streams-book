@@ -144,9 +144,9 @@ NOTE: `registerStateStores` is used when <<kafka-streams-internals-StandbyTask.a
 Collection<TopicPartition> changelogPartitions()
 ----
 
-NOTE: `changelogPartitions` is part of <<kafka-streams-internals-Task.adoc#changelogPartitions, Task Contract>> to return changelog partitions associated with the task.
+NOTE: `changelogPartitions` is part of <<kafka-streams-internals-Task.adoc#changelogPartitions, Task Contract>> to get the changelog partitions of a task.
 
-`changelogPartitions` simply requests the <<stateMgr, ProcessorStateManager>> to give the <<kafka-streams-ProcessorStateManager.adoc#changelogPartitions, changelogPartitions>> and returns them.
+`changelogPartitions` simply requests the <<stateMgr, ProcessorStateManager>> for the <<kafka-streams-ProcessorStateManager.adoc#changelogPartitions, changelogPartitions>>.
 
 === [[getStore]] Accessing State Store by Name -- `getStore` Method
 
