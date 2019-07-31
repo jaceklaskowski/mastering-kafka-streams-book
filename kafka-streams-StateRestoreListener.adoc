@@ -27,7 +27,7 @@ Used when:
 
 * `GlobalStateManagerImpl` is requested to <<kafka-streams-internals-GlobalStateManagerImpl.adoc#restoreState, restoreState>> (when requested to <<kafka-streams-internals-GlobalStateManagerImpl.adoc#register, register a state store>>)
 
-* `StateRestorer` is requested to <<kafka-streams-StateRestorer.adoc#restoreBatchCompleted, restoreBatchCompleted>>
+* `StateRestorer` is requested to <<kafka-streams-internals-StateRestorer.adoc#restoreBatchCompleted, restoreBatchCompleted>>
 
 | onRestoreEnd
 a| [[onRestoreEnd]]
@@ -44,7 +44,7 @@ Used when:
 
 * `GlobalStateManagerImpl` is requested to <<kafka-streams-internals-GlobalStateManagerImpl.adoc#restoreState, restoreState>> (when requested to <<kafka-streams-internals-GlobalStateManagerImpl.adoc#register, register a state store>>)
 
-* `StateRestorer` is requested to <<kafka-streams-StateRestorer.adoc#restoreDone, restoreDone>>
+* `StateRestorer` is requested to <<kafka-streams-internals-StateRestorer.adoc#restoreDone, restoreDone>>
 
 | onRestoreStart
 a| [[onRestoreStart]]
@@ -62,7 +62,7 @@ Used when:
 
 * `GlobalStateManagerImpl` is requested to <<kafka-streams-internals-GlobalStateManagerImpl.adoc#restoreState, restoreState>> (when requested to <<kafka-streams-internals-GlobalStateManagerImpl.adoc#register, register a state store>>)
 
-* `StateRestorer` is requested to <<kafka-streams-StateRestorer.adoc#restoreStarted, restoreStarted>>
+* `StateRestorer` is requested to <<kafka-streams-internals-StateRestorer.adoc#restoreStarted, restoreStarted>>
 
 |===
 

@@ -79,7 +79,7 @@ If the `ProcessorStateManager` is not in <<isStandby, standby>> mode, `register`
 Restoring state store [storeName] from changelog topic [topic] at checkpoint [offset]
 ```
 
-`register` creates a <<kafka-streams-StateRestorer.adoc#, StateRestorer>> and requests the <<changelogReader, ChangelogReader>> to <<kafka-streams-internals-ChangelogReader.adoc#register, register it>>.
+`register` creates a <<kafka-streams-internals-StateRestorer.adoc#, StateRestorer>> and requests the <<changelogReader, ChangelogReader>> to <<kafka-streams-internals-ChangelogReader.adoc#register, register it>>.
 
 `register` then adds the (store) partition to the <<changelogPartitions, changelogPartitions>> internal registry.
 

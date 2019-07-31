@@ -33,7 +33,7 @@ When <<creating-instance, created>>, `StoreChangelogReader` is given the <<pollT
 void register(StateRestorer restorer)
 ----
 
-NOTE: `register` is part of link:kafka-streams-internals-ChangelogReader.adoc#register[ChangelogReader Contract] to register a <<kafka-streams-StateRestorer.adoc#, StateRestorer>> (for a changelog partition).
+NOTE: `register` is part of link:kafka-streams-internals-ChangelogReader.adoc#register[ChangelogReader Contract] to register a <<kafka-streams-internals-StateRestorer.adoc#, StateRestorer>> (for a changelog partition).
 
 `register`...FIXME
 
@@ -68,9 +68,9 @@ Map<TopicPartition, Long> restoredOffsets()
 
 NOTE: `restoredOffsets` is part of <<kafka-streams-internals-ChangelogReader.adoc#restoredOffsets, ChangelogReader Contract>> to restore offsets.
 
-`restoredOffsets` returns pairs of `TopicPartition` and <<kafka-streams-StateRestorer.adoc#restoredOffset, restoredOffset>> (from the associated <<kafka-streams-StateRestorer.adoc#, StateRestorer>> that is <<kafka-streams-StateRestorer.adoc#isPersistent, persistent>> for the <<kafka-streams-StateRestorer.adoc#storeName, state store>> that is <<kafka-streams-StateStore.adoc#persistent, persistent>>).
+`restoredOffsets` returns pairs of `TopicPartition` and <<kafka-streams-internals-StateRestorer.adoc#restoredOffset, restoredOffset>> (from the associated <<kafka-streams-internals-StateRestorer.adoc#, StateRestorer>> that is <<kafka-streams-internals-StateRestorer.adoc#isPersistent, persistent>> for the <<kafka-streams-internals-StateRestorer.adoc#storeName, state store>> that is <<kafka-streams-StateStore.adoc#persistent, persistent>>).
 
-Internally, for every pair of `TopicPartition` and <<kafka-streams-StateRestorer.adoc#, StateRestorer>> (in the <<stateRestorers, stateRestorers>> internal registry), `restoredOffsets` requests the `StateRestorer` to <<kafka-streams-StateRestorer.adoc#restoredOffset, restoredOffset>> when the restorer is <<kafka-streams-StateRestorer.adoc#isPersistent, persistent>> (i.e. when the <<kafka-streams-StateRestorer.adoc#storeName, associated state store>> is <<kafka-streams-StateStore.adoc#persistent, persistent>>).
+Internally, for every pair of `TopicPartition` and <<kafka-streams-internals-StateRestorer.adoc#, StateRestorer>> (in the <<stateRestorers, stateRestorers>> internal registry), `restoredOffsets` requests the `StateRestorer` to <<kafka-streams-internals-StateRestorer.adoc#restoredOffset, restoredOffset>> when the restorer is <<kafka-streams-internals-StateRestorer.adoc#isPersistent, persistent>> (i.e. when the <<kafka-streams-internals-StateRestorer.adoc#storeName, associated state store>> is <<kafka-streams-StateStore.adoc#persistent, persistent>>).
 
 === [[processNext]] `processNext` Internal Method
 
@@ -119,7 +119,7 @@ NOTE: `initialize` is used exclusively when `StateRestorer` is requested to <<re
 | [[endOffsets]]
 
 | needsInitializing
-a| [[needsInitializing]] Changelog partitions (of <<kafka-streams-StateRestorer.adoc#, StateRestorers>>) that need initializing (`Set<TopicPartition>`)
+a| [[needsInitializing]] Changelog partitions (of <<kafka-streams-internals-StateRestorer.adoc#, StateRestorers>>) that need initializing (`Set<TopicPartition>`)
 
 * New changelog partitions added in <<register, register>>
 
@@ -136,7 +136,7 @@ Used in <<restore, restore>>
 | [[partitionInfo]]
 
 | stateRestorers
-a| [[stateRestorers]] <<kafka-streams-StateRestorer.adoc#, StateRestorers>> per changelog partition (`Map<TopicPartition, StateRestorer>`)
+a| [[stateRestorers]] <<kafka-streams-internals-StateRestorer.adoc#, StateRestorers>> per changelog partition (`Map<TopicPartition, StateRestorer>`)
 
 * New `StateRestorer` added in <<register, register>>
 

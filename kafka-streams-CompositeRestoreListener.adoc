@@ -20,4 +20,4 @@ void setUserRestoreListener(final StateRestoreListener userRestoreListener)
 
 `setUserRestoreListener` simply sets the <<userRestoreListener, userRestoreListener>> to be the given <<kafka-streams-StateRestoreListener.adoc#, StateRestoreListener>>.
 
-NOTE: `setUserRestoreListener` is used exclusively when `StateRestorer` is requested to <<kafka-streams-StateRestorer.adoc#setUserRestoreListener, set a StateRestoreListener>>.
+NOTE: `setUserRestoreListener` is used exclusively when `StateRestorer` is requested to <<kafka-streams-internals-StateRestorer.adoc#setUserRestoreListener, set a StateRestoreListener>>.

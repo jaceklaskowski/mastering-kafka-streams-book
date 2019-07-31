@@ -17,7 +17,7 @@ a| [[register]]
 void register(StateRestorer restorer)
 ----
 
-Registers a <<kafka-streams-StateRestorer.adoc#, StateRestorer>> (for a changelog partition)
+Registers a <<kafka-streams-internals-StateRestorer.adoc#, StateRestorer>> (for a changelog partition)
 
 Used exclusively when `ProcessorStateManager` is requested to <<kafka-streams-internals-ProcessorStateManager.adoc#register, register a persistent state store>> (with an underlying changelog topic)
 
