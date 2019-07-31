@@ -505,7 +505,7 @@ NOTE: The input <<kafka-streams-StateRestoreListener.adoc#, StateRestoreListener
 
 `create` creates a <<kafka-streams-internals-ThreadCache.adoc#, ThreadCache>> (with `cacheSizeBytes` for the `maxCacheSizeBytes` and the `StreamsMetricsThreadImpl`).
 
-`create` creates a link:kafka-streams-internals-TaskCreator.adoc#creating-instance[TaskCreator] and a link:kafka-streams-internals-StandbyTaskCreator.adoc#creating-instance[StandbyTaskCreator] that are used exclusively to create a <<kafka-streams-internals-TaskManager.adoc#, TaskManager>> (with a new link:kafka-streams-AssignedStreamsTasks.adoc#creating-instance[AssignedStreamsTasks] and link:kafka-streams-AssignedStandbyTasks.adoc#creating-instance[AssignedStandbyTasks] as well as the given <<kafka-streams-StreamsMetadataState.adoc#, StreamsMetadataState>>).
+`create` creates a link:kafka-streams-internals-TaskCreator.adoc#creating-instance[TaskCreator] and a link:kafka-streams-internals-StandbyTaskCreator.adoc#creating-instance[StandbyTaskCreator] that are used exclusively to create a <<kafka-streams-internals-TaskManager.adoc#, TaskManager>> (with a new link:kafka-streams-internals-AssignedStreamsTasks.adoc#creating-instance[AssignedStreamsTasks] and link:kafka-streams-AssignedStandbyTasks.adoc#creating-instance[AssignedStandbyTasks] as well as the given <<kafka-streams-StreamsMetadataState.adoc#, StreamsMetadataState>>).
 
 `create` prints out the following INFO message to the logs:
 

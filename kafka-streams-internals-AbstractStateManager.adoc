@@ -17,7 +17,7 @@ NOTE: `AbstractStateManager` is a Java abstract class and cannot be <<creating-i
 | <<kafka-streams-internals-GlobalStateManagerImpl.adoc#, GlobalStateManagerImpl>>
 | [[GlobalStateManagerImpl]]
 
-| <<kafka-streams-ProcessorStateManager.adoc#, ProcessorStateManager>>
+| <<kafka-streams-internals-ProcessorStateManager.adoc#, ProcessorStateManager>>
 | [[ProcessorStateManager]]
 |===
 
@@ -39,7 +39,7 @@ Used when:
 
 * `GlobalStateManagerImpl` is requested to <<kafka-streams-internals-GlobalStateManagerImpl.adoc#initialize, initialize>> and <<kafka-streams-internals-GlobalStateManagerImpl.adoc#checkpoint, checkpoint>>
 
-* `ProcessorStateManager` is <<kafka-streams-ProcessorStateManager.adoc#, created>> and requested to <<kafka-streams-ProcessorStateManager.adoc#checkpoint, checkpoint>>
+* `ProcessorStateManager` is <<kafka-streams-internals-ProcessorStateManager.adoc#, created>> and requested to <<kafka-streams-internals-ProcessorStateManager.adoc#checkpoint, checkpoint>>
 
 | checkpointableOffsets
 a| [[checkpointableOffsets]] Collection of Kafka https://kafka.apache.org/22/javadoc/index.html?org/apache/kafka/common/TopicPartition.html[TopicPartitions] with offsets (`Map<TopicPartition, Long>`)
@@ -48,7 +48,7 @@ Entries (partitions with offsets) added when:
 
 * `GlobalStateManagerImpl` is requested to <<kafka-streams-internals-GlobalStateManagerImpl.adoc#initialize, initialize>>, <<kafka-streams-internals-GlobalStateManagerImpl.adoc#restoreState, restoreState>> and <<kafka-streams-internals-GlobalStateManagerImpl.adoc#checkpoint, checkpoint>>
 
-* `ProcessorStateManager` is <<kafka-streams-ProcessorStateManager.adoc#, created>> and requested to <<kafka-streams-ProcessorStateManager.adoc#checkpoint, checkpoint>>
+* `ProcessorStateManager` is <<kafka-streams-internals-ProcessorStateManager.adoc#, created>> and requested to <<kafka-streams-internals-ProcessorStateManager.adoc#checkpoint, checkpoint>>
 
 | globalStores
 a| [[globalStores]] Global <<kafka-streams-StateStore.adoc#, state stores>> by name (managed by <<kafka-streams-internals-GlobalStateManagerImpl.adoc#, GlobalStateManagerImpl>> _mostly_)
@@ -57,22 +57,22 @@ New state stores added when:
 
 * `GlobalStateManagerImpl` is requested to <<kafka-streams-internals-GlobalStateManagerImpl.adoc#register, register a state store>>
 
-* `ProcessorStateManager` is requested to <<kafka-streams-ProcessorStateManager.adoc#registerGlobalStateStores, registerGlobalStateStores>>
+* `ProcessorStateManager` is requested to <<kafka-streams-internals-ProcessorStateManager.adoc#registerGlobalStateStores, registerGlobalStateStores>>
 
 State stores removed when:
 
 * `GlobalStateManagerImpl` is requested to <<kafka-streams-internals-GlobalStateManagerImpl.adoc#close, close>>
 
 | stores
-a| [[stores]] <<kafka-streams-StateStore.adoc#, State stores>> by name (managed by <<kafka-streams-ProcessorStateManager.adoc#, ProcessorStateManager>>)
+a| [[stores]] <<kafka-streams-StateStore.adoc#, State stores>> by name (managed by <<kafka-streams-internals-ProcessorStateManager.adoc#, ProcessorStateManager>>)
 
 New state stores added when:
 
-* `ProcessorStateManager` is requested to <<kafka-streams-ProcessorStateManager.adoc#register, register a state store>>
+* `ProcessorStateManager` is requested to <<kafka-streams-internals-ProcessorStateManager.adoc#register, register a state store>>
 
 State stores removed when:
 
-* `ProcessorStateManager` is requested to <<kafka-streams-ProcessorStateManager.adoc#close, close>>
+* `ProcessorStateManager` is requested to <<kafka-streams-internals-ProcessorStateManager.adoc#close, close>>
 |===
 
 === [[reinitializeStateStoresForPartitions]] `reinitializeStateStoresForPartitions` Method
@@ -95,7 +95,7 @@ void reinitializeStateStoresForPartitions(
 
 * `GlobalStateManagerImpl` is requested to <<kafka-streams-internals-GlobalStateManagerImpl.adoc#reinitializeStateStoresForPartitions, reinitializeStateStoresForPartitions>>
 
-* `ProcessorStateManager` is requested to <<kafka-streams-ProcessorStateManager.adoc#reinitializeStateStoresForPartitions, reinitializeStateStoresForPartitions>>
+* `ProcessorStateManager` is requested to <<kafka-streams-internals-ProcessorStateManager.adoc#reinitializeStateStoresForPartitions, reinitializeStateStoresForPartitions>>
 ====
 
 === [[inverseOneToOneMap]] `inverseOneToOneMap` Internal Method

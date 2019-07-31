@@ -20,7 +20,7 @@ a| [[register]]
 void register(final StateRestorer restorer)
 ----
 
-Used exclusively when `ProcessorStateManager` is requested to <<kafka-streams-ProcessorStateManager.adoc#register, register a persistent state store>> (with an underlying changelog topic)
+Used exclusively when `ProcessorStateManager` is requested to <<kafka-streams-internals-ProcessorStateManager.adoc#register, register a persistent state store>> (with an underlying changelog topic)
 
 | reset
 a| [[reset]]
@@ -54,6 +54,6 @@ Map<TopicPartition, Long> restoredOffsets()
 
 Restores offsets (for <<kafka-streams-StateStore.adoc#persistent, persistent state stores>>)
 
-Used exclusively when `ProcessorStateManager` is requested to <<kafka-streams-ProcessorStateManager.adoc#checkpoint, checkpoint offsets>>
+Used exclusively when `ProcessorStateManager` is requested to <<kafka-streams-internals-ProcessorStateManager.adoc#checkpoint, checkpoint offsets>>
 
 |===

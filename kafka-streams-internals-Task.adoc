@@ -119,7 +119,7 @@ Commits the task
 
 Used when:
 
-* `AssignedStreamsTasks` is requested to execute the <<kafka-streams-AssignedStreamsTasks.adoc#maybeCommitAction, maybeCommitAction>> action
+* `AssignedStreamsTasks` is requested to execute the <<kafka-streams-internals-AssignedStreamsTasks.adoc#maybeCommitAction, maybeCommitAction>> action
 
 * `AssignedTasks` is requested to execute the <<kafka-streams-internals-AssignedTasks.adoc#commitAction, commitAction>> action
 

@@ -214,7 +214,7 @@ In case of a `KafkaException`, `process` throws a `StreamsException`.
 
 In the end, `process` returns `true` when the single record was processed successfully, and `false` when there were no records to process.
 
-NOTE: `process` is used exclusively when `AssignedStreamsTasks` is requested to <<kafka-streams-AssignedStreamsTasks.adoc#process, request the running stream tasks to process records (one record per task)>>.
+NOTE: `process` is used exclusively when `AssignedStreamsTasks` is requested to <<kafka-streams-internals-AssignedStreamsTasks.adoc#process, request the running stream tasks to process records (one record per task)>>.
 
 === [[closeSuspended]] `closeSuspended` Method
 
@@ -320,7 +320,7 @@ In the end, `maybePunctuateStreamTime` returns whatever the stream-time `Punctua
 
 If the minimum timestamp is <<kafka-streams-internals-RecordQueue.adoc#UNKNOWN, UNKNOWN>>, `maybePunctuateStreamTime` returns `false`.
 
-NOTE: `maybePunctuateStreamTime` is used exclusively when `AssignedStreamsTasks` is requested to <<kafka-streams-AssignedStreamsTasks.adoc#punctuate, punctuate running stream tasks>>.
+NOTE: `maybePunctuateStreamTime` is used exclusively when `AssignedStreamsTasks` is requested to <<kafka-streams-internals-AssignedStreamsTasks.adoc#punctuate, punctuate running stream tasks>>.
 
 === [[maybePunctuateSystemTime]] Attempting to Punctuate by System Time -- `maybePunctuateSystemTime` Method
 
@@ -331,7 +331,7 @@ boolean maybePunctuateSystemTime()
 
 `maybePunctuateSystemTime`...FIXME
 
-NOTE: `maybePunctuateSystemTime` is used exclusively when `AssignedStreamsTasks` is requested to <<kafka-streams-AssignedStreamsTasks.adoc#punctuate, punctuate running stream tasks>>.
+NOTE: `maybePunctuateSystemTime` is used exclusively when `AssignedStreamsTasks` is requested to <<kafka-streams-internals-AssignedStreamsTasks.adoc#punctuate, punctuate running stream tasks>>.
 
 === [[schedule]] Scheduling Cancellable Periodic Action (Punctuator) -- `schedule` Method
 
@@ -420,7 +420,7 @@ Committing
 
 `commit` <<flushState, flushState>>.
 
-(only when <<kafka-streams-internals-AbstractTask.adoc#eosEnabled, exactly-once support>> is off) `commit` requests the <<stateMgr, ProcessorStateManager>> to <<kafka-streams-ProcessorStateManager.adoc#checkpoint, checkpoint>> with the <<activeTaskCheckpointableOffsets, checkpointable offsets>>.
+(only when <<kafka-streams-internals-AbstractTask.adoc#eosEnabled, exactly-once support>> is off) `commit` requests the <<stateMgr, ProcessorStateManager>> to <<kafka-streams-internals-ProcessorStateManager.adoc#checkpoint, checkpoint>> with the <<activeTaskCheckpointableOffsets, checkpointable offsets>>.
 
 `commit` <<commitOffsets, commitOffsets>> with the input `startNewTransaction` flag.
 
@@ -477,7 +477,7 @@ Otherwise, `isProcessable` returns `false`.
 
 NOTE: (FIXME) `isProcessable` does some minor accounting.
 
-NOTE: `isProcessable` is used exclusively when `AssignedStreamsTasks` is requested to <<kafka-streams-AssignedStreamsTasks.adoc#process, request the running stream tasks to process records (one record per task)>>.
+NOTE: `isProcessable` is used exclusively when `AssignedStreamsTasks` is requested to <<kafka-streams-internals-AssignedStreamsTasks.adoc#process, request the running stream tasks to process records (one record per task)>>.
 
 === [[resume]] Resuming Task -- `resume` Method
 

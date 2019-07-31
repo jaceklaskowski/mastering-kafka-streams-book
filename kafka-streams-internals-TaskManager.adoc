@@ -119,7 +119,7 @@ NOTE: `suspendTasksAndState` is used exclusively when `RebalanceListener` handle
 boolean updateNewAndRestoringTasks()
 ----
 
-`updateNewAndRestoringTasks` returns `true` only when the <<active, AssignedStreamsTasks>> tasks are <<kafka-streams-AssignedStreamsTasks.adoc#allTasksRunning, all running>> and <<standby, AssignedStandbyTasks>> tasks are <<kafka-streams-internals-AssignedTasks.adoc#allTasksRunning, all running>> in the end. Otherwise, `updateNewAndRestoringTasks` returns `false`.
+`updateNewAndRestoringTasks` returns `true` only when the <<active, AssignedStreamsTasks>> tasks are <<kafka-streams-internals-AssignedStreamsTasks.adoc#allTasksRunning, all running>> and <<standby, AssignedStandbyTasks>> tasks are <<kafka-streams-internals-AssignedTasks.adoc#allTasksRunning, all running>> in the end. Otherwise, `updateNewAndRestoringTasks` returns `false`.
 
 .TaskManager and updateNewAndRestoringTasks
 image::images/kafka-streams-TaskManager-updateNewAndRestoringTasks.png[align="center"]
@@ -128,13 +128,13 @@ Internally, `updateNewAndRestoringTasks` requests the <<active, AssignedStreamsT
 
 `updateNewAndRestoringTasks` requests the <<changelogReader, ChangelogReader>> to <<kafka-streams-ChangelogReader.adoc#restore, restore>> the <<active, AssignedStreamsTasks>> tasks (_restored_).
 
-`updateNewAndRestoringTasks` requests the <<active, AssignedStreamsTasks>> tasks to <<kafka-streams-AssignedStreamsTasks.adoc#updateRestored, updateRestored>> (from the <<changelogReader, ChangelogReader>>).
+`updateNewAndRestoringTasks` requests the <<active, AssignedStreamsTasks>> tasks to <<kafka-streams-internals-AssignedStreamsTasks.adoc#updateRestored, updateRestored>> (from the <<changelogReader, ChangelogReader>>).
 
-`updateNewAndRestoringTasks` requests the <<active, AssignedStreamsTasks>> tasks to <<kafka-streams-AssignedStreamsTasks.adoc#allTasksRunning, check whether all StreamTasks are running>>.
+`updateNewAndRestoringTasks` requests the <<active, AssignedStreamsTasks>> tasks to <<kafka-streams-internals-AssignedStreamsTasks.adoc#allTasksRunning, check whether all StreamTasks are running>>.
 
-If not <<kafka-streams-AssignedStreamsTasks.adoc#allTasksRunning, all active StreamTasks are running>>, `updateNewAndRestoringTasks` simply returns `false`.
+If not <<kafka-streams-internals-AssignedStreamsTasks.adoc#allTasksRunning, all active StreamTasks are running>>, `updateNewAndRestoringTasks` simply returns `false`.
 
-Otherwise, if <<kafka-streams-AssignedStreamsTasks.adoc#allTasksRunning, all active StreamTasks are running>>, `updateNewAndRestoringTasks` requests the <<consumer, Kafka consumer>> for the partition assignment (using link:++https://kafka.apache.org/23/javadoc/org/apache/kafka/clients/consumer/KafkaConsumer.html#assignment--++[Consumer.assignment]) and prints out the following TRACE message to the logs:
+Otherwise, if <<kafka-streams-internals-AssignedStreamsTasks.adoc#allTasksRunning, all active StreamTasks are running>>, `updateNewAndRestoringTasks` requests the <<consumer, Kafka consumer>> for the partition assignment (using link:++https://kafka.apache.org/23/javadoc/org/apache/kafka/clients/consumer/KafkaConsumer.html#assignment--++[Consumer.assignment]) and prints out the following TRACE message to the logs:
 
 ```
 Resuming partitions [assignment]
@@ -178,7 +178,7 @@ NOTE: `activeTask` is used exclusively when `StreamThread` is requested to <<kaf
 * [[taskCreator]] <<kafka-streams-internals-AbstractTaskCreator.adoc#, AbstractTaskCreator>> of <<kafka-streams-internals-StreamTask.adoc#, StreamTasks>> (`StreamThread.AbstractTaskCreator<StreamTask>`)
 * [[standbyTaskCreator]] <<kafka-streams-internals-AbstractTaskCreator.adoc#, AbstractTaskCreator>> of <<kafka-streams-internals-StandbyTask.adoc#, StandbyTasks>> (`StreamThread.AbstractTaskCreator<StandbyTask>`)
 * [[adminClient]] Kafka https://kafka.apache.org/22/javadoc/org/apache/kafka/clients/admin/AdminClient.html[AdminClient]
-* [[active]] <<kafka-streams-AssignedStreamsTasks.adoc#, AssignedStreamsTasks>>
+* [[active]] <<kafka-streams-internals-AssignedStreamsTasks.adoc#, AssignedStreamsTasks>>
 * [[standby]] <<kafka-streams-AssignedStandbyTasks.adoc#, AssignedStandbyTasks>>
 
 `TaskManager` initializes the <<internal-properties, internal properties>>.
@@ -344,7 +344,7 @@ NOTE: `toString` is used exclusively when `StreamThread` is requested to <<kafka
 void maybePurgeCommitedRecords()
 ----
 
-In essence, `maybePurgeCommitedRecords` requests the <<active, AssignedStreamsTasks>> for the <<kafka-streams-AssignedStreamsTasks.adoc#recordsToDelete, recordsToDelete>> and then the <<adminClient, AdminClient>> to delete the records (whose offset is smaller than the given offset of the corresponding partition).
+In essence, `maybePurgeCommitedRecords` requests the <<active, AssignedStreamsTasks>> for the <<kafka-streams-internals-AssignedStreamsTasks.adoc#recordsToDelete, recordsToDelete>> and then the <<adminClient, AdminClient>> to delete the records (whose offset is smaller than the given offset of the corresponding partition).
 
 `maybePurgeCommitedRecords`...FIXME
 
@@ -357,7 +357,7 @@ NOTE: `maybePurgeCommitedRecords` is used exclusively when `StreamThread` is req
 int process()
 ----
 
-`process` simply requests <<active, AssignedStreamsTasks>> to <<kafka-streams-AssignedStreamsTasks.adoc#process, request the running stream tasks to process a single record (per task)>>.
+`process` simply requests <<active, AssignedStreamsTasks>> to <<kafka-streams-internals-AssignedStreamsTasks.adoc#process, request the running stream tasks to process a single record (per task)>>.
 
 In the end, `process` gives the number of <<kafka-streams-internals-StreamTask.adoc#, stream tasks>> that processed a record.
 
@@ -370,7 +370,7 @@ NOTE: `process` is used exclusively when `StreamThread` is requested to <<kafka-
 int maybeCommitActiveTasks()
 ----
 
-`maybeCommitActiveTasks` simply requests <<active, AssignedStreamsTasks>> to link:kafka-streams-AssignedStreamsTasks.adoc#maybeCommit[commit running stream tasks that requested it].
+`maybeCommitActiveTasks` simply requests <<active, AssignedStreamsTasks>> to link:kafka-streams-internals-AssignedStreamsTasks.adoc#maybeCommit[commit running stream tasks that requested it].
 
 In the end, `maybeCommitActiveTasks` gives the number of running stream tasks that link:kafka-streams-internals-StreamTask.adoc#commitNeeded[needed a commit].
 
@@ -383,7 +383,7 @@ NOTE: `maybeCommitActiveTasks` is used exclusively when `StreamThread` is reques
 int punctuate()
 ----
 
-`punctuate` simply requests the <<active, AssignedStreamsTasks>> to <<kafka-streams-AssignedStreamsTasks.adoc#punctuate, punctuate running stream tasks (by stream and system time)>>.
+`punctuate` simply requests the <<active, AssignedStreamsTasks>> to <<kafka-streams-internals-AssignedStreamsTasks.adoc#punctuate, punctuate running stream tasks (by stream and system time)>>.
 
 NOTE: `punctuate` is used exclusively when `StreamThread` is requested to <<kafka-streams-internals-StreamThread.adoc#maybePunctuate, attempt to punctuate>>.
 
@@ -440,7 +440,7 @@ NOTE: `cachedTasksIds` is used exclusively when `StreamsPartitionAssignor` is re
 int maybeCommitActiveTasksPerUserRequested()
 ----
 
-`maybeCommitActiveTasksPerUserRequested` simply requests the <<active, AssignedStreamsTasks>> to <<kafka-streams-AssignedStreamsTasks.adoc#maybeCommitPerUserRequested, maybeCommitPerUserRequested>>.
+`maybeCommitActiveTasksPerUserRequested` simply requests the <<active, AssignedStreamsTasks>> to <<kafka-streams-internals-AssignedStreamsTasks.adoc#maybeCommitPerUserRequested, maybeCommitPerUserRequested>>.
 
 NOTE: `maybeCommitActiveTasksPerUserRequested` is used when `StreamThread` is requested to <<kafka-streams-internals-StreamThread.adoc#runOnce, poll records once and process them using active stream tasks>> and <<kafka-streams-internals-StreamThread.adoc#maybeCommit, commit all tasks (when commit interval elapsed)>>.
 

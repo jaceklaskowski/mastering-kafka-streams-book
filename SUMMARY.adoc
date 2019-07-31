@@ -332,7 +332,7 @@
 
 . link:kafka-streams-internals-AssignedTasks.adoc[AssignedTasks]
 .. link:kafka-streams-AssignedStandbyTasks.adoc[AssignedStandbyTasks -- AssignedTasks For StandbyTasks]
-.. link:kafka-streams-AssignedStreamsTasks.adoc[AssignedStreamsTasks -- AssignedTasks For StreamTasks]
+.. link:kafka-streams-internals-AssignedStreamsTasks.adoc[AssignedStreamsTasks -- AssignedTasks For StreamTasks]
 
 . link:kafka-streams-internals-ProcessorNodePunctuator.adoc[ProcessorNodePunctuator Contract]
 
@@ -402,7 +402,7 @@
 . link:kafka-streams-internals-StateManager.adoc[StateManager Contract -- State Store Managers]
 .. link:kafka-streams-internals-AbstractStateManager.adoc[AbstractStateManager]
 
-. link:kafka-streams-ProcessorStateManager.adoc[ProcessorStateManager]
+. link:kafka-streams-internals-ProcessorStateManager.adoc[ProcessorStateManager]
 . link:kafka-streams-GlobalStateManager.adoc[GlobalStateManager]
 .. link:kafka-streams-internals-GlobalStateManagerImpl.adoc[GlobalStateManagerImpl]
 

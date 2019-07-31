@@ -6,7 +6,7 @@
 
 1. `AbstractStateManager` is link:kafka-streams-internals-AbstractStateManager.adoc#creating-instance[created]
 
-1. `ProcessorStateManager` is requested to link:kafka-streams-ProcessorStateManager.adoc#checkpoint[checkpoint]
+1. `ProcessorStateManager` is requested to link:kafka-streams-internals-ProcessorStateManager.adoc#checkpoint[checkpoint]
 
 [[creating-instance]]
 [[file]]
@@ -31,7 +31,7 @@ Map<TopicPartition, Long> read() throws IOException
 `read` is used when:
 
 * `GlobalStateManagerImpl` is requested to link:kafka-streams-internals-GlobalStateManagerImpl.adoc#initialize[initialize]
-* `ProcessorStateManager` is link:kafka-streams-ProcessorStateManager.adoc#creating-instance[created]
+* `ProcessorStateManager` is link:kafka-streams-internals-ProcessorStateManager.adoc#creating-instance[created]
 ====
 
 === [[write]] Writing Offsets to Checkpoint File -- `write` Method
@@ -49,7 +49,7 @@ void write(final Map<TopicPartition, Long> offsets) throws IOException
 
 * `AbstractStateManager` is requested to link:kafka-streams-internals-AbstractStateManager.adoc#reinitializeStateStoresForPartitions[reinitializeStateStoresForPartitions]
 * `GlobalStateManagerImpl` is requested to link:kafka-streams-internals-GlobalStateManagerImpl.adoc#checkpoint[checkpoint]
-* `ProcessorStateManager` is requested to link:kafka-streams-ProcessorStateManager.adoc#checkpoint[checkpoint]
+* `ProcessorStateManager` is requested to link:kafka-streams-internals-ProcessorStateManager.adoc#checkpoint[checkpoint]
 ====
 
 === [[delete]] Deleting Offset Checkpoint File -- `delete` Method
@@ -61,4 +61,4 @@ void delete() throws IOException
 
 `delete` simply deletes the <<file, offset checkpoint file>> if exists.
 
-NOTE: `delete` is used exclusively when `ProcessorStateManager` is link:kafka-streams-ProcessorStateManager.adoc#creating-instance[created] (with link:kafka-streams-exactly-once-support-eos.adoc[Exactly-Once Support (EOS)] enabled).
+NOTE: `delete` is used exclusively when `ProcessorStateManager` is link:kafka-streams-internals-ProcessorStateManager.adoc#creating-instance[created] (with link:kafka-streams-exactly-once-support-eos.adoc[Exactly-Once Support (EOS)] enabled).

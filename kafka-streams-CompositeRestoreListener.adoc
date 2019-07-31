@@ -2,7 +2,7 @@
 
 `CompositeRestoreListener` is a concrete `BatchingStateRestoreCallback` and a <<kafka-streams-StateRestoreListener.adoc#, StateRestoreListener>>.
 
-`CompositeRestoreListener` is <<creating-instance, created>> exclusively when `ProcessorStateManager` is requested to <<kafka-streams-ProcessorStateManager.adoc#register, register a state store>> (and restores it from the changelog topic).
+`CompositeRestoreListener` is <<creating-instance, created>> exclusively when `ProcessorStateManager` is requested to <<kafka-streams-internals-ProcessorStateManager.adoc#register, register a state store>> (and restores it from the changelog topic).
 
 [[userRestoreListener]]
 `CompositeRestoreListener` uses a <<kafka-streams-StateRestoreListener.adoc#, StateRestoreListener>> in <<onRestoreStart, onRestoreStart>>, <<onBatchRestored, onBatchRestored>> and <<onRestoreEnd, onRestoreEnd>> callbacks. A `StateRestoreListener` can be assigned using <<setUserRestoreListener, setUserRestoreListener>> method.

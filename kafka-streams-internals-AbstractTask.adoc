@@ -52,9 +52,9 @@ a| [[processorContext]] <<kafka-streams-internals-InternalProcessorContext.adoc#
 * <<kafka-streams-internals-StandbyContextImpl.adoc#, StandbyContextImpl>> for <<kafka-streams-internals-StandbyTask.adoc#, StandbyTask>>
 
 | stateMgr
-a| [[stateMgr]] <<kafka-streams-ProcessorStateManager.adoc#, ProcessorStateManager>>
+a| [[stateMgr]] <<kafka-streams-internals-ProcessorStateManager.adoc#, ProcessorStateManager>>
 
-<<kafka-streams-ProcessorStateManager.adoc#creating-instance, Created>> when `AbstractTask` is <<creating-instance, created>>
+<<kafka-streams-internals-ProcessorStateManager.adoc#creating-instance, Created>> when `AbstractTask` is <<creating-instance, created>>
 
 Used when:
 
@@ -111,7 +111,7 @@ NOTE: `hasStateStores` is part of link:kafka-streams-internals-Task.adoc#hasStat
 void flushState()
 ----
 
-`flushState` simply requests the <<stateMgr, ProcessorStateManager>> to <<kafka-streams-ProcessorStateManager.adoc#flush, flush>>.
+`flushState` simply requests the <<stateMgr, ProcessorStateManager>> to <<kafka-streams-internals-ProcessorStateManager.adoc#flush, flush>>.
 
 NOTE: `flushState` is used exclusively when `StreamTask` is requested to <<kafka-streams-internals-StreamTask.adoc#commit, commit>> (using the custom <<kafka-streams-internals-StreamTask.adoc#flushState, flushState>>).
 
@@ -146,7 +146,7 @@ Collection<TopicPartition> changelogPartitions()
 
 NOTE: `changelogPartitions` is part of <<kafka-streams-internals-Task.adoc#changelogPartitions, Task Contract>> to get the changelog partitions of a task.
 
-`changelogPartitions` simply requests the <<stateMgr, ProcessorStateManager>> for the <<kafka-streams-ProcessorStateManager.adoc#changelogPartitions, changelogPartitions>>.
+`changelogPartitions` simply requests the <<stateMgr, ProcessorStateManager>> for the <<kafka-streams-internals-ProcessorStateManager.adoc#changelogPartitions, changelogPartitions>>.
 
 === [[getStore]] Accessing State Store by Name -- `getStore` Method
 
@@ -157,7 +157,7 @@ StateStore getStore(final String name)
 
 NOTE: `getStore` is part of the <<kafka-streams-internals-Task.adoc#getStore, Task Contract>> to access the <<kafka-streams-StateStore.adoc#, state store>> by name.
 
-`getStore` simply requests the <<stateMgr, ProcessorStateManager>> for the <<kafka-streams-ProcessorStateManager.adoc#getStore, StateStore by name>>.
+`getStore` simply requests the <<stateMgr, ProcessorStateManager>> for the <<kafka-streams-internals-ProcessorStateManager.adoc#getStore, StateStore by name>>.
 
 === [[updateOffsetLimits]] `updateOffsetLimits` Method
 
@@ -186,7 +186,7 @@ void updateOffsetLimits()
 void reinitializeStateStoresForPartitions(final Collection<TopicPartition> partitions)
 ----
 
-`reinitializeStateStoresForPartitions` simply requests the <<stateMgr, ProcessorStateManager>> to <<kafka-streams-ProcessorStateManager.adoc#reinitializeStateStoresForPartitions, reinitializeStateStores>> for the input `partitions` and the <<processorContext, InternalProcessorContext>>.
+`reinitializeStateStoresForPartitions` simply requests the <<stateMgr, ProcessorStateManager>> to <<kafka-streams-internals-ProcessorStateManager.adoc#reinitializeStateStoresForPartitions, reinitializeStateStores>> for the input `partitions` and the <<processorContext, InternalProcessorContext>>.
 
 [NOTE]
 ====

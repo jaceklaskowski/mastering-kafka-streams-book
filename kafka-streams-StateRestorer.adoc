@@ -4,7 +4,7 @@
 
 `StateRestorer` uses a <<compositeRestoreListener, CompositeRestoreListener>> to propagate the events: <<restoreStarted, restoreStarted>>, <<restoreDone, restoreDone>>, <<restoreBatchCompleted, restoreBatchCompleted>>, <<restore, restore>>.
 
-`StateRestorer` is <<creating-instance, created>> exclusively when `ProcessorStateManager` is requested to <<kafka-streams-ProcessorStateManager.adoc#register, register a state store>>.
+`StateRestorer` is <<creating-instance, created>> exclusively when `ProcessorStateManager` is requested to <<kafka-streams-internals-ProcessorStateManager.adoc#register, register a state store>>.
 
 === [[creating-instance]] Creating StateRestorer Instance
 

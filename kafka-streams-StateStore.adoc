@@ -27,7 +27,7 @@ Used when:
 
 * `AbstractStateManager` is requested to <<kafka-streams-internals-AbstractStateManager.adoc#reinitializeStateStoresForPartitions, reinitializeStateStoresForPartitions>>
 
-* <<kafka-streams-internals-GlobalStateManagerImpl.adoc#close, GlobalStateManagerImpl>> and <<kafka-streams-ProcessorStateManager.adoc#close, ProcessorStateManager>> are requested to close
+* <<kafka-streams-internals-GlobalStateManagerImpl.adoc#close, GlobalStateManagerImpl>> and <<kafka-streams-internals-ProcessorStateManager.adoc#close, ProcessorStateManager>> are requested to close
 
 * `RocksDBStore` is requested to `toggleDbForBulkLoading`
 
@@ -45,7 +45,7 @@ Flushes cached data
 
 Used when:
 
-* <<kafka-streams-internals-GlobalStateManagerImpl.adoc#flush, GlobalStateManagerImpl>> and <<kafka-streams-ProcessorStateManager.adoc#flush, ProcessorStateManager>> are requested to flush their state stores
+* <<kafka-streams-internals-GlobalStateManagerImpl.adoc#flush, GlobalStateManagerImpl>> and <<kafka-streams-internals-ProcessorStateManager.adoc#flush, ProcessorStateManager>> are requested to flush their state stores
 
 * <<kafka-streams-StateStore-CachingKeyValueStore.adoc#close, CachingKeyValueStore>>, <<kafka-streams-StateStore-CachingSessionStore.adoc#close, CachingSessionStore>> and <<kafka-streams-StateStore-CachingWindowStore.adoc#close, CachingWindowStore>> are requested to close state stores
 
@@ -117,7 +117,7 @@ Used when:
 
 * `GlobalStateManagerImpl` is <<kafka-streams-internals-GlobalStateManagerImpl.adoc#creating-instance, created>>
 
-* `ProcessorStateManager` is requested to <<kafka-streams-ProcessorStateManager.adoc#register, register a state store>> and <<kafka-streams-ProcessorStateManager.adoc#checkpoint, checkpoint>>
+* `ProcessorStateManager` is requested to <<kafka-streams-internals-ProcessorStateManager.adoc#register, register a state store>> and <<kafka-streams-internals-ProcessorStateManager.adoc#checkpoint, checkpoint>>
 |===
 
 [[implementations]]
