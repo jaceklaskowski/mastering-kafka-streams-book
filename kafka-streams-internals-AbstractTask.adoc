@@ -84,7 +84,7 @@ NOTE: `closeStateManager` is used when...FIXME
 * [[partitions]] Assigned Kafka https://kafka.apache.org/22/javadoc/org/apache/kafka/common/TopicPartition.html[TopicPartitions]
 * [[topology]] <<kafka-streams-internals-ProcessorTopology.adoc#, ProcessorTopology>>
 * [[consumer]] Kafka https://kafka.apache.org/22/javadoc/org/apache/kafka/clients/consumer/KafkaConsumer.html[Consumer] (`Consumer<byte[], byte[]>`)
-* [[changelogReader]] <<kafka-streams-ChangelogReader.adoc#, ChangelogReader>>
+* [[changelogReader]] <<kafka-streams-internals-ChangelogReader.adoc#, ChangelogReader>>
 * [[isStandby]] `isStandby` flag
 * [[stateDirectory]] <<kafka-streams-internals-StateDirectory.adoc#, StateDirectory>>
 * [[config]] <<kafka-streams-StreamsConfig.adoc#, StreamsConfig>>
@@ -192,7 +192,7 @@ void reinitializeStateStoresForPartitions(final Collection<TopicPartition> parti
 ====
 `reinitializeStateStoresForPartitions` is used when:
 
-* `StoreChangelogReader` is requested to <<kafka-streams-StoreChangelogReader.adoc#restore, restore>>
+* `StoreChangelogReader` is requested to <<kafka-streams-internals-StoreChangelogReader.adoc#restore, restore>>
 
 * `StreamThread` is requested to <<kafka-streams-internals-StreamThread.adoc#maybeUpdateStandbyTasks, maybeUpdateStandbyTasks>>
 ====

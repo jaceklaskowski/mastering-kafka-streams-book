@@ -38,7 +38,7 @@ Refer to <<kafka-logging.adoc#log4j.properties, Application Logging Using log4j>
 * [[isStandby]] `isStandby` flag (to indicate whether used by <<kafka-streams-internals-StandbyTask.adoc#, StandbyTask>>, i.e. `true` or <<kafka-streams-internals-StreamTask.adoc#, StreamTask>>, i.e. `false` that is used exclusively when <<register, registering a state store>>)
 * [[stateDirectory]] link:kafka-streams-internals-StateDirectory.adoc[StateDirectory]
 * [[storeToChangelogTopic]] Names of the state stores and the names of the corresponding changelog topics (from the <<kafka-streams-internals-ProcessorTopology.adoc#storeToChangelogTopic, ProcessorTopology>>)
-* [[changelogReader]] <<kafka-streams-ChangelogReader.adoc#, ChangelogReader>>
+* [[changelogReader]] <<kafka-streams-internals-ChangelogReader.adoc#, ChangelogReader>>
 * [[eosEnabled]] `eosEnabled` Flag (that corresponds to link:kafka-streams-properties.adoc#processing.guarantee[processing.guarantee] configuration property)
 * [[logContext]] `LogContext`
 
@@ -71,7 +71,7 @@ If the `ProcessorStateManager` is in <<isStandby, standby>> mode, `register` pri
 Preparing standby replica of persistent state store [storeName] with changelog topic [topic]
 ```
 
-If the `ProcessorStateManager` is not in <<isStandby, standby>> mode, `register` prints out the following TRACE message to the logs, creates a `StateRestorer` and requests the <<changelogReader, ChangelogReader>> to <<kafka-streams-ChangelogReader.adoc#register, register>> it.
+If the `ProcessorStateManager` is not in <<isStandby, standby>> mode, `register` prints out the following TRACE message to the logs, creates a `StateRestorer` and requests the <<changelogReader, ChangelogReader>> to <<kafka-streams-internals-ChangelogReader.adoc#register, register>> it.
 
 ```
 Restoring state store [storeName] from changelog topic [topic]
@@ -216,7 +216,7 @@ void checkpoint(final Map<TopicPartition, Long> checkpointableOffsets)
 
 NOTE: `checkpoint` is part of the <<kafka-streams-Checkpointable.adoc#checkpoint, Checkpointable Contract>> to checkpoint offsets.
 
-`checkpoint` requests the <<changelogReader, ChangelogReader>> for <<kafka-streams-ChangelogReader.adoc#restoredOffsets, restoredOffsets>> and adds them to the <<kafka-streams-internals-AbstractStateManager.adoc#checkpointableOffsets, checkpointableOffsets>> registry.
+`checkpoint` requests the <<changelogReader, ChangelogReader>> for <<kafka-streams-internals-ChangelogReader.adoc#restoredOffsets, restoredOffsets>> and adds them to the <<kafka-streams-internals-AbstractStateManager.adoc#checkpointableOffsets, checkpointableOffsets>> registry.
 
 For every <<kafka-streams-StateStore.adoc#, state store>> (in the <<kafka-streams-internals-AbstractStateManager.adoc#stores, stores>> internal registry), `checkpoint`...FIXME
 

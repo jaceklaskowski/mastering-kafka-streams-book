@@ -100,7 +100,7 @@ NOTE: `resume` is part of the <<kafka-streams-internals-Task.adoc#resume, Task C
 * [[partitions]] Assigned Kafka https://kafka.apache.org/22/javadoc/org/apache/kafka/common/TopicPartition.html[TopicPartitions]
 * [[topology]] <<kafka-streams-internals-ProcessorTopology.adoc#, ProcessorTopology>>
 * [[consumer]] Kafka https://kafka.apache.org/22/javadoc/org/apache/kafka/clients/consumer/KafkaConsumer.html[Consumer] (`Consumer<byte[], byte[]>`)
-* [[changelogReader]] <<kafka-streams-ChangelogReader.adoc#, ChangelogReader>>
+* [[changelogReader]] <<kafka-streams-internals-ChangelogReader.adoc#, ChangelogReader>>
 * [[config]] <<kafka-streams-StreamsConfig.adoc#, StreamsConfig>>
 * [[metrics]] <<kafka-streams-internals-StreamsMetricsImpl.adoc#, StreamsMetricsImpl>>
 * [[stateDirectory]] <<kafka-streams-internals-StateDirectory.adoc#, StateDirectory>>

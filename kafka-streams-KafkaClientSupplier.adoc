@@ -74,7 +74,7 @@ Consumer<byte[], byte[]> getRestoreConsumer(
   final Map<String, Object> config)
 ----
 
-A Kafka https://kafka.apache.org/22/javadoc/org/apache/kafka/clients/consumer/KafkaConsumer.html[Consumer] (for <<kafka-streams-StoreChangelogReader.adoc#restoreConsumer, StoreChangelogReader>>, <<kafka-streams-internals-TaskManager.adoc#restoreConsumer, TaskManager>> and <<kafka-streams-internals-StreamThread.adoc#restoreConsumer, StreamThread>>)
+A Kafka https://kafka.apache.org/22/javadoc/org/apache/kafka/clients/consumer/KafkaConsumer.html[Consumer] (for <<kafka-streams-internals-StoreChangelogReader.adoc#restoreConsumer, StoreChangelogReader>>, <<kafka-streams-internals-TaskManager.adoc#restoreConsumer, TaskManager>> and <<kafka-streams-internals-StreamThread.adoc#restoreConsumer, StreamThread>>)
 
 Used exclusively when `StreamThread` is <<kafka-streams-internals-StreamThread.adoc#create, created>>
 

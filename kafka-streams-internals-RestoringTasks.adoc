@@ -19,7 +19,7 @@ StreamTask restoringTaskFor(TopicPartition partition)
 
 Finds the restoring <<kafka-streams-internals-StreamTask.adoc#, StreamTask>> for a partition
 
-Used exclusively when `StoreChangelogReader` is requested to <<kafka-streams-StoreChangelogReader.adoc#restore, restore>>
+Used exclusively when `StoreChangelogReader` is requested to <<kafka-streams-internals-StoreChangelogReader.adoc#restore, restore>>
 
 |===
 

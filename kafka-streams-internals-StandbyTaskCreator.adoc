@@ -40,6 +40,6 @@ Skipped standby task [taskId] with assigned partitions [partitions] since it doe
 * [[config]] <<kafka-streams-StreamsConfig.adoc#, StreamsConfig>>
 * [[streamsMetrics]] <<kafka-streams-StreamsMetricsThreadImpl.adoc#, StreamsMetricsThreadImpl>>
 * [[stateDirectory]] <<kafka-streams-internals-StateDirectory.adoc#, StateDirectory>>
-* [[storeChangelogReader]] <<kafka-streams-ChangelogReader.adoc#, ChangelogReader>>
+* [[storeChangelogReader]] <<kafka-streams-internals-ChangelogReader.adoc#, ChangelogReader>>
 * [[time]] `Time`
 * [[log]] `Logger`

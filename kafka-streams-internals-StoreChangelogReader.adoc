@@ -1,6 +1,6 @@
 == [[StoreChangelogReader]] StoreChangelogReader
 
-`StoreChangelogReader` is a concrete <<kafka-streams-ChangelogReader.adoc#, ChangelogReader>> that...FIXME
+`StoreChangelogReader` is a concrete <<kafka-streams-internals-ChangelogReader.adoc#, ChangelogReader>> that...FIXME
 
 `StoreChangelogReader` is <<creating-instance, created>> for a <<kafka-streams-internals-StreamThread.adoc#create, StreamThread>>.
 
@@ -54,7 +54,7 @@ NOTE: link:kafka-streams-internals-StreamThread.adoc[StreamThread] uses a `Store
 void register(final StateRestorer restorer)
 ----
 
-NOTE: `register` is part of link:kafka-streams-ChangelogReader.adoc#register[ChangelogReader Contract] to...FIXME.
+NOTE: `register` is part of link:kafka-streams-internals-ChangelogReader.adoc#register[ChangelogReader Contract] to...FIXME.
 
 `register`...FIXME
 
@@ -65,7 +65,7 @@ NOTE: `register` is part of link:kafka-streams-ChangelogReader.adoc#register[Cha
 void reset()
 ----
 
-NOTE: `reset` is part of link:kafka-streams-ChangelogReader.adoc#reset[ChangelogReader Contract] to...FIXME.
+NOTE: `reset` is part of link:kafka-streams-internals-ChangelogReader.adoc#reset[ChangelogReader Contract] to...FIXME.
 
 `reset`...FIXME
 
@@ -73,10 +73,10 @@ NOTE: `reset` is part of link:kafka-streams-ChangelogReader.adoc#reset[Changelog
 
 [source, java]
 ----
-Collection<TopicPartition> restore(final RestoringTasks active)
+Collection<TopicPartition> restore(RestoringTasks active)
 ----
 
-NOTE: `restore` is part of the <<kafka-streams-ChangelogReader.adoc#restore, ChangelogReader Contract>> to...FIXME.
+NOTE: `restore` is part of the <<kafka-streams-internals-ChangelogReader.adoc#restore, ChangelogReader Contract>> to...FIXME.
 
 `restore`...FIXME
 
@@ -87,7 +87,7 @@ NOTE: `restore` is part of the <<kafka-streams-ChangelogReader.adoc#restore, Cha
 Map<TopicPartition, Long> restoredOffsets()
 ----
 
-NOTE: `restoredOffsets` is part of <<kafka-streams-ChangelogReader.adoc#restoredOffsets, ChangelogReader Contract>> to restore offsets.
+NOTE: `restoredOffsets` is part of <<kafka-streams-internals-ChangelogReader.adoc#restoredOffsets, ChangelogReader Contract>> to restore offsets.
 
 `restoredOffsets` returns pairs of `TopicPartition` and <<kafka-streams-StateRestorer.adoc#restoredOffset, restoredOffset>> (from the associated <<kafka-streams-StateRestorer.adoc#, StateRestorer>> that is <<kafka-streams-StateRestorer.adoc#isPersistent, persistent>> for the <<kafka-streams-StateRestorer.adoc#storeName, state store>> that is <<kafka-streams-StateStore.adoc#persistent, persistent>>).
 

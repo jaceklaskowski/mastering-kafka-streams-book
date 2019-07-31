@@ -3,7 +3,7 @@
 `ChangelogReader` is the internal <<contract, contract>> for <<implementations, changelog readers>> that...FIXME
 
 [[implementations]]
-NOTE: link:kafka-streams-StoreChangelogReader.adoc[StoreChangelogReader] is the one and only known direct implementation of <<contract, ChangelogReader Contract>> in Kafka Streams {{ book.kafka_version }}.
+NOTE: link:kafka-streams-internals-StoreChangelogReader.adoc[StoreChangelogReader] is the one and only known direct implementation of <<contract, ChangelogReader Contract>> in Kafka Streams {{ book.kafka_version }}.
 
 [[contract]]
 .ChangelogReader Contract

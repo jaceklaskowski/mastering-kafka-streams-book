@@ -29,7 +29,7 @@ void restoreBatchCompleted(long currentRestoredOffset, int numRestored)
 
 `restoreBatchCompleted`...FIXME
 
-NOTE: `restoreBatchCompleted` is used exclusively when `StoreChangelogReader` is requested to <<kafka-streams-StoreChangelogReader.adoc#processNext, processNext>> (when requested to <<kafka-streams-StoreChangelogReader.adoc#restore, restore>>).
+NOTE: `restoreBatchCompleted` is used exclusively when `StoreChangelogReader` is requested to <<kafka-streams-internals-StoreChangelogReader.adoc#processNext, processNext>> (when requested to <<kafka-streams-internals-StoreChangelogReader.adoc#restore, restore>>).
 
 === [[restoreStarted]] `restoreStarted` Method
 
@@ -40,7 +40,7 @@ void restoreStarted()
 
 `restoreStarted`...FIXME
 
-NOTE: `restoreStarted` is used exclusively when `StoreChangelogReader` is requested to <<kafka-streams-StoreChangelogReader.adoc#startRestoration, startRestoration>> (when requested to <<kafka-streams-StoreChangelogReader.adoc#initialize, initialize>> as part of <<kafka-streams-StoreChangelogReader.adoc#restore, restore>>).
+NOTE: `restoreStarted` is used exclusively when `StoreChangelogReader` is requested to <<kafka-streams-internals-StoreChangelogReader.adoc#startRestoration, startRestoration>> (when requested to <<kafka-streams-internals-StoreChangelogReader.adoc#initialize, initialize>> as part of <<kafka-streams-internals-StoreChangelogReader.adoc#restore, restore>>).
 
 === [[restoreDone]] `restoreDone` Method
 
@@ -51,7 +51,7 @@ void restoreDone()
 
 `restoreDone`...FIXME
 
-NOTE: `restoreDone` is used exclusively when `StoreChangelogReader` is requested to <<kafka-streams-StoreChangelogReader.adoc#processNext, processNext>> (when requested to <<kafka-streams-StoreChangelogReader.adoc#restore, restore>>).
+NOTE: `restoreDone` is used exclusively when `StoreChangelogReader` is requested to <<kafka-streams-internals-StoreChangelogReader.adoc#processNext, processNext>> (when requested to <<kafka-streams-internals-StoreChangelogReader.adoc#restore, restore>>).
 
 === [[restore]] `restore` Method
 
@@ -62,7 +62,7 @@ void restore(final Collection<KeyValue<byte[], byte[]>> records)
 
 `restore`...FIXME
 
-NOTE: `restore` is used exclusively when `StoreChangelogReader` is requested to <<kafka-streams-StoreChangelogReader.adoc#restore, restore>>.
+NOTE: `restore` is used exclusively when `StoreChangelogReader` is requested to <<kafka-streams-internals-StoreChangelogReader.adoc#restore, restore>>.
 
 === [[setUserRestoreListener]] Setting StateRestoreListener -- `setUserRestoreListener` Method
 
@@ -73,7 +73,7 @@ void setUserRestoreListener(StateRestoreListener userRestoreListener)
 
 `setUserRestoreListener` simply requests the <<compositeRestoreListener, CompositeRestoreListener>> to <<kafka-streams-CompositeRestoreListener.adoc#setUserRestoreListener, use>> the input <<kafka-streams-StateRestoreListener.adoc#, StateRestoreListener>>.
 
-NOTE: `setUserRestoreListener` is used exclusively when `StoreChangelogReader` is requested to <<kafka-streams-StoreChangelogReader.adoc#register, register a StateRestorer>>.
+NOTE: `setUserRestoreListener` is used exclusively when `StoreChangelogReader` is requested to <<kafka-streams-internals-StoreChangelogReader.adoc#register, register a StateRestorer>>.
 
 === [[isPersistent]] `isPersistent` Method
 
@@ -84,7 +84,7 @@ boolean isPersistent()
 
 `isPersistent` returns the <<persistent, persistent>> flag.
 
-NOTE: `isPersistent` is used exclusively when `StoreChangelogReader` is requested to <<kafka-streams-StoreChangelogReader.adoc#restoredOffsets, restoredOffsets>>.
+NOTE: `isPersistent` is used exclusively when `StoreChangelogReader` is requested to <<kafka-streams-internals-StoreChangelogReader.adoc#restoredOffsets, restoredOffsets>>.
 
 === [[internal-properties]] Internal Properties
 

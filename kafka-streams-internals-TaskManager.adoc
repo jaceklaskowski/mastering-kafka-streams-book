@@ -126,7 +126,7 @@ image::images/kafka-streams-TaskManager-updateNewAndRestoringTasks.png[align="ce
 
 Internally, `updateNewAndRestoringTasks` requests the <<active, AssignedStreamsTasks>> and the <<standby, AssignedStandbyTasks>> tasks to <<kafka-streams-internals-AssignedTasks.adoc#initializeNewTasks, initialize new tasks>>.
 
-`updateNewAndRestoringTasks` requests the <<changelogReader, ChangelogReader>> to <<kafka-streams-ChangelogReader.adoc#restore, restore>> the <<active, AssignedStreamsTasks>> tasks (_restored_).
+`updateNewAndRestoringTasks` requests the <<changelogReader, ChangelogReader>> to <<kafka-streams-internals-ChangelogReader.adoc#restore, restore>> the <<active, AssignedStreamsTasks>> tasks (_restored_).
 
 `updateNewAndRestoringTasks` requests the <<active, AssignedStreamsTasks>> tasks to <<kafka-streams-internals-AssignedStreamsTasks.adoc#updateRestored, updateRestored>> (from the <<changelogReader, ChangelogReader>>).
 
@@ -170,7 +170,7 @@ NOTE: `activeTask` is used exclusively when `StreamThread` is requested to <<kaf
 
 `TaskManager` takes the following to be created:
 
-* [[changelogReader]] <<kafka-streams-ChangelogReader.adoc#, ChangelogReader>>
+* [[changelogReader]] <<kafka-streams-internals-ChangelogReader.adoc#, ChangelogReader>>
 * [[processId]] Process ID
 * [[logPrefix]] `logPrefix`
 * [[restoreConsumer]] Kafka "restore" https://kafka.apache.org/22/javadoc/org/apache/kafka/clients/consumer/KafkaConsumer.html[Consumer] (`Consumer<byte[], byte[]>`)

@@ -410,8 +410,8 @@
 
 . link:kafka-streams-internals-OffsetCheckpoint.adoc[OffsetCheckpoint]
 
-. link:kafka-streams-ChangelogReader.adoc[ChangelogReader]
-.. link:kafka-streams-StoreChangelogReader.adoc[StoreChangelogReader]
+. link:kafka-streams-internals-ChangelogReader.adoc[ChangelogReader]
+.. link:kafka-streams-internals-StoreChangelogReader.adoc[StoreChangelogReader]
 . link:kafka-streams-StateRestorer.adoc[StateRestorer]
 
 . link:kafka-streams-internals-RestoringTasks.adoc[RestoringTasks]
