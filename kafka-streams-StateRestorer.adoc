@@ -2,7 +2,7 @@
 
 `StateRestorer` is a concrete `BatchingStateRestoreCallback` and a <<kafka-streams-StateRestoreListener.adoc#, StateRestoreListener>>.
 
-`StateRestorer` uses a <<compositeRestoreListener, CompositeRestoreListener>> to propagate the events: <<restoreStarted, restoreStarted>>, <<restoreDone, restoreDone>>, <<restoreBatchCompleted, restoreBatchCompleted>>, <<restore, restore>>.
+`StateRestorer` uses a <<compositeRestoreListener, CompositeRestoreListener>> to propagate the events: <<restoreStarted, restoreStarted>>, <<restoreDone, restoreDone>>, <<restoreBatchCompleted, restoreBatchCompleted>>, and <<restore, restore>>.
 
 `StateRestorer` is <<creating-instance, created>> exclusively when `ProcessorStateManager` is requested to <<kafka-streams-internals-ProcessorStateManager.adoc#register, register a state store>>.
 
@@ -10,7 +10,7 @@
 
 `StateRestorer` takes the following to be created:
 
-* [[partition]] Kafka https://kafka.apache.org/22/javadoc/index.html?org/apache/kafka/common/TopicPartition.html[TopicPartition]
+* [[partition]] Kafka https://kafka.apache.org/23/javadoc/index.html?org/apache/kafka/common/TopicPartition.html[TopicPartition]
 * [[compositeRestoreListener]] <<kafka-streams-CompositeRestoreListener.adoc#, CompositeRestoreListener>>
 * [[checkpoint]] `checkpoint`
 * [[offsetLimit]] `offsetLimit`

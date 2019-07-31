@@ -26,14 +26,14 @@ When <<creating-instance, created>>, `StoreChangelogReader` is given the <<pollT
 
 `StoreChangelogReader` initializes the <<internal-properties, internal properties>>.
 
-=== [[register]] Registering StateRestorer -- `register` Method
+=== [[register]] Registering StateRestorer (For Changelog Partition) -- `register` Method
 
 [source, java]
 ----
-void register(final StateRestorer restorer)
+void register(StateRestorer restorer)
 ----
 
-NOTE: `register` is part of link:kafka-streams-internals-ChangelogReader.adoc#register[ChangelogReader Contract] to...FIXME.
+NOTE: `register` is part of link:kafka-streams-internals-ChangelogReader.adoc#register[ChangelogReader Contract] to register a <<kafka-streams-StateRestorer.adoc#, StateRestorer>> (for a changelog partition).
 
 `register`...FIXME
 
@@ -101,12 +101,12 @@ NOTE: `startRestoration` is used exclusively when `StoreChangelogReader` is requ
 
 [source, java]
 ----
-void initialize()
+void initialize(RestoringTasks active)
 ----
 
 `initialize`...FIXME
 
-NOTE: `initialize` is used exclusively when `StateRestorer` is requested to <<restore, restore>>.
+NOTE: `initialize` is used exclusively when `StateRestorer` is requested to <<restore, restore>> (and there are <<needsInitializing, needsInitializing>> changelog partitions).
 
 === [[internal-properties]] Internal Properties
 
@@ -118,11 +118,16 @@ NOTE: `initialize` is used exclusively when `StateRestorer` is requested to <<re
 | endOffsets
 | [[endOffsets]]
 
-| log
-| [[log]]
-
 | needsInitializing
-| [[needsInitializing]]
+a| [[needsInitializing]] Changelog partitions (of <<kafka-streams-StateRestorer.adoc#, StateRestorers>>) that need initializing (`Set<TopicPartition>`)
+
+* New changelog partitions added in <<register, register>>
+
+* Changelog partition removed in <<initialize, initialize>> (<<restore, restore>>) and <<startRestoration, startRestoration>>
+
+* All changelog partitions removed in <<reset, reset>>
+
+Used in <<restore, restore>>
 
 | needsRestoring
 | [[needsRestoring]]
@@ -131,5 +136,12 @@ NOTE: `initialize` is used exclusively when `StateRestorer` is requested to <<re
 | [[partitionInfo]]
 
 | stateRestorers
-| [[stateRestorers]]
+a| [[stateRestorers]] <<kafka-streams-StateRestorer.adoc#, StateRestorers>> per changelog partition (`Map<TopicPartition, StateRestorer>`)
+
+* New `StateRestorer` added in <<register, register>>
+
+* All `StateRestorers` removed in <<reset, reset>>
+
+Used in <<restore, restore>>, and <<restoredOffsets, restoredOffsets>>
+
 |===

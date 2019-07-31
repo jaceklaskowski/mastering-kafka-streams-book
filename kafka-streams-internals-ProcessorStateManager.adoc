@@ -49,11 +49,11 @@ Refer to <<kafka-logging.adoc#log4j.properties, Application Logging Using log4j>
 [source, java]
 ----
 void register(
-  final StateStore store,
-  final StateRestoreCallback stateRestoreCallback)
+  StateStore store,
+  StateRestoreCallback stateRestoreCallback)
 ----
 
-NOTE: `register` is part of link:kafka-streams-internals-StateManager.adoc#register[StateManager Contract] to register a <<kafka-streams-StateStore.adoc#, state store>> and the associated `StateRestoreCallback`.
+NOTE: `register` is part of link:kafka-streams-internals-StateManager.adoc#register[StateManager Contract] to register a <<kafka-streams-StateStore.adoc#, state store>> (with an associated <<kafka-streams-StateRestoreCallback.adoc#, StateRestoreCallback>>).
 
 `register` prints out the following DEBUG message to the logs:
 
