@@ -5,7 +5,7 @@
 NOTE: `AbstractStateManager` is a Java abstract class and cannot be <<creating-instance, created>> directly. It is created indirectly for the <<implementations, concrete AbstractStateManagers>>.
 
 [[CHECKPOINT_FILE_NAME]]
-`AbstractStateManager` uses `.checkpoint` for the name of the <<checkpoint, checkpoint>> offset file.
+`AbstractStateManager` uses *.checkpoint* for the name of the <<checkpoint, checkpoint>> offset file.
 
 [[implementations]]
 .AbstractStateManagers
@@ -119,3 +119,14 @@ NOTE: `inverseOneToOneMap` is used exclusively when `AbstractStateManager` is re
 `AbstractStateManager` initializes the <<internal-registries, internal registries and counters>>.
 
 NOTE: `AbstractStateManager` is a Java abstract class and cannot be <<creating-instance, created>> directly. It is created indirectly for the <<implementations, concrete AbstractStateManagers>>.
+
+=== [[converterForStore]] `converterForStore` Static Method
+
+[source, java]
+----
+RecordConverter converterForStore(StateStore store)
+----
+
+`converterForStore`...FIXME
+
+NOTE: `converterForStore` is used when...FIXME

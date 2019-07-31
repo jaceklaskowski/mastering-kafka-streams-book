@@ -13,7 +13,7 @@ NOTE: `ProcessorStateManager` is <<creating-instance, created>> with the <<isSta
 `ProcessorStateManager` uses...FIXME...for the base directory.
 
 [[changelogPartitions]]
-`ProcessorStateManager` tracks *changelog partitions* that are the Kafka https://kafka.apache.org/22/javadoc/org/apache/kafka/common/TopicPartition.html[TopicPartitions] of the <<register, registered StateStores>>.
+`ProcessorStateManager` manages *changelog partitions* that are the Kafka https://kafka.apache.org/23/javadoc/org/apache/kafka/common/TopicPartition.html[partitions] of the <<register, registered StateStores>>.
 
 [[logging]]
 [TIP]
@@ -61,11 +61,13 @@ NOTE: `register` is part of link:kafka-streams-internals-StateManager.adoc#regis
 Registering state store [storeName] to its state manager
 ```
 
-`register` finds the <<kafka-streams-StateStore.adoc#, StateStore>> in the <<storeToChangelogTopic, storeToChangelogTopic>> internal registry. If not found, `register` registers the `StateStore` (in the <<kafka-streams-internals-AbstractStateManager.adoc#stores, stores>> registry) and returns.
+`register` looks up the given <<kafka-streams-StateStore.adoc#, StateStore>> (by its name) in the <<storeToChangelogTopic, storeToChangelogTopic>> internal registry.
 
-If found however, `register` uses the topic to create a Kafka `TopicPartition` (with the <<getPartition, partition>>).
+If not found, `register` adds the `StateStore` in the <<registeredStores, registeredStores>>.
 
-If the `ProcessorStateManager` is in <<isStandby, standby>> mode, `register` prints out the following TRACE message to the logs and registers the topic and the input `StateRestoreCallback` (in the <<restoreCallbacks, restoreCallbacks>> registry).
+If the changelog topic is found, `register` <<getPartition, finds the partition ID by the changelog topic>> and creates a Kafka `TopicPartition`. `register` <<kafka-streams-internals-AbstractStateManager.adoc#converterForStore, finds the RecordConverter for the StateStore>>.
+
+If the `ProcessorStateManager` is in <<isStandby, standby>> mode, `register` prints out the following TRACE message to the logs and registers the topic with the input `StateRestoreCallback` and the `RecordConverter` in the <<restoreCallbacks, restoreCallbacks>> and <<recordConverters, recordConverters>> registries, respectively.
 
 ```
 Preparing standby replica of persistent state store [storeName] with changelog topic [topic]
@@ -74,28 +76,32 @@ Preparing standby replica of persistent state store [storeName] with changelog t
 If the `ProcessorStateManager` is not in <<isStandby, standby>> mode, `register` prints out the following TRACE message to the logs, creates a `StateRestorer` and requests the <<changelogReader, ChangelogReader>> to <<kafka-streams-internals-ChangelogReader.adoc#register, register>> it.
 
 ```
-Restoring state store [storeName] from changelog topic [topic]
+Restoring state store [storeName] from changelog topic [topic] at checkpoint [offset]
 ```
 
-`register` adds the (store) partition to the <<changelogPartitions, changelogPartitions>> and registers the `StateStore` (in the <<kafka-streams-internals-AbstractStateManager.adoc#stores, stores>> registry).
+`register` creates a <<kafka-streams-StateRestorer.adoc#, StateRestorer>> and requests the <<changelogReader, ChangelogReader>> to <<kafka-streams-internals-ChangelogReader.adoc#register, register it>>.
 
-`register` throws an `IllegalArgumentException` if the name of the <<kafka-streams-StateStore.adoc#, StateStore>> is *.checkpoint*.
+`register` then adds the (store) partition to the <<changelogPartitions, changelogPartitions>> internal registry.
 
-```
-Illegal store name: .checkpoint
-```
+In the end, `register` registers the `StateStore` (in the <<registeredStores, registeredStores>> registry).
 
-`register` throws an `IllegalArgumentException` if the <<kafka-streams-StateStore.adoc#, StateStore>> is already registered (in the <<kafka-streams-internals-AbstractStateManager.adoc#stores, stores>> registry).
+`register` throws an `IllegalArgumentException` if the name of the <<kafka-streams-StateStore.adoc#, StateStore>> is <<kafka-streams-internals-AbstractStateManager.adoc#CHECKPOINT_FILE_NAME, .checkpoint>>.
 
 ```
-Store [storeName] has already been registered.
+[logPrefix]Illegal store name: .checkpoint
+```
+
+`register` throws an `IllegalArgumentException` if the `StateStore` is already registered (in the <<registeredStores, registeredStores>> registry).
+
+```
+[logPrefix]Store [storeName] has already been registered.
 ```
 
 === [[close]] Closing ProcessorStateManager -- `close` Method
 
 [source, java]
 ----
-void close(final Map<TopicPartition, Long> ackedOffsets) throws ProcessorStateException
+void close(Map<TopicPartition, Long> ackedOffsets)
 ----
 
 NOTE: `close` is part of link:kafka-streams-internals-StateManager.adoc#close[StateManager Contract] to...FIXME.
@@ -117,7 +123,7 @@ NOTE: `flush` is part of the <<kafka-streams-internals-StateManager.adoc#flush, 
 
 [source, java]
 ----
-StateStore getGlobalStore(final String name)
+StateStore getGlobalStore(String name)
 ----
 
 NOTE: `getGlobalStore` is part of link:kafka-streams-internals-StateManager.adoc#getGlobalStore[StateManager Contract] to...FIXME.
@@ -128,7 +134,7 @@ NOTE: `getGlobalStore` is part of link:kafka-streams-internals-StateManager.adoc
 
 [source, java]
 ----
-StateStore getStore(final String name)
+StateStore getStore(String name)
 ----
 
 NOTE: `getStore` is part of link:kafka-streams-internals-StateManager.adoc#getStore[StateManager Contract] to...FIXME.
@@ -140,8 +146,8 @@ NOTE: `getStore` is part of link:kafka-streams-internals-StateManager.adoc#getSt
 [source, java]
 ----
 void reinitializeStateStoresForPartitions(
-  final Collection<TopicPartition> partitions,
-  final InternalProcessorContext processorContext)
+  Collection<TopicPartition> partitions,
+  InternalProcessorContext processorContext)
 ----
 
 NOTE: `reinitializeStateStoresForPartitions` is part of <<kafka-streams-internals-StateManager.adoc#reinitializeStateStoresForPartitions, StateManager Contract>> to...FIXME.
@@ -152,7 +158,9 @@ NOTE: `reinitializeStateStoresForPartitions` is part of <<kafka-streams-internal
 
 [source, java]
 ----
-static String storeChangelogTopic(final String applicationId, final String storeName)
+static String storeChangelogTopic(
+  String applicationId,
+  String storeName)
 ----
 
 `storeChangelogTopic` simply returns a `[applicationId]-[storeName][STATE_CHANGELOG_TOPIC_SUFFIX]`.
@@ -172,7 +180,7 @@ static String storeChangelogTopic(final String applicationId, final String store
 
 [source, java]
 ----
-int getPartition(final String topic)
+int getPartition(String topic)
 ----
 
 `getPartition` tries to find the https://kafka.apache.org/22/javadoc/org/apache/kafka/common/TopicPartition.html[TopicPartition] for the input `topic` name (in the <<partitionForTopic, partitionForTopic>> internal registry).
@@ -199,8 +207,8 @@ NOTE: `checkpointed` is part of the <<kafka-streams-Checkpointable.adoc#checkpoi
 [source, java]
 ----
 List<ConsumerRecord<byte[], byte[]>> updateStandbyStates(
-  final TopicPartition storePartition,
-  final List<ConsumerRecord<byte[], byte[]>> records)
+  TopicPartition storePartition,
+  List<ConsumerRecord<byte[], byte[]>> records)
 ----
 
 `updateStandbyStates`...FIXME
@@ -211,7 +219,7 @@ NOTE: `updateStandbyStates` is used exclusively when `StandbyTask` is requested 
 
 [source, java]
 ----
-void checkpoint(final Map<TopicPartition, Long> checkpointableOffsets)
+void checkpoint(Map<TopicPartition, Long> checkpointableOffsets)
 ----
 
 NOTE: `checkpoint` is part of the <<kafka-streams-Checkpointable.adoc#checkpoint, Checkpointable Contract>> to checkpoint offsets.
@@ -234,7 +242,7 @@ In the end, `checkpoint` requests the <<kafka-streams-internals-AbstractStateMan
 
 [source, java]
 ----
-void registerGlobalStateStores(final List<StateStore> stateStores)
+void registerGlobalStateStores(List<StateStore> stateStores)
 ----
 
 `registerGlobalStateStores`...FIXME
@@ -259,5 +267,11 @@ a| [[partitionForTopic]] Kafka https://kafka.apache.org/22/javadoc/org/apache/ka
 Initialized and filled in when `ProcessorStateManager` is <<sources, created>>
 
 Used exclusively when `ProcessorStateManager` is requested to <<getPartition, find the partition ID for a topic (name)>>.
+
+| recordConverters
+a| [[recordConverters]]
+
+| registeredStores
+a| [[registeredStores]]
 
 |===
