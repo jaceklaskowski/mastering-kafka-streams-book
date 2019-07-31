@@ -1,10 +1,22 @@
-== [[StandbyTaskCreator]] StandbyTaskCreator -- Factory of Standby Tasks
+== [[StandbyTaskCreator]] StandbyTaskCreator -- Factory of Standby Tasks (StandbyTasks)
 
-`StandbyTaskCreator` is a concrete <<kafka-streams-internals-AbstractTaskCreator.adoc, task factory>> of <<createTask, standby tasks>>.
+`StandbyTaskCreator` is a concrete <<kafka-streams-internals-AbstractTaskCreator.adoc#, task factory>> of <<createTask, standby tasks (StandbyTasks)>>.
 
-`StandbyTaskCreator` is <<creating-instance, created>> exclusively when `StreamThread` is <<kafka-streams-internals-StreamThread.adoc#create, created>> (for the only purpose of <<kafka-streams-internals-TaskManager.adoc#standbyTaskCreator, creating a TaskManager>>).
+`StandbyTaskCreator` is <<creating-instance, created>> exclusively for <<kafka-streams-internals-StreamThread.adoc#, StreamThread>> (_standbyTaskCreator_) for the only purpose of creating the <<kafka-streams-internals-TaskManager.adoc#, TaskManager>>.
 
 `StandbyTaskCreator` always records when requested to <<createTask, create a task>> for monitoring purposes, but creates a <<kafka-streams-internals-StandbyTask.adoc#, standby task>> only for <<kafka-streams-internals-ProcessorTopology.adoc#, processor task topologies>> (for <<builder, which it was created>>) with at least one <<kafka-streams-internals-ProcessorTopology.adoc#stateStores, state store>>.
+
+=== [[creating-instance]] Creating StandbyTaskCreator Instance
+
+`StandbyTaskCreator` takes the following to be created:
+
+* [[builder]] <<kafka-streams-internals-InternalTopologyBuilder.adoc#, InternalTopologyBuilder>>
+* [[config]] <<kafka-streams-StreamsConfig.adoc#, StreamsConfig>>
+* [[streamsMetrics]] <<kafka-streams-StreamsMetricsThreadImpl.adoc#, StreamsMetricsThreadImpl>>
+* [[stateDirectory]] <<kafka-streams-internals-StateDirectory.adoc#, StateDirectory>>
+* [[storeChangelogReader]] <<kafka-streams-internals-ChangelogReader.adoc#, ChangelogReader>>
+* [[time]] `Time`
+* [[log]] `Logger`
 
 === [[createTask]] Creating Standby Task -- `createTask` Factory Method
 
@@ -31,15 +43,3 @@ If the `ProcessorTopology` has no <<kafka-streams-internals-ProcessorTopology.ad
 ```
 Skipped standby task [taskId] with assigned partitions [partitions] since it does not have any state stores to materialize
 ```
-
-=== [[creating-instance]] Creating StandbyTaskCreator Instance
-
-`StandbyTaskCreator` takes the following when created:
-
-* [[builder]] <<kafka-streams-internals-InternalTopologyBuilder.adoc#, InternalTopologyBuilder>>
-* [[config]] <<kafka-streams-StreamsConfig.adoc#, StreamsConfig>>
-* [[streamsMetrics]] <<kafka-streams-StreamsMetricsThreadImpl.adoc#, StreamsMetricsThreadImpl>>
-* [[stateDirectory]] <<kafka-streams-internals-StateDirectory.adoc#, StateDirectory>>
-* [[storeChangelogReader]] <<kafka-streams-internals-ChangelogReader.adoc#, ChangelogReader>>
-* [[time]] `Time`
-* [[log]] `Logger`

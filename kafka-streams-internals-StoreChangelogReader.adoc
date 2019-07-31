@@ -1,51 +1,30 @@
 == [[StoreChangelogReader]] StoreChangelogReader
 
-`StoreChangelogReader` is a concrete <<kafka-streams-internals-ChangelogReader.adoc#, ChangelogReader>> that...FIXME
+`StoreChangelogReader` is a concrete <<kafka-streams-internals-ChangelogReader.adoc#, ChangelogReader>> that is used for the following:
 
-`StoreChangelogReader` is <<creating-instance, created>> for a <<kafka-streams-internals-StreamThread.adoc#create, StreamThread>>.
+* <<kafka-streams-internals-AbstractTask.adoc#, Tasks>> to create a <<kafka-streams-internals-ProcessorStateManager.adoc#, ProcessorStateManager>>
+
+* <<kafka-streams-internals-TaskManager.adoc#, TaskManager>> when <<kafka-streams-internals-TaskManager.adoc#suspendTasksAndState, suspending all (active and standby) tasks and state>> (at the <<kafka-streams-StreamThread-RebalanceListener.adoc#onPartitionsRevoked, beginning of consumer rebalance>>) and <<kafka-streams-internals-TaskManager.adoc#updateNewAndRestoringTasks, updateNewAndRestoringTasks>> (at the <<kafka-streams-StreamThread-RebalanceListener.adoc#onPartitionsAssigned, end of consumer rebalance>>)
+
+`StoreChangelogReader` is <<creating-instance, created>> for a <<kafka-streams-internals-StreamThread.adoc#, StreamThread>> for the only purpose of creating the <<kafka-streams-internals-TaskCreator.adoc#storeChangelogReader, TaskCreator>>, the <<kafka-streams-internals-StandbyTaskCreator.adoc#storeChangelogReader, StandbyTaskCreator>> and the <<kafka-streams-internals-TaskManager.adoc#changelogReader, TaskManager>>.
 
 .StoreChangelogReader
 image::images/kafka-streams-StoreChangelogReader.png[align="center"]
 
+When <<creating-instance, created>>, `StoreChangelogReader` is given the <<pollTime, pollTime>> that is configured using <<kafka-streams-StreamsConfig.adoc#POLL_MS_CONFIG, StreamsConfig.POLL_MS_CONFIG>> configuration property.
+
 `StoreChangelogReader` uses the <<userStateRestoreListener, StateRestoreListener>> exclusively when <<register, registering a StateRestorer>>.
-
-NOTE: link:kafka-streams-internals-StreamThread.adoc[StreamThread] uses a `StoreChangelogReader` to create a link:kafka-streams-internals-TaskCreator.adoc#storeChangelogReader[TaskCreator], a link:kafka-streams-internals-StandbyTaskCreator.adoc#storeChangelogReader[StandbyTaskCreator] and a link:kafka-streams-internals-TaskManager.adoc#changelogReader[TaskManager].
-
-[[internal-registries]]
-.StoreChangelogReader's Internal Properties (e.g. Registries, Counters and Flags)
-[cols="1m,2",options="header",width="100%"]
-|===
-| Name
-| Description
-
-| endOffsets
-| [[endOffsets]]
-
-| log
-| [[log]]
-
-| needsInitializing
-| [[needsInitializing]]
-
-| needsRestoring
-| [[needsRestoring]]
-
-| partitionInfo
-| [[partitionInfo]]
-
-| stateRestorers
-| [[stateRestorers]]
-|===
 
 === [[creating-instance]] Creating StoreChangelogReader Instance
 
-`StoreChangelogReader` takes the following when created:
+`StoreChangelogReader` takes the following to be created:
 
-* [[restoreConsumer]] Kafka https://kafka.apache.org/22/javadoc/org/apache/kafka/clients/consumer/KafkaConsumer.html[Consumer] (`Consumer<byte[], byte[]>`)
+* [[restoreConsumer]] *Restore Consumer* (`Consumer<byte[], byte[]>`)
+* [[pollTime]] `pollTime`
 * [[userStateRestoreListener]] <<kafka-streams-StateRestoreListener.adoc#, StateRestoreListener>>
 * [[logContext]] `LogContext`
 
-`StoreChangelogReader` initializes the <<internal-registries, internal registries and counters>>.
+`StoreChangelogReader` initializes the <<internal-properties, internal properties>>.
 
 === [[register]] Registering StateRestorer -- `register` Method
 
@@ -128,3 +107,29 @@ void initialize()
 `initialize`...FIXME
 
 NOTE: `initialize` is used exclusively when `StateRestorer` is requested to <<restore, restore>>.
+
+=== [[internal-properties]] Internal Properties
+
+[cols="30m,70",options="header",width="100%"]
+|===
+| Name
+| Description
+
+| endOffsets
+| [[endOffsets]]
+
+| log
+| [[log]]
+
+| needsInitializing
+| [[needsInitializing]]
+
+| needsRestoring
+| [[needsRestoring]]
+
+| partitionInfo
+| [[partitionInfo]]
+
+| stateRestorers
+| [[stateRestorers]]
+|===

@@ -1,17 +1,33 @@
-== [[TaskCreator]] TaskCreator -- Factory of Stream Tasks
+== [[TaskCreator]] TaskCreator -- Factory of Stream Processor Tasks (StreamTasks)
 
-`TaskCreator` is a concrete link:kafka-streams-internals-AbstractTaskCreator.adoc[AbstractTaskCreator] that can <<createTask, create stream tasks>>.
+`TaskCreator` is a concrete <<kafka-streams-internals-AbstractTaskCreator.adoc#, task factory>> of <<createTask, stream processor tasks (StreamTasks)>>.
 
-`TaskCreator` is <<creating-instance, created>> exclusively when `StreamThread` is link:kafka-streams-internals-StreamThread.adoc#create[created] (and only to create a link:kafka-streams-internals-TaskManager.adoc#standbyTaskCreator[TaskManager]).
+`TaskCreator` is <<creating-instance, created>> exclusively for <<kafka-streams-internals-StreamThread.adoc#, StreamThread>> (_activeTaskCreator_) for the only purpose of creating the <<kafka-streams-internals-TaskManager.adoc#, TaskManager>>.
+
+=== [[creating-instance]] Creating TaskCreator Instance
+
+`TaskCreator` takes the following to be created:
+
+* [[builder]] <<kafka-streams-internals-InternalTopologyBuilder.adoc#, InternalTopologyBuilder>>
+* [[config]] <<kafka-streams-StreamsConfig.adoc#, StreamsConfig>>
+* [[streamsMetrics]] <<kafka-streams-StreamsMetricsThreadImpl.adoc#, StreamsMetricsThreadImpl>>
+* [[stateDirectory]] <<kafka-streams-internals-StateDirectory.adoc#, StateDirectory>>
+* [[storeChangelogReader]] <<kafka-streams-internals-ChangelogReader.adoc#, ChangelogReader>>
+* [[cache]] <<kafka-streams-internals-ThreadCache.adoc#, ThreadCache>>
+* [[time]] `Time`
+* [[clientSupplier]] <<kafka-streams-KafkaClientSupplier.adoc#, KafkaClientSupplier>>
+* [[threadProducer]] Kafka https://kafka.apache.org/23/javadoc/org/apache/kafka/clients/producer/Producer.html[Producer] (`Producer<byte[], byte[]>`)
+* [[threadClientId]] `threadClientId`
+* [[log]] `Logger`
 
 === [[createTask]] Creating Stream Processor Task -- `createTask` Factory Method
 
 [source, java]
 ----
 StreamTask createTask(
-  final Consumer<byte[], byte[]> consumer,
-  final TaskId taskId,
-  final Set<TopicPartition> partitions)
+  Consumer<byte[], byte[]> consumer,
+  TaskId taskId,
+  Set<TopicPartition> partitions)
 ----
 
 NOTE: `createTask` is part of link:kafka-streams-internals-AbstractTaskCreator.adoc#createTask[AbstractTaskCreator Contract] to create a concrete link:kafka-streams-internals-AbstractTask.adoc[stream processor task].
@@ -19,23 +35,6 @@ NOTE: `createTask` is part of link:kafka-streams-internals-AbstractTaskCreator.a
 `createTask` requests the link:kafka-streams-internals-AbstractTaskCreator.adoc#taskCreatedSensor[taskCreatedSensor] to record this execution.
 
 `createTask` then creates a link:kafka-streams-internals-StreamTask.adoc#creating-instance[StreamTask] (for a given topic group ID and a <<createProducer, producer client for the task>>).
-
-=== [[creating-instance]] Creating TaskCreator Instance
-
-`TaskCreator` takes the following when created:
-
-* [[builder]] link:kafka-streams-internals-InternalTopologyBuilder.adoc[InternalTopologyBuilder]
-* [[config]] link:kafka-streams-StreamsConfig.adoc[StreamsConfig]
-* [[streamsMetrics]] link:kafka-streams-StreamsMetrics.adoc[StreamsMetrics]
-* [[stateDirectory]] link:kafka-streams-internals-StateDirectory.adoc[StateDirectory]
-* [[taskCreatedSensor]] `Sensor`
-* [[storeChangelogReader]] <<kafka-streams-internals-ChangelogReader.adoc#, ChangelogReader>>
-* [[cache]] <<kafka-streams-internals-ThreadCache.adoc#, ThreadCache>>
-* [[time]] `Time`
-* [[clientSupplier]] link:kafka-streams-KafkaClientSupplier.adoc[KafkaClientSupplier]
-* [[threadProducer]] Kafka https://kafka.apache.org/22/javadoc/org/apache/kafka/clients/producer/Producer.html[Producer] (`Producer<byte[], byte[]>`)
-* [[threadClientId]] `threadClientId`
-* [[log]] `Logger`
 
 === [[createProducer]] `createProducer` Internal Method
 

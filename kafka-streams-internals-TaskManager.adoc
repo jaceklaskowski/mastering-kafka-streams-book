@@ -101,7 +101,7 @@ void updateSubscriptionsFromMetadata(Set<String> topics)
 
 NOTE: `updateSubscriptionsFromMetadata` is used when `StreamsPartitionAssignor` is requested to link:kafka-streams-internals-StreamsPartitionAssignor.adoc#subscription[subscription].
 
-=== [[suspendTasksAndState]] Suspending All (Active and Standby) Stream Tasks And State -- `suspendTasksAndState` Method
+=== [[suspendTasksAndState]] Suspending All (Active and Standby) Tasks And State -- `suspendTasksAndState` Method
 
 [source, java]
 ----
@@ -110,7 +110,7 @@ void suspendTasksAndState()
 
 `suspendTasksAndState`...FIXME
 
-NOTE: `suspendTasksAndState` is used exclusively when `RebalanceListener` handles link:kafka-streams-StreamThread-RebalanceListener.adoc#onPartitionsAssigned[onPartitionsAssigned].
+NOTE: `suspendTasksAndState` is used exclusively when `RebalanceListener` is requested to <<kafka-streams-StreamThread-RebalanceListener.adoc#onPartitionsAssigned, handle onPartitionsAssigned event>>.
 
 === [[updateNewAndRestoringTasks]] `updateNewAndRestoringTasks` Method
 

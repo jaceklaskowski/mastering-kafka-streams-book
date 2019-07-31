@@ -2,12 +2,9 @@
 
 `ChangelogReader` is the internal <<contract, contract>> for <<implementations, changelog readers>> that...FIXME
 
-[[implementations]]
-NOTE: link:kafka-streams-internals-StoreChangelogReader.adoc[StoreChangelogReader] is the one and only known direct implementation of <<contract, ChangelogReader Contract>> in Kafka Streams {{ book.kafka_version }}.
-
 [[contract]]
 .ChangelogReader Contract
-[cols="1m,2",options="header",width="100%"]
+[cols="30m,70",options="header",width="100%"]
 |===
 | Method
 | Description
@@ -17,8 +14,10 @@ a| [[register]]
 
 [source, java]
 ----
-void register(final StateRestorer restorer)
+void register(StateRestorer restorer)
 ----
+
+Registers a <<kafka-streams-StateRestorer.adoc#, StateRestorer>>
 
 Used exclusively when `ProcessorStateManager` is requested to <<kafka-streams-internals-ProcessorStateManager.adoc#register, register a persistent state store>> (with an underlying changelog topic)
 
@@ -30,14 +29,14 @@ a| [[reset]]
 void reset()
 ----
 
-Used exclusively when `TaskManager` is requested to <<kafka-streams-internals-TaskManager.adoc#createTasks, create processor tasks for assigned topic partitions>> (when `RebalanceListener` handles <<kafka-streams-StreamThread-RebalanceListener.adoc#onPartitionsAssigned, onPartitionsAssigned>>)
+Used exclusively when `TaskManager` is requested to <<kafka-streams-internals-TaskManager.adoc#suspendTasksAndState, suspend all (active and standby) tasks and state>> (when `RebalanceListener` is requested to <<kafka-streams-StreamThread-RebalanceListener.adoc#onPartitionsRevoked, handle onPartitionsRevoked event (at the beginning of consumer rebalance)>>)
 
 | restore
 a| [[restore]]
 
 [source, java]
 ----
-Collection<TopicPartition> restore(final RestoringTasks active)
+Collection<TopicPartition> restore(RestoringTasks active)
 ----
 
 Restores the <<kafka-streams-internals-RestoringTasks.adoc#, RestoringTasks>>
@@ -57,3 +56,6 @@ Restores offsets (for <<kafka-streams-StateStore.adoc#persistent, persistent sta
 Used exclusively when `ProcessorStateManager` is requested to <<kafka-streams-internals-ProcessorStateManager.adoc#checkpoint, checkpoint offsets>>
 
 |===
+
+[[implementations]]
+NOTE: <<kafka-streams-internals-StoreChangelogReader.adoc#, StoreChangelogReader>> is the default and only known implementation of the <<contract, ChangelogReader Contract>> in Kafka Streams.
