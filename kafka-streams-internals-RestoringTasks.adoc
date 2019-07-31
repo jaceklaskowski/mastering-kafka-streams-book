@@ -1,3 +1,27 @@
-== [[RestoringTasks]] RestoringTasks
+== [[RestoringTasks]] RestoringTasks Contract
 
-`RestoringTasks` is...FIXME
+`RestoringTasks` is the <<contract, abstraction>> of <<implementations, restoring task managers>> that can <<restoringTaskFor, find the restoring StreamTask for a partition>>.
+
+[[contract]]
+.RestoringTasks Contract
+[cols="30m,70",options="header",width="100%"]
+|===
+| Method
+| Description
+
+| restoringTaskFor
+a| [[restoringTaskFor]]
+
+[source, java]
+----
+StreamTask restoringTaskFor(TopicPartition partition)
+----
+
+Finds the restoring <<kafka-streams-internals-StreamTask.adoc#, StreamTask>> for a partition
+
+Used exclusively when `StoreChangelogReader` is requested to <<kafka-streams-StoreChangelogReader.adoc#restore, restore>>
+
+|===
+
+[[implementations]]
+NOTE: <<kafka-streams-internals-AssignedStreamsTasks.adoc#, AssignedStreamsTasks>> is the default and only known implementation of the <<contract, RestoringTasks Contract>> in Kafka Streams.
