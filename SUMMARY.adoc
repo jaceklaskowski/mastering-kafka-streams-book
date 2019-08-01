@@ -213,7 +213,6 @@
 
 === Internals of State Stores
 
-. link:kafka-streams-internals-AbstractStateStore.adoc[AbstractStateStore]
 . link:kafka-streams-internals-WrappedStateStore.adoc[WrappedStateStore]
 .. link:kafka-streams-internals-CachingKeyValueStore.adoc[CachingKeyValueStore]
 .. link:kafka-streams-internals-CachingSessionStore.adoc[CachingSessionStore]

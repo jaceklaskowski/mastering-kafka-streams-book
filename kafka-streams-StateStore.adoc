@@ -91,8 +91,6 @@ Used when:
 
 * `Segments` is requested to `segments` and `allSegments`
 
-* `AbstractStateStore` is requested to <<kafka-streams-internals-AbstractStateStore.adoc#validateStoreOpen, validateStoreOpen>>
-
 | name
 a| [[name]]
 
