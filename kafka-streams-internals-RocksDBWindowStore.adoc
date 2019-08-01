@@ -2,13 +2,13 @@
 
 `RocksDBWindowStore` is a custom <<kafka-streams-StateStore-WindowStore.adoc#, WindowStore>> that uses the <<bytesStore, SegmentedBytesStore>> (as the underlying <<kafka-streams-StateStore.adoc#, state store>>).
 
-`RocksDBWindowStore` is <<creating-instance, created>> exclusively when `RocksDbWindowBytesStoreSupplier` is requested for a <<kafka-streams-internals-RocksDbWindowBytesStoreSupplier.adoc#get, state store>> (and gives a `RocksDBWindowStore` with a <<kafka-streams-StateStore-RocksDBSegmentedBytesStore.adoc#, RocksDBSegmentedBytesStore>>).
+`RocksDBWindowStore` is <<creating-instance, created>> exclusively when `RocksDbWindowBytesStoreSupplier` is requested for a <<kafka-streams-internals-RocksDbWindowBytesStoreSupplier.adoc#get, state store>> (and gives a `RocksDBWindowStore` with a <<kafka-streams-internals-RocksDBSegmentedBytesStore.adoc#, RocksDBSegmentedBytesStore>>).
 
 === [[creating-instance]] Creating RocksDBWindowStore Instance
 
 `RocksDBWindowStore` takes the following when created:
 
-* [[bytesStore]] <<kafka-streams-StateStore-SegmentedBytesStore.adoc#, SegmentedBytesStore>>
+* [[bytesStore]] <<kafka-streams-internals-SegmentedBytesStore.adoc#, SegmentedBytesStore>>
 * [[keySerde]] `Serde<K>` for keys
 * [[valueSerde]] `Serde<V>` for values
 * [[retainDuplicates]] `retainDuplicates` flag

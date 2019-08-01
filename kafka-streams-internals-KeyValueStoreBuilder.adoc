@@ -20,11 +20,11 @@ import org.apache.kafka.streams.state.internals.KeyValueStoreBuilder
 assert(storeBuilder.isInstanceOf[KeyValueStoreBuilder[_, _]])
 ----
 
-When <<build, requested for a state store>>, `KeyValueStoreBuilder` creates a new <<kafka-streams-StateStore-MeteredKeyValueBytesStore.adoc#, MeteredKeyValueBytesStore>> (with the state store from the <<storeSupplier, KeyValueBytesStoreSupplier>>).
+When <<build, requested for a state store>>, `KeyValueStoreBuilder` creates a new <<kafka-streams-internals-MeteredKeyValueBytesStore.adoc#, MeteredKeyValueBytesStore>> (with the state store from the <<storeSupplier, KeyValueBytesStoreSupplier>>).
 
-With <<kafka-streams-internals-AbstractStoreBuilder.adoc#enableCaching, caching enabled>>, `build` creates a <<kafka-streams-StateStore-CachingKeyValueStore.adoc#, CachingKeyValueStore>>.
+With <<kafka-streams-internals-AbstractStoreBuilder.adoc#enableCaching, caching enabled>>, `build` creates a <<kafka-streams-internals-CachingKeyValueStore.adoc#, CachingKeyValueStore>>.
 
-With <<kafka-streams-internals-AbstractStoreBuilder.adoc#enableLogging, logging enabled>>, `build` creates a <<kafka-streams-StateStore-ChangeLoggingKeyValueBytesStore.adoc#, ChangeLoggingKeyValueBytesStore>>.
+With <<kafka-streams-internals-AbstractStoreBuilder.adoc#enableLogging, logging enabled>>, `build` creates a <<kafka-streams-internals-ChangeLoggingKeyValueBytesStore.adoc#, ChangeLoggingKeyValueBytesStore>>.
 
 NOTE: <<kafka-streams-internals-AbstractStoreBuilder.adoc#enableLogging, Logging is enabled>> by default.
 
@@ -60,7 +60,7 @@ KeyValueStore<Bytes, byte[]> maybeWrapLogging(
 
 `maybeWrapLogging` simply returns the given inner <<kafka-streams-StateStore-KeyValueStore.adoc#, KeyValueStore>> with <<kafka-streams-internals-AbstractStoreBuilder.adoc#enableLogging, logging disabled>>.
 
-Otherwise, with <<kafka-streams-internals-AbstractStoreBuilder.adoc#enableLogging, logging enabled>>, `maybeWrapLogging` creates a <<kafka-streams-StateStore-ChangeLoggingKeyValueBytesStore.adoc#, ChangeLoggingKeyValueBytesStore>>.
+Otherwise, with <<kafka-streams-internals-AbstractStoreBuilder.adoc#enableLogging, logging enabled>>, `maybeWrapLogging` creates a <<kafka-streams-internals-ChangeLoggingKeyValueBytesStore.adoc#, ChangeLoggingKeyValueBytesStore>>.
 
 NOTE: `maybeWrapLogging` is used exclusively when `KeyValueStoreBuilder` is requested to <<build, build a KeyValueStore>>.
 
@@ -74,6 +74,6 @@ KeyValueStore<Bytes, byte[]> maybeWrapCaching(
 
 `maybeWrapCaching` simply returns the given inner <<kafka-streams-StateStore-KeyValueStore.adoc#, KeyValueStore>> with <<kafka-streams-internals-AbstractStoreBuilder.adoc#enableCaching, caching disabled>>.
 
-Otherwise, with <<kafka-streams-internals-AbstractStoreBuilder.adoc#enableCaching, caching enabled>>, `maybeWrapCaching` creates a <<kafka-streams-StateStore-CachingKeyValueStore.adoc#, CachingKeyValueStore>>.
+Otherwise, with <<kafka-streams-internals-AbstractStoreBuilder.adoc#enableCaching, caching enabled>>, `maybeWrapCaching` creates a <<kafka-streams-internals-CachingKeyValueStore.adoc#, CachingKeyValueStore>>.
 
 NOTE: `maybeWrapCaching` is used exclusively when `KeyValueStoreBuilder` is requested to <<build, build a KeyValueStore>>.

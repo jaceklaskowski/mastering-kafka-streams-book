@@ -9,7 +9,7 @@
 void init(final ProcessorContext context, final StateStore root)
 ----
 
-NOTE: `init` is part of <<kafka-streams-StateStore-AbstractStateStore.adoc#init, AbstractStateStore Contract>> to initialize the <<kafka-streams-StateStore.adoc#, state store>>.
+NOTE: `init` is part of <<kafka-streams-internals-AbstractStateStore.adoc#init, AbstractStateStore Contract>> to initialize the <<kafka-streams-StateStore.adoc#, state store>>.
 
 `init`...FIXME
 

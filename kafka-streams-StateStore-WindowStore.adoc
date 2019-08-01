@@ -30,16 +30,16 @@ Used when <<kafka-streams-internals-KStreamJoinWindowProcessor.adoc#process, KSt
 | WindowStore
 | Description
 
-| <<kafka-streams-StateStore-CachingWindowStore.adoc#, CachingWindowStore>>
+| <<kafka-streams-internals-CachingWindowStore.adoc#, CachingWindowStore>>
 | [[CachingWindowStore]]
 
-| <<kafka-streams-StateStore-ChangeLoggingWindowBytesStore.adoc#, ChangeLoggingWindowBytesStore>>
+| <<kafka-streams-internals-ChangeLoggingWindowBytesStore.adoc#, ChangeLoggingWindowBytesStore>>
 | [[ChangeLoggingWindowBytesStore]]
 
 | <<kafka-streams-internals-MeteredWindowStore.adoc#, MeteredWindowStore>>
 | [[MeteredWindowStore]]
 
-| <<kafka-streams-StateStore-RocksDBWindowStore.adoc#, RocksDBWindowStore>>
+| <<kafka-streams-internals-RocksDBWindowStore.adoc#, RocksDBWindowStore>>
 | [[RocksDBWindowStore]]
 
 |===

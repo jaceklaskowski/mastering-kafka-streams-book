@@ -1,6 +1,6 @@
 == [[RocksDBSegmentedBytesStore]] RocksDBSegmentedBytesStore
 
-`RocksDBSegmentedBytesStore` is a concrete <<kafka-streams-StateStore.adoc#, StateStore>> (as a <<kafka-streams-StateStore-AbstractRocksDBSegmentedBytesStore.adoc#, AbstractRocksDBSegmentedBytesStore>> of `KeyValueSegments`) that...FIXME
+`RocksDBSegmentedBytesStore` is a concrete <<kafka-streams-StateStore.adoc#, StateStore>> (as a <<kafka-streams-internals-AbstractRocksDBSegmentedBytesStore.adoc#, AbstractRocksDBSegmentedBytesStore>> of `KeyValueSegments`) that...FIXME
 
 `RocksDBSegmentedBytesStore` is <<creating-instance, created>> when:
 

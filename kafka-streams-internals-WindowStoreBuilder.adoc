@@ -49,7 +49,7 @@ scala> :type windowStore
 org.apache.kafka.streams.state.WindowStore[Int,Long]
 ----
 
-With <<kafka-streams-StoreBuilder.adoc#withCachingEnabled, caching enabled>>, `build` creates a <<kafka-streams-internals-MeteredWindowStore.adoc#, MeteredWindowStore>> (with a <<kafka-streams-StateStore-CachingWindowStore.adoc#, CachingWindowStore>>).
+With <<kafka-streams-StoreBuilder.adoc#withCachingEnabled, caching enabled>>, `build` creates a <<kafka-streams-internals-MeteredWindowStore.adoc#, MeteredWindowStore>> (with a <<kafka-streams-internals-CachingWindowStore.adoc#, CachingWindowStore>>).
 
 [source, scala]
 ----
@@ -63,7 +63,7 @@ import org.apache.kafka.streams.state.internals.MeteredWindowStore
 assert(windowStore.isInstanceOf[MeteredWindowStore[_, _]])
 ----
 
-With <<kafka-streams-StoreBuilder.adoc#withLoggingEnabled, logging enabled>>, `build` creates a <<kafka-streams-internals-MeteredWindowStore.adoc#, MeteredWindowStore>> (with a <<kafka-streams-StateStore-ChangeLoggingWindowBytesStore.adoc#, ChangeLoggingWindowBytesStore>>).
+With <<kafka-streams-StoreBuilder.adoc#withLoggingEnabled, logging enabled>>, `build` creates a <<kafka-streams-internals-MeteredWindowStore.adoc#, MeteredWindowStore>> (with a <<kafka-streams-internals-ChangeLoggingWindowBytesStore.adoc#, ChangeLoggingWindowBytesStore>>).
 
 === [[maybeWrapLogging]] `maybeWrapLogging` Internal Method
 

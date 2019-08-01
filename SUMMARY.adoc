@@ -149,7 +149,7 @@
 
 . link:kafka-streams-StreamTask-TaskMetrics.adoc[TaskMetrics]
 
-. link:kafka-streams-StoreChangeLogger.adoc[StoreChangeLogger]
+. link:kafka-streams-internals-StoreChangeLogger.adoc[StoreChangeLogger]
 
 == Testing
 
@@ -213,26 +213,24 @@
 
 === Internals of State Stores
 
-. link:kafka-streams-StateStore-AbstractStateStore.adoc[AbstractStateStore]
-. link:kafka-streams-StateStore-WrappedStateStore.adoc[WrappedStateStore]
-.. link:kafka-streams-StateStore-CachingKeyValueStore.adoc[CachingKeyValueStore]
-.. link:kafka-streams-StateStore-CachingSessionStore.adoc[CachingSessionStore]
-.. link:kafka-streams-StateStore-CachingWindowStore.adoc[CachingWindowStore]
-.. link:kafka-streams-StateStore-ChangeLoggingKeyValueBytesStore.adoc[ChangeLoggingKeyValueBytesStore]
-.. link:kafka-streams-StateStore-ChangeLoggingSessionBytesStore.adoc[ChangeLoggingSessionBytesStore]
-.. link:kafka-streams-StateStore-ChangeLoggingWindowBytesStore.adoc[ChangeLoggingWindowBytesStore]
+. link:kafka-streams-internals-AbstractStateStore.adoc[AbstractStateStore]
+. link:kafka-streams-internals-WrappedStateStore.adoc[WrappedStateStore]
+.. link:kafka-streams-internals-CachingKeyValueStore.adoc[CachingKeyValueStore]
+.. link:kafka-streams-internals-CachingSessionStore.adoc[CachingSessionStore]
+.. link:kafka-streams-internals-CachingWindowStore.adoc[CachingWindowStore]
+.. link:kafka-streams-internals-ChangeLoggingKeyValueBytesStore.adoc[ChangeLoggingKeyValueBytesStore]
+.. link:kafka-streams-internals-ChangeLoggingSessionBytesStore.adoc[ChangeLoggingSessionBytesStore]
+.. link:kafka-streams-internals-ChangeLoggingWindowBytesStore.adoc[ChangeLoggingWindowBytesStore]
 .. link:kafka-streams-internals-MeteredKeyValueStore.adoc[MeteredKeyValueStore]
 .. link:kafka-streams-internals-MeteredSessionStore.adoc[MeteredSessionStore]
 .. link:kafka-streams-internals-MeteredWindowStore.adoc[MeteredWindowStore]
-.. link:kafka-streams-StateStore-RocksDBSessionStore.adoc[RocksDBSessionStore]
-.. link:kafka-streams-StateStore-RocksDBWindowStore.adoc[RocksDBWindowStore]
-.. link:kafka-streams-StateStore-InMemoryKeyValueStore.adoc[InMemoryKeyValueStore]
-.. link:kafka-streams-StateStore-InMemoryKeyValueLoggedStore.adoc[InMemoryKeyValueLoggedStore]
-.. link:kafka-streams-StateStore-InMemorySessionStore.adoc[InMemorySessionStore]
-.. link:kafka-streams-StateStore-MemoryLRUCache.adoc[MemoryLRUCache]
-.. link:kafka-streams-StateStore-MeteredKeyValueBytesStore.adoc[MeteredKeyValueBytesStore]
-.. link:kafka-streams-StateStore-RocksDBStore.adoc[RocksDBStore]
-.. link:kafka-streams-StateStore-RocksDBSessionBytesStore.adoc[RocksDBSessionBytesStore]
+.. link:kafka-streams-internals-RocksDBSessionStore.adoc[RocksDBSessionStore]
+.. link:kafka-streams-internals-RocksDBWindowStore.adoc[RocksDBWindowStore]
+.. link:kafka-streams-internals-InMemoryKeyValueStore.adoc[InMemoryKeyValueStore]
+.. link:kafka-streams-internals-InMemorySessionStore.adoc[InMemorySessionStore]
+.. link:kafka-streams-internals-MemoryLRUCache.adoc[MemoryLRUCache]
+.. link:kafka-streams-internals-MeteredKeyValueBytesStore.adoc[MeteredKeyValueBytesStore]
+.. link:kafka-streams-internals-RocksDBStore.adoc[RocksDBStore]
 
 . link:kafka-streams-internals-AbstractStoreBuilder.adoc[AbstractStoreBuilder]
 .. link:kafka-streams-internals-KeyValueStoreBuilder.adoc[KeyValueStoreBuilder]
@@ -245,21 +243,21 @@
 . link:kafka-streams-internals-RocksDbSessionBytesStoreSupplier.adoc[RocksDbSessionBytesStoreSupplier]
 . link:kafka-streams-internals-RocksDbWindowBytesStoreSupplier.adoc[RocksDbWindowBytesStoreSupplier]
 
-. link:kafka-streams-StateStore-KeyValueToTimestampedKeyValueByteStoreAdapter.adoc[KeyValueToTimestampedKeyValueByteStoreAdapter]
-. link:kafka-streams-StateStore-WindowToTimestampedWindowByteStoreAdapter.adoc[WindowToTimestampedWindowByteStoreAdapter]
+. link:kafka-streams-internals-KeyValueToTimestampedKeyValueByteStoreAdapter.adoc[KeyValueToTimestampedKeyValueByteStoreAdapter]
+. link:kafka-streams-internals-WindowToTimestampedWindowByteStoreAdapter.adoc[WindowToTimestampedWindowByteStoreAdapter]
 
-. link:kafka-streams-StateStore-SegmentedBytesStore.adoc[SegmentedBytesStore]
-.. link:kafka-streams-StateStore-AbstractRocksDBSegmentedBytesStore.adoc[AbstractRocksDBSegmentedBytesStore]
-.. link:kafka-streams-StateStore-RocksDBSegmentedBytesStore.adoc[RocksDBSegmentedBytesStore]
+. link:kafka-streams-internals-SegmentedBytesStore.adoc[SegmentedBytesStore]
+.. link:kafka-streams-internals-AbstractRocksDBSegmentedBytesStore.adoc[AbstractRocksDBSegmentedBytesStore]
+.. link:kafka-streams-internals-RocksDBSegmentedBytesStore.adoc[RocksDBSegmentedBytesStore]
 
-. link:kafka-streams-StateStore-TimeOrderedKeyValueBuffer.adoc[TimeOrderedKeyValueBuffer]
-.. link:kafka-streams-StateStore-InMemoryTimeOrderedKeyValueBuffer.adoc[InMemoryTimeOrderedKeyValueBuffer]
+. link:kafka-streams-internals-TimeOrderedKeyValueBuffer.adoc[TimeOrderedKeyValueBuffer]
+.. link:kafka-streams-internals-InMemoryTimeOrderedKeyValueBuffer.adoc[InMemoryTimeOrderedKeyValueBuffer]
 
 === Logical Plan of Stream Processing Execution
 
 . link:kafka-streams-internals-ProcessorNode.adoc[ProcessorNode]
 .. link:kafka-streams-internals-SourceNode.adoc[SourceNode]
-.. link:kafka-streams-internals-SinkNode.adoc[SinkNode -- ProcessorNode with no Child Nodes]
+.. link:kafka-streams-internals-SinkNode.adoc[SinkNode]
 
 . link:kafka-streams-internals-InternalStreamsBuilder.adoc[InternalStreamsBuilder]
 

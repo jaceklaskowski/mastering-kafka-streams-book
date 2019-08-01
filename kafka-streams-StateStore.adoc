@@ -2,7 +2,7 @@
 
 `StateStore` is the <<contract, contract>> of <<implementations, state storage engines>> that manage a state.
 
-`StateStore` can be <<persistent, persistent>> or not. Among persistent stores are <<kafka-streams-StateStore-AbstractRocksDBSegmentedBytesStore.adoc#, AbstractRocksDBSegmentedBytesStore>>, <<kafka-streams-StateStore-KeyValueToTimestampedKeyValueByteStoreAdapter.adoc#, KeyValueToTimestampedKeyValueByteStoreAdapter>>, <<kafka-streams-StateStore-RocksDBStore.adoc#, RocksDBStore>>, <<kafka-streams-StateStore-WindowToTimestampedWindowByteStoreAdapter.adoc#, WindowToTimestampedWindowByteStoreAdapter>>.
+`StateStore` can be <<persistent, persistent>> or not. Among persistent stores are <<kafka-streams-internals-AbstractRocksDBSegmentedBytesStore.adoc#, AbstractRocksDBSegmentedBytesStore>>, <<kafka-streams-internals-KeyValueToTimestampedKeyValueByteStoreAdapter.adoc#, KeyValueToTimestampedKeyValueByteStoreAdapter>>, <<kafka-streams-internals-RocksDBStore.adoc#, RocksDBStore>>, <<kafka-streams-internals-WindowToTimestampedWindowByteStoreAdapter.adoc#, WindowToTimestampedWindowByteStoreAdapter>>.
 
 NOTE: A `StateStore` can be *local* or *global* (although it is a property of a <<kafka-streams-internals-ProcessorTopology.adoc#, ProcessorTopology>>).
 
@@ -47,9 +47,9 @@ Used when:
 
 * <<kafka-streams-internals-GlobalStateManagerImpl.adoc#flush, GlobalStateManagerImpl>> and <<kafka-streams-internals-ProcessorStateManager.adoc#flush, ProcessorStateManager>> are requested to flush their state stores
 
-* <<kafka-streams-StateStore-CachingKeyValueStore.adoc#close, CachingKeyValueStore>>, <<kafka-streams-StateStore-CachingSessionStore.adoc#close, CachingSessionStore>> and <<kafka-streams-StateStore-CachingWindowStore.adoc#close, CachingWindowStore>> are requested to close state stores
+* <<kafka-streams-internals-CachingKeyValueStore.adoc#close, CachingKeyValueStore>>, <<kafka-streams-internals-CachingSessionStore.adoc#close, CachingSessionStore>> and <<kafka-streams-internals-CachingWindowStore.adoc#close, CachingWindowStore>> are requested to close state stores
 
-* `RocksDBSegmentedBytesStore` is requested to <<kafka-streams-StateStore-RocksDBSegmentedBytesStore.adoc#init, initialize the state store>>
+* `RocksDBSegmentedBytesStore` is requested to <<kafka-streams-internals-RocksDBSegmentedBytesStore.adoc#init, initialize the state store>>
 
 * `Segments` is requested to `flush`
 
@@ -91,7 +91,7 @@ Used when:
 
 * `Segments` is requested to `segments` and `allSegments`
 
-* `AbstractStateStore` is requested to <<kafka-streams-StateStore-AbstractStateStore.adoc#validateStoreOpen, validateStoreOpen>>
+* `AbstractStateStore` is requested to <<kafka-streams-internals-AbstractStateStore.adoc#validateStoreOpen, validateStoreOpen>>
 
 | name
 a| [[name]]
@@ -130,18 +130,18 @@ Used when:
 | <<kafka-streams-StateStore-KeyValueStore.adoc#, KeyValueStore>>
 | [[KeyValueStore]]
 
-| <<kafka-streams-StateStore-SegmentedBytesStore.adoc#, SegmentedBytesStore>>
+| <<kafka-streams-internals-SegmentedBytesStore.adoc#, SegmentedBytesStore>>
 | [[SegmentedBytesStore]]
 
 | <<kafka-streams-StateStore-SessionStore.adoc#, SessionStore>>
 | [[SessionStore]]
 
-| <<kafka-streams-StateStore-TimeOrderedKeyValueBuffer.adoc#, TimeOrderedKeyValueBuffer>>
+| <<kafka-streams-internals-TimeOrderedKeyValueBuffer.adoc#, TimeOrderedKeyValueBuffer>>
 | [[TimeOrderedKeyValueBuffer]]
 
 | <<kafka-streams-StateStore-WindowStore.adoc#, WindowStore>>
 | [[WindowStore]]
 
-| <<kafka-streams-StateStore-WrappedStateStore.adoc#, WrappedStateStore>>
+| <<kafka-streams-internals-WrappedStateStore.adoc#, WrappedStateStore>>
 | [[WrappedStateStore]]
 |===

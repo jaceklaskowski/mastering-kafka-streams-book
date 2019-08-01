@@ -1,6 +1,6 @@
 == [[AbstractRocksDBSegmentedBytesStore]] AbstractRocksDBSegmentedBytesStore
 
-`AbstractRocksDBSegmentedBytesStore` is a concrete <<kafka-streams-StateStore-SegmentedBytesStore.adoc#, SegmentedBytesStore>> that...FIXME
+`AbstractRocksDBSegmentedBytesStore` is a concrete <<kafka-streams-internals-SegmentedBytesStore.adoc#, SegmentedBytesStore>> that...FIXME
 
 [[persistent]]
 `AbstractRocksDBSegmentedBytesStore` is always <<kafka-streams-StateStore.adoc#persistent, persistent>>.

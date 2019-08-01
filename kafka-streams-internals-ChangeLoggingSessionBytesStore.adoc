@@ -16,7 +16,7 @@
 | Description
 
 | `changeLogger`
-| [[changeLogger]] link:kafka-streams-StoreChangeLogger.adoc[StoreChangeLogger]
+| [[changeLogger]] link:kafka-streams-internals-StoreChangeLogger.adoc[StoreChangeLogger]
 
 Used when...FIXME
 
@@ -33,7 +33,7 @@ Used when...FIXME
 void init(final ProcessorContext context, final StateStore root)
 ----
 
-NOTE: `init` is part of <<kafka-streams-StateStore-AbstractStateStore.adoc#init, AbstractStateStore Contract>> to initialize the <<kafka-streams-StateStore.adoc#, state store>>.
+NOTE: `init` is part of <<kafka-streams-internals-AbstractStateStore.adoc#init, AbstractStateStore Contract>> to initialize the <<kafka-streams-StateStore.adoc#, state store>>.
 
 `init`...FIXME
 
@@ -48,4 +48,4 @@ NOTE: `put` is part of link:kafka-streams-StateStore-SessionStore.adoc#put[Sessi
 
 `put` requests the <<bytesStore, SessionStore>> to link:kafka-streams-StateStore-SessionStore.adoc#put[store the aggregated value for the given session key].
 
-In the end, `put` uses the `SessionKeySerde` to link:kafka-streams-SessionKeySerde.adoc#bytesToBinary[convert the session key to binary] and requests the <<changeLogger, StoreChangeLogger>> to link:kafka-streams-StoreChangeLogger.adoc#logChange[logChange] (with the binary key and the aggregated value).
+In the end, `put` uses the `SessionKeySerde` to link:kafka-streams-SessionKeySerde.adoc#bytesToBinary[convert the session key to binary] and requests the <<changeLogger, StoreChangeLogger>> to link:kafka-streams-internals-StoreChangeLogger.adoc#logChange[logChange] (with the binary key and the aggregated value).

@@ -2,11 +2,11 @@
 
 `StoreChangeLogger` is <<creating-instance, created>> when the following <<kafka-streams-StateStore.adoc#, state stores>> are requested to initialize:
 
-* <<kafka-streams-StateStore-ChangeLoggingKeyValueBytesStore.adoc#, ChangeLoggingKeyValueBytesStore>>
+* <<kafka-streams-internals-ChangeLoggingKeyValueBytesStore.adoc#, ChangeLoggingKeyValueBytesStore>>
 
-* <<kafka-streams-StateStore-ChangeLoggingSessionBytesStore.adoc#, ChangeLoggingSessionBytesStore>>
+* <<kafka-streams-internals-ChangeLoggingSessionBytesStore.adoc#, ChangeLoggingSessionBytesStore>>
 
-* <<kafka-streams-StateStore-ChangeLoggingWindowBytesStore.adoc#, ChangeLoggingWindowBytesStore>>
+* <<kafka-streams-internals-ChangeLoggingWindowBytesStore.adoc#, ChangeLoggingWindowBytesStore>>
 
 === [[creating-instance]] Creating StoreChangeLogger Instance
 
@@ -34,11 +34,11 @@ void logChange(K key, V value, long timestamp)
 ====
 `logChange` is used when:
 
-* `ChangeLoggingKeyValueBytesStore` is requested to <<kafka-streams-StateStore-ChangeLoggingKeyValueBytesStore.adoc#log, log>>
+* `ChangeLoggingKeyValueBytesStore` is requested to <<kafka-streams-internals-ChangeLoggingKeyValueBytesStore.adoc#log, log>>
 
-* `ChangeLoggingSessionBytesStore` is requested to <<kafka-streams-StateStore-ChangeLoggingSessionBytesStore.adoc#remove, remove>> and <<kafka-streams-StateStore-ChangeLoggingSessionBytesStore.adoc#put, put>>
+* `ChangeLoggingSessionBytesStore` is requested to <<kafka-streams-internals-ChangeLoggingSessionBytesStore.adoc#remove, remove>> and <<kafka-streams-internals-ChangeLoggingSessionBytesStore.adoc#put, put>>
 
-* `ChangeLoggingWindowBytesStore` is requested to <<kafka-streams-StateStore-ChangeLoggingWindowBytesStore.adoc#log, log>>
+* `ChangeLoggingWindowBytesStore` is requested to <<kafka-streams-internals-ChangeLoggingWindowBytesStore.adoc#log, log>>
 
 * `ChangeLoggingTimestampedKeyValueBytesStore` and `ChangeLoggingTimestampedWindowBytesStore` are requested to `log`
 ====

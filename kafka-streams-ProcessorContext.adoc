@@ -8,7 +8,7 @@
 
 * `Task` is requested for the <<kafka-streams-internals-Task.adoc#context, ProcessorContext>>
 
-* `StoreChangeLogger` is <<kafka-streams-StoreChangeLogger.adoc#context, created>>
+* `StoreChangeLogger` is <<kafka-streams-internals-StoreChangeLogger.adoc#context, created>>
 
 TIP: Use <<kafka-streams-AbstractProcessor.adoc#, AbstractProcessor>> to manage the `ProcessorContext` of a custom <<kafka-streams-Processor.adoc#, Processor>>.
 
@@ -128,7 +128,7 @@ void register(
 
 Registers a <<kafka-streams-StateStore.adoc#, state store>> with a <<kafka-streams-StateRestoreCallback.adoc#, StateRestoreCallback>>
 
-Used when <<kafka-streams-StateStore-InMemoryKeyValueStore.adoc#init, InMemoryKeyValueStore>>, <<kafka-streams-StateStore-MemoryLRUCache.adoc#init, MemoryLRUCache>>, <<kafka-streams-StateStore-RocksDBSegmentedBytesStore.adoc#init, RocksDBSegmentedBytesStore>> and <<kafka-streams-StateStore-RocksDBStore.adoc#init, RocksDBStore>> are requested to initialize itself
+Used when <<kafka-streams-internals-InMemoryKeyValueStore.adoc#init, InMemoryKeyValueStore>>, <<kafka-streams-internals-MemoryLRUCache.adoc#init, MemoryLRUCache>>, <<kafka-streams-internals-RocksDBSegmentedBytesStore.adoc#init, RocksDBSegmentedBytesStore>> and <<kafka-streams-internals-RocksDBStore.adoc#init, RocksDBStore>> are requested to initialize itself
 
 | schedule
 a| [[schedule]]

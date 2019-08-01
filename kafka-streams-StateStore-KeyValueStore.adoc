@@ -32,10 +32,10 @@ interface KeyValueStore<K, V> extends StateStore, ReadOnlyKeyValueStore<K, V> {
 | KeyValueStore
 | Description
 
-| link:kafka-streams-StateStore-MeteredKeyValueBytesStore.adoc[MeteredKeyValueBytesStore]
+| link:kafka-streams-internals-MeteredKeyValueBytesStore.adoc[MeteredKeyValueBytesStore]
 | [[MeteredKeyValueBytesStore]]
 
-| link:kafka-streams-StateStore-ChangeLoggingKeyValueBytesStore.adoc[ChangeLoggingKeyValueBytesStore]
+| link:kafka-streams-internals-ChangeLoggingKeyValueBytesStore.adoc[ChangeLoggingKeyValueBytesStore]
 | [[ChangeLoggingKeyValueBytesStore]]
 
 | MemoryLRUCache
@@ -46,9 +46,6 @@ interface KeyValueStore<K, V> extends StateStore, ReadOnlyKeyValueStore<K, V> {
 
 | MeteredKeyValueStore
 | [[MeteredKeyValueStore]]
-
-| link:kafka-streams-StateStore-InMemoryKeyValueLoggedStore.adoc[InMemoryKeyValueLoggedStore]
-| [[InMemoryKeyValueLoggedStore]]
 
 | RocksDBStore
 | [[RocksDBStore]]

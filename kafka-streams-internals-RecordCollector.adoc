@@ -88,7 +88,7 @@ Used when:
 
 * `InMemoryTimeOrderedKeyValueBuffer` is requested to `flush`
 
-* `StoreChangeLogger` is requested to <<kafka-streams-StoreChangeLogger.adoc#logChange, logChange>>
+* `StoreChangeLogger` is requested to <<kafka-streams-internals-StoreChangeLogger.adoc#logChange, logChange>>
 
 * `SinkNode` is requested to <<kafka-streams-internals-SinkNode.adoc#process, process a record>>
 
@@ -126,5 +126,5 @@ RecordCollector recordCollector()
 
 * `InMemoryTimeOrderedKeyValueBuffer` is requested to `init`
 
-* StoreChangeLogger is <<kafka-streams-StoreChangeLogger.adoc#, created>>
+* StoreChangeLogger is <<kafka-streams-internals-StoreChangeLogger.adoc#, created>>
 ====

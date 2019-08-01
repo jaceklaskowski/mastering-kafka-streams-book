@@ -31,9 +31,9 @@ Used when:
 
 * `KStreamSessionWindowAggregateProcessor` is requested to link:kafka-streams-internals-KStreamSessionWindowAggregateProcessor.adoc#process[process a key-value record]
 
-* `CachingSessionStore` is requested to link:kafka-streams-StateStore-CachingSessionStore.adoc#remove[remove a session key] and link:kafka-streams-StateStore-CachingSessionStore.adoc#putAndMaybeForward[putAndMaybeForward]
+* `CachingSessionStore` is requested to link:kafka-streams-internals-CachingSessionStore.adoc#remove[remove a session key] and link:kafka-streams-internals-CachingSessionStore.adoc#putAndMaybeForward[putAndMaybeForward]
 
-* `ChangeLoggingSessionBytesStore` is requested to link:kafka-streams-StateStore-ChangeLoggingSessionBytesStore.adoc#put[store an aggregated value for a session key]
+* `ChangeLoggingSessionBytesStore` is requested to link:kafka-streams-internals-ChangeLoggingSessionBytesStore.adoc#put[store an aggregated value for a session key]
 
 * `MeteredSessionStore` is requested to link:kafka-streams-internals-MeteredSessionStore.adoc#put[store an aggregated value for a session key]
 
@@ -48,16 +48,13 @@ Used when:
 | SessionStore
 | Description
 
-| link:kafka-streams-StateStore-CachingSessionStore.adoc[CachingSessionStore]
+| link:kafka-streams-internals-CachingSessionStore.adoc[CachingSessionStore]
 | [[CachingSessionStore]]
 
-| link:kafka-streams-StateStore-RocksDBSessionStore.adoc[RocksDBSessionStore]
+| link:kafka-streams-internals-RocksDBSessionStore.adoc[RocksDBSessionStore]
 | [[RocksDBSessionStore]]
 
-| link:kafka-streams-StateStore-RocksDBSessionBytesStore.adoc[RocksDBSessionBytesStore]
-| [[RocksDBSessionBytesStore]]
-
-| link:kafka-streams-StateStore-ChangeLoggingSessionBytesStore.adoc[ChangeLoggingSessionBytesStore]
+| link:kafka-streams-internals-ChangeLoggingSessionBytesStore.adoc[ChangeLoggingSessionBytesStore]
 | [[ChangeLoggingSessionBytesStore]]
 
 | link:kafka-streams-internals-MeteredSessionStore.adoc[MeteredSessionStore]

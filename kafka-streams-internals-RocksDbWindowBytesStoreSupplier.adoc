@@ -30,9 +30,9 @@ WindowStore<Bytes, byte[]> get()
 
 NOTE: `get` is part of the <<kafka-streams-StoreSupplier.adoc#get, StoreSupplier Contract>> to get a <<kafka-streams-StateStore.adoc#, state store>>.
 
-`get` creates a <<kafka-streams-StateStore-RocksDBSegmentedBytesStore.adoc#, RocksDBSegmentedBytesStore>> (with the <<name, name>>, the <<retentionPeriod, retentionPeriod>> and the <<segments, segments>>).
+`get` creates a <<kafka-streams-internals-RocksDBSegmentedBytesStore.adoc#, RocksDBSegmentedBytesStore>> (with the <<name, name>>, the <<retentionPeriod, retentionPeriod>> and the <<segments, segments>>).
 
-`get` then returns a new <<kafka-streams-StateStore-RocksDBWindowStore.adoc#, RocksDBWindowStore>> (with the `RocksDBSegmentedBytesStore` and the <<retainDuplicates, retainDuplicates>> and the <<windowSize, windowSize>>).
+`get` then returns a new <<kafka-streams-internals-RocksDBWindowStore.adoc#, RocksDBWindowStore>> (with the `RocksDBSegmentedBytesStore` and the <<retainDuplicates, retainDuplicates>> and the <<windowSize, windowSize>>).
 
 === [[creating-instance]] Creating RocksDbWindowBytesStoreSupplier Instance
 

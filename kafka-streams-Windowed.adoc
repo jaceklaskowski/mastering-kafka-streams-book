@@ -6,7 +6,7 @@
 
 * <<kafka-streams-internals-KStreamSessionWindowAggregateProcessor.adoc#process, KStreamSessionWindowAggregateProcessor>> and <<kafka-streams-internals-KStreamWindowAggregateProcessor.adoc#process, KStreamWindowAggregateProcessor>> processors are requested to process a record
 
-* `CachingSessionStore` state store is requested to <<kafka-streams-StateStore-CachingSessionStore.adoc#putAndMaybeForward, putAndMaybeForward>>
+* `CachingSessionStore` state store is requested to <<kafka-streams-internals-CachingSessionStore.adoc#putAndMaybeForward, putAndMaybeForward>>
 
 * `MergedSortedCacheSessionStoreIterator` is requested to `deserializeCacheKey`
 

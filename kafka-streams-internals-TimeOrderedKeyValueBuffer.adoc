@@ -90,4 +90,4 @@ Used when...FIXME
 |===
 
 [[implementations]]
-NOTE: <<kafka-streams-StateStore-InMemoryTimeOrderedKeyValueBuffer.adoc#, InMemoryTimeOrderedKeyValueBuffer>> is the default and only known implementation of the <<contract, TimeOrderedKeyValueBuffer Contract>> in Kafka Streams.
+NOTE: <<kafka-streams-internals-InMemoryTimeOrderedKeyValueBuffer.adoc#, InMemoryTimeOrderedKeyValueBuffer>> is the default and only known implementation of the <<contract, TimeOrderedKeyValueBuffer Contract>> in Kafka Streams.

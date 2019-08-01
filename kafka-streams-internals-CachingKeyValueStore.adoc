@@ -1,6 +1,6 @@
-== [[CachingSessionStore]] CachingSessionStore
+== [[CachingKeyValueStore]] CachingKeyValueStore
 
-`CachingSessionStore` is...FIXME
+`CachingKeyValueStore` is...FIXME
 
 === [[init]] Initialize State Store -- `init` Method
 
@@ -9,7 +9,7 @@
 void init(final ProcessorContext context, final StateStore root)
 ----
 
-NOTE: `init` is part of <<kafka-streams-StateStore-AbstractStateStore.adoc#init, AbstractStateStore Contract>> to initialize the <<kafka-streams-StateStore.adoc#, state store>>.
+NOTE: `init` is part of <<kafka-streams-internals-AbstractStateStore.adoc#init, AbstractStateStore Contract>> to initialize the <<kafka-streams-StateStore.adoc#, state store>>.
 
 `init`...FIXME
 
@@ -42,6 +42,6 @@ NOTE: `putAndMaybeForward` is used when...FIXME
 void close()
 ----
 
-NOTE: `close` is part of the <<kafka-streams-StateStore-AbstractStateStore.adoc#close, AbstractStateStore Contract>> to close the <<kafka-streams-StateStore.adoc#, state store>>.
+NOTE: `close` is part of the <<kafka-streams-internals-AbstractStateStore.adoc#close, AbstractStateStore Contract>> to close the <<kafka-streams-StateStore.adoc#, state store>>.
 
 `close`...FIXME

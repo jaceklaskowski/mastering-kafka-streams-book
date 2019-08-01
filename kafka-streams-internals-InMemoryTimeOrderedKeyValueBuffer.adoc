@@ -1,6 +1,6 @@
 == [[InMemoryTimeOrderedKeyValueBuffer]] InMemoryTimeOrderedKeyValueBuffer
 
-`InMemoryTimeOrderedKeyValueBuffer` is a concrete <<kafka-streams-StateStore-TimeOrderedKeyValueBuffer.adoc#, TimeOrderedKeyValueBuffer>> that is <<creating-instance, created>> exclusively when `KTableImpl` is requested to <<kafka-streams-internals-KTableImpl.adoc#suppress, suppress>>.
+`InMemoryTimeOrderedKeyValueBuffer` is a concrete <<kafka-streams-internals-TimeOrderedKeyValueBuffer.adoc#, TimeOrderedKeyValueBuffer>> that is <<creating-instance, created>> exclusively when `KTableImpl` is requested to <<kafka-streams-internals-KTableImpl.adoc#suppress, suppress>>.
 
 === [[creating-instance]] Creating InMemoryTimeOrderedKeyValueBuffer Instance
 
@@ -22,4 +22,4 @@ InMemoryTimeOrderedKeyValueBuffer<K, V> build()
 
 NOTE: `build` is part of the <<kafka-streams-StoreBuilder.adoc#build, StoreBuilder Contract>> to create (_build_) a <<kafka-streams-StateStore.adoc#, state store>>.
 
-`build` simply creates a new <<kafka-streams-StateStore-InMemoryTimeOrderedKeyValueBuffer.adoc#, InMemoryTimeOrderedKeyValueBuffer>>.
+`build` simply creates a new <<kafka-streams-internals-InMemoryTimeOrderedKeyValueBuffer.adoc#, InMemoryTimeOrderedKeyValueBuffer>>.

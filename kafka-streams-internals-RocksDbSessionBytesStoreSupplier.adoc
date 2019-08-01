@@ -13,4 +13,4 @@ SessionStore<Bytes, byte[]> get()
 
 NOTE: `get` is part of the <<kafka-streams-StoreSupplier.adoc#get, StoreSupplier Contract>> to get a <<kafka-streams-StateStore.adoc#, state store>>.
 
-`get` simply creates a new <<kafka-streams-StateStore-RocksDBSessionStore.adoc#, RocksDBSessionStore>>.
+`get` simply creates a new <<kafka-streams-internals-RocksDBSessionStore.adoc#, RocksDBSessionStore>>.
