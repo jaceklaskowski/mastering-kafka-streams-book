@@ -1,3 +1,71 @@
 == [[WrappedStateStore]] WrappedStateStore
 
-`WrappedStateStore` is...FIXME
+`WrappedStateStore` is the base implementation of the <<kafka-streams-StateStore.adoc#, StateStore>> and <<kafka-streams-internals-CachedStateStore.adoc#, CachedStateStore>> contracts for <<implementations, state stores>> that simply delegate all operations to the <<wrapped, wrapped state store>>.
+
+`WrappedStateStore` allows for composing state stores and building more sophisticated state stores (e.g. <<kafka-streams-internals-MeteredKeyValueStore.adoc#, MeteredKeyValueStore>> with <<CachingKeyValueStore, CachingKeyValueStore>> and <<ChangeLoggingKeyValueBytesStore, ChangeLoggingKeyValueBytesStore>>).
+
+NOTE: Kafka Streams developers use <<kafka-streams-Stores.adoc#, Stores>> factory to use the more sophisticated state stores.
+
+[[implementations]]
+.WrappedStateStores
+[cols="30,70",options="header",width="100%"]
+|===
+| WrappedStateStore
+| Description
+
+| <<kafka-streams-internals-CachingKeyValueStore.adoc#, CachingKeyValueStore>>
+a| [[CachingKeyValueStore]]
+
+| <<kafka-streams-internals-CachingSessionStore.adoc#, CachingSessionStore>>
+a| [[CachingSessionStore]]
+
+| <<kafka-streams-internals-CachingWindowStore.adoc#, CachingWindowStore>>
+a| [[CachingWindowStore]]
+
+| <<kafka-streams-internals-ChangeLoggingKeyValueBytesStore.adoc#, ChangeLoggingKeyValueBytesStore>>
+a| [[ChangeLoggingKeyValueBytesStore]]
+
+| <<kafka-streams-internals-ChangeLoggingSessionBytesStore.adoc#, ChangeLoggingSessionBytesStore>>
+a| [[ChangeLoggingSessionBytesStore]]
+
+| <<kafka-streams-internals-ChangeLoggingWindowBytesStore.adoc#, ChangeLoggingWindowBytesStore>>
+a| [[ChangeLoggingWindowBytesStore]]
+
+| <<kafka-streams-internals-MeteredKeyValueStore.adoc#, MeteredKeyValueStore>>
+a| [[MeteredKeyValueStore]]
+
+| <<kafka-streams-internals-MeteredSessionStore.adoc#, MeteredSessionStore>>
+a| [[MeteredSessionStore]]
+
+| <<kafka-streams-internals-MeteredWindowStore.adoc#, MeteredWindowStore>>
+a| [[MeteredWindowStore]]
+
+| <<kafka-streams-internals-RocksDBSessionStore.adoc#, RocksDBSessionStore>>
+a| [[RocksDBSessionStore]]
+
+| <<kafka-streams-internals-RocksDBWindowStore.adoc#, RocksDBWindowStore>>
+a| [[RocksDBWindowStore]]
+
+|===
+
+[[creating-instance]][[wrapped]]
+`WrappedStateStore` takes a single <<kafka-streams-StateStore.adoc#, StateStore>> (_wrapped state store_) to be created.
+
+NOTE: `WrappedStateStore` is a Java abstract class and cannot be <<creating-instance, created>> directly. It is created indirectly for the <<implementations, concrete WrappedStateStores>>.
+
+=== [[isTimestamped]] `isTimestamped` Static Method
+
+[source, java]
+----
+boolean isTimestamped(StateStore stateStore)
+----
+
+`isTimestamped` is positive (`true`) when either of the following holds:
+
+* The given <<kafka-streams-StateStore.adoc#, StateStore>> is a `TimestampedBytesStore`
+
+* The <<wrapped, wrapped StateStore>> is timestamped (recursively)
+
+Otherwise, `isTimestamped` is negative (`false`).
+
+NOTE: `isTimestamped` is used exclusively when `AbstractStateManager` is requested for a <<kafka-streams-internals-AbstractStateManager.adoc#converterForStore, RecordConverter>> (for a <<kafka-streams-StateStore.adoc#, StateStore>>).

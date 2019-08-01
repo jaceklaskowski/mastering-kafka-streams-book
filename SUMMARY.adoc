@@ -252,6 +252,8 @@
 . link:kafka-streams-internals-TimeOrderedKeyValueBuffer.adoc[TimeOrderedKeyValueBuffer]
 .. link:kafka-streams-internals-InMemoryTimeOrderedKeyValueBuffer.adoc[InMemoryTimeOrderedKeyValueBuffer]
 
+. link:kafka-streams-internals-CachedStateStore.adoc[CachedStateStore]
+
 === Logical Plan of Stream Processing Execution
 
 . link:kafka-streams-internals-ProcessorNode.adoc[ProcessorNode]
