@@ -2,7 +2,7 @@
 
 `StoreSupplier` is the <<contract, abstraction>> of <<extensions, state store suppliers>> that can <<get, create state stores>> in the <<kafka-streams-streams-dsl.adoc#, Streams DSL -- High-Level Stream Processing DSL>>.
 
-Kafka Streams developers usually create a `StoreSupplier` using <<kafka-streams-Stores.adoc#, Stores>> factory object. The `StoreSupplier` can then be further customized using <<kafka-streams-Materialized.adoc#, Materialized>>.
+Kafka Streams developers usually create a `StoreSupplier` using <<kafka-streams-Stores.adoc#, Stores>> utility. The `StoreSupplier` can then be further customized using <<kafka-streams-Materialized.adoc#, Materialized>>.
 
 NOTE: When using the <<kafka-streams-processor-api.adoc#, Low-Level Processor API>>, Kafka Streams developers use <<kafka-streams-StoreBuilder.adoc#, StoreBuilders>> instead that are then attached to <<kafka-streams-Processor.adoc#, Processors>>.
 

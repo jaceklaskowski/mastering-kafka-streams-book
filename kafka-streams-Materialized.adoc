@@ -19,16 +19,17 @@
 [[factory-methods]]
 [source, java]
 ----
-Materialized<K, V, S> as(final String storeName)
+Materialized<K, V, S> as(
+  String storeName)
 Materialized<K, V, KeyValueStore<Bytes, byte[]>> as(
-  final KeyValueBytesStoreSupplier supplier)
+  KeyValueBytesStoreSupplier supplier)
 Materialized<K, V, SessionStore<Bytes, byte[]>> as(
-  final SessionBytesStoreSupplier supplier)
+  SessionBytesStoreSupplier supplier)
 Materialized<K, V, WindowStore<Bytes, byte[]>> as(
-  final WindowBytesStoreSupplier supplier)
+  WindowBytesStoreSupplier supplier)
 Materialized<K, V, S> with(
-  final Serde<K> keySerde,
-  final Serde<V> valueSerde)
+  Serde<K> keySerde,
+  Serde<V> valueSerde)
 ----
 
 A `Materialized` instance can futher be configured using the <<methods, "with" methods>>.
@@ -65,7 +66,7 @@ a| [[withKeySerde]]
 
 [source, java]
 ----
-Materialized<K, V, S> withKeySerde(final Serde<K> keySerde)
+Materialized<K, V, S> withKeySerde(Serde<K> keySerde)
 ----
 
 Creates a `Materialized` with the <<keySerde, Serde for keys>>
@@ -85,7 +86,7 @@ a| [[withLoggingEnabled]]
 
 [source, java]
 ----
-Materialized<K, V, S> withLoggingEnabled(final Map<String, String> config)
+Materialized<K, V, S> withLoggingEnabled(Map<String, String> config)
 ----
 
 Creates a `Materialized` with <<loggingEnabled, logging enabled>>
@@ -95,7 +96,7 @@ a| [[withRetention]]
 
 [source, java]
 ----
-Materialized<K, V, S> withRetention(final Duration retention)
+Materialized<K, V, S> withRetention(Duration retention)
 ----
 
 | withValueSerde
@@ -103,7 +104,7 @@ a| [[withValueSerde]]
 
 [source, java]
 ----
-Materialized<K, V, S> withValueSerde(final Serde<V> valueSerde)
+Materialized<K, V, S> withValueSerde(Serde<V> valueSerde)
 ----
 
 Creates a `Materialized` with the <<valueSerde, Serde for values>>
