@@ -23,10 +23,37 @@ a| [[inMemoryKeyValueStore]]
 
 [source, java]
 ----
-KeyValueBytesStoreSupplier inMemoryKeyValueStore(final String name)
+KeyValueBytesStoreSupplier inMemoryKeyValueStore(
+  String name)
 ----
 
-Creates a <<kafka-streams-KeyValueBytesStoreSupplier.adoc#, KeyValueBytesStoreSupplier>> (that creates <<kafka-streams-StateStore-KeyValueStore.adoc#, KeyValueStores>>)
+Creates a <<kafka-streams-KeyValueBytesStoreSupplier.adoc#, KeyValueBytesStoreSupplier>> of <<kafka-streams-StateStore-KeyValueStore.adoc#, KeyValueStores>> (i.e. <<kafka-streams-internals-InMemoryKeyValueStore.adoc#, InMemoryKeyValueStore>>)
+
+| inMemorySessionStore
+a| [[inMemorySessionStore]]
+
+[source, java]
+----
+SessionBytesStoreSupplier inMemorySessionStore(
+  String name,
+  Duration retentionPeriod)
+----
+
+Creates a <<kafka-streams-SessionBytesStoreSupplier.adoc#, SessionBytesStoreSupplier>> of <<kafka-streams-StateStore-SessionStore.adoc#, SessionStores>> (i.e. <<kafka-streams-internals-InMemorySessionBytesStoreSupplier.adoc#, InMemorySessionBytesStoreSupplier>>)
+
+| inMemoryWindowStore
+a| [[inMemoryWindowStore]]
+
+[source, java]
+----
+WindowBytesStoreSupplier inMemoryWindowStore(
+  String name,
+  Duration retentionPeriod,
+  Duration windowSize,
+  boolean retainDuplicates)
+----
+
+Creates a <<kafka-streams-WindowBytesStoreSupplier.adoc#, WindowBytesStoreSupplier>> of <<kafka-streams-StateStore-WindowStore.adoc#, WindowStores>> (i.e. `InMemoryWindowBytesStoreSupplier`)
 
 | keyValueStoreBuilder
 a| [[keyValueStoreBuilder]]
@@ -34,12 +61,12 @@ a| [[keyValueStoreBuilder]]
 [source, java]
 ----
 StoreBuilder<KeyValueStore<K, V>> keyValueStoreBuilder(
-  final KeyValueBytesStoreSupplier supplier,
-  final Serde<K> keySerde,
-  final Serde<V> valueSerde)
+  KeyValueBytesStoreSupplier supplier,
+  Serde<K> keySerde,
+  Serde<V> valueSerde)
 ----
 
-Creates a <<kafka-streams-internals-KeyValueStoreBuilder.adoc#, KeyValueStoreBuilder>> (that creates <<kafka-streams-StateStore-KeyValueStore.adoc#, KeyValueStores>>)
+Creates a <<kafka-streams-internals-KeyValueStoreBuilder.adoc#, KeyValueStoreBuilder>> of <<kafka-streams-StateStore-KeyValueStore.adoc#, KeyValueStores>> (i.e. <<kafka-streams-internals-KeyValueStoreBuilder.adoc#, KeyValueStoreBuilder>>)
 
 | lruMap
 a| [[lruMap]]
@@ -47,21 +74,22 @@ a| [[lruMap]]
 [source, java]
 ----
 KeyValueBytesStoreSupplier lruMap(
-  final String name,
-  final int maxCacheSize)
+  String name,
+  int maxCacheSize)
 ----
 
-Creates a <<kafka-streams-KeyValueBytesStoreSupplier.adoc#, KeyValueBytesStoreSupplier>> (that creates `MemoryNavigableLRUCaches` with `maxCacheSize`)
+Creates a <<kafka-streams-KeyValueBytesStoreSupplier.adoc#, KeyValueBytesStoreSupplier>> of <<kafka-streams-StateStore-KeyValueStore.adoc#, KeyValueStores>> (i.e. `MemoryNavigableLRUCache`)
 
 | persistentKeyValueStore
 a| [[persistentKeyValueStore]]
 
 [source, java]
 ----
-KeyValueBytesStoreSupplier persistentKeyValueStore(final String name)
+KeyValueBytesStoreSupplier persistentKeyValueStore(
+  String name)
 ----
 
-Creates a `RocksDbKeyValueBytesStoreSupplier`
+Creates a <<kafka-streams-KeyValueBytesStoreSupplier.adoc#, KeyValueBytesStoreSupplier>> of <<kafka-streams-StateStore-KeyValueStore.adoc#, KeyValueStores>> (i.e. `RocksDbKeyValueBytesStoreSupplier`)
 
 | persistentSessionStore
 a| [[persistentSessionStore]]
@@ -69,11 +97,36 @@ a| [[persistentSessionStore]]
 [source, java]
 ----
 SessionBytesStoreSupplier persistentSessionStore(
-  final String name,
-  final Duration retentionPeriod)
+  String name,
+  Duration retentionPeriod)
 ----
 
-Creates a <<kafka-streams-internals-RocksDbSessionBytesStoreSupplier.adoc#, RocksDbSessionBytesStoreSupplier>> (with `retentionPeriod`)
+Creates a <<kafka-streams-SessionBytesStoreSupplier.adoc#, SessionBytesStoreSupplier>> of <<kafka-streams-StateStore-SessionStore.adoc#, SessionStores>> (i.e. <<kafka-streams-internals-RocksDbSessionBytesStoreSupplier.adoc#, RocksDbSessionBytesStoreSupplier>>)
+
+| persistentTimestampedKeyValueStore
+a| [[persistentTimestampedKeyValueStore]]
+
+[source, java]
+----
+KeyValueBytesStoreSupplier persistentTimestampedKeyValueStore(
+  String name)
+----
+
+Creates a <<kafka-streams-KeyValueBytesStoreSupplier.adoc#, KeyValueBytesStoreSupplier>> of <<kafka-streams-StateStore-KeyValueStore.adoc#, KeyValueStores>> (i.e. `RocksDbKeyValueBytesStoreSupplier`)
+
+| persistentTimestampedWindowStore
+a| [[persistentTimestampedWindowStore]]
+
+[source, java]
+----
+WindowBytesStoreSupplier persistentTimestampedWindowStore(
+  String name,
+  Duration retentionPeriod,
+  Duration windowSize,
+  boolean retainDuplicates)
+----
+
+Creates a <<kafka-streams-WindowBytesStoreSupplier.adoc#, WindowBytesStoreSupplier>> of <<kafka-streams-StateStore-WindowStore.adoc#, WindowStores>> (i.e. <<kafka-streams-internals-RocksDbWindowBytesStoreSupplier.adoc#, RocksDbWindowBytesStoreSupplier>>)
 
 | persistentWindowStore
 a| [[persistentWindowStore]]
@@ -81,13 +134,26 @@ a| [[persistentWindowStore]]
 [source, java]
 ----
 WindowBytesStoreSupplier persistentWindowStore(
-  final String name,
-  final Duration retentionPeriod,
-  final Duration windowSize,
-  final boolean retainDuplicates)
+  String name,
+  Duration retentionPeriod,
+  Duration windowSize,
+  boolean retainDuplicates)
+WindowBytesStoreSupplier persistentWindowStore(
+  String name,
+  Duration retentionPeriod,
+  Duration windowSize,
+  boolean retainDuplicates,
+  boolean timestampedStore)
+WindowBytesStoreSupplier persistentWindowStore(
+  String name,
+  long retentionPeriod,
+  long windowSize,
+  boolean retainDuplicates,
+  long segmentInterval,
+  boolean timestampedStore)
 ----
 
-Creates a <<kafka-streams-WindowBytesStoreSupplier.adoc#, WindowBytesStoreSupplier>> (i.e. <<kafka-streams-internals-RocksDbWindowBytesStoreSupplier.adoc#, RocksDbWindowBytesStoreSupplier>>)
+Creates a <<kafka-streams-WindowBytesStoreSupplier.adoc#, WindowBytesStoreSupplier>> of <<kafka-streams-StateStore-WindowStore.adoc#, WindowStores>> (i.e. <<kafka-streams-internals-RocksDbWindowBytesStoreSupplier.adoc#, RocksDbWindowBytesStoreSupplier>>)
 
 | sessionStoreBuilder
 a| [[sessionStoreBuilder]]
@@ -95,12 +161,38 @@ a| [[sessionStoreBuilder]]
 [source, java]
 ----
 StoreBuilder<SessionStore<K, V>> sessionStoreBuilder(
-  final SessionBytesStoreSupplier supplier,
-  final Serde<K> keySerde,
-  final Serde<V> valueSerde)
+  SessionBytesStoreSupplier supplier,
+  Serde<K> keySerde,
+  Serde<V> valueSerde)
 ----
 
-Creates a <<kafka-streams-StoreBuilder.adoc#, StoreBuilder>> of <<kafka-streams-StateStore-SessionStore.adoc#, SessionStores>> (i.e. a <<kafka-streams-internals-SessionStoreBuilder.adoc#, SessionStoreBuilder>>)
+Creates a <<kafka-streams-StoreBuilder.adoc#, StoreBuilder>> of <<kafka-streams-StateStore-SessionStore.adoc#, SessionStores>> (i.e. <<kafka-streams-internals-SessionStoreBuilder.adoc#, SessionStoreBuilder>>)
+
+| timestampedKeyValueStoreBuilder
+a| [[timestampedKeyValueStoreBuilder]]
+
+[source, java]
+----
+StoreBuilder<TimestampedKeyValueStore<K, V>> timestampedKeyValueStoreBuilder(
+  KeyValueBytesStoreSupplier supplier,
+  Serde<K> keySerde,
+  Serde<V> valueSerde)
+----
+
+Creates a <<kafka-streams-StoreBuilder.adoc#, StoreBuilder>> of <<kafka-streams-StateStore-TimestampedKeyValueStore.adoc#, TimestampedKeyValueStores>> (i.e. <<kafka-streams-internals-TimestampedKeyValueStoreBuilder.adoc#, TimestampedKeyValueStoreBuilder>>)
+
+| timestampedWindowStoreBuilder
+a| [[timestampedWindowStoreBuilder]]
+
+[source, java]
+----
+StoreBuilder<TimestampedWindowStore<K, V>> timestampedWindowStoreBuilder(
+  WindowBytesStoreSupplier supplier,
+  Serde<K> keySerde,
+  Serde<V> valueSerde)
+----
+
+Creates a <<kafka-streams-StoreBuilder.adoc#, StoreBuilder>> of <<kafka-streams-StateStore-TimestampedWindowStore.adoc#, TimestampedWindowStores>> (i.e. <<kafka-streams-internals-TimestampedWindowStoreBuilder.adoc#, TimestampedWindowStoreBuilder>>)
 
 | windowStoreBuilder
 a| [[windowStoreBuilder]]
@@ -108,11 +200,11 @@ a| [[windowStoreBuilder]]
 [source, java]
 ----
 StoreBuilder<WindowStore<K, V>> windowStoreBuilder(
-  final WindowBytesStoreSupplier supplier,
-  final Serde<K> keySerde,
-  final Serde<V> valueSerde)
+  WindowBytesStoreSupplier supplier,
+  Serde<K> keySerde,
+  Serde<V> valueSerde)
 ----
 
-Creates a <<kafka-streams-StoreBuilder.adoc#, StoreBuilder>> of <<kafka-streams-StateStore-WindowStore.adoc#, WindowStores>> (i.e. a <<kafka-streams-internals-WindowStoreBuilder.adoc#, WindowStoreBuilder>>)
+Creates a <<kafka-streams-StoreBuilder.adoc#, StoreBuilder>> of <<kafka-streams-StateStore-WindowStore.adoc#, WindowStores>> (i.e. <<kafka-streams-internals-WindowStoreBuilder.adoc#, WindowStoreBuilder>>)
 
 |===
