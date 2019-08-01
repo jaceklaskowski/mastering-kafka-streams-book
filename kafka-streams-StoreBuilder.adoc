@@ -70,7 +70,7 @@ a| [[name]]
 String name()
 ----
 
-Name of the <<kafka-streams-StateStore.adoc#, state store>> (for identification purposes)
+Name of <<kafka-streams-StateStore.adoc#, state stores>> to <<build, build>> (for identification purposes)
 
 | withCachingDisabled
 a| [[withCachingDisabled]]
@@ -107,7 +107,7 @@ a| [[withLoggingEnabled]]
 
 [source, java]
 ----
-StoreBuilder<T> withLoggingEnabled(final Map<String, String> config)
+StoreBuilder<T> withLoggingEnabled(Map<String, String> config)
 ----
 
 Enables change-logging on <<kafka-streams-StateStore.adoc#, state stores>> (i.e. a changelog for any changes made to the stores)

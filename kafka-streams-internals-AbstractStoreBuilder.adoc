@@ -1,11 +1,8 @@
 == [[AbstractStoreBuilder]] AbstractStoreBuilder -- Fluent API for State Store Builders
 
-`AbstractStoreBuilder` is the base implementation of the <<kafka-streams-StoreBuilder.adoc#, StoreBuilder contract>>  for <<implementations, state store builders>> that offer a fluent API to <<kafka-streams-StoreBuilder.adoc#build, build state stores>>.
+`AbstractStoreBuilder` is the base implementation of the <<kafka-streams-StoreBuilder.adoc#, StoreBuilder contract>> for <<implementations, state store builders>> that offer a fluent API to <<kafka-streams-StoreBuilder.adoc#build, build state stores>>.
 
 NOTE: `AbstractStoreBuilder` is a Java abstract class and cannot be <<creating-instance, created>> directly. It is created indirectly for the <<implementations, concrete AbstractStoreBuilders>>.
-
-[[enableLogging]]
-`AbstractStoreBuilder` assumes that <<kafka-streams-StoreBuilder.adoc#loggingEnabled, change-logging>> is enabled by default.
 
 [[implementations]]
 .AbstractStoreBuilders
@@ -20,20 +17,26 @@ NOTE: `AbstractStoreBuilder` is a Java abstract class and cannot be <<creating-i
 | <<kafka-streams-internals-SessionStoreBuilder.adoc#, SessionStoreBuilder>>
 | [[SessionStoreBuilder]] Builds <<kafka-streams-StateStore-SessionStore.adoc#, SessionStores>>
 
+| <<kafka-streams-internals-TimestampedKeyValueStoreBuilder.adoc#, TimestampedKeyValueStoreBuilder>>
+| [[TimestampedKeyValueStoreBuilder]] Builds...FIXME
+
+| <<kafka-streams-internals-TimestampedWindowStoreBuilder.adoc#, TimestampedWindowStoreBuilder>>
+| [[TimestampedWindowStoreBuilder]] Builds...FIXME
+
 | <<kafka-streams-internals-WindowStoreBuilder.adoc#, WindowStoreBuilder>>
 | [[WindowStoreBuilder]] Builds <<kafka-streams-StateStore-WindowStore.adoc#, WindowStores>>
 |===
 
 === [[creating-instance]] Creating AbstractStoreBuilder Instance
 
-`AbstractStoreBuilder` takes the following when created:
+`AbstractStoreBuilder` takes the following to be created:
 
-* [[name]] Name of the state store to build
+* [[name]] <<kafka-streams-StoreBuilder.adoc#name, Name of the state stores to build>>
 * [[keySerde]] `Serde<K>` for keys
 * [[valueSerde]] `Serde<V>` for values
 * [[time]] `Time`
 
-`AbstractStoreBuilder` initializes the <<internal-registries, internal registries and counters>>.
+`AbstractStoreBuilder` initializes the <<internal-properties, internal properties>>.
 
 NOTE: `AbstractStoreBuilder` is a Java abstract class and cannot be <<creating-instance, created>> directly. It is created indirectly for the <<implementations, concrete AbstractStoreBuilders>>.
 
@@ -41,12 +44,12 @@ NOTE: `AbstractStoreBuilder` is a Java abstract class and cannot be <<creating-i
 
 [source, java]
 ----
-StoreBuilder<T> withLoggingEnabled(final Map<String, String> config)
+StoreBuilder<T> withLoggingEnabled(Map<String, String> config)
 ----
 
 NOTE: `withLoggingEnabled` is part of the <<kafka-streams-StoreBuilder.adoc#withLoggingEnabled, StoreBuilder Contract>> to enable change-logging on <<kafka-streams-StateStore.adoc#, state stores>>.
 
-`withLoggingEnabled` simply turns the <<enableLogging, enableLogging>> flag on and the <<logConfig, logConfig>> to the given `Map<String, String>`.
+`withLoggingEnabled` simply turns the <<enableLogging, enableLogging>> flag on (`true`) and the <<logConfig, logConfig>> to the given config (`Map<String, String>`).
 
 === [[withLoggingDisabled]] `withLoggingDisabled` Method
 
@@ -57,4 +60,46 @@ StoreBuilder<T> withLoggingDisabled()
 
 NOTE: `withLoggingDisabled` is part of the <<kafka-streams-StoreBuilder.adoc#withLoggingDisabled, StoreBuilder Contract>> to disable change-logging on <<kafka-streams-StateStore.adoc#, state stores>>.
 
-`withLoggingDisabled` simply turns the <<enableLogging, enableLogging>> flag off and clears the <<logConfig, logConfig>>.
+`withLoggingDisabled` simply turns the <<enableLogging, enableLogging>> flag off (`false`) and clears the <<logConfig, logConfig>>.
+
+=== [[withCachingEnabled]] `withCachingEnabled` Method
+
+[source, java]
+----
+StoreBuilder<T> withCachingEnabled()
+----
+
+NOTE: `withCachingEnabled` is part of the <<kafka-streams-StoreBuilder.adoc#withCachingEnabled, StoreBuilder Contract>> to enable caching on <<kafka-streams-StateStore.adoc#, state stores>>.
+
+`withCachingEnabled` simply turns the <<enableCaching, enableCaching>> flag on (`true`).
+
+=== [[withCachingDisabled]] `withCachingDisabled` Method
+
+[source, java]
+----
+StoreBuilder<T> withCachingDisabled()
+----
+
+NOTE: `withCachingDisabled` is part of the <<kafka-streams-StoreBuilder.adoc#withCachingDisabled, StoreBuilder Contract>> to disable caching on <<kafka-streams-StateStore.adoc#, state stores>>.
+
+`withCachingDisabled` simply turns the <<enableCaching, enableCaching>> flag off (`false`).
+
+=== [[internal-properties]] Internal Properties
+
+[cols="30m,70",options="header",width="100%"]
+|===
+| Name
+| Description
+
+| enableCaching
+a| [[enableCaching]] Flag to control whether to <<withCachingEnabled, enable caching>> (`true`) or <<withCachingDisabled, not>> (`false`)
+
+| enableLogging
+a| [[enableLogging]][[loggingEnabled]] Flag to control whether to <<withLoggingEnabled, enable logging>> (`true`) or <<withLoggingDisabled, not>> (`false`)
+
+Default: `true`
+
+| logConfig
+a| [[logConfig]] Change-logging configuration (`Map<String, String>`)
+
+|===
