@@ -81,9 +81,9 @@ NOTE: `closeStateManager` is used when...FIXME
 `AbstractTask` takes the following when created:
 
 * [[id]] `TaskId`
-* [[partitions]] Assigned Kafka https://kafka.apache.org/22/javadoc/org/apache/kafka/common/TopicPartition.html[TopicPartitions]
+* [[partitions]] Assigned Kafka https://kafka.apache.org/23/javadoc/org/apache/kafka/common/TopicPartition.html[partitions]
 * [[topology]] <<kafka-streams-internals-ProcessorTopology.adoc#, ProcessorTopology>>
-* [[consumer]] Kafka https://kafka.apache.org/22/javadoc/org/apache/kafka/clients/consumer/KafkaConsumer.html[Consumer] (`Consumer<byte[], byte[]>`)
+* [[consumer]] Kafka https://kafka.apache.org/23/javadoc/org/apache/kafka/clients/consumer/KafkaConsumer.html[Consumer] (`Consumer<byte[], byte[]>`)
 * [[changelogReader]] <<kafka-streams-internals-ChangelogReader.adoc#, ChangelogReader>>
 * [[isStandby]] `isStandby` flag
 * [[stateDirectory]] <<kafka-streams-internals-StateDirectory.adoc#, StateDirectory>>
@@ -146,7 +146,7 @@ Collection<TopicPartition> changelogPartitions()
 
 NOTE: `changelogPartitions` is part of <<kafka-streams-internals-Task.adoc#changelogPartitions, Task Contract>> to get the changelog partitions of a task.
 
-`changelogPartitions` simply requests the <<stateMgr, ProcessorStateManager>> for the <<kafka-streams-internals-ProcessorStateManager.adoc#changelogPartitions, changelogPartitions>>.
+`changelogPartitions` simply requests the <<stateMgr, ProcessorStateManager>> for the <<kafka-streams-internals-ProcessorStateManager.adoc#changelogPartitions, changelog partitions>>.
 
 === [[getStore]] Accessing State Store by Name -- `getStore` Method
 

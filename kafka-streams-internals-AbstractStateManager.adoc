@@ -9,7 +9,7 @@ NOTE: `AbstractStateManager` is a Java abstract class and cannot be <<creating-i
 
 [[implementations]]
 .AbstractStateManagers
-[cols="1,2",options="header",width="100%"]
+[cols="30,70",options="header",width="100%"]
 |===
 | AbstractStateManager
 | Description
@@ -21,9 +21,65 @@ NOTE: `AbstractStateManager` is a Java abstract class and cannot be <<creating-i
 | [[ProcessorStateManager]]
 |===
 
-[[internal-registries]]
-.AbstractStateManager's Internal Properties (e.g. Registries, Counters and Flags)
-[cols="1m,2",options="header",width="100%"]
+=== [[creating-instance]] Creating AbstractStateManager Instance
+
+`AbstractStateManager` takes the following to be created:
+
+* [[baseDir]] Base directory
+* [[eosEnabled]] `eosEnabled` flag
+
+`AbstractStateManager` initializes the <<internal-properties, internal properties>>.
+
+NOTE: `AbstractStateManager` is a Java abstract class and cannot be <<creating-instance, created>> directly. It is created indirectly for the <<implementations, concrete AbstractStateManagers>>.
+
+=== [[reinitializeStateStoresForPartitions]] `reinitializeStateStoresForPartitions` Method
+
+[source, java]
+----
+void reinitializeStateStoresForPartitions(
+  Logger log,
+  Map<String, StateStore> stateStores,
+  Map<String, String> storeToChangelogTopic,
+  Collection<TopicPartition> partitions,
+  InternalProcessorContext processorContext)
+----
+
+`reinitializeStateStoresForPartitions`...FIXME
+
+[NOTE]
+====
+`reinitializeStateStoresForPartitions` is used when:
+
+* `GlobalStateManagerImpl` is requested to <<kafka-streams-internals-GlobalStateManagerImpl.adoc#reinitializeStateStoresForPartitions, reinitializeStateStoresForPartitions>>
+
+* `ProcessorStateManager` is requested to <<kafka-streams-internals-ProcessorStateManager.adoc#reinitializeStateStoresForPartitions, reinitializeStateStoresForPartitions>>
+====
+
+==== [[inverseOneToOneMap]] `inverseOneToOneMap` Internal Method
+
+[source, java]
+----
+Map<String, String> inverseOneToOneMap(Map<String, String> origin)
+----
+
+`inverseOneToOneMap`...FIXME
+
+NOTE: `inverseOneToOneMap` is used exclusively when `AbstractStateManager` is requested to <<reinitializeStateStoresForPartitions, reinitializeStateStoresForPartitions>>.
+
+=== [[converterForStore]] `converterForStore` Static Method
+
+[source, java]
+----
+RecordConverter converterForStore(StateStore store)
+----
+
+`converterForStore`...FIXME
+
+NOTE: `converterForStore` is used when...FIXME
+
+=== [[internal-properties]] Internal Properties
+
+[cols="30m,70",options="header",width="100%"]
 |===
 | Name
 | Description
@@ -74,59 +130,3 @@ State stores removed when:
 
 * `ProcessorStateManager` is requested to <<kafka-streams-internals-ProcessorStateManager.adoc#close, close>>
 |===
-
-=== [[reinitializeStateStoresForPartitions]] `reinitializeStateStoresForPartitions` Method
-
-[source, java]
-----
-void reinitializeStateStoresForPartitions(
-  final Logger log,
-  final Map<String, StateStore> stateStores,
-  final Map<String, String> storeToChangelogTopic,
-  final Collection<TopicPartition> partitions,
-  final InternalProcessorContext processorContext)
-----
-
-`reinitializeStateStoresForPartitions`...FIXME
-
-[NOTE]
-====
-`reinitializeStateStoresForPartitions` is used when:
-
-* `GlobalStateManagerImpl` is requested to <<kafka-streams-internals-GlobalStateManagerImpl.adoc#reinitializeStateStoresForPartitions, reinitializeStateStoresForPartitions>>
-
-* `ProcessorStateManager` is requested to <<kafka-streams-internals-ProcessorStateManager.adoc#reinitializeStateStoresForPartitions, reinitializeStateStoresForPartitions>>
-====
-
-=== [[inverseOneToOneMap]] `inverseOneToOneMap` Internal Method
-
-[source, java]
-----
-Map<String, String> inverseOneToOneMap(final Map<String, String> origin)
-----
-
-`inverseOneToOneMap`...FIXME
-
-NOTE: `inverseOneToOneMap` is used exclusively when `AbstractStateManager` is requested to <<reinitializeStateStoresForPartitions, reinitializeStateStoresForPartitions>>.
-
-=== [[creating-instance]] Creating AbstractStateManager Instance
-
-`AbstractStateManager` takes the following when created:
-
-* [[baseDir]] Base directory
-* [[eosEnabled]] `eosEnabled` flag
-
-`AbstractStateManager` initializes the <<internal-registries, internal registries and counters>>.
-
-NOTE: `AbstractStateManager` is a Java abstract class and cannot be <<creating-instance, created>> directly. It is created indirectly for the <<implementations, concrete AbstractStateManagers>>.
-
-=== [[converterForStore]] `converterForStore` Static Method
-
-[source, java]
-----
-RecordConverter converterForStore(StateStore store)
-----
-
-`converterForStore`...FIXME
-
-NOTE: `converterForStore` is used when...FIXME

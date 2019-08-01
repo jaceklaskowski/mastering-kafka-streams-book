@@ -17,7 +17,9 @@ a| [[baseDir]]
 File baseDir()
 ----
 
-Used exclusively when `AbstractProcessorContext` is requested for <<kafka-streams-internals-AbstractProcessorContext.adoc#stateDir, stateDir>>
+*Base directory*
+
+Used exclusively when `AbstractProcessorContext` is requested for the <<kafka-streams-internals-AbstractProcessorContext.adoc#stateDir, state directory>>
 
 | close
 a| [[close]]

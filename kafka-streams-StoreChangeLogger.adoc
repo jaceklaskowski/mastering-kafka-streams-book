@@ -1,56 +1,62 @@
 == [[StoreChangeLogger]] StoreChangeLogger
 
-`StoreChangeLogger` is...FIXME
+`StoreChangeLogger` is <<creating-instance, created>> when the following <<kafka-streams-StateStore.adoc#, state stores>> are requested to initialize:
 
-`StoreChangeLogger` is <<creating-instance, created>> when link:kafka-streams-StateStore-ChangeLoggingKeyValueBytesStore.adoc#init[ChangeLoggingKeyValueBytesStore], link:kafka-streams-StateStore-ChangeLoggingSessionBytesStore.adoc#init[ChangeLoggingSessionBytesStore], link:kafka-streams-StateStore-ChangeLoggingWindowBytesStore.adoc#init[ChangeLoggingWindowBytesStore] and link:kafka-streams-StateStore-InMemoryKeyValueLoggedStore.adoc#init[InMemoryKeyValueLoggedStore] are requested to init.
+* <<kafka-streams-StateStore-ChangeLoggingKeyValueBytesStore.adoc#, ChangeLoggingKeyValueBytesStore>>
 
-[[internal-registries]]
-.StoreChangeLogger's Internal Properties (e.g. Registries, Counters and Flags)
-[cols="1,2",options="header",width="100%"]
-|===
-| Name
-| Description
+* <<kafka-streams-StateStore-ChangeLoggingSessionBytesStore.adoc#, ChangeLoggingSessionBytesStore>>
 
-| `collector`
-| [[collector]] link:kafka-streams-internals-RecordCollector.adoc[RecordCollector]
-
-Used when...FIXME
-
-| `topic`
-| [[topic]] The name of the topic for...FIXME
-
-Used when...FIXME
-|===
+* <<kafka-streams-StateStore-ChangeLoggingWindowBytesStore.adoc#, ChangeLoggingWindowBytesStore>>
 
 === [[creating-instance]] Creating StoreChangeLogger Instance
 
-`StoreChangeLogger` takes the following when created:
+`StoreChangeLogger` takes the following to be created:
 
-* [[storeName]] Store name
+* [[storeName]] Name of a state store
 * [[context]] <<kafka-streams-ProcessorContext.adoc#, ProcessorContext>>
 * [[partition]] Partition ID
 * [[serialization]] `StateSerdes<K, V>`
 
-`StoreChangeLogger` initializes the <<internal-registries, internal registries and counters>>.
+`StoreChangeLogger` initializes the <<internal-properties, internal properties>>.
 
 === [[logChange]] `logChange` Method
 
 [source, java]
 ----
-void logChange(
-  final K key,
-  final V value)
+void logChange(K key, V value) // <1>
+void logChange(K key, V value, long timestamp)
 ----
+<1> Uses the <<context, ProcessorContext>> for the <<kafka-streams-ProcessorContext.adoc#timestamp, timestamp>>
 
-`logChange`...FIXME
+`logChange` simply requests the <<collector, RecordCollector>> to <<kafka-streams-internals-RecordCollector.adoc#send, send>> the key and the value to the <<topic, topic>> and the <<partition, partition>> (using the <<keySerializer, keySerializer>> and the <<valueSerializer, valueSerializer>>).
 
 [NOTE]
 ====
 `logChange` is used when:
 
-* `ChangeLoggingKeyValueBytesStore` is requested to <<kafka-streams-StateStore-ChangeLoggingKeyValueBytesStore.adoc#init, init>>, <<kafka-streams-StateStore-ChangeLoggingKeyValueBytesStore.adoc#put, put>>, <<kafka-streams-StateStore-ChangeLoggingKeyValueBytesStore.adoc#putAll, putAll>>, and <<kafka-streams-StateStore-ChangeLoggingKeyValueBytesStore.adoc#delete, delete>>
+* `ChangeLoggingKeyValueBytesStore` is requested to <<kafka-streams-StateStore-ChangeLoggingKeyValueBytesStore.adoc#log, log>>
 
 * `ChangeLoggingSessionBytesStore` is requested to <<kafka-streams-StateStore-ChangeLoggingSessionBytesStore.adoc#remove, remove>> and <<kafka-streams-StateStore-ChangeLoggingSessionBytesStore.adoc#put, put>>
 
-* `ChangeLoggingWindowBytesStore` is requested to <<kafka-streams-StateStore-ChangeLoggingWindowBytesStore.adoc#put, put>>
+* `ChangeLoggingWindowBytesStore` is requested to <<kafka-streams-StateStore-ChangeLoggingWindowBytesStore.adoc#log, log>>
+
+* `ChangeLoggingTimestampedKeyValueBytesStore` and `ChangeLoggingTimestampedWindowBytesStore` are requested to `log`
 ====
+
+=== [[internal-properties]] Internal Properties
+
+[cols="30m,70",options="header",width="100%"]
+|===
+| Name
+| Description
+
+| collector
+a| [[collector]] <<kafka-streams-internals-RecordCollector.adoc#, RecordCollector>>
+
+Used when...FIXME
+
+| topic
+a| [[topic]] The name of the changelog topic (given the <<kafka-streams-internals-ProcessorStateManager.adoc#storeChangelogTopic, application ID and the store name>>)
+
+Used when...FIXME
+|===

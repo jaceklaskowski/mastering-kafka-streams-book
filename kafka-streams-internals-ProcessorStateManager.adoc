@@ -163,7 +163,11 @@ static String storeChangelogTopic(
   String storeName)
 ----
 
-`storeChangelogTopic` simply returns a `[applicationId]-[storeName][STATE_CHANGELOG_TOPIC_SUFFIX]`.
+`storeChangelogTopic` simply returns the following topic name:
+
+```
+[applicationId]-[storeName][STATE_CHANGELOG_TOPIC_SUFFIX]
+```
 
 [NOTE]
 ====
