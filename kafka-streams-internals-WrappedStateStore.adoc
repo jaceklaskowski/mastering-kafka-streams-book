@@ -4,7 +4,7 @@
 
 `WrappedStateStore` allows for composing state stores and building more sophisticated state stores (e.g. <<kafka-streams-internals-MeteredKeyValueStore.adoc#, MeteredKeyValueStore>> with <<CachingKeyValueStore, CachingKeyValueStore>> and <<ChangeLoggingKeyValueBytesStore, ChangeLoggingKeyValueBytesStore>>).
 
-NOTE: Kafka Streams developers use <<kafka-streams-Stores.adoc#, Stores>> factory to use the more sophisticated state stores.
+NOTE: Kafka Streams developers use <<kafka-streams-Stores.adoc#, Stores>> utility to use the more sophisticated state stores.
 
 [[implementations]]
 .WrappedStateStores

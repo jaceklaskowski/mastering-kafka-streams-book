@@ -1,10 +1,16 @@
 == [[StateStore]] StateStore Contract -- State Storage Engines
 
-`StateStore` is the <<contract, contract>> of <<implementations, state storage engines>> that manage a state.
+`StateStore` is the <<contract, contract>> of <<implementations, state storage engines>> (_state stores_) that manage a state.
 
-`StateStore` can be <<persistent, persistent>> or not. Among persistent stores are <<kafka-streams-internals-AbstractRocksDBSegmentedBytesStore.adoc#, AbstractRocksDBSegmentedBytesStore>>, <<kafka-streams-internals-KeyValueToTimestampedKeyValueByteStoreAdapter.adoc#, KeyValueToTimestampedKeyValueByteStoreAdapter>>, <<kafka-streams-internals-RocksDBStore.adoc#, RocksDBStore>>, <<kafka-streams-internals-WindowToTimestampedWindowByteStoreAdapter.adoc#, WindowToTimestampedWindowByteStoreAdapter>>.
+`StateStore` can be <<persistent, persistent>> or not (i.e. *in-memory*).
 
 NOTE: A `StateStore` can be *local* or *global* (although it is a property of a <<kafka-streams-internals-ProcessorTopology.adoc#, ProcessorTopology>>).
+
+Kafka Streams developers use <<kafka-streams-Stores.adoc#, Stores>> utility for creating state stores.
+
+NOTE: A `StateStore` can be backed by a changelog topic in the Kafka cluster for fault-tolerance, i.e. with logging enabled (although it is an implementation detail, and not part of the `StateStore` contract). Kafka Streams developers use <<kafka-streams-Materialized.adoc#, Materialized>> or <<kafka-streams-StoreBuilder.adoc#, StoreBuilder>> APIs to control logging.
+
+NOTE: A `StateStore` can be cached for performance, i.e. with caching enabled (although it is an implementation detail, and not part of the `StateStore` contract). Kafka Streams developers use <<kafka-streams-Materialized.adoc#, Materialized>> or <<kafka-streams-StoreBuilder.adoc#, StoreBuilder>> APIs to control logging.
 
 [[contract]]
 .StateStore Contract
