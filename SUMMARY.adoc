@@ -9,7 +9,29 @@
 
 . link:kafka-streams-exactly-once-support-eos.adoc[Exactly-Once Support (EOS)]
 
-== Developing Stream Processing Applications with Kafka Streams
+== Stateful Stream Processing
+
+. link:kafka-streams-stateful-stream-processing.adoc[Stateful Stream Processing]
+
+. link:kafka-streams-StateStore.adoc[StateStore]
+.. link:kafka-streams-StateStore-KeyValueStore.adoc[KeyValueStore]
+.. link:kafka-streams-StateStore-SessionStore.adoc[SessionStore]
+.. link:kafka-streams-StateStore-WindowStore.adoc[WindowStore]
+
+. link:kafka-streams-Stores.adoc[Stores]
+
+. link:kafka-streams-Materialized.adoc[Materialized]
+
+. link:kafka-streams-StoreSupplier.adoc[StoreSupplier]
+.. link:kafka-streams-KeyValueBytesStoreSupplier.adoc[KeyValueBytesStoreSupplier]
+.. link:kafka-streams-SessionBytesStoreSupplier.adoc[SessionBytesStoreSupplier]
+.. link:kafka-streams-WindowBytesStoreSupplier.adoc[WindowBytesStoreSupplier]
+
+. link:kafka-streams-StoreBuilder.adoc[StoreBuilder]
+
+. link:kafka-streams-ReadOnlyKeyValueStore.adoc[ReadOnlyKeyValueStore]
+
+== Stream Processing with Kafka Streams
 
 . link:kafka-streams-KafkaStreams.adoc[KafkaStreams]
 . link:kafka-streams-Topology.adoc[Topology]
@@ -111,33 +133,6 @@
 . link:kafka-streams-PartitionGrouper.adoc[PartitionGrouper Contract]
 .. link:kafka-streams-DefaultPartitionGrouper.adoc[DefaultPartitionGrouper]
 
-== Developing Stateful Stream Processing Applications with Kafka Streams
-
-. link:kafka-streams-StateStore.adoc[StateStore]
-.. link:kafka-streams-StateStore-SessionStore.adoc[SessionStore]
-.. link:kafka-streams-StateStore-WindowStore.adoc[WindowStore]
-
-. link:kafka-streams-Stores.adoc[Stores]
-
-. link:kafka-streams-Materialized.adoc[Materialized]
-
-. link:kafka-streams-StoreSupplier.adoc[StoreSupplier]
-.. link:kafka-streams-KeyValueBytesStoreSupplier.adoc[KeyValueBytesStoreSupplier]
-.. link:kafka-streams-SessionBytesStoreSupplier.adoc[SessionBytesStoreSupplier]
-.. link:kafka-streams-WindowBytesStoreSupplier.adoc[WindowBytesStoreSupplier]
-
-. link:kafka-streams-StoreBuilder.adoc[StoreBuilder]
-
-. link:kafka-streams-KTableValueGetter.adoc[KTableValueGetter]
-
-. link:kafka-streams-KTableValueGetterSupplier.adoc[KTableValueGetterSupplier]
-.. link:kafka-streams-KTableMaterializedValueGetterSupplier.adoc[KTableMaterializedValueGetterSupplier]
-.. link:kafka-streams-KTableSourceValueGetterSupplier.adoc[KTableSourceValueGetterSupplier]
-.. link:kafka-streams-KTableKTableAbstractJoinValueGetterSupplier.adoc[KTableKTableAbstractJoinValueGetterSupplier]
-
-. link:kafka-streams-ReadOnlyKeyValueStore.adoc[ReadOnlyKeyValueStore]
-.. link:kafka-streams-StateStore-KeyValueStore.adoc[KeyValueStore]
-
 == Monitoring Kafka Streams Applications
 
 . link:kafka-streams-StateListener.adoc[StateListener -- KafkaStreams State Listener]
@@ -210,6 +205,12 @@
 .. link:kafka-streams-internals-KTableSource.adoc[KTableSource -- ProcessorSupplier of KTableSourceProcessors]
 
 . link:kafka-streams-internals-KTableSuppressProcessor.adoc[KTableSuppressProcessor]
+
+. link:kafka-streams-internals-KTableValueGetter.adoc[KTableValueGetter]
+. link:kafka-streams-internals-KTableValueGetterSupplier.adoc[KTableValueGetterSupplier]
+.. link:kafka-streams-internals-KTableMaterializedValueGetterSupplier.adoc[KTableMaterializedValueGetterSupplier]
+.. link:kafka-streams-internals-KTableSourceValueGetterSupplier.adoc[KTableSourceValueGetterSupplier]
+.. link:kafka-streams-internals-KTableKTableAbstractJoinValueGetterSupplier.adoc[KTableKTableAbstractJoinValueGetterSupplier]
 
 === Internals of State Stores
 

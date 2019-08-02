@@ -150,7 +150,7 @@ NOTE: `GlobalKTables` use state stores with logging disabled.
 
 `globalTable` <<addGraphNode, adds>> the `TableSourceNode` to the <<root, root>> node.
 
-In the end, `globalTable` creates a <<kafka-streams-GlobalKTableImpl.adoc#, GlobalKTableImpl>> (with a new <<kafka-streams-KTableSourceValueGetterSupplier.adoc#, KTableSourceValueGetterSupplier>> and the queryable flag of the `MaterializedInternal`).
+In the end, `globalTable` creates a <<kafka-streams-GlobalKTableImpl.adoc#, GlobalKTableImpl>> (with a new <<kafka-streams-internals-KTableSourceValueGetterSupplier.adoc#, KTableSourceValueGetterSupplier>> and the queryable flag of the `MaterializedInternal`).
 
 NOTE: `globalTable` is used exclusively when `StreamsBuilder` is requested to <<kafka-streams-StreamsBuilder.adoc#globalTable, add a GlobalKTable to the topology>>.
 

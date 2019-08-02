@@ -22,7 +22,7 @@ null
 
 `GlobalKTableImpl` takes the following when created:
 
-* [[valueGetterSupplier]] link:kafka-streams-KTableValueGetterSupplier.adoc[KTableValueGetterSupplier] (of `K` primary keys and `V` value changes)
+* [[valueGetterSupplier]] link:kafka-streams-internals-KTableValueGetterSupplier.adoc[KTableValueGetterSupplier] (of `K` primary keys and `V` value changes)
 * [[queryable]] `queryable` flag
 
 === [[queryableStoreName]] `queryableStoreName` Method
@@ -34,6 +34,6 @@ String queryableStoreName()
 
 NOTE: `queryableStoreName` is part of link:kafka-streams-GlobalKTable.adoc#queryableStoreName[GlobalKTable Contract] to...FIXME.
 
-Only when <<queryable, queryable>> is enabled, `queryableStoreName` requests the <<valueGetterSupplier, KTableValueGetterSupplier>> for link:kafka-streams-KTableValueGetterSupplier.adoc#storeNames[storeNames] and takes the very first one.
+Only when <<queryable, queryable>> is enabled, `queryableStoreName` requests the <<valueGetterSupplier, KTableValueGetterSupplier>> for link:kafka-streams-internals-KTableValueGetterSupplier.adoc#storeNames[storeNames] and takes the very first one.
 
 Otherwise, `queryableStoreName` returns `null`.

@@ -4,7 +4,7 @@
 
 `ProcessorContext` is used when:
 
-* <<kafka-streams-Processor.adoc#init, Processor>>, <<kafka-streams-StateStore.adoc#init, StateStore>>, <<kafka-streams-Transformer.adoc#init, Transformer>>, <<kafka-streams-ValueTransformer.adoc#init, ValueTransformer>>, <<kafka-streams-ValueTransformerWithKey.adoc#init, ValueTransformerWithKey>> and <<kafka-streams-KTableValueGetter.adoc#init, KTableValueGetter>> are requested to initialize
+* <<kafka-streams-Processor.adoc#init, Processor>>, <<kafka-streams-StateStore.adoc#init, StateStore>>, <<kafka-streams-Transformer.adoc#init, Transformer>>, <<kafka-streams-ValueTransformer.adoc#init, ValueTransformer>>, <<kafka-streams-ValueTransformerWithKey.adoc#init, ValueTransformerWithKey>> and <<kafka-streams-internals-KTableValueGetter.adoc#init, KTableValueGetter>> are requested to initialize
 
 * `Task` is requested for the <<kafka-streams-internals-Task.adoc#context, ProcessorContext>>
 

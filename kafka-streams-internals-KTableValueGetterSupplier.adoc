@@ -33,12 +33,12 @@ interface KTableValueGetterSupplier<K, V> {
 | KTableValueGetterSupplier
 | Description
 
-| link:kafka-streams-KTableMaterializedValueGetterSupplier.adoc[KTableMaterializedValueGetterSupplier]
+| link:kafka-streams-internals-KTableMaterializedValueGetterSupplier.adoc[KTableMaterializedValueGetterSupplier]
 | [[KTableMaterializedValueGetterSupplier]]
 
-| link:kafka-streams-KTableSourceValueGetterSupplier.adoc[KTableSourceValueGetterSupplier]
+| link:kafka-streams-internals-KTableSourceValueGetterSupplier.adoc[KTableSourceValueGetterSupplier]
 | [[KTableSourceValueGetterSupplier]]
 
-| link:kafka-streams-KTableKTableAbstractJoinValueGetterSupplier.adoc[KTableKTableAbstractJoinValueGetterSupplier]
+| link:kafka-streams-internals-KTableKTableAbstractJoinValueGetterSupplier.adoc[KTableKTableAbstractJoinValueGetterSupplier]
 | [[KTableKTableAbstractJoinValueGetterSupplier]]
 |===
