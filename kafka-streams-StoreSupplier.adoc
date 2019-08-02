@@ -33,7 +33,7 @@ a| [[metricsScope]]
 String metricsScope()
 ----
 
-Scope for metrics recorded by metered stores (i.e. <<kafka-streams-internals-MeteredKeyValueBytesStore.adoc#, MeteredKeyValueBytesStore>>, <<kafka-streams-internals-MeteredSessionStore.adoc#, MeteredSessionStore>> and <<kafka-streams-internals-MeteredWindowStore.adoc#, MeteredWindowStore>>)
+*Metric scope* for the metrics recorded by Metered stores (e.g. <<kafka-streams-internals-MeteredKeyValueBytesStore.adoc#, MeteredKeyValueBytesStore>>, <<kafka-streams-internals-MeteredSessionStore.adoc#, MeteredSessionStore>> and <<kafka-streams-internals-MeteredWindowStore.adoc#, MeteredWindowStore>>)
 
 Used when:
 
