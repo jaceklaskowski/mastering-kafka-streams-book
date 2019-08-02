@@ -21,7 +21,7 @@ a| [[get]]
 T get()
 ----
 
-Returns a <<kafka-streams-StateStore.adoc#, state store>> (as `T`)
+Supplies a <<kafka-streams-StateStore.adoc#, state store>> (as `T`)
 
 Used when <<kafka-streams-StoreBuilder.adoc#, StoreBuilders>> (i.e. <<kafka-streams-internals-KeyValueStoreBuilder.adoc#, KeyValueStoreBuilder>>, <<kafka-streams-internals-SessionStoreBuilder.adoc#, SessionStoreBuilder>> and <<kafka-streams-internals-WindowStoreBuilder.adoc#, WindowStoreBuilder>>) are requested to <<kafka-streams-StoreBuilder.adoc#build, build a KeyValueStore>>
 

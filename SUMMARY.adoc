@@ -239,6 +239,7 @@
 .. link:kafka-streams-internals-WindowStoreBuilder.adoc[WindowStoreBuilder]
 
 . link:kafka-streams-internals-InMemorySessionBytesStoreSupplier.adoc[InMemorySessionBytesStoreSupplier]
+. link:kafka-streams-internals-RocksDbKeyValueBytesStoreSupplier.adoc[RocksDbKeyValueBytesStoreSupplier]
 . link:kafka-streams-internals-RocksDbSessionBytesStoreSupplier.adoc[RocksDbSessionBytesStoreSupplier]
 . link:kafka-streams-internals-RocksDbWindowBytesStoreSupplier.adoc[RocksDbWindowBytesStoreSupplier]
 

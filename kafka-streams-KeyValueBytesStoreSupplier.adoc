@@ -1,3 +1,24 @@
-== [[KeyValueBytesStoreSupplier]] KeyValueBytesStoreSupplier
+== [[KeyValueBytesStoreSupplier]] KeyValueBytesStoreSupplier Contract
 
-`KeyValueBytesStoreSupplier` is...FIXME
+`KeyValueBytesStoreSupplier` is the <<contract, extension>> of the <<kafka-streams-StoreSupplier.adoc#, StoreSupplier contract>> for <<implementations, store suppliers>> of <<kafka-streams-StateStore-KeyValueStore.adoc#, KeyValueStores>> (of `Bytes` keys and `byte[]` values, i.e. `StoreSupplier<KeyValueStore<Bytes, byte[]>>`).
+
+[[contract]]
+`KeyValueBytesStoreSupplier` offers no new methods and simply specifies the type of the <<kafka-streams-StateStore.adoc#, StateStores>> to <<kafka-streams-StoreSupplier.adoc#get, supply>>, i.e. `KeyValueStore<Bytes, byte[]>`.
+
+[[implementations]]
+.KeyValueBytesStoreSuppliers
+[cols="30,70",options="header",width="100%"]
+|===
+| KeyValueBytesStoreSupplier
+| Description
+
+| <<kafka-streams-Stores.adoc#inMemoryKeyValueStore, Stores.inMemoryKeyValueStore()>>
+| [[inMemoryKeyValueStore]]
+
+| <<kafka-streams-Stores.adoc#lruMap, Stores.lruMap()>>
+| [[lruMap]]
+
+| <<kafka-streams-internals-RocksDbKeyValueBytesStoreSupplier.adoc#, RocksDbKeyValueBytesStoreSupplier>>
+| [[RocksDbKeyValueBytesStoreSupplier]]
+
+|===
