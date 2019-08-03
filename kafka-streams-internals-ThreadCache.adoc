@@ -19,3 +19,29 @@
 * [[metrics]] <<kafka-streams-internals-StreamsMetricsImpl.adoc#, StreamsMetricsImpl>>
 
 `ThreadCache` initializes the <<internal-registries, internal registries and counters>>.
+
+=== [[nameSpaceFromTaskIdAndStore]] `nameSpaceFromTaskIdAndStore` Static Method
+
+[source, java]
+----
+String nameSpaceFromTaskIdAndStore(
+  String taskIDString,
+  String underlyingStoreName)
+----
+
+`nameSpaceFromTaskIdAndStore`...FIXME
+
+NOTE: `nameSpaceFromTaskIdAndStore` is used when...FIXME
+
+=== [[addDirtyEntryFlushListener]] `addDirtyEntryFlushListener` Method
+
+[source, java]
+----
+void addDirtyEntryFlushListener(
+  String namespace,
+  DirtyEntryFlushListener listener)
+----
+
+`addDirtyEntryFlushListener`...FIXME
+
+NOTE: `addDirtyEntryFlushListener` is used when...FIXME
