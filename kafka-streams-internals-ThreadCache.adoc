@@ -57,7 +57,7 @@ String nameSpaceFromTaskIdAndStore(
 
 NOTE: `nameSpaceFromTaskIdAndStore` is used exclusively when `CachingKeyValueStore` is requested to <<kafka-streams-internals-CachingKeyValueStore.adoc#init, initialize>> (via <<kafka-streams-internals-CachingKeyValueStore.adoc#initInternal, initInternal>>).
 
-=== [[addDirtyEntryFlushListener]] `addDirtyEntryFlushListener` Method
+=== [[addDirtyEntryFlushListener]] Registering DirtyEntryFlushListener For Namespace -- `addDirtyEntryFlushListener` Method
 
 [source, java]
 ----
@@ -66,11 +66,9 @@ void addDirtyEntryFlushListener(
   DirtyEntryFlushListener listener)
 ----
 
-`addDirtyEntryFlushListener` <<getOrCreateCache, gets or creates a new named cache>> by the namespace.
+`addDirtyEntryFlushListener` <<getOrCreateCache, gets or creates a new named cache>> (by the namespace) and requests it to <<kafka-streams-internals-NamedCache.adoc#setListener, set the flush listener>> with the `DirtyEntryFlushListener`.
 
-In the end, `addDirtyEntryFlushListener` requests the `NamedCache` to `setListener` for the `DirtyEntryFlushListener`.
-
-NOTE: `addDirtyEntryFlushListener` is used when...FIXME
+NOTE: `addDirtyEntryFlushListener` is used when the <<kafka-streams-internals-AbstractStoreBuilder.adoc#withCachingEnabled, state stores with caching enabled>> (i.e. <<kafka-streams-internals-CachingKeyValueStore.adoc#initInternal, CachingKeyValueStore>>, <<kafka-streams-internals-CachingSessionStore.adoc#initInternal, CachingSessionStore>>, and <<kafka-streams-internals-CachingWindowStore.adoc#initInternal, CachingWindowStore>>) are requested to initialize.
 
 === [[close]] Closing NamedCache by Namespace -- `close` Method
 
@@ -122,7 +120,7 @@ void flush(String namespace)
 
 NOTE: `flush` is used when...FIXME
 
-=== [[getOrCreateCache]] `getOrCreateCache` Internal Method
+=== [[getOrCreateCache]] Getting Or Creating New Named Cache by Namespace -- `getOrCreateCache` Internal Method
 
 [source, java]
 ----
@@ -169,21 +167,19 @@ NOTE: `sizeBytes` is used exclusively when `ThreadCache` is requested to <<maybe
 | Description
 
 | caches
-a| [[caches]] Collection of `NamedCaches` by namespace (`Map<String, NamedCache>`)
+a| [[caches]] Collection of <<kafka-streams-internals-NamedCache.adoc#, NamedCaches>> by namespace (`Map<String, NamedCache>`)
 
-* A new `NamedCache` is added in <<getOrCreateCache, getOrCreateCache>>
+* A new `NamedCache` is added when requested to <<getOrCreateCache, get or create a new NamedCache by namespace>>
 
 * A `NamedCache` is removed in <<close, close>>
 
 Used when...FIXME
 
 | numPuts
-a| [[numPuts]][[puts]]
+a| [[numPuts]][[puts]] Number of <<put, put>> and <<putIfAbsent, putIfAbsent>>
 
 Default: `0`
 
-Incremented in <<put, put>> and <<putIfAbsent, putIfAbsent>>
-
-Used exclusively in <<flush, flush>> with TRACE logging level enabled
+Used exclusively in <<flush, flush>> to print the current value with TRACE logging level enabled
 
 |===

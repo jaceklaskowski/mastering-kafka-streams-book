@@ -1,0 +1,84 @@
+== [[NamedCache]] NamedCache
+
+`NamedCache` is...FIXME
+
+`NamedCache` is <<creating-instance, created>> exclusively when `ThreadCache` is requested to <<kafka-streams-internals-ThreadCache.adoc#getOrCreateCache, get or create a new named cache by namespace>>.
+
+=== [[creating-instance]] Creating NamedCache Instance
+
+`NamedCache` takes the following to be created:
+
+* [[name]] Name
+* [[metrics]] <<kafka-streams-internals-StreamsMetricsImpl.adoc#, StreamsMetricsImpl>>
+
+`NamedCache` initializes the <<internal-properties, internal properties>>.
+
+=== [[NamedCacheMetrics]] NamedCacheMetrics -- Performance Metrics of NamedCache
+
+`NamedCache` uses the following performance metrics...FIXME
+
+=== [[setListener]] `setListener` Method
+
+[source, java]
+----
+void setListener(
+  ThreadCache.DirtyEntryFlushListener listener)
+----
+
+`setListener` simply sets the <<listener, listener>> internal registry to be the `ThreadCache.DirtyEntryFlushListener`.
+
+NOTE: `setListener` is used exclusively when `ThreadCache` is requested to <<kafka-streams-internals-ThreadCache.adoc#addDirtyEntryFlushListener, register a DirtyEntryFlushListener for a namespace>>.
+
+=== [[evict]] `evict` Method
+
+[source, java]
+----
+void evict()
+----
+
+`evict`...FIXME
+
+NOTE: `evict` is used exclusively when `ThreadCache` is requested to <<kafka-streams-internals-ThreadCache.adoc#maybeEvict, maybeEvict a namespace>>
+
+=== [[close]] `close` Method
+
+[source, java]
+----
+void close()
+----
+
+`close`...FIXME
+
+NOTE: `close` is used when...FIXME
+
+=== [[flush]] `flush` Method
+
+[source, java]
+----
+void flush() // <1>
+// Private API
+void flush(LRUNode evicted)
+----
+<1> Uses `null` for the evicted `LRUNode`
+
+`flush`...FIXME
+
+NOTE: `flush` is used when...FIXME
+
+=== [[internal-properties]] Internal Properties
+
+[cols="30m,70",options="header",width="100%"]
+|===
+| Name
+| Description
+
+| listener
+a| [[listener]] `ThreadCache.DirtyEntryFlushListener`
+
+* Initialized in <<setListener, setListener>>
+
+* Removed (_nullified_) in <<close, close>>
+
+Used exclusively when <<flush, flush an evicted LRUNode>>
+
+|===

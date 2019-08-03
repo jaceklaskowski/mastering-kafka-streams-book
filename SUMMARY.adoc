@@ -370,6 +370,7 @@
 . link:kafka-streams-internals-ForwardingDisabledProcessorContext.adoc[ForwardingDisabledProcessorContext]
 
 . link:kafka-streams-internals-ThreadCache.adoc[ThreadCache]
+.. link:kafka-streams-internals-NamedCache.adoc[NamedCache]
 
 . link:kafka-streams-internals-GlobalStreamThread.adoc[GlobalStreamThread]
 .. link:kafka-streams-StateConsumer.adoc[StateConsumer]
