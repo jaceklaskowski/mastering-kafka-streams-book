@@ -36,7 +36,7 @@ Used exclusively when `StreamTask` is requested to <<kafka-streams-internals-Str
 Use <<kafka-streams-StreamsConfig.adoc#BUFFERED_RECORDS_PER_PARTITION_CONFIG, StreamsConfig.BUFFERED_RECORDS_PER_PARTITION_CONFIG>> to reference the property.
 
 | cache.max.bytes.buffering
-| [[cache.max.bytes.buffering]] Maximum number of memory bytes to be used for buffering across all (processor and global) threads
+| [[cache.max.bytes.buffering]] Maximum number of memory bytes to be used for buffering across all threads (<<kafka-streams-internals-StreamThread.adoc#, StreamThreads>> and <<kafka-streams-internals-GlobalStreamThread.adoc#, GlobalStreamThread>>)
 
 Default: `10 * 1024 * 1024L` (i.e. `10MB`)
 

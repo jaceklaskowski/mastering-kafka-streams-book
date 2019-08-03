@@ -1,26 +1,46 @@
 == [[ThreadCache]] ThreadCache
 
-`ThreadCache` is...FIXME
+`ThreadCache` is a <<caches, collection of NamedCaches>> per <<nameSpaceFromTaskIdAndStore, task ID and state store with caching enabled>>.
 
 `ThreadCache` is <<creating-instance, created>> when:
 
-* `GlobalStreamThread` is <<kafka-streams-internals-GlobalStreamThread.adoc#cache, created>>
+* `GlobalStreamThread` is <<kafka-streams-internals-GlobalStreamThread.adoc#, created>>
 
-* `StandbyContextImpl` is <<kafka-streams-internals-StandbyContextImpl.adoc#, created>> (as a <<kafka-streams-internals-AbstractProcessorContext.adoc#cache, AbstractProcessorContext>>)
+* `StreamThread` is <<kafka-streams-internals-StreamThread.adoc#, created>> (to create a <<kafka-streams-internals-TaskCreator.adoc#, TaskCreator>>)
 
-* `StreamThread` is <<kafka-streams-internals-StreamThread.adoc#create, created>> (and creates a <<kafka-streams-internals-TaskCreator.adoc#cache, TaskCreator>>)
+* `StandbyContextImpl` is <<kafka-streams-internals-StandbyContextImpl.adoc#, created>>
+
+[[logging]]
+[TIP]
+====
+Enable `ALL` logging level for `org.apache.kafka.streams.state.internals.ThreadCache` logger to see what happens inside.
+
+Add the following line to `log4j.properties`:
+
+```
+log4j.logger.org.apache.kafka.streams.state.internals.ThreadCache=ALL
+```
+
+Refer to <<kafka-logging.adoc#log4j.properties, Application Logging Using log4j>>.
+====
 
 === [[creating-instance]] Creating ThreadCache Instance
 
-`ThreadCache` takes the following when created:
+`ThreadCache` takes the following to be created:
 
 * [[logContext]] `LogContext`
 * [[maxCacheSizeBytes]] `maxCacheSizeBytes`
 * [[metrics]] <<kafka-streams-internals-StreamsMetricsImpl.adoc#, StreamsMetricsImpl>>
 
-`ThreadCache` initializes the <<internal-registries, internal registries and counters>>.
+`ThreadCache` initializes the <<internal-properties, internal properties>>.
 
-=== [[nameSpaceFromTaskIdAndStore]] `nameSpaceFromTaskIdAndStore` Static Method
+=== [[CACHE_MAX_BYTES_BUFFERING_CONFIG]] StreamsConfig.CACHE_MAX_BYTES_BUFFERING_CONFIG Configuration Property
+
+When <<creating-instance, created>>, `ThreadCache` is given the <<maxCacheSizeBytes, maxCacheSizeBytes>> that is configured using <<kafka-streams-StreamsConfig.adoc#CACHE_MAX_BYTES_BUFFERING_CONFIG, StreamsConfig.CACHE_MAX_BYTES_BUFFERING_CONFIG>> configuration property.
+
+The <<maxCacheSizeBytes, maxCacheSizeBytes>> is used when `ThreadCache` is requested to <<maybeEvict, maybeEvict>> (when requested to <<put, put>> and <<putIfAbsent, putIfAbsent>>).
+
+=== [[nameSpaceFromTaskIdAndStore]] Building Cache Namespace -- `nameSpaceFromTaskIdAndStore` Static Method
 
 [source, java]
 ----
@@ -29,9 +49,13 @@ String nameSpaceFromTaskIdAndStore(
   String underlyingStoreName)
 ----
 
-`nameSpaceFromTaskIdAndStore`...FIXME
+`nameSpaceFromTaskIdAndStore` builds a cache namespace to be of the format:
 
-NOTE: `nameSpaceFromTaskIdAndStore` is used when...FIXME
+```
+[taskIDString]-[underlyingStoreName]
+```
+
+NOTE: `nameSpaceFromTaskIdAndStore` is used exclusively when `CachingKeyValueStore` is requested to <<kafka-streams-internals-CachingKeyValueStore.adoc#init, initialize>> (via <<kafka-streams-internals-CachingKeyValueStore.adoc#initInternal, initInternal>>).
 
 === [[addDirtyEntryFlushListener]] `addDirtyEntryFlushListener` Method
 
@@ -42,6 +66,124 @@ void addDirtyEntryFlushListener(
   DirtyEntryFlushListener listener)
 ----
 
-`addDirtyEntryFlushListener`...FIXME
+`addDirtyEntryFlushListener` <<getOrCreateCache, gets or creates a new named cache>> by the namespace.
+
+In the end, `addDirtyEntryFlushListener` requests the `NamedCache` to `setListener` for the `DirtyEntryFlushListener`.
 
 NOTE: `addDirtyEntryFlushListener` is used when...FIXME
+
+=== [[close]] Closing NamedCache by Namespace -- `close` Method
+
+[source, java]
+----
+void close(String namespace)
+----
+
+`close`...FIXME
+
+NOTE: `close` is used when...FIXME
+
+=== [[put]] Putting Key And Value Into Namespace -- `put` Method
+
+[source, java]
+----
+void put(
+  String namespace,
+  Bytes key,
+  LRUCacheEntry value)
+----
+
+`put`...FIXME
+
+NOTE: `put` is used when...FIXME
+
+=== [[putIfAbsent]] `putIfAbsent` Method
+
+[source, java]
+----
+LRUCacheEntry putIfAbsent(
+  String namespace,
+  Bytes key,
+  LRUCacheEntry value)
+----
+
+`putIfAbsent`...FIXME
+
+NOTE: `putIfAbsent` is used when...FIXME
+
+=== [[flush]] `flush` Method
+
+[source, java]
+----
+void flush(String namespace)
+----
+
+`flush`...FIXME
+
+NOTE: `flush` is used when...FIXME
+
+=== [[getOrCreateCache]] `getOrCreateCache` Internal Method
+
+[source, java]
+----
+NamedCache getOrCreateCache(String name)
+----
+
+`getOrCreateCache`...FIXME
+
+NOTE: `getOrCreateCache` is used when `ThreadCache` is requested to <<addDirtyEntryFlushListener, addDirtyEntryFlushListener>>, <<put, put a key and a value into a namespace>>, <<putIfAbsent, putIfAbsent>>, and <<maybeEvict, maybeEvict>>.
+
+=== [[maybeEvict]] `maybeEvict` Internal Method
+
+[source, java]
+----
+void maybeEvict(String namespace)
+----
+
+`maybeEvict`...FIXME
+
+NOTE: `maybeEvict` is used when `ThreadCache` is requested to <<put, put>> and <<putIfAbsent, putIfAbsent>>.
+
+=== [[sizeBytes]] `sizeBytes` Method
+
+[source, java]
+----
+long sizeBytes()
+----
+
+`sizeBytes`...FIXME
+
+In the end, `sizeBytes` prints out the following TRACE message to the logs:
+
+```
+Evicted [numEvicted] entries from cache [namespace]
+```
+
+NOTE: `sizeBytes` is used exclusively when `ThreadCache` is requested to <<maybeEvict, maybeEvict>> (when requested to <<put, put>> and <<putIfAbsent, putIfAbsent>>).
+
+=== [[internal-properties]] Internal Properties
+
+[cols="30m,70",options="header",width="100%"]
+|===
+| Name
+| Description
+
+| caches
+a| [[caches]] Collection of `NamedCaches` by namespace (`Map<String, NamedCache>`)
+
+* A new `NamedCache` is added in <<getOrCreateCache, getOrCreateCache>>
+
+* A `NamedCache` is removed in <<close, close>>
+
+Used when...FIXME
+
+| numPuts
+a| [[numPuts]][[puts]]
+
+Default: `0`
+
+Incremented in <<put, put>> and <<putIfAbsent, putIfAbsent>>
+
+Used exclusively in <<flush, flush>> with TRACE logging level enabled
+
+|===
