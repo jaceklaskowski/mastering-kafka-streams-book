@@ -1,58 +1,91 @@
-== [[KeyValueStore]] KeyValueStore
+== [[KeyValueStore]] KeyValueStore Contract -- Key-Value State Stores with Range Queries
 
-`KeyValueStore` is the <<contract, contract>> of <<implementations, state stores>> that...FIXME
+`KeyValueStore` (`KeyValueStore<K, V>`) is the <<contract, extension>> of the <<kafka-streams-StateStore.adoc#, StateStore contract>> for <<implementations, key-value state stores>> that allow for <<put, inserting, updating>> and <<delete, deleting>> key-value pairs.
+
+`KeyValueStore` is also a <<kafka-streams-ReadOnlyKeyValueStore.adoc#, ReadOnlyKeyValueStore>> that allows for range queries.
 
 [[contract]]
-[source, java]
-----
-package org.apache.kafka.streams.state;
-
-interface KeyValueStore<K, V> extends StateStore, ReadOnlyKeyValueStore<K, V> {
-  void put(K key, V value);
-  V putIfAbsent(K key, V value);
-  void putAll(List<KeyValue<K, V>> entries);
-  V delete(K key);
-}
-----
-
 .KeyValueStore Contract
-[cols="1,2",options="header",width="100%"]
+[cols="30m,70",options="header",width="100%"]
 |===
 | Method
 | Description
 
-| [[put]] `put`
-|
+| delete
+a| [[delete]]
+
+[source, java]
+----
+V delete(K key)
+----
+
+Deletes the value for the non-``null`` key from the store (if there was one) and gives the old value or `null` if there was no such key.
+
+The key must not be `null` or an `NullPointerException` is thrown.
+
+| put
+a| [[put]]
+
+[source, java]
+----
+void put(K key, V value)
+----
+
+Inserts or updates the value associated with the key
+
+| putAll
+a| [[putAll]]
+
+[source, java]
+----
+void putAll(List<KeyValue<K, V>> entries)
+----
+
+| putIfAbsent
+a| [[putIfAbsent]]
+
+[source, java]
+----
+V putIfAbsent(K key, V value)
+----
+
 |===
 
 [[implementations]]
-.KeyValueStores
-[cols="1,2",options="header",width="100%"]
+.KeyValueStores (Direct Implementations and Extensions Only)
+[cols="30,70",options="header",width="100%"]
 |===
 | KeyValueStore
 | Description
 
-| link:kafka-streams-internals-MeteredKeyValueBytesStore.adoc[MeteredKeyValueBytesStore]
-| [[MeteredKeyValueBytesStore]]
-
-| link:kafka-streams-internals-ChangeLoggingKeyValueBytesStore.adoc[ChangeLoggingKeyValueBytesStore]
-| [[ChangeLoggingKeyValueBytesStore]]
-
-| MemoryLRUCache
-| [[MemoryLRUCache]]
-
-| InMemoryKeyValueStore
-| [[InMemoryKeyValueStore]]
-
-| MeteredKeyValueStore
-| [[MeteredKeyValueStore]]
-
-| RocksDBStore
-| [[RocksDBStore]]
-
-| CachingKeyValueStore
+| <<kafka-streams-internals-CachingKeyValueStore.adoc#, CachingKeyValueStore>>
 | [[CachingKeyValueStore]]
 
-| InnerMeteredKeyValueStore
-| [[InnerMeteredKeyValueStore]]
+| <<kafka-streams-internals-ChangeLoggingKeyValueBytesStore.adoc#, ChangeLoggingKeyValueBytesStore>>
+| [[ChangeLoggingKeyValueBytesStore]]
+
+| <<kafka-streams-internals-InMemoryKeyValueStore.adoc#, InMemoryKeyValueStore>>
+| [[InMemoryKeyValueStore]]
+
+| InMemoryTimestampedKeyValueStoreMarker
+| [[InMemoryTimestampedKeyValueStoreMarker]]
+
+| <<kafka-streams-internals-KeyValueToTimestampedKeyValueByteStoreAdapter.adoc#, KeyValueToTimestampedKeyValueByteStoreAdapter>>
+| [[KeyValueToTimestampedKeyValueByteStoreAdapter]]
+
+| <<kafka-streams-internals-MemoryLRUCache.adoc#, MemoryLRUCache>>
+| [[MemoryLRUCache]]
+
+| <<kafka-streams-internals-MeteredKeyValueStore.adoc#, MeteredKeyValueStore>>
+| [[MeteredKeyValueStore]]
+
+| <<kafka-streams-internals-RocksDBStore.adoc#, RocksDBStore>>
+| [[RocksDBStore]]
+
+| Segment
+| [[Segment]]
+
+| TimestampedKeyValueStore
+| [[TimestampedKeyValueStore]]
+
 |===
