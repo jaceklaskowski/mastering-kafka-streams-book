@@ -8,6 +8,7 @@
 . link:kafka-streams-multi-instance-kafka-streams-application.adoc[Multi-Instance Kafka Streams Applications]
 
 . link:kafka-streams-exactly-once-support-eos.adoc[Exactly-Once Support (EOS)]
+. link:kafka-streams-StreamThreads-StreamTasks-and-StandbyTasks.adoc[StreamThreads, StreamTasks and StandbyTasks]
 
 == Stateful Stream Processing
 

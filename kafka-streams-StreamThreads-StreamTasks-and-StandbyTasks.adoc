@@ -1,0 +1,23 @@
+== StreamThreads, StreamTasks and StandbyTasks
+
+<<kafka-streams-StreamsConfig.adoc#NUM_STREAM_THREADS_CONFIG, StreamsConfig.NUM_STREAM_THREADS_CONFIG>> (`num.stream.threads`) is the number of <<kafka-streams-internals-StreamThread.adoc#, StreamThreads>> to execute stream processing.
+
+* Number of StreamTasks = # TaskCreator.createTask = # AbstractTaskCreator.createTasks = TaskManager.addStreamTasks
+
+<<kafka-streams-StreamsConfig.adoc#NUM_STANDBY_REPLICAS_CONFIG, StreamsConfig.NUM_STANDBY_REPLICAS_CONFIG>> (`num.standby.replicas`) is the number of <<kafka-streams-internals-StandbyTask.adoc#, standby replicas>> for each task.
+
+* StickyTaskAssignor.assignActive = number of tasks per StreamThread
+
+* StickyTaskAssignor.assign
+
+StreamsPartitionAssignor.assign —> TaskManager.builder().topicGroups() —> PartitionGrouper.partitionGroups(sourceTopicsByGroup, fullMetadata)
+
+At this step = Map<TaskId, Set<TopicPartition>> partitionsForTask
+
+Enable DEBUG logging level for org.apache.kafka.streams.processor.internals.StreamsPartitionAssignor
+
+DEBUG Assigning tasks {} to clients {} with number of replicas {}
+
+Step 1. StreamsPartitionAssignor.onAssignment(final Assignment assignment) —> TaskManager.setAssignmentMetadata(Map<TaskId, Set<TopicPartition>> activeTasks, Map<TaskId, Set<TopicPartition>> standbyTasks)
+
+Step 2. RebalanceListener.onPartitionsAssigned(Collection<TopicPartition> assignment) —> TaskManager.createTasks(assignment)
