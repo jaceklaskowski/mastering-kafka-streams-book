@@ -320,24 +320,24 @@
 . link:kafka-streams-internals-QuickUnion.adoc[QuickUnion]
 . link:kafka-streams-internals-TopicsInfo.adoc[TopicsInfo]
 
-=== Physical Plan of Execution
+=== Physical Plan of Stream Processing Execution
 
-. link:kafka-streams-internals-ProcessorTopology.adoc[ProcessorTopology -- Physical Processor Task Topology]
+. link:kafka-streams-internals-ProcessorTopology.adoc[ProcessorTopology]
 
-. link:kafka-streams-internals-Task.adoc[Task Contract -- Stream Processor Tasks]
-.. link:kafka-streams-internals-AbstractTask.adoc[AbstractTask -- Base Processor Task]
+. link:kafka-streams-internals-Task.adoc[Task]
+.. link:kafka-streams-internals-AbstractTask.adoc[AbstractTask]
 .. link:kafka-streams-internals-StandbyTask.adoc[StandbyTask]
+.. link:kafka-streams-internals-StreamTask.adoc[StreamTask]
 
-. link:kafka-streams-internals-StreamTask.adoc[StreamTask]
-.. link:kafka-streams-internals-ProcessorContextImpl.adoc[ProcessorContextImpl]
+. link:kafka-streams-internals-ProcessorContextImpl.adoc[ProcessorContextImpl]
 
 . link:kafka-streams-internals-ProducerSupplier.adoc[ProducerSupplier]
 
 . link:kafka-streams-internals-AssignedTasks.adoc[AssignedTasks]
-.. link:kafka-streams-AssignedStandbyTasks.adoc[AssignedStandbyTasks -- AssignedTasks For StandbyTasks]
-.. link:kafka-streams-internals-AssignedStreamsTasks.adoc[AssignedStreamsTasks -- AssignedTasks For StreamTasks]
+.. link:kafka-streams-AssignedStandbyTasks.adoc[AssignedStandbyTasks]
+.. link:kafka-streams-internals-AssignedStreamsTasks.adoc[AssignedStreamsTasks]
 
-. link:kafka-streams-internals-ProcessorNodePunctuator.adoc[ProcessorNodePunctuator Contract]
+. link:kafka-streams-internals-ProcessorNodePunctuator.adoc[ProcessorNodePunctuator]
 
 === Kafka Streams Execution Engine
 

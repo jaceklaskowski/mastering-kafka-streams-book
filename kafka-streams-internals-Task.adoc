@@ -1,47 +1,10 @@
 == [[Task]] Task Contract -- Stream Processor Tasks
 
-`Task` is the <<contract, contract>> in Kafka Streams for *stream processor tasks* that are identified by <<id, id>> and...FIXME
-
-NOTE: link:kafka-streams-internals-AbstractTask.adoc[AbstractTask] is the direct implementation of `Task` available with the concrete link:kafka-streams-internals-StandbyTask.adoc[StandbyTask] and link:kafka-streams-internals-StreamTask.adoc[StreamTask] implementations.
-
-The lifecycle of a task is...FIXME
-
-There are two types of partitions that a task operates on:
-
-1. <<partitions, partitions>>
-
-1. <<changelogPartitions, changelogPartitions>>
+`Task` is the <<contract, abstraction>> of <<implementations, stream processor tasks>>.
 
 [[contract]]
-[source, java]
-----
-package org.apache.kafka.streams.processor.internals;
-
-public interface Task {
-  String applicationId();
-  Collection<TopicPartition> changelogPartitions();
-  void close(final boolean clean,
-             final boolean isZombie);
-  void closeSuspended(final boolean clean,
-                      final boolean isZombie,
-                      final RuntimeException e);
-  void commit();
-  ProcessorContext context();
-  StateStore getStore(final String name);
-  boolean hasStateStores();
-  TaskId id();
-  boolean initializeStateStores();
-  void initializeTopology();
-  Set<TopicPartition> partitions();
-  void resume();
-  void suspend();
-  ProcessorTopology topology();
-  String toString(final String indent);
-}
-----
-
 .Task Contract
-[cols="1m,2",options="header",width="100%"]
+[cols="30m,70",options="header",width="100%"]
 |===
 | Method
 | Description
@@ -54,6 +17,8 @@ a| [[applicationId]]
 String applicationId()
 ----
 
+*Application ID* of the Kafka Streams application the task belongs to
+
 | changelogPartitions
 a| [[changelogPartitions]]
 
@@ -62,13 +27,15 @@ a| [[changelogPartitions]]
 Collection<TopicPartition> changelogPartitions()
 ----
 
-Changelog partitions of the task
+Changelog partitions associated with the task
 
 Used when:
 
-* `AssignedTasks` is requested to <<kafka-streams-internals-AssignedTasks.adoc#updateRestored, updateRestored>>, <<kafka-streams-internals-AssignedTasks.adoc#addToRestoring, addToRestoring>> and <<kafka-streams-internals-AssignedTasks.adoc#transitionToRunning, transitionToRunning>>
+* `AssignedStreamsTasks` is requested to <<kafka-streams-internals-AssignedStreamsTasks.adoc#updateRestored, updateRestored>> and <<kafka-streams-internals-AssignedStreamsTasks.adoc#addToRestoring, addToRestoring>>
 
-* `StreamTask` is requested to <<kafka-streams-internals-StreamTask.adoc#initializeStateStores, initialize state stores>>.
+* `AssignedTasks` is requested to <<kafka-streams-internals-AssignedTasks.adoc#transitionToRunning, mark a task as ready for execution and processing records>>
+
+* `StreamTask` is requested to <<kafka-streams-internals-StreamTask.adoc#initializeStateStores, initialize state stores>>
 
 | close
 a| [[close]]
@@ -80,21 +47,13 @@ void close(
   boolean isZombie)
 ----
 
+Closes the task
+
 Used when:
 
-* `AssignedTasks` is requested to do the following:
+* `AssignedTasks` is requested to <<kafka-streams-internals-AssignedTasks.adoc#closeNonRunningTasks, closeNonRunningTasks>>, <<kafka-streams-internals-AssignedTasks.adoc#suspendTasks, suspendTasks>>, <<kafka-streams-internals-AssignedTasks.adoc#closeZombieTask, closeZombieTask>>, <<kafka-streams-internals-AssignedTasks.adoc#close, close>>, and <<kafka-streams-internals-AssignedTasks.adoc#closeUnclean, closeUnclean>>
 
-** link:kafka-streams-internals-AssignedTasks.adoc#close[close]
-
-** link:kafka-streams-internals-AssignedTasks.adoc#closeNonRunningTasks[closeNonRunningTasks]
-
-** link:kafka-streams-internals-AssignedTasks.adoc#closeUnclean[closeUnclean]
-
-** link:kafka-streams-internals-AssignedTasks.adoc#closeZombieTask[closeZombieTask]
-
-** link:kafka-streams-internals-AssignedTasks.adoc#suspendTasks[suspendTasks] (and suspending a task has failed)
-
-* `StandbyTask` is requested to link:kafka-streams-internals-StandbyTask.adoc#closeSuspended[closeSuspended]
+* `StandbyTask` is requested to <<kafka-streams-internals-StandbyTask.adoc#closeSuspended, closeSuspended>>
 
 | closeSuspended
 a| [[closeSuspended]]
@@ -106,6 +65,12 @@ void closeSuspended(
   boolean isZombie,
   RuntimeException e)
 ----
+
+Used when:
+
+* `AssignedTasks` is requested to <<kafka-streams-internals-AssignedTasks.adoc#closeNonAssignedSuspendedTasks, closeNonAssignedSuspendedTasks>>
+
+* `StreamTask` is requested to <<kafka-streams-internals-StreamTask.adoc#close, close>>
 
 | commit
 a| [[commit]]
@@ -119,11 +84,25 @@ Commits the task
 
 Used when:
 
-* `AssignedStreamsTasks` is requested to execute the <<kafka-streams-internals-AssignedStreamsTasks.adoc#maybeCommitAction, maybeCommitAction>> action
+* `AssignedStreamsTasks` is requested to <<kafka-streams-internals-AssignedStreamsTasks.adoc#maybeCommitPerUserRequested, maybeCommitPerUserRequested>>
 
-* `AssignedTasks` is requested to execute the <<kafka-streams-internals-AssignedTasks.adoc#commitAction, commitAction>> action
+* `AssignedTasks` is requested to <<kafka-streams-internals-AssignedTasks.adoc#commit, commit>>
 
 * `StandbyTask` is requested to <<kafka-streams-internals-StandbyTask.adoc#close, close>>
+
+| commitNeeded
+a| [[commitNeeded]]
+
+[source, java]
+----
+boolean commitNeeded()
+----
+
+Used when:
+
+* `AssignedStreamsTasks` is requested to <<kafka-streams-internals-AssignedStreamsTasks.adoc#maybeCommitPerUserRequested, maybeCommitPerUserRequested>>
+
+* `AssignedTasks` is requested to <<kafka-streams-internals-AssignedTasks.adoc#commit, commit>>
 
 | context
 a| [[context]]
@@ -143,7 +122,9 @@ a| [[getStore]]
 StateStore getStore(String name)
 ----
 
-Gets the <<kafka-streams-StateStore.adoc#, state store>> by name
+Looks up the <<kafka-streams-StateStore.adoc#, state store>> by name
+
+Used exclusively when `StreamThreadStateStoreProvider` is requested for the <<kafka-streams-StreamThreadStateStoreProvider.adoc#stores, stores>>
 
 | hasStateStores
 a| [[hasStateStores]]
@@ -152,16 +133,6 @@ a| [[hasStateStores]]
 ----
 boolean hasStateStores()
 ----
-
-Used when `AssignedTasks` is requested to:
-
-* link:kafka-streams-internals-AssignedTasks.adoc#transitionToRunning[Schedule a task for execution]
-
-* link:kafka-streams-internals-AssignedTasks.adoc#uninitializedPartitions[Get the partitions of the new tasks with a state store]
-
----
-
-Implemented exclusively in link:kafka-streams-internals-AbstractTask.adoc#hasStateStores[AbstractTask].
 
 | id
 a| [[id]]
@@ -209,6 +180,14 @@ a| [[partitions]]
 Set<TopicPartition> partitions()
 ----
 
+Used when:
+
+* `AssignedStreamsTasks` is requested to <<kafka-streams-internals-AssignedStreamsTasks.adoc#addToRestoring, addToRestoring>>
+
+* `AssignedTasks` is requested to <<kafka-streams-internals-AssignedTasks.adoc#maybeResumeSuspendedTask, maybeResumeSuspendedTask>>, <<kafka-streams-internals-AssignedTasks.adoc#transitionToRunning, transitionToRunning>>, and <<kafka-streams-internals-AssignedTasks.adoc#closeNonAssignedSuspendedTasks, closeNonAssignedSuspendedTasks>>
+
+* `StreamThread` is requested to <<kafka-streams-internals-StreamThread.adoc#updateThreadMetadata, updateThreadMetadata>>
+
 | resume
 a| [[resume]]
 
@@ -228,6 +207,8 @@ a| [[suspend]]
 ----
 void suspend()
 ----
+
+Suspends the task
 
 Used exclusively when `AssignedTasks` is requested to <<kafka-streams-internals-AssignedTasks.adoc#suspendTasks, suspend tasks>>.
 
@@ -252,3 +233,6 @@ String toString(String indent)
 Describes the task (*textual representation*)
 
 |===
+
+[[implementations]]
+NOTE: <<kafka-streams-internals-AbstractTask.adoc#, AbstractTask>> is the base implementation of the <<contract, Task Contract>> in Kafka Streams (with <<kafka-streams-internals-StandbyTask.adoc#, StandbyTask>> and <<kafka-streams-internals-StreamTask.adoc#, StreamTask>> as the only concrete implementations).
