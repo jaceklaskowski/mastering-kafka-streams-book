@@ -46,11 +46,11 @@ Refer to <<kafka-logging.adoc#log4j.properties, Application Logging Using log4j>
 
 `StreamTask` creates a new <<recordCollector, RecordCollector>> or is given one (when <<creating-instance, created>>).
 
-The <<recordCollector, RecordCollector>> is requested to <<kafka-streams-internals-RecordCollector.adoc#init, initialize>> (with a <<producer, Kafka Producer>>) when `StreamTask` is <<creating-instance, created>> and <<resume, resumed>>.
+The <<recordCollector, RecordCollector>> is requested to <<kafka-streams-internals-RecordCollector.adoc#init, initialize>> (with the <<producer, Kafka Producer>>) when `StreamTask` is <<creating-instance, created>> and <<resume, resumed>>.
 
 `StreamTask` uses the <<recordCollector, RecordCollector>> for the following:
 
-* Creating an <<kafka-streams-internals-AbstractTask.adoc#processorContext, InternalProcessorContext>> (when <<creating-instance, created>>)
+* Creating a <<kafka-streams-internals-AbstractTask.adoc#processorContext, InternalProcessorContext>> (while <<creating-instance, being created>>)
 
 * <<kafka-streams-internals-RecordCollector.adoc#offsets, Getting offsets>> when <<activeTaskCheckpointableOffsets, activeTaskCheckpointableOffsets>>
 
@@ -448,7 +448,7 @@ NOTE: `activeTaskCheckpointableOffsets` is part of the <<kafka-streams-internals
 void flushState()
 ----
 
-NOTE: `flushState` is part of link:kafka-streams-internals-AbstractTask.adoc#flushState[AbstractTask Contract] to flush all <<kafka-streams-StateStore.adoc#, state stores>> registered with the task.
+NOTE: `flushState` is part of <<kafka-streams-internals-AbstractTask.adoc#flushState, AbstractTask Contract>> to flush all <<kafka-streams-StateStore.adoc#, state stores>> registered with the task.
 
 `flushState` prints out the following TRACE message to the logs:
 
@@ -458,7 +458,7 @@ Flushing state and producer
 
 `flushState` <<kafka-streams-internals-AbstractTask.adoc#flushState, flushes state stores>>.
 
-`flushState` requests the <<recordCollector, RecordCollector>> to <<kafka-streams-internals-RecordCollector.adoc#flush, flush the internal Kafka producer>>.
+`flushState` requests the <<recordCollector, RecordCollector>> to <<kafka-streams-internals-RecordCollector.adoc#flush, flush (the internal Kafka producer)>>.
 
 === [[isProcessable]] `isProcessable` Method
 

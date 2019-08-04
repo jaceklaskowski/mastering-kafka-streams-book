@@ -1,9 +1,20 @@
 == [[RecordCollectorImpl]] RecordCollectorImpl
 
-`RecordCollectorImpl` is a concrete <<kafka-streams-internals-RecordCollector.adoc#, RecordCollector>> that is <<creating-instance, created>> exclusively for <<kafka-streams-internals-StreamTask.adoc#recordCollector, StreamTask>>.
+`RecordCollectorImpl` is a concrete <<kafka-streams-internals-RecordCollector.adoc#, RecordCollector>> that is <<creating-instance, created>> and immediately <<init, initialized>> exclusively when <<kafka-streams-internals-StreamTask.adoc#, StreamTask>> is created.
 
 [[logPrefix]]
 `RecordCollectorImpl` uses *task [streamTaskId]* for the `logPrefix` (that uses the specified <<streamTaskId, streamTaskId>>).
+
+=== [[creating-instance]] Creating RecordCollectorImpl Instance
+
+`RecordCollectorImpl` takes the following to be created:
+
+* [[streamTaskId]] StreamTask ID
+* [[logContext]] `LogContext`
+* [[productionExceptionHandler]] `ProductionExceptionHandler`
+* [[skippedRecordsSensor]] *skippedRecords* sensor
+
+`RecordCollectorImpl` initializes the <<internal-properties, internal properties>>.
 
 === [[send]] `send` Method
 
@@ -42,31 +53,38 @@ Flushing producer
 
 In the end, `flush` <<checkForException, checkForException>>.
 
-== [[checkForException]] `checkForException` Internal Method
+=== [[close]] Closing RecordCollector -- `close` Method
+
+[source, java]
+----
+void close()
+----
+
+NOTE: `close` is part of the <<kafka-streams-internals-RecordCollector.adoc#close, RecordCollector Contract>> to close a `RecordCollector`.
+
+`close` prints out the following DEBUG message to the logs:
+
+```
+Closing producer
+```
+
+`close` requests the internal <<producer, Producer>> to close.
+
+In the end, `close` <<checkForException, throws any KafkaException that may have been reported (but not yet thrown)>>.
+
+=== [[checkForException]] `checkForException` Internal Method
 
 [source, java]
 ----
 void checkForException()
 ----
 
-`checkForException` checks the internal <<sendException, sendException>> registry and throws the exception if defined.
+`checkForException` checks the <<sendException, sendException>> internal registry and throws the exception if specified.
 
 NOTE: `checkForException` is used when...FIXME
 
-=== [[creating-instance]] Creating RecordCollectorImpl Instance
-
-`RecordCollectorImpl` takes the following to be created:
-
-* [[streamTaskId]] StreamTask ID
-* [[logContext]] `LogContext`
-* [[productionExceptionHandler]] `ProductionExceptionHandler`
-* [[skippedRecordsSensor]] *skippedRecords* sensor
-
-`RecordCollectorImpl` initializes the <<internal-properties, internal properties>>.
-
 === [[internal-properties]] Internal Properties
 
-.RecordCollectorImpl's Internal Properties (e.g. Registries, Counters and Flags)
 [cols="30m,70",options="header",width="100%"]
 |===
 | Name

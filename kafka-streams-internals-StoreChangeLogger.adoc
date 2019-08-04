@@ -12,7 +12,7 @@
 
 `StoreChangeLogger` takes the following to be created:
 
-* [[storeName]] Name of a state store
+* [[storeName]] Name of a <<kafka-streams-StateStore.adoc#, state store>>
 * [[context]] <<kafka-streams-ProcessorContext.adoc#, ProcessorContext>>
 * [[partition]] Partition ID
 * [[serialization]] `StateSerdes<K, V>`
@@ -53,7 +53,7 @@ void logChange(K key, V value, long timestamp)
 | collector
 a| [[collector]] <<kafka-streams-internals-RecordCollector.adoc#, RecordCollector>>
 
-Used when...FIXME
+Used exclusively when `StoreChangeLogger` is requested to <<logChange, logChange>>.
 
 | topic
 a| [[topic]] The name of the changelog topic (given the <<kafka-streams-internals-ProcessorStateManager.adoc#storeChangelogTopic, application ID and the store name>>)

@@ -331,9 +331,6 @@
 . link:kafka-streams-internals-StreamTask.adoc[StreamTask]
 .. link:kafka-streams-internals-ProcessorContextImpl.adoc[ProcessorContextImpl]
 
-. link:kafka-streams-internals-RecordCollector.adoc[RecordCollector Contract]
-.. link:kafka-streams-internals-RecordCollectorImpl.adoc[RecordCollectorImpl]
-
 . link:kafka-streams-internals-ProducerSupplier.adoc[ProducerSupplier]
 
 . link:kafka-streams-internals-AssignedTasks.adoc[AssignedTasks]
@@ -345,16 +342,16 @@
 === Kafka Streams Execution Engine
 
 . link:kafka-streams-internals-TaskManager.adoc[TaskManager]
-.. link:kafka-streams-internals-TaskCreator.adoc[TaskCreator -- Factory of Stream Tasks]
-.. link:kafka-streams-internals-StandbyTaskCreator.adoc[StandbyTaskCreator -- Factory of Standby Tasks]
+.. link:kafka-streams-internals-TaskCreator.adoc[TaskCreator]
+.. link:kafka-streams-internals-StandbyTaskCreator.adoc[StandbyTaskCreator]
 .. link:kafka-streams-internals-AbstractTaskCreator.adoc[AbstractTaskCreator]
 
-. link:kafka-streams-internals-StreamThread.adoc[StreamThread -- Stream Processor Thread]
-. link:kafka-streams-StreamThread-RebalanceListener.adoc[RebalanceListener -- Kafka ConsumerRebalanceListener for Partition Assignment Among Processor Tasks]
+. link:kafka-streams-internals-StreamThread.adoc[StreamThread]
+. link:kafka-streams-StreamThread-RebalanceListener.adoc[RebalanceListener]
 . link:kafka-streams-StreamThread-StateListener.adoc[StateListener]
 . link:kafka-streams-StreamsMetadataState.adoc[StreamsMetadataState]
 
-. link:kafka-streams-internals-StreamsPartitionAssignor.adoc[StreamsPartitionAssignor -- Dynamic Partition Assignment Strategy]
+. link:kafka-streams-internals-StreamsPartitionAssignor.adoc[StreamsPartitionAssignor]
 .. link:kafka-streams-internals-InternalTopicManager.adoc[InternalTopicManager]
 .. link:kafka-streams-internals-AssignmentInfo.adoc[AssignmentInfo]
 .. link:kafka-streams-internals-SubscriptionInfo.adoc[SubscriptionInfo]
@@ -363,22 +360,25 @@
 ... link:kafka-streams-internals-StickyTaskAssignor.adoc[StickyTaskAssignor]
 
 . link:kafka-streams-internals-InternalProcessorContext.adoc[InternalProcessorContext Contract]
-.. link:kafka-streams-internals-AbstractProcessorContext.adoc[AbstractProcessorContext -- Base Of Internal Processor Contexts]
+.. link:kafka-streams-internals-AbstractProcessorContext.adoc[AbstractProcessorContext]
 .. link:kafka-streams-internals-GlobalProcessorContextImpl.adoc[GlobalProcessorContextImpl]
 .. link:kafka-streams-internals-StandbyContextImpl.adoc[StandbyContextImpl]
 
 . link:kafka-streams-internals-ForwardingDisabledProcessorContext.adoc[ForwardingDisabledProcessorContext]
 
-. link:kafka-streams-internals-ThreadCache.adoc[ThreadCache]
-.. link:kafka-streams-internals-NamedCache.adoc[NamedCache]
-
 . link:kafka-streams-internals-GlobalStreamThread.adoc[GlobalStreamThread]
 .. link:kafka-streams-StateConsumer.adoc[StateConsumer]
 
 . link:kafka-streams-internals-GlobalStateMaintainer.adoc[GlobalStateMaintainer]
-.. link:kafka-streams-internals-GlobalStateUpdateTask.adoc[GlobalStateUpdateTask -- The Default GlobalStateMaintainer]
+.. link:kafka-streams-internals-GlobalStateUpdateTask.adoc[GlobalStateUpdateTask]
 
-. link:kafka-streams-Stamped.adoc[Stamped -- Orderable Value At Timestamp]
+. link:kafka-streams-internals-RecordCollector.adoc[RecordCollector]
+.. link:kafka-streams-internals-RecordCollectorImpl.adoc[RecordCollectorImpl]
+
+. link:kafka-streams-internals-ThreadCache.adoc[ThreadCache]
+.. link:kafka-streams-internals-NamedCache.adoc[NamedCache]
+
+. link:kafka-streams-Stamped.adoc[Stamped]
 . link:kafka-streams-TimestampTracker.adoc[TimestampTracker]
 .. link:kafka-streams-MinTimestampTracker.adoc[MinTimestampTracker]
 
@@ -386,10 +386,10 @@
 .. link:kafka-streams-internals-RecordInfo.adoc[RecordInfo]
 
 . link:kafka-streams-internals-RecordQueue.adoc[RecordQueue]
-.. link:kafka-streams-internals-StampedRecord.adoc[StampedRecord -- Orderable Kafka ConsumerRecords At Timestamp]
+.. link:kafka-streams-internals-StampedRecord.adoc[StampedRecord]
 
 . link:kafka-streams-PunctuationQueue.adoc[PunctuationQueue]
-.. link:kafka-streams-PunctuationSchedule.adoc[PunctuationSchedule -- Orderable ProcessorNodes At Timestamp]
+.. link:kafka-streams-PunctuationSchedule.adoc[PunctuationSchedule]
 
 . link:kafka-streams-QueryableStoreProvider.adoc[QueryableStoreProvider]
 . link:kafka-streams-StateStoreProvider.adoc[StateStoreProvider]

@@ -76,8 +76,8 @@ a| [[close]]
 [source, java]
 ----
 void close(
-  final boolean clean,
-  final boolean isZombie)
+  boolean clean,
+  boolean isZombie)
 ----
 
 Used when:
@@ -102,9 +102,9 @@ a| [[closeSuspended]]
 [source, java]
 ----
 void closeSuspended(
-  final boolean clean,
-  final boolean isZombie,
-  final RuntimeException e)
+  boolean clean,
+  boolean isZombie,
+  RuntimeException e)
 ----
 
 | commit
@@ -133,12 +133,14 @@ a| [[context]]
 ProcessorContext context()
 ----
 
+<<kafka-streams-ProcessorContext.adoc#, ProcessorContext>> of the task
+
 | getStore
 a| [[getStore]]
 
 [source, java]
 ----
-StateStore getStore(final String name)
+StateStore getStore(String name)
 ----
 
 Gets the <<kafka-streams-StateStore.adoc#, state store>> by name
@@ -244,7 +246,7 @@ a| [[toString]]
 
 [source, java]
 ----
-String toString(final String indent)
+String toString(String indent)
 ----
 
 Describes the task (*textual representation*)

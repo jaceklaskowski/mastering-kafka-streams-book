@@ -29,7 +29,7 @@ a| [[flush]]
 void flush()
 ----
 
-Flushing the internal Kafka producer
+Flushes the `RecordCollector` (and the internal Kafka producer)
 
 Used exclusively when `StreamTask` is requested to <<kafka-streams-internals-StreamTask.adoc#flushState, flush state stores and the internal Kafka producer>>
 
@@ -38,10 +38,11 @@ a| [[init]]
 
 [source, java]
 ----
-void init(final Producer<byte[], byte[]> producer)
+void init(
+  Producer<byte[], byte[]> producer)
 ----
 
-Initializes the `RecordCollector` (with a specified Kafka `Producer`)
+Initializes the `RecordCollector` (with a Kafka https://kafka.apache.org/23/javadoc/org/apache/kafka/clients/producer/KafkaProducer.html[Producer])
 
 Used when `StreamTask` is <<kafka-streams-internals-StreamTask.adoc#, created>> and <<kafka-streams-internals-StreamTask.adoc#resume, resumed>>
 
@@ -61,23 +62,23 @@ a| [[send]]
 [source, java]
 ----
 <K, V> void send(
-  final String topic,
-  final K key,
-  final V value,
-  final Headers headers,
-  final Integer partition,
-  final Long timestamp,
-  final Serializer<K> keySerializer,
-  final Serializer<V> valueSerializer)
+  String topic,
+  K key,
+  V value,
+  Headers headers,
+  Integer partition,
+  Long timestamp,
+  Serializer<K> keySerializer,
+  Serializer<V> valueSerializer)
 <K, V> void send(
-  final String topic,
-  final K key,
-  final V value,
-  final Headers headers,
-  final Long timestamp,
-  final Serializer<K> keySerializer,
-  final Serializer<V> valueSerializer,
-  final StreamPartitioner<? super K, ? super V> partitioner)
+  String topic,
+  K key,
+  V value,
+  Headers headers,
+  Long timestamp,
+  Serializer<K> keySerializer,
+  Serializer<V> valueSerializer,
+  StreamPartitioner<? super K, ? super V> partitioner)
 ----
 
 Sends a record to a topic
@@ -124,7 +125,7 @@ RecordCollector recordCollector()
 
 * `SinkNode` is requested to <<kafka-streams-internals-SinkNode.adoc#process, process a record>>
 
-* `InMemoryTimeOrderedKeyValueBuffer` is requested to `init`
+* `InMemoryTimeOrderedKeyValueBuffer` is requested to <<kafka-streams-internals-InMemoryTimeOrderedKeyValueBuffer.adoc#init, initialize>>
 
 * StoreChangeLogger is <<kafka-streams-internals-StoreChangeLogger.adoc#, created>>
 ====
