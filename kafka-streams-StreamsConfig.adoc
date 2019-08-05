@@ -200,6 +200,10 @@ String EXACTLY_ONCE = "exactly_once"
 
 * <<kafka-streams-internals-AbstractTask.adoc#eosEnabled, AbstractTask>> is created
 
+* <<kafka-streams-internals-GlobalStateManagerImpl.adoc#, GlobalStateManagerImpl>> is created
+
+* <<kafka-streams-internals-StreamThread.adoc#create, StreamThread>> is created
+
 === [[postProcessParsedConfig]] `postProcessParsedConfig` Method
 
 [source, java]

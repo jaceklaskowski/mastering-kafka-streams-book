@@ -516,9 +516,21 @@ NOTE: `maybeAbortTransactionAndCloseRecordCollector` is used when...FIXME
 void initializeTransactions()
 ----
 
-`initializeTransactions`...FIXME
+`initializeTransactions` simply requests the <<producer, Producer>> to `initTransactions`.
 
-NOTE: `initializeTransactions` is used when...FIXME
+In case of `TimeoutException`, `initializeTransactions` prints out the following ERROR message to the logs:
+
+```
+Timeout exception caught when initializing transactions for task [id]. This might happen if the broker is slow to respond, if the network connection to the broker was interrupted, or if similar circumstances arise. You can increase producer parameter `max.block.ms` to increase this timeout.
+```
+
+In the end, `initializeTransactions` throws a `StreamsException`.
+
+```
+[logPrefix]Failed to initialize task [id] due to timeout.
+```
+
+NOTE: `initializeTransactions` is used when `StreamTask` is <<creating-instance, created>> and requested to <<resume, resume>> (both with <<kafka-streams-internals-AbstractTask.adoc#eosEnabled, exactly-once support enabled>>).
 
 === [[producerMetrics]] `producerMetrics` Method
 
