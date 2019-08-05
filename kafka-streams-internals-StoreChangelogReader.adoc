@@ -86,11 +86,13 @@ long processNext(
 
 NOTE: `processNext` is used exclusively when `StoreChangelogReader` is requested to <<restore, restore>>.
 
-=== [[startRestoration]] `startRestoration` Internal Method
+=== [[startRestoration]] Restoring State Stores From Changelog Topics -- `startRestoration` Internal Method
 
 [source, java]
 ----
-void startRestoration(final Map<TopicPartition, StateRestorer> initialized)
+void startRestoration(
+  Set<TopicPartition> initialized,
+  RestoringTasks active)
 ----
 
 `startRestoration`...FIXME

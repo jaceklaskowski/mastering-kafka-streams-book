@@ -4,9 +4,6 @@
 
 NOTE: `AbstractTask` is a Java abstract class and cannot be <<creating-instance, created>> directly. It is created indirectly for the <<implementations, concrete AbstractTasks>>.
 
-[[eosEnabled]]
-`AbstractTask` uses <<kafka-streams-properties.adoc#processing.guarantee, processing.guarantee>> configuration property to enable <<kafka-streams-exactly-once-support-eos.adoc#, Exactly-Once Support>> for...FIXME
-
 [[taskInitialized]]
 `AbstractTask` has `taskInitialized` flag that is on (i.e. `true`) to mark when:
 
@@ -35,34 +32,6 @@ The `taskInitialized` flag is used by the <<implementations, concrete AbstractTa
 
 | <<kafka-streams-internals-StreamTask.adoc#, StreamTask>>
 | [[StreamTask]]
-|===
-
-[[internal-registries]]
-.AbstractTask's Internal Properties (e.g. Registries, Counters and Flags)
-[cols="1m,2",options="header",width="100%"]
-|===
-| Name
-| Description
-
-| processorContext
-a| [[processorContext]] <<kafka-streams-internals-InternalProcessorContext.adoc#, InternalProcessorContext>>, i.e.
-
-* <<kafka-streams-internals-ProcessorContextImpl.adoc#, ProcessorContextImpl>> for <<kafka-streams-internals-StreamTask.adoc#, StreamTask>>
-
-* <<kafka-streams-internals-StandbyContextImpl.adoc#, StandbyContextImpl>> for <<kafka-streams-internals-StandbyTask.adoc#, StandbyTask>>
-
-| stateMgr
-a| [[stateMgr]] <<kafka-streams-internals-ProcessorStateManager.adoc#, ProcessorStateManager>>
-
-<<kafka-streams-internals-ProcessorStateManager.adoc#creating-instance, Created>> when `AbstractTask` is <<creating-instance, created>>
-
-Used when:
-
-* `AbstractTask` is requested to <<getStore, getStore>>, <<updateOffsetLimits, updateOffsetLimits>>, <<flushState, flushState>>, <<reinitializeStateStoresForPartitions, reinitializeStateStoresForPartitions>>, <<closeStateManager, closeStateManager>> and <<changelogPartitions, changelogPartitions>>
-
-* `StandbyTask` is <<kafka-streams-internals-StandbyTask.adoc#creating-instance, created>> (and creates the <<processorContext, InternalProcessorContext>>), and is requested to <<kafka-streams-internals-StandbyTask.adoc#initializeStateStores, initializeStateStores>>, <<kafka-streams-internals-StandbyTask.adoc#flushAndCheckpointState, flushAndCheckpointState>> and <<kafka-streams-internals-StandbyTask.adoc#update, update>>
-
-* `StreamTask` is <<kafka-streams-internals-StreamTask.adoc#creating-instance, created>> (and creates the <<processorContext, InternalProcessorContext>>), and is requested to <<kafka-streams-internals-StreamTask.adoc#commit, commit>> and <<kafka-streams-internals-StreamTask.adoc#commitOffsets, commitOffsets>>
 |===
 
 === [[closeStateManager]] Closing State Manager -- `closeStateManager` Method
@@ -205,3 +174,44 @@ Map<TopicPartition, Long> activeTaskCheckpointableOffsets()
 ----
 
 `activeTaskCheckpointableOffsets` simply returns an empty collection (of checkpointable offsets).
+
+=== [[internal-properties]] Internal Properties
+
+[cols="30m,70",options="header",width="100%"]
+|===
+| Name
+| Description
+
+| eosEnabled
+a| [[eosEnabled]][[isEosEnabled]] Flag that controls whether to enable <<kafka-streams-exactly-once-support-eos.adoc#, Exactly-Once Support>> (`true`) or not (`false`)
+
+* Enabled (`true`) when <<kafka-streams-StreamsConfig.adoc#PROCESSING_GUARANTEE_CONFIG, StreamsConfig.PROCESSING_GUARANTEE_CONFIG>> configuration property is <<kafka-streams-StreamsConfig.adoc#EXACTLY_ONCE, StreamsConfig.EXACTLY_ONCE>>
+
+Used when (directly or indirectly as `isEosEnabled` public method):
+
+* <<stateMgr, ProcessorStateManager>> is created
+
+* `StoreChangelogReader` is requested to <<kafka-streams-internals-StoreChangelogReader.adoc#startRestoration, restore state stores from changelog topics>>
+
+* <<kafka-streams-internals-StreamTask.adoc#, StreamTask>> is created (and <<kafka-streams-internals-StreamTask.adoc#initializeTransactions, initializeTransactions>>), is requested to <<kafka-streams-internals-StreamTask.adoc#initializeTopology, initializeTopology>>, <<kafka-streams-internals-StreamTask.adoc#resume, resume>>, <<kafka-streams-internals-StreamTask.adoc#commit, commit>>, <<kafka-streams-internals-StreamTask.adoc#suspend, suspend>>, and <<kafka-streams-internals-StreamTask.adoc#maybeAbortTransactionAndCloseRecordCollector, maybeAbortTransactionAndCloseRecordCollector>>
+
+| processorContext
+a| [[processorContext]] <<kafka-streams-internals-InternalProcessorContext.adoc#, InternalProcessorContext>>, i.e.
+
+* <<kafka-streams-internals-ProcessorContextImpl.adoc#, ProcessorContextImpl>> for <<kafka-streams-internals-StreamTask.adoc#, StreamTask>>
+
+* <<kafka-streams-internals-StandbyContextImpl.adoc#, StandbyContextImpl>> for <<kafka-streams-internals-StandbyTask.adoc#, StandbyTask>>
+
+| stateMgr
+a| [[stateMgr]] <<kafka-streams-internals-ProcessorStateManager.adoc#, ProcessorStateManager>>
+
+<<kafka-streams-internals-ProcessorStateManager.adoc#creating-instance, Created>> when `AbstractTask` is <<creating-instance, created>>
+
+Used when:
+
+* `AbstractTask` is requested to <<getStore, getStore>>, <<updateOffsetLimits, updateOffsetLimits>>, <<flushState, flushState>>, <<reinitializeStateStoresForPartitions, reinitializeStateStoresForPartitions>>, <<closeStateManager, closeStateManager>> and <<changelogPartitions, changelogPartitions>>
+
+* `StandbyTask` is <<kafka-streams-internals-StandbyTask.adoc#creating-instance, created>> (and creates the <<processorContext, InternalProcessorContext>>), and is requested to <<kafka-streams-internals-StandbyTask.adoc#initializeStateStores, initializeStateStores>>, <<kafka-streams-internals-StandbyTask.adoc#flushAndCheckpointState, flushAndCheckpointState>> and <<kafka-streams-internals-StandbyTask.adoc#update, update>>
+
+* `StreamTask` is <<kafka-streams-internals-StreamTask.adoc#creating-instance, created>> (and creates the <<processorContext, InternalProcessorContext>>), and is requested to <<kafka-streams-internals-StreamTask.adoc#commit, commit>> and <<kafka-streams-internals-StreamTask.adoc#commitOffsets, commitOffsets>>
+|===

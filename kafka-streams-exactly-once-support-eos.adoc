@@ -1,3 +1,16 @@
 == Exactly-Once Support (EOS)
 
-*Exactly-Once Support (EOS)* is...FIXME
+*Exactly-Once Support (EOS)* (aka *Exactly-Once Processing Guarantee*) is...FIXME
+
+[[eosEnabled]][[EXACTLY_ONCE]]
+`StreamsConfig` defines <<kafka-streams-StreamsConfig.adoc#eosEnabled, eosEnabled>> internal flag that is enabled (`true`) when <<kafka-streams-StreamsConfig.adoc#PROCESSING_GUARANTEE_CONFIG, StreamsConfig.PROCESSING_GUARANTEE_CONFIG>> is <<kafka-streams-StreamsConfig.adoc#EXACTLY_ONCE, StreamsConfig.EXACTLY_ONCE>> (`exactly_once`).
+
+<<kafka-streams-StreamsConfig.adoc#PROCESSING_GUARANTEE_CONFIG, StreamsConfig.PROCESSING_GUARANTEE_CONFIG>> can be one of the two values:
+
+* <<kafka-streams-StreamsConfig.adoc#AT_LEAST_ONCE, AT_LEAST_ONCE>> (default)
+
+* <<kafka-streams-StreamsConfig.adoc#EXACTLY_ONCE, EXACTLY_ONCE>>
+
+With EOS enabled, the frequency with which to save the position of a processor (<<kafka-streams-StreamsConfig.adoc#COMMIT_INTERVAL_MS_CONFIG, StreamsConfig.COMMIT_INTERVAL_MS_CONFIG>>) is always `100L`.
+
+Exactly-once processing requires a cluster of at least three brokers (by default) what is the recommended setting for production. For development you can change this, by adjusting broker setting `transaction.state.log.replication.factor` and `transaction.state.log.min.isr`.

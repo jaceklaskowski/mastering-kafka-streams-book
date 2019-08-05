@@ -177,31 +177,48 @@ client.id -> clientId-consumer
 [[CONSUMER_PREFIX]]
 `StreamsConfig` uses `consumer` prefix for custom Kafka configurations of a Kafka consumer.
 
-[[eosEnabled]]
-`StreamsConfig` uses `eosEnabled` internal flag for...FIXME
-
 [[InternalConfig]]
 `StreamsConfig` defines the `InternalConfig` inner class with the <<internal-properties, internal properties>>.
 
-[[internal-properties]]
-.Constants for Internal Configuration Properties
-[cols="1m,1",options="header",width="100%"]
-|===
-| Name
-| Value
-
-| ASSIGNMENT_ERROR_CODE
-a| [[ASSIGNMENT_ERROR_CODE]] `++__assignment.error.code__++`
-
-| TASK_MANAGER_FOR_PARTITION_ASSIGNOR
-a| [[TASK_MANAGER_FOR_PARTITION_ASSIGNOR]] `++__task.manager.instance__++`
-
-Used to associate the <<kafka-streams-internals-TaskManager.adoc#, TaskManager>> (of <<kafka-streams-internals-StreamThread.adoc#, StreamThread>>) with <<kafka-streams-internals-StreamsPartitionAssignor.adoc#, StreamsPartitionAssignor>> (when <<kafka-streams-internals-StreamsPartitionAssignor.adoc#configure, configured>>)
-
-|===
-
 [[InternalStreamsConfig]]
 NOTE: `InternalStreamsConfig` is an extension of `StreamsConfig` that is used in <<kafka-streams-internals-StreamsPartitionAssignor.adoc#, StreamsPartitionAssignor>> to specify custom <<props, configuration properties>> and turn the <<doLog, doLog>> flag off.
+
+=== [[EXACTLY_ONCE]] StreamsConfig.EXACTLY_ONCE for Exactly-Once Support (EOS)
+
+[source, java]
+----
+String EXACTLY_ONCE = "exactly_once"
+----
+
+`StreamsConfig` defines `StreamsConfig.EXACTLY_ONCE` (`exactly_once`) constant value that is used for the following:
+
+* <<eosEnabled, eosEnabled>> internal flag
+
+* <<postProcessParsedConfig, postProcessParsedConfig>>
+
+* <<checkIfUnexpectedUserSpecifiedConsumerConfig, checkIfUnexpectedUserSpecifiedConsumerConfig>>
+
+* <<kafka-streams-internals-AbstractTask.adoc#eosEnabled, AbstractTask>> is created
+
+=== [[postProcessParsedConfig]] `postProcessParsedConfig` Method
+
+[source, java]
+----
+Map<String, Object> postProcessParsedConfig(
+  Map<String, Object> parsedValues)
+----
+
+`postProcessParsedConfig`...FIXME
+
+NOTE: `postProcessParsedConfig` is used when...FIXME
+
+=== [[eosEnabled]] `eosEnabled` Internal Flag for Exactly-Once Support (EOS)
+
+`StreamsConfig` defines `eosEnabled` internal flag that is enabled (`true`) when <<PROCESSING_GUARANTEE_CONFIG, StreamsConfig.PROCESSING_GUARANTEE_CONFIG>> is <<EXACTLY_ONCE, EXACTLY_ONCE>>.
+
+`eosEnabled` is used for the following:
+
+* ...FIXME
 
 === [[getProducerConfigs]] `getProducerConfigs` Method
 
@@ -309,11 +326,11 @@ NOTE: `getCommonConsumerConfigs` is used when `StreamsConfig` is requested for <
 [source, java]
 ----
 void checkIfUnexpectedUserSpecifiedConsumerConfig(
-  final Map<String, Object> clientProvidedProps,
-  final String[] nonConfigurableConfigs)
+  Map<String, Object> clientProvidedProps,
+  String[] nonConfigurableConfigs)
 ----
 
-`checkIfUnexpectedUserSpecifiedConsumerConfig` removes non-configurable configurations (`nonConfigurableConfigs`) from user-defined configurations (`clientProvidedProps`) and logging a warning.
+`checkIfUnexpectedUserSpecifiedConsumerConfig` removes non-configurable configuration properties (`nonConfigurableConfigs`) from user-defined configurations (`clientProvidedProps`) and prints out a warning for any violation.
 
 Internally, `checkIfUnexpectedUserSpecifiedConsumerConfig` iterates over `nonConfigurableConfigs`...FIXME
 
@@ -395,3 +412,20 @@ static String adminClientPrefix(final String adminClientProp)
 * [[doLog]] `doLog` flag
 
 `StreamsConfig` initializes the <<eosEnabled, eosEnabled>> internal property.
+
+=== [[internal-configuration-properties]] Internal Configuration Properties
+
+[cols="30m,70",options="header",width="100%"]
+|===
+| Name
+| Value
+
+| ASSIGNMENT_ERROR_CODE
+a| [[ASSIGNMENT_ERROR_CODE]] `++__assignment.error.code__++`
+
+| TASK_MANAGER_FOR_PARTITION_ASSIGNOR
+a| [[TASK_MANAGER_FOR_PARTITION_ASSIGNOR]] `++__task.manager.instance__++`
+
+Used to associate the <<kafka-streams-internals-TaskManager.adoc#, TaskManager>> (of <<kafka-streams-internals-StreamThread.adoc#, StreamThread>>) with <<kafka-streams-internals-StreamsPartitionAssignor.adoc#, StreamsPartitionAssignor>> (when <<kafka-streams-internals-StreamsPartitionAssignor.adoc#configure, configured>>)
+
+|===
