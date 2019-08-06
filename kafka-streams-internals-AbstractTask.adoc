@@ -152,7 +152,8 @@ void updateOffsetLimits()
 
 [source, java]
 ----
-void reinitializeStateStoresForPartitions(final Collection<TopicPartition> partitions)
+void reinitializeStateStoresForPartitions(
+  Collection<TopicPartition> partitions)
 ----
 
 `reinitializeStateStoresForPartitions` simply requests the <<stateMgr, ProcessorStateManager>> to <<kafka-streams-internals-ProcessorStateManager.adoc#reinitializeStateStoresForPartitions, reinitializeStateStores>> for the input `partitions` and the <<processorContext, InternalProcessorContext>>.

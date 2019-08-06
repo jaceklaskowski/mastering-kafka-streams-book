@@ -6,13 +6,16 @@
 
 `StateRestorer` is <<creating-instance, created>> exclusively when `ProcessorStateManager` is requested to <<kafka-streams-internals-ProcessorStateManager.adoc#register, register a state store>>.
 
+[[NO_CHECKPOINT]]
+`StateRestorer` uses `-1` as a marker for an uninitialized <<checkpoint, partition offset>>.
+
 === [[creating-instance]] Creating StateRestorer Instance
 
 `StateRestorer` takes the following to be created:
 
 * [[partition]] Kafka https://kafka.apache.org/23/javadoc/index.html?org/apache/kafka/common/TopicPartition.html[TopicPartition]
 * [[compositeRestoreListener]] <<kafka-streams-CompositeRestoreListener.adoc#, CompositeRestoreListener>>
-* [[checkpoint]] `checkpoint`
+* [[checkpoint]] Checkpoint offset
 * [[offsetLimit]] `offsetLimit`
 * [[persistent]] `persistent` flag
 * [[storeName]] Name of the state store
@@ -86,6 +89,17 @@ boolean isPersistent()
 
 NOTE: `isPersistent` is used exclusively when `StoreChangelogReader` is requested to <<kafka-streams-internals-StoreChangelogReader.adoc#restoredOffsets, restoredOffsets>>.
 
+=== [[setStartingOffset]] `setStartingOffset` Method
+
+[source, java]
+----
+void setStartingOffset(long startingOffset)
+----
+
+`setStartingOffset` simply sets the <<startingOffset, startingOffset>> internal registry to the minimum value of the <<offsetLimit, offsetLimit>> and the given `startingOffset`.
+
+NOTE: `setStartingOffset` is used when...FIXME
+
 === [[internal-properties]] Internal Properties
 
 [cols="30m,70",options="header",width="100%"]
@@ -94,7 +108,12 @@ NOTE: `isPersistent` is used exclusively when `StoreChangelogReader` is requeste
 | Description
 
 | checkpointOffset
-a| [[checkpointOffset]]
+a| [[checkpointOffset]][[setCheckpointOffset]] Checkpoint offset
+
+Used when...FIXME
+
+| startingOffset
+a| [[startingOffset]]
 
 Used when...FIXME
 
