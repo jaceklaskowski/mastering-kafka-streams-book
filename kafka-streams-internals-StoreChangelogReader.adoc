@@ -34,13 +34,13 @@ Refer to <<kafka-logging.adoc#log4j.properties, Application Logging Using log4j>
 `StoreChangelogReader` takes the following to be created:
 
 * [[restoreConsumer]] *Restore Consumer* (`Consumer<byte[], byte[]>`)
-* [[pollTime]] `pollTime`
+* [[pollTime]] `pollTime` (per <<kafka-streams-StreamsConfig.adoc#POLL_MS_CONFIG, StreamsConfig.POLL_MS_CONFIG>> configuration property)
 * [[userStateRestoreListener]] <<kafka-streams-StateRestoreListener.adoc#, StateRestoreListener>>
 * [[logContext]] `LogContext`
 
 `StoreChangelogReader` initializes the <<internal-properties, internal properties>>.
 
-=== [[register]] Registering StateRestorer (For Changelog Partition) -- `register` Method
+=== [[register]] Registering StateRestorer For Changelog Partition -- `register` Method
 
 [source, java]
 ----
@@ -49,7 +49,15 @@ void register(StateRestorer restorer)
 
 NOTE: `register` is part of link:kafka-streams-internals-ChangelogReader.adoc#register[ChangelogReader Contract] to register a <<kafka-streams-internals-StateRestorer.adoc#, StateRestorer>> (for a changelog partition).
 
-`register`...FIXME
+`register` requests the given `StateRestorer` for the <<kafka-streams-internals-StateRestorer.adoc#partition, partition>>.
+
+If the <<stateRestorers, stateRestorers>> internal registry does not have the partition registered, `register` requests the `StateRestorer` to <<kafka-streams-internals-StateRestorer.adoc#setUserRestoreListener, setUserRestoreListener>> with the <<userStateRestoreListener, userStateRestoreListener>> and adds it to the <<stateRestorers, stateRestorers>> registry. `register` prints out the following TRACE message to the logs:
+
+```
+Added restorer for changelog [partition]
+```
+
+In the end, `register` adds the partition to the <<needsInitializing, needsInitializing>> internal registry.
 
 === [[reset]] `reset` Method
 
@@ -213,7 +221,7 @@ a| [[endOffsets]]
 | needsInitializing
 a| [[needsInitializing]] Changelog partitions (of <<kafka-streams-internals-StateRestorer.adoc#, StateRestorers>>) that need initializing (`Set<TopicPartition>`)
 
-* New changelog partitions added in <<register, register>>
+* New changelog partitions added when <<register, registering a new StateRestorer>>
 
 * Changelog partition removed in <<initialize, initialize>> (<<restore, restore>> and <<startRestoration, startRestoration>>)
 

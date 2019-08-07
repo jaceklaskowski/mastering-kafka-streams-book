@@ -411,6 +411,7 @@
 .. link:kafka-streams-internals-AbstractStateManager.adoc[AbstractStateManager]
 
 . link:kafka-streams-internals-ProcessorStateManager.adoc[ProcessorStateManager]
+
 . link:kafka-streams-GlobalStateManager.adoc[GlobalStateManager]
 .. link:kafka-streams-internals-GlobalStateManagerImpl.adoc[GlobalStateManagerImpl]
 

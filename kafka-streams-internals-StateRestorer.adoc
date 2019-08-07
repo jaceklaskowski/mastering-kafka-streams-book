@@ -110,6 +110,8 @@ NOTE: `setStartingOffset` is used when...FIXME
 | checkpointOffset
 a| [[checkpointOffset]][[setCheckpointOffset]] Checkpoint offset
 
+* Initialized to the given <<checkpoint, checkpoint>> if defined or <<NO_CHECKPOINT, -1>>
+
 Used when...FIXME
 
 | startingOffset
