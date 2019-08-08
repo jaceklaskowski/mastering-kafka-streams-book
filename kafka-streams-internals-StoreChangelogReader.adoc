@@ -70,17 +70,6 @@ NOTE: `reset` is part of link:kafka-streams-internals-ChangelogReader.adoc#reset
 
 `reset`...FIXME
 
-=== [[restore]] `restore` Method
-
-[source, java]
-----
-Collection<TopicPartition> restore(RestoringTasks active)
-----
-
-NOTE: `restore` is part of the <<kafka-streams-internals-ChangelogReader.adoc#restore, ChangelogReader Contract>> to...FIXME.
-
-`restore`...FIXME
-
 === [[restoredOffsets]] `restoredOffsets` Method
 
 [source, java]
@@ -108,7 +97,19 @@ long processNext(
 
 NOTE: `processNext` is used exclusively when `StoreChangelogReader` is requested to <<restore, restore>>.
 
-=== [[initialize]] `initialize` Internal Method
+=== [[restore]] `restore` Method
+
+[source, java]
+----
+Collection<TopicPartition> restore(
+  RestoringTasks active)
+----
+
+NOTE: `restore` is part of the <<kafka-streams-internals-ChangelogReader.adoc#restore, ChangelogReader Contract>> to restores changelog-enabled state stores using the <<kafka-streams-internals-RestoringTasks.adoc#, RestoringTasks>>.
+
+`restore`...FIXME
+
+==== [[initialize]] `initialize` Internal Method
 
 [source, java]
 ----

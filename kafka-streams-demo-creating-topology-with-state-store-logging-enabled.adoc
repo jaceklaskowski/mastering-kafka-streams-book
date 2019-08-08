@@ -1,0 +1,42 @@
+== Demo: Creating Topology with State Store with Logging Enabled
+
+The following demo shows the internals of <<kafka-streams-StateStore.adoc#, state stores>> with <<kafka-streams-StoreBuilder.adoc#withLoggingEnabled, logging enabled>>.
+
+[source, scala]
+----
+import org.apache.kafka.streams.Topology
+val topology = new Topology
+
+import org.apache.kafka.common.serialization.Serdes
+import org.apache.kafka.streams.state.Stores
+import scala.collection.JavaConverters._
+val storeBuilder = Stores
+  .keyValueStoreBuilder[String, String](
+    Stores.inMemoryKeyValueStore("in-memory-key-value-store"),
+    Serdes.String,
+    Serdes.String)
+  .withLoggingEnabled(Map.empty.asJava)
+
+topology.addStateStore(storeBuilder)
+
+scala> println(topology.describe)
+Topologies:
+
+// "Discovery of a day"
+// You can create a topology with a single state store only (no processors)
+// No idea why anyone would want it though
+
+import org.apache.kafka.streams.StreamsConfig
+val config = new java.util.Properties()
+config.put(StreamsConfig.APPLICATION_ID_CONFIG, "demo-state-store-logging-enabled-appId")
+config.put(StreamsConfig.BOOTSTRAP_SERVERS_CONFIG, ":9092")
+
+import org.apache.kafka.streams.KafkaStreams
+val ks = new KafkaStreams(topology, config)
+
+// TIP: Copy and paste the above code using :paste mode in sbt console / Scala REPL
+// So all the INFO messages go away
+// So you can focus on the log messages after starting the KafkaStreams instance
+
+ks.start
+----

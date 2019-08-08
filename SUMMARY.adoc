@@ -10,6 +10,10 @@
 . link:kafka-streams-exactly-once-support-eos.adoc[Exactly-Once Support (EOS)]
 . link:kafka-streams-StreamThreads-StreamTasks-and-StandbyTasks.adoc[StreamThreads, StreamTasks and StandbyTasks]
 
+== Demos
+
+. link:kafka-streams-demo-creating-topology-with-state-store-logging-enabled.adoc[Creating Topology with State Store with Logging Enabled]
+
 == Stateful Stream Processing
 
 . link:kafka-streams-stateful-stream-processing.adoc[Stateful Stream Processing]

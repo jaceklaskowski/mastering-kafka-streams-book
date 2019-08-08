@@ -37,10 +37,11 @@ scala> :type topology
 org.apache.kafka.streams.Topology
 
 import org.apache.kafka.streams.state.Stores
-val storeBuilder = Stores.keyValueStoreBuilder[String, String](
-  Stores.inMemoryKeyValueStore("in-memory-key-value-store"),
-  Serdes.String,
-  Serdes.String)
+val storeBuilder = Stores
+  .keyValueStoreBuilder[String, String](
+    Stores.inMemoryKeyValueStore("in-memory-key-value-store"),
+    Serdes.String,
+    Serdes.String)
   .withLoggingDisabled  // this is for a global table
 val sourceName = "demo-source-processor"
 val timestampExtractor = null

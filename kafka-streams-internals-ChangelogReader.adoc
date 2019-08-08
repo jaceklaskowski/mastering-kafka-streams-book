@@ -36,10 +36,11 @@ a| [[restore]]
 
 [source, java]
 ----
-Collection<TopicPartition> restore(RestoringTasks active)
+Collection<TopicPartition> restore(
+  RestoringTasks active)
 ----
 
-Restores the <<kafka-streams-internals-RestoringTasks.adoc#, RestoringTasks>>
+Restores changelog-enabled state stores using the <<kafka-streams-internals-RestoringTasks.adoc#, RestoringTasks>>
 
 Used exclusively when `TaskManager` is requested to <<kafka-streams-internals-TaskManager.adoc#updateNewAndRestoringTasks, updateNewAndRestoringTasks>> (when the owning `StreamThread` is requested to <<kafka-streams-internals-StreamThread.adoc#runOnce, poll records once and process them using active stream tasks>> while <<kafka-streams-internals-StreamThread.adoc#runLoop, running the main record processing loop>>)
 

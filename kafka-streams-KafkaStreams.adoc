@@ -169,10 +169,10 @@ NOTE: A Kafka Streams developer describes the processing logic using a link:kafk
 
 [source, scala]
 ----
-import org.apache.kafka.streams.KafkaStreams
 val topology: Topology = ...
-
 val config: StreamsConfig = ...
+
+import org.apache.kafka.streams.KafkaStreams
 val ks = new KafkaStreams(topology, config)
 ----
 
