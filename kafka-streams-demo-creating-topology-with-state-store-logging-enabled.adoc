@@ -2,34 +2,83 @@
 
 The following demo shows the internals of <<kafka-streams-StateStore.adoc#, state stores>> with <<kafka-streams-StoreBuilder.adoc#withLoggingEnabled, logging enabled>>.
 
+=== Kafka Setup
+
+Before you run the demo application, use `./bin/kafka-topics.sh --create` to create the source topic.
+
+```
+./bin/kafka-topics.sh \
+  --bootstrap-server :9092 \
+  --create \
+  --topic StateStoreLoggingEnabledDemo-input \
+  --partitions 3 \
+  --replication-factor 1
+```
+
+After the demo application is up and running, use `./bin/kafka-topics.sh --list` to list the topics used in the topology.
+
+```
+$ ./bin/kafka-topics.sh --bootstrap-server :9092 --list
+StateStoreLoggingEnabledDemo-StateStoreLoggingEnabledDemo-in-memory-key-value-store-changelog
+StateStoreLoggingEnabledDemo-StateStoreLoggingEnabledDemo-in-memory-key-value-store-repartition
+StateStoreLoggingEnabledDemo-input
+```
+
+=== Demo Application
+
 [source, scala]
 ----
-import org.apache.kafka.streams.Topology
-val topology = new Topology
+val appId = this.getClass.getSimpleName.replace("$", "")
+val storeName = s"$appId-in-memory-key-value-store"
+val source = s"$appId-input"
+val bootstrapServers = ":9092"
 
-import org.apache.kafka.common.serialization.Serdes
+println(s"Source topics: $source")
+println("Make sure that the source topics are available and press ENTER")
+/**
+ * ./bin/kafka-topics.sh \
+ *    --bootstrap-server :9092 \
+ *    --create \
+ *    --topic StateStoreLoggingEnabledDemo-input \
+ *    --partitions 3 \
+ *    --replication-factor 1
+ */
+System.in.read()
+
+// Using Scala API for Kafka Streams
+import org.apache.kafka.streams.scala._
+import ImplicitConversions._
+import Serdes._
+
 import org.apache.kafka.streams.state.Stores
+val storeSupplier = Stores.inMemoryKeyValueStore(storeName)
+
+import org.apache.kafka.streams.scala.kstream.Materialized
 import scala.collection.JavaConverters._
-val storeBuilder = Stores
-  .keyValueStoreBuilder[String, String](
-    Stores.inMemoryKeyValueStore("in-memory-key-value-store"),
-    Serdes.String,
-    Serdes.String)
-  .withLoggingEnabled(Map.empty.asJava)
+val materialized: Materialized[String, Long, ByteArrayKeyValueStore] = Materialized
+  .as[String, Long](storeSupplier)
+  .withLoggingEnabled(Map.empty[String, String].asJava)
 
-topology.addStateStore(storeBuilder)
+import org.apache.kafka.streams.kstream.Printed
+val sysout = Printed.toSysOut[String, Long].withLabel("sysout")
 
-scala> println(topology.describe)
-Topologies:
+val builder = new StreamsBuilder
+builder
+  .stream[String, String](source)
+  .selectKey { case (_, v) => v.split(",").head }
+  .groupByKey
+  .count()(materialized)
+  .toStream
+  .print(sysout)
 
-// "Discovery of a day"
-// You can create a topology with a single state store only (no processors)
-// No idea why anyone would want it though
+val topology = builder.build
+
+println(topology.describe)
 
 import org.apache.kafka.streams.StreamsConfig
 val config = new java.util.Properties()
-config.put(StreamsConfig.APPLICATION_ID_CONFIG, "demo-state-store-logging-enabled-appId")
-config.put(StreamsConfig.BOOTSTRAP_SERVERS_CONFIG, ":9092")
+config.put(StreamsConfig.APPLICATION_ID_CONFIG, appId)
+config.put(StreamsConfig.BOOTSTRAP_SERVERS_CONFIG, bootstrapServers)
 
 import org.apache.kafka.streams.KafkaStreams
 val ks = new KafkaStreams(topology, config)
@@ -38,5 +87,5 @@ val ks = new KafkaStreams(topology, config)
 // So all the INFO messages go away
 // So you can focus on the log messages after starting the KafkaStreams instance
 
-ks.start
+ks.start()
 ----
