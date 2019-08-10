@@ -97,7 +97,7 @@ long processNext(
 
 NOTE: `processNext` is used exclusively when `StoreChangelogReader` is requested to <<restore, restore>>.
 
-=== [[restore]] `restore` Method
+=== [[restore]] Restoring Active StreamTasks (From Changelog Partitions) -- `restore` Method
 
 [source, java]
 ----
@@ -105,9 +105,21 @@ Collection<TopicPartition> restore(
   RestoringTasks active)
 ----
 
-NOTE: `restore` is part of the <<kafka-streams-internals-ChangelogReader.adoc#restore, ChangelogReader Contract>> to restores changelog-enabled state stores using the <<kafka-streams-internals-RestoringTasks.adoc#, RestoringTasks>>.
+NOTE: `restore` is part of the <<kafka-streams-internals-ChangelogReader.adoc#restore, ChangelogReader Contract>> to restore logging-enabled <<kafka-streams-StateStore.adoc#, state stores>> using the <<kafka-streams-internals-RestoringTasks.adoc#, RestoringTasks>>.
+
+`restore` <<initialize, initializes>> (with the given active <<kafka-streams-internals-RestoringTasks.adoc#, RestoringTasks>>) when the <<needsInitializing, needsInitializing>> internal registry has at least one changelog partition (that was added when <<register, registering a StateRestorer for a changelog partition>>).
+
+`restore` simply finishes with the <<completed, completely-restored changelog partitions>> when there is no <<needsRestoring, changelog partitions that need restoring>>. `restore` also requests the <<restoreConsumer, restore Consumer>> to unsubscribe from changelog topics (`KafkaConsumer.unsubscribe`).
+
+With at least one <<needsRestoring, changelog partition that needs restoring>>, `restore` requests the <<restoreConsumer, restore Consumer>> to fetch data for the changelog partitions (`KafkaConsumer.poll`) with the <<pollTime, poll time>>.
 
 `restore`...FIXME
+
+`restore` removes all changelog partitions that are <<completedRestorers, completed>> from the <<needsRestoring, needsRestoring>> internal registry.
+
+In the end, `restore` requests the <<restoreConsumer, restore Consumer>> to unsubscribe from changelog topics (`KafkaConsumer.unsubscribe`) when the <<needsRestoring, needsRestoring>> internal registry has no changelog partition and simply finishes with the <<completed, completely-restored changelog partitions>>.
+
+In case of `InvalidOffsetException`, `restore`...FIXME
 
 ==== [[initialize]] `initialize` Internal Method
 
@@ -216,22 +228,31 @@ NOTE: `startRestoration` is used exclusively when `StoreChangelogReader` is requ
 | Name
 | Description
 
+| completedRestorers
+a| [[completedRestorers]][[completed]] Completely-restored changelog partitions (`Set<TopicPartition>`)
+
 | endOffsets
 a| [[endOffsets]]
 
 | needsInitializing
 a| [[needsInitializing]] Changelog partitions (of <<kafka-streams-internals-StateRestorer.adoc#, StateRestorers>>) that need initializing (`Set<TopicPartition>`)
 
-* New changelog partitions added when <<register, registering a new StateRestorer>>
+* New changelog partitions added while <<register, registering a new StateRestorer>>
 
-* Changelog partition removed in <<initialize, initialize>> (<<restore, restore>> and <<startRestoration, startRestoration>>)
+* A changelog partition removed in <<initialize, initialize>> (<<restore, restore>> and <<startRestoration, startRestoration>>)
 
 * All changelog partitions removed in <<reset, reset>>
 
 Used in <<restore, restore>>
 
 | needsRestoring
-| [[needsRestoring]]
+a| [[needsRestoring]] Changelog partitions (of <<kafka-streams-internals-StateRestorer.adoc#, StateRestorers>>) that need restoring (`Set<TopicPartition>`)
+
+* New changelog partitions added while <<startRestoration, restoring state stores from their changelog topics>> (while <<initialize, initialize>> while <<restore, restore>>)
+
+* All changelog partitions removed in <<reset, reset>>
+
+Used in <<restore, restore>>
 
 | partitionInfo
 | [[partitionInfo]]

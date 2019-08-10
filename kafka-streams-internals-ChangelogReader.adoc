@@ -40,7 +40,7 @@ Collection<TopicPartition> restore(
   RestoringTasks active)
 ----
 
-Restores changelog-enabled state stores using the <<kafka-streams-internals-RestoringTasks.adoc#, RestoringTasks>>
+Restores logging-enabled <<kafka-streams-StateStore.adoc#, state stores>> using the <<kafka-streams-internals-RestoringTasks.adoc#, RestoringTasks>>
 
 Used exclusively when `TaskManager` is requested to <<kafka-streams-internals-TaskManager.adoc#updateNewAndRestoringTasks, updateNewAndRestoringTasks>> (when the owning `StreamThread` is requested to <<kafka-streams-internals-StreamThread.adoc#runOnce, poll records once and process them using active stream tasks>> while <<kafka-streams-internals-StreamThread.adoc#runLoop, running the main record processing loop>>)
 
