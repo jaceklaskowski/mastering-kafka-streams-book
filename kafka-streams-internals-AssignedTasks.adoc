@@ -138,7 +138,7 @@ NOTE: `addNewTask` is used exclusively when `TaskManager` is requested to link:k
 void initializeNewTasks()
 ----
 
-`initializeNewTasks` initializes new tasks (that are in the <<created, created>> state), i.e. moves tasks from the <<created, created>> internal registry to either <<restoring, restoring>> or <<running, running>> registeries per whether a task has state stores that may need restoring or not, respectively.
+`initializeNewTasks` initializes new tasks (that are in the <<created, created>> state), i.e. moves tasks from the <<created, created>> internal registry to either <<restoring, restoring>> or <<running, running>> registries per whether a task has state stores that may need restoring or not, respectively.
 
 .AssignedTasks.initializeNewTasks
 image::images/kafka-streams-AssignedTasks-initializeNewTasks.png[align="center"]
@@ -153,7 +153,7 @@ Initializing [taskTypeName]s [created]
 
 `initializeNewTasks` walks over all tasks in the <<created, created>> internal registry.
 
-`initializeNewTasks` requests a task to <<kafka-streams-internals-Task.adoc#initializeStateStores, initialize state stores>> (if there are any state stores at all).
+`initializeNewTasks` requests a task to <<kafka-streams-internals-Task.adoc#initializeStateStores, initialize state stores (of the topology)>>.
 
 If the above yielded `true`, `initializeNewTasks` <<transitionToRunning, marks the task as ready for execution and processing records>>.
 
