@@ -126,9 +126,13 @@ void register(
   StateRestoreCallback stateRestoreCallback)
 ----
 
-Registers a <<kafka-streams-StateStore.adoc#, state store>> with a <<kafka-streams-StateRestoreCallback.adoc#, StateRestoreCallback>>
+Registers a <<kafka-streams-StateStore.adoc#, state store>> (and a <<kafka-streams-StateRestoreCallback.adoc#, StateRestoreCallback>>)
 
-Used when <<kafka-streams-internals-InMemoryKeyValueStore.adoc#init, InMemoryKeyValueStore>>, <<kafka-streams-internals-MemoryLRUCache.adoc#init, MemoryLRUCache>>, <<kafka-streams-internals-RocksDBSegmentedBytesStore.adoc#init, RocksDBSegmentedBytesStore>> and <<kafka-streams-internals-RocksDBStore.adoc#init, RocksDBStore>> are requested to initialize itself
+Used when:
+
+* <<kafka-streams-StateStore.adoc#, State stores>> (<<kafka-streams-internals-AbstractRocksDBSegmentedBytesStore.adoc#init, AbstractRocksDBSegmentedBytesStore>>, <<kafka-streams-internals-InMemoryKeyValueStore.adoc#init, InMemoryKeyValueStore>>, <<kafka-streams-internals-InMemorySessionStore.adoc#init, InMemorySessionStore>>, <<kafka-streams-internals-InMemoryTimeOrderedKeyValueBuffer.adoc#init, InMemoryTimeOrderedKeyValueBuffer>>, <<kafka-streams-internals-InMemoryWindowStore.adoc#init, InMemoryWindowStore>>, <<kafka-streams-internals-MemoryLRUCache.adoc#init, MemoryLRUCache>>, and <<kafka-streams-internals-RocksDBStore.adoc#init, RocksDBStore>>) are requested to <<kafka-streams-StateStore.adoc#init, initialize>>
+
+* <<kafka-streams-internals-ForwardingDisabledProcessorContext.adoc#, ForwardingDisabledProcessorContext>> is requested to <<kafka-streams-internals-ForwardingDisabledProcessorContext.adoc#register, register a state store (and a StateRestoreCallback)>>
 
 | schedule
 a| [[schedule]]

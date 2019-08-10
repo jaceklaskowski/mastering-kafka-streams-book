@@ -70,3 +70,14 @@ File[] listTaskDirectories()
 `listTaskDirectories`...FIXME
 
 NOTE: `listTaskDirectories` is used when...FIXME
+
+=== [[lock]] Locking State Directory For Task -- `lock` Method
+
+[source, java]
+----
+boolean lock(TaskId taskId)
+----
+
+`lock`...FIXME
+
+NOTE: `lock` is used when...FIXME

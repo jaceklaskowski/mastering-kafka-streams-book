@@ -73,7 +73,7 @@ If the `ProcessorStateManager` is in <<isStandby, standby>> mode, `register` pri
 Preparing standby replica of persistent state store [storeName] with changelog topic [topic]
 ```
 
-If the `ProcessorStateManager` is not in <<isStandby, standby>> mode, `register` prints out the following TRACE message to the logs, creates a `StateRestorer` and requests the <<changelogReader, ChangelogReader>> to <<kafka-streams-internals-ChangelogReader.adoc#register, register>> it.
+If the `ProcessorStateManager` is not in <<isStandby, standby>> mode, `register` prints out the following TRACE message to the logs, creates a <<kafka-streams-internals-StateRestorer.adoc#, StateRestorer>> and requests the <<changelogReader, ChangelogReader>> to <<kafka-streams-internals-ChangelogReader.adoc#register, register>> it.
 
 ```
 Restoring state store [storeName] from changelog topic [topic] at checkpoint [offset]

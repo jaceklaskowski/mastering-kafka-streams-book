@@ -95,16 +95,46 @@ Map<TopicPartition, Long> recordCollectorOffsets()
 
 NOTE: `recordCollectorOffsets` is used when...FIXME
 
-=== [[registerStateStores]] `registerStateStores` Method
+=== [[registerStateStores]] Registering and Initializing State Stores -- `registerStateStores` Method
 
 [source, java]
 ----
 void registerStateStores()
 ----
 
-`registerStateStores`...FIXME
+`registerStateStores` simply exits when the <<topology, ProcessorTopology>> has no <<kafka-streams-internals-ProcessorTopology.adoc#stateStores, state stores>>.
 
-NOTE: `registerStateStores` is used when <<kafka-streams-internals-StandbyTask.adoc#initializeStateStores, StandbyTask>> and <<kafka-streams-internals-StreamTask.adoc#initializeStateStores, StreamTask>> are requested to `initializeStateStores`.
+`registerStateStores` requests the <<stateDirectory, StateDirectory>> for the <<kafka-streams-internals-StateDirectory.adoc#lock, lock for the state directory of the task>> (by <<id, TaskId>>).
+
+`registerStateStores` prints out the following TRACE message to the logs:
+
+```
+Initializing state stores
+```
+
+`registerStateStores` <<updateOffsetLimits, updateOffsetLimits>>.
+
+In the end, for every <<kafka-streams-internals-ProcessorTopology.adoc#stateStores, StateStore>> in the <<topology, ProcessorTopology>>, `registerStateStores` prints out the following TRACE message to the logs:
+
+```
+Initializing store [name]
+```
+
+`registerStateStores` requests the <<processorContext, InternalProcessorContext>> to <<kafka-streams-internals-InternalProcessorContext.adoc#uninitialize, uninitialize>> and then requests the `StateStore` to <<kafka-streams-StateStore.adoc#init, initialize>> (with the <<processorContext, InternalProcessorContext>> and itself).
+
+`registerStateStores` throws a `LockException` when requesting the <<stateDirectory, StateDirectory>> for the <<kafka-streams-internals-StateDirectory.adoc#lock, lock for the state directory of the task>> failed:
+
+```
+[logPrefix]Failed to lock the state directory for task [id]
+```
+
+`registerStateStores` throws a `StreamsException` when requesting the <<stateDirectory, StateDirectory>> for the <<kafka-streams-internals-StateDirectory.adoc#lock, lock for the state directory of the task>> failed with an `IOException`:
+
+```
+[logPrefix]Fatal error while trying to lock the state directory for task [id]
+```
+
+NOTE: `registerStateStores` is used when the concrete <<kafka-streams-internals-Task.adoc#, Tasks>> (<<kafka-streams-internals-StandbyTask.adoc#initializeStateStores, StandbyTask>> and <<kafka-streams-internals-StreamTask.adoc#initializeStateStores, StreamTask>>) are requested to <<kafka-streams-internals-Task.adoc#initializeStateStores, initialize state stores>>.
 
 === [[changelogPartitions]] `changelogPartitions` Method
 

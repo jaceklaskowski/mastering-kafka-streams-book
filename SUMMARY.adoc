@@ -262,6 +262,7 @@
 .. link:kafka-streams-internals-RocksDBWindowStore.adoc[RocksDBWindowStore]
 .. link:kafka-streams-internals-InMemoryKeyValueStore.adoc[InMemoryKeyValueStore]
 .. link:kafka-streams-internals-InMemorySessionStore.adoc[InMemorySessionStore]
+.. link:kafka-streams-internals-InMemoryWindowStore.adoc[InMemoryWindowStore]
 .. link:kafka-streams-internals-MemoryLRUCache.adoc[MemoryLRUCache]
 .. link:kafka-streams-internals-MeteredKeyValueBytesStore.adoc[MeteredKeyValueBytesStore]
 .. link:kafka-streams-internals-RocksDBStore.adoc[RocksDBStore]

@@ -56,20 +56,20 @@ NOTE: `stateDir` is part of the <<kafka-streams-ProcessorContext.adoc#stateDir, 
 
 `stateDir`...FIXME
 
-=== [[register]] Registering State Store -- `register` Method
+=== [[register]] Registering State Store (And StateRestoreCallback) -- `register` Method
 
 [source, java]
 ----
 void register(
-  final StateStore store,
-  final StateRestoreCallback stateRestoreCallback)
+  StateStore store,
+  StateRestoreCallback stateRestoreCallback)
 ----
 
-NOTE: `register` is part of the <<kafka-streams-ProcessorContext.adoc#register, ProcessorContext Contract>> to register a <<kafka-streams-StateStore.adoc#, state store>>.
+NOTE: `register` is part of the <<kafka-streams-ProcessorContext.adoc#register, ProcessorContext Contract>> to register a <<kafka-streams-StateStore.adoc#, state store>> (and a <<kafka-streams-StateRestoreCallback.adoc#, StateRestoreCallback>>).
 
-`register` simply requests the <<stateManager, StateManager>> to <<kafka-streams-internals-StateManager.adoc#register, register the state store>> (and the given <<kafka-streams-StateRestoreCallback.adoc#, StateRestoreCallback>>)
+`register` simply requests the <<stateManager, StateManager>> to <<kafka-streams-internals-StateManager.adoc#register, register the state store>> (and the <<kafka-streams-StateRestoreCallback.adoc#, StateRestoreCallback>>).
 
-`register` throws an `IllegalStateException` when <<initialized, initialized>>:
+When <<initialized, initialized>> already, `register` throws an `IllegalStateException`:
 
 ```
 Can only create state stores during initialization.

@@ -26,7 +26,8 @@ a| [[close]]
 
 [source, java]
 ----
-void close(final Map<TopicPartition, Long> offsets) throws IOException
+void close(
+  Map<TopicPartition, Long> offsets)
 ----
 
 Closes a state manager
@@ -58,7 +59,8 @@ a| [[getGlobalStore]]
 
 [source, java]
 ----
-StateStore getGlobalStore(final String name)
+StateStore getGlobalStore(
+  String name)
 ----
 
 Accessing the global <<kafka-streams-StateStore.adoc#, state store>> by name
@@ -74,7 +76,8 @@ a| [[getStore]]
 
 [source, java]
 ----
-StateStore getStore(final String name)
+StateStore getStore(
+  String name)
 ----
 
 Accessing the <<kafka-streams-StateStore.adoc#, state store>> by name
@@ -87,8 +90,8 @@ a| [[register]]
 [source, java]
 ----
 void register(
-  final StateStore store,
-  final StateRestoreCallback stateRestoreCallback)
+  StateStore store,
+  StateRestoreCallback stateRestoreCallback)
 ----
 
 Registers a <<kafka-streams-StateStore.adoc#, state store>> (with an associated <<kafka-streams-StateRestoreCallback.adoc#, StateRestoreCallback>>)
@@ -101,8 +104,8 @@ a| [[reinitializeStateStoresForPartitions]]
 [source, java]
 ----
 void reinitializeStateStoresForPartitions(
-  final Collection<TopicPartition> partitions,
-  final InternalProcessorContext processorContext)
+  Collection<TopicPartition> partitions,
+  InternalProcessorContext processorContext)
 ----
 
 Used when:

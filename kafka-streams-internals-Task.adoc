@@ -152,7 +152,7 @@ a| [[initializeStateStores]]
 boolean initializeStateStores()
 ----
 
-Initializes <<kafka-streams-StateStore.adoc#, state stores>>
+Initializes <<kafka-streams-StateStore.adoc#, state stores>> (of the <<topology, ProcessorTopology>>)
 
 Enabled (`true`) if the task has no state stores that need restoring.
 
