@@ -1,17 +1,17 @@
 == [[StoreChangelogReader]] StoreChangelogReader
 
-`StoreChangelogReader` is a concrete <<kafka-streams-internals-ChangelogReader.adoc#, ChangelogReader>> that is used for the following:
-
-* <<kafka-streams-internals-AbstractTask.adoc#, Tasks>> to create a <<kafka-streams-internals-ProcessorStateManager.adoc#, ProcessorStateManager>>
-
-* <<kafka-streams-internals-TaskManager.adoc#, TaskManager>> when <<kafka-streams-internals-TaskManager.adoc#suspendTasksAndState, suspending all (active and standby) tasks and state>> (at the <<kafka-streams-StreamThread-RebalanceListener.adoc#onPartitionsRevoked, beginning of consumer rebalance>>) and <<kafka-streams-internals-TaskManager.adoc#updateNewAndRestoringTasks, updateNewAndRestoringTasks>> (at the <<kafka-streams-StreamThread-RebalanceListener.adoc#onPartitionsAssigned, end of consumer rebalance>>)
+`StoreChangelogReader` is the default <<kafka-streams-internals-ChangelogReader.adoc#, ChangelogReader>>.
 
 `StoreChangelogReader` is <<creating-instance, created>> for a <<kafka-streams-internals-StreamThread.adoc#, StreamThread>> for the only purpose of creating the <<kafka-streams-internals-TaskCreator.adoc#storeChangelogReader, TaskCreator>>, the <<kafka-streams-internals-StandbyTaskCreator.adoc#storeChangelogReader, StandbyTaskCreator>> and the <<kafka-streams-internals-TaskManager.adoc#changelogReader, TaskManager>>.
 
 .StoreChangelogReader
 image::images/kafka-streams-StoreChangelogReader.png[align="center"]
 
-`StoreChangelogReader` uses the <<userStateRestoreListener, StateRestoreListener>> exclusively when <<register, registering a StateRestorer>>.
+`StoreChangelogReader` is used for the following:
+
+* <<kafka-streams-internals-AbstractTask.adoc#, Tasks>> to create a <<kafka-streams-internals-ProcessorStateManager.adoc#, ProcessorStateManager>>
+
+* <<kafka-streams-internals-TaskManager.adoc#, TaskManager>> when <<kafka-streams-internals-TaskManager.adoc#suspendTasksAndState, suspending all (active and standby) tasks and state>> (at the <<kafka-streams-StreamThread-RebalanceListener.adoc#onPartitionsRevoked, beginning of consumer rebalance>>) and <<kafka-streams-internals-TaskManager.adoc#updateNewAndRestoringTasks, updateNewAndRestoringTasks>> (at the <<kafka-streams-StreamThread-RebalanceListener.adoc#onPartitionsAssigned, end of consumer rebalance>>)
 
 [[logging]]
 [TIP]
@@ -33,7 +33,7 @@ Refer to <<kafka-logging.adoc#log4j.properties, Application Logging Using log4j>
 
 * [[restoreConsumer]] *Restore Consumer* (`Consumer<byte[], byte[]>`)
 * [[pollTime]] <<POLL_MS_CONFIG, Poll duration>>
-* [[userStateRestoreListener]] <<kafka-streams-StateRestoreListener.adoc#, StateRestoreListener>>
+* [[userStateRestoreListener]] <<StateRestoreListener, User-Defined StateRestoreListener>>
 * [[logContext]] `LogContext`
 
 `StoreChangelogReader` initializes the <<internal-properties, internal properties>>.
@@ -43,6 +43,12 @@ Refer to <<kafka-logging.adoc#log4j.properties, Application Logging Using log4j>
 When <<creating-instance, created>>, `StoreChangelogReader` is given the <<pollTime, poll duration>> that is configured using <<kafka-streams-StreamsConfig.adoc#POLL_MS_CONFIG, StreamsConfig.POLL_MS_CONFIG>> configuration property.
 
 The <<pollTime, poll duration>> is used exclusively for the <<restoreConsumer, restore Consumer>> to fetch data for changelog partitions (using link:++https://kafka.apache.org/23/javadoc/org/apache/kafka/clients/consumer/Consumer.html#poll-java.time.Duration-++[Consumer.poll]) when <<restore, restoring active StreamTasks (from the changelog partitions)>>.
+
+=== [[StateRestoreListener]] User-Defined StateRestoreListener
+
+When <<creating-instance, created>>, `StoreChangelogReader` is given a <<userStateRestoreListener, user-defined StateRestoreListener>>.
+
+`StoreChangelogReader` uses the <<kafka-streams-StateRestoreListener.adoc#, StateRestoreListener>> exclusively when <<register, registering a StateRestorer for a changelog partition>> so that the <<kafka-streams-internals-StateRestorer.adoc#, StateRestorer>> to be registered is associated with the listener.
 
 === [[register]] Registering StateRestorer For Changelog Partition -- `register` Method
 

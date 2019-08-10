@@ -10,6 +10,35 @@
 . link:kafka-streams-exactly-once-support-eos.adoc[Exactly-Once Support (EOS)]
 . link:kafka-streams-StreamThreads-StreamTasks-and-StandbyTasks.adoc[StreamThreads, StreamTasks and StandbyTasks]
 
+=== State (Store) Management
+
+. link:kafka-streams-internals-StateManager.adoc[StateManager]
+.. link:kafka-streams-internals-AbstractStateManager.adoc[AbstractStateManager]
+
+. link:kafka-streams-internals-ProcessorStateManager.adoc[ProcessorStateManager]
+
+. link:kafka-streams-GlobalStateManager.adoc[GlobalStateManager]
+.. link:kafka-streams-internals-GlobalStateManagerImpl.adoc[GlobalStateManagerImpl]
+
+. link:kafka-streams-Checkpointable.adoc[Checkpointable]
+
+. link:kafka-streams-internals-OffsetCheckpoint.adoc[OffsetCheckpoint]
+
+. link:kafka-streams-internals-ChangelogReader.adoc[ChangelogReader]
+.. link:kafka-streams-internals-StoreChangelogReader.adoc[StoreChangelogReader]
+
+. link:kafka-streams-internals-StateRestorer.adoc[StateRestorer]
+
+. link:kafka-streams-internals-RestoringTasks.adoc[RestoringTasks]
+
+. link:kafka-streams-internals-StateStoreFactory.adoc[StateStoreFactory]
+.. link:kafka-streams-StoreBuilderFactory.adoc[StoreBuilderFactory]
+.. link:kafka-streams-StateStoreSupplierFactory.adoc[StateStoreSupplierFactory]
+.. link:kafka-streams-AbstractStateStoreFactory.adoc[AbstractStateStoreFactory]
+
+. link:kafka-streams-DelegatingStateRestoreListener.adoc[DelegatingStateRestoreListener]
+. link:kafka-streams-CompositeRestoreListener.adoc[CompositeRestoreListener]
+
 == Demos
 
 . link:kafka-streams-demo-creating-topology-with-state-store-logging-enabled.adoc[Creating Topology with State Store with Logging Enabled]
@@ -408,34 +437,6 @@
 . link:kafka-streams-internals-ProcessorRecordContext.adoc[ProcessorRecordContext]
 
 . link:kafka-streams-internals-CopartitionedTopicsValidator.adoc[CopartitionedTopicsValidator]
-
-=== State (Store) Management
-
-. link:kafka-streams-internals-StateManager.adoc[StateManager Contract -- State Store Managers]
-.. link:kafka-streams-internals-AbstractStateManager.adoc[AbstractStateManager]
-
-. link:kafka-streams-internals-ProcessorStateManager.adoc[ProcessorStateManager]
-
-. link:kafka-streams-GlobalStateManager.adoc[GlobalStateManager]
-.. link:kafka-streams-internals-GlobalStateManagerImpl.adoc[GlobalStateManagerImpl]
-
-. link:kafka-streams-Checkpointable.adoc[Checkpointable]
-
-. link:kafka-streams-internals-OffsetCheckpoint.adoc[OffsetCheckpoint]
-
-. link:kafka-streams-internals-ChangelogReader.adoc[ChangelogReader]
-.. link:kafka-streams-internals-StoreChangelogReader.adoc[StoreChangelogReader]
-. link:kafka-streams-internals-StateRestorer.adoc[StateRestorer]
-
-. link:kafka-streams-internals-RestoringTasks.adoc[RestoringTasks]
-
-. link:kafka-streams-internals-StateStoreFactory.adoc[StateStoreFactory]
-.. link:kafka-streams-StoreBuilderFactory.adoc[StoreBuilderFactory]
-.. link:kafka-streams-StateStoreSupplierFactory.adoc[StateStoreSupplierFactory]
-.. link:kafka-streams-AbstractStateStoreFactory.adoc[AbstractStateStoreFactory]
-
-. link:kafka-streams-DelegatingStateRestoreListener.adoc[DelegatingStateRestoreListener]
-. link:kafka-streams-CompositeRestoreListener.adoc[CompositeRestoreListener]
 
 == Deprecated
 
