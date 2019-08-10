@@ -11,8 +11,6 @@
 .StoreChangelogReader
 image::images/kafka-streams-StoreChangelogReader.png[align="center"]
 
-When <<creating-instance, created>>, `StoreChangelogReader` is given the <<pollTime, pollTime>> that is configured using <<kafka-streams-StreamsConfig.adoc#POLL_MS_CONFIG, StreamsConfig.POLL_MS_CONFIG>> configuration property.
-
 `StoreChangelogReader` uses the <<userStateRestoreListener, StateRestoreListener>> exclusively when <<register, registering a StateRestorer>>.
 
 [[logging]]
@@ -34,11 +32,17 @@ Refer to <<kafka-logging.adoc#log4j.properties, Application Logging Using log4j>
 `StoreChangelogReader` takes the following to be created:
 
 * [[restoreConsumer]] *Restore Consumer* (`Consumer<byte[], byte[]>`)
-* [[pollTime]] `pollTime` (per <<kafka-streams-StreamsConfig.adoc#POLL_MS_CONFIG, StreamsConfig.POLL_MS_CONFIG>> configuration property)
+* [[pollTime]] <<POLL_MS_CONFIG, Poll duration>>
 * [[userStateRestoreListener]] <<kafka-streams-StateRestoreListener.adoc#, StateRestoreListener>>
 * [[logContext]] `LogContext`
 
 `StoreChangelogReader` initializes the <<internal-properties, internal properties>>.
+
+=== [[POLL_MS_CONFIG]] Poll Duration and StreamsConfig.POLL_MS_CONFIG
+
+When <<creating-instance, created>>, `StoreChangelogReader` is given the <<pollTime, poll duration>> that is configured using <<kafka-streams-StreamsConfig.adoc#POLL_MS_CONFIG, StreamsConfig.POLL_MS_CONFIG>> configuration property.
+
+The <<pollTime, poll duration>> is used exclusively for the <<restoreConsumer, restore Consumer>> to fetch data for changelog partitions (using link:++https://kafka.apache.org/23/javadoc/org/apache/kafka/clients/consumer/Consumer.html#poll-java.time.Duration-++[Consumer.poll]) when <<restore, restoring active StreamTasks (from the changelog partitions)>>.
 
 === [[register]] Registering StateRestorer For Changelog Partition -- `register` Method
 
@@ -83,20 +87,6 @@ NOTE: `restoredOffsets` is part of <<kafka-streams-internals-ChangelogReader.ado
 
 Internally, for every pair of `TopicPartition` and <<kafka-streams-internals-StateRestorer.adoc#, StateRestorer>> (in the <<stateRestorers, stateRestorers>> internal registry), `restoredOffsets` requests the `StateRestorer` to <<kafka-streams-internals-StateRestorer.adoc#restoredOffset, restoredOffset>> when the restorer is <<kafka-streams-internals-StateRestorer.adoc#isPersistent, persistent>> (i.e. when the <<kafka-streams-internals-StateRestorer.adoc#storeName, associated state store>> is <<kafka-streams-StateStore.adoc#persistent, persistent>>).
 
-=== [[processNext]] `processNext` Internal Method
-
-[source, java]
-----
-long processNext(
-  final List<ConsumerRecord<byte[], byte[]>> records,
-  final StateRestorer restorer,
-  final Long endOffset)
-----
-
-`processNext`...FIXME
-
-NOTE: `processNext` is used exclusively when `StoreChangelogReader` is requested to <<restore, restore>>.
-
 === [[restore]] Restoring Active StreamTasks (From Changelog Partitions) -- `restore` Method
 
 [source, java]
@@ -111,7 +101,7 @@ NOTE: `restore` is part of the <<kafka-streams-internals-ChangelogReader.adoc#re
 
 `restore` simply finishes with the <<completed, completely-restored changelog partitions>> when there is no <<needsRestoring, changelog partitions that need restoring>>. `restore` also requests the <<restoreConsumer, restore Consumer>> to unsubscribe from changelog topics (`KafkaConsumer.unsubscribe`).
 
-With at least one <<needsRestoring, changelog partition that needs restoring>>, `restore` requests the <<restoreConsumer, restore Consumer>> to fetch data for the changelog partitions (`KafkaConsumer.poll`) with the <<pollTime, poll time>>.
+With at least one <<needsRestoring, changelog partition that needs restoring>>, `restore` requests the <<restoreConsumer, restore Consumer>> to fetch data for the changelog partitions (`KafkaConsumer.poll`) with the <<pollTime, poll duration>>.
 
 `restore`...FIXME
 
@@ -220,6 +210,20 @@ Restoring partition [partition] from offset [position] to endOffset [endOffset]
 In the end, `startRestoration` adds all `initialized` partitions to the <<needsRestoring, needsRestoring>> internal registry.
 
 NOTE: `startRestoration` is used exclusively when `StoreChangelogReader` is requested to <<initialize, initialize>> (when requested to <<restore, restore>>).
+
+==== [[processNext]] `processNext` Internal Method
+
+[source, java]
+----
+long processNext(
+  List<ConsumerRecord<byte[], byte[]>> records,
+  StateRestorer restorer,
+  Long endOffset)
+----
+
+`processNext`...FIXME
+
+NOTE: `processNext` is used exclusively when `StoreChangelogReader` is requested to <<restore, restore active StreamTasks (from changelog partitions)>>.
 
 === [[internal-properties]] Internal Properties
 
