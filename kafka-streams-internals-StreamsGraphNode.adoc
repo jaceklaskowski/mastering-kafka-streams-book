@@ -6,10 +6,37 @@
 [[writeToTopology]]
 [source, java]
 ----
-void writeToTopology(final InternalTopologyBuilder topologyBuilder)
+void writeToTopology(
+  InternalTopologyBuilder topologyBuilder)
 ----
 
 `StreamsGraphNode` is used exclusively in <<kafka-streams-internals-InternalStreamsBuilder.adoc#root, InternalStreamsBuilder>> (to <<kafka-streams-internals-InternalStreamsBuilder.adoc#buildAndOptimizeTopology, build a topology>>).
+
+[source, scala]
+----
+import org.apache.kafka.streams.kstream.internals.InternalStreamsBuilder
+import org.apache.kafka.streams.processor.internals.InternalTopologyBuilder
+val builder = new InternalStreamsBuilder(new InternalTopologyBuilder)
+
+import org.apache.kafka.streams.state.Stores
+val lruMapSupplier = Stores.lruMap("input-stream", 5)
+import org.apache.kafka.common.serialization.Serdes
+import org.apache.kafka.streams.state.{KeyValueStore, StoreBuilder}
+val storeBuilder = Stores.keyValueStoreBuilder(
+  lruMapSupplier,
+  Serdes.Long(),
+  Serdes.Long())
+
+builder.addStateStore(storeBuilder)
+
+val root = builder.root
+scala> :type root
+org.apache.kafka.streams.kstream.internals.graph.StreamsGraphNode
+
+val children = root.children
+scala> :type children
+java.util.Collection[org.apache.kafka.streams.kstream.internals.graph.StreamsGraphNode]
+----
 
 [[creating-instance]]
 `StreamsGraphNode` takes the following when created:

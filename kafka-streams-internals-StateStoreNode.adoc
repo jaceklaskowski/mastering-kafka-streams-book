@@ -1,3 +1,18 @@
 == [[StateStoreNode]] StateStoreNode
 
-`StateStoreNode` is...FIXME
+`StateStoreNode` is a concrete <<kafka-streams-internals-StreamsGraphNode.adoc#, StreamsGraphNode>> that is <<creating-instance, created>> exclusively when `InternalStreamsBuilder` is requested to <<kafka-streams-internals-InternalStreamsBuilder.adoc#addStateStore, add a state store to a topology>>.
+
+[[creating-instance]][[storeBuilder]]
+`StateStoreNode` takes a single <<kafka-streams-StoreBuilder.adoc#, StoreBuilder>> to be created.
+
+=== [[writeToTopology]] `writeToTopology` Method
+
+[source, java]
+----
+void writeToTopology(
+  InternalTopologyBuilder topologyBuilder)
+----
+
+NOTE: `writeToTopology` is part of the <<kafka-streams-internals-StreamsGraphNode.adoc#writeToTopology, StreamsGraphNode Contract>> to...FIXME.
+
+`writeToTopology` simply requests the given <<kafka-streams-internals-InternalTopologyBuilder.adoc#, InternalTopologyBuilder>> to <<kafka-streams-internals-InternalTopologyBuilder.adoc#addStateStore, add a state store>> (as the <<storeBuilder, StoreBuilder>>).

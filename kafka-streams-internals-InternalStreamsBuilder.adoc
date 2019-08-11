@@ -22,27 +22,28 @@ image::images/kafka-streams-InternalStreamsBuilder.png[align="center"]
 [[logging]]
 [TIP]
 ====
-Enable `DEBUG` logging level for `org.apache.kafka.streams.kstream.internals.InternalStreamsBuilder` logger to see what happens inside.
+Enable `ALL` logging level for `org.apache.kafka.streams.kstream.internals.InternalStreamsBuilder` logger to see what happens inside.
 
 Add the following line to `log4j.properties`:
 
 ```
-log4j.logger.org.apache.kafka.streams.kstream.internals.InternalStreamsBuilder=DEBUG
+log4j.logger.org.apache.kafka.streams.kstream.internals.InternalStreamsBuilder=ALL
 ```
 
-Refer to link:kafka-logging.adoc#log4j.properties[Application Logging Using log4j].
+Refer to <<kafka-logging.adoc#log4j.properties, Application Logging Using log4j>>.
 ====
 
-=== [[addStateStore]] Adding StateStore to Topology -- `addStateStore` Method
+=== [[addStateStore]] Adding State Store to Topology -- `addStateStore` Method
 
 [source, java]
 ----
-void addStateStore(final StoreBuilder builder)
+void addStateStore(
+  StoreBuilder builder)
 ----
 
 `addStateStore` creates a <<kafka-streams-internals-StateStoreNode.adoc#, StateStoreNode>> (with the given <<kafka-streams-StoreBuilder.adoc#, StoreBuilder>>) and <<addGraphNode, adds it>> to the <<root, root>> node.
 
-NOTE: `addStateStore` is used exclusively when `StreamsBuilder` is requested to <<kafka-streams-StreamsBuilder.adoc#addStateStore, add a StateStore to a topology>>.
+NOTE: `addStateStore` is used exclusively when `StreamsBuilder` is requested to <<kafka-streams-StreamsBuilder.adoc#addStateStore, add a state store to a topology>>.
 
 === [[stream]] Adding KStream to Topology -- `stream` Method
 
