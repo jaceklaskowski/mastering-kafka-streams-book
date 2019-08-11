@@ -17,10 +17,10 @@
 [source, java]
 ----
 <T> KTable<K, T> build(
-  final KStreamAggProcessorSupplier<K, ?, V, T> aggregateSupplier,
-  final String functionName,
-  final StoreBuilder storeBuilder,
-  final boolean isQueryable)
+  KStreamAggProcessorSupplier<K, ?, V, T> aggregateSupplier,
+  String functionName,
+  StoreBuilder storeBuilder,
+  boolean isQueryable)
 ----
 
 `build`...FIXME

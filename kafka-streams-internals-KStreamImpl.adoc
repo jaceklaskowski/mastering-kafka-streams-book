@@ -77,8 +77,8 @@ NOTE: `transformValues` is part of link:kafka-streams-KStream.adoc#transformValu
 [source, java]
 ----
 void process(
-  final ProcessorSupplier<? super K, ? super V> processorSupplier,
-  final String... stateStoreNames)
+  ProcessorSupplier<? super K, ? super V> processorSupplier,
+  String... stateStoreNames)
 ----
 
 NOTE: `process` is part of link:kafka-streams-KStream.adoc#process[KStream Contract] for...FIXME
@@ -90,8 +90,11 @@ NOTE: `process` is part of link:kafka-streams-KStream.adoc#process[KStream Contr
 [source, java]
 ----
 KStream<K1, V1> transform(
-  final TransformerSupplier<? super K, ? super V, KeyValue<K1, V1>> transformerSupplier,
-  final String... stateStoreNames)
+  TransformerSupplier<
+    ? super K,
+    ? super V,
+    KeyValue<K1, V1>> transformerSupplier,
+  String... stateStoreNames)
 ----
 
 NOTE: `transform` is part of <<kafka-streams-KStream.adoc#transform, KStream API>> to transform a record into zero or more output records with state.
@@ -331,16 +334,53 @@ NOTE: `filterNot` is part of the <<kafka-streams-KStream.adoc#filterNot, KStream
 
 `filterNot`...FIXME
 
+=== [[flatTransform]] `flatTransform` Method
+
+[source, java]
+----
+KStream<K1, V1> flatTransform(
+  TransformerSupplier<
+    ? super K,
+    ? super V,
+    Iterable<KeyValue<K1, V1>>> transformerSupplier,
+  String... stateStoreNames)
+----
+
+NOTE: `flatTransform` is part of the <<kafka-streams-KStream.adoc#flatTransform, KStream Contract>> to...FIXME.
+
+`flatTransform`...FIXME
+
+=== [[flatTransformValues]] `flatTransformValues` Method
+
+[source, java]
+----
+KStream<K, VR> flatTransformValues(
+  ValueTransformerSupplier<
+    ? super V,
+    Iterable<VR>> valueTransformerSupplier,
+  String... stateStoreNames)
+KStream<K, VR> flatTransformValues(
+  ValueTransformerWithKeySupplier<
+    ? super K,
+    ? super V,
+    Iterable<VR>> valueTransformerSupplier,
+  String... stateStoreNames)
+----
+
+NOTE: `flatTransformValues` is part of the <<kafka-streams-KStream.adoc#flatTransformValues, KStream Contract>> to...FIXME.
+
+`flatTransformValues`...FIXME
+
 === [[doTransformValues]] `doTransformValues` Internal Method
 
 [source, java]
 ----
 KStream<K, VR> doTransformValues(
-  final ValueTransformerWithKeySupplier<
+  ValueTransformerWithKeySupplier<
     ? super K,
     ? super V,
     ? extends VR> valueTransformerWithKeySupplier,
-  final String... stateStoreNames)
+  String... stateStoreNames)
 ----
 
 `doTransformValues` requests the <<builder, InternalStreamsBuilder>> for a <<kafka-streams-internals-InternalStreamsBuilder.adoc#newProcessorName, new processor name>> with <<TRANSFORMVALUES_NAME, KSTREAM-TRANSFORMVALUES>> prefix.
@@ -353,7 +393,7 @@ KStream<K, VR> doTransformValues(
 
 In the end, `doTransformValues` creates a new <<creating-instance, KStreamImpl>> (with the new processor name, the <<sourceNodes, sourceNodes>>, the <<repartitionRequired, repartitionRequired>> flag, the `StatefulProcessorNode` itself and the <<builder, InternalStreamsBuilder>>).
 
-NOTE: `doTransformValues` is used when `KStreamImpl` is requested to <<transformValues, transformValues>>.
+NOTE: `doTransformValues` is used exclusively when `KStreamImpl` is requested to <<transformValues, transformValues>>.
 
 === [[internalSelectKey]] `internalSelectKey` Internal Method
 
@@ -366,3 +406,35 @@ ProcessorGraphNode<K, V> internalSelectKey(
 `internalSelectKey`...FIXME
 
 NOTE: `internalSelectKey` is used when `KStreamImpl` is requested to <<selectKey, selectKey>> and <<groupBy, groupBy>>.
+
+=== [[doFlatTransform]] `doFlatTransform` Internal Method
+
+[source, java]
+----
+KStream<K1, V1> doFlatTransform(
+  TransformerSupplier<
+    ? super K,
+    ? super V,
+    Iterable<KeyValue<K1, V1>>> transformerSupplier,
+  String... stateStoreNames)
+----
+
+`doFlatTransform`...FIXME
+
+NOTE: `doFlatTransform` is used when `KStreamImpl` is requested to <<transform, transform>> and <<flatTransform, flatTransform>>.
+
+=== [[doFlatTransformValues]] `doFlatTransformValues` Internal Method
+
+[source, java]
+----
+KStream<K, VR> doFlatTransformValues(
+  ValueTransformerWithKeySupplier<
+    ? super K,
+    ? super V,
+    Iterable<VR>> valueTransformerWithKeySupplier,
+  String... stateStoreNames)
+----
+
+`doFlatTransformValues`...FIXME
+
+NOTE: `doFlatTransformValues` is used exclusively when `KStreamImpl` is requested to <<flatTransformValues, flatTransformValues>>.

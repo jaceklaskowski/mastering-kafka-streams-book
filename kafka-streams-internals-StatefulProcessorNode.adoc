@@ -1,41 +1,48 @@
 == [[StatefulProcessorNode]] StatefulProcessorNode
 
-`StatefulProcessorNode` is a <<kafka-streams-internals-StreamsGraphNode.adoc#, graph node>> for stateful operators in <<kafka-streams-internals-KGroupedStreamImpl.adoc#, KGroupedStreamImpl>>, <<kafka-streams-internals-KGroupedTableImpl.adoc#, KGroupedTableImpl>>, <<kafka-streams-internals-KStreamImpl.adoc#, KStreamImpl>>, and <<kafka-streams-internals-KTableImpl.adoc#, KTableImpl>>.
+`StatefulProcessorNode` is a concrete <<kafka-streams-internals-StreamsGraphNode.adoc#, StreamsGraphNode>> (as a <<kafka-streams-internals-ProcessorGraphNode.adoc#, ProcessorGraphNode>>) that represents stateful operators of the following:
 
-[[storeBuilder]]
-`StatefulProcessorNode` extends the parent <<kafka-streams-internals-ProcessorGraphNode.adoc#, ProcessorGraphNode>> with the two state-related parameters, i.e. <<storeNames, state store names>> and <<materializedKTableStoreBuilder, StoreBuilder>>.
+* <<kafka-streams-internals-KGroupedStreamImpl.adoc#, KGroupedStreamImpl>>
 
-When requested to <<writeToTopology, writeToTopology>>, `StatefulProcessorNode` simply requests the given <<kafka-streams-internals-InternalTopologyBuilder.adoc#, InternalTopologyBuilder>> to <<kafka-streams-internals-InternalTopologyBuilder.adoc#addProcessor, add a processor>> (as a <<kafka-streams-internals-ProcessorGraphNode.adoc#, ProcessorGraphNode>>) and to associate the state stores (by the <<storeNames, names>> or the <<materializedKTableStoreBuilder, StoreBuilder>>).
+* <<kafka-streams-internals-KGroupedTableImpl.adoc#, KGroupedTableImpl>>
+
+* <<kafka-streams-internals-KStreamImpl.adoc#, KStreamImpl>>
+
+* <<kafka-streams-internals-KTableImpl.adoc#, KTableImpl>>
 
 `StatefulProcessorNode` is <<creating-instance, created>> when:
 
+* `KStreamImpl` is requested to <<kafka-streams-internals-KStreamImpl.adoc#transform, KStreamImpl.transform>> and <<kafka-streams-internals-KStreamImpl.adoc#flatTransform, KStreamImpl.flatTransform>>, <<kafka-streams-internals-KStreamImpl.adoc#transformValues, KStreamImpl.transformValues>>, <<kafka-streams-internals-KStreamImpl.adoc#flatTransformValues, KStreamImpl.flatTransformValues>>, <<kafka-streams-internals-KStreamImpl.adoc#process, KStreamImpl.process>>
+
 * `GroupedStreamAggregateBuilder` is requested to <<kafka-streams-internals-GroupedStreamAggregateBuilder.adoc#build, build>> (for <<kafka-streams-internals-KStreamImpl.adoc#groupBy, KStream.groupBy>> and <<kafka-streams-internals-KStreamImpl.adoc#groupByKey, KStream.groupByKey>> streaming operators, incl. `windowedBy` operator with a <<kafka-streams-internals-KGroupedStreamImpl.adoc#windowedBy-Windows, Windows>> or a <<kafka-streams-internals-KGroupedStreamImpl.adoc#windowedBy-SessionWindows, SessionWindows>>)
 
-* `KGroupedTableImpl` is requested to <<kafka-streams-internals-KGroupedTableImpl.adoc#doAggregate, doAggregate>> (for <<kafka-streams-internals-KGroupedTableImpl.adoc#reduce, reduce>>, <<kafka-streams-internals-KGroupedTableImpl.adoc#count, count>> and <<kafka-streams-internals-KGroupedTableImpl.adoc#aggregate, aggregate>> operators)
-
-* `KStreamImpl` is requested to <<kafka-streams-internals-KStreamImpl.adoc#transform, transform>>, <<kafka-streams-internals-KStreamImpl.adoc#doTransformValues, doTransformValues>> (for <<transformValues, transformValues>> operator), and <<kafka-streams-internals-KStreamImpl.adoc#process, process>>
+* `KGroupedTableImpl` is requested to <<kafka-streams-internals-KGroupedTableImpl.adoc#doAggregate, doAggregate>> (for <<kafka-streams-internals-KGroupedTableImpl.adoc#aggregate, KGroupedTableImpl.aggregate>>, <<kafka-streams-internals-KGroupedTableImpl.adoc#count, KGroupedTableImpl.count>>, and <<kafka-streams-internals-KGroupedTableImpl.adoc#reduce, KGroupedTableImpl.reduce>> operators)
 
 * `KTableImpl` is requested to <<kafka-streams-internals-KTableImpl.adoc#suppress, suppress>>
 
-[[creating-instance]]
+[[storeBuilder]]
+`StatefulProcessorNode` extends the parent <<kafka-streams-internals-ProcessorGraphNode.adoc#, ProcessorGraphNode>> with the two state-related parameters - the <<storeNames, state store names>> and a <<kafka-streams-StoreBuilder.adoc#, StoreBuilder>>.
+
+=== [[creating-instance]] Creating StatefulProcessorNode Instance
+
 `StatefulProcessorNode` takes the following to be created:
 
 * [[nodeName]] Node name
 * [[processorParameters]] `ProcessorParameters<K, V>`
 * [[materializedKTableStoreBuilder]][[storeNames]] Names of the state stores or a <<kafka-streams-StoreBuilder.adoc#, StoreBuilder>>
-* [[repartitionRequired]] `repartitionRequired` flag
 
 === [[writeToTopology]] `writeToTopology` Method
 
 [source, java]
 ----
-void writeToTopology(final InternalTopologyBuilder topologyBuilder)
+void writeToTopology(
+  InternalTopologyBuilder topologyBuilder)
 ----
 
 NOTE: `writeToTopology` is part of the <<kafka-streams-internals-StreamsGraphNode.adoc#writeToTopology, StreamsGraphNode Contract>> to...FIXME.
 
-`writeToTopology` requests the given `InternalTopologyBuilder` to <<kafka-streams-internals-InternalTopologyBuilder.adoc#addProcessor, add a processor>> with the name and the <<kafka-streams-ProcessorSupplier.adoc#, ProcessorSupplier>> as defined by the <<processorParameters, ProcessorParameters>>.
+`writeToTopology` requests the given <<kafka-streams-internals-InternalTopologyBuilder.adoc#, InternalTopologyBuilder>> to <<kafka-streams-internals-InternalTopologyBuilder.adoc#addProcessor, add a processor>> (with the name and the <<kafka-streams-ProcessorSupplier.adoc#, ProcessorSupplier>> as defined by the <<processorParameters, ProcessorParameters>>).
 
-With <<storeNames, state store name>> given, `writeToTopology` requests the given `InternalTopologyBuilder` to <<kafka-streams-internals-InternalTopologyBuilder.adoc#connectProcessorAndStateStores, connect them with the processor>>.
+With <<storeNames, state store names>> given, `writeToTopology` requests the given `InternalTopologyBuilder` to <<kafka-streams-internals-InternalTopologyBuilder.adoc#connectProcessorAndStateStores, connect them with the processor>>.
 
-With a <<storeBuilder, StoreBuilder>> given, `writeToTopology` requests the given `InternalTopologyBuilder` to <<kafka-streams-internals-InternalTopologyBuilder.adoc#addStateStore, addStateStore>> with the `StoreBuilder` and the processor.
+With a <<storeBuilder, StoreBuilder>> given, `writeToTopology` requests the given `InternalTopologyBuilder` to <<kafka-streams-internals-InternalTopologyBuilder.adoc#addStateStore, add a state store>> (with the `StoreBuilder` and the processor).
