@@ -226,9 +226,11 @@ New entries are added when `InternalTopologyBuilder` is requested for the follow
 Used when...FIXME
 
 | stateFactories
-a| [[stateFactories]] link:kafka-streams-internals-StateStoreFactory.adoc[StateStoreFactories] by name
+a| [[stateFactories]][[getStateStores]] <<kafka-streams-internals-StateStoreFactory.adoc#, StateStoreFactories>> by name (of the <<kafka-streams-StoreBuilder.adoc#, StoreBuilder>>) (`Map<String, StateStoreFactory>`)
 
-* A new `StateStoreFactory` is added when `InternalTopologyBuilder` is requested to <<addStateStore, addStateStore>>
+* A new `StateStoreFactory` added when <<addStateStore, registering a state store (as StoreBuilder)>>
+
+Used when <<connectProcessorAndStateStore, connecting a state store with a processor node>>, <<buildProcessorNode, buildProcessorNode>>, <<allStateStoreName, allStateStoreName>>, <<topicGroups, topicGroups>>
 
 | stateStoreNameToSourceRegex
 | [[stateStoreNameToSourceRegex]]
@@ -385,10 +387,10 @@ NOTE: A processor has a unique name, a <<kafka-streams-ProcessorSupplier.adoc#, 
 [source, java]
 ----
 void buildProcessorNode(
-  final Map<String, ProcessorNode> processorMap,
-  final Map<String, StateStore> stateStoreMap,
-  final ProcessorNodeFactory factory,
-  final ProcessorNode node)
+  Map<String, ProcessorNode> processorMap,
+  Map<String, StateStore> stateStoreMap,
+  ProcessorNodeFactory factory,
+  ProcessorNode node)
 ----
 
 `buildProcessorNode`...FIXME
@@ -621,8 +623,8 @@ NOTE: `connectSourceStoreAndTopic` is used when `InternalTopologyBuilder` is req
 [source, java]
 ----
 void connectProcessorAndStateStore(
-  final String processorName,
-  final String stateStoreName)
+  String processorName,
+  String stateStoreName)
 ----
 
 NOTE: `connectProcessorAndStateStore` (singular) is an internal method that is used by the public <<connectProcessorAndStateStores, connectProcessorAndStateStores>> (plural).
@@ -652,19 +654,19 @@ void connectStateStoreNameToSourceTopicsOrPattern(
 
 NOTE: `connectStateStoreNameToSourceTopicsOrPattern` is used when...FIXME
 
-=== [[addStateStore]] Registering State Store -- `addStateStore` Method
+=== [[addStateStore]] Registering State Store (As StoreBuilder) -- `addStateStore` Method
 
 [source, java]
 ----
 void addStateStore(
-  final StoreBuilder storeBuilder,
-  final String... processorNames) // <1>
+  StoreBuilder<?> storeBuilder,
+  String... processorNames) // <1>
 void addStateStore(
-  final StoreBuilder storeBuilder,
-  final boolean allowOverride,
-  final String... processorNames)
+  StoreBuilder<?> storeBuilder,
+  boolean allowOverride,
+  String... processorNames)
 ----
-<1> Does not allow overrides (`allowOverride` flag is `false`)
+<1> Uses `false` for the `allowOverride` flag
 
 `addStateStore`...FIXME
 
