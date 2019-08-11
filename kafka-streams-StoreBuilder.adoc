@@ -32,7 +32,7 @@ Used when:
 
 * `InternalTopologyBuilder` is requested to <<kafka-streams-internals-InternalTopologyBuilder.adoc#rewriteTopology, rewriteTopology>> (with any `StoreBuilders` for global state stores)
 
-* `StateStoreFactory` is requested to <<kafka-streams-internals-StateStoreFactory.adoc#build, build a StateStore>> (when `InternalTopologyBuilder` is requested to <<kafka-streams-internals-InternalTopologyBuilder.adoc#buildProcessorNode, buildProcessorNode>>)
+* `StateStoreFactory` is requested to <<kafka-streams-internals-InternalTopologyBuilder-StateStoreFactory.adoc#build, build a StateStore>> (when `InternalTopologyBuilder` is requested to <<kafka-streams-internals-InternalTopologyBuilder.adoc#buildProcessorNode, buildProcessorNode>>)
 
 | logConfig
 a| [[logConfig]]

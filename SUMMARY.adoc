@@ -306,7 +306,7 @@
 .. link:kafka-streams-internals-InternalTopologyBuilder-Processor.adoc[Processor]
 .. link:kafka-streams-internals-InternalTopologyBuilder-Sink.adoc[Sink]
 .. link:kafka-streams-internals-InternalTopologyBuilder-Source.adoc[Source]
-.. link:kafka-streams-internals-StateStoreFactory.adoc[StateStoreFactory]
+.. link:kafka-streams-internals-InternalTopologyBuilder-StateStoreFactory.adoc[StateStoreFactory]
 
 . link:kafka-streams-internals-InternalTopologyBuilder-NodeFactory.adoc[NodeFactory]
 .. link:kafka-streams-internals-InternalTopologyBuilder-ProcessorNodeFactory.adoc[ProcessorNodeFactory]
