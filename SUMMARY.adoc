@@ -101,6 +101,7 @@
 . link:kafka-streams-Printed.adoc[Printed]
 
 . link:kafka-streams-KeyValueMapper.adoc[KeyValueMapper]
+. link:kafka-streams-ValueJoiner.adoc[ValueJoiner]
 
 . link:kafka-streams-ValueTransformer.adoc[ValueTransformer -- Stateful Record-by-Record Value Transformation]
 .. link:kafka-streams-ValueTransformerSupplier.adoc[ValueTransformerSupplier -- ValueTransformers Object Factory]

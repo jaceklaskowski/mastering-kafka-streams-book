@@ -1,14 +1,43 @@
 == [[StreamStreamJoinNode]] StreamStreamJoinNode
 
-`StreamStreamJoinNode` is...FIXME
+`StreamStreamJoinNode` is a concrete <<kafka-streams-internals-StreamsGraphNode.adoc#, StreamsGraphNode>> (as a <<kafka-streams-internals-BaseJoinProcessorNode.adoc#, BaseJoinProcessorNode>>) that is <<creating-instance, created>> (using <<build, StreamStreamJoinNode.build>> method) for <<kafka-streams-internals-KStreamImpl.adoc#join, KStreamImpl.join>>, <<kafka-streams-internals-KStreamImpl.adoc#leftJoin, KStreamImpl.leftJoin>>, and <<kafka-streams-internals-KStreamImpl.adoc#outerJoin, KStreamImpl.outerJoin>> operators.
+
+In other words, `StreamStreamJoinNode` represents <<kafka-streams-internals-KStreamImpl.adoc#join, KStreamImpl.join>>, <<kafka-streams-internals-KStreamImpl.adoc#leftJoin, KStreamImpl.leftJoin>>, and <<kafka-streams-internals-KStreamImpl.adoc#outerJoin, KStreamImpl.outerJoin>> operators.
+
+=== [[creating-instance]] Creating StreamStreamJoinNode Instance
+
+`StreamStreamJoinNode` takes the following to be created:
+
+* [[nodeName]] Node name
+* [[valueJoiner]] <<kafka-streams-ValueJoiner.adoc#, ValueJoiner>> (`ValueJoiner<? super V1, ? super V2, ? extends VR>`)
+* [[joinThisProcessorParameters]] `ProcessorParameters<K, V1>` of this join side
+* [[joinOtherProcessParameters]] `ProcessorParameters<K, V2>` of the other join side
+* [[joinMergeProcessorParameters]] `ProcessorParameters<K, VR>` of the join merger
+* [[thisWindowedStreamProcessorParameters]] `ProcessorParameters<K, V1>`
+* [[otherWindowedStreamProcessorParameters]] `ProcessorParameters<K, V2>`
+* [[thisWindowStoreBuilder]] <<kafka-streams-StoreBuilder.adoc#, StoreBuilder>> of <<kafka-streams-WindowStore.adoc#, WindowStore>> (`StoreBuilder<WindowStore<K, V1>>`)
+* [[otherWindowStoreBuilder]] <<kafka-streams-StoreBuilder.adoc#, StoreBuilder>> of <<kafka-streams-WindowStore.adoc#, WindowStore>> (`StoreBuilder<WindowStore<K, V2>>`)
+* [[joined]] <<kafka-streams-Joined.adoc#, Joined>> (`Joined<K, V1, V2>`)
 
 === [[writeToTopology]] `writeToTopology` Method
 
 [source, java]
 ----
-void writeToTopology(final InternalTopologyBuilder topologyBuilder)
+void writeToTopology(
+  InternalTopologyBuilder topologyBuilder)
 ----
 
 NOTE: `writeToTopology` is part of the <<kafka-streams-internals-StreamsGraphNode.adoc#writeToTopology, StreamsGraphNode Contract>> to...FIXME.
 
 `writeToTopology`...FIXME
+
+=== [[build]] Creating StreamStreamJoinNode -- `build` Method
+
+[source, java]
+----
+StreamStreamJoinNode<K, V1, V2, VR> build()
+----
+
+`build` simply <<creating-instance, creates a new StreamStreamJoinNode>>.
+
+NOTE: `build` is used exclusively when `KTableImpl` is requested to <<kafka-streams-internals-KTableImpl.adoc#doJoin, doJoin>> (for <<kafka-streams-internals-KTableImpl.adoc#join, KTableImpl.join>>, <<kafka-streams-internals-KTableImpl.adoc#leftJoin, KTableImpl.leftJoin>> and <<kafka-streams-internals-KTableImpl.adoc#outerJoin, KTableImpl.outerJoin>> operators).
