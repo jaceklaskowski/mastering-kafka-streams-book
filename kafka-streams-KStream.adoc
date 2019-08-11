@@ -23,12 +23,11 @@ scala> :type input
 org.apache.kafka.streams.scala.kstream.KStream[String,String]
 ----
 
-`KStream` comes with a rich set of <<operators, operators>> (aka _KStream API_) that allow for building topologies to consume, process and produce key-value records.
+`KStream` comes with a rich set of <<contract, operators>> (aka _KStream API_) that allow for building topologies to consume, process and produce key-value records.
 
-[[operators]]
 [[contract]]
 .KStream API / Operators
-[cols="1m,2",options="header",width="100%"]
+[cols="30m,70",options="header",width="100%"]
 |===
 | Operator
 | Description
@@ -38,7 +37,8 @@ a| [[branch]]
 
 [source, java]
 ----
-KStream<K, V>[] branch(final Predicate<? super K, ? super V>... predicates)
+KStream<K, V>[] branch(
+  Predicate<? super K, ? super V>... predicates)
 ----
 
 | filter
@@ -46,7 +46,8 @@ a| [[filter]]
 
 [source, java]
 ----
-KStream<K, V> filter(Predicate<? super K, ? super V> predicate)
+KStream<K, V> filter(
+  Predicate<? super K, ? super V> predicate)
 ----
 
 | filterNot
@@ -54,7 +55,8 @@ a| [[filterNot]]
 
 [source, java]
 ----
-KStream<K, V> filterNot(Predicate<? super K, ? super V> predicate)
+KStream<K, V> filterNot(
+  Predicate<? super K, ? super V> predicate)
 ----
 
 | flatMap
@@ -63,7 +65,7 @@ a| [[flatMap]]
 [source, java]
 ----
 KStream<KR, VR> flatMap(
-  final KeyValueMapper<
+  KeyValueMapper<
     ? super K,
     ? super V,
     ? extends Iterable<? extends KeyValue<? extends KR, ? extends VR>>> mapper)
@@ -75,14 +77,45 @@ a| [[flatMapValues]]
 [source, java]
 ----
 KStream<K, VR> flatMapValues(
-  final ValueMapper<
+  ValueMapper<
     ? super V,
     ? extends Iterable<? extends VR>> mapper)
 KStream<K, VR> flatMapValues(
-  final ValueMapperWithKey<
+  ValueMapperWithKey<
     ? super K,
     ? super V,
     ? extends Iterable<? extends VR>> mapper)
+----
+
+| flatTransform
+a| [[flatTransform]]
+
+[source, java]
+----
+KStream<K1, V1> flatTransform(
+  TransformerSupplier<
+    ? super K,
+    ? super V,
+    Iterable<KeyValue<K1, V1>>> transformerSupplier,
+  String... stateStoreNames)
+----
+
+| flatTransformValues
+a| [[flatTransformValues]]
+
+[source, java]
+----
+KStream<K, VR> flatTransformValues(
+  ValueTransformerSupplier<
+    ? super V,
+    Iterable<VR>> valueTransformerSupplier,
+  String... stateStoreNames)
+KStream<K, VR> flatTransformValues(
+  ValueTransformerWithKeySupplier<
+    ? super K,
+    ? super V,
+    Iterable<VR>> valueTransformerSupplier,
+  String... stateStoreNames)
 ----
 
 | foreach
@@ -91,7 +124,7 @@ a| [[foreach]]
 [source, java]
 ----
 void foreach(
-  final ForeachAction<? super K, ? super V> action)
+  ForeachAction<? super K, ? super V> action)
 ----
 
 | groupBy
@@ -100,10 +133,10 @@ a| [[groupBy]]
 [source, java]
 ----
 KGroupedStream<KR, V> groupBy(
-  final KeyValueMapper<? super K, ? super V, KR> selector)
+  KeyValueMapper<? super K, ? super V, KR> selector)
 KGroupedStream<KR, V> groupBy(
-  final KeyValueMapper<? super K, ? super V, KR> selector,
-  final Grouped<KR, V> grouped)
+  KeyValueMapper<? super K, ? super V, KR> selector,
+  Grouped<KR, V> grouped)
 ----
 
 Creates a <<kafka-streams-KGroupedStream.adoc#, KGroupedStream>> with a given <<kafka-streams-KeyValueMapper.adoc#, KeyValueMapper>>
@@ -115,7 +148,7 @@ a| [[groupByKey]]
 ----
 KGroupedStream<K, V> groupByKey()
 KGroupedStream<K, V> groupByKey(
-  final Grouped<K, V> grouped)
+  Grouped<K, V> grouped)
 ----
 
 Creates a <<kafka-streams-KGroupedStream.adoc#, KGroupedStream>>
@@ -126,25 +159,25 @@ a| [[join]]
 [source, java]
 ----
 KStream<K, RV> join(
-  final GlobalKTable<GK, GV> globalKTable,
-  final KeyValueMapper<? super K, ? super V, ? extends GK> keyValueMapper,
-  final ValueJoiner<? super V, ? super GV, ? extends RV> joiner)
+  GlobalKTable<GK, GV> globalKTable,
+  KeyValueMapper<? super K, ? super V, ? extends GK> keyValueMapper,
+  ValueJoiner<? super V, ? super GV, ? extends RV> joiner)
 KStream<K, VR> join(
-  final KStream<K, VO> otherStream,
-  final ValueJoiner<? super V, ? super VO, ? extends VR> joiner,
-  final JoinWindows windows)
+  KStream<K, VO> otherStream,
+  ValueJoiner<? super V, ? super VO, ? extends VR> joiner,
+  JoinWindows windows)
 KStream<K, VR> join(
-  final KStream<K, VO> otherStream,
-  final ValueJoiner<? super V, ? super VO, ? extends VR> joiner,
-  final JoinWindows windows,
-  final Joined<K, V, VO> joined)
+  KStream<K, VO> otherStream,
+  ValueJoiner<? super V, ? super VO, ? extends VR> joiner,
+  JoinWindows windows,
+  Joined<K, V, VO> joined)
 KStream<K, VR> join(
-  final KTable<K, VT> table,
-  final ValueJoiner<? super V, ? super VT, ? extends VR> joiner)
+  KTable<K, VT> table,
+  ValueJoiner<? super V, ? super VT, ? extends VR> joiner)
 KStream<K, VR> join(
-  final KTable<K, VT> table,
-  final ValueJoiner<? super V, ? super VT, ? extends VR> joiner,
-  final Joined<K, V, VT> joined)
+  KTable<K, VT> table,
+  ValueJoiner<? super V, ? super VT, ? extends VR> joiner,
+  Joined<K, V, VT> joined)
 ----
 
 | leftJoin
@@ -153,25 +186,25 @@ a| [[leftJoin]]
 [source, java]
 ----
 KStream<K, RV> leftJoin(
-  final GlobalKTable<GK, GV> globalKTable,
-  final KeyValueMapper<? super K, ? super V, ? extends GK> keyValueMapper,
-  final ValueJoiner<? super V, ? super GV, ? extends RV> valueJoiner)
+  GlobalKTable<GK, GV> globalKTable,
+  KeyValueMapper<? super K, ? super V, ? extends GK> keyValueMapper,
+  ValueJoiner<? super V, ? super GV, ? extends RV> valueJoiner)
 KStream<K, VR> leftJoin(
-  final KStream<K, VO> otherStream,
-  final ValueJoiner<? super V, ? super VO, ? extends VR> joiner,
-  final JoinWindows windows)
+  KStream<K, VO> otherStream,
+  ValueJoiner<? super V, ? super VO, ? extends VR> joiner,
+  JoinWindows windows)
 KStream<K, VR> leftJoin(
-  final KStream<K, VO> otherStream,
-  final ValueJoiner<? super V, ? super VO, ? extends VR> joiner,
-  final JoinWindows windows,
-  final Joined<K, V, VO> joined)
+  KStream<K, VO> otherStream,
+  ValueJoiner<? super V, ? super VO, ? extends VR> joiner,
+  JoinWindows windows,
+  Joined<K, V, VO> joined)
 KStream<K, VR> leftJoin(
-  final KTable<K, VT> table,
-  final ValueJoiner<? super V, ? super VT, ? extends VR> joiner)
+  KTable<K, VT> table,
+  ValueJoiner<? super V, ? super VT, ? extends VR> joiner)
 KStream<K, VR> leftJoin(
-  final KTable<K, VT> table,
-  final ValueJoiner<? super V, ? super VT, ? extends VR> joiner,
-  final Joined<K, V, VT> joined)
+  KTable<K, VT> table,
+  ValueJoiner<? super V, ? super VT, ? extends VR> joiner,
+  Joined<K, V, VT> joined)
 ----
 
 | map
@@ -194,7 +227,7 @@ a| [[mapValues]]
 KStream<K, VR> mapValues(
   ValueMapper<? super V, ? extends VR> mapper)
 KStream<K, VR> mapValues(
-  final ValueMapperWithKey<? super K, ? super V, ? extends VR> mapper)
+  ValueMapperWithKey<? super K, ? super V, ? extends VR> mapper)
 ----
 
 | merge
@@ -202,7 +235,8 @@ a| [[merge]]
 
 [source, java]
 ----
-KStream<K, V> merge(final KStream<K, V> stream)
+KStream<K, V> merge(
+  KStream<K, V> stream)
 ----
 
 | outerJoin
@@ -211,14 +245,14 @@ a| [[outerJoin]]
 [source, java]
 ----
 KStream<K, VR> outerJoin(
-  final KStream<K, VO> otherStream,
-  final ValueJoiner<? super V, ? super VO, ? extends VR> joiner,
-  final JoinWindows windows)
+  KStream<K, VO> otherStream,
+  ValueJoiner<? super V, ? super VO, ? extends VR> joiner,
+  JoinWindows windows)
 KStream<K, VR> outerJoin(
-  final KStream<K, VO> otherStream,
-  final ValueJoiner<? super V, ? super VO, ? extends VR> joiner,
-  final JoinWindows windows,
-  final Joined<K, V, VO> joined)
+  KStream<K, VO> otherStream,
+  ValueJoiner<? super V, ? super VO, ? extends VR> joiner,
+  JoinWindows windows,
+  Joined<K, V, VO> joined)
 ----
 
 | peek
@@ -227,7 +261,7 @@ a| [[peek]]
 [source, java]
 ----
 KStream<K, V> peek(
-  final ForeachAction<? super K, ? super V> action)
+  ForeachAction<? super K, ? super V> action)
 ----
 
 | print
@@ -235,7 +269,8 @@ a| [[print]]
 
 [source, java]
 ----
-void print(final Printed<K, V> printed)
+void print(
+  Printed<K, V> printed)
 ----
 
 | process
@@ -244,8 +279,8 @@ a| [[process]]
 [source, java]
 ----
 void process(
-  final ProcessorSupplier<? super K, ? super V> processorSupplier,
-  final String... stateStoreNames)
+  ProcessorSupplier<? super K, ? super V> processorSupplier,
+  String... stateStoreNames)
 ----
 
 | selectKey
@@ -254,7 +289,10 @@ a| [[selectKey]]
 [source, java]
 ----
 KStream<KR, V> selectKey(
-  KeyValueMapper<? super K, ? super V, ? extends KR> mapper)
+  KeyValueMapper<
+    ? super K,
+    ? super V,
+    ? extends KR> mapper)
 ----
 
 | through
@@ -262,10 +300,11 @@ a| [[through]]
 
 [source, java]
 ----
-KStream<K, V> through(final String topic)
 KStream<K, V> through(
-  final String topic,
-  final Produced<K, V> produced)
+  String topic)
+KStream<K, V> through(
+  String topic,
+  Produced<K, V> produced)
 ----
 
 | to
@@ -273,12 +312,16 @@ a| [[to]]
 
 [source, java]
 ----
-void to(final String topic)
-void to(final String topic, final Produced<K, V> produced)
-void to(final TopicNameExtractor<K, V> topicExtractor)
 void to(
-  final TopicNameExtractor<K, V> topicExtractor,
-  final Produced<K, V> produced)
+  String topic)
+void to(
+  String topic,
+  Produced<K, V> produced)
+void to(
+  TopicNameExtractor<K, V> topicExtractor)
+void to(
+  TopicNameExtractor<K, V> topicExtractor,
+  Produced<K, V> produced)
 ----
 
 Produces records to a given topic or using *dynamic routing* based on <<kafka-streams-TopicNameExtractor.adoc#, TopicNameExtractor>>
@@ -291,8 +334,11 @@ a| [[transform]]
 [source, java]
 ----
 KStream<K1, V1> transform(
-  final TransformerSupplier<? super K, ? super V, KeyValue<K1, V1>> transformerSupplier,
-  final String... stateStoreNames)
+  TransformerSupplier<
+    ? super K,
+    ? super V,
+    KeyValue<K1, V1>> transformerSupplier,
+  String... stateStoreNames)
 ----
 
 Stateful record transformation
@@ -303,16 +349,16 @@ a| [[transformValues]]
 [source, java]
 ----
 KStream<K, VR> transformValues(
-  final ValueTransformerSupplier<
+  ValueTransformerSupplier<
     ? super V,
     ? extends VR> valueTransformerSupplier,
-  final String... stateStoreNames)
+  String... stateStoreNames)
 KStream<K, VR> transformValues(
-  final ValueTransformerWithKeySupplier<
+  ValueTransformerWithKeySupplier<
     ? super K,
     ? super V,
     ? extends VR> valueTransformerSupplier,
-  final String... stateStoreNames)
+  String... stateStoreNames)
 ----
 
 Stateful record-by-record value transformation
