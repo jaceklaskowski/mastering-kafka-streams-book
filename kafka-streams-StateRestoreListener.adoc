@@ -79,7 +79,7 @@ Used when:
 | <<kafka-streams-AbstractNotifyingRestoreCallback.adoc#, AbstractNotifyingRestoreCallback>>
 | [[AbstractNotifyingRestoreCallback]]
 
-| <<kafka-streams-CompositeRestoreListener.adoc#, CompositeRestoreListener>>
+| <<kafka-streams-internals-CompositeRestoreListener.adoc#, CompositeRestoreListener>>
 | [[CompositeRestoreListener]]
 
 | <<kafka-streams-DelegatingStateRestoreListener.adoc#, DelegatingStateRestoreListener>>

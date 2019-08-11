@@ -666,7 +666,7 @@ void addStateStore(
 ----
 <1> Does not allow overrides (`allowOverride` flag is `false`)
 
-`addStateStore` creates a <<kafka-streams-StoreBuilderFactory.adoc#, StoreBuilderFactory>> and adds it to the <<stateFactories, stateFactories>> internal registry (using the <<kafka-streams-StoreBuilder.adoc#name, name>> of the input `StoreBuilder`).
+`addStateStore`...FIXME
 
 `addStateStore` then <<connectProcessorAndStateStore, connects the state store with processors>> (using the <<kafka-streams-StoreBuilder.adoc#name, name>> of the input `StoreBuilder`).
 

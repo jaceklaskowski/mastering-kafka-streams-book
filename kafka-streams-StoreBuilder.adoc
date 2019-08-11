@@ -44,7 +44,7 @@ Map<String, String> logConfig()
 
 Configuration of the changelog for a <<kafka-streams-StateStore.adoc#, state store>>
 
-Used exclusively when `StoreBuilderFactory` is <<kafka-streams-StoreBuilderFactory.adoc#, created>>
+Used when...FIXME
 
 | loggingEnabled
 a| [[loggingEnabled]]
@@ -59,8 +59,6 @@ Indicates whether change-logging should be enabled (`true`) or not (`false`) on 
 Used when:
 
 * `InternalTopologyBuilder` is requested to <<kafka-streams-internals-InternalTopologyBuilder.adoc#addGlobalStore, addGlobalStore>>
-
-* `StoreBuilderFactory` is <<kafka-streams-StoreBuilderFactory.adoc#, created>>
 
 | name
 a| [[name]]

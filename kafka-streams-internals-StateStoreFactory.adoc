@@ -2,9 +2,6 @@
 
 `StateStoreFactory` is the internal <<contract, contract>> (of <<kafka-streams-internals-InternalTopologyBuilder.adoc#, InternalTopologyBuilder>>) for <<implementations, factories>> that can <<build, build state stores>>.
 
-[[implementations]]
-NOTE: <<kafka-streams-AbstractStateStoreFactory.adoc#, AbstractStateStoreFactory>> is the one and only known direct extension contract of the <<contract, StateStoreFactory Contract>>.
-
 [[contract]]
 .StateStoreFactory Contract
 [cols="1m,2",options="header",width="100%"]
@@ -36,7 +33,7 @@ Indicates whether a `StateStoreFactory` was created for a link:kafka-streams-int
 
 Used exclusively when `InternalTopologyBuilder` is requested to link:kafka-streams-internals-InternalTopologyBuilder.adoc#createChangelogTopicConfig[create an InternalTopicConfig (for a given name and StateStoreFactory)]
 
-`isWindowStore` is implemented by link:kafka-streams-AbstractStateStoreFactory.adoc#isWindowStore[AbstractStateStoreFactory] only and corresponds to link:kafka-streams-AbstractStateStoreFactory.adoc#windowStore[windowStore] flag that is given when link:kafka-streams-AbstractStateStoreFactory.adoc#implementations[concrete StateStoreFactories] are created.
+`isWindowStore` is implemented by...FIXME
 
 In a nutshell, The flag is enabled only when the `StateStoreFactory` is created for a link:kafka-streams-internals-WindowStoreBuilder.adoc[WindowStoreBuilder].
 
@@ -57,8 +54,6 @@ a| [[loggingEnabled]]
 ----
 boolean loggingEnabled()
 ----
-
-Indicates whether <<kafka-streams-AbstractStateStoreFactory.adoc#loggingEnabled, change-logging>> is enabled (`true`) or not (`false`)
 
 Used when `InternalTopologyBuilder` is requested to <<kafka-streams-internals-InternalTopologyBuilder.adoc#buildProcessorNode, buildProcessorNode>> and for <<kafka-streams-internals-InternalTopologyBuilder.adoc#topicGroups, topic groups>>
 

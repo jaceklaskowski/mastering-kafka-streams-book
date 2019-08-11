@@ -14,7 +14,7 @@
 `StateRestorer` takes the following to be created:
 
 * [[partition]] Kafka https://kafka.apache.org/23/javadoc/index.html?org/apache/kafka/common/TopicPartition.html[TopicPartition]
-* [[compositeRestoreListener]] <<kafka-streams-CompositeRestoreListener.adoc#, CompositeRestoreListener>>
+* [[compositeRestoreListener]] <<kafka-streams-internals-CompositeRestoreListener.adoc#, CompositeRestoreListener>>
 * [[checkpoint]] Checkpoint offset
 * [[offsetLimit]] `offsetLimit`
 * [[persistent]] `persistent` flag
@@ -74,7 +74,7 @@ NOTE: `restore` is used exclusively when `StoreChangelogReader` is requested to 
 void setUserRestoreListener(StateRestoreListener userRestoreListener)
 ----
 
-`setUserRestoreListener` simply requests the <<compositeRestoreListener, CompositeRestoreListener>> to <<kafka-streams-CompositeRestoreListener.adoc#setUserRestoreListener, use>> the input <<kafka-streams-StateRestoreListener.adoc#, StateRestoreListener>>.
+`setUserRestoreListener` simply requests the <<compositeRestoreListener, CompositeRestoreListener>> to <<kafka-streams-internals-CompositeRestoreListener.adoc#setUserRestoreListener, use>> the input <<kafka-streams-StateRestoreListener.adoc#, StateRestoreListener>>.
 
 NOTE: `setUserRestoreListener` is used exclusively when `StoreChangelogReader` is requested to <<kafka-streams-internals-StoreChangelogReader.adoc#register, register a StateRestorer>>.
 

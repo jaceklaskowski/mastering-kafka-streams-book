@@ -57,7 +57,7 @@ void flushState()
 
 NOTE: `flushState` is part of link:kafka-streams-internals-GlobalStateMaintainer.adoc#flushState[GlobalStateMaintainer Contract] to...FIXME.
 
-`flushState` requests <<stateMgr, GlobalStateManager>> to link:kafka-streams-internals-StateManager.adoc#flush[flush] followed by link:kafka-streams-Checkpointable.adoc#checkpoint[checkpointing] the <<offsets, offsets>>.
+`flushState` requests <<stateMgr, GlobalStateManager>> to link:kafka-streams-internals-StateManager.adoc#flush[flush] followed by link:kafka-streams-internals-Checkpointable.adoc#checkpoint[checkpointing] the <<offsets, offsets>>.
 
 === [[close]] Closing State Manager -- `close` Method
 
@@ -76,7 +76,7 @@ NOTE: `close` is part of link:kafka-streams-internals-StateManager.adoc#close[St
 
 * [[topology]] <<kafka-streams-internals-ProcessorTopology.adoc#, ProcessorTopology>>
 * [[processorContext]] link:kafka-streams-internals-InternalProcessorContext.adoc[InternalProcessorContext]
-* [[stateMgr]] link:kafka-streams-GlobalStateManager.adoc[GlobalStateManager]
+* [[stateMgr]] link:kafka-streams-internals-GlobalStateManager.adoc[GlobalStateManager]
 * [[deserializationExceptionHandler]] `DeserializationExceptionHandler`
 * [[logContext]] `LogContext`
 

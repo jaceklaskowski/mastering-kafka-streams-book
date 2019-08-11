@@ -202,7 +202,7 @@ NOTE: `getPartition` is used when `ProcessorStateManager` is requested to <<regi
 Map<TopicPartition, Long> checkpointed()
 ----
 
-NOTE: `checkpointed` is part of the <<kafka-streams-Checkpointable.adoc#checkpointed, Checkpointable Contract>> to...FIXME.
+NOTE: `checkpointed` is part of the <<kafka-streams-internals-Checkpointable.adoc#checkpointed, Checkpointable Contract>> to...FIXME.
 
 `checkpointed`...FIXME
 
@@ -226,7 +226,7 @@ NOTE: `updateStandbyStates` is used exclusively when `StandbyTask` is requested 
 void checkpoint(Map<TopicPartition, Long> checkpointableOffsets)
 ----
 
-NOTE: `checkpoint` is part of the <<kafka-streams-Checkpointable.adoc#checkpoint, Checkpointable Contract>> to checkpoint offsets.
+NOTE: `checkpoint` is part of the <<kafka-streams-internals-Checkpointable.adoc#checkpoint, Checkpointable Contract>> to checkpoint offsets.
 
 `checkpoint` requests the <<changelogReader, ChangelogReader>> for <<kafka-streams-internals-ChangelogReader.adoc#restoredOffsets, restoredOffsets>> and adds them to the <<kafka-streams-internals-AbstractStateManager.adoc#checkpointableOffsets, checkpointableOffsets>> registry.
 

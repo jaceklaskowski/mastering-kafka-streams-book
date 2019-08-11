@@ -1,6 +1,6 @@
 == [[StateManager]] StateManager Contract -- State Store Managers
 
-`StateManager` is the <<contract, contract>> of <<implementations, state store managers>> that manage <<kafka-streams-StateStore.adoc#, state stores>> and are <<kafka-streams-Checkpointable.adoc#, checkpointable>>.
+`StateManager` is the <<contract, contract>> of <<implementations, state store managers>> that manage <<kafka-streams-StateStore.adoc#, state stores>> and are <<kafka-streams-internals-Checkpointable.adoc#, checkpointable>>.
 
 [[contract]]
 .StateManager Contract
@@ -126,6 +126,6 @@ Used when:
 | <<kafka-streams-internals-AbstractStateManager.adoc#, AbstractStateManager>>
 | [[AbstractStateManager]]
 
-| <<kafka-streams-GlobalStateManager.adoc#, GlobalStateManager>>
+| <<kafka-streams-internals-GlobalStateManager.adoc#, GlobalStateManager>>
 | [[GlobalStateManager]]
 |===

@@ -17,10 +17,10 @@
 
 . link:kafka-streams-internals-ProcessorStateManager.adoc[ProcessorStateManager]
 
-. link:kafka-streams-GlobalStateManager.adoc[GlobalStateManager]
+. link:kafka-streams-internals-GlobalStateManager.adoc[GlobalStateManager]
 .. link:kafka-streams-internals-GlobalStateManagerImpl.adoc[GlobalStateManagerImpl]
 
-. link:kafka-streams-Checkpointable.adoc[Checkpointable]
+. link:kafka-streams-internals-Checkpointable.adoc[Checkpointable]
 
 . link:kafka-streams-internals-OffsetCheckpoint.adoc[OffsetCheckpoint]
 
@@ -32,14 +32,9 @@
 . link:kafka-streams-internals-RestoringTasks.adoc[RestoringTasks]
 
 . link:kafka-streams-internals-StateStoreFactory.adoc[StateStoreFactory]
-.. link:kafka-streams-StoreBuilderFactory.adoc[StoreBuilderFactory]
-.. link:kafka-streams-StateStoreSupplierFactory.adoc[StateStoreSupplierFactory]
-.. link:kafka-streams-AbstractStateStoreFactory.adoc[AbstractStateStoreFactory]
-
-. link:kafka-streams-DelegatingStateRestoreListener.adoc[DelegatingStateRestoreListener]
-. link:kafka-streams-CompositeRestoreListener.adoc[CompositeRestoreListener]
 
 . link:kafka-streams-internals-RecordBatchingStateRestoreCallback.adoc[RecordBatchingStateRestoreCallback]
+.. link:kafka-streams-internals-CompositeRestoreListener.adoc[CompositeRestoreListener]
 
 . link:kafka-streams-internals-StateRestoreCallbackAdapter.adoc[StateRestoreCallbackAdapter]
 
@@ -185,6 +180,8 @@
 . link:kafka-streams-StreamTask-TaskMetrics.adoc[TaskMetrics]
 
 . link:kafka-streams-internals-StoreChangeLogger.adoc[StoreChangeLogger]
+
+. link:kafka-streams-DelegatingStateRestoreListener.adoc[DelegatingStateRestoreListener]
 
 == Testing
 

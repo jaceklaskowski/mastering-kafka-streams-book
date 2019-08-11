@@ -18,7 +18,7 @@ Internally, `adapt`...FIXME
 ====
 `adapt` is used when:
 
-* <<kafka-streams-CompositeRestoreListener.adoc#, CompositeRestoreListener>> is created
+* <<kafka-streams-internals-CompositeRestoreListener.adoc#, CompositeRestoreListener>> is created
 
 * `GlobalStateManagerImpl` is requested to <<kafka-streams-internals-GlobalStateManagerImpl.adoc#restoreState, restoreState>>
 
