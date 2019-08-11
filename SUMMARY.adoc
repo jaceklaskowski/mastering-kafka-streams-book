@@ -79,46 +79,44 @@
 
 == High-Level Streams DSL
 
-. link:kafka-streams-streams-dsl.adoc[Streams DSL -- High-Level Stream Processing DSL]
+. link:kafka-streams-streams-dsl.adoc[High-Level Streams DSL]
 
-. link:kafka-streams-StreamsBuilder.adoc[StreamsBuilder -- The Entry Point to High-Level Streams DSL]
+. link:kafka-streams-StreamsBuilder.adoc[StreamsBuilder]
 . link:kafka-streams-KStream.adoc[KStream]
-
 . link:kafka-streams-KTable.adoc[KTable]
+. link:kafka-streams-GlobalKTable.adoc[GlobalKTable]
 
-. link:kafka-streams-GlobalKTable.adoc[GlobalKTable -- Global Changelog Stream]
-
-. link:kafka-streams-KGroupedStream.adoc[KGroupedStream -- Basic Stream Aggregations]
+. link:kafka-streams-KGroupedStream.adoc[KGroupedStream]
 .. link:kafka-streams-SessionWindowedKStream.adoc[SessionWindowedKStream]
-.. link:kafka-streams-TimeWindowedKStream.adoc[TimeWindowedKStream -- Time-Windowed Stream Aggregations]
+.. link:kafka-streams-TimeWindowedKStream.adoc[TimeWindowedKStream]
 
 . link:kafka-streams-KGroupedTable.adoc[KGroupedTable]
 
-. link:kafka-streams-Consumed.adoc[Consumed -- Metadata for Consuming Streams]
-. link:kafka-streams-Produced.adoc[Produced -- Metadata for Producing Streams]
-. link:kafka-streams-Grouped.adoc[Grouped -- Metadata for Aggregating Streams]
-. link:kafka-streams-Joined.adoc[Joined -- Metadata for Joined Streams]
+. link:kafka-streams-Consumed.adoc[Consumed]
+. link:kafka-streams-Produced.adoc[Produced]
+. link:kafka-streams-Grouped.adoc[Grouped]
+. link:kafka-streams-Joined.adoc[Joined]
 . link:kafka-streams-Printed.adoc[Printed]
 
 . link:kafka-streams-KeyValueMapper.adoc[KeyValueMapper]
 . link:kafka-streams-ValueJoiner.adoc[ValueJoiner]
 
-. link:kafka-streams-ValueTransformer.adoc[ValueTransformer -- Stateful Record-by-Record Value Transformation]
-.. link:kafka-streams-ValueTransformerSupplier.adoc[ValueTransformerSupplier -- ValueTransformers Object Factory]
+. link:kafka-streams-ValueTransformer.adoc[ValueTransformer]
+.. link:kafka-streams-ValueTransformerSupplier.adoc[ValueTransformerSupplier]
 
 . link:kafka-streams-ValueTransformerWithKey.adoc[ValueTransformerWithKey]
 
-. link:kafka-streams-Transformer.adoc[Transformer -- Record-by-Record Stateful Transformation]
+. link:kafka-streams-Transformer.adoc[Transformer]
 . link:kafka-streams-TransformerSupplier.adoc[TransformerSupplier]
 
-. link:kafka-streams-Windows.adoc[Windows -- Window Specification For Time-Windowed Streaming Aggregations]
-.. link:kafka-streams-JoinWindows.adoc[JoinWindows -- Window Specification for Streaming Joins]
-.. link:kafka-streams-TimeWindows.adoc[TimeWindows -- Time-Bound Window Specification]
+. link:kafka-streams-Windows.adoc[Windows]
+.. link:kafka-streams-JoinWindows.adoc[JoinWindows]
+.. link:kafka-streams-TimeWindows.adoc[TimeWindows]
 .. link:kafka-streams-UnlimitedWindows.adoc[UnlimitedWindows]
 
 . link:kafka-streams-Window.adoc[Window]
 
-. link:kafka-streams-WindowedSerdes.adoc[WindowedSerdes -- SessionWindowedSerde and TimeWindowedSerde]
+. link:kafka-streams-WindowedSerdes.adoc[WindowedSerdes]
 .. link:kafka-streams-Windowed.adoc[Windowed]
 .. link:kafka-streams-TimeWindowedSerializer.adoc[TimeWindowedSerializer]
 
