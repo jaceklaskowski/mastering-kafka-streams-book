@@ -199,9 +199,11 @@ a| [[nodeFactories]] link:kafka-streams-internals-InternalTopologyBuilder-NodeFa
 Used when...FIXME
 
 | nodeGroups
-a| [[nodeGroups]] Node groups by ID, i.e. groups of node names that can be looked up by a group ID.
+a| [[nodeGroups]] Node groups by ID, i.e. groups of node names that can be looked up by a group ID (`Map<Integer, Set<String>>`)
 
-Initialized when `InternalTopologyBuilder` is requested for <<nodeGroups-accessor, node groups>> (the very first time as once <<makeNodeGroups, initialized>> it will never change)
+Initialized when `InternalTopologyBuilder` is requested for <<nodeGroups-accessor, node groups>> (the very first time since it never changes once <<makeNodeGroups, initialized>>)
+
+* Reset (_nullified_) when <<addStateStore, registering a state store (as a StoreBuilder)>>
 
 NOTE: <<nodeGroups-accessor, nodeGroups accessor>> is used to access `nodeGroups` registry.
 
@@ -654,7 +656,7 @@ void connectStateStoreNameToSourceTopicsOrPattern(
 
 NOTE: `connectStateStoreNameToSourceTopicsOrPattern` is used when...FIXME
 
-=== [[addStateStore]] Registering State Store (As StoreBuilder) -- `addStateStore` Method
+=== [[addStateStore]] Adding State Store (As StoreBuilder) -- `addStateStore` Method
 
 [source, java]
 ----
@@ -668,25 +670,35 @@ void addStateStore(
 ----
 <1> Uses `false` for the `allowOverride` flag
 
-`addStateStore`...FIXME
+`addStateStore` creates a <<kafka-streams-internals-InternalTopologyBuilder-StateStoreFactory.adoc#, StateStoreFactory>> (with the <<kafka-streams-StoreBuilder.adoc#, StoreBuilder>>) and registers it (in the <<stateFactories, stateFactories>> internal registry).
 
-`addStateStore` then <<connectProcessorAndStateStore, connects the state store with processors>> (using the <<kafka-streams-StoreBuilder.adoc#name, name>> of the input `StoreBuilder`).
+`addStateStore` then <<connectProcessorAndStateStore, connects the state store with processors>> (if they are given).
+
+In the end, `addStateStore` resets (_nullify_) the <<nodeGroups, nodeGroups>> internal registry.
+
+`addStateStore` throws a `TopologyException` when the given <<kafka-streams-StoreBuilder.adoc#, StoreBuilder>> has already been registered (in the <<stateFactories, stateFactories>> internal registry) and the `allowOverride` flag is off (`false`):
+
+```
+StateStore [name] is already added.
+```
 
 [NOTE]
 ====
-`addStateStore` is used when:
+`addStateStore` is used (with the `allowOverride` flag disabled) when:
 
-* `Topology` is requested to link:kafka-streams-Topology.adoc#addStateStore[addStateStore]
+* `Topology` is requested to <<kafka-streams-Topology.adoc#addStateStore, add a state store and associate it with processors>>
 
-* `GroupedStreamAggregateBuilder` is requested to link:kafka-streams-internals-GroupedStreamAggregateBuilder.adoc#build[build]
+* `KTableKTableJoinNode` is requested to <<kafka-streams-internals-KTableKTableJoinNode.adoc#writeToTopology, writeToTopology>>
 
-* `InternalStreamsBuilder` is requested to link:kafka-streams-internals-InternalStreamsBuilder.adoc#addStateStore[addStateStore] and link:kafka-streams-internals-InternalStreamsBuilder.adoc#table[create a KTable for a topic]
+* `StatefulProcessorNode` is requested to <<kafka-streams-internals-StatefulProcessorNode.adoc#writeToTopology, writeToTopology>>
 
-* `KGroupedTableImpl` is requested to link:kafka-streams-internals-KGroupedTableImpl.adoc#doAggregate[doAggregate]
+* `StateStoreNode` is requested to <<kafka-streams-internals-StateStoreNode.adoc#writeToTopology, writeToTopology>>
 
-* `KStreamImplJoin` is requested to link:kafka-streams-internals-KStreamImpl-KStreamImplJoin.adoc#join[join]
+* `StreamStreamJoinNode` is requested to <<kafka-streams-internals-StreamStreamJoinNode.adoc#writeToTopology, writeToTopology>>
 
-* `KTableImpl` is requested to link:kafka-streams-internals-KTableImpl.adoc#doFilter[doFilter], link:kafka-streams-internals-KTableImpl.adoc#doJoin[doJoin] and link:kafka-streams-internals-KTableImpl.adoc#mapValues[mapValues]
+* `TableProcessorNode` is requested to <<kafka-streams-internals-TableProcessorNode.adoc#writeToTopology, writeToTopology>>
+
+* `TableSourceNode` is requested to <<kafka-streams-internals-TableSourceNode.adoc#writeToTopology, writeToTopology>>
 ====
 
 === [[topicGroups]] Topic Groups (TopicsInfos By IDs) -- `topicGroups` Method

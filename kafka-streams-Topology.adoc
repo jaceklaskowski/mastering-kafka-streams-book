@@ -267,11 +267,13 @@ a| [[addStateStore]]
 [source, java]
 ----
 Topology addStateStore(
-  final StoreBuilder storeBuilder,
-  final String... processorNames)
+  StoreBuilder storeBuilder,
+  String... processorNames)
 ----
 
-Adds a new <<kafka-streams-StateStore.adoc#, StateStore>> (with the <<kafka-streams-StoreBuilder.adoc#, StoreBuilder>>) to the topology.
+Adds a new <<kafka-streams-StateStore.adoc#, state store>> (as a <<kafka-streams-StoreBuilder.adoc#, StoreBuilder>>) to the topology and associates it with processors
+
+Internally, `addStateStore` simply requests the <<internalTopologyBuilder, InternalTopologyBuilder>> to <<kafka-streams-internals-InternalTopologyBuilder.adoc#addStateStore, add a state store (as a StoreBuilder)>>
 
 | connectProcessorAndStateStores
 a| [[connectProcessorAndStateStores]]
