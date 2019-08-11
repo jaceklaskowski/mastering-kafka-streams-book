@@ -1,0 +1,3 @@
+== [[BatchingStateRestoreCallback]] BatchingStateRestoreCallback
+
+`BatchingStateRestoreCallback` is...FIXME

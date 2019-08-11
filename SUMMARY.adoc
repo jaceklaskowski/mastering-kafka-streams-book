@@ -39,6 +39,8 @@
 . link:kafka-streams-DelegatingStateRestoreListener.adoc[DelegatingStateRestoreListener]
 . link:kafka-streams-CompositeRestoreListener.adoc[CompositeRestoreListener]
 
+. link:kafka-streams-internals-StateRestoreCallbackAdapter.adoc[StateRestoreCallbackAdapter]
+
 == Demos
 
 . link:kafka-streams-demo-creating-topology-with-state-store-logging-enabled.adoc[Creating Topology with State Store with Logging Enabled]
@@ -148,11 +150,6 @@
 . link:kafka-streams-Cancellable.adoc[Cancellable]
 
 . link:kafka-streams-ProcessorSupplier.adoc[ProcessorSupplier Contract]
-. link:kafka-streams-StateRestoreCallback.adoc[StateRestoreCallback]
-
-. link:kafka-streams-StateRestoreListener.adoc[StateRestoreListener]
-.. link:kafka-streams-AbstractNotifyingBatchingRestoreCallback.adoc[AbstractNotifyingBatchingRestoreCallback]
-.. link:kafka-streams-AbstractNotifyingRestoreCallback.adoc[AbstractNotifyingRestoreCallback]
 
 . link:kafka-streams-StreamPartitioner.adoc[StreamPartitioner]
 
@@ -166,6 +163,13 @@
 
 . link:kafka-streams-PartitionGrouper.adoc[PartitionGrouper Contract]
 .. link:kafka-streams-DefaultPartitionGrouper.adoc[DefaultPartitionGrouper]
+
+. link:kafka-streams-StateRestoreCallback.adoc[StateRestoreCallback]
+.. link:kafka-streams-BatchingStateRestoreCallback.adoc[BatchingStateRestoreCallback]
+
+. link:kafka-streams-StateRestoreListener.adoc[StateRestoreListener]
+.. link:kafka-streams-AbstractNotifyingBatchingRestoreCallback.adoc[AbstractNotifyingBatchingRestoreCallback]
+.. link:kafka-streams-AbstractNotifyingRestoreCallback.adoc[AbstractNotifyingRestoreCallback]
 
 == Monitoring Kafka Streams Applications
 

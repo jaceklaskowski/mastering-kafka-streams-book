@@ -17,10 +17,10 @@ a| [[onBatchRestored]]
 [source, java]
 ----
 void onBatchRestored(
-  final TopicPartition topicPartition,
-  final String storeName,
-  final long batchEndOffset,
-  final long numRestored)
+  TopicPartition topicPartition,
+  String storeName,
+  long batchEndOffset,
+  long numRestored)
 ----
 
 Used when:
@@ -35,9 +35,9 @@ a| [[onRestoreEnd]]
 [source, java]
 ----
 void onRestoreEnd(
-  final TopicPartition topicPartition,
-  final String storeName,
-  final long totalRestored)
+  TopicPartition topicPartition,
+  String storeName,
+  long totalRestored)
 ----
 
 Used when:
@@ -52,10 +52,10 @@ a| [[onRestoreStart]]
 [source, java]
 ----
 void onRestoreStart(
-  final TopicPartition topicPartition,
-  final String storeName,
-  final long startingOffset,
-  final long endingOffset)
+  TopicPartition topicPartition,
+  String storeName,
+  long startingOffset,
+  long endingOffset)
 ----
 
 Used when:

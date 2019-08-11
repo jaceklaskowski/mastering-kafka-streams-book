@@ -1,3 +1,60 @@
-== [[StateRestoreCallback]] StateRestoreCallback
+== [[StateRestoreCallback]] StateRestoreCallback Contract
 
-`StateRestoreCallback` is...FIXME
+`StateRestoreCallback` is the <<contract, abstraction>> of <<implementations, objects>> that can <<restore, restore>>.
+
+[[contract]]
+.StateRestoreCallback Contract
+[cols="30m,70",options="header",width="100%"]
+|===
+| Method
+| Description
+
+| restore
+a| [[restore]]
+
+[source, java]
+----
+void restore(
+  byte[] key,
+  byte[] value)
+----
+
+Used exclusively when <<kafka-streams-internals-StateRestoreCallbackAdapter.adoc#, StateRestoreCallbackAdapter>> is created (_adapted_ from a <<kafka-streams-StateRestoreCallback.adoc#, StateRestoreCallback>>)
+
+|===
+
+=== [[implementations]] Functional Interface and StateRestoreCallback's Implementations
+
+`StateRestoreCallback` is a *functional interface* in Java.
+
+https://docs.oracle.com/javase/specs/jls/se8/html/jls-9.html#jls-9.8[Functional interface] is an interface that has just one abstract method (aside from the methods of `java.lang.Object`), and thus represents a single function contract.
+
+In addition to the usual process of creating an interface instance by declaring and instantiating a class, instances of functional interfaces can be created with method reference expressions and lambda expressions.
+
+Because of this simplification of the Java language, `StateRestoreCallback` implementations are _usually_ anonymous classes and are defined and used in the following <<kafka-streams-StateStore.adoc#, state stores>>:
+
+* <<kafka-streams-internals-InMemoryKeyValueStore.adoc#init, InMemoryKeyValueStore>>
+
+* <<kafka-streams-internals-InMemorySessionStore.adoc#init, InMemorySessionStore>>
+
+* <<kafka-streams-internals-InMemoryTimeOrderedKeyValueBuffer.adoc#init, InMemoryTimeOrderedKeyValueBuffer>>
+
+* <<kafka-streams-internals-InMemoryWindowStore.adoc#init, InMemoryWindowStore>>
+
+* <<kafka-streams-internals-MemoryLRUCache.adoc#init, MemoryLRUCache>>
+
+The following are the regular named implementations.
+
+.StateRestoreCallbacks (Direct Implementations and Extensions Only)
+[cols="30,70",options="header",width="100%"]
+|===
+| StateRestoreCallback
+| Description
+
+| <<kafka-streams-AbstractNotifyingRestoreCallback.adoc#, AbstractNotifyingRestoreCallback>>
+| [[AbstractNotifyingRestoreCallback]]
+
+| <<kafka-streams-BatchingStateRestoreCallback.adoc#, BatchingStateRestoreCallback>>
+| [[BatchingStateRestoreCallback]]
+
+|===

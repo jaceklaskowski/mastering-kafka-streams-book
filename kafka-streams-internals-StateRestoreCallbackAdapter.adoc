@@ -1,0 +1,3 @@
+== [[StateRestoreCallbackAdapter]] StateRestoreCallbackAdapter
+
+`StateRestoreCallbackAdapter` is...FIXME
