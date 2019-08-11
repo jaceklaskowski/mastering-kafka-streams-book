@@ -1,10 +1,25 @@
-== [[KTable]] KTable
+== [[KTable]] KTable API -- Changelog Stream
 
-`KTable` is...FIXME
+`KTable` is the <<contract, abstraction>> of a *changelog stream* from a primary-keyed table. Each record in the changelog stream is an update on the primary-keyed table with the record key as the primary key.
 
+`KTable` assumes that records from the source topic that have `null` keys are simply dropped.
+
+`KTable` can be created directly from a Kafka topic (using <<kafka-streams-StreamsBuilder.adoc#table, StreamsBuilder.table>> operator), as a result of <<operators, transformations>> on an existing `KTable`, or aggregations (`aggregate`, `count`, and `reduce`) of the following abstractions:
+
+* <<kafka-streams-KGroupedStream.adoc#, KGroupedStream>> (<<kafka-streams-KStream.adoc#groupBy, KStream.groupBy>> and <<kafka-streams-KStream.adoc#groupByKey, KStream.groupByKey>> aggregate stream operators)
+
+* <<kafka-streams-KGroupedTable.adoc#, KGroupedTable>>
+
+* <<kafka-streams-SessionWindowedKStream.adoc#, SessionWindowedKStream>> (<<kafka-streams-KGroupedStream.adoc#windowedBy, KGroupedStream.windowedBy>> stream operator)
+
+* <<kafka-streams-TimeWindowedKStream.adoc#, TimeWindowedKStream>> (<<kafka-streams-KGroupedStream.adoc#windowedBy-TimeWindowedKStream, KGroupedStream.windowedBy>> stream operator with a <<kafka-streams-TimeWindows.adoc#, TimeWindows>> window specification)
+
+TIP: Use <<kafka-streams-scala.adoc#, Scala API for Kafka Streams>> to make your Kafka Streams development more pleasant if Scala is your programming language.
+
+[[contract]]
 [[operators]]
-.KTable Operators
-[cols="1m,3",options="header",width="100%"]
+.KTable API / Operators
+[cols="30m,70",options="header",width="100%"]
 |===
 | Operator
 | Description
@@ -15,10 +30,10 @@ a| [[filter]]
 [source, java]
 ----
 KTable<K, V> filter(
-  final Predicate<? super K, ? super V> predicate)
+  Predicate<? super K, ? super V> predicate)
 KTable<K, V> filter(
-  final Predicate<? super K, ? super V> predicate,
-  final Materialized<K, V, KeyValueStore<Bytes, byte[]>> materialized)
+  Predicate<? super K, ? super V> predicate,
+  Materialized<K, V, KeyValueStore<Bytes, byte[]>> materialized)
 ----
 
 | filterNot
@@ -27,10 +42,10 @@ a| [[filterNot]]
 [source, java]
 ----
 KTable<K, V> filterNot(
-  final Predicate<? super K, ? super V> predicate)
+  Predicate<? super K, ? super V> predicate)
 KTable<K, V> filterNot(
-  final Predicate<? super K, ? super V> predicate,
-  final Materialized<K, V, KeyValueStore<Bytes, byte[]>> materialized)
+  Predicate<? super K, ? super V> predicate,
+  Materialized<K, V, KeyValueStore<Bytes, byte[]>> materialized)
 ----
 
 | groupBy
@@ -39,10 +54,10 @@ a| [[groupBy]]
 [source, java]
 ----
 KGroupedTable<KR, VR> groupBy(
-  final KeyValueMapper<? super K, ? super V, KeyValue<KR, VR>> selector)
+  KeyValueMapper<? super K, ? super V, KeyValue<KR, VR>> selector)
 KGroupedTable<KR, VR> groupBy(
-  final KeyValueMapper<? super K, ? super V, KeyValue<KR, VR>> selector,
-  final Grouped<KR, VR> grouped)
+  KeyValueMapper<? super K, ? super V, KeyValue<KR, VR>> selector,
+  Grouped<KR, VR> grouped)
 ----
 
 | join
@@ -51,12 +66,12 @@ a| [[join]]
 [source, java]
 ----
 KTable<K, VR> join(
-  final KTable<K, VO> other,
-  final ValueJoiner<? super V, ? super VO, ? extends VR> joiner)
+  KTable<K, VO> other,
+  ValueJoiner<? super V, ? super VO, ? extends VR> joiner)
 KTable<K, VR> join(
-  final KTable<K, VO> other,
-  final ValueJoiner<? super V, ? super VO, ? extends VR> joiner,
-  final Materialized<K, VR, KeyValueStore<Bytes, byte[]>> materialized)
+  KTable<K, VO> other,
+  ValueJoiner<? super V, ? super VO, ? extends VR> joiner,
+  Materialized<K, VR, KeyValueStore<Bytes, byte[]>> materialized)
 ----
 
 | leftJoin
@@ -65,12 +80,12 @@ a| [[leftJoin]]
 [source, java]
 ----
 KTable<K, VR> leftJoin(
-  final KTable<K, VO> other,
-  final ValueJoiner<? super V, ? super VO, ? extends VR> joiner)
+  KTable<K, VO> other,
+  ValueJoiner<? super V, ? super VO, ? extends VR> joiner)
 KTable<K, VR> leftJoin(
-  final KTable<K, VO> other,
-  final ValueJoiner<? super V, ? super VO, ? extends VR> joiner,
-  final Materialized<K, VR, KeyValueStore<Bytes, byte[]>> materialized)
+  KTable<K, VO> other,
+  ValueJoiner<? super V, ? super VO, ? extends VR> joiner,
+  Materialized<K, VR, KeyValueStore<Bytes, byte[]>> materialized)
 ----
 
 | mapValues
@@ -79,15 +94,15 @@ a| [[mapValues]]
 [source, java]
 ----
 KTable<K, VR> mapValues(
-  final ValueMapper<? super V, ? extends VR> mapper)
+  ValueMapper<? super V, ? extends VR> mapper)
 KTable<K, VR> mapValues(
-  final ValueMapper<? super V, ? extends VR> mapper,
-  final Materialized<K, VR, KeyValueStore<Bytes, byte[]>> materialized)
+  ValueMapper<? super V, ? extends VR> mapper,
+  Materialized<K, VR, KeyValueStore<Bytes, byte[]>> materialized)
 KTable<K, VR> mapValues(
-  final ValueMapperWithKey<? super K, ? super V, ? extends VR> mapper)
+  ValueMapperWithKey<? super K, ? super V, ? extends VR> mapper)
 KTable<K, VR> mapValues(
-  final ValueMapperWithKey<? super K, ? super V, ? extends VR> mapper,
-  final Materialized<K, VR, KeyValueStore<Bytes, byte[]>> materialized)
+  ValueMapperWithKey<? super K, ? super V, ? extends VR> mapper,
+  Materialized<K, VR, KeyValueStore<Bytes, byte[]>> materialized)
 ----
 
 | outerJoin
@@ -96,12 +111,12 @@ a| [[outerJoin]]
 [source, java]
 ----
 KTable<K, VR> outerJoin(
-  final KTable<K, VO> other,
-  final ValueJoiner<? super V, ? super VO, ? extends VR> joiner)
+  KTable<K, VO> other,
+  ValueJoiner<? super V, ? super VO, ? extends VR> joiner)
 KTable<K, VR> outerJoin(
-  final KTable<K, VO> other,
-  final ValueJoiner<? super V, ? super VO, ? extends VR> joiner,
-  final Materialized<K, VR, KeyValueStore<Bytes, byte[]>> materialized)
+  KTable<K, VO> other,
+  ValueJoiner<? super V, ? super VO, ? extends VR> joiner,
+  Materialized<K, VR, KeyValueStore<Bytes, byte[]>> materialized)
 ----
 
 | queryableStoreName
@@ -118,7 +133,7 @@ a| [[suppress]]
 [source, java]
 ----
 KTable<K, V> suppress(
-  final Suppressed<? super K> suppressed)
+  Suppressed<? super K> suppressed)
 ----
 
 | toStream
@@ -128,7 +143,7 @@ a| [[toStream]]
 ----
 KStream<K, V> toStream()
 KStream<KR, V> toStream(
-  final KeyValueMapper<? super K, ? super V, ? extends KR> mapper)
+  KeyValueMapper<? super K, ? super V, ? extends KR> mapper)
 ----
 
 | transformValues
@@ -137,14 +152,12 @@ a| [[transformValues]]
 [source, java]
 ----
 KTable<K, VR> transformValues(
-  final ValueTransformerWithKeySupplier<
-    ? super K, ? super V, ? extends VR> transformerSupplier,
-  final Materialized<K, VR, KeyValueStore<Bytes, byte[]>> materialized,
-  final String... stateStoreNames)
+  ValueTransformerWithKeySupplier<? super K, ? super V, ? extends VR> transformerSupplier,
+  Materialized<K, VR, KeyValueStore<Bytes, byte[]>> materialized,
+  String... stateStoreNames)
 KTable<K, VR> transformValues(
-  final ValueTransformerWithKeySupplier<
-    ? super K, ? super V, ? extends VR> transformerSupplier,
-  final String... stateStoreNames)
+  ValueTransformerWithKeySupplier<? super K, ? super V, ? extends VR> transformerSupplier,
+  String... stateStoreNames)
 ----
 
 |===

@@ -2,7 +2,7 @@
 
 `SessionWindowedKStream` is the <<contract, contract>> of <<implementations, KStreams>> that allows Kafka Streams developers for <<aggregate, aggregate>>, <<count, count>> and <<reduce, reduce>> aggregations over a session-windowed record stream.
 
-`SessionWindowedKStream` is created using link:kafka-streams-KGroupedStream.adoc#windowedBy[KGroupedStream.windowedBy] method.
+`SessionWindowedKStream` is created using <<kafka-streams-KGroupedStream.adoc#windowedBy, KGroupedStream.windowedBy>> method.
 
 [[contract]]
 [source, java]
