@@ -60,6 +60,7 @@
 
 . link:kafka-streams-StoreBuilder.adoc[StoreBuilder]
 
+. link:kafka-streams-TimestampedKeyValueStore.adoc[TimestampedKeyValueStore]
 . link:kafka-streams-ReadOnlyKeyValueStore.adoc[ReadOnlyKeyValueStore]
 
 == Stream Processing with Kafka Streams

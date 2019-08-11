@@ -1,14 +1,44 @@
 == [[KTableKTableJoinNode]] KTableKTableJoinNode
 
-`KTableKTableJoinNode` is...FIXME
+`KTableKTableJoinNode` is a concrete <<kafka-streams-internals-StreamsGraphNode.adoc#, StreamsGraphNode>> (as a <<kafka-streams-internals-BaseJoinProcessorNode.adoc#, BaseJoinProcessorNode>>) that is <<creating-instance, created>> (using <<build, KTableKTableJoinNodeBuilder.build>> method) for <<kafka-streams-internals-KTableImpl.adoc#join, KTableImpl.join>>, <<kafka-streams-internals-KTableImpl.adoc#leftJoin, KTableImpl.leftJoin>> and <<kafka-streams-internals-KTableImpl.adoc#outerJoin, KTableImpl.outerJoin>> operators.
+
+In other words, `KTableKTableJoinNode` represents <<kafka-streams-internals-KTableImpl.adoc#join, KTableImpl.join>>, <<kafka-streams-internals-KTableImpl.adoc#leftJoin, KTableImpl.leftJoin>> and <<kafka-streams-internals-KTableImpl.adoc#outerJoin, KTableImpl.outerJoin>> operators.
+
+=== [[creating-instance]] Creating KTableKTableJoinNode Instance
+
+`KTableKTableJoinNode` takes the following to be created:
+
+* [[nodeName]] Node name
+* [[joinThisProcessorParameters]] `ProcessorParameters<K, Change<V1>>` of this join side
+* [[joinOtherProcessorParameters]] `ProcessorParameters<K, Change<V2>>` of the other join side
+* [[joinMergeProcessorParameters]] `ProcessorParameters<K, Change<VR>>` of the join merger
+* [[thisJoinSide]] Name of this join side
+* [[otherJoinSide]] Name of the other join side
+* [[keySerde]] Key `Serde` (`Serde<K>`)
+* [[valueSerde]] Value `Serde` (`Serde<VR>`)
+* [[joinThisStoreNames]] Names of the state stores of this join side
+* [[joinOtherStoreNames]] Names of the state stores of the other join side
+* [[storeBuilder]] <<kafka-streams-StoreBuilder.adoc#, StoreBuilder>> of <<kafka-streams-TimestampedKeyValueStore.adoc#, TimestampedKeyValueStore>> (`StoreBuilder<TimestampedKeyValueStore<K, VR>>`)
 
 === [[writeToTopology]] `writeToTopology` Method
 
 [source, java]
 ----
-void writeToTopology(final InternalTopologyBuilder topologyBuilder)
+void writeToTopology(
+  InternalTopologyBuilder topologyBuilder)
 ----
 
 NOTE: `writeToTopology` is part of the <<kafka-streams-internals-StreamsGraphNode.adoc#writeToTopology, StreamsGraphNode Contract>> to...FIXME.
 
 `writeToTopology`...FIXME
+
+=== [[build]] Creating KTableKTableJoinNode -- `build` Method
+
+[source, java]
+----
+KTableKTableJoinNode<K, V1, V2, VR> build()
+----
+
+`build`...FIXME
+
+NOTE: `build` is used exclusively when `KTableImpl` is requested to <<kafka-streams-internals-KTableImpl.adoc#doJoin, doJoin>> (for <<kafka-streams-internals-KTableImpl.adoc#join, KTableImpl.join>>, <<kafka-streams-internals-KTableImpl.adoc#leftJoin, KTableImpl.leftJoin>> and <<kafka-streams-internals-KTableImpl.adoc#outerJoin, KTableImpl.outerJoin>> operators).
