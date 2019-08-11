@@ -1,0 +1,3 @@
+== [[RecordBatchingStateRestoreCallback]] RecordBatchingStateRestoreCallback
+
+`RecordBatchingStateRestoreCallback` is...FIXME

@@ -19,7 +19,7 @@ void restore(
   byte[] value)
 ----
 
-Used exclusively when <<kafka-streams-internals-StateRestoreCallbackAdapter.adoc#, StateRestoreCallbackAdapter>> is created (_adapted_ from a <<kafka-streams-StateRestoreCallback.adoc#, StateRestoreCallback>>)
+Used exclusively when `StateRestoreCallbackAdapter` factory object is requested for a <<kafka-streams-internals-StateRestoreCallbackAdapter.adoc#adapt, RecordBatchingStateRestoreCallback for a given StateRestoreCallback>> (that is neither a <<kafka-streams-internals-RecordBatchingStateRestoreCallback.adoc#, RecordBatchingStateRestoreCallback>> nor a <<kafka-streams-BatchingStateRestoreCallback.adoc#, BatchingStateRestoreCallback>>)
 
 |===
 

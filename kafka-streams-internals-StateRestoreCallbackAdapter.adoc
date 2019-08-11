@@ -1,3 +1,26 @@
-== [[StateRestoreCallbackAdapter]] StateRestoreCallbackAdapter
+== [[StateRestoreCallbackAdapter]] StateRestoreCallbackAdapter -- Converting StateRestoreCallbacks To RecordBatchingStateRestoreCallbacks
 
-`StateRestoreCallbackAdapter` is...FIXME
+`StateRestoreCallbackAdapter` is a factory object (_adapter_) of <<adapt, RecordBatchingStateRestoreCallbacks given StateRestoreCallbacks>>.
+
+=== [[adapt]] Creating RecordBatchingStateRestoreCallback For StateRestoreCallback -- `adapt` Factory Method
+
+[source, java]
+----
+RecordBatchingStateRestoreCallback adapt(
+  StateRestoreCallback restoreCallback)
+----
+
+`adapt` simply creates a <<kafka-streams-internals-RecordBatchingStateRestoreCallback.adoc#, RecordBatchingStateRestoreCallback>> for a <<kafka-streams-StateRestoreCallback.adoc#, StateRestoreCallback>>.
+
+Internally, `adapt`...FIXME
+
+[NOTE]
+====
+`adapt` is used when:
+
+* <<kafka-streams-CompositeRestoreListener.adoc#, CompositeRestoreListener>> is created
+
+* `GlobalStateManagerImpl` is requested to <<kafka-streams-internals-GlobalStateManagerImpl.adoc#restoreState, restoreState>>
+
+* `ProcessorStateManager` is requested to <<kafka-streams-internals-ProcessorStateManager.adoc#updateStandbyStates, updateStandbyStates>>
+====

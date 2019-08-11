@@ -68,10 +68,10 @@ NOTE: `flush` is part of the <<kafka-streams-internals-StateManager.adoc#flush, 
 [source, java]
 ----
 void restoreState(
-  final StateRestoreCallback stateRestoreCallback,
-  final List<TopicPartition> topicPartitions,
-  final Map<TopicPartition, Long> highWatermarks,
-  final String storeName)
+  StateRestoreCallback stateRestoreCallback,
+  List<TopicPartition> topicPartitions,
+  Map<TopicPartition, Long> highWatermarks,
+  String storeName)
 ----
 
 `restoreState`...FIXME

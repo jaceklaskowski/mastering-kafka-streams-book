@@ -39,6 +39,8 @@
 . link:kafka-streams-DelegatingStateRestoreListener.adoc[DelegatingStateRestoreListener]
 . link:kafka-streams-CompositeRestoreListener.adoc[CompositeRestoreListener]
 
+. link:kafka-streams-internals-RecordBatchingStateRestoreCallback.adoc[RecordBatchingStateRestoreCallback]
+
 . link:kafka-streams-internals-StateRestoreCallbackAdapter.adoc[StateRestoreCallbackAdapter]
 
 == Demos
