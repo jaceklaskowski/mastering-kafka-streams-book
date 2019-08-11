@@ -86,9 +86,9 @@ NOTE: `outerJoin` is used when...FIXME
 [source, java]
 ----
 KTable<K, V> doFilter(
-  final Predicate<? super K, ? super V> predicate,
-  final MaterializedInternal<K, V, KeyValueStore<Bytes, byte[]>> materialized,
-  final boolean filterNot)
+  Predicate<? super K, ? super V> predicate,
+  MaterializedInternal<K, V, KeyValueStore<Bytes, byte[]>> materialized,
+  boolean filterNot)
 ----
 
 `doFilter`...FIXME
@@ -100,8 +100,11 @@ NOTE: `doFilter` is used when `KTableImpl` is requested to <<filter, filter>> an
 [source, java]
 ----
 KTable<K, VR> doMapValues(
-  final ValueMapperWithKey<? super K, ? super V, ? extends VR> mapper,
-  final MaterializedInternal<K, VR, KeyValueStore<Bytes, byte[]>> materializedInternal)
+  ValueMapperWithKey<
+    ? super K,
+    ? super V,
+    ? extends VR> mapper,
+  MaterializedInternal<K, VR, KeyValueStore<Bytes, byte[]>> materializedInternal)
 ----
 
 `doMapValues`...FIXME
@@ -113,9 +116,12 @@ NOTE: `doMapValues` is used exclusively when `KTableImpl` is requested to <<mapV
 [source, java]
 ----
 KTable<K, VR> doTransformValues(
-  final ValueTransformerWithKeySupplier<? super K, ? super V, ? extends VR> transformerSupplier,
-  final MaterializedInternal<K, VR, KeyValueStore<Bytes, byte[]>> materialized,
-  final String... stateStoreNames)
+  ValueTransformerWithKeySupplier<
+    ? super K,
+    ? super V,
+    ? extends VR> transformerSupplier,
+  MaterializedInternal<K, VR, KeyValueStore<Bytes, byte[]>> materialized,
+  String... stateStoreNames)
 ----
 
 `doTransformValues`...FIXME
