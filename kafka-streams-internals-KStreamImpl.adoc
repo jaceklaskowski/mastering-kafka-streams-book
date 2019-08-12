@@ -28,15 +28,15 @@
 
 [source, java]
 ----
-<V1, R> KStream<K, R> doStreamTableJoin(
-  final KTable<K, V1> other,
-  final ValueJoiner<? super V, ? super V1, ? extends R> joiner,
-  final boolean leftJoin)
+KStream<K, R> doStreamTableJoin(
+  KTable<K, V1> other,
+  ValueJoiner<? super V, ? super V1, ? extends R> joiner,
+  boolean leftJoin)
 ----
 
 `doStreamTableJoin`...FIXME
 
-NOTE: `doStreamTableJoin` is used when...FIXME
+NOTE: `doStreamTableJoin` is used when `KStreamImpl` is requested to <<join, join>> and <<leftJoin, leftJoin>>.
 
 === [[doJoin]] `doJoin` Internal Method
 
@@ -441,3 +441,24 @@ KStream<K, VR> doFlatTransformValues(
 `doFlatTransformValues`...FIXME
 
 NOTE: `doFlatTransformValues` is used exclusively when `KStreamImpl` is requested to <<flatTransformValues, flatTransformValues>>.
+
+=== [[globalTableJoin]] `globalTableJoin` Internal Method
+
+[source, java]
+----
+KStream<K, VR> globalTableJoin(
+  GlobalKTable<KG, VG> globalTable,
+  KeyValueMapper<
+    ? super K,
+    ? super V,
+    ? extends KG> keyMapper,
+  ValueJoiner<
+    ? super V,
+    ? super VG,
+    ? extends VR> joiner,
+  boolean leftJoin)
+----
+
+`globalTableJoin`...FIXME
+
+NOTE: `globalTableJoin` is used when `KStreamImpl` is requested to <<join, join>> and <<leftJoin, leftJoin>>.

@@ -100,7 +100,7 @@ Base of <<kafka-streams-internals-GlobalStoreNode.adoc#, GlobalStoreNode>>
 Base of <<kafka-streams-internals-TableSourceNode.adoc#, TableSourceNode>>
 
 | <<kafka-streams-internals-StreamTableJoinNode.adoc#, StreamTableJoinNode>>
-| [[StreamTableJoinNode]]
+| [[StreamTableJoinNode]] Represents <<kafka-streams-internals-KStreamImpl.adoc#join, KStreamImpl.join>> and <<kafka-streams-internals-KStreamImpl.adoc#leftJoin, KStreamImpl.leftJoin>> operators
 
 | <<kafka-streams-internals-TableProcessorNode.adoc#, TableProcessorNode>>
 | [[TableProcessorNode]] Represents <<kafka-streams-internals-KTableImpl.adoc#filter, KTableImpl.filter>>, <<kafka-streams-internals-KTableImpl.adoc#filterNot, KTableImpl.filterNot>>, <<kafka-streams-internals-KTableImpl.adoc#mapValues, KTableImpl.mapValues>>, and <<kafka-streams-internals-KTableImpl.adoc#transformValues, KTableImpl.transformValues>> operators

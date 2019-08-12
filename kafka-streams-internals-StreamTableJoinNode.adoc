@@ -1,12 +1,22 @@
 == [[StreamTableJoinNode]] StreamTableJoinNode
 
-`StreamTableJoinNode` is...FIXME
+`StreamTableJoinNode` is a concrete <<kafka-streams-internals-StreamsGraphNode.adoc#, StreamsGraphNode>> that represents (and is <<creating-instance, created>> for) <<kafka-streams-internals-KStreamImpl.adoc#join, KStreamImpl.join>> and <<kafka-streams-internals-KStreamImpl.adoc#leftJoin, KStreamImpl.leftJoin>> operators.
+
+=== [[creating-instance]] Creating StreamTableJoinNode Instance
+
+`StreamTableJoinNode` takes the following to be created:
+
+* [[nodeName]] Node name
+* [[processorParameters]] `ProcessorParameters<K, V>`
+* [[storeNames]] Names of the state stores
+* [[otherJoinSideNodeName]] Node name of the other join side
 
 === [[writeToTopology]] `writeToTopology` Method
 
 [source, java]
 ----
-void writeToTopology(final InternalTopologyBuilder topologyBuilder)
+void writeToTopology(
+  InternalTopologyBuilder topologyBuilder)
 ----
 
 NOTE: `writeToTopology` is part of the <<kafka-streams-internals-StreamsGraphNode.adoc#writeToTopology, StreamsGraphNode Contract>> to...FIXME.
