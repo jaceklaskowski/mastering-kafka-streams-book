@@ -15,20 +15,22 @@
 
 A `Produced` instance is <<creating-instance, created>> using one of the available <<factory-methods, factory methods>>.
 
-[[factory-methods]]
+[[factory-methods]][[with]]
 [source, java]
 ----
-Produced<K, V> keySerde(final Serde<K> keySerde)
+Produced<K, V> keySerde(
+  Serde<K> keySerde)
 Produced<K, V> streamPartitioner(
-  final StreamPartitioner<? super K, ? super V> partitioner)
-Produced<K, V> valueSerde(final Serde<V> valueSerde)
+  StreamPartitioner<? super K, ? super V> partitioner)
+Produced<K, V> valueSerde(
+  Serde<V> valueSerde)
 Produced<K, V> with(
-  final Serde<K> keySerde,
-  final Serde<V> valueSerde)
+  Serde<K> keySerde,
+  Serde<V> valueSerde)
 Produced<K, V> with(
-  final Serde<K> keySerde,
-  final Serde<V> valueSerde,
-  final StreamPartitioner<? super K, ? super V> partitioner)
+  Serde<K> keySerde,
+  Serde<V> valueSerde,
+  StreamPartitioner<? super K, ? super V> partitioner)
 ----
 
 A `Produced` instance can futher be configured using the <<methods, "with" methods>>.

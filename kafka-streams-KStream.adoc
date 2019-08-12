@@ -307,6 +307,8 @@ KStream<K, V> through(
   Produced<K, V> produced)
 ----
 
+Materializes the stream to a given topic (_passes it through_) and creates a new `KStream` from the topic (using the <<kafka-streams-Produced.adoc#, Produced>> for configuration)
+
 | to
 a| [[to]]
 

@@ -126,7 +126,7 @@ Internally, `mapValues` requests <<builder, InternalStreamsBuilder>> for a new p
 
 NOTE: `mapValues` uses <<builder, InternalStreamsBuilder>> to access the current link:kafka-streams-internals-InternalStreamsBuilder.adoc#internalTopologyBuilder[InternalTopologyBuilder].
 
-=== [[through]] `through` Operator
+=== [[through]] Passing Stream Through Topic -- `through` Method
 
 [source, java]
 ----
@@ -136,11 +136,15 @@ KStream<K, V> through(
   String topic,
   Produced<K, V> produced)
 ----
-<1> Calls the other `to` with `Produced` of `nulls`
+<1> Uses <<kafka-streams-Produced.adoc#with, Produced.with>> factory method to create a `Produced`
 
-NOTE: `through` is part of link:kafka-streams-KStream.adoc#through[KStream Contract] to...FIXME.
+NOTE: `through` is part of <<kafka-streams-KStream.adoc#through, KStream Contract>> to materialize a stream to a topic (_pass it through_) and create a new `KStream` from the topic (using the <<kafka-streams-Produced.adoc#, Produced>> for configuration).
 
-`through`...FIXME
+`through` creates a new <<kafka-streams-internals-ProducedInternal.adoc#, ProducedInternal>> for the given <<kafka-streams-Produced.adoc#, Produced>> and sets the key and value serdes if both `null` with the <<kafka-streams-AbstractStream.adoc#keySerde, keySerde>> and <<kafka-streams-AbstractStream.adoc#valSerde, valSerde>>, respectively.
+
+`through` <<to, writes the stream to the topic>> (with the `ProducedInternal`).
+
+In the end, `through` creates a <<kafka-streams-internals-ConsumedInternal.adoc#, ConsumedInternal>> (with <<kafka-streams-FailOnInvalidTimestamp.adoc#, FailOnInvalidTimestamp>> timestamp extractor) and requests the <<kafka-streams-AbstractStream.adoc#builder, InternalStreamsBuilder>> to <<kafka-streams-internals-InternalStreamsBuilder.adoc#stream, create a KStream to read from the topic>>.
 
 === [[print]] Registering Processor Node with KStreamPrint Processor Supplier and KSTREAM-PRINTER Prefix -- `print` Operator
 
@@ -161,10 +165,16 @@ NOTE: `print` uses <<builder, InternalStreamsBuilder>> to access the current lin
 
 [source, java]
 ----
-void to(final String topic) // <1>
-void to(final String topic, final Produced<K, V> produced)
-void to(final TopicNameExtractor<K, V> topicExtractor)
-void to(final TopicNameExtractor<K, V> topicExtractor, final Produced<K, V> produced)
+void to(
+  String topic) // <1>
+void to(
+  String topic,
+  Produced<K, V> produced)
+void to(
+  TopicNameExtractor<K, V> topicExtractor)
+void to(
+  TopicNameExtractor<K, V> topicExtractor,
+  Produced<K, V> produced)
 ----
 <1> Calls the other `to` with `Produced` of `nulls`
 
