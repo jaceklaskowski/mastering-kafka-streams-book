@@ -1,6 +1,6 @@
 == [[InternalStreamsBuilder]] InternalStreamsBuilder
 
-`InternalStreamsBuilder` is a façade of <<internalTopologyBuilder, InternalTopologyBuilder>> (to add sources and state stores to a topology) and link:kafka-streams-internals-KTableImpl.adoc[KTableImpl] for <<table, table>>, link:kafka-streams-GlobalKTableImpl.adoc[GlobalKTableImpl] for <<globalTable, globalTable>>, and link:kafka-streams-internals-KStreamImpl.adoc[KStreamImpl] for <<stream, stream>> operators.
+`InternalStreamsBuilder` is a façade of <<internalTopologyBuilder, InternalTopologyBuilder>> (to add sources and state stores to a topology) and link:kafka-streams-internals-KTableImpl.adoc[KTableImpl] for <<table, table>>, link:kafka-streams-internals-GlobalKTableImpl.adoc[GlobalKTableImpl] for <<globalTable, globalTable>>, and link:kafka-streams-internals-KStreamImpl.adoc[KStreamImpl] for <<stream, stream>> operators.
 
 `InternalStreamsBuilder` is <<creating-instance, created>> exclusively for <<kafka-streams-StreamsBuilder.adoc#internalStreamsBuilder, StreamsBuilder>>.
 
@@ -148,7 +148,7 @@ NOTE: `addGlobalStore` is used when...FIXME
   MaterializedInternal<K, V, KeyValueStore<Bytes, byte[]>> materialized)
 ----
 
-`globalTable` creates a new <<kafka-streams-GlobalKTableImpl.adoc#, GlobalKTableImpl>>.
+`globalTable` creates a new <<kafka-streams-internals-GlobalKTableImpl.adoc#, GlobalKTableImpl>>.
 
 Internally, `globalTable` requests the `MaterializedInternal` to <<kafka-streams-Materialized.adoc#withLoggingDisabled, disable logging>> (regardless whether it was enabled initially or not).
 
@@ -160,7 +160,7 @@ NOTE: `GlobalKTables` use state stores with logging disabled.
 
 `globalTable` <<addGraphNode, adds>> the `TableSourceNode` to the <<root, root>> node.
 
-In the end, `globalTable` creates a <<kafka-streams-GlobalKTableImpl.adoc#, GlobalKTableImpl>> (with a new <<kafka-streams-internals-KTableSourceValueGetterSupplier.adoc#, KTableSourceValueGetterSupplier>> and the queryable flag of the `MaterializedInternal`).
+In the end, `globalTable` creates a <<kafka-streams-internals-GlobalKTableImpl.adoc#, GlobalKTableImpl>> (with a new <<kafka-streams-internals-KTableSourceValueGetterSupplier.adoc#, KTableSourceValueGetterSupplier>> and the queryable flag of the `MaterializedInternal`).
 
 NOTE: `globalTable` is used exclusively when `StreamsBuilder` is requested to <<kafka-streams-StreamsBuilder.adoc#globalTable, add a GlobalKTable to the topology>>.
 

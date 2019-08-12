@@ -1,6 +1,6 @@
 == [[WindowedChangelogTopicConfig]] WindowedChangelogTopicConfig
 
-`WindowedChangelogTopicConfig` is an link:kafka-streams-InternalTopicConfig.adoc[InternalTopicConfig] that...FIXME
+`WindowedChangelogTopicConfig` is an link:kafka-streams-internals-InternalTopicConfig.adoc[InternalTopicConfig] that...FIXME
 
 `WindowedChangelogTopicConfig` is <<creating-instance, created>> exclusively when `InternalTopologyBuilder` is requested for link:kafka-streams-internals-InternalTopologyBuilder.adoc#createChangelogTopicConfig[create an InternalTopicConfig (for a given name and StateStoreFactory)].
 

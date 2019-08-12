@@ -141,7 +141,7 @@ NOTE: `doTransformValues` is used exclusively when `KTableImpl` is requested to 
   final String internalQueryableName)
 ----
 
-`buildJoin` link:kafka-streams-AbstractStream.adoc#ensureJoinableWith[ensureJoinableWith] the `other` stream.
+`buildJoin` link:kafka-streams-internals-AbstractStream.adoc#ensureJoinableWith[ensureJoinableWith] the `other` stream.
 
 `buildJoin`...FIXME
 

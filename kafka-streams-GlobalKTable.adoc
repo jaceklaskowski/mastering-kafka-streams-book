@@ -24,4 +24,4 @@ Name of the local state store that can be used in interactive queries. If `null`
 NOTE: `GlobalKTable` is an `Evolving` contract which means that compatibility may be broken at a minor release.
 
 [[implementations]]
-NOTE: <<kafka-streams-GlobalKTableImpl.adoc#, GlobalKTableImpl>> is the one and only known implementation of <<contract, GlobalKTable Contract>> in Kafka Streams.
+NOTE: <<kafka-streams-internals-GlobalKTableImpl.adoc#, GlobalKTableImpl>> is the one and only known implementation of <<contract, GlobalKTable Contract>> in Kafka Streams.

@@ -1,6 +1,6 @@
 == [[KGroupedStreamImpl]] KGroupedStreamImpl
 
-`KGroupedStreamImpl` is a concrete <<kafka-streams-AbstractStream.adoc#, stream>> of <<kafka-streams-KGroupedStream.adoc#, grouped records>> that is <<creating-instance, created>> for <<kafka-streams-internals-KStreamImpl.adoc#groupBy, KStream.groupBy>> and <<kafka-streams-internals-KStreamImpl.adoc#groupByKey, KStream.groupByKey>> streaming operators.
+`KGroupedStreamImpl` is a concrete <<kafka-streams-internals-AbstractStream.adoc#, stream>> of <<kafka-streams-KGroupedStream.adoc#, grouped records>> that is <<creating-instance, created>> for <<kafka-streams-internals-KStreamImpl.adoc#groupBy, KStream.groupBy>> and <<kafka-streams-internals-KStreamImpl.adoc#groupByKey, KStream.groupByKey>> streaming operators.
 
 [[creating-instance]]
 `KGroupedStreamImpl` takes the following to be created:
@@ -90,7 +90,7 @@ NOTE: `doAggregate` is used when `KGroupedStreamImpl` is requested to <<reduce, 
 KTable<K, Long> doCount(final Materialized<K, Long, KeyValueStore<Bytes, byte[]>> materialized)
 ----
 
-`doCount` creates a <<kafka-streams-internals-MaterializedInternal.adoc#, MaterializedInternal>> for the given <<kafka-streams-Materialized.adoc#, Materialized>> and requests it to <<kafka-streams-internals-MaterializedInternal.adoc#generateStoreNameIfNeeded, generateStoreNameIfNeeded>> (with the <<kafka-streams-AbstractStream.adoc#builder, InternalStreamsBuilder>> and *KSTREAM-AGGREGATE-* store name prefix).
+`doCount` creates a <<kafka-streams-internals-MaterializedInternal.adoc#, MaterializedInternal>> for the given <<kafka-streams-Materialized.adoc#, Materialized>> and requests it to <<kafka-streams-internals-MaterializedInternal.adoc#generateStoreNameIfNeeded, generateStoreNameIfNeeded>> (with the <<kafka-streams-internals-AbstractStream.adoc#builder, InternalStreamsBuilder>> and *KSTREAM-AGGREGATE-* store name prefix).
 
 Unless specified (and not `null`), `doCount` defines key and value serdes.
 

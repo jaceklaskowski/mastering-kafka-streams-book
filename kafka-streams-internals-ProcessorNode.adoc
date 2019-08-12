@@ -39,7 +39,7 @@ void process(final K key, final V value)
 
 `process` requests the <<processor, Processor>> to <<kafka-streams-Processor.adoc#process, process the given key and value pair>>.
 
-In the end, `process` requests the <<nodeMetrics, NodeMetrics>> for the <<kafka-streams-NodeMetrics.adoc#nodeProcessTimeSensor, nodeProcessTimeSensor>> to record the processing time.
+In the end, `process` requests the <<nodeMetrics, NodeMetrics>> for the <<kafka-streams-internals-NodeMetrics.adoc#nodeProcessTimeSensor, nodeProcessTimeSensor>> to record the processing time.
 
 [NOTE]
 ====
@@ -108,7 +108,7 @@ void punctuate(
 
 `punctuate` requests the given <<kafka-streams-Punctuator.adoc#, Punctuator>> to <<kafka-streams-Punctuator.adoc#punctuate, punctuate>> with the given `timestamp`.
 
-In the end, `punctuate` requests the <<nodeMetrics, NodeMetrics>> for the <<kafka-streams-NodeMetrics.adoc#nodePunctuateTimeSensor, nodePunctuateTimeSensor>> to record the time for node punctuation.
+In the end, `punctuate` requests the <<nodeMetrics, NodeMetrics>> for the <<kafka-streams-internals-NodeMetrics.adoc#nodePunctuateTimeSensor, nodePunctuateTimeSensor>> to record the time for node punctuation.
 
 NOTE: `punctuate` is used exclusively when `StreamTask` is requested to <<kafka-streams-internals-StreamTask.adoc#punctuate, punctuate a processor>>.
 
@@ -125,7 +125,7 @@ NOTE: `punctuate` is used exclusively when `StreamTask` is requested to <<kafka-
 Used when...FIXME
 
 | nodeMetrics
-| [[nodeMetrics]] <<kafka-streams-NodeMetrics.adoc#, NodeMetrics>>
+| [[nodeMetrics]] <<kafka-streams-internals-NodeMetrics.adoc#, NodeMetrics>>
 
 Used when...FIXME
 

@@ -309,22 +309,21 @@
 .. link:kafka-streams-internals-InternalTopologyBuilder-StateStoreFactory.adoc[StateStoreFactory]
 
 . link:kafka-streams-internals-InternalTopologyBuilder-NodeFactory.adoc[NodeFactory]
+.. link:kafka-streams-internals-InternalTopologyBuilder-GlobalStore.adoc[GlobalStore]
 .. link:kafka-streams-internals-InternalTopologyBuilder-ProcessorNodeFactory.adoc[ProcessorNodeFactory]
 .. link:kafka-streams-internals-InternalTopologyBuilder-SinkNodeFactory.adoc[SinkNodeFactory]
 .. link:kafka-streams-internals-InternalTopologyBuilder-SourceNodeFactory.adoc[SourceNodeFactory]
 
 . link:kafka-streams-internals-InternalTopologyBuilder-TopologyDescription.adoc[InternalTopologyBuilder.TopologyDescription]
 
-. link:kafka-streams-NodeMetrics.adoc[NodeMetrics]
+. link:kafka-streams-internals-NodeMetrics.adoc[NodeMetrics]
 
-. link:kafka-streams-GlobalStore.adoc[GlobalStore]
+. link:kafka-streams-internals-InternalTopicConfig.adoc[InternalTopicConfig]
+.. link:kafka-streams-internals-WindowedChangelogTopicConfig.adoc[WindowedChangelogTopicConfig]
+.. link:kafka-streams-internals-UnwindowedChangelogTopicConfig.adoc[UnwindowedChangelogTopicConfig]
 
-. link:kafka-streams-InternalTopicConfig.adoc[InternalTopicConfig]
-.. link:kafka-streams-WindowedChangelogTopicConfig.adoc[WindowedChangelogTopicConfig]
-.. link:kafka-streams-UnwindowedChangelogTopicConfig.adoc[UnwindowedChangelogTopicConfig]
-
-. link:kafka-streams-internals-WindowedStreamPartitioner.adoc[WindowedStreamPartitioner -- Default StreamPartitioner of Windowed Keys]
-. link:kafka-streams-internals-WindowedSerializer.adoc[WindowedSerializer Contract]
+. link:kafka-streams-internals-WindowedStreamPartitioner.adoc[WindowedStreamPartitioner]
+. link:kafka-streams-internals-WindowedSerializer.adoc[WindowedSerializer]
 
 . link:kafka-streams-internals-DefaultKafkaClientSupplier.adoc[DefaultKafkaClientSupplier]
 
@@ -332,13 +331,13 @@
 . link:kafka-streams-internals-TimeWindow.adoc[TimeWindow]
 . link:kafka-streams-internals-UnlimitedWindow.adoc[UnlimitedWindow]
 
-. link:kafka-streams-AbstractStream.adoc[AbstractStream]
+. link:kafka-streams-internals-AbstractStream.adoc[AbstractStream]
+.. link:kafka-streams-internals-GlobalKTableImpl.adoc[GlobalKTableImpl]
+.. link:kafka-streams-internals-KGroupedStreamImpl.adoc[KGroupedStreamImpl]
+.. link:kafka-streams-internals-KGroupedTableImpl.adoc[KGroupedTableImpl]
+.. link:kafka-streams-internals-KStreamAggregate.adoc[KStreamAggregate]
 .. link:kafka-streams-internals-KStreamImpl.adoc[KStreamImpl]
 .. link:kafka-streams-internals-KTableImpl.adoc[KTableImpl]
-.. link:kafka-streams-GlobalKTableImpl.adoc[GlobalKTableImpl]
-.. link:kafka-streams-internals-KGroupedStreamImpl.adoc[KGroupedStreamImpl]
-.. link:kafka-streams-internals-KStreamAggregate.adoc[KStreamAggregate]
-.. link:kafka-streams-internals-KGroupedTableImpl.adoc[KGroupedTableImpl]
 .. link:kafka-streams-internals-SessionWindowedKStreamImpl.adoc[SessionWindowedKStreamImpl -- Default SessionWindowedKStream]
 .. link:kafka-streams-internals-TimeWindowedKStreamImpl.adoc[TimeWindowedKStreamImpl]
 

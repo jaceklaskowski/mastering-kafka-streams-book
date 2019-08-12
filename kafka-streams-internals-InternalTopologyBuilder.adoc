@@ -1064,7 +1064,7 @@ InternalTopicConfig createChangelogTopicConfig(
   final String name)
 ----
 
-`createChangelogTopicConfig` creates a <<kafka-streams-UnwindowedChangelogTopicConfig.adoc#, UnwindowedChangelogTopicConfig>> or a <<kafka-streams-WindowedChangelogTopicConfig.adoc#, WindowedChangelogTopicConfig>> per the <<kafka-streams-internals-InternalTopologyBuilder-StateStoreFactory.adoc#isWindowStore, isWindowStore>> flag of the input `StateStoreFactory`.
+`createChangelogTopicConfig` creates a <<kafka-streams-internals-UnwindowedChangelogTopicConfig.adoc#, UnwindowedChangelogTopicConfig>> or a <<kafka-streams-internals-WindowedChangelogTopicConfig.adoc#, WindowedChangelogTopicConfig>> per the <<kafka-streams-internals-InternalTopologyBuilder-StateStoreFactory.adoc#isWindowStore, isWindowStore>> flag of the input `StateStoreFactory`.
 
 Internally, `createChangelogTopicConfig` requests the input link:kafka-streams-internals-InternalTopologyBuilder-StateStoreFactory.adoc[StateStoreFactory] for link:kafka-streams-internals-InternalTopologyBuilder-StateStoreFactory.adoc#isWindowStore[isWindowStore] flag.
 
@@ -1072,11 +1072,11 @@ NOTE: `isWindowStore` flag is enabled when a `StateStoreFactory` is created for 
 
 If `isWindowStore` flag is enabled (`true`), `createChangelogTopicConfig` does the following:
 
-. Requests the input `StateStoreFactory` for link:kafka-streams-internals-InternalTopologyBuilder-StateStoreFactory.adoc#logConfig[logConfig] and uses it to create a link:kafka-streams-WindowedChangelogTopicConfig.adoc#creating-instance[WindowedChangelogTopicConfig] (for the input `name`)
+. Requests the input `StateStoreFactory` for link:kafka-streams-internals-InternalTopologyBuilder-StateStoreFactory.adoc#logConfig[logConfig] and uses it to create a link:kafka-streams-internals-WindowedChangelogTopicConfig.adoc#creating-instance[WindowedChangelogTopicConfig] (for the input `name`)
 
-. Requests the input `StateStoreFactory` for link:kafka-streams-internals-InternalTopologyBuilder-StateStoreFactory.adoc#retentionPeriod[retentionPeriod] and uses it to requests the `WindowedChangelogTopicConfig` to link:kafka-streams-WindowedChangelogTopicConfig.adoc#setRetentionMs[setRetentionMs]
+. Requests the input `StateStoreFactory` for link:kafka-streams-internals-InternalTopologyBuilder-StateStoreFactory.adoc#retentionPeriod[retentionPeriod] and uses it to requests the `WindowedChangelogTopicConfig` to link:kafka-streams-internals-WindowedChangelogTopicConfig.adoc#setRetentionMs[setRetentionMs]
 
-If `isWindowStore` flag is disabled (`false`), `createChangelogTopicConfig` requests the input `StateStoreFactory` for link:kafka-streams-internals-InternalTopologyBuilder-StateStoreFactory.adoc#logConfig[logConfig] and uses it to create a link:kafka-streams-UnwindowedChangelogTopicConfig.adoc#creating-instance[UnwindowedChangelogTopicConfig] (for the input `name`).
+If `isWindowStore` flag is disabled (`false`), `createChangelogTopicConfig` requests the input `StateStoreFactory` for link:kafka-streams-internals-InternalTopologyBuilder-StateStoreFactory.adoc#logConfig[logConfig] and uses it to create a link:kafka-streams-internals-UnwindowedChangelogTopicConfig.adoc#creating-instance[UnwindowedChangelogTopicConfig] (for the input `name`).
 
 NOTE: `createChangelogTopicConfig` is used exclusively when `InternalTopologyBuilder` is requested for <<topicGroups, topic groups>>.
 
