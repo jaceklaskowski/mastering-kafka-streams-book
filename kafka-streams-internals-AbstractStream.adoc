@@ -1,115 +1,50 @@
 == [[AbstractStream]] AbstractStream
 
-`AbstractStream` is a base abstraction for the <<implementations, different concrete streams>>.
-
-[[creating-instance]]
-Every `AbstractStream` has the following internal properties:
-
-* [[builder]] link:kafka-streams-internals-InternalStreamsBuilder.adoc[InternalStreamsBuilder]
-* [[name]] Name
-* [[sourceNodes]] One or more names of the source nodes
+`AbstractStream` is the base abstraction of the <<implementations, streams>>.
 
 [[implementations]]
 .AbstractStreams
-[cols="1,2",options="header",width="100%"]
+[cols="30,70",options="header",width="100%"]
 |===
 | AbstractStream
 | Description
 
-| [[KTableImpl]] link:kafka-streams-internals-KTableImpl.adoc[KTableImpl]
-|
+| <<kafka-streams-internals-KGroupedStreamImpl.adoc#, KGroupedStreamImpl>>
+| [[KGroupedStreamImpl]]
 
-| [[KGroupedTableImpl]] link:kafka-streams-internals-KGroupedTableImpl.adoc[KGroupedTableImpl]
-|
+| <<kafka-streams-internals-KGroupedTableImpl.adoc#, KGroupedTableImpl>>
+| [[KGroupedTableImpl]]
 
-| [[TimeWindowedKStreamImpl]] link:kafka-streams-internals-TimeWindowedKStreamImpl.adoc[TimeWindowedKStreamImpl]
-|
+| <<kafka-streams-internals-KStreamImpl.adoc#, KStreamImpl>>
+| [[KStreamImpl]]
 
-| [[SessionWindowedKStreamImpl]] link:kafka-streams-internals-SessionWindowedKStreamImpl.adoc[SessionWindowedKStreamImpl]
-|
+| <<kafka-streams-internals-KTableImpl.adoc#, KTableImpl>>
+| [[KTableImpl]]
 
-| [[KStreamImpl]] link:kafka-streams-internals-KStreamImpl.adoc[KStreamImpl]
-|
+| <<kafka-streams-internals-SessionWindowedKStreamImpl.adoc#, SessionWindowedKStreamImpl>>
+| [[SessionWindowedKStreamImpl]]
 
-| [[KGroupedStreamImpl]] link:kafka-streams-internals-KGroupedStreamImpl.adoc[KGroupedStreamImpl]
-|
+| <<kafka-streams-internals-TimeWindowedKStreamImpl.adoc#, TimeWindowedKStreamImpl>>
+| [[TimeWindowedKStreamImpl]]
+
 |===
 
-=== [[storeFactory]] `storeFactory` Static Method
+[[creating-instance]]
+Every `AbstractStream` has the following properties:
 
-[source, java]
-----
-static <T, K> Stores.PersistentKeyValueFactory<K, T> storeFactory(
-  final Serde<K> keySerde,
-  final Serde<T> aggValueSerde,
-  final String storeName)
-----
-
-`storeFactory` simply requests `Stores` to link:kafka-streams-Stores.adoc#create[create a StoreFactory] with the input parameters.
-
-[NOTE]
-====
-`storeFactory` is used when:
-
-* `AbstractStream` is requested for <<keyValueStore, keyValueStore>> and <<windowedStore, windowedStore>>
-
-* `KGroupedStreamImpl` is requested for link:kafka-streams-internals-KGroupedStreamImpl.adoc#aggregate[aggregate] and link:kafka-streams-internals-KGroupedStreamImpl.adoc#reduce[reduce]
-====
-
-=== [[keyValueStore]] `keyValueStore` Static Method
-
-[source, java]
-----
-static <T, K> org.apache.kafka.streams.processor.StateStoreSupplier<KeyValueStore>
-keyValueStore(
-  final Serde<K> keySerde,
-  final Serde<T> aggValueSerde,
-  final String storeName)
-----
-
-`keyValueStore`...FIXME
-
-NOTE: `keyValueStore` is used when...FIXME
-
-=== [[windowedStore]] `windowedStore` Static Method
-
-[source, java]
-----
-static <W extends Window, T, K> org.apache.kafka.streams.processor.StateStoreSupplier<WindowStore>
-windowedStore(
-  final Serde<K> keySerde,
-  final Serde<T> aggValSerde,
-  final Windows<W> windows,
-  final String storeName)
-----
-
-`windowedStore`...FIXME
-
-NOTE: `windowedStore` is used when...FIXME
-
-=== [[toInternalValueTransformerSupplier]] Converting ValueTransformerSupplier or ValueTransformerWithKeySupplier to InternalValueTransformerWithKeySupplier -- `toInternalValueTransformerSupplier` Method
-
-[source, java]
-----
-static <K, V, VR> InternalValueTransformerWithKeySupplier<K, V, VR>
-toInternalValueTransformerSupplier(final ValueTransformerSupplier<V, VR> valueTransformerSupplier)
-static <K, V, VR> InternalValueTransformerWithKeySupplier<K, V, VR>
-toInternalValueTransformerSupplier(final ValueTransformerWithKeySupplier<K, V, VR> valueTransformerWithKeySupplier)
-----
-
-`toInternalValueTransformerSupplier` requests a `ValueTransformer` or `ValueTransformerWithKey` from the link:kafka-streams-ValueTransformerSupplier.adoc#get[ValueTransformerSupplier] or `ValueTransformerWithKeySupplier`, respectively.
-
-`toInternalValueTransformerSupplier` then creates a `InternalValueTransformerWithKeySupplier` that can produce a `InternalValueTransformerWithKey` that passes all calls to the `ValueTransformerSupplier` or `ValueTransformerWithKeySupplier`, respectively.
-
-`toInternalValueTransformerSupplier` reports an `NullPointerException` when `ValueTransformerSupplier` or `ValueTransformerWithKeySupplier` are `null`.
-
-NOTE: `toInternalValueTransformerSupplier` is used exclusively when `KStreamImpl` is requested for link:kafka-streams-internals-KStreamImpl.adoc#transformValues[transforming values with state].
+* [[name]] Name
+* [[keySerde]] Key Serde (`Serde<K>`)
+* [[valSerde]] Value Serde (`Serde<V>`)
+* [[sourceNodes]] Names of the source nodes (`Set<String>`)
+* [[streamsGraphNode]] <<kafka-streams-internals-StreamsGraphNode.adoc#, StreamsGraphNode>>
+* [[builder]] <<kafka-streams-internals-InternalStreamsBuilder.adoc#, InternalStreamsBuilder>>
 
 === [[ensureJoinableWith]] `ensureJoinableWith` Method
 
 [source, java]
 ----
-Set<String> ensureJoinableWith(final AbstractStream<K> other)
+Set<String> ensureJoinableWith(
+  AbstractStream<K, ?> other)
 ----
 
 `ensureJoinableWith`...FIXME
@@ -118,7 +53,57 @@ Set<String> ensureJoinableWith(final AbstractStream<K> other)
 ====
 `ensureJoinableWith` is used when:
 
-* `KStreamImpl` is requested to link:kafka-streams-internals-KStreamImpl.adoc#doJoin[doJoin] and link:kafka-streams-internals-KStreamImpl.adoc#doStreamTableJoin[doStreamTableJoin]
+* `KStreamImpl` is requested to <<kafka-streams-internals-KStreamImpl.adoc#join, join>>, <<kafka-streams-internals-KStreamImpl.adoc#outerJoin, outerJoin>> and <<kafka-streams-internals-KStreamImpl.adoc#leftJoin, leftJoin>>
 
-* `KTableImpl` is requested to link:kafka-streams-internals-KTableImpl.adoc#buildJoin[buildJoin]
+* `KTableImpl` is requested to <<kafka-streams-internals-KTableImpl.adoc#join, join>>, <<kafka-streams-internals-KTableImpl.adoc#leftJoin, leftJoin>> and <<kafka-streams-internals-KTableImpl.adoc#outerJoin, outerJoin>>
+====
+
+=== [[toValueTransformerWithKeySupplier]] `toValueTransformerWithKeySupplier` Static Method
+
+[source, java]
+----
+ValueTransformerWithKeySupplier<K, V, VR> toValueTransformerWithKeySupplier(
+  ValueTransformerSupplier<V, VR> valueTransformerSupplier)
+----
+
+`toValueTransformerWithKeySupplier`...FIXME
+
+NOTE: `toValueTransformerWithKeySupplier` is used when `KStreamImpl` is requested to <<kafka-streams-internals-KStreamImpl.adoc#transformValues, transformValues>> and <<kafka-streams-internals-KStreamImpl.adoc#flatTransformValues, flatTransformValues>>.
+
+=== [[reverseJoiner]] `reverseJoiner` Static Method
+
+[source, java]
+----
+ValueJoiner<T2, T1, R> reverseJoiner(
+  ValueJoiner<T1, T2, R> joiner)
+----
+
+`reverseJoiner`...FIXME
+
+[NOTE]
+====
+`reverseJoiner` is used when:
+
+* `KStreamImplJoin` is requested to <<kafka-streams-internals-KStreamImpl-KStreamImplJoin.adoc#join, join>> (for <<kafka-streams-internals-KStreamImpl.adoc#join, KStreamImpl.join>>, <<kafka-streams-internals-KStreamImpl.adoc#outerJoin, KStreamImpl.outerJoin>> and <<kafka-streams-internals-KStreamImpl.adoc#leftJoin, KStreamImpl.leftJoin>> operators)
+
+* `KTableImpl` is requested to <<kafka-streams-internals-KTableImpl.adoc#doJoin, doJoin>> (for <<kafka-streams-internals-KTableImpl.adoc#join, KTableImpl.join>>, <<kafka-streams-internals-KTableImpl.adoc#leftJoin, KTableImpl.leftJoin>> and <<kafka-streams-internals-KTableImpl.adoc#outerJoin, KTableImpl.outerJoin>> operators)
+====
+
+=== [[withKey]] `withKey` Static Method
+
+[source, java]
+----
+ValueMapperWithKey<K, V, VR> withKey(
+  ValueMapper<V, VR> valueMapper)
+----
+
+`withKey`...FIXME
+
+[NOTE]
+====
+`withKey` is used when:
+
+* `KStreamImpl` is requested to <<kafka-streams-internals-KStreamImpl.adoc#mapValues, mapValues>> and <<kafka-streams-internals-KStreamImpl.adoc#flatMapValues, flatMapValues>>
+
+* `KTableImpl` is requested to <<kafka-streams-internals-KTableImpl.adoc#mapValues, mapValues>>
 ====

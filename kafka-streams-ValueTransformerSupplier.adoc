@@ -20,4 +20,4 @@ interface ValueTransformerSupplier<V, VR> {
 FIXME Example of KStream.transformValues
 ----
 
-`get` is used exclusively when `AbstractStream` is requested for link:kafka-streams-internals-AbstractStream.adoc#toInternalValueTransformerSupplier[toInternalValueTransformerSupplier]
+`get`...FIXME

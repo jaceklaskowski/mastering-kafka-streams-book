@@ -1,6 +1,6 @@
 == [[TimeWindowedKStreamImpl]] TimeWindowedKStreamImpl
 
-`TimeWindowedKStreamImpl` is a <<kafka-streams-internals-AbstractStream.adoc#, stream>> that allows for <<kafka-streams-TimeWindowedKStream.adoc#, time-windowed streaming aggregations>>.
+`TimeWindowedKStreamImpl` is a <<kafka-streams-internals-AbstractStream.adoc#, stream>> for <<kafka-streams-TimeWindowedKStream.adoc#, time-windowed streaming aggregations>>.
 
 `TimeWindowedKStreamImpl` is <<creating-instance, created>> exclusively when `KGroupedStreamImpl` is requested to <<kafka-streams-internals-KGroupedStreamImpl.adoc#windowedBy-Windows, windowedBy (with a Windows)>>.
 

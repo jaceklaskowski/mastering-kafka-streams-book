@@ -28,9 +28,10 @@
 
 [source, java]
 ----
-KStream<K, R> doStreamTableJoin(
-  KTable<K, V1> other,
-  ValueJoiner<? super V, ? super V1, ? extends R> joiner,
+KStream<K, VR> doStreamTableJoin(
+  KTable<K, VO> other,
+  ValueJoiner<? super V, ? super VO, ? extends VR> joiner,
+  Joined<K, V, VO> joined,
   boolean leftJoin)
 ----
 
@@ -42,12 +43,12 @@ NOTE: `doStreamTableJoin` is used when `KStreamImpl` is requested to <<join, joi
 
 [source, java]
 ----
-<V1, R> KStream<K, R> doJoin(
-  final KStream<K, V1> other,
-  final ValueJoiner<? super V, ? super V1, ? extends R> joiner,
-  final JoinWindows windows,
-  final Joined<K, V, V1> joined,
-  final KStreamImplJoin join)
+KStream<K, VR> doJoin(
+  KStream<K, VO> other,
+  ValueJoiner<? super V, ? super VO, ? extends VR> joiner,
+  JoinWindows windows,
+  Joined<K, V, VO> joined,
+  KStreamImplJoin join)
 ----
 
 `doJoin`...FIXME
@@ -68,7 +69,7 @@ KStream<K, VR> transformValues(
 
 NOTE: `transformValues` is part of link:kafka-streams-KStream.adoc#transformValues[KStream Contract] for a stateful record-by-record value transformation.
 
-`transformValues` link:kafka-streams-internals-AbstractStream.adoc#toInternalValueTransformerSupplier[converts ValueTransformerSupplier or ValueTransformerWithKeySupplier to InternalValueTransformerWithKeySupplier] followed by the internal <<transformValues-private, transformValues>>.
+`transformValues`...FIXME
 
 `transformValues` reports a `NullPointerException` when either `ValueTransformerSupplier` or `ValueTransformerWithKeySupplier` is `null`.
 

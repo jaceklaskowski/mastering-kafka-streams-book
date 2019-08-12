@@ -16,4 +16,4 @@ KStream<K1, R> join(
 
 `join`...FIXME
 
-NOTE: `join` is used exclusively when `KStreamImpl` is requested to <<kafka-streams-internals-KStreamImpl.adoc#doJoin, doJoin>> (for <<kafka-streams-internals-KStreamImpl.adoc#join, join>>, <<kafka-streams-internals-KStreamImpl.adoc#outerJoin, outerJoin>> and <<kafka-streams-internals-KStreamImpl.adoc#leftJoin, leftJoin>> join operators).
+NOTE: `join` is used exclusively when `KStreamImpl` is requested to <<kafka-streams-internals-KStreamImpl.adoc#doJoin, doJoin>> (for <<kafka-streams-internals-KStreamImpl.adoc#join, KStreamImpl.join>>, <<kafka-streams-internals-KStreamImpl.adoc#outerJoin, KStreamImpl.outerJoin>> and <<kafka-streams-internals-KStreamImpl.adoc#leftJoin, KStreamImpl.leftJoin>> operators).

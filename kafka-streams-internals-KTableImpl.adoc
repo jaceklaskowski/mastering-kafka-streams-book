@@ -151,10 +151,10 @@ NOTE: `buildJoin` is used exclusively when `KTableImpl` is requested to <<doJoin
 
 [source, java]
 ----
-<VO, VR> KTable<K, VR> doJoin(
+KTable<K, VR> doJoin(
   KTable<K, VO> other,
   ValueJoiner<? super V, ? super VO, ? extends VR> joiner,
-  MaterializedInternal<K, VR, KeyValueStore<Bytes, byte[]>> materialized,
+  MaterializedInternal<K, VR, KeyValueStore<Bytes, byte[]>> materializedInternal,
   boolean leftOuter,
   boolean rightOuter)
 ----
