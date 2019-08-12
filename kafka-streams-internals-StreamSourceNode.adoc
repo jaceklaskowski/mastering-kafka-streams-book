@@ -2,6 +2,8 @@
 
 `StreamSourceNode` is a <<kafka-streams-internals-StreamsGraphNode.adoc#, StreamsGraphNode>> that is <<creating-instance, created>> when `InternalStreamsBuilder` is requested to <<kafka-streams-internals-InternalStreamsBuilder.adoc#stream, add a KStream to a topology>>.
 
+In other words, `StreamSourceNode` represents <<kafka-streams-StreamsBuilder.adoc#stream, StreamsBuilder.stream>> and <<kafka-streams-internals-KStreamImpl.adoc#through, KStreamImpl.through>> operators.
+
 [[creating-instance]]
 `StreamSourceNode` takes the following when created:
 

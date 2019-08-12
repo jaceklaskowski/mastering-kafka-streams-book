@@ -130,8 +130,11 @@ NOTE: `mapValues` uses <<builder, InternalStreamsBuilder>> to access the current
 
 [source, java]
 ----
-KStream<K, V> through(final String topic) // <1>
-KStream<K, V> through(final String topic, final Produced<K, V> produced)
+KStream<K, V> through(
+  String topic) // <1>
+KStream<K, V> through(
+  String topic,
+  Produced<K, V> produced)
 ----
 <1> Calls the other `to` with `Produced` of `nulls`
 

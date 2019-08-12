@@ -1,25 +1,40 @@
 == [[StreamsGraphNode]] StreamsGraphNode Contract -- Graph Nodes that Write to Topology
 
-`StreamsGraphNode` is the <<contract, abstraction>> of <<implementations, graph nodes>> that can <<writeToTopology, writeToTopology>>.
+`StreamsGraphNode` is the <<contract, abstraction>> of <<implementations, graph nodes>> that can <<writeToTopology, write to a topology>>.
 
 [[contract]]
-[[writeToTopology]]
+.StreamsGraphNode Contract (Abstract Methods Only)
+[cols="30m,70",options="header",width="100%"]
+|===
+| Method
+| Description
+
+| writeToTopology
+a| [[writeToTopology]]
+
 [source, java]
 ----
 void writeToTopology(
   InternalTopologyBuilder topologyBuilder)
 ----
 
-`StreamsGraphNode` is used exclusively in <<kafka-streams-internals-InternalStreamsBuilder.adoc#root, InternalStreamsBuilder>> (to <<kafka-streams-internals-InternalStreamsBuilder.adoc#buildAndOptimizeTopology, build a topology>>).
+Used exclusively when `InternalStreamsBuilder` is requested to <<kafka-streams-internals-InternalStreamsBuilder.adoc#buildAndOptimizeTopology, build a topology>>
+
+|===
+
+`StreamsGraphNode` is used in <<kafka-streams-internals-InternalStreamsBuilder.adoc#, InternalStreamsBuilder>> so it can <<kafka-streams-internals-InternalStreamsBuilder.adoc#buildAndOptimizeTopology, build a topology>>. `InternalStreamsBuilder` uses the <<kafka-streams-internals-InternalStreamsBuilder.adoc#root, root node>> that all child `StreamsGraphNodes` can be <<kafka-streams-internals-InternalStreamsBuilder.adoc#addGraphNode, added to>>.
 
 [source, scala]
 ----
-import org.apache.kafka.streams.kstream.internals.InternalStreamsBuilder
 import org.apache.kafka.streams.processor.internals.InternalTopologyBuilder
-val builder = new InternalStreamsBuilder(new InternalTopologyBuilder)
+val intTopologyBuilder = new InternalTopologyBuilder
+
+import org.apache.kafka.streams.kstream.internals.InternalStreamsBuilder
+val intStreamsBuilder = new InternalStreamsBuilder(intTopologyBuilder)
 
 import org.apache.kafka.streams.state.Stores
-val lruMapSupplier = Stores.lruMap("input-stream", 5)
+val storeName = "input-stream"
+val lruMapSupplier = Stores.lruMap(storeName, 5)
 import org.apache.kafka.common.serialization.Serdes
 import org.apache.kafka.streams.state.{KeyValueStore, StoreBuilder}
 val storeBuilder = Stores.keyValueStoreBuilder(
@@ -27,58 +42,68 @@ val storeBuilder = Stores.keyValueStoreBuilder(
   Serdes.Long(),
   Serdes.Long())
 
-builder.addStateStore(storeBuilder)
+intStreamsBuilder.addStateStore(storeBuilder)
 
-val root = builder.root
-scala> :type root
-org.apache.kafka.streams.kstream.internals.graph.StreamsGraphNode
+val root = intStreamsBuilder.root
+import org.apache.kafka.streams.kstream.internals.graph.StreamsGraphNode
+assert(root.isInstanceOf[StreamsGraphNode])
 
 val children = root.children
-scala> :type children
-java.util.Collection[org.apache.kafka.streams.kstream.internals.graph.StreamsGraphNode]
+assert(children.isInstanceOf[java.util.Collection[StreamsGraphNode]])
+
+// Triggers StreamsGraphNode.writeToTopology of all nodes
+intStreamsBuilder.buildAndOptimizeTopology
+
+intTopologyBuilder.setApplicationId("required to complete optimization")
+
+import scala.collection.JavaConverters._
+assert(intTopologyBuilder.allStateStoreName.asScala.head == storeName)
 ----
-
-[[creating-instance]]
-`StreamsGraphNode` takes the following when created:
-
-* [[nodeName]] *Name* of the node
-* [[repartitionRequired]] *repartitionRequired* flag (that does not seem to be used)
-
-NOTE: `StreamsGraphNode` is a Java abstract class and cannot be <<creating-instance, created>> directly. It is created indirectly for the <<implementations, concrete StreamsGraphNodes>> and as the <<kafka-streams-internals-InternalStreamsBuilder.adoc#root, root node of an InternalStreamsBuilder>>.
 
 [[valueChangingOperation]]
 [[setValueChangingOperation]]
 `StreamsGraphNode` uses the `valueChangingOperation` flag for...FIXME
 
 [[implementations]]
-.StreamsGraphNodes (Direct Implementations)
+.StreamsGraphNodes (Direct Implementations and Extensions Only)
 [cols="1,2",options="header",width="100%"]
 |===
 | StreamsGraphNode
 | Description
 
 | <<kafka-streams-internals-BaseJoinProcessorNode.adoc#, BaseJoinProcessorNode>>
-| [[BaseJoinProcessorNode]]
+| [[BaseJoinProcessorNode]] Base of <<kafka-streams-internals-KTableKTableJoinNode.adoc#, KTableKTableJoinNode>> and <<kafka-streams-internals-StreamStreamJoinNode.adoc#, StreamStreamJoinNode>>
 
 | <<kafka-streams-internals-BaseRepartitionNode.adoc#, BaseRepartitionNode>>
-| [[BaseRepartitionNode]]
+| [[BaseRepartitionNode]] Base of <<kafka-streams-internals-GroupedTableOperationRepartitionNode.adoc#, GroupedTableOperationRepartitionNode>> and <<kafka-streams-internals-OptimizableRepartitionNode.adoc#, OptimizableRepartitionNode>>
 
 | <<kafka-streams-internals-ProcessorGraphNode.adoc#, ProcessorGraphNode>>
-| [[ProcessorGraphNode]]
+| [[ProcessorGraphNode]] Represents stateless operators in <<kafka-streams-internals-KStreamImpl.adoc#, KStreamImpl>> and <<kafka-streams-internals-KTableImpl.adoc#, KTableImpl>>
+
+Base of <<kafka-streams-internals-StatefulProcessorNode.adoc#, StatefulProcessorNode>>
 
 | <<kafka-streams-internals-StateStoreNode.adoc#, StateStoreNode>>
-| [[StateStoreNode]]
+| [[StateStoreNode]] Represents <<kafka-streams-StreamsBuilder.adoc#addStateStore, StreamsBuilder.addStateStore>> operator
+
+Base of <<kafka-streams-internals-GlobalStoreNode.adoc#, GlobalStoreNode>>
 
 | <<kafka-streams-internals-StreamSinkNode.adoc#, StreamSinkNode>>
-| [[StreamSinkNode]]
+| [[StreamSinkNode]] Represents <<kafka-streams-internals-KStreamImpl.adoc#to, KStreamImpl.to>> operator
 
 | <<kafka-streams-internals-StreamSourceNode.adoc#, StreamSourceNode>>
-| [[StreamSourceNode]]
+| [[StreamSourceNode]] Represents <<kafka-streams-StreamsBuilder.adoc#stream, StreamsBuilder.stream>> and <<kafka-streams-internals-KStreamImpl.adoc#through, KStreamImpl.through>> operators
+
+Base of <<kafka-streams-internals-TableSourceNode.adoc#, TableSourceNode>>
 
 | <<kafka-streams-internals-StreamTableJoinNode.adoc#, StreamTableJoinNode>>
 | [[StreamTableJoinNode]]
 
 | <<kafka-streams-internals-TableProcessorNode.adoc#, TableProcessorNode>>
-| [[TableProcessorNode]]
+| [[TableProcessorNode]] Represents <<kafka-streams-internals-KTableImpl.adoc#filter, KTableImpl.filter>>, <<kafka-streams-internals-KTableImpl.adoc#filterNot, KTableImpl.filterNot>>, <<kafka-streams-internals-KTableImpl.adoc#mapValues, KTableImpl.mapValues>>, and <<kafka-streams-internals-KTableImpl.adoc#transformValues, KTableImpl.transformValues>> operators
 
 |===
+
+[[creating-instance]][[nodeName]]
+`StreamsGraphNode` takes a single *node name* to be created.
+
+NOTE: `StreamsGraphNode` is a Java abstract class and cannot be <<creating-instance, created>> directly. It is created indirectly for the <<implementations, concrete StreamsGraphNodes>> and as the <<kafka-streams-internals-InternalStreamsBuilder.adoc#root, root node of InternalStreamsBuilder>>.

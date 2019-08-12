@@ -2,6 +2,8 @@
 
 `StreamSinkNode` is a <<kafka-streams-internals-StreamsGraphNode.adoc#, StreamsGraphNode>> that is <<creating-instance, created>> exclusively when `KStreamImpl` is requested to <<kafka-streams-internals-KStreamImpl.adoc#to, add a StreamSinkNode to a node graph>>.
 
+In other words, `StreamSinkNode` represents <<kafka-streams-internals-KStreamImpl.adoc#to, KStreamImpl.to>> operator.
+
 [[creating-instance]]
 `StreamSinkNode` takes the following when created:
 

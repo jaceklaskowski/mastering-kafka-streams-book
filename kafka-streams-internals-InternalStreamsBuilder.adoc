@@ -50,11 +50,11 @@ NOTE: `addStateStore` is used exclusively when `StreamsBuilder` is requested to 
 [source, java]
 ----
 KStream<K, V> stream(
-  final Collection<String> topics,
-  final ConsumedInternal<K, V> consumed)
+  Collection<String> topics,
+  ConsumedInternal<K, V> consumed)
 KStream<K, V> stream(
-  final Pattern topicPattern,
-  final ConsumedInternal<K, V> consumed)
+  Pattern topicPattern,
+  ConsumedInternal<K, V> consumed)
 ----
 
 `stream` <<newProcessorName, creates a new processor name>> with <<kafka-streams-internals-KStreamImpl.adoc#SOURCE_NAME, KSTREAM-SOURCE>> prefix.
@@ -82,6 +82,15 @@ org.apache.kafka.streams.kstream.KStream[String,String]
 import org.apache.kafka.streams.kstream.internals.KStreamImpl
 assert(kstream.isInstanceOf[KStreamImpl[String, String]])
 ----
+
+[NOTE]
+====
+`stream` is used when:
+
+* `StreamsBuilder` is requested to <<kafka-streams-StreamsBuilder.adoc#stream, stream>>
+
+* `KStreamImpl` is requested to <<kafka-streams-internals-KStreamImpl.adoc#through, through>>
+====
 
 === [[table]] Adding KTable to Topology -- `table` Method
 
@@ -232,12 +241,15 @@ void maybeAddNodeForOptimizationMetadata(final StreamsGraphNode node)
 
 NOTE: `maybeAddNodeForOptimizationMetadata` is used when...FIXME
 
-=== [[buildAndOptimizeTopology]] Building Optimized Topology -- `buildAndOptimizeTopology` Method
+=== [[buildAndOptimizeTopology]] Building Topology (with Optional Optimizations) -- `buildAndOptimizeTopology` Method
 
-[source, scala]
+[source, java]
 ----
-void buildAndOptimizeTopology(final Properties props)
+void buildAndOptimizeTopology() // <1>
+void buildAndOptimizeTopology(
+  Properties props)
 ----
+<1> For testing only; Uses `null` for the `Properties`
 
 `buildAndOptimizeTopology` starts with <<maybePerformOptimizations, maybePerformOptimizations>> (and the given `Properties`).
 
