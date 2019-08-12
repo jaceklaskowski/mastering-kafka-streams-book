@@ -212,19 +212,19 @@ scala> println(name)
 PREFIXSTATE-STORE-0000000001
 ----
 
-=== [[addGraphNode]] Adding StreamsGraphNode Child to StreamsGraphNode Parent(s) -- `addGraphNode` Method
+=== [[addGraphNode]] Adding Child Node -- `addGraphNode` Method
 
 [source, java]
 ----
 void addGraphNode(
-  final StreamsGraphNode parent,
-  final StreamsGraphNode child)
+  StreamsGraphNode parent,
+  StreamsGraphNode child)
 void addGraphNode(
-  final Collection<StreamsGraphNode> parents,
-  final StreamsGraphNode child)
+  Collection<StreamsGraphNode> parents,
+  StreamsGraphNode child)
 ----
 
-`addGraphNode` simply requests the input `StreamsGraphNode` to add the given child `StreamsGraphNode`.
+`addGraphNode` simply requests the input <<kafka-streams-internals-StreamsGraphNode.adoc#, StreamsGraphNode>> to <<kafka-streams-internals-StreamsGraphNode.adoc#addChild, add the given child node>>.
 
 In the end, `addGraphNode` <<maybeAddNodeForOptimizationMetadata, maybeAddNodeForOptimizationMetadata>>.
 
@@ -234,12 +234,13 @@ NOTE: `addGraphNode` is used when...FIXME
 
 [source, java]
 ----
-void maybeAddNodeForOptimizationMetadata(final StreamsGraphNode node)
+void maybeAddNodeForOptimizationMetadata(
+  StreamsGraphNode node)
 ----
 
 `maybeAddNodeForOptimizationMetadata`...FIXME
 
-NOTE: `maybeAddNodeForOptimizationMetadata` is used when...FIXME
+NOTE: `maybeAddNodeForOptimizationMetadata` is used exclusively when `InternalStreamsBuilder` is requested to <<addGraphNode, adding a child node>>.
 
 === [[buildAndOptimizeTopology]] Building Topology (with Optional Optimizations) -- `buildAndOptimizeTopology` Method
 
@@ -261,9 +262,33 @@ NOTE: `buildAndOptimizeTopology` is used exclusively when `StreamsBuilder` is re
 
 [source, java]
 ----
-void maybePerformOptimizations(final Properties props)
+void maybePerformOptimizations(
+  Properties props)
 ----
 
 `maybePerformOptimizations`...FIXME
 
-NOTE: `maybePerformOptimizations` is used exclusively when `InternalStreamsBuilder` is requested to <<buildAndOptimizeTopology, build an optimized topology>>.
+NOTE: `maybePerformOptimizations` is used exclusively when `InternalStreamsBuilder` is requested to <<buildAndOptimizeTopology, build a topology (with optional optimizations)>>.
+
+=== [[getKeyChangingParentNode]] `getKeyChangingParentNode` Internal Method
+
+[source, java]
+----
+StreamsGraphNode getKeyChangingParentNode(
+  StreamsGraphNode repartitionNode)
+----
+
+`getKeyChangingParentNode`...FIXME
+
+NOTE: `getKeyChangingParentNode` is used exclusively when `InternalStreamsBuilder` is requested to <<maybeAddNodeForOptimizationMetadata, maybeAddNodeForOptimizationMetadata>>.
+
+=== [[maybeOptimizeRepartitionOperations]] `maybeOptimizeRepartitionOperations` Internal Method
+
+[source, java]
+----
+void maybeOptimizeRepartitionOperations()
+----
+
+`maybeOptimizeRepartitionOperations`...FIXME
+
+NOTE: `maybeOptimizeRepartitionOperations` is used exclusively when `InternalStreamsBuilder` is requested to <<maybePerformOptimizations, maybePerformOptimizations>>.
