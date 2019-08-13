@@ -5,7 +5,7 @@
 .InternalTopologyBuilder and ProcessorTopology
 image::images/kafka-streams-InternalTopologyBuilder-build.png[align="center"]
 
-`InternalTopologyBuilder` is <<creating-instance, created>> exclusively for a <<kafka-streams-Topology.adoc#internalTopologyBuilder, Topology>> (and acts as a developer-friendly frontend).
+`InternalTopologyBuilder` is <<creating-instance, created>> exclusively for a <<kafka-streams-Topology.adoc#internalTopologyBuilder, Topology>>.
 
 .InternalTopologyBuilder and Topology
 image::images/kafka-streams-InternalTopologyBuilder-Topology.png[align="center"]
@@ -355,10 +355,10 @@ NOTE: `copartitionGroups` is used when...FIXME
 
 [source, java]
 ----
-final void addProcessor(
-  final String name,
-  final ProcessorSupplier supplier,
-  final String... predecessorNames)
+void addProcessor(
+  String name,
+  ProcessorSupplier supplier,
+  String... predecessorNames)
 ----
 
 `addProcessor` simply registers a new <<kafka-streams-internals-InternalTopologyBuilder-ProcessorNodeFactory.adoc#, ProcessorNodeFactory>> by the given name in the <<nodeFactories, nodeFactories>> internal registry.
@@ -381,7 +381,7 @@ NOTE: A processor has a unique name, a <<kafka-streams-ProcessorSupplier.adoc#, 
 
 * `Topology` is requested to <<kafka-streams-Topology.adoc#addProcessor, add a processor>>
 
-* <<kafka-streams-internals-StreamsGraphNode.adoc#, StreamsGraphNodes>> (i.e. <<kafka-streams-internals-KTableKTableJoinNode.adoc#, KTableKTableJoinNode>>, <<kafka-streams-internals-OptimizableRepartitionNode.adoc#, OptimizableRepartitionNode>>, <<kafka-streams-internals-ProcessorGraphNode.adoc#, ProcessorGraphNode>>, <<kafka-streams-internals-StreamStreamJoinNode.adoc#, StreamStreamJoinNode>>, <<kafka-streams-internals-StreamTableJoinNode.adoc#, StreamTableJoinNode>>, <<kafka-streams-internals-TableProcessorNode.adoc#, TableProcessorNode>>, and <<kafka-streams-internals-TableSourceNode.adoc#, TableSourceNode>>) are requested to `writeToTopology`
+* <<kafka-streams-internals-StreamsGraphNode.adoc#, StreamsGraphNodes>> (i.e. <<kafka-streams-internals-KTableKTableJoinNode.adoc#, KTableKTableJoinNode>>, <<kafka-streams-internals-OptimizableRepartitionNode.adoc#, OptimizableRepartitionNode>>, <<kafka-streams-internals-ProcessorGraphNode.adoc#, ProcessorGraphNode>>, <<kafka-streams-internals-StatefulProcessorNode.adoc#, StatefulProcessorNode>>, <<kafka-streams-internals-StreamStreamJoinNode.adoc#, StreamStreamJoinNode>>, <<kafka-streams-internals-StreamTableJoinNode.adoc#, StreamTableJoinNode>>, <<kafka-streams-internals-TableProcessorNode.adoc#, TableProcessorNode>>, and <<kafka-streams-internals-TableSourceNode.adoc#, TableSourceNode>>) are requested to <<kafka-streams-internals-StreamsGraphNode.adoc#writeToTopology, write to a topology>> (when `InternalStreamsBuilder` is requested to <<kafka-streams-internals-InternalStreamsBuilder.adoc#buildAndOptimizeTopology, build a topology>> when `StreamsBuilder` is requested to <<kafka-streams-StreamsBuilder.adoc#build, build a topology>>)
 ====
 
 === [[buildProcessorNode]] `buildProcessorNode` Internal Method

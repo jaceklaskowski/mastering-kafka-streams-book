@@ -196,6 +196,8 @@
 .. link:kafka-streams-internals-BaseJoinProcessorNode.adoc[BaseJoinProcessorNode]
 .. link:kafka-streams-internals-BaseRepartitionNode.adoc[BaseRepartitionNode]
 
+. link:kafka-streams-internals-ProcessorParameters.adoc[ProcessorParameters]
+
 . link:kafka-streams-internals-GlobalStoreNode.adoc[GlobalStoreNode]
 . link:kafka-streams-internals-GroupedTableOperationRepartitionNode.adoc[GroupedTableOperationRepartitionNode]
 .. link:kafka-streams-internals-GroupedTableOperationRepartitionNodeBuilder.adoc[GroupedTableOperationRepartitionNodeBuilder]
@@ -213,24 +215,24 @@
 
 === Processors and ProcessorSuppliers
 
-. link:kafka-streams-internals-KStreamAggProcessorSupplier.adoc[KStreamAggProcessorSupplier Contract]
+. link:kafka-streams-internals-KStreamAggProcessorSupplier.adoc[KStreamAggProcessorSupplier]
 
 . link:kafka-streams-internals-KStreamBranch.adoc[KStreamBranch]
 
 . link:kafka-streams-internals-KStreamFilterProcessor.adoc[KStreamFilterProcessor]
-.. link:kafka-streams-internals-KStreamFilter.adoc[KStreamFilter -- ProcessorSupplier of KStreamFilterProcessors for filter and filterNot Streaming Operators]
+.. link:kafka-streams-internals-KStreamFilter.adoc[KStreamFilter]
 
 . link:kafka-streams-internals-KStreamJoinWindowProcessor.adoc[KStreamJoinWindowProcessor]
 
-. link:kafka-streams-internals-KStreamPeek.adoc[KStreamPeek -- ProcessorSupplier of KStreamPeekProcessors]
+. link:kafka-streams-internals-KStreamPeek.adoc[KStreamPeek]
 
 . link:kafka-streams-internals-KStreamPassThrough.adoc[KStreamPassThrough]
 
 . link:kafka-streams-internals-KStreamSessionWindowAggregateProcessor.adoc[KStreamSessionWindowAggregateProcessor]
-.. link:kafka-streams-internals-KStreamSessionWindowAggregate.adoc[KStreamSessionWindowAggregate -- ProcessorSupplier of KStreamSessionWindowAggregateProcessors]
+.. link:kafka-streams-internals-KStreamSessionWindowAggregate.adoc[KStreamSessionWindowAggregate]
 
-. link:kafka-streams-internals-KStreamTransformProcessor.adoc[KStreamTransformProcessor for transform Streaming Operator]
-.. link:kafka-streams-internals-KStreamTransform.adoc[KStreamTransform -- Supplier of KStreamTransformProcessors]
+. link:kafka-streams-internals-KStreamTransformProcessor.adoc[KStreamTransformProcessor]
+.. link:kafka-streams-internals-KStreamTransform.adoc[KStreamTransform]
 
 . link:kafka-streams-internals-KStreamTransformValuesProcessor.adoc[KStreamTransformValuesProcessor]
 .. link:kafka-streams-internals-KStreamTransformValues.adoc[KStreamTransformValues]
@@ -239,7 +241,7 @@
 .. link:kafka-streams-internals-KStreamWindowAggregate.adoc[KStreamWindowAggregate]
 
 . link:kafka-streams-internals-KTableSourceProcessor.adoc[KTableSourceProcessor]
-.. link:kafka-streams-internals-KTableSource.adoc[KTableSource -- ProcessorSupplier of KTableSourceProcessors]
+.. link:kafka-streams-internals-KTableSource.adoc[KTableSource]
 
 . link:kafka-streams-internals-KTableSuppressProcessor.adoc[KTableSuppressProcessor]
 

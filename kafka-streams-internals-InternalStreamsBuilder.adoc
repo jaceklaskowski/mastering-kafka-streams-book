@@ -9,10 +9,55 @@ image::images/kafka-streams-InternalStreamsBuilder.png[align="center"]
 
 [[creating-instance]]
 [[internalTopologyBuilder]]
-`InternalStreamsBuilder` takes a link:kafka-streams-internals-InternalTopologyBuilder.adoc[InternalTopologyBuilder] to be created.
+`InternalStreamsBuilder` takes a <<kafka-streams-internals-InternalTopologyBuilder.adoc#, InternalTopologyBuilder>> to be created.
+
+[source, scala]
+----
+import org.apache.kafka.streams.processor.internals.InternalTopologyBuilder
+val intTopologyBuilder = new InternalTopologyBuilder
+
+import org.apache.kafka.streams.kstream.internals.InternalStreamsBuilder
+val intStreamsBuilder = new InternalStreamsBuilder(intTopologyBuilder)
+----
 
 [[root]]
 `InternalStreamsBuilder` manages a <<kafka-streams-internals-StreamsGraphNode.adoc#, StreamsGraphNode>> as the *root node* (of the <<buildAndOptimizeTopology, topology to build>>). Every time `InternalStreamsBuilder` is requested to add a <<stream, stream>>, a <<table, table>>, a <<globalTable, global table>>, a <<addStateStore, state store>> or a <<addGlobalStore, global state store>> the root node <<addGraphNode, gets a corresponding child node added>>. Once the topology is of a proper structure, `InternalStreamsBuilder` can simply be requested to <<buildAndOptimizeTopology, build it (with optional optimizations applied)>>.
+
+[source, scala]
+----
+import org.apache.kafka.streams.kstream.internals.InternalStreamsBuilder
+assert(intStreamsBuilder.isInstanceOf[InternalStreamsBuilder])
+
+val topics = Seq("input")
+import org.apache.kafka.streams.kstream.internals.ConsumedInternal
+val intConsumed = new ConsumedInternal[String, String]()
+import scala.collection.JavaConversions._
+// Add a new graph node (stream) to the root node
+intStreamsBuilder.stream(topics, intConsumed)
+
+intStreamsBuilder.buildAndOptimizeTopology
+
+val root = intStreamsBuilder.root
+import org.apache.kafka.streams.kstream.internals.graph.StreamsGraphNode
+assert(root.isInstanceOf[StreamsGraphNode])
+assert(root.children.size == 1)
+
+// Let's explore what we built
+
+val streamSourceNode = root.children.head
+println(streamSourceNode)
+/**
+StreamSourceNode{topicNames=[input], topicPattern=null, consumedInternal=org.apache.kafka.streams.kstream.internals.ConsumedInternal@e1781} StreamsGraphNode{nodeName='KSTREAM-SOURCE-0000000000', buildPriority=0, hasWrittenToTopology=true, keyChangingOperation=false, valueChangingOperation=false, mergeNode=false, parentNodes=[root]}
+*/
+
+println(intTopologyBuilder.describe)
+/**
+Topologies:
+   Sub-topology: 0
+    Source: KSTREAM-SOURCE-0000000000 (topics: [input])
+      --> none
+*/
+----
 
 [[InternalNameProvider]]
 `InternalStreamsBuilder` is an <<kafka-streams-internals-InternalNameProvider.adoc#, InternalNameProvider>> and can be requested for a name for new <<newProcessorName, processors>> and <<newStoreName, stores>>.

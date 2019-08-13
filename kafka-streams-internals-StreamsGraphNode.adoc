@@ -18,7 +18,7 @@ void writeToTopology(
   InternalTopologyBuilder topologyBuilder)
 ----
 
-Used exclusively when `InternalStreamsBuilder` is requested to <<kafka-streams-internals-InternalStreamsBuilder.adoc#buildAndOptimizeTopology, build a topology>>
+Used exclusively when `InternalStreamsBuilder` is requested to <<kafka-streams-internals-InternalStreamsBuilder.adoc#buildAndOptimizeTopology, build a topology>> (when `StreamsBuilder` is requested to <<kafka-streams-StreamsBuilder.adoc#build, build a topology>>)
 
 |===
 
