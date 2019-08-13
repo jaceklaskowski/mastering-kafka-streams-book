@@ -1,6 +1,6 @@
 == [[InternalStreamsBuilder]] InternalStreamsBuilder
 
-`InternalStreamsBuilder` is a façade of <<internalTopologyBuilder, InternalTopologyBuilder>> (to add sources and state stores to a topology) and link:kafka-streams-internals-KTableImpl.adoc[KTableImpl] for <<table, table>>, link:kafka-streams-internals-GlobalKTableImpl.adoc[GlobalKTableImpl] for <<globalTable, globalTable>>, and link:kafka-streams-internals-KStreamImpl.adoc[KStreamImpl] for <<stream, stream>> operators.
+`InternalStreamsBuilder` is an internal entity that <<kafka-streams-StreamsBuilder.adoc#, StreamsBuilder>> (of <<kafka-streams-streams-dsl.adoc#, Streams DSL -- High-Level Stream Processing DSL>>) uses to <<buildAndOptimizeTopology, build a topology>> by adding nodes to the <<root, stream graph>> using the high-level stream operators.
 
 `InternalStreamsBuilder` is <<creating-instance, created>> exclusively for <<kafka-streams-StreamsBuilder.adoc#internalStreamsBuilder, StreamsBuilder>>.
 
@@ -9,15 +9,16 @@ image::images/kafka-streams-InternalStreamsBuilder.png[align="center"]
 
 [[creating-instance]]
 [[internalTopologyBuilder]]
-`InternalStreamsBuilder` takes a link:kafka-streams-internals-InternalTopologyBuilder.adoc[InternalTopologyBuilder] to be created (that all the methods are based on).
+`InternalStreamsBuilder` takes a link:kafka-streams-internals-InternalTopologyBuilder.adoc[InternalTopologyBuilder] to be created.
 
-`InternalStreamsBuilder` is an link:kafka-streams-internals-InternalNameProvider.adoc[InternalNameProvider] and so can be requested for a new name for a <<newProcessorName, processor>> or a <<newStoreName, store>>.
+[[root]]
+`InternalStreamsBuilder` manages a <<kafka-streams-internals-StreamsGraphNode.adoc#, StreamsGraphNode>> as the *root node* (of the <<buildAndOptimizeTopology, topology to build>>). Every time `InternalStreamsBuilder` is requested to add a <<stream, stream>>, a <<table, table>>, a <<globalTable, global table>>, a <<addStateStore, state store>> or a <<addGlobalStore, global state store>> the root node <<addGraphNode, gets a corresponding child node added>>. Once the topology is of a proper structure, `InternalStreamsBuilder` can simply be requested to <<buildAndOptimizeTopology, build it (with optional optimizations applied)>>.
+
+[[InternalNameProvider]]
+`InternalStreamsBuilder` is an <<kafka-streams-internals-InternalNameProvider.adoc#, InternalNameProvider>> and can be requested for a name for new <<newProcessorName, processors>> and <<newStoreName, stores>>.
 
 [[index]]
 `InternalStreamsBuilder` uses `index` counter that starts at `0` and is incremented every time a new name for a <<newProcessorName, processor>> or a <<newStoreName, store>> is requested. That makes all names unique and sources and stores uniquely identified by name.
-
-[[root]]
-`InternalStreamsBuilder` manages a <<kafka-streams-internals-StreamsGraphNode.adoc#, StreamsGraphNode>> as the *root node*. Every time `InternalStreamsBuilder` is requested to <<stream, stream>>, <<table, table>>, <<globalTable, globalTable>>, <<addStateStore, addStateStore>>, <<addGlobalStore, addGlobalStore>> the root node <<addGraphNode, gets a child node added>>. In the end, `InternalStreamsBuilder` is requested to <<buildAndOptimizeTopology, buildAndOptimizeTopology>>.
 
 [[logging]]
 [TIP]
@@ -45,7 +46,7 @@ void addStateStore(
 
 NOTE: `addStateStore` is used exclusively when `StreamsBuilder` is requested to <<kafka-streams-StreamsBuilder.adoc#addStateStore, add a state store to a topology>>.
 
-=== [[stream]] Adding KStream to Topology -- `stream` Method
+=== [[stream]] Adding Stream to Topology (and Creating KStream) -- `stream` Method
 
 [source, java]
 ----
@@ -92,57 +93,47 @@ assert(kstream.isInstanceOf[KStreamImpl[String, String]])
 * `KStreamImpl` is requested to <<kafka-streams-internals-KStreamImpl.adoc#through, through>>
 ====
 
-=== [[table]] Adding KTable to Topology -- `table` Method
+=== [[table]] Adding Table to Topology (and Creating KTable) -- `table` Method
 
 [source, java]
 ----
 KTable<K, V> table(
-  final String topic,
-  final ConsumedInternal<K, V> consumed,
-  final MaterializedInternal<K, V, KeyValueStore<Bytes, byte[]>> materialized)
+  String topic,
+  ConsumedInternal<K, V> consumed,
+  MaterializedInternal<K, V, KeyValueStore<Bytes, byte[]>> materialized)
 ----
 
 `table`...FIXME
 
-NOTE: `table` is used exclusively when `StreamsBuilder` is requested to <<kafka-streams-StreamsBuilder.adoc#table, add a KTable to a topology>>.
+NOTE: `table` is used exclusively when `StreamsBuilder` is requested to <<kafka-streams-StreamsBuilder.adoc#table, add a table to a topology>>.
 
-=== [[createKTable]] `createKTable` Internal Method
-
-[source, scala]
-----
-KTable<K, V> createKTable(
-  final ConsumedInternal<K, V> consumed,
-  final String topic,
-  final String storeName,
-  final boolean isQueryable,
-  final String source,
-  final String name)
-----
-
-`createKTable`...FIXME
-
-NOTE: `createKTable` is used exclusively when `InternalStreamsBuilder` is requested to <<table, create a KTable for a topic>>.
-
-=== [[addGlobalStore]] `addGlobalStore` Method
+=== [[addGlobalStore]] Adding Global State Store to Topology -- `addGlobalStore` Method
 
 [source, java]
 ----
 void addGlobalStore(
-  final StoreBuilder<KeyValueStore> storeBuilder,
-  final String topic,
-  final ConsumedInternal consumed,
-  final ProcessorSupplier stateUpdateSupplier)
+  StoreBuilder<KeyValueStore> storeBuilder,
+  String topic,
+  ConsumedInternal consumed,
+  ProcessorSupplier stateUpdateSupplier)
+void addGlobalStore(
+  StoreBuilder<KeyValueStore> storeBuilder,
+  String sourceName,
+  String topic,
+  ConsumedInternal consumed,
+  String processorName,
+  ProcessorSupplier stateUpdateSupplier)
 ----
 
 `addGlobalStore`...FIXME
 
-NOTE: `addGlobalStore` is used when...FIXME
+NOTE: `addGlobalStore` is used exclusively when `StreamsBuilder` is requested to <<kafka-streams-StreamsBuilder.adoc#addGlobalStore, addGlobalStore>>.
 
-=== [[globalTable]] Adding GlobalKTable to Topology -- `globalTable` Method
+=== [[globalTable]] Adding Global Table to Topology (and Creating GlobalKTable) -- `globalTable` Method
 
 [source, java]
 ----
-<K, V> GlobalKTable<K, V> globalTable(
+GlobalKTable<K, V> globalTable(
   String topic,
   ConsumedInternal<K, V> consumed,
   MaterializedInternal<K, V, KeyValueStore<Bytes, byte[]>> materialized)
@@ -162,16 +153,17 @@ NOTE: `GlobalKTables` use state stores with logging disabled.
 
 In the end, `globalTable` creates a <<kafka-streams-internals-GlobalKTableImpl.adoc#, GlobalKTableImpl>> (with a new <<kafka-streams-internals-KTableSourceValueGetterSupplier.adoc#, KTableSourceValueGetterSupplier>> and the queryable flag of the `MaterializedInternal`).
 
-NOTE: `globalTable` is used exclusively when `StreamsBuilder` is requested to <<kafka-streams-StreamsBuilder.adoc#globalTable, add a GlobalKTable to the topology>>.
+NOTE: `globalTable` is used exclusively when `StreamsBuilder` is requested to <<kafka-streams-StreamsBuilder.adoc#globalTable, add a global table to a topology>>.
 
-=== [[newProcessorName]] Requesting New Processor Name -- `newProcessorName` Method
+=== [[newProcessorName]] New Unique Processor Name -- `newProcessorName` Method
 
 [source, java]
 ----
-String newProcessorName(final String prefix)
+String newProcessorName(
+  String prefix)
 ----
 
-NOTE: `newProcessorName` is part of link:kafka-streams-internals-InternalNameProvider.adoc#newProcessorName[InternalNameProvider Contract] to give a new name for a link:kafka-streams-internals-ProcessorNode.adoc[processor].
+NOTE: `newProcessorName` is part of link:kafka-streams-internals-InternalNameProvider.adoc#newProcessorName[InternalNameProvider Contract] to create a new unique name for a link:kafka-streams-internals-ProcessorNode.adoc[processor].
 
 `newProcessorName` simply takes the input `prefix` followed by the <<index, index>>.
 
@@ -188,14 +180,15 @@ scala> println(name)
 PREFIX0000000001
 ----
 
-=== [[newStoreName]] Requesting New Store Name -- `newStoreName` Method
+=== [[newStoreName]] New Unique Store Name -- `newStoreName` Method
 
 [source, java]
 ----
-String newStoreName(final String prefix)
+String newStoreName(
+  String prefix)
 ----
 
-NOTE: `newStoreName` is part of link:kafka-streams-internals-InternalNameProvider.adoc#newStoreName[InternalNameProvider Contract] to give a new name for a link:kafka-streams-StateStore.adoc[state store].
+NOTE: `newStoreName` is part of link:kafka-streams-internals-InternalNameProvider.adoc#newStoreName[InternalNameProvider Contract] to create a new unique name for a link:kafka-streams-StateStore.adoc[state store].
 
 `newStoreName` simply concatenates the input `prefix`, `STATE-STORE-` and the <<index, index>>.
 
@@ -228,7 +221,23 @@ void addGraphNode(
 
 In the end, `addGraphNode` <<maybeAddNodeForOptimizationMetadata, maybeAddNodeForOptimizationMetadata>>.
 
-NOTE: `addGraphNode` is used when...FIXME
+NOTE: `addGraphNode` is used in _many places_ in <<kafka-streams-internals-GroupedStreamAggregateBuilder.adoc#, GroupedStreamAggregateBuilder>>, <<kafka-streams-internals-InternalStreamsBuilder.adoc#, InternalStreamsBuilder>>, <<kafka-streams-internals-KGroupedTableImpl.adoc#, KGroupedTableImpl>>, <<kafka-streams-internals-KStreamImpl.adoc#, KStreamImpl>>, <<kafka-streams-internals-KStreamImpl-KStreamImplJoin.adoc#, KStreamImplJoin>>, and <<kafka-streams-internals-KTableImpl.adoc#, KTableImpl>>.
+
+=== [[buildAndOptimizeTopology]] Building Topology (with Optional Optimizations) -- `buildAndOptimizeTopology` Method
+
+[source, java]
+----
+void buildAndOptimizeTopology() // <1>
+void buildAndOptimizeTopology(
+  Properties props)
+----
+<1> For testing only; Uses `null` for the `Properties`
+
+`buildAndOptimizeTopology` does <<maybePerformOptimizations, maybePerformOptimizations>> (with the given `Properties`).
+
+`buildAndOptimizeTopology`...FIXME
+
+NOTE: `buildAndOptimizeTopology` is used exclusively when `StreamsBuilder` is requested to <<kafka-streams-StreamsBuilder.adoc#build, build a topology>>.
 
 === [[maybeAddNodeForOptimizationMetadata]] `maybeAddNodeForOptimizationMetadata` Internal Method
 
@@ -241,22 +250,6 @@ void maybeAddNodeForOptimizationMetadata(
 `maybeAddNodeForOptimizationMetadata`...FIXME
 
 NOTE: `maybeAddNodeForOptimizationMetadata` is used exclusively when `InternalStreamsBuilder` is requested to <<addGraphNode, adding a child node>>.
-
-=== [[buildAndOptimizeTopology]] Building Topology (with Optional Optimizations) -- `buildAndOptimizeTopology` Method
-
-[source, java]
-----
-void buildAndOptimizeTopology() // <1>
-void buildAndOptimizeTopology(
-  Properties props)
-----
-<1> For testing only; Uses `null` for the `Properties`
-
-`buildAndOptimizeTopology` starts with <<maybePerformOptimizations, maybePerformOptimizations>> (and the given `Properties`).
-
-`buildAndOptimizeTopology`...FIXME
-
-NOTE: `buildAndOptimizeTopology` is used exclusively when `StreamsBuilder` is requested to <<kafka-streams-StreamsBuilder.adoc#build, build a topology>>.
 
 === [[maybePerformOptimizations]] `maybePerformOptimizations` Internal Method
 
@@ -292,3 +285,76 @@ void maybeOptimizeRepartitionOperations()
 `maybeOptimizeRepartitionOperations`...FIXME
 
 NOTE: `maybeOptimizeRepartitionOperations` is used exclusively when `InternalStreamsBuilder` is requested to <<maybePerformOptimizations, maybePerformOptimizations>>.
+
+=== [[createRepartitionNode]] `createRepartitionNode` Internal Method
+
+[source, java]
+----
+OptimizableRepartitionNode createRepartitionNode(
+  String repartitionTopicName,
+  Serde keySerde,
+  Serde valueSerde)
+----
+
+`createRepartitionNode`...FIXME
+
+NOTE: `createRepartitionNode` is used when...FIXME
+
+=== [[findParentNodeMatching]] `findParentNodeMatching` Internal Method
+
+[source, java]
+----
+StreamsGraphNode findParentNodeMatching(
+  StreamsGraphNode startSeekingNode,
+  Predicate<StreamsGraphNode> parentNodePredicate)
+----
+
+`findParentNodeMatching`...FIXME
+
+NOTE: `findParentNodeMatching` is used when...FIXME
+
+=== [[getFirstRepartitionTopicName]] `getFirstRepartitionTopicName` Internal Method
+
+[source, java]
+----
+String getFirstRepartitionTopicName(
+  Collection<OptimizableRepartitionNode> repartitionNodes)
+----
+
+`getFirstRepartitionTopicName`...FIXME
+
+NOTE: `getFirstRepartitionTopicName` is used when...FIXME
+
+=== [[getRepartitionSerdes]] `getRepartitionSerdes` Internal Method
+
+[source, java]
+----
+GroupedInternal getRepartitionSerdes(
+  Collection<OptimizableRepartitionNode> repartitionNodes)
+----
+
+`getRepartitionSerdes`...FIXME
+
+NOTE: `getRepartitionSerdes` is used when...FIXME
+
+=== [[maybeUpdateKeyChangingRepartitionNodeMap]] `maybeUpdateKeyChangingRepartitionNodeMap` Internal Method
+
+[source, java]
+----
+void maybeUpdateKeyChangingRepartitionNodeMap()
+----
+
+`maybeUpdateKeyChangingRepartitionNodeMap`...FIXME
+
+NOTE: `maybeUpdateKeyChangingRepartitionNodeMap` is used when...FIXME
+
+=== [[optimizeKTableSourceTopics]] `optimizeKTableSourceTopics` Internal Method
+
+[source, java]
+----
+void optimizeKTableSourceTopics()
+----
+
+`optimizeKTableSourceTopics`...FIXME
+
+NOTE: `optimizeKTableSourceTopics` is used when...FIXME

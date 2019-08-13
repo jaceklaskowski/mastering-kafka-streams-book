@@ -188,7 +188,9 @@
 
 == Internals of Kafka Streams
 
-=== Logical Streams Graph
+=== High-Level Stream Processing Graph
+
+. link:kafka-streams-internals-InternalStreamsBuilder.adoc[InternalStreamsBuilder]
 
 . link:kafka-streams-internals-StreamsGraphNode.adoc[StreamsGraphNode]
 .. link:kafka-streams-internals-BaseJoinProcessorNode.adoc[BaseJoinProcessorNode]
@@ -299,22 +301,22 @@
 .. link:kafka-streams-internals-SourceNode.adoc[SourceNode]
 .. link:kafka-streams-internals-SinkNode.adoc[SinkNode]
 
-. link:kafka-streams-internals-InternalStreamsBuilder.adoc[InternalStreamsBuilder]
-
 . link:kafka-streams-internals-InternalTopologyBuilder.adoc[InternalTopologyBuilder]
-.. link:kafka-streams-internals-InternalTopologyBuilder-AbstractNode.adoc[AbstractNode]
+
+. link:kafka-streams-internals-InternalTopologyBuilder-AbstractNode.adoc[AbstractNode]
 .. link:kafka-streams-internals-InternalTopologyBuilder-Processor.adoc[Processor]
 .. link:kafka-streams-internals-InternalTopologyBuilder-Sink.adoc[Sink]
 .. link:kafka-streams-internals-InternalTopologyBuilder-Source.adoc[Source]
-.. link:kafka-streams-internals-InternalTopologyBuilder-StateStoreFactory.adoc[StateStoreFactory]
 
 . link:kafka-streams-internals-InternalTopologyBuilder-NodeFactory.adoc[NodeFactory]
-.. link:kafka-streams-internals-InternalTopologyBuilder-GlobalStore.adoc[GlobalStore]
 .. link:kafka-streams-internals-InternalTopologyBuilder-ProcessorNodeFactory.adoc[ProcessorNodeFactory]
 .. link:kafka-streams-internals-InternalTopologyBuilder-SinkNodeFactory.adoc[SinkNodeFactory]
 .. link:kafka-streams-internals-InternalTopologyBuilder-SourceNodeFactory.adoc[SourceNodeFactory]
 
 . link:kafka-streams-internals-InternalTopologyBuilder-TopologyDescription.adoc[InternalTopologyBuilder.TopologyDescription]
+
+. link:kafka-streams-internals-InternalTopologyBuilder-GlobalStore.adoc[GlobalStore]
+. link:kafka-streams-internals-InternalTopologyBuilder-StateStoreFactory.adoc[StateStoreFactory]
 
 . link:kafka-streams-internals-NodeMetrics.adoc[NodeMetrics]
 
