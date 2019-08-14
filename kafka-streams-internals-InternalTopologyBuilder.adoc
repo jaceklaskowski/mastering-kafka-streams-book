@@ -155,7 +155,7 @@ Topologies:
 | [[earliestResetTopics]]
 
 | globalStateStores
-a| [[globalStateStores]] Global link:kafka-streams-StateStore.adoc[StateStores] by name
+a| [[globalStateStores]] Global <<kafka-streams-StateStore.adoc#, state stores>> by name
 
 * A new global link:kafka-streams-StateStore.adoc[StateStore] is added exclusively when `InternalTopologyBuilder` is requested to <<addGlobalStore, add a global state store to a topology>>
 
@@ -296,11 +296,11 @@ String decorateTopic(final String topic)
 [source, java]
 ----
 void buildSinkNode(
-  final Map<String, ProcessorNode> processorMap,
-  final Map<String, SinkNode> topicSinkMap,
-  final Set<String> repartitionTopics,
-  final SinkNodeFactory sinkNodeFactory,
-  final SinkNode node)
+  Map<String, ProcessorNode> processorMap,
+  Map<String, SinkNode> topicSinkMap,
+  Set<String> repartitionTopics,
+  SinkNodeFactory sinkNodeFactory,
+  SinkNode node)
 ----
 
 `buildSinkNode`...FIXME
@@ -344,14 +344,26 @@ NOTE: `resetTopicsPattern` is used when...FIXME
 
 [source, java]
 ----
-synchronized Collection<Set<String>> copartitionGroups()
+Collection<Set<String>> copartitionGroups()
 ----
 
 `copartitionGroups`...FIXME
 
-NOTE: `copartitionGroups` is used when...FIXME
+NOTE: `copartitionGroups` is used exclusively when `StreamsPartitionAssignor` is requested to <<kafka-streams-internals-StreamsPartitionAssignor.adoc#assign, perform group assignment (assign tasks to consumer clients)>>.
 
-=== [[addProcessor]] Registering Processor Node -- `addProcessor` Method
+=== [[copartitionSources]] `copartitionSources` Method
+
+[source, java]
+----
+void copartitionSources(
+  Collection<String> sourceNodes)
+----
+
+`copartitionSources`...FIXME
+
+NOTE: `copartitionSources` is used exclusively when `AbstractStream` is requested to <<kafka-streams-internals-AbstractStream.adoc#ensureJoinableWith, ensureJoinableWith>>.
+
+=== [[addProcessor]] Adding Processor to Topology -- `addProcessor` Method
 
 [source, java]
 ----
@@ -404,34 +416,34 @@ NOTE: `buildProcessorNode` is used exclusively when `InternalTopologyBuilder` is
 [source, java]
 ----
 void buildSourceNode(
-  final Map<String, SourceNode> topicSourceMap,
-  final Set<String> repartitionTopics,
-  final SourceNodeFactory sourceNodeFactory,
-  final SourceNode node)
+  Map<String, SourceNode> topicSourceMap,
+  Set<String> repartitionTopics,
+  SourceNodeFactory sourceNodeFactory,
+  SourceNode node)
 ----
 
 `buildSourceNode`...FIXME
 
-NOTE: `buildSourceNode` is used exclusively when `InternalTopologyBuilder` is requested to link:kafka-streams-internals-InternalTopologyBuilder.adoc#build[build a topology of processor tasks] (aka *processor topology*).
+NOTE: `buildSourceNode` is used exclusively when `InternalTopologyBuilder` is requested to <<build, build a topology of processor nodes>>.
 
-=== [[addSource]] Registering Source Processor Node -- `addSource` Method
+=== [[addSource]] Adding Source Node to Topology -- `addSource` Method
 
-[source, scala]
+[source, java]
 ----
-final void addSource(
-  final Topology.AutoOffsetReset offsetReset,
-  final String name,
-  final TimestampExtractor timestampExtractor,
-  final Deserializer keyDeserializer,
-  final Deserializer valDeserializer,
-  final Pattern topicPattern)
-final void addSource(
-  final Topology.AutoOffsetReset offsetReset,
-  final String name,
-  final TimestampExtractor timestampExtractor,
-  final Deserializer keyDeserializer,
-  final Deserializer valDeserializer,
-  final String... topics)
+void addSource(
+  Topology.AutoOffsetReset offsetReset,
+  String name,
+  TimestampExtractor timestampExtractor,
+  Deserializer keyDeserializer,
+  Deserializer valDeserializer,
+  Pattern topicPattern)
+void addSource(
+  Topology.AutoOffsetReset offsetReset,
+  String name,
+  TimestampExtractor timestampExtractor,
+  Deserializer keyDeserializer,
+  Deserializer valDeserializer,
+  String... topics)
 ----
 
 `addSource` simply registers a new <<kafka-streams-internals-InternalTopologyBuilder-SourceNodeFactory.adoc#, SourceNodeFactory>> by the given name in the <<nodeFactories, nodeFactories>> internal registry.
@@ -494,13 +506,13 @@ void validateTopicNotAlreadyRegistered(final String topic)
 
 NOTE: `validateTopicNotAlreadyRegistered` is used when...FIXME
 
-=== [[connectProcessorAndStateStores]] Connecting State Store with Processor Nodes -- `connectProcessorAndStateStores` Method
+=== [[connectProcessorAndStateStores]] Connecting Processor with State Stores -- `connectProcessorAndStateStores` Method
 
 [source, java]
 ----
 void connectProcessorAndStateStores(
-  final String processorName,
-  final String... stateStoreNames)
+  String processorName,
+  String... stateStoreNames)
 ----
 
 `connectProcessorAndStateStores` simply <<connectProcessorAndStateStore, connectProcessorAndStateStore>> with `processorName` and every state store name in `stateStoreNames`.
@@ -515,26 +527,24 @@ NOTE: `connectProcessorAndStateStores` (plural) is a public method that uses the
 ====
 `connectProcessorAndStateStores` is used when:
 
-* `KStreamImpl` is requested to link:kafka-streams-internals-KStreamImpl.adoc#doStreamTableJoin[doStreamTableJoin], link:kafka-streams-internals-KStreamImpl.adoc#process[process], link:kafka-streams-internals-KStreamImpl.adoc#transform[transform], link:kafka-streams-internals-KStreamImpl.adoc#transformValues[transformValues]
+* `Topology` is requested to <<kafka-streams-Topology.adoc#connectProcessorAndStateStores, connect a processor with state stores>>
 
-* `KTableImpl` is requested to link:kafka-streams-internals-KTableImpl.adoc#buildJoin[buildJoin]
-
-* `Topology` is requested to link:kafka-streams-Topology.adoc#connectProcessorAndStateStores[connectProcessorAndStateStores]
+* <<kafka-streams-internals-StreamsGraphNode.adoc#, StreamsGraphNodes>> (i.e. <<kafka-streams-internals-KTableKTableJoinNode.adoc#, KTableKTableJoinNode>>, <<kafka-streams-internals-StatefulProcessorNode.adoc#, StatefulProcessorNode>>, <<kafka-streams-internals-StreamTableJoinNode.adoc#, StreamTableJoinNode>>, and <<kafka-streams-internals-TableProcessorNode.adoc#, TableProcessorNode>>) are requested to <<kafka-streams-internals-StreamsGraphNode.adoc#writeToTopology, write to a topology>>
 ====
 
-=== [[addGlobalStore]] Adding Global Key-Value State Store (to Topology) -- `addGlobalStore` Method
+=== [[addGlobalStore]] Adding Global State Store to Topology -- `addGlobalStore` Method
 
 [source, java]
 ----
 void addGlobalStore(
-  final StoreBuilder<KeyValueStore> storeBuilder,
-  final String sourceName,
-  final TimestampExtractor timestampExtractor,
-  final Deserializer keyDeserializer,
-  final Deserializer valueDeserializer,
-  final String topic,
-  final String processorName,
-  final ProcessorSupplier stateUpdateSupplier)
+  StoreBuilder storeBuilder,
+  String sourceName,
+  TimestampExtractor timestampExtractor,
+  Deserializer keyDeserializer,
+  Deserializer valueDeserializer,
+  String topic,
+  String processorName,
+  ProcessorSupplier stateUpdateSupplier)
 ----
 
 `addGlobalStore` first <<validateGlobalStoreArguments, validateGlobalStoreArguments>> followed by <<validateTopicNotAlreadyRegistered, validateTopicNotAlreadyRegistered>>.
@@ -606,8 +616,8 @@ NOTE: `validateGlobalStoreArguments` is used exclusively when `InternalTopologyB
 [source, java]
 ----
 void connectSourceStoreAndTopic(
-  final String sourceStoreName,
-  final String topic)
+  String sourceStoreName,
+  String topic)
 ----
 
 `connectSourceStoreAndTopic` adds the given `sourceStoreName` with the `topic` to <<storeToChangelogTopic, storeToChangelogTopic>> internal registry.
@@ -618,7 +628,14 @@ void connectSourceStoreAndTopic(
 Source store [sourceStoreName] is already added.
 ```
 
-NOTE: `connectSourceStoreAndTopic` is used when `InternalTopologyBuilder` is requested to <<addGlobalStore, add a global state store to a topology>> and <<adjust, adjust>>.
+[NOTE]
+====
+`connectSourceStoreAndTopic` is used when:
+
+* `InternalTopologyBuilder` is requested to <<addGlobalStore, add a global state store to a topology>>
+
+* `TableSourceNode` is requested to <<kafka-streams-internals-TableSourceNode.adoc#writeToTopology, write to a topology>>
+====
 
 === [[connectProcessorAndStateStore]] Connecting State Store with Processor Node -- `connectProcessorAndStateStore` Internal Method
 
@@ -641,22 +658,22 @@ In the end, `connectProcessorAndStateStore` <<connectStateStoreNameToSourceTopic
 
 `connectProcessorAndStateStore` reports a `TopologyException` when the input `stateStoreName` or `processorName` have not been registered yet or the `processorName` is the name of a source or sink node.
 
-NOTE: `connectProcessorAndStateStore` is used when `InternalTopologyBuilder` is requested to <<addStateStore, addStateStore>> and <<connectProcessorAndStateStores, connectProcessorAndStateStores>>
+NOTE: `connectProcessorAndStateStore` is used when `InternalTopologyBuilder` is requested to <<addStateStore, add a state store>> and <<connectProcessorAndStateStores, connect a processor with state stores>>.
 
 === [[connectStateStoreNameToSourceTopicsOrPattern]] `connectStateStoreNameToSourceTopicsOrPattern` Internal Method
 
-[source, scala]
+[source, java]
 ----
 void connectStateStoreNameToSourceTopicsOrPattern(
-  final String stateStoreName,
-  final ProcessorNodeFactory processorNodeFactory)
+  String stateStoreName,
+  ProcessorNodeFactory processorNodeFactory)
 ----
 
 `connectStateStoreNameToSourceTopicsOrPattern`...FIXME
 
-NOTE: `connectStateStoreNameToSourceTopicsOrPattern` is used when...FIXME
+NOTE: `connectStateStoreNameToSourceTopicsOrPattern` is used exclusively when `InternalTopologyBuilder` is requested to <<connectProcessorAndStateStore, connect a processor with a state store>>
 
-=== [[addStateStore]] Adding State Store (As StoreBuilder) -- `addStateStore` Method
+=== [[addStateStore]] Adding State Store to Topology -- `addStateStore` Method
 
 [source, java]
 ----
@@ -736,7 +753,7 @@ ProcessorTopology buildGlobalStateTopology()
 
 `buildGlobalStateTopology` returns `null` if <<globalNodeGroups, globalNodeGroups>> is empty.
 
-NOTE: `buildGlobalStateTopology` is used exclusively when `KafkaStreams` is link:kafka-streams-KafkaStreams.adoc#globalStreamThread[created].
+NOTE: `buildGlobalStateTopology` is used exclusively when `KafkaStreams` is <<kafka-streams-KafkaStreams.adoc#globalStreamThread, created>>.
 
 === [[describeGlobalStore]] `describeGlobalStore` Internal Method
 
@@ -779,7 +796,7 @@ Otherwise, `isGlobalSource` is negative (i.e. `false`).
 
 NOTE: `isGlobalSource` is used when `InternalTopologyBuilder` is requested to <<describeGlobalStore, describeGlobalStore>>, <<globalNodeGroups, globalNodeGroups>> and <<nodeGroupContainsGlobalSourceNode, nodeGroupContainsGlobalSourceNode>>.
 
-=== [[globalNodeGroups]] Collecting Global Node Groups -- `globalNodeGroups` Internal Method
+=== [[globalNodeGroups]] Global Node Groups -- `globalNodeGroups` Internal Method
 
 [source, java]
 ----
@@ -896,7 +913,7 @@ Topologies:
       <-- sourceName
 ----
 
-NOTE: `describe` is used exclusively when `Topology` is requested to link:kafka-streams-Topology.adoc#describe[describe].
+NOTE: `describe` is used exclusively when `Topology` is requested to <<kafka-streams-Topology.adoc#describe, describe>>.
 
 ==== [[describeSubtopology]] `describeSubtopology` Internal Method
 
@@ -930,19 +947,19 @@ NOTE: `describeGlobalStore` is used exclusively when `InternalTopologyBuilder` i
 [source, java]
 ----
 void addSink(
-  final String name,
-  final String topic,
-  final Serializer<K> keySerializer,
-  final Serializer<V> valSerializer,
-  final StreamPartitioner<? super K, ? super V> partitioner,
-  final String... predecessorNames) // <1>
+  String name,
+  String topic,
+  Serializer<K> keySerializer,
+  Serializer<V> valSerializer,
+  StreamPartitioner<? super K, ? super V> partitioner,
+  String... predecessorNames) // <1>
 void addSink(
-  final String name,
-  final TopicNameExtractor<K, V> topicExtractor,
-  final Serializer<K> keySerializer,
-  final Serializer<V> valSerializer,
-  final StreamPartitioner<? super K, ? super V> partitioner,
-  final String... predecessorNames)
+  String name,
+  TopicNameExtractor<K, V> topicExtractor,
+  Serializer<K> keySerializer,
+  Serializer<V> valSerializer,
+  StreamPartitioner<? super K, ? super V> partitioner,
+  String... predecessorNames)
 ----
 <1> Uses <<kafka-streams-internals-StaticTopicNameExtractor.adoc#, StaticTopicNameExtractor>>
 
@@ -963,14 +980,15 @@ void addSink(
 * `Topology` is requested to <<kafka-streams-Topology.adoc#addSink, add a sink>>
 ====
 
-=== [[addInternalTopic]] Registering Internal Topic Name -- `addInternalTopic` Method
+=== [[addInternalTopic]] Adding Internal Topic Name -- `addInternalTopic` Method
 
 [source, java]
 ----
-void addInternalTopic(final String topicName)
+void addInternalTopic(
+  String topicName)
 ----
 
-`addInternalTopic` simply registers the input `topicName` (in the <<internalTopicNames, internalTopicNames>> internal registry).
+`addInternalTopic` simply adds the input `topicName` to the <<internalTopicNames, internalTopicNames>> internal registry.
 
 [NOTE]
 ====
@@ -986,10 +1004,12 @@ void addInternalTopic(final String topicName)
 [source, java]
 ----
 ProcessorTopology build() // <1>
-ProcessorTopology build(final Integer topicGroupId) // <2>
+ProcessorTopology build(
+  Integer topicGroupId) // <2>
 
 // PRIVATE
-private ProcessorTopology build(final Set<String> nodeGroup)
+private ProcessorTopology build(
+  Set<String> nodeGroup)
 ----
 <1> Uses <<build-topicGroupId, build>> with an undefined `topicGroupId` (i.e. `null`)
 <2> Uses `build` with `nodeGroup` being the node names for a given `topicGroupId`
@@ -1018,13 +1038,14 @@ NOTE: `nodeGroup` can be either <<globalNodeGroups, global node groups>> (aka _g
 
 NOTE: The private `build` is used when `InternalTopologyBuilder` is requested to <<build-topicGroupId, build a processor task topology>> (for a group ID) and <<buildGlobalStateTopology, build a global processor task topology>>.
 
-NOTE: The parameter-less `build` is used exclusively when `KafkaStreams` is <<kafka-streams-KafkaStreams.adoc#, created>> (as a sanity check to fail-fast in case a `ProcessorTopology` could not be built due to some exception).
+NOTE: The no-argument `build` is used exclusively when `KafkaStreams` is <<kafka-streams-KafkaStreams.adoc#, created>> (as a sanity check to fail-fast in case a `ProcessorTopology` could not be built due to some exception).
 
 ==== [[build-topicGroupId]] Building Processor Task Topology For Group ID -- `build` Factory Method
 
 [source, java]
 ----
-ProcessorTopology build(final Integer topicGroupId)
+ProcessorTopology build(
+  Integer topicGroupId)
 ----
 
 This variant of `build` takes either a group ID or `null` (see the parameter-less <<build, build()>>).
@@ -1037,7 +1058,7 @@ When the input `topicGroupId` is undefined (i.e. `null`), `build` takes the node
 ====
 `build` (with a topic group ID) is used when:
 
-* `InternalTopologyBuilder` is requested to <<build, build a processor task topology>> (with no group ID)
+* `InternalTopologyBuilder` is requested to <<build, build a processor task topology>> (with no group ID specified)
 
 * `StandbyTaskCreator` is requested to <<kafka-streams-internals-StandbyTaskCreator.adoc#createTask, create a standby task for a given task ID>>
 
@@ -1060,8 +1081,8 @@ NOTE: `allStateStoreName` is used exclusively when `TopologyTestDriver` is reque
 [source, java]
 ----
 InternalTopicConfig createChangelogTopicConfig(
-  final StateStoreFactory factory,
-  final String name)
+  StateStoreFactory factory,
+  String name)
 ----
 
 `createChangelogTopicConfig` creates a <<kafka-streams-internals-UnwindowedChangelogTopicConfig.adoc#, UnwindowedChangelogTopicConfig>> or a <<kafka-streams-internals-WindowedChangelogTopicConfig.adoc#, WindowedChangelogTopicConfig>> per the <<kafka-streams-internals-InternalTopologyBuilder-StateStoreFactory.adoc#isWindowStore, isWindowStore>> flag of the input `StateStoreFactory`.
@@ -1107,13 +1128,13 @@ Before returning the <<topicPattern, source topics pattern>>, `sourceTopicPatter
 [source, java]
 ----
 Pattern buildPatternForOffsetResetTopics(
-  final Collection<String> sourceTopics,
-  final Collection<Pattern> sourcePatterns)
+  Collection<String> sourceTopics,
+  Collection<Pattern> sourcePatterns)
 ----
 
 `buildPatternForOffsetResetTopics`...FIXME
 
-NOTE: `buildPatternForOffsetResetTopics` is used when...FIXME
+NOTE: `buildPatternForOffsetResetTopics` is used when `InternalTopologyBuilder` is requested to <<resetTopicsPattern, resetTopicsPattern>> and <<sourceTopicPattern, sourceTopicPattern>>.
 
 === [[setRegexMatchedTopicsToSourceNodes]] `setRegexMatchedTopicsToSourceNodes` Internal Method
 
