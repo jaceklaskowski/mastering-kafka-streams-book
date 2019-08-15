@@ -60,6 +60,98 @@ log4j.logger.org.apache.kafka.streams.processor.internals.StreamThread=ALL
 Refer to <<kafka-logging.adoc#log4j.properties, Application Logging Using log4j>>.
 ====
 
+=== [[creating-instance]] Creating StreamThread Instance
+
+`StreamThread` takes the following to be created:
+
+* [[time]] `Time`
+* [[config]] <<kafka-streams-StreamsConfig.adoc#, StreamsConfig>>
+* [[producer]] Kafka http://kafka.apache.org/22/javadoc/org/apache/kafka/clients/producer/KafkaProducer.html[Producer] (`Producer<byte[], byte[]>`)
+* [[restoreConsumer]] Kafka "restore" https://kafka.apache.org/22/javadoc/org/apache/kafka/clients/consumer/KafkaConsumer.html[Consumer] (`Consumer<byte[], byte[]>`)
+* [[consumer]] Kafka https://kafka.apache.org/22/javadoc/org/apache/kafka/clients/consumer/KafkaConsumer.html[Consumer] (`Consumer<byte[], byte[]>`)
+* [[originalReset]] `originalReset`
+* [[taskManager]] <<kafka-streams-internals-TaskManager.adoc#, TaskManager>>
+* [[streamsMetrics]] <<kafka-streams-StreamsMetricsThreadImpl.adoc#, StreamsMetricsThreadImpl>>
+* [[builder]] <<kafka-streams-internals-InternalTopologyBuilder.adoc#, InternalTopologyBuilder>>
+* [[threadClientId]] Thread Client ID
+* [[logContext]] `LogContext`
+* [[assignmentErrorCode]] Assignment Error Code (`AtomicInteger`)
+
+`StreamThread` initializes the <<internal-properties, internal properties>>.
+
+=== [[create]] Creating StreamThread Instance -- `create` Factory Method
+
+[source, java]
+----
+StreamThread create(
+  InternalTopologyBuilder builder,
+  StreamsConfig config,
+  KafkaClientSupplier clientSupplier,
+  AdminClient adminClient,
+  UUID processId,
+  String clientId,
+  Metrics metrics,
+  Time time,
+  StreamsMetadataState streamsMetadataState,
+  long cacheSizeBytes,
+  StateDirectory stateDirectory,
+  StateRestoreListener userStateRestoreListener,
+  int threadIdx)
+----
+
+.Creating StreamThread
+image::images/kafka-streams-StreamThread-create.png[align="center"]
+
+`create` prints out the following INFO message to the logs:
+
+```
+Creating restore consumer client
+```
+
+`create` requests the input `StreamsConfig` for link:kafka-streams-StreamsConfig.adoc#getRestoreConsumerConfigs[getRestoreConsumerConfigs] for a new `threadClientId` (of the format `[clientId]-StreamThread-[STREAM_THREAD_ID]`).
+
+`create` requests the given `KafkaClientSupplier` for link:kafka-streams-KafkaClientSupplier.adoc#getRestoreConsumer[getRestoreConsumer] for the `restoreConsumerConfigs`.
+
+[[create-StoreChangelogReader]]
+`create` creates a <<kafka-streams-internals-StoreChangelogReader.adoc#, StoreChangelogReader>> (with the `restoreConsumer`, the given <<kafka-streams-StateRestoreListener.adoc#, StateRestoreListener>> and the configured <<kafka-streams-properties.adoc#poll.ms, poll.ms>>).
+
+NOTE: The input <<kafka-streams-StateRestoreListener.adoc#, StateRestoreListener>> is a <<kafka-streams-DelegatingStateRestoreListener.adoc#, DelegatingStateRestoreListener>> actually.
+
+(Only with eos enabled) `create`...FIXME
+
+`create` creates a link:kafka-streams-StreamsMetricsThreadImpl.adoc#creating-instance[StreamsMetricsThreadImpl] with the following:
+
+* the input `Metrics`
+* *stream-metrics* link:kafka-streams-StreamsMetricsThreadImpl.adoc#groupName[group name]
+* `thread.[clientId]-StreamThread-[STREAM_THREAD_ID]` link:kafka-streams-StreamsMetricsThreadImpl.adoc#prefix[prefix]
+* link:kafka-streams-StreamsMetricsThreadImpl.adoc#tags[Tags] with one entry with `client-id` and the `[clientId]-StreamThread-[STREAM_THREAD_ID]` value.
+
+`create` creates a <<kafka-streams-internals-ThreadCache.adoc#, ThreadCache>> (with `cacheSizeBytes` for the `maxCacheSizeBytes` and the `StreamsMetricsThreadImpl`).
+
+`create` creates a link:kafka-streams-internals-TaskCreator.adoc#creating-instance[TaskCreator] and a link:kafka-streams-internals-StandbyTaskCreator.adoc#creating-instance[StandbyTaskCreator] that are used exclusively to create a <<kafka-streams-internals-TaskManager.adoc#, TaskManager>> (with a new link:kafka-streams-internals-AssignedStreamsTasks.adoc#creating-instance[AssignedStreamsTasks] and link:kafka-streams-AssignedStandbyTasks.adoc#creating-instance[AssignedStandbyTasks] as well as the given <<kafka-streams-StreamsMetadataState.adoc#, StreamsMetadataState>>).
+
+`create` prints out the following INFO message to the logs:
+
+```
+Creating consumer client
+```
+
+`create` requests the input `StreamsConfig` for link:kafka-streams-properties.adoc#application.id[application.id] configuration property.
+
+`create` requests the input `StreamsConfig` for the link:kafka-streams-StreamsConfig.adoc#getMainConsumerConfigs[configuration of a Kafka Consumer] for the application ID and the `threadClientId` (of the format `[clientId]-StreamThread-[STREAM_THREAD_ID]`) and adds the following internal properties:
+
+* <<kafka-streams-StreamsConfig.adoc#TASK_MANAGER_FOR_PARTITION_ASSIGNOR, TASK_MANAGER_FOR_PARTITION_ASSIGNOR>> to be the `TaskManager` just created
+
+* <<kafka-streams-StreamsConfig.adoc#ASSIGNMENT_ERROR_CODE, ASSIGNMENT_ERROR_CODE>> to be a new `AtomicInteger`
+
+(Only with non-empty `latestResetTopicsPattern` and `earliestResetTopicsPattern` patterns) `create`...FIXME
+
+`create` requests the given `KafkaClientSupplier` for a link:kafka-streams-KafkaClientSupplier.adoc#getConsumer[Kafka Consumer] (with the `consumerConfigs`) and link:kafka-streams-internals-TaskManager.adoc#setConsumer[associates] it with the `TaskManager`.
+
+In the end, `create` creates a <<creating-instance, StreamThread>>.
+
+NOTE: `create` is used exclusively when `KafkaStreams` is <<kafka-streams-KafkaStreams.adoc#, created>>.
+
 === [[state]][[State]] Life Cycle of StreamThread -- StreamThread's States
 
 `StreamThread` can be in exactly one of the following *states* at any given point in time:
@@ -96,43 +188,6 @@ assert(CREATED.isValidTransition(RUNNING))
 // DEAD cannot the next possible state after CREATED
 assert(CREATED.isValidTransition(DEAD) == false)
 ----
-
-=== [[pollRequests]] Polling Records -- `pollRequests` Internal Method
-
-[source, java]
-----
-ConsumerRecords<byte[], byte[]> pollRequests(Duration pollTime)
-----
-
-`pollRequests` simply requests the <<consumer, Kafka Consumer>> to poll record with the given `pollTime`.
-
-In case of an `InvalidOffsetException`, `pollRequests` <<resetInvalidOffsets, resetInvalidOffsets>>.
-
-In case of a <<rebalanceException, rebalanceException>>, `pollRequests` re-throws it as a `TaskMigratedException` or a `StreamsException`.
-
-NOTE: `pollRequests` is used exclusively when `StreamThread` is requested to <<runOnce, poll records once and process them using active stream tasks>>.
-
-=== [[resetInvalidOffsets]] `resetInvalidOffsets` Internal Method
-
-[source, java]
-----
-void resetInvalidOffsets(final InvalidOffsetException e)
-----
-
-`resetInvalidOffsets`...FIXME
-
-NOTE: `resetInvalidOffsets` is used exclusively when `StreamThread` is requested to <<pollRequests, pollRequests>> (and an `InvalidOffsetException` is reported).
-
-=== [[completeShutdown]] `completeShutdown` Internal Method
-
-[source, java]
-----
-void completeShutdown(final boolean cleanRun)
-----
-
-`completeShutdown`...FIXME
-
-NOTE: `completeShutdown` is used when `StreamThread` is requested to <<run, run>> and <<shutdown, shutdown>>.
 
 === [[shutdown]] `shutdown` Method
 
@@ -188,6 +243,34 @@ In the end, `runOnce` <<maybeUpdateStandbyTasks, maybeUpdateStandbyTasks>> follo
 
 NOTE: `runOnce` is used exclusively when `StreamThread` is requested to <<runLoop, run the main record processing loop>>.
 
+=== [[pollRequests]] Polling Records -- `pollRequests` Internal Method
+
+[source, java]
+----
+ConsumerRecords<byte[], byte[]> pollRequests(
+  Duration pollTime)
+----
+
+`pollRequests` simply requests the <<consumer, Kafka Consumer>> to poll record with the given `pollTime`.
+
+In case of an `InvalidOffsetException`, `pollRequests` <<resetInvalidOffsets, resetInvalidOffsets>>.
+
+In case of a <<rebalanceException, rebalanceException>>, `pollRequests` re-throws it as a `TaskMigratedException` or a `StreamsException`.
+
+NOTE: `pollRequests` is used exclusively when `StreamThread` is requested to <<runOnce, poll records once and process them using active stream tasks>>.
+
+=== [[resetInvalidOffsets]] `resetInvalidOffsets` Internal Method
+
+[source, java]
+----
+void resetInvalidOffsets(
+  InvalidOffsetException e)
+----
+
+`resetInvalidOffsets`...FIXME
+
+NOTE: `resetInvalidOffsets` is used exclusively when `StreamThread` is requested to <<pollRequests, pollRequests>> (and an `InvalidOffsetException` is reported).
+
 === [[maybeUpdateStandbyTasks]] Attempting to Update Running StandbyTasks -- `maybeUpdateStandbyTasks` Internal Method
 
 [source, java]
@@ -200,25 +283,6 @@ void maybeUpdateStandbyTasks()
 `maybeUpdateStandbyTasks` does nothing and simply returns when `StreamThread` is not in <<RUNNING, RUNNING>> state or the <<taskManager, TaskManager>> has no <<kafka-streams-internals-TaskManager.adoc#hasStandbyRunningTasks, hasStandbyRunningTasks>>.
 
 NOTE: `maybeUpdateStandbyTasks` is used exclusively when `StreamThread` is requested to <<runOnce, poll records once and process them using active stream tasks>>.
-
-=== [[creating-instance]] Creating StreamThread Instance
-
-`StreamThread` takes the following to be created:
-
-* [[time]] `Time`
-* [[config]] <<kafka-streams-StreamsConfig.adoc#, StreamsConfig>>
-* [[producer]] Kafka http://kafka.apache.org/22/javadoc/org/apache/kafka/clients/producer/KafkaProducer.html[Producer] (`Producer<byte[], byte[]>`)
-* [[restoreConsumer]] Kafka "restore" https://kafka.apache.org/22/javadoc/org/apache/kafka/clients/consumer/KafkaConsumer.html[Consumer] (`Consumer<byte[], byte[]>`)
-* [[consumer]] Kafka https://kafka.apache.org/22/javadoc/org/apache/kafka/clients/consumer/KafkaConsumer.html[Consumer] (`Consumer<byte[], byte[]>`)
-* [[originalReset]] `originalReset`
-* [[taskManager]] <<kafka-streams-internals-TaskManager.adoc#, TaskManager>>
-* [[streamsMetrics]] <<kafka-streams-StreamsMetricsThreadImpl.adoc#, StreamsMetricsThreadImpl>>
-* [[builder]] <<kafka-streams-internals-InternalTopologyBuilder.adoc#, InternalTopologyBuilder>>
-* [[threadClientId]] `threadClientId`
-* [[logContext]] `LogContext`
-* [[assignmentErrorCode]] `assignmentErrorCode`
-
-`StreamThread` initializes the <<internal-properties, internal properties>>.
 
 === [[runLoop]] Running Main Record Processing Loop -- `runLoop` Internal Method
 
@@ -284,59 +348,35 @@ NOTE: `run` is used exclusively when `KafkaStreams` is requested to <<kafka-stre
 
 [source, java]
 ----
-boolean setState(final State newState)
+State setState(
+  State newState)
 ----
 
 `setState`...FIXME
 
 NOTE: `setState` is used when...FIXME
 
-=== [[setRebalanceException]] `setRebalanceException` Method
+=== [[setRebalanceException]] `setRebalanceException` Internal Method
 
 [source, java]
 ----
-void setRebalanceException(final Throwable rebalanceException)
+void setRebalanceException(
+  Throwable rebalanceException)
 ----
 
 `setRebalanceException`...FIXME
 
 NOTE: `setRebalanceException` is used when...FIXME
 
-=== [[adjustRecordsProcessedBeforeCommit]] Adjusting Number Of Records Processed Before Commit (Per Current Processing and Commit Times) -- `adjustRecordsProcessedBeforeCommit` Internal Method
-
-[source, java]
-----
-long adjustRecordsProcessedBeforeCommit(
-  final long prevRecordsProcessedBeforeCommit,
-  final long totalProcessed,
-  final long processLatency,
-  final long commitTime)
-----
-
-`adjustRecordsProcessedBeforeCommit` adjusts (scales up or down) the <<recordsProcessedBeforeCommit, number of records process before commit>> per current `processLatency` and `commitTime` times.
-
-If `processLatency` is greater than `0` and `commitTime`, `adjustRecordsProcessedBeforeCommit` scales `recordsProcessedBeforeCommit` down and prints out the following DEBUG message to the logs:
-
-```
-processing latency [processLatency] > commit time [commitTime] for [totalProcessed] records. Adjusting down recordsProcessedBeforeCommit=[recordsProcessedBeforeCommit]
-```
-
-If however `prevRecordsProcessedBeforeCommit` is available (measured) and `processLatency` is greater than `0` (but not `commitTime`), `adjustRecordsProcessedBeforeCommit` scales `recordsProcessedBeforeCommit` up and prints out the following DEBUG message to the logs:
-
-```
-processing latency [processLatency] < commit time [commitTime] for [totalProcessed] records. Adjusting up recordsProcessedBeforeCommit=[recordsProcessedBeforeCommit]
-```
-
-NOTE: `adjustRecordsProcessedBeforeCommit` is used exclusively when `StreamThread` is requested to <<runOnce, poll records once and process them using active stream tasks>> (and there have been records available).
-
 === [[toString]] Describing Itself (Textual Representation) -- `toString` Method
 
 [source, java]
 ----
 String toString() // <1>
-String toString(final String indent)
+String toString(
+  String indent)
 ----
-<1> Calls `toString(final String indent)` with an empty indent, i.e. `""`
+<1> Uses an empty indent
 
 `toString` gives a text representation with "StreamsThread threadId:" and the thread name followed by the link:kafka-streams-internals-TaskManager.adoc#toString[text representation] of the <<taskManager, TaskManager>>.
 
@@ -344,71 +384,6 @@ String toString(final String indent)
 ----
 FIXME toString in action
 ----
-
-=== [[processAndMaybeCommit]] Processing Records (with Optional Commit) -- `processAndMaybeCommit` Internal Method
-
-[source, java]
-----
-long processAndMaybeCommit(final long recordsProcessedBeforeCommit)
-----
-
-`processAndMaybeCommit` repeats the following processing loop until the number of active stream tasks that processed records successfully is 0 (i.e. no record has been processed).
-
-.StreamThread.processAndMaybeCommit, TaskManager and Sensors
-image::images/kafka-streams-StreamThread-processAndMaybeCommit.png[align="center"]
-
-NOTE: `processAndMaybeCommit` is used exclusively when `StreamThread` is requested to <<runOnce, poll records once and process them using active stream tasks>> (and there have been records to be processed).
-
-==== [[processAndMaybeCommit-processing-loop]] Processing Loop of `processAndMaybeCommit`
-
-`processAndMaybeCommit` requests <<taskManager, TaskManager>> to link:kafka-streams-internals-TaskManager.adoc#process[process records] (by all active stream tasks).
-
-If the number of active stream tasks that processed records successfully is greater than 0, `processAndMaybeCommit` requests process time sensor to record processing time (as <<computeLatency, computeLatency>> by the number of stream tasks that processed records).
-
-NOTE: `processAndMaybeCommit` uses <<streamsMetrics, StreamsMetricsThreadImpl>> to access the link:kafka-streams-StreamsMetricsThreadImpl.adoc#processTimeSensor[process time sensor].
-
-`processAndMaybeCommit` increments the total number of processed records by the number of active stream tasks processed records.
-
-`processAndMaybeCommit` <<punctuate, punctuate>>.
-
-`processAndMaybeCommit` resets the total number of processed records followed by <<maybeCommit, maybeCommit>> when all the following conditions are met:
-
-1. The input `recordsProcessedBeforeCommit` is not `UNLIMITED_RECORDS`
-1. The total number of processed records is greater than the input `recordsProcessedBeforeCommit`
-
-`processAndMaybeCommit` requests <<taskManager, TaskManager>> to link:kafka-streams-internals-TaskManager.adoc#maybeCommitActiveTasks[maybeCommitActiveTasks].
-
-If the number of active stream tasks that committed records is greater than 0, `processAndMaybeCommit` requests commit time sensor to record commit time (as <<computeLatency, computeLatency>> by the number of stream tasks that committed records).
-
-NOTE: `processAndMaybeCommit` uses <<streamsMetrics, StreamsMetricsThreadImpl>> to access the link:kafka-streams-StreamsMetricsThreadImpl.adoc#commitTimeSensor[commit time sensor].
-
-=== [[UNLIMITED_RECORDS]][[recordsProcessedBeforeCommit]] Tracking Number Of Records Processed Before Commit and `UNLIMITED_RECORDS` Marker
-
-`StreamThread` tracks the *number of records processed before commit* (aka `recordsProcessedBeforeCommit`).
-
-`StreamThread` uses `UNLIMITED_RECORDS` marker (i.e. `-1`) as the "zero" to say that no record has been processed yet.
-
-[source, java]
-----
-private final static int UNLIMITED_RECORDS = -1;
-----
-
-When `StreamThread` is <<run, started>> (and <<runLoop, runs the main record processing loop>>), the number of records processed before commit is `UNLIMITED_RECORDS` (which makes it clear that the `StreamThread` has just been started and there has been no way that any record could have been processed).
-
-The main event loop <<runOnce, polls records once and processes them using active stream tasks>> and gives the number of records processed in this one-off poll that becomes the number of records processed before commit from the moment in time on.
-
-The number of records processed before commit may have changed but could still be `UNLIMITED_RECORDS` for the following:
-
-1. There were no records to be polled
-1. FIXME Anything else (that could have happened in <<runOnce, runOnce>>)?
-
-CAUTION: FIXME Review <<runOnce, runOnce>> yet again to focus on `UNLIMITED_RECORDS`.
-
-At some point `StreamThread` <<processAndMaybeCommit, may want to commit>> the records that have been processed so far that happens when the number of records processed before commit is no longer `UNLIMITED_RECORDS` and...FIXME
-
-When requested for <<adjustRecordsProcessedBeforeCommit, adjusting the number of records processed before commit>>, `StreamThread` uses `UNLIMITED_RECORDS` for a local `recordsProcessedBeforeCommit` that is then scaled up or down per the current processing and commit times.
-
-NOTE: <<adjustRecordsProcessedBeforeCommit, Adjusting the number of records processed before commit>> can only scale up when the current number of records processed before commit (while <<runOnce, polling records once and processing them using active stream tasks>>) is not `UNLIMITED_RECORDS` (and the processing time is not greater than commit time).
 
 === [[isRunning]] Checking If StreamThread Is Running -- `isRunning` Method
 
@@ -437,11 +412,117 @@ NOTE: `isRunning` is simply a pass-through variant of <<State, State.isRunning>>
 * `KafkaStreams` is requested to link:kafka-streams-KafkaStreams.adoc#close[close].
 ====
 
+=== [[adminClientMetrics]] `adminClientMetrics` Method
+
+[source, java]
+----
+Map<MetricName, Metric> adminClientMetrics()
+----
+
+`adminClientMetrics`...FIXME
+
+NOTE: `adminClientMetrics` is used when...FIXME
+
+=== [[consumerMetrics]] `consumerMetrics` Method
+
+[source, java]
+----
+Map<MetricName, Metric> consumerMetrics()
+----
+
+`consumerMetrics`...FIXME
+
+NOTE: `consumerMetrics` is used when...FIXME
+
+=== [[producerMetrics]] `producerMetrics` Method
+
+[source, java]
+----
+Map<MetricName, Metric> producerMetrics()
+----
+
+`producerMetrics`...FIXME
+
+NOTE: `producerMetrics` is used when...FIXME
+
+=== [[getConsumerClientId]] `getConsumerClientId` Static Method
+
+[source, java]
+----
+String getConsumerClientId(
+  String threadClientId)
+----
+
+`getConsumerClientId`...FIXME
+
+NOTE: `getConsumerClientId` is used when...FIXME
+
+=== [[getRestoreConsumerClientId]] `getRestoreConsumerClientId` Static Method
+
+[source, java]
+----
+String getRestoreConsumerClientId(
+  String threadClientId)
+----
+
+`getRestoreConsumerClientId`...FIXME
+
+NOTE: `getRestoreConsumerClientId` is used when...FIXME
+
+=== [[getSharedAdminClientId]] `getSharedAdminClientId` Static Method
+
+[source, java]
+----
+String getSharedAdminClientId(
+  String clientId)
+----
+
+`getSharedAdminClientId`...FIXME
+
+NOTE: `getSharedAdminClientId` is used when...FIXME
+
+=== [[tasks]] `tasks` Method
+
+[source, java]
+----
+Map<TaskId, StreamTask> tasks()
+----
+
+`tasks`...FIXME
+
+NOTE: `tasks` is used when...FIXME
+
+=== [[getTaskProducerClientId]] `getTaskProducerClientId` Internal Static Method
+
+[source, java]
+----
+String getTaskProducerClientId(
+  String threadClientId,
+  TaskId taskId)
+----
+
+`getTaskProducerClientId`...FIXME
+
+NOTE: `getTaskProducerClientId` is used when...FIXME
+
+=== [[getThreadProducerClientId]] `getThreadProducerClientId` Internal Static Method
+
+[source, java]
+----
+String getThreadProducerClientId(
+  String threadClientId)
+----
+
+`getThreadProducerClientId`...FIXME
+
+NOTE: `getThreadProducerClientId` is used when...FIXME
+
 === [[addRecordsToTasks]] Adding Records to Active Stream Tasks -- `addRecordsToTasks` Internal Method
 
 [source, java]
 ----
-void addRecordsToTasks(ConsumerRecords<byte[], byte[]> records)
+void addRecordsToTasks(
+  ConsumerRecords<byte[], byte[]> records)
 ----
 
 For every https://kafka.apache.org/22/javadoc/org/apache/kafka/common/TopicPartition.html[partition] of the input link:++https://kafka.apache.org/22/javadoc/org/apache/kafka/clients/consumer/ConsumerRecords.html#partitions--++[records] `addRecordsToTasks` requests the <<taskManager, TaskManager>> for the <<kafka-streams-internals-TaskManager.adoc#activeTask, active stream processor task>> responsible for the partition.
@@ -457,78 +538,6 @@ NOTE: https://kafka.apache.org/22/javadoc/org/apache/kafka/clients/consumer/Cons
 
 NOTE: `addRecordsToTasks` is used exclusively when `StreamThread` is requested to <<runOnce, poll records once and process them using active stream tasks>>.
 
-=== [[create]] Creating StreamThread Instance -- `create` Factory Method
-
-[source, java]
-----
-StreamThread create(
-  final InternalTopologyBuilder builder,
-  final StreamsConfig config,
-  final KafkaClientSupplier clientSupplier,
-  final AdminClient adminClient,
-  final UUID processId,
-  final String clientId,
-  final Metrics metrics,
-  final Time time,
-  final StreamsMetadataState streamsMetadataState,
-  final long cacheSizeBytes,
-  final StateDirectory stateDirectory,
-  final StateRestoreListener userStateRestoreListener)
-----
-
-.Creating StreamThread
-image::images/kafka-streams-StreamThread-create.png[align="center"]
-
-`create` prints out the following INFO message to the logs:
-
-```
-Creating restore consumer client
-```
-
-`create` requests the input `StreamsConfig` for link:kafka-streams-StreamsConfig.adoc#getRestoreConsumerConfigs[getRestoreConsumerConfigs] for a new `threadClientId` (of the format `[clientId]-StreamThread-[STREAM_THREAD_ID]`).
-
-`create` requests the given `KafkaClientSupplier` for link:kafka-streams-KafkaClientSupplier.adoc#getRestoreConsumer[getRestoreConsumer] for the `restoreConsumerConfigs`.
-
-[[create-StoreChangelogReader]]
-`create` creates a <<kafka-streams-internals-StoreChangelogReader.adoc#, StoreChangelogReader>> (with the `restoreConsumer`, the given <<kafka-streams-StateRestoreListener.adoc#, StateRestoreListener>> and the configured <<kafka-streams-properties.adoc#poll.ms, poll.ms>>).
-
-NOTE: The input <<kafka-streams-StateRestoreListener.adoc#, StateRestoreListener>> is a <<kafka-streams-DelegatingStateRestoreListener.adoc#, DelegatingStateRestoreListener>> actually.
-
-(Only with eos enabled) `create`...FIXME
-
-`create` creates a link:kafka-streams-StreamsMetricsThreadImpl.adoc#creating-instance[StreamsMetricsThreadImpl] with the following:
-
-* the input `Metrics`
-* *stream-metrics* link:kafka-streams-StreamsMetricsThreadImpl.adoc#groupName[group name]
-* `thread.[clientId]-StreamThread-[STREAM_THREAD_ID]` link:kafka-streams-StreamsMetricsThreadImpl.adoc#prefix[prefix]
-* link:kafka-streams-StreamsMetricsThreadImpl.adoc#tags[Tags] with one entry with `client-id` and the `[clientId]-StreamThread-[STREAM_THREAD_ID]` value.
-
-`create` creates a <<kafka-streams-internals-ThreadCache.adoc#, ThreadCache>> (with `cacheSizeBytes` for the `maxCacheSizeBytes` and the `StreamsMetricsThreadImpl`).
-
-`create` creates a link:kafka-streams-internals-TaskCreator.adoc#creating-instance[TaskCreator] and a link:kafka-streams-internals-StandbyTaskCreator.adoc#creating-instance[StandbyTaskCreator] that are used exclusively to create a <<kafka-streams-internals-TaskManager.adoc#, TaskManager>> (with a new link:kafka-streams-internals-AssignedStreamsTasks.adoc#creating-instance[AssignedStreamsTasks] and link:kafka-streams-AssignedStandbyTasks.adoc#creating-instance[AssignedStandbyTasks] as well as the given <<kafka-streams-StreamsMetadataState.adoc#, StreamsMetadataState>>).
-
-`create` prints out the following INFO message to the logs:
-
-```
-Creating consumer client
-```
-
-`create` requests the input `StreamsConfig` for link:kafka-streams-properties.adoc#application.id[application.id] configuration property.
-
-`create` requests the input `StreamsConfig` for the link:kafka-streams-StreamsConfig.adoc#getMainConsumerConfigs[configuration of a Kafka Consumer] for the application ID and the `threadClientId` (of the format `[clientId]-StreamThread-[STREAM_THREAD_ID]`) and adds the following internal properties:
-
-* <<kafka-streams-StreamsConfig.adoc#TASK_MANAGER_FOR_PARTITION_ASSIGNOR, TASK_MANAGER_FOR_PARTITION_ASSIGNOR>> to be the `TaskManager` just created
-
-* <<kafka-streams-StreamsConfig.adoc#ASSIGNMENT_ERROR_CODE, ASSIGNMENT_ERROR_CODE>> to be a new `AtomicInteger`
-
-(Only with non-empty `latestResetTopicsPattern` and `earliestResetTopicsPattern` patterns) `create`...FIXME
-
-`create` requests the given `KafkaClientSupplier` for a link:kafka-streams-KafkaClientSupplier.adoc#getConsumer[Kafka Consumer] (with the `consumerConfigs`) and link:kafka-streams-internals-TaskManager.adoc#setConsumer[associates] it with the `TaskManager`.
-
-In the end, `create` creates a <<creating-instance, StreamThread>>.
-
-NOTE: `create` is used exclusively when `KafkaStreams` is <<kafka-streams-KafkaStreams.adoc#, created>>.
-
 === [[enforceRebalance]] Enforcing Rebalance -- `enforceRebalance` Internal Method
 
 [source, java]
@@ -540,16 +549,16 @@ void enforceRebalance()
 
 NOTE: `enforceRebalance` is used when...FIXME
 
-=== [[maybeCommit]] Committing All Tasks (When Commit Interval Elapsed) -- `maybeCommit` Method
+=== [[maybeCommit]] Committing All Active and Standby Tasks (When Commit Interval Elapsed) -- `maybeCommit` Method
 
 [source, java]
 ----
-void maybeCommit(final long now)
+boolean maybeCommit()
 ----
 
 `maybeCommit` commits all tasks (owned by this <<taskManager, TaskManager>>) if the <<commitTimeMs, commit interval>> has elapsed (i.e. the commit interval is non-negative and the time since the <<lastCommitMs, last commit>> is long gone).
 
-`maybeCommit` prints out the following TRACE message to the logs:
+Internally, `maybeCommit` prints out the following TRACE message to the logs:
 
 ```
 Committing all active tasks [activeTaskIds] and standby tasks [standbyTaskIds] since [time]ms has elapsed (commit interval is [commitTimeMs]ms)
@@ -573,7 +582,7 @@ Committed all active tasks [activeTaskIds] and standby tasks [standbyTaskIds] in
 
 `maybeCommit` turns the <<processStandbyRecords, processStandbyRecords>> flag on.
 
-NOTE: `maybeCommit` is used when `StreamThread` is requested to <<runOnce, poll records once and process them using active stream tasks>> (directly and indirectly in <<processAndMaybeCommit, processAndMaybeCommit>>).
+NOTE: `maybeCommit` is used exclusively when `StreamThread` is requested to <<runOnce, poll records once and process them using active stream tasks>>.
 
 === [[maybePunctuate]] Attempting to Punctuate (Running Stream Tasks) -- `maybePunctuate` Internal Method
 
@@ -590,7 +599,23 @@ In the end, `maybePunctuate` returns whether the punctuate returned a positive n
 
 NOTE: `maybePunctuate` is used exclusively when `StreamThread` is requested to <<runOnce, poll records once and process them using active stream tasks>>.
 
-== [[advanceNowAndComputeLatency]] Computing Latency -- `advanceNowAndComputeLatency` Internal Method
+=== [[addToResetList]] `addToResetList` Internal Method
+
+[source, java]
+----
+void addToResetList(
+  TopicPartition partition,
+  Set<TopicPartition> partitions,
+  String logMessage,
+  String resetPolicy,
+  Set<String> loggedTopics)
+----
+
+`addToResetList`...FIXME
+
+NOTE: `addToResetList` is used when `StreamThread`...FIXME
+
+=== [[advanceNowAndComputeLatency]] Computing Latency -- `advanceNowAndComputeLatency` Internal Method
 
 [source, java]
 ----
@@ -600,6 +625,44 @@ long advanceNowAndComputeLatency()
 `advanceNowAndComputeLatency` updates (_advances_) the <<now, "now" timestamp>> to be the current timestamp and returns the timestamp difference (_latency_).
 
 NOTE: `advanceNowAndComputeLatency` is used when `StreamThread` is requested to <<runOnce, poll records once and process them using active stream tasks>>, <<maybePunctuate, maybePunctuate>>, <<maybeCommit, maybeCommit>>, and <<maybeUpdateStandbyTasks, maybeUpdateStandbyTasks>>.
+
+=== [[clearStandbyRecords]] `clearStandbyRecords` Internal Method
+
+[source, java]
+----
+void clearStandbyRecords()
+----
+
+`clearStandbyRecords`...FIXME
+
+NOTE: `clearStandbyRecords` is used when `StreamThread`...FIXME
+
+=== [[completeShutdown]] `completeShutdown` Internal Method
+
+[source, java]
+----
+void completeShutdown(
+  boolean cleanRun)
+----
+
+`completeShutdown`...FIXME
+
+NOTE: `completeShutdown` is used when `StreamThread` is requested to <<run, run>> and <<shutdown, shutdown>>.
+
+=== [[updateThreadMetadata]] `updateThreadMetadata` Internal Method
+
+[source, java]
+----
+void updateThreadMetadata(
+  Map<TaskId, StreamTask> activeTasks,
+  Map<TaskId, StandbyTask> standbyTasks)
+StreamThread updateThreadMetadata(
+  String adminClientId)
+----
+
+`updateThreadMetadata`...FIXME
+
+NOTE: `updateThreadMetadata` is used when `StreamThread`...FIXME
 
 === [[internal-properties]] Internal Properties
 
@@ -615,7 +678,7 @@ a| [[builder]] <<kafka-streams-internals-InternalTopologyBuilder.adoc#, Internal
 a| [[lastCommitMs]] Time of the last <<maybeCommit, commit>>
 
 | numIterations
-a| [[numIterations]] Number of iterations when the <<taskManager, TaskManager>> is requested to <<kafka-streams-internals-TaskManager.adoc#process, process records by running stream tasks (one record per task)>> (while `StreamThread` is <<runOnce, polling records once and processing them using active stream tasks>>)
+a| [[numIterations]][[currentNumIterations]] Number of iterations when the <<taskManager, TaskManager>> is requested to <<kafka-streams-internals-TaskManager.adoc#process, process records by running stream tasks (one record per task)>> (while `StreamThread` is <<runOnce, polling records once and processing them using active stream tasks>>)
 
 Default: `1`
 
@@ -641,6 +704,9 @@ a| [[rebalanceListener]] <<kafka-streams-StreamThread-RebalanceListener.adoc#, R
 * Used exclusively when `StreamThread` is requested to <<runLoop, run the main record processing loop>> (and requests the Kafka <<consumer, Consumer>> to subscribe to get dynamically assigned partitions of topics matching specified pattern)
 
 NOTE: `StreamThread` requests <<builder, InternalTopologyBuilder>> for the link:kafka-streams-internals-InternalTopologyBuilder.adoc#sourceTopicPattern[source topic pattern] to subscribe to.
+
+| standbyRecords
+a| [[standbyRecords]]
 
 | stateListener
 a| [[stateListener]][[setStateListener]] <<kafka-streams-StreamThread-StateListener.adoc#, StateListener>>

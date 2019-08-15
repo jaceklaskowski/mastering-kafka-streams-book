@@ -274,6 +274,35 @@ Map<String, Assignment> computeNewAssignment(
 
 NOTE: `computeNewAssignment` is used exclusively when `StreamsPartitionAssignor` is requested to <<assign, perform partition assignment>>.
 
+=== [[processVersionOneAssignment]] `processVersionOneAssignment` Internal Method
+
+[source, java]
+----
+void processVersionOneAssignment(
+  AssignmentInfo info,
+  List<TopicPartition> partitions,
+  Map<TaskId, Set<TopicPartition>> activeTasks)
+----
+
+`processVersionOneAssignment`...FIXME
+
+NOTE: `processVersionOneAssignment` is used when `StreamsPartitionAssignor` is requested to <<onAssignment, handle partition assignment from a group leader>> (for version 1) and <<processVersionTwoAssignment, process partition assignment (version 2)>>.
+
+=== [[processVersionTwoAssignment]] `processVersionTwoAssignment` Internal Method
+
+[source, java]
+----
+void processVersionTwoAssignment(
+  AssignmentInfo info,
+  List<TopicPartition> partitions,
+  Map<TaskId, Set<TopicPartition>> activeTasks,
+  Map<TopicPartition, PartitionInfo> topicToPartitionInfo)
+----
+
+`processVersionTwoAssignment`...FIXME
+
+NOTE: `processVersionTwoAssignment` is used when...FIXME
+
 === [[internal-properties]] Internal Properties
 
 [cols="30m,70",options="header",width="100%"]

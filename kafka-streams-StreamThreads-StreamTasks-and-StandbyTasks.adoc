@@ -1,6 +1,10 @@
-== StreamThreads, StreamTasks and StandbyTasks
+== KafkaStreams, StreamThreads, StreamTasks and StandbyTasks
 
-<<kafka-streams-StreamsConfig.adoc#NUM_STREAM_THREADS_CONFIG, StreamsConfig.NUM_STREAM_THREADS_CONFIG>> (`num.stream.threads`) is the number of <<kafka-streams-internals-StreamThread.adoc#, StreamThreads>> to execute stream processing.
+<<kafka-streams-StreamsConfig.adoc#NUM_STREAM_THREADS_CONFIG, StreamsConfig.NUM_STREAM_THREADS_CONFIG>> (`num.stream.threads`) is the number of <<kafka-streams-internals-StreamThread.adoc#, StreamThreads>> that a single <<kafka-streams-KafkaStreams.adoc#, KafkaStreams>> instance creates for stream processing.
+
+With that, there will always be at least two threads running for a Kafka Streams application - the main thread of the application and one or many `StreamThreads`.
+
+Every `StreamThread` manages its own <<kafka-streams-internals-TaskManager.adoc#, TaskManager>> (with the factories of <<kafka-streams-internals-TaskCreator.adoc#, StreamTasks>> and <<kafka-streams-internals-StandbyTaskCreator.adoc#, StandbyTasks>>).
 
 * Number of StreamTasks = # TaskCreator.createTask = # AbstractTaskCreator.createTasks = TaskManager.addStreamTasks
 
@@ -21,3 +25,5 @@ DEBUG Assigning tasks {} to clients {} with number of replicas {}
 Step 1. StreamsPartitionAssignor.onAssignment(final Assignment assignment) —> TaskManager.setAssignmentMetadata(Map<TaskId, Set<TopicPartition>> activeTasks, Map<TaskId, Set<TopicPartition>> standbyTasks)
 
 Step 2. RebalanceListener.onPartitionsAssigned(Collection<TopicPartition> assignment) —> TaskManager.createTasks(assignment)
+
+`StreamsPartitionAssignor` makes sure that the <<kafka-streams-internals-StreamsPartitionAssignor.adoc#processVersionOneAssignment, number of assigned partitions to a Kafka Streams application instance is exactly the same as number of active tasks>>.

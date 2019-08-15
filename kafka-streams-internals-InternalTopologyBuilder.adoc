@@ -1,11 +1,11 @@
 == [[InternalTopologyBuilder]] InternalTopologyBuilder
 
-`InternalTopologyBuilder` is used to <<build, build a topology of processor nodes>> (for <<kafka-streams-internals-StandbyTaskCreator.adoc#, StreamThread.StandbyTaskCreators>> and <<kafka-streams-internals-TaskCreator.adoc#, StreamThread.TaskCreator>>).
+`InternalTopologyBuilder` is used to <<build, build a topology of processor nodes>> (for <<kafka-streams-internals-StandbyTaskCreator.adoc#, StreamThread.StandbyTaskCreator>> and <<kafka-streams-internals-TaskCreator.adoc#, StreamThread.TaskCreator>> task factories and hence <<kafka-streams-internals-Task.adoc#, stream processor tasks>> themselves).
 
 .InternalTopologyBuilder and ProcessorTopology
 image::images/kafka-streams-InternalTopologyBuilder-build.png[align="center"]
 
-`InternalTopologyBuilder` is <<creating-instance, created>> exclusively for a <<kafka-streams-Topology.adoc#internalTopologyBuilder, Topology>>.
+`InternalTopologyBuilder` is <<creating-instance, created>> exclusively for a <<kafka-streams-Topology.adoc#internalTopologyBuilder, Topology>> (which is simply the frontend to the internals of topology development).
 
 .InternalTopologyBuilder and Topology
 image::images/kafka-streams-InternalTopologyBuilder-Topology.png[align="center"]

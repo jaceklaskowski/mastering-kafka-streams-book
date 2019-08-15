@@ -398,16 +398,23 @@ int commitAll()
 
 NOTE: `commitAll` is used exclusively when `StreamThread` is requested to <<kafka-streams-internals-StreamThread.adoc#maybeCommit, commit all tasks (when commit interval elapsed)>>.
 
-=== [[activeTaskIds]] `activeTaskIds` Method
+=== [[activeTaskIds]] All Active Tasks -- `activeTaskIds` Method
 
 [source, java]
 ----
 Set<TaskId> activeTaskIds()
 ----
 
-`activeTaskIds`...FIXME
+`activeTaskIds` simply requests the <<active, AssignedStreamsTasks>> for the <<kafka-streams-internals-AssignedStreamsTasks.adoc#allAssignedTaskIds, assigned task IDs>>.
 
-NOTE: `activeTaskIds` is used when...FIXME
+[NOTE]
+====
+`activeTaskIds` is used when:
+
+* `StreamThread` is requested to <<kafka-streams-internals-StreamThread.adoc#maybeCommit, commit all active tasks (when commit interval elapsed)>>
+
+* `RebalanceListener` is requested to handle <<kafka-streams-StreamThread-RebalanceListener.adoc#onPartitionsAssigned, onPartitionsAssigned>> and <<kafka-streams-StreamThread-RebalanceListener.adoc#onPartitionsRevoked, onPartitionsRevoked>> events
+====
 
 === [[standbyTaskIds]] `standbyTaskIds` Method
 
