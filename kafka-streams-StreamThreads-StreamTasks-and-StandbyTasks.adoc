@@ -1,8 +1,18 @@
 == KafkaStreams, StreamThreads, StreamTasks and StandbyTasks
 
-<<kafka-streams-StreamsConfig.adoc#NUM_STREAM_THREADS_CONFIG, StreamsConfig.NUM_STREAM_THREADS_CONFIG>> (`num.stream.threads`) is the number of <<kafka-streams-internals-StreamThread.adoc#, StreamThreads>> that a single <<kafka-streams-KafkaStreams.adoc#, KafkaStreams>> instance creates for stream processing. That means that there will always be at least two threads running for a Kafka Streams application - the main thread of the application and one or many `StreamThreads`.
+=== KafkaStreams, StreamThreads and StreamsConfig.NUM_STREAM_THREADS_CONFIG
 
-Every `StreamThread` manages its own <<kafka-streams-internals-TaskManager.adoc#, TaskManager>> (with the factories of <<kafka-streams-internals-TaskCreator.adoc#, stream>> and <<kafka-streams-internals-StandbyTaskCreator.adoc#, standby>> tasks).
+A <<kafka-streams-KafkaStreams.adoc#, KafkaStreams>> instance uses <<kafka-streams-internals-StreamThread.adoc#, StreamThreads>> for stream processing.
+
+The number of `StreamThreads` is controlled by <<kafka-streams-StreamsConfig.adoc#NUM_STREAM_THREADS_CONFIG, StreamsConfig.NUM_STREAM_THREADS_CONFIG>> (`num.stream.threads`) configuration property.
+
+=== StreamThread and Kafka Consumer
+
+`StreamThread` uses a <<kafka-streams-internals-StreamThread.adoc#consumer, Kafka Consumer>>.
+
+=== StreamThread, TaskManager and StreamTask
+
+Every `StreamThread` manages its own <<kafka-streams-internals-TaskManager.adoc#, TaskManager>> (with the factories to create <<kafka-streams-internals-TaskCreator.adoc#, stream>> and <<kafka-streams-internals-StandbyTaskCreator.adoc#, standby>> tasks).
 
 When requested to <<kafka-streams-internals-StreamThread.adoc#runOnce, poll records once and process them using active stream tasks>>, `StreamThread` requests the `TaskManager` for <<kafka-streams-internals-TaskManager.adoc#activeTask, active stream tasks>> for every partition with records (see <<kafka-streams-internals-StreamThread.adoc#addRecordsToTasks, StreamThread.addRecordsToTasks>>).
 
@@ -11,6 +21,8 @@ A single `StreamTask` is responsible for processing records from <<kafka-streams
 When requested for a <<kafka-streams-internals-TaskCreator.adoc#createTask, StreamTask>>, `TaskCreator` is given partitions.
 
 NOTE: Explore the relationship between topic groups, partitions and tasks (`builder.build(taskId.topicGroupId)` while creating a `StreamTask`) which is <<kafka-streams-internals-TaskManager.adoc#addStreamTask, TaskManager.addStreamTask>>.
+
+The number of `StreamTask` is exactly the number of partitions assigned (as `StreamTasks` simply create a consumer group and so every partition can only be consumed by one and exactly one consumer group member).
 
 * Number of StreamTasks = # TaskCreator.createTask = # AbstractTaskCreator.createTasks = TaskManager.addStreamTasks
 
