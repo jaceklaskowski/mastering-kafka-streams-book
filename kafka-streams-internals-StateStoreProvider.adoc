@@ -29,12 +29,12 @@ interface StateStoreProvider {
 | StateStoreProvider
 | Description
 
-| link:kafka-streams-GlobalStateStoreProvider.adoc[GlobalStateStoreProvider]
+| link:kafka-streams-internals-GlobalStateStoreProvider.adoc[GlobalStateStoreProvider]
 | [[GlobalStateStoreProvider]]
 
-| link:kafka-streams-StreamThreadStateStoreProvider.adoc[StreamThreadStateStoreProvider]
+| link:kafka-streams-internals-StreamThreadStateStoreProvider.adoc[StreamThreadStateStoreProvider]
 | [[StreamThreadStateStoreProvider]]
 
-| link:kafka-streams-WrappingStoreProvider.adoc[WrappingStoreProvider]
+| link:kafka-streams-internals-WrappingStoreProvider.adoc[WrappingStoreProvider]
 | [[WrappingStoreProvider]]
 |===

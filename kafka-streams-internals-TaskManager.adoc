@@ -62,7 +62,7 @@ Refer to <<kafka-logging.adoc#log4j.properties, Application Logging Using log4j>
 void setPartitionsByHostState(Map<HostInfo, Set<TopicPartition>> partitionsByHostState)
 ----
 
-`setPartitionsByHostState` simply notifies the <<streamsMetadataState, StreamsMetadataState>> that <<kafka-streams-StreamsMetadataState.adoc#onChange, cluster metadata has changed>>.
+`setPartitionsByHostState` simply notifies the <<streamsMetadataState, StreamsMetadataState>> that <<kafka-streams-internals-StreamsMetadataState.adoc#onChange, cluster metadata has changed>>.
 
 NOTE: `setPartitionsByHostState` is used when `StreamsPartitionAssignor` is requested to <<kafka-streams-internals-StreamsPartitionAssignor.adoc#assign, assign>> and <<kafka-streams-internals-StreamsPartitionAssignor.adoc#onAssignment, onAssignment>>.
 
@@ -174,12 +174,12 @@ NOTE: `activeTask` is used exclusively when `StreamThread` is requested to <<kaf
 * [[processId]] Process ID
 * [[logPrefix]] `logPrefix`
 * [[restoreConsumer]] Kafka "restore" https://kafka.apache.org/22/javadoc/org/apache/kafka/clients/consumer/KafkaConsumer.html[Consumer] (`Consumer<byte[], byte[]>`)
-* [[streamsMetadataState]] <<kafka-streams-StreamsMetadataState.adoc#, StreamsMetadataState>>
+* [[streamsMetadataState]] <<kafka-streams-internals-StreamsMetadataState.adoc#, StreamsMetadataState>>
 * [[taskCreator]] <<kafka-streams-internals-AbstractTaskCreator.adoc#, AbstractTaskCreator>> of <<kafka-streams-internals-StreamTask.adoc#, StreamTasks>> (`StreamThread.AbstractTaskCreator<StreamTask>`)
 * [[standbyTaskCreator]] <<kafka-streams-internals-AbstractTaskCreator.adoc#, AbstractTaskCreator>> of <<kafka-streams-internals-StandbyTask.adoc#, StandbyTasks>> (`StreamThread.AbstractTaskCreator<StandbyTask>`)
 * [[adminClient]] Kafka https://kafka.apache.org/22/javadoc/org/apache/kafka/clients/admin/AdminClient.html[AdminClient]
 * [[active]] <<kafka-streams-internals-AssignedStreamsTasks.adoc#, AssignedStreamsTasks>>
-* [[standby]] <<kafka-streams-AssignedStandbyTasks.adoc#, AssignedStandbyTasks>>
+* [[standby]] <<kafka-streams-internals-AssignedStandbyTasks.adoc#, AssignedStandbyTasks>>
 
 `TaskManager` initializes the <<internal-properties, internal properties>>.
 

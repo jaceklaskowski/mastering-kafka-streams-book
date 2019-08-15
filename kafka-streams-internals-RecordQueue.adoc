@@ -50,15 +50,15 @@ int addRawRecords(final Iterable<ConsumerRecord<byte[], byte[]>> rawRecords)
 
 For every Kafka https://kafka.apache.org/22/javadoc/org/apache/kafka/clients/consumer/ConsumerRecord.html[ConsumerRecord] in the input `rawRecords`, `addRawRecords` does the following:
 
-. Requests the <<recordDeserializer, RecordDeserializer>> to link:kafka-streams-RecordDeserializer.adoc#deserialize[deserialize the record] (with the <<processorContext, ProcessorContext>>)
+. Requests the <<recordDeserializer, RecordDeserializer>> to link:kafka-streams-internals-RecordDeserializer.adoc#deserialize[deserialize the record] (with the <<processorContext, ProcessorContext>>)
 
-. Requests the <<timeTracker, TimestampTracker>> for the link:kafka-streams-TimestampTracker.adoc#get[currently-tracked timestamp] and uses it to request the <<timestampExtractor, TimestampExtractor>> to link:kafka-streams-TimestampExtractor.adoc#extract[extract the timestamp from the record]
+. FIXME
 
 . Creates a link:kafka-streams-internals-StampedRecord.adoc#creating-instance[StampedRecord] for the record and the record timestamp
 
 . Inserts the `StampedRecord` at the end of the <<fifoQueue, fifoQueue>>
 
-. Requests the <<timeTracker, TimestampTracker>> to link:kafka-streams-TimestampTracker.adoc#addElement[add the StampedRecord]
+. FIXME
 
 While processing `ConsumerRecords`, `addRawRecords` prints out the following TRACE message to the logs:
 
@@ -66,7 +66,7 @@ While processing `ConsumerRecords`, `addRawRecords` prints out the following TRA
 Source node [name] extracted timestamp [timestamp] for record [record]
 ```
 
-With all `ConsumerRecords` processed, `addRawRecords` updates the <<partitionTime, partitionTime>> if the link:kafka-streams-TimestampTracker.adoc#get[current timestamp] (of the <<timeTracker, TimestampTracker>>) is greater (later time-wise).
+With all `ConsumerRecords` processed, `addRawRecords`...FIXME
 
 In the end, `addRawRecords` returns the <<size, number of ConsumerRecords>> in the <<fifoQueue, queue>>.
 
@@ -74,7 +74,7 @@ In the end, `addRawRecords` returns the <<size, number of ConsumerRecords>> in t
 ====
 `addRawRecords` skips (drops) Kafka `ConsumerRecords` when either condition holds:
 
-* <<recordDeserializer, RecordDeserializer>> could not link:kafka-streams-RecordDeserializer.adoc#deserialize[deserialize] and the `DeserializationExceptionHandler` is not set to fail upon a deserialization error
+* <<recordDeserializer, RecordDeserializer>> could not link:kafka-streams-internals-RecordDeserializer.adoc#deserialize[deserialize] and the `DeserializationExceptionHandler` is not set to fail upon a deserialization error
 
 * Extracted timestamp is negative (and hence invalid)
 ====
@@ -88,7 +88,7 @@ NOTE: `addRawRecords` is used exclusively when `PartitionGroup` is requested to 
 void clear()
 ----
 
-`clear` removes all of the elements from the <<fifoQueue, fifoQueue>> and requests the <<timeTracker, TimestampTracker>> to link:kafka-streams-TimestampTracker.adoc#clear[clear itself].
+`clear`...FIXME
 
 In the end, `clear` (re)sets the <<partitionTime, partitionTime>> to `NOT_KNOWN`.
 
@@ -131,12 +131,8 @@ Used when...FIXME
 a| [[partitionTime]][[timestamp]]
 
 | recordDeserializer
-| [[recordDeserializer]] link:kafka-streams-RecordDeserializer.adoc[RecordDeserializer] (for the <<source, SourceNode>> and <<deserializationExceptionHandler, DeserializationExceptionHandler>>)
+| [[recordDeserializer]] link:kafka-streams-internals-RecordDeserializer.adoc[RecordDeserializer] (for the <<source, SourceNode>> and <<deserializationExceptionHandler, DeserializationExceptionHandler>>)
 
 Used when...FIXME
 
-| timeTracker
-| [[timeTracker]] link:kafka-streams-TimestampTracker.adoc[TimestampTracker]
-
-Used when...FIXME
 |===

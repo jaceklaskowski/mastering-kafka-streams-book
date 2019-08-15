@@ -1,6 +1,6 @@
 == [[MeteredKeyValueBytesStore]] MeteredKeyValueBytesStore
 
-`MeteredKeyValueBytesStore` is a concrete link:kafka-streams-StateStore-KeyValueStore.adoc[KeyValueStore] that...FIXME
+`MeteredKeyValueBytesStore` is a concrete link:kafka-streams-KeyValueStore.adoc[KeyValueStore] that...FIXME
 
 === [[init]] `init` Method
 

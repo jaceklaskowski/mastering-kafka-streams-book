@@ -83,7 +83,7 @@ Indicates whether the state store is open or not
 
 Used when:
 
-* <<kafka-streams-GlobalStateStoreProvider.adoc#stores, GlobalStateStoreProvider>> and <<kafka-streams-StreamThreadStateStoreProvider.adoc#stores, StreamThreadStateStoreProvider>> are requested to `stores`
+* <<kafka-streams-internals-GlobalStateStoreProvider.adoc#stores, GlobalStateStoreProvider>> and <<kafka-streams-internals-StreamThreadStateStoreProvider.adoc#stores, StreamThreadStateStoreProvider>> are requested to `stores`
 
 * `SegmentIterator` is requested to `hasNext`
 
@@ -123,19 +123,19 @@ Used when:
 | StateStore
 | Description
 
-| <<kafka-streams-StateStore-KeyValueStore.adoc#, KeyValueStore>>
+| <<kafka-streams-KeyValueStore.adoc#, KeyValueStore>>
 | [[KeyValueStore]]
 
 | <<kafka-streams-internals-SegmentedBytesStore.adoc#, SegmentedBytesStore>>
 | [[SegmentedBytesStore]]
 
-| <<kafka-streams-StateStore-SessionStore.adoc#, SessionStore>>
+| <<kafka-streams-SessionStore.adoc#, SessionStore>>
 | [[SessionStore]]
 
 | <<kafka-streams-internals-TimeOrderedKeyValueBuffer.adoc#, TimeOrderedKeyValueBuffer>>
 | [[TimeOrderedKeyValueBuffer]]
 
-| <<kafka-streams-StateStore-WindowStore.adoc#, WindowStore>>
+| <<kafka-streams-WindowStore.adoc#, WindowStore>>
 | [[WindowStore]]
 
 | <<kafka-streams-internals-WrappedStateStore.adoc#, WrappedStateStore>>

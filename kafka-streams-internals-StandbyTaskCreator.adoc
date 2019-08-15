@@ -12,7 +12,7 @@
 
 * [[builder]] <<kafka-streams-internals-InternalTopologyBuilder.adoc#, InternalTopologyBuilder>>
 * [[config]] <<kafka-streams-StreamsConfig.adoc#, StreamsConfig>>
-* [[streamsMetrics]] <<kafka-streams-StreamsMetricsThreadImpl.adoc#, StreamsMetricsThreadImpl>>
+* [[streamsMetrics]] <<kafka-streams-internals-StreamsMetricsThreadImpl.adoc#, StreamsMetricsThreadImpl>>
 * [[stateDirectory]] <<kafka-streams-internals-StateDirectory.adoc#, StateDirectory>>
 * [[storeChangelogReader]] <<kafka-streams-internals-ChangelogReader.adoc#, ChangelogReader>>
 * [[time]] `Time`
@@ -32,7 +32,7 @@ NOTE: `createTask` is part of <<kafka-streams-internals-AbstractTaskCreator.adoc
 
 `createTask` records execution (occurence) for monitoring purposes and creates a <<kafka-streams-internals-StandbyTask.adoc#, StandbyTask>> only if the processor task topology has at least one <<kafka-streams-internals-ProcessorTopology.adoc#stateStores, state store>>.
 
-Internally, `createTask` first requests the <<streamsMetrics, StreamsMetricsThreadImpl>> for the <<kafka-streams-StreamsMetricsThreadImpl.adoc#taskCreatedSensor, taskCreatedSensor>> and records execution (i.e. increments the counter of how many times `createTask` was executed).
+Internally, `createTask` first requests the <<streamsMetrics, StreamsMetricsThreadImpl>> for the <<kafka-streams-internals-StreamsMetricsThreadImpl.adoc#taskCreatedSensor, taskCreatedSensor>> and records execution (i.e. increments the counter of how many times `createTask` was executed).
 
 `createTask` requests the <<builder, InternalTopologyBuilder>> to <<kafka-streams-internals-InternalTopologyBuilder.adoc#build, build the processor task topology>> for the <<kafka-streams-TaskId.adoc#topicGroupId, topicGroupId>> of the given `TaskId`.
 

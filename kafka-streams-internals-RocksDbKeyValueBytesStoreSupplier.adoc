@@ -2,7 +2,7 @@
 
 `RocksDbKeyValueBytesStoreSupplier` is a <<kafka-streams-KeyValueBytesStoreSupplier.adoc#, KeyValueBytesStoreSupplier>>.
 
-`RocksDbKeyValueBytesStoreSupplier` is <<creating-instance, created>> when `Stores` utility is used to create persistent <<kafka-streams-StateStore-KeyValueStore.adoc#, KeyValueStores>>:
+`RocksDbKeyValueBytesStoreSupplier` is <<creating-instance, created>> when `Stores` utility is used to create persistent <<kafka-streams-KeyValueStore.adoc#, KeyValueStores>>:
 
 * <<kafka-streams-Stores.adoc#persistentKeyValueStore, Stores.persistentKeyValueStore>> (with the <<returnTimestampedStore, returnTimestampedStore>> off)
 
@@ -27,7 +27,7 @@ KeyValueStore<Bytes, byte[]> get()
 
 NOTE: `get` is part of the <<kafka-streams-StoreSupplier.adoc#get, StoreSupplier Contract>> to supply (_get_) a <<kafka-streams-StateStore.adoc#, state store>>.
 
-`get` gives the following <<kafka-streams-StateStore-KeyValueStore.adoc#, KeyValueStores>>:
+`get` gives the following <<kafka-streams-KeyValueStore.adoc#, KeyValueStores>>:
 
 * <<kafka-streams-internals-RocksDBTimestampedStore.adoc#, RocksDBTimestampedStore>> when <<returnTimestampedStore, returnTimestampedStore>> is on (`true`)
 

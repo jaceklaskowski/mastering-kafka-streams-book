@@ -1,10 +1,8 @@
 == KafkaStreams, StreamThreads, StreamTasks and StandbyTasks
 
-<<kafka-streams-StreamsConfig.adoc#NUM_STREAM_THREADS_CONFIG, StreamsConfig.NUM_STREAM_THREADS_CONFIG>> (`num.stream.threads`) is the number of <<kafka-streams-internals-StreamThread.adoc#, StreamThreads>> that a single <<kafka-streams-KafkaStreams.adoc#, KafkaStreams>> instance creates for stream processing.
+<<kafka-streams-StreamsConfig.adoc#NUM_STREAM_THREADS_CONFIG, StreamsConfig.NUM_STREAM_THREADS_CONFIG>> (`num.stream.threads`) is the number of <<kafka-streams-internals-StreamThread.adoc#, StreamThreads>> that a single <<kafka-streams-KafkaStreams.adoc#, KafkaStreams>> instance creates for stream processing. That means that there will always be at least two threads running for a Kafka Streams application - the main thread of the application and one or many `StreamThreads`.
 
-With that, there will always be at least two threads running for a Kafka Streams application - the main thread of the application and one or many `StreamThreads`.
-
-Every `StreamThread` manages its own <<kafka-streams-internals-TaskManager.adoc#, TaskManager>> (with the factories of <<kafka-streams-internals-TaskCreator.adoc#, StreamTasks>> and <<kafka-streams-internals-StandbyTaskCreator.adoc#, StandbyTasks>>).
+Every `StreamThread` manages its own <<kafka-streams-internals-TaskManager.adoc#, TaskManager>> (with the factories of <<kafka-streams-internals-TaskCreator.adoc#, stream>> and <<kafka-streams-internals-StandbyTaskCreator.adoc#, standby>> tasks).
 
 When requested to <<kafka-streams-internals-StreamThread.adoc#runOnce, poll records once and process them using active stream tasks>>, `StreamThread` requests the `TaskManager` for <<kafka-streams-internals-TaskManager.adoc#activeTask, active stream tasks>> for every partition with records (see <<kafka-streams-internals-StreamThread.adoc#addRecordsToTasks, StreamThread.addRecordsToTasks>>).
 

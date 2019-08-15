@@ -13,7 +13,7 @@ void punctuate(
   Punctuator punctuator)
 ----
 
-`punctuate` is used exclusively when `PunctuationQueue` is requested to <<kafka-streams-PunctuationQueue.adoc#mayPunctuate, attempt to punctuate>> (for `StreamTask` that attempts to punctuate by <<kafka-streams-internals-StreamTask.adoc#maybePunctuateStreamTime, stream>> and <<kafka-streams-internals-StreamTask.adoc#maybePunctuateSystemTime, system>> time).
+`punctuate` is used exclusively when `PunctuationQueue` is requested to <<kafka-streams-internals-PunctuationQueue.adoc#mayPunctuate, attempt to punctuate>> (for `StreamTask` that attempts to punctuate by <<kafka-streams-internals-StreamTask.adoc#maybePunctuateStreamTime, stream>> and <<kafka-streams-internals-StreamTask.adoc#maybePunctuateSystemTime, system>> time).
 
 [[implementations]]
 NOTE: <<kafka-streams-internals-StreamTask.adoc#, StreamTask>> is the default and only known implementation of the <<contract, ProcessorNodePunctuator Contract>> in Kafka Streams.

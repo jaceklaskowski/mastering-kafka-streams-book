@@ -1,8 +1,8 @@
 == [[CachingKeyValueStore]] CachingKeyValueStore
 
-`CachingKeyValueStore` is a concrete <<kafka-streams-StateStore-KeyValueStore.adoc#, KeyValueStore>> of `Bytes` keys and `byte[]` values (i.e. `KeyValueStore<Bytes, byte[]>`).
+`CachingKeyValueStore` is a concrete <<kafka-streams-KeyValueStore.adoc#, KeyValueStore>> of `Bytes` keys and `byte[]` values (i.e. `KeyValueStore<Bytes, byte[]>`).
 
-`CachingKeyValueStore` is also a concrete <<kafka-streams-internals-WrappedStateStore.adoc#, WrappedStateStore>> of <<kafka-streams-StateStore-KeyValueStore.adoc#, KeyValueStore>> of `Bytes` keys and `byte[]` values (i.e. `WrappedStateStore<KeyValueStore<Bytes, byte[]>, byte[], byte[]>`).
+`CachingKeyValueStore` is also a concrete <<kafka-streams-internals-WrappedStateStore.adoc#, WrappedStateStore>> of <<kafka-streams-KeyValueStore.adoc#, KeyValueStore>> of `Bytes` keys and `byte[]` values (i.e. `WrappedStateStore<KeyValueStore<Bytes, byte[]>, byte[], byte[]>`).
 
 `CachingKeyValueStore` is a concrete <<kafka-streams-internals-CachedStateStore.adoc#, CachedStateStore>>.
 
@@ -13,7 +13,7 @@
 * `TimestampedKeyValueStoreBuilder` is requested to <<kafka-streams-internals-TimestampedKeyValueStoreBuilder.adoc#build, build a TimestampedKeyValueStore>> with <<kafka-streams-internals-AbstractStoreBuilder.adoc#withCachingEnabled, caching enabled>>
 
 [[creating-instance]][[underlying]]
-`CachingKeyValueStore` takes a single <<kafka-streams-StateStore-KeyValueStore.adoc#, KeyValueStore>> (_underlying state store_) to be created.
+`CachingKeyValueStore` takes a single <<kafka-streams-KeyValueStore.adoc#, KeyValueStore>> (_underlying state store_) to be created.
 
 === [[init]] Initializing State Store -- `init` Method
 
@@ -69,7 +69,7 @@ NOTE: `putAndMaybeForward` is used exclusively when `CachingKeyValueStore` is re
 void remove(final Windowed<Bytes> sessionKey)
 ----
 
-NOTE: `remove` is part of link:kafka-streams-StateStore-SessionStore.adoc#remove[SessionStore Contract] to...FIXME.
+NOTE: `remove` is part of link:kafka-streams-SessionStore.adoc#remove[SessionStore Contract] to...FIXME.
 
 `remove`...FIXME
 

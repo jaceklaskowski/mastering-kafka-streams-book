@@ -10,7 +10,7 @@
 
 * [[builder]] <<kafka-streams-internals-InternalTopologyBuilder.adoc#, InternalTopologyBuilder>>
 * [[config]] <<kafka-streams-StreamsConfig.adoc#, StreamsConfig>>
-* [[streamsMetrics]] <<kafka-streams-StreamsMetricsThreadImpl.adoc#, StreamsMetricsThreadImpl>>
+* [[streamsMetrics]] <<kafka-streams-internals-StreamsMetricsThreadImpl.adoc#, StreamsMetricsThreadImpl>>
 * [[stateDirectory]] <<kafka-streams-internals-StateDirectory.adoc#, StateDirectory>>
 * [[storeChangelogReader]] <<kafka-streams-internals-ChangelogReader.adoc#, ChangelogReader>>
 * [[cache]] <<kafka-streams-internals-ThreadCache.adoc#, ThreadCache>>

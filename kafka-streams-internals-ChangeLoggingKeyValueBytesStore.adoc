@@ -1,14 +1,14 @@
 == [[ChangeLoggingKeyValueBytesStore]] ChangeLoggingKeyValueBytesStore
 
 [[changeLogger]]
-`ChangeLoggingKeyValueBytesStore` is a concrete <<kafka-streams-StateStore-KeyValueStore.adoc#, KeyValueStore>> of `Bytes` keys and `byte[]` values (i.e. `KeyValueStore<Bytes, byte[]>`) that uses a <<kafka-streams-internals-StoreChangeLogger.adoc#, StoreChangeLogger>> to <<log, log records>>.
+`ChangeLoggingKeyValueBytesStore` is a concrete <<kafka-streams-KeyValueStore.adoc#, KeyValueStore>> of `Bytes` keys and `byte[]` values (i.e. `KeyValueStore<Bytes, byte[]>`) that uses a <<kafka-streams-internals-StoreChangeLogger.adoc#, StoreChangeLogger>> to <<log, log records>>.
 
-`ChangeLoggingKeyValueBytesStore` is also a concrete <<kafka-streams-internals-WrappedStateStore.adoc#, WrappedStateStore>> of <<kafka-streams-StateStore-KeyValueStore.adoc#, KeyValueStore>> of `Bytes` keys and `byte[]` values (i.e. `WrappedStateStore<KeyValueStore<Bytes, byte[]>, byte[], byte[]>`).
+`ChangeLoggingKeyValueBytesStore` is also a concrete <<kafka-streams-internals-WrappedStateStore.adoc#, WrappedStateStore>> of <<kafka-streams-KeyValueStore.adoc#, KeyValueStore>> of `Bytes` keys and `byte[]` values (i.e. `WrappedStateStore<KeyValueStore<Bytes, byte[]>, byte[], byte[]>`).
 
 `ChangeLoggingKeyValueBytesStore` is <<creating-instance, created>> exclusively when `KeyValueStoreBuilder` is requested to <<kafka-streams-internals-KeyValueStoreBuilder.adoc#maybeWrapLogging, build a KeyValueStore>> with <<kafka-streams-internals-AbstractStoreBuilder.adoc#withLoggingEnabled, logging enabled>>.
 
 [[creating-instance]][[inner]]
-`ChangeLoggingKeyValueBytesStore` takes a single <<kafka-streams-StateStore-KeyValueStore.adoc#, KeyValueStore>> (_inner state store_) to be created.
+`ChangeLoggingKeyValueBytesStore` takes a single <<kafka-streams-KeyValueStore.adoc#, KeyValueStore>> (_inner state store_) to be created.
 
 === [[init]] Initializing State Store -- `init` Method
 
@@ -21,7 +21,7 @@ void init(
 
 NOTE: `init` is part of the <<kafka-streams-StateStore.adoc#init, StateStore Contract>> to initialize the state store.
 
-`init` requests the <<inner, inner KeyValueStore>> to <<kafka-streams-StateStore-KeyValueStore.adoc#init, initialize>> (with the given <<kafka-streams-ProcessorContext.adoc#, ProcessorContext>> and the root <<kafka-streams-StateStore.adoc#, StateStore>>).
+`init` requests the <<inner, inner KeyValueStore>> to <<kafka-streams-KeyValueStore.adoc#init, initialize>> (with the given <<kafka-streams-ProcessorContext.adoc#, ProcessorContext>> and the root <<kafka-streams-StateStore.adoc#, StateStore>>).
 
 `init` then creates a new `StateSerdes` and <<kafka-streams-internals-StoreChangeLogger.adoc#, StoreChangeLogger>> (for the name of the changelog topic per <<kafka-streams-internals-ProcessorStateManager.adoc#storeChangelogTopic, application ID and store name>>) that is saved as the <<changeLogger, changeLogger>> internal registry.
 

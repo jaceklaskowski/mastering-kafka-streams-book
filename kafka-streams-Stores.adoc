@@ -26,7 +26,7 @@ KeyValueBytesStoreSupplier inMemoryKeyValueStore(
   String name)
 ----
 
-Creates a <<kafka-streams-KeyValueBytesStoreSupplier.adoc#, KeyValueBytesStoreSupplier>> of <<kafka-streams-StateStore-KeyValueStore.adoc#, KeyValueStores>> (i.e. <<kafka-streams-internals-InMemoryKeyValueStore.adoc#, InMemoryKeyValueStore>>)
+Creates a <<kafka-streams-KeyValueBytesStoreSupplier.adoc#, KeyValueBytesStoreSupplier>> of <<kafka-streams-KeyValueStore.adoc#, KeyValueStores>> (i.e. <<kafka-streams-internals-InMemoryKeyValueStore.adoc#, InMemoryKeyValueStore>>)
 
 | inMemorySessionStore
 a| [[inMemorySessionStore]]
@@ -38,7 +38,7 @@ SessionBytesStoreSupplier inMemorySessionStore(
   Duration retentionPeriod)
 ----
 
-Creates a <<kafka-streams-SessionBytesStoreSupplier.adoc#, SessionBytesStoreSupplier>> of <<kafka-streams-StateStore-SessionStore.adoc#, SessionStores>> (i.e. <<kafka-streams-internals-InMemorySessionBytesStoreSupplier.adoc#, InMemorySessionBytesStoreSupplier>>)
+Creates a <<kafka-streams-SessionBytesStoreSupplier.adoc#, SessionBytesStoreSupplier>> of <<kafka-streams-SessionStore.adoc#, SessionStores>> (i.e. <<kafka-streams-internals-InMemorySessionBytesStoreSupplier.adoc#, InMemorySessionBytesStoreSupplier>>)
 
 | inMemoryWindowStore
 a| [[inMemoryWindowStore]]
@@ -52,7 +52,7 @@ WindowBytesStoreSupplier inMemoryWindowStore(
   boolean retainDuplicates)
 ----
 
-Creates a <<kafka-streams-WindowBytesStoreSupplier.adoc#, WindowBytesStoreSupplier>> of <<kafka-streams-StateStore-WindowStore.adoc#, WindowStores>> (i.e. `InMemoryWindowBytesStoreSupplier`)
+Creates a <<kafka-streams-WindowBytesStoreSupplier.adoc#, WindowBytesStoreSupplier>> of <<kafka-streams-WindowStore.adoc#, WindowStores>> (i.e. `InMemoryWindowBytesStoreSupplier`)
 
 | keyValueStoreBuilder
 a| [[keyValueStoreBuilder]]
@@ -65,7 +65,7 @@ StoreBuilder<KeyValueStore<K, V>> keyValueStoreBuilder(
   Serde<V> valueSerde)
 ----
 
-Creates a <<kafka-streams-internals-KeyValueStoreBuilder.adoc#, KeyValueStoreBuilder>> of <<kafka-streams-StateStore-KeyValueStore.adoc#, KeyValueStores>> (i.e. <<kafka-streams-internals-KeyValueStoreBuilder.adoc#, KeyValueStoreBuilder>>)
+Creates a <<kafka-streams-internals-KeyValueStoreBuilder.adoc#, KeyValueStoreBuilder>> of <<kafka-streams-KeyValueStore.adoc#, KeyValueStores>> (i.e. <<kafka-streams-internals-KeyValueStoreBuilder.adoc#, KeyValueStoreBuilder>>)
 
 | lruMap
 a| [[lruMap]]
@@ -77,7 +77,7 @@ KeyValueBytesStoreSupplier lruMap(
   int maxCacheSize)
 ----
 
-Creates a <<kafka-streams-KeyValueBytesStoreSupplier.adoc#, KeyValueBytesStoreSupplier>> of <<kafka-streams-StateStore-KeyValueStore.adoc#, KeyValueStores>> (i.e. `MemoryNavigableLRUCache`)
+Creates a <<kafka-streams-KeyValueBytesStoreSupplier.adoc#, KeyValueBytesStoreSupplier>> of <<kafka-streams-KeyValueStore.adoc#, KeyValueStores>> (i.e. `MemoryNavigableLRUCache`)
 
 | persistentKeyValueStore
 a| [[persistentKeyValueStore]]
@@ -88,7 +88,7 @@ KeyValueBytesStoreSupplier persistentKeyValueStore(
   String name)
 ----
 
-Creates a <<kafka-streams-KeyValueBytesStoreSupplier.adoc#, KeyValueBytesStoreSupplier>> of <<kafka-streams-StateStore-KeyValueStore.adoc#, KeyValueStores>> (i.e. `RocksDbKeyValueBytesStoreSupplier`)
+Creates a <<kafka-streams-KeyValueBytesStoreSupplier.adoc#, KeyValueBytesStoreSupplier>> of <<kafka-streams-KeyValueStore.adoc#, KeyValueStores>> (i.e. `RocksDbKeyValueBytesStoreSupplier`)
 
 | persistentSessionStore
 a| [[persistentSessionStore]]
@@ -100,7 +100,7 @@ SessionBytesStoreSupplier persistentSessionStore(
   Duration retentionPeriod)
 ----
 
-Creates a <<kafka-streams-SessionBytesStoreSupplier.adoc#, SessionBytesStoreSupplier>> of <<kafka-streams-StateStore-SessionStore.adoc#, SessionStores>> (i.e. <<kafka-streams-internals-RocksDbSessionBytesStoreSupplier.adoc#, RocksDbSessionBytesStoreSupplier>>)
+Creates a <<kafka-streams-SessionBytesStoreSupplier.adoc#, SessionBytesStoreSupplier>> of <<kafka-streams-SessionStore.adoc#, SessionStores>> (i.e. <<kafka-streams-internals-RocksDbSessionBytesStoreSupplier.adoc#, RocksDbSessionBytesStoreSupplier>>)
 
 | persistentTimestampedKeyValueStore
 a| [[persistentTimestampedKeyValueStore]]
@@ -111,7 +111,7 @@ KeyValueBytesStoreSupplier persistentTimestampedKeyValueStore(
   String name)
 ----
 
-Creates a <<kafka-streams-KeyValueBytesStoreSupplier.adoc#, KeyValueBytesStoreSupplier>> of <<kafka-streams-StateStore-KeyValueStore.adoc#, KeyValueStores>> (i.e. `RocksDbKeyValueBytesStoreSupplier`)
+Creates a <<kafka-streams-KeyValueBytesStoreSupplier.adoc#, KeyValueBytesStoreSupplier>> of <<kafka-streams-KeyValueStore.adoc#, KeyValueStores>> (i.e. `RocksDbKeyValueBytesStoreSupplier`)
 
 | persistentTimestampedWindowStore
 a| [[persistentTimestampedWindowStore]]
@@ -125,7 +125,7 @@ WindowBytesStoreSupplier persistentTimestampedWindowStore(
   boolean retainDuplicates)
 ----
 
-Creates a <<kafka-streams-WindowBytesStoreSupplier.adoc#, WindowBytesStoreSupplier>> of <<kafka-streams-StateStore-WindowStore.adoc#, WindowStores>> (i.e. <<kafka-streams-internals-RocksDbWindowBytesStoreSupplier.adoc#, RocksDbWindowBytesStoreSupplier>>)
+Creates a <<kafka-streams-WindowBytesStoreSupplier.adoc#, WindowBytesStoreSupplier>> of <<kafka-streams-WindowStore.adoc#, WindowStores>> (i.e. <<kafka-streams-internals-RocksDbWindowBytesStoreSupplier.adoc#, RocksDbWindowBytesStoreSupplier>>)
 
 | persistentWindowStore
 a| [[persistentWindowStore]]
@@ -152,7 +152,7 @@ WindowBytesStoreSupplier persistentWindowStore(
   boolean timestampedStore)
 ----
 
-Creates a <<kafka-streams-WindowBytesStoreSupplier.adoc#, WindowBytesStoreSupplier>> of <<kafka-streams-StateStore-WindowStore.adoc#, WindowStores>> (i.e. <<kafka-streams-internals-RocksDbWindowBytesStoreSupplier.adoc#, RocksDbWindowBytesStoreSupplier>>)
+Creates a <<kafka-streams-WindowBytesStoreSupplier.adoc#, WindowBytesStoreSupplier>> of <<kafka-streams-WindowStore.adoc#, WindowStores>> (i.e. <<kafka-streams-internals-RocksDbWindowBytesStoreSupplier.adoc#, RocksDbWindowBytesStoreSupplier>>)
 
 | sessionStoreBuilder
 a| [[sessionStoreBuilder]]
@@ -165,7 +165,7 @@ StoreBuilder<SessionStore<K, V>> sessionStoreBuilder(
   Serde<V> valueSerde)
 ----
 
-Creates a <<kafka-streams-StoreBuilder.adoc#, StoreBuilder>> of <<kafka-streams-StateStore-SessionStore.adoc#, SessionStores>> (i.e. <<kafka-streams-internals-SessionStoreBuilder.adoc#, SessionStoreBuilder>>)
+Creates a <<kafka-streams-StoreBuilder.adoc#, StoreBuilder>> of <<kafka-streams-SessionStore.adoc#, SessionStores>> (i.e. <<kafka-streams-internals-SessionStoreBuilder.adoc#, SessionStoreBuilder>>)
 
 | timestampedKeyValueStoreBuilder
 a| [[timestampedKeyValueStoreBuilder]]
@@ -204,6 +204,6 @@ StoreBuilder<WindowStore<K, V>> windowStoreBuilder(
   Serde<V> valueSerde)
 ----
 
-Creates a <<kafka-streams-StoreBuilder.adoc#, StoreBuilder>> of <<kafka-streams-StateStore-WindowStore.adoc#, WindowStores>> (i.e. <<kafka-streams-internals-WindowStoreBuilder.adoc#, WindowStoreBuilder>>)
+Creates a <<kafka-streams-StoreBuilder.adoc#, StoreBuilder>> of <<kafka-streams-WindowStore.adoc#, WindowStores>> (i.e. <<kafka-streams-internals-WindowStoreBuilder.adoc#, WindowStoreBuilder>>)
 
 |===

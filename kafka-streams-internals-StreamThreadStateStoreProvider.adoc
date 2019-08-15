@@ -11,6 +11,6 @@ List<T> stores(
   final QueryableStoreType<T> queryableStoreType)
 ----
 
-NOTE: `stores` is part of <<kafka-streams-StateStoreProvider.adoc#stores, StateStoreProvider Contract>> to...FIXME.
+NOTE: `stores` is part of <<kafka-streams-internals-StateStoreProvider.adoc#stores, StateStoreProvider Contract>> to...FIXME.
 
 `stores`...FIXME

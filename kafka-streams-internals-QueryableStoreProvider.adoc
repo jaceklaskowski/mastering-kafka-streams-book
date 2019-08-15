@@ -6,8 +6,8 @@
 
 `QueryableStoreProvider` takes the following when created:
 
-* [[storeProviders]] link:kafka-streams-StateStoreProvider.adoc[StateStoreProviders]
-* [[globalStateStoreProvider]] link:kafka-streams-GlobalStateStoreProvider.adoc[GlobalStateStoreProvider]
+* [[storeProviders]] link:kafka-streams-internals-StateStoreProvider.adoc[StateStoreProviders]
+* [[globalStateStoreProvider]] link:kafka-streams-internals-GlobalStateStoreProvider.adoc[GlobalStateStoreProvider]
 
 === [[getStore]] `getStore` Method
 

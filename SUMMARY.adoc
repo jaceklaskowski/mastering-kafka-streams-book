@@ -19,9 +19,9 @@
 . link:kafka-streams-stateful-stream-processing.adoc[Stateful Stream Processing]
 
 . link:kafka-streams-StateStore.adoc[StateStore]
-.. link:kafka-streams-StateStore-KeyValueStore.adoc[KeyValueStore]
-.. link:kafka-streams-StateStore-SessionStore.adoc[SessionStore]
-.. link:kafka-streams-StateStore-WindowStore.adoc[WindowStore]
+.. link:kafka-streams-KeyValueStore.adoc[KeyValueStore]
+.. link:kafka-streams-SessionStore.adoc[SessionStore]
+.. link:kafka-streams-WindowStore.adoc[WindowStore]
 
 . link:kafka-streams-Stores.adoc[Stores]
 
@@ -94,8 +94,6 @@
 .. link:kafka-streams-Windowed.adoc[Windowed]
 .. link:kafka-streams-TimeWindowedSerializer.adoc[TimeWindowedSerializer]
 
-. link:kafka-streams-SessionKeySerde.adoc[SessionKeySerde]
-
 . link:kafka-streams-scala.adoc[Scala API for Kafka Streams]
 .. link:kafka-streams-scala-ImplicitConversions.adoc[ImplicitConversions]
 .. link:kafka-streams-scala-Serdes.adoc[Serdes]
@@ -142,12 +140,12 @@
 
 == Monitoring Kafka Streams Applications
 
-. link:kafka-streams-StateListener.adoc[StateListener -- KafkaStreams State Listener]
+. link:kafka-streams-internals-StateListener.adoc[StateListener -- KafkaStreams State Listener]
 . link:kafka-streams-internals-CacheFlushListener.adoc[CacheFlushListener]
 
 . link:kafka-streams-StreamsMetrics.adoc[StreamsMetrics]
 .. link:kafka-streams-internals-StreamsMetricsImpl.adoc[StreamsMetricsImpl]
-.. link:kafka-streams-StreamsMetricsThreadImpl.adoc[StreamsMetricsThreadImpl]
+.. link:kafka-streams-internals-StreamsMetricsThreadImpl.adoc[StreamsMetricsThreadImpl]
 
 . link:kafka-streams-StreamTask-TaskMetrics.adoc[TaskMetrics]
 
@@ -158,7 +156,6 @@
 == Testing
 
 . link:kafka-streams-TopologyTestDriver.adoc[TopologyTestDriver]
-. link:kafka-streams-ProcessorTopologyTestDriver.adoc[ProcessorTopologyTestDriver]
 
 == Internals of Kafka Streams
 
@@ -350,7 +347,7 @@
 . link:kafka-streams-internals-ProducerSupplier.adoc[ProducerSupplier]
 
 . link:kafka-streams-internals-AssignedTasks.adoc[AssignedTasks]
-.. link:kafka-streams-AssignedStandbyTasks.adoc[AssignedStandbyTasks]
+.. link:kafka-streams-internals-AssignedStandbyTasks.adoc[AssignedStandbyTasks]
 .. link:kafka-streams-internals-AssignedStreamsTasks.adoc[AssignedStreamsTasks]
 
 . link:kafka-streams-internals-ProcessorNodePunctuator.adoc[ProcessorNodePunctuator]
@@ -365,7 +362,7 @@
 . link:kafka-streams-internals-StreamThread.adoc[StreamThread]
 . link:kafka-streams-StreamThread-RebalanceListener.adoc[RebalanceListener]
 . link:kafka-streams-StreamThread-StateListener.adoc[StateListener]
-. link:kafka-streams-StreamsMetadataState.adoc[StreamsMetadataState]
+. link:kafka-streams-internals-StreamsMetadataState.adoc[StreamsMetadataState]
 
 . link:kafka-streams-internals-StreamsPartitionAssignor.adoc[StreamsPartitionAssignor]
 .. link:kafka-streams-internals-InternalTopicManager.adoc[InternalTopicManager]
@@ -383,7 +380,7 @@
 . link:kafka-streams-internals-ForwardingDisabledProcessorContext.adoc[ForwardingDisabledProcessorContext]
 
 . link:kafka-streams-internals-GlobalStreamThread.adoc[GlobalStreamThread]
-.. link:kafka-streams-StateConsumer.adoc[StateConsumer]
+.. link:kafka-streams-internals-StateConsumer.adoc[StateConsumer]
 
 . link:kafka-streams-internals-GlobalStateMaintainer.adoc[GlobalStateMaintainer]
 .. link:kafka-streams-internals-GlobalStateUpdateTask.adoc[GlobalStateUpdateTask]
@@ -395,8 +392,6 @@
 .. link:kafka-streams-internals-NamedCache.adoc[NamedCache]
 
 . link:kafka-streams-Stamped.adoc[Stamped]
-. link:kafka-streams-TimestampTracker.adoc[TimestampTracker]
-.. link:kafka-streams-MinTimestampTracker.adoc[MinTimestampTracker]
 
 . link:kafka-streams-internals-PartitionGroup.adoc[PartitionGroup]
 .. link:kafka-streams-internals-RecordInfo.adoc[RecordInfo]
@@ -404,16 +399,16 @@
 . link:kafka-streams-internals-RecordQueue.adoc[RecordQueue]
 .. link:kafka-streams-internals-StampedRecord.adoc[StampedRecord]
 
-. link:kafka-streams-PunctuationQueue.adoc[PunctuationQueue]
+. link:kafka-streams-internals-PunctuationQueue.adoc[PunctuationQueue]
 .. link:kafka-streams-PunctuationSchedule.adoc[PunctuationSchedule]
 
-. link:kafka-streams-QueryableStoreProvider.adoc[QueryableStoreProvider]
-. link:kafka-streams-StateStoreProvider.adoc[StateStoreProvider]
-.. link:kafka-streams-StreamThreadStateStoreProvider.adoc[StreamThreadStateStoreProvider]
-.. link:kafka-streams-GlobalStateStoreProvider.adoc[GlobalStateStoreProvider]
-.. link:kafka-streams-WrappingStoreProvider.adoc[WrappingStoreProvider]
+. link:kafka-streams-internals-QueryableStoreProvider.adoc[QueryableStoreProvider]
+. link:kafka-streams-internals-StateStoreProvider.adoc[StateStoreProvider]
+.. link:kafka-streams-internals-StreamThreadStateStoreProvider.adoc[StreamThreadStateStoreProvider]
+.. link:kafka-streams-internals-GlobalStateStoreProvider.adoc[GlobalStateStoreProvider]
+.. link:kafka-streams-internals-WrappingStoreProvider.adoc[WrappingStoreProvider]
 
-. link:kafka-streams-RecordDeserializer.adoc[RecordDeserializer]
+. link:kafka-streams-internals-RecordDeserializer.adoc[RecordDeserializer]
 
 . link:kafka-streams-internals-StateDirectory.adoc[StateDirectory]
 . link:kafka-streams-internals-ProcessorRecordContext.adoc[ProcessorRecordContext]
@@ -445,7 +440,3 @@
 .. link:kafka-streams-internals-CompositeRestoreListener.adoc[CompositeRestoreListener]
 
 . link:kafka-streams-internals-StateRestoreCallbackAdapter.adoc[StateRestoreCallbackAdapter]
-
-== Deprecated
-
-. link:kafka-streams-StoreFactory.adoc[StoreFactory]

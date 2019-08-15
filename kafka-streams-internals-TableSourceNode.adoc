@@ -26,7 +26,7 @@ void writeToTopology(
 
 NOTE: `writeToTopology` is part of the <<kafka-streams-internals-StreamsGraphNode.adoc#writeToTopology, StreamsGraphNode Contract>> to...FIXME.
 
-`writeToTopology` creates a <<kafka-streams-internals-KeyValueStoreMaterializer.adoc#, KeyValueStoreMaterializer>> and requests it to <<kafka-streams-internals-KeyValueStoreMaterializer.adoc#materialize, materialize>> (to a <<kafka-streams-StoreBuilder.adoc#, StoreBuilder>> of <<kafka-streams-StateStore-KeyValueStore.adoc#, KeyValueStore>>).
+`writeToTopology` creates a <<kafka-streams-internals-KeyValueStoreMaterializer.adoc#, KeyValueStoreMaterializer>> and requests it to <<kafka-streams-internals-KeyValueStoreMaterializer.adoc#materialize, materialize>> (to a <<kafka-streams-StoreBuilder.adoc#, StoreBuilder>> of <<kafka-streams-KeyValueStore.adoc#, KeyValueStore>>).
 
 `writeToTopology` branches off per <<isGlobalKTable, isGlobalKTable>> flag.
 

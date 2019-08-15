@@ -28,4 +28,4 @@ PunctuationSchedule next(final long currTimestamp)
 
 `next`...FIXME
 
-NOTE: `next` is used exclusively when `PunctuationQueue` is requested to link:kafka-streams-PunctuationQueue.adoc#mayPunctuate[mayPunctuate].
+NOTE: `next` is used exclusively when `PunctuationQueue` is requested to link:kafka-streams-internals-PunctuationQueue.adoc#mayPunctuate[mayPunctuate].

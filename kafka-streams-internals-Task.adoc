@@ -124,7 +124,7 @@ StateStore getStore(String name)
 
 Looks up the <<kafka-streams-StateStore.adoc#, state store>> by name
 
-Used exclusively when `StreamThreadStateStoreProvider` is requested for the <<kafka-streams-StreamThreadStateStoreProvider.adoc#stores, stores>>
+Used exclusively when `StreamThreadStateStoreProvider` is requested for the <<kafka-streams-internals-StreamThreadStateStoreProvider.adoc#stores, stores>>
 
 | hasStateStores
 a| [[hasStateStores]]

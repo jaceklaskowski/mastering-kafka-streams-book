@@ -6,11 +6,11 @@
 
 * `GlobalStreamThread` is <<kafka-streams-internals-GlobalStreamThread.adoc#, created>>
 
-* `StreamsMetricsThreadImpl` is <<kafka-streams-StreamsMetricsThreadImpl.adoc#, created>>
+* `StreamsMetricsThreadImpl` is <<kafka-streams-internals-StreamsMetricsThreadImpl.adoc#, created>>
 
 When requested for the <<kafka-streams-StreamsMetrics.adoc#metrics, metrics>>, `StreamsMetricsImpl` simply requests the Kafka <<metrics, Metrics>> for them.
 
-NOTE: link:kafka-streams-StreamsMetricsThreadImpl.adoc[StreamsMetricsThreadImpl] is a custom `StreamsMetricsImpl` that is used...FIXME...for efficiency.
+NOTE: link:kafka-streams-internals-StreamsMetricsThreadImpl.adoc[StreamsMetricsThreadImpl] is a custom `StreamsMetricsImpl` that is used...FIXME...for efficiency.
 
 === [[measureLatencyNs]] `measureLatencyNs` Method
 

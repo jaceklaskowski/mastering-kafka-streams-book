@@ -334,7 +334,7 @@ boolean maybePunctuateStreamTime()
 
 `maybePunctuateStreamTime` requests the <<partitionGroup, PartitionGroup>> for the <<kafka-streams-internals-PartitionGroup.adoc#timestamp, minimum partition timestamp across all partitions>>.
 
-`maybePunctuateStreamTime` requests the <<streamTimePunctuationQueue, stream-time PunctuationQueue>> to <<kafka-streams-PunctuationQueue.adoc#mayPunctuate, mayPunctuate>> with the minimum timestamp.
+`maybePunctuateStreamTime` requests the <<streamTimePunctuationQueue, stream-time PunctuationQueue>> to <<kafka-streams-internals-PunctuationQueue.adoc#mayPunctuate, mayPunctuate>> with the minimum timestamp.
 
 In the end, `maybePunctuateStreamTime` returns whatever the stream-time `PunctuationQueue` returned.
 
@@ -378,7 +378,7 @@ For `STREAM_TIME`, `schedule` always uses `0L` as the `startTime` and the <<stre
 [[schedule-WALL_CLOCK_TIME]]
 For `WALL_CLOCK_TIME`, `schedule` uses the current time and the specified `interval` as the `startTime` and the <<systemTimePunctuationQueue, system-time PunctuationQueue>>.
 
-`schedule` then creates a new <<kafka-streams-PunctuationSchedule.adoc#, PunctuationSchedule>> (with the <<kafka-streams-internals-InternalProcessorContext.adoc#currentNode, current processor>> of the <<kafka-streams-internals-AbstractTask.adoc#processorContext, InternalProcessorContext>>) and requests the appropriate `PunctuationQueue` to <<kafka-streams-PunctuationQueue.adoc#schedule, schedule>> it.
+`schedule` then creates a new <<kafka-streams-PunctuationSchedule.adoc#, PunctuationSchedule>> (with the <<kafka-streams-internals-InternalProcessorContext.adoc#currentNode, current processor>> of the <<kafka-streams-internals-AbstractTask.adoc#processorContext, InternalProcessorContext>>) and requests the appropriate `PunctuationQueue` to <<kafka-streams-internals-PunctuationQueue.adoc#schedule, schedule>> it.
 
 NOTE: `schedule` is used exclusively when `ProcessorContextImpl` is requested to <<kafka-streams-internals-ProcessorContextImpl.adoc#schedule, schedule a cancellable periodic action>>.
 
@@ -642,10 +642,10 @@ a| [[recordInfo]] <<kafka-streams-internals-RecordInfo.adoc#, RecordInfo>> (that
 Created empty alongside the <<StreamTask, StreamTask>> and _"fill up"_ with the <<kafka-streams-internals-RecordQueue.adoc#, RecordQueue>> when requested to <<process, process a single record>>
 
 | streamTimePunctuationQueue
-a| [[streamTimePunctuationQueue]] <<kafka-streams-PunctuationQueue.adoc#, PunctuationQueue>>
+a| [[streamTimePunctuationQueue]] <<kafka-streams-internals-PunctuationQueue.adoc#, PunctuationQueue>>
 
 | systemTimePunctuationQueue
-a| [[systemTimePunctuationQueue]] <<kafka-streams-PunctuationQueue.adoc#, PunctuationQueue>>
+a| [[systemTimePunctuationQueue]] <<kafka-streams-internals-PunctuationQueue.adoc#, PunctuationQueue>>
 
 | taskMetrics
 a| [[taskMetrics]] <<kafka-streams-StreamTask-TaskMetrics.adoc#, TaskMetrics>> for the <<id, TaskId>> and the <<metrics, StreamsMetricsImpl>>

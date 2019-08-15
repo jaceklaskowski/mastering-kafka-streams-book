@@ -2,7 +2,7 @@
 
 `GlobalStateUpdateTask` is the one and only link:kafka-streams-internals-GlobalStateMaintainer.adoc[GlobalStateMaintainer] that...FIXME
 
-`GlobalStateUpdateTask` is <<creating-instance, created>> exclusively when `GlobalStreamThread` is requested to link:kafka-streams-internals-GlobalStreamThread.adoc#initialize[initialize] (and creates a link:kafka-streams-StateConsumer.adoc#stateMaintainer[StateConsumer]).
+`GlobalStateUpdateTask` is <<creating-instance, created>> exclusively when `GlobalStreamThread` is requested to link:kafka-streams-internals-GlobalStreamThread.adoc#initialize[initialize] (and creates a link:kafka-streams-internals-StateConsumer.adoc#stateMaintainer[StateConsumer]).
 
 [[offsets]]
 `GlobalStateUpdateTask` keeps track of the *offsets* of the records (by the topics and the partitions) that have already been <<update, processed>>. The offsets are then <<flushState, flushed to the global store>> when requested.
@@ -30,9 +30,9 @@ void update(final ConsumerRecord<byte[], byte[]> record)
 
 NOTE: `update` is part of link:kafka-streams-internals-GlobalStateMaintainer.adoc#update[GlobalStateMaintainer Contract] to...FIXME.
 
-`update` looks up the link:kafka-streams-RecordDeserializer.adoc[RecordDeserializer] for the topic (of the record) in the <<deserializers, deserializers>> internal registry.
+`update` looks up the link:kafka-streams-internals-RecordDeserializer.adoc[RecordDeserializer] for the topic (of the record) in the <<deserializers, deserializers>> internal registry.
 
-NOTE: `RecordDeserializer` is the metadata of a link:kafka-streams-RecordDeserializer.adoc#sourceNode[SourceNode] that link:kafka-streams-RecordDeserializer.adoc#deserialize[knows how to deserialize a raw record] in a given `ProcessorContext`.
+NOTE: `RecordDeserializer` is the metadata of a link:kafka-streams-internals-RecordDeserializer.adoc#sourceNode[SourceNode] that link:kafka-streams-internals-RecordDeserializer.adoc#deserialize[knows how to deserialize a raw record] in a given `ProcessorContext`.
 
 `update` then uses the `RecordDeserializer` to deserialize the record (to the proper types of the key and the value).
 
@@ -42,9 +42,9 @@ When the record has been successfully deserialized, `update` does the following:
 
 1. Requests <<processorContext, InternalProcessorContext>> to link:kafka-streams-internals-InternalProcessorContext.adoc#setRecordContext[use the record context]
 
-1. Requests <<processorContext, InternalProcessorContext>> to link:kafka-streams-internals-InternalProcessorContext.adoc#setCurrentNode[use the source node] of the link:kafka-streams-RecordDeserializer.adoc#sourceNode[RecordDeserializer]
+1. Requests <<processorContext, InternalProcessorContext>> to link:kafka-streams-internals-InternalProcessorContext.adoc#setCurrentNode[use the source node] of the link:kafka-streams-internals-RecordDeserializer.adoc#sourceNode[RecordDeserializer]
 
-1. Requests the link:kafka-streams-RecordDeserializer.adoc#sourceNode[SourceNode] (of the deserialized record) to link:kafka-streams-internals-SourceNode.adoc#process[process] the deserialized record
+1. Requests the link:kafka-streams-internals-RecordDeserializer.adoc#sourceNode[SourceNode] (of the deserialized record) to link:kafka-streams-internals-SourceNode.adoc#process[process] the deserialized record
 
 In the end, `update` saves the topic and the partition of the record with the offset in the <<offsets, offsets>> internal registry.
 

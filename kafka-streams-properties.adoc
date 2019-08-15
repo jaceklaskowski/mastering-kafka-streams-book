@@ -131,7 +131,7 @@ Default: `100`
 
 Used when:
 
-* `GlobalStreamThread` is requested to <<kafka-streams-internals-GlobalStreamThread.adoc#initialize, initialize>> (which is right after `KafkaStreams` has been requested to <<kafka-streams-KafkaStreams.adoc#start, start>>) and creates a <<kafka-streams-StateConsumer.adoc#pollMs, StateConsumer>>
+* `GlobalStreamThread` is requested to <<kafka-streams-internals-GlobalStreamThread.adoc#initialize, initialize>> (which is right after `KafkaStreams` has been requested to <<kafka-streams-KafkaStreams.adoc#start, start>>) and creates a <<kafka-streams-internals-StateConsumer.adoc#pollMs, StateConsumer>>
 
 * `StreamThread` is <<kafka-streams-internals-StreamThread.adoc#pollTime, created>>
 

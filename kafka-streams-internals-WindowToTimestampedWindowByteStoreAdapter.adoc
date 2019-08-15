@@ -1,6 +1,6 @@
 == [[WindowToTimestampedWindowByteStoreAdapter]] WindowToTimestampedWindowByteStoreAdapter
 
-`WindowToTimestampedWindowByteStoreAdapter` is a concrete <<kafka-streams-StateStore-WindowStore.adoc#, WindowStore>> that...FIXME
+`WindowToTimestampedWindowByteStoreAdapter` is a concrete <<kafka-streams-WindowStore.adoc#, WindowStore>> that...FIXME
 
 [[persistent]]
 `WindowToTimestampedWindowByteStoreAdapter` is always <<kafka-streams-StateStore.adoc#persistent, persistent>>.

@@ -20,7 +20,7 @@ NOTE: `init` is part of...FIXME
 void remove(final Windowed<Bytes> sessionKey)
 ----
 
-NOTE: `remove` is part of link:kafka-streams-StateStore-SessionStore.adoc#remove[SessionStore Contract] to...FIXME.
+NOTE: `remove` is part of link:kafka-streams-SessionStore.adoc#remove[SessionStore Contract] to...FIXME.
 
 `remove`...FIXME
 

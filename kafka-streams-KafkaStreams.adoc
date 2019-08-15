@@ -9,7 +9,7 @@ A `KafkaStreams` instance (process) can be <<start, started>> or <<close, closed
 [[isRunning]]
 `KafkaStreams` is running when the <<state, state>> is either `RUNNING` or `REBALANCING`.
 
-There could be many `KafkaStreams` instances running simultaneously (e.g. as separate JVM processes each with its own <<threads, StreamThreads>>). While a `KafkaStreams` instance is running, it allows for inspecting <<kafka-streams-StreamsMetadataState.adoc#StreamsMetadata, streams metadata>> using <<allMetadata, allMetadata>>, <<allMetadataForStore, allMetadataForStore>>, and <<metadataForKey, metadataForKey>> methods.
+There could be many `KafkaStreams` instances running simultaneously (e.g. as separate JVM processes each with its own <<threads, StreamThreads>>). While a `KafkaStreams` instance is running, it allows for inspecting <<kafka-streams-internals-StreamsMetadataState.adoc#StreamsMetadata, streams metadata>> using <<allMetadata, allMetadata>>, <<allMetadataForStore, allMetadataForStore>>, and <<metadataForKey, metadataForKey>> methods.
 
 A `KafkaStreams` instance exposes <<metrics, monitoring metrics>> (incl. the Kafka Producer, Consumers, and AdminClient).
 
@@ -30,7 +30,7 @@ a| [[allMetadata]]
 Collection<StreamsMetadata> allMetadata()
 ----
 
-<<kafka-streams-StreamsMetadataState.adoc#StreamsMetadatas, StreamsMetadatas>> for all instances in a <<kafka-streams-multi-instance-kafka-streams-application.adoc#, multi-instance Kafka Streams application>>
+<<kafka-streams-internals-StreamsMetadataState.adoc#StreamsMetadatas, StreamsMetadatas>> for all instances in a <<kafka-streams-multi-instance-kafka-streams-application.adoc#, multi-instance Kafka Streams application>>
 
 | allMetadataForStore
 a| [[allMetadataForStore]]
@@ -116,7 +116,7 @@ void setStateListener(
   KafkaStreams.StateListener listener)
 ----
 
-Registers a <<kafka-streams-StateListener.adoc#, KafkaStreams.StateListener>>
+Registers a <<kafka-streams-internals-StateListener.adoc#, KafkaStreams.StateListener>>
 
 | setUncaughtExceptionHandler
 a| [[setUncaughtExceptionHandler]]
@@ -319,7 +319,7 @@ Internally, `start` prints out the following DEBUG message to the logs:
 Starting Streams client
 ```
 
-`start` <<setRunningFromCreated, marks KafkaStreams as running>> (i.e. transitions from CREATED to RUNNING state and notifies link:kafka-streams-StateListener.adoc[StateListeners]).
+`start` <<setRunningFromCreated, marks KafkaStreams as running>> (i.e. transitions from CREATED to RUNNING state and notifies link:kafka-streams-internals-StateListener.adoc[StateListeners]).
 
 `start` starts <<globalStreamThread, global stream thread>> if defined (which is when...FIXME)
 
@@ -363,7 +363,7 @@ Can only set GlobalStateRestoreListener in CREATED state. Current state is: [sta
 Collection<StreamsMetadata> allMetadata()
 ----
 
-`allMetadata` <<validateIsRunning, makes sure that KafkaStreams is running>> and requests the <<streamsMetadataState, StreamsMetadataState>> for <<kafka-streams-StreamsMetadataState.adoc#getAllMetadata, metadata>>.
+`allMetadata` <<validateIsRunning, makes sure that KafkaStreams is running>> and requests the <<streamsMetadataState, StreamsMetadataState>> for <<kafka-streams-internals-StreamsMetadataState.adoc#getAllMetadata, metadata>>.
 
 === [[validateIsRunning]] Making Sure That KafkaStreams Is Running -- `validateIsRunning` Internal Method
 
@@ -442,7 +442,7 @@ a| [[clientId]] *Client ID* that is initialized when `KafkaStreams` is <<creatin
 * <<kafka-streams-properties.adoc#application.id, application.id>> followed by `-` and the <<processId, processId>>
 
 | queryableStoreProvider
-| [[queryableStoreProvider]] link:kafka-streams-QueryableStoreProvider.adoc[QueryableStoreProvider]
+| [[queryableStoreProvider]] link:kafka-streams-internals-QueryableStoreProvider.adoc[QueryableStoreProvider]
 
 | stateDirectory
 | [[stateDirectory]] link:kafka-streams-internals-StateDirectory.adoc[StateDirectory]
@@ -451,7 +451,7 @@ a| [[clientId]] *Client ID* that is initialized when `KafkaStreams` is <<creatin
 | [[stateLock]] Object lock for...FIXME
 
 | streamsMetadataState
-a| [[streamsMetadataState]] <<kafka-streams-StreamsMetadataState.adoc#, StreamsMetadataState>> (with the <<internalTopologyBuilder, InternalTopologyBuilder>> and <<kafka-streams-properties.adoc#application.server, application.server>> configuration property)
+a| [[streamsMetadataState]] <<kafka-streams-internals-StreamsMetadataState.adoc#, StreamsMetadataState>> (with the <<internalTopologyBuilder, InternalTopologyBuilder>> and <<kafka-streams-properties.adoc#application.server, application.server>> configuration property)
 
 `KafkaStreams` is simply a public facade to expose the <<streamsMetadataState, StreamsMetadataState>> using the following methods:
 

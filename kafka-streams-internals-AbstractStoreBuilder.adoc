@@ -12,10 +12,10 @@ NOTE: `AbstractStoreBuilder` is a Java abstract class and cannot be <<creating-i
 | Description
 
 | <<kafka-streams-internals-KeyValueStoreBuilder.adoc#, KeyValueStoreBuilder>>
-| [[KeyValueStoreBuilder]] Builds <<kafka-streams-StateStore-KeyValueStore.adoc#, KeyValueStores>>
+| [[KeyValueStoreBuilder]] Builds <<kafka-streams-KeyValueStore.adoc#, KeyValueStores>>
 
 | <<kafka-streams-internals-SessionStoreBuilder.adoc#, SessionStoreBuilder>>
-| [[SessionStoreBuilder]] Builds <<kafka-streams-StateStore-SessionStore.adoc#, SessionStores>>
+| [[SessionStoreBuilder]] Builds <<kafka-streams-SessionStore.adoc#, SessionStores>>
 
 | <<kafka-streams-internals-TimestampedKeyValueStoreBuilder.adoc#, TimestampedKeyValueStoreBuilder>>
 | [[TimestampedKeyValueStoreBuilder]] Builds...FIXME
@@ -24,7 +24,7 @@ NOTE: `AbstractStoreBuilder` is a Java abstract class and cannot be <<creating-i
 | [[TimestampedWindowStoreBuilder]] Builds...FIXME
 
 | <<kafka-streams-internals-WindowStoreBuilder.adoc#, WindowStoreBuilder>>
-| [[WindowStoreBuilder]] Builds <<kafka-streams-StateStore-WindowStore.adoc#, WindowStores>>
+| [[WindowStoreBuilder]] Builds <<kafka-streams-WindowStore.adoc#, WindowStores>>
 |===
 
 === [[creating-instance]] Creating AbstractStoreBuilder Instance

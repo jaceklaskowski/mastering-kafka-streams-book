@@ -23,7 +23,7 @@ NOTE: `AssignedTasks` is a Java abstract class and cannot be <<creating-instance
 | Task
 | Description
 
-| <<kafka-streams-AssignedStandbyTasks.adoc#, AssignedStandbyTasks>>
+| <<kafka-streams-internals-AssignedStandbyTasks.adoc#, AssignedStandbyTasks>>
 | Manages <<kafka-streams-internals-StandbyTask.adoc#, StandbyTasks>>
 
 | <<kafka-streams-internals-AssignedStreamsTasks.adoc#, AssignedStreamsTasks>>

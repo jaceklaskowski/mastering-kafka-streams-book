@@ -1,12 +1,12 @@
 == [[ChangeLoggingSessionBytesStore]] ChangeLoggingSessionBytesStore
 
-`ChangeLoggingSessionBytesStore` is a link:kafka-streams-StateStore-SessionStore.adoc[SessionStore] that uses Kafka `Bytes` (immutable byte arrays) for keys.
+`ChangeLoggingSessionBytesStore` is a link:kafka-streams-SessionStore.adoc[SessionStore] that uses Kafka `Bytes` (immutable byte arrays) for keys.
 
 `ChangeLoggingSessionBytesStore` is <<creating-instance, created>> exclusively when `SessionStoreBuilder` is requested to link:kafka-streams-internals-SessionStoreBuilder.adoc#build[build a MeteredSessionStore] (with link:kafka-streams-internals-SessionStoreBuilder.adoc#maybeWrapLogging[logging enabled]).
 
 [[creating-instance]]
 [[bytesStore]]
-`ChangeLoggingSessionBytesStore` takes a link:kafka-streams-StateStore-SessionStore.adoc[SessionStore] when created.
+`ChangeLoggingSessionBytesStore` takes a link:kafka-streams-SessionStore.adoc[SessionStore] when created.
 
 [[internal-registries]]
 .ChangeLoggingSessionBytesStore's Internal Properties (e.g. Registries, Counters and Flags)
@@ -44,8 +44,8 @@ NOTE: `init` is part of...FIXME
 void put(final Windowed<Bytes> sessionKey, final byte[] aggregate)
 ----
 
-NOTE: `put` is part of link:kafka-streams-StateStore-SessionStore.adoc#put[SessionStore Contract] to store an aggregated value for a session key.
+NOTE: `put` is part of link:kafka-streams-SessionStore.adoc#put[SessionStore Contract] to store an aggregated value for a session key.
 
-`put` requests the <<bytesStore, SessionStore>> to link:kafka-streams-StateStore-SessionStore.adoc#put[store the aggregated value for the given session key].
+`put` requests the <<bytesStore, SessionStore>> to link:kafka-streams-SessionStore.adoc#put[store the aggregated value for the given session key].
 
-In the end, `put` uses the `SessionKeySerde` to link:kafka-streams-SessionKeySerde.adoc#bytesToBinary[convert the session key to binary] and requests the <<changeLogger, StoreChangeLogger>> to link:kafka-streams-internals-StoreChangeLogger.adoc#logChange[logChange] (with the binary key and the aggregated value).
+In the end, `put`...FIXME

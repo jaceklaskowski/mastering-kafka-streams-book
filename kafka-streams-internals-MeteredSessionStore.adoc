@@ -1,6 +1,6 @@
 == [[MeteredSessionStore]] MeteredSessionStore
 
-`MeteredSessionStore` is a <<kafka-streams-StateStore-SessionStore.adoc#, SessionStore>> that...FIXME
+`MeteredSessionStore` is a <<kafka-streams-SessionStore.adoc#, SessionStore>> that...FIXME
 
 === [[init]] Initialize State Store -- `init` Method
 
@@ -20,7 +20,7 @@ NOTE: `init` is part of...FIXME
 void put(final Windowed<K> sessionKey, final V aggregate)
 ----
 
-NOTE: `put` is part of link:kafka-streams-StateStore-SessionStore.adoc#put[SessionStore Contract] to store an aggregated value for a session.
+NOTE: `put` is part of link:kafka-streams-SessionStore.adoc#put[SessionStore Contract] to store an aggregated value for a session.
 
 `put`...FIXME
 
@@ -31,6 +31,6 @@ NOTE: `put` is part of link:kafka-streams-StateStore-SessionStore.adoc#put[Sessi
 void remove(final Windowed<K> sessionKey)
 ----
 
-NOTE: `remove` is part of link:kafka-streams-StateStore-SessionStore.adoc#remove[SessionStore Contract] to remove an aggregated value for a session.
+NOTE: `remove` is part of link:kafka-streams-SessionStore.adoc#remove[SessionStore Contract] to remove an aggregated value for a session.
 
 `remove`...FIXME

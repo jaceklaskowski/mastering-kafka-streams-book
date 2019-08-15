@@ -14,7 +14,7 @@ NOTE: `KStreamSessionWindowAggregateProcessor` is a `private` class of link:kafk
 | Description
 
 | `store`
-| [[store]] link:kafka-streams-StateStore-SessionStore.adoc[SessionStore]
+| [[store]] link:kafka-streams-SessionStore.adoc[SessionStore]
 
 Used when...FIXME
 

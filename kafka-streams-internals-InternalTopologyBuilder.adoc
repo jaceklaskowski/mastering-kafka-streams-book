@@ -165,9 +165,9 @@ NOTE: There are two types of link:kafka-streams-StateStore.adoc[StateStores], i.
 ====
 `InternalTopologyBuilder` comes with `globalStateStores` method to access `globalStateStores` registry as an unmodifiable collection. It is used when:
 
-* `KafkaStreams` is link:kafka-streams-KafkaStreams.adoc#creating-instance[created] (and creates a link:kafka-streams-GlobalStateStoreProvider.adoc#creating-instance[GlobalStateStoreProvider] for the link:kafka-streams-KafkaStreams.adoc#queryableStoreProvider[QueryableStoreProvider])
+* `KafkaStreams` is link:kafka-streams-KafkaStreams.adoc#creating-instance[created] (and creates a link:kafka-streams-internals-GlobalStateStoreProvider.adoc#creating-instance[GlobalStateStoreProvider] for the link:kafka-streams-KafkaStreams.adoc#queryableStoreProvider[QueryableStoreProvider])
 
-* `StreamsMetadataState` is link:kafka-streams-StreamsMetadataState.adoc#creating-instance[created]
+* `StreamsMetadataState` is link:kafka-streams-internals-StreamsMetadataState.adoc#creating-instance[created]
 ====
 
 | globalTopics

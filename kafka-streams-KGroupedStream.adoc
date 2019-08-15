@@ -44,7 +44,7 @@ KTable<K, VR> aggregate(
   final Materialized<K, VR, KeyValueStore<Bytes, byte[]>> materialized)
 ----
 
-Creates a <<kafka-streams-KTable.adoc#, KTable>> with a given `Initializer`, `Aggregator` and <<kafka-streams-Materialized.adoc#, Materialized>> (view of a <<kafka-streams-StateStore-KeyValueStore.adoc#, KeyValueStore>>)
+Creates a <<kafka-streams-KTable.adoc#, KTable>> with a given `Initializer`, `Aggregator` and <<kafka-streams-Materialized.adoc#, Materialized>> (view of a <<kafka-streams-KeyValueStore.adoc#, KeyValueStore>>)
 
 | count
 a| [[count]]
@@ -56,7 +56,7 @@ KTable<K, Long> count(
   final Materialized<K, Long, KeyValueStore<Bytes, byte[]>> materialized)
 ----
 
-Creates a <<kafka-streams-KTable.adoc#, KTable>> with a given <<kafka-streams-Materialized.adoc#, Materialized>> (view of a <<kafka-streams-StateStore-KeyValueStore.adoc#, KeyValueStore>>)
+Creates a <<kafka-streams-KTable.adoc#, KTable>> with a given <<kafka-streams-Materialized.adoc#, Materialized>> (view of a <<kafka-streams-KeyValueStore.adoc#, KeyValueStore>>)
 
 | reduce
 a| [[reduce]]
@@ -69,7 +69,7 @@ KTable<K, V> reduce(
   final Materialized<K, V, KeyValueStore<Bytes, byte[]>> materialized)
 ----
 
-Creates a <<kafka-streams-KTable.adoc#, KTable>> with a given `Reducer` and <<kafka-streams-Materialized.adoc#, Materialized>> (view of a <<kafka-streams-StateStore-KeyValueStore.adoc#, KeyValueStore>>)
+Creates a <<kafka-streams-KTable.adoc#, KTable>> with a given `Reducer` and <<kafka-streams-Materialized.adoc#, Materialized>> (view of a <<kafka-streams-KeyValueStore.adoc#, KeyValueStore>>)
 
 | windowedBy
 a| [[windowedBy]][[windowedBy-SessionWindowedKStream]]

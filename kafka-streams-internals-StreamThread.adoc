@@ -71,7 +71,7 @@ Refer to <<kafka-logging.adoc#log4j.properties, Application Logging Using log4j>
 * [[consumer]] Kafka https://kafka.apache.org/22/javadoc/org/apache/kafka/clients/consumer/KafkaConsumer.html[Consumer] (`Consumer<byte[], byte[]>`)
 * [[originalReset]] `originalReset`
 * [[taskManager]] <<kafka-streams-internals-TaskManager.adoc#, TaskManager>>
-* [[streamsMetrics]] <<kafka-streams-StreamsMetricsThreadImpl.adoc#, StreamsMetricsThreadImpl>>
+* [[streamsMetrics]] <<kafka-streams-internals-StreamsMetricsThreadImpl.adoc#, StreamsMetricsThreadImpl>>
 * [[builder]] <<kafka-streams-internals-InternalTopologyBuilder.adoc#, InternalTopologyBuilder>>
 * [[threadClientId]] Thread Client ID
 * [[logContext]] `LogContext`
@@ -119,16 +119,16 @@ NOTE: The input <<kafka-streams-StateRestoreListener.adoc#, StateRestoreListener
 
 (Only with eos enabled) `create`...FIXME
 
-`create` creates a link:kafka-streams-StreamsMetricsThreadImpl.adoc#creating-instance[StreamsMetricsThreadImpl] with the following:
+`create` creates a link:kafka-streams-internals-StreamsMetricsThreadImpl.adoc#creating-instance[StreamsMetricsThreadImpl] with the following:
 
 * the input `Metrics`
-* *stream-metrics* link:kafka-streams-StreamsMetricsThreadImpl.adoc#groupName[group name]
-* `thread.[clientId]-StreamThread-[STREAM_THREAD_ID]` link:kafka-streams-StreamsMetricsThreadImpl.adoc#prefix[prefix]
-* link:kafka-streams-StreamsMetricsThreadImpl.adoc#tags[Tags] with one entry with `client-id` and the `[clientId]-StreamThread-[STREAM_THREAD_ID]` value.
+* *stream-metrics* link:kafka-streams-internals-StreamsMetricsThreadImpl.adoc#groupName[group name]
+* `thread.[clientId]-StreamThread-[STREAM_THREAD_ID]` link:kafka-streams-internals-StreamsMetricsThreadImpl.adoc#prefix[prefix]
+* link:kafka-streams-internals-StreamsMetricsThreadImpl.adoc#tags[Tags] with one entry with `client-id` and the `[clientId]-StreamThread-[STREAM_THREAD_ID]` value.
 
 `create` creates a <<kafka-streams-internals-ThreadCache.adoc#, ThreadCache>> (with `cacheSizeBytes` for the `maxCacheSizeBytes` and the `StreamsMetricsThreadImpl`).
 
-`create` creates a link:kafka-streams-internals-TaskCreator.adoc#creating-instance[TaskCreator] and a link:kafka-streams-internals-StandbyTaskCreator.adoc#creating-instance[StandbyTaskCreator] that are used exclusively to create a <<kafka-streams-internals-TaskManager.adoc#, TaskManager>> (with a new link:kafka-streams-internals-AssignedStreamsTasks.adoc#creating-instance[AssignedStreamsTasks] and link:kafka-streams-AssignedStandbyTasks.adoc#creating-instance[AssignedStandbyTasks] as well as the given <<kafka-streams-StreamsMetadataState.adoc#, StreamsMetadataState>>).
+`create` creates a link:kafka-streams-internals-TaskCreator.adoc#creating-instance[TaskCreator] and a link:kafka-streams-internals-StandbyTaskCreator.adoc#creating-instance[StandbyTaskCreator] that are used exclusively to create a <<kafka-streams-internals-TaskManager.adoc#, TaskManager>> (with a new link:kafka-streams-internals-AssignedStreamsTasks.adoc#creating-instance[AssignedStreamsTasks] and link:kafka-streams-internals-AssignedStandbyTasks.adoc#creating-instance[AssignedStandbyTasks] as well as the given <<kafka-streams-internals-StreamsMetadataState.adoc#, StreamsMetadataState>>).
 
 `create` prints out the following INFO message to the logs:
 
@@ -256,7 +256,7 @@ In essence, `runOnce` requests the <<consumer, Consumer>> to poll records, <<add
 .StreamThread and Polling Records Once And Processing Them Using Active Stream Tasks
 image::images/kafka-streams-StreamThread-runOnce.png[align="center"]
 
-NOTE: `runOnce` uses the <<streamsMetrics, StreamsMetricsThreadImpl>> to access <<kafka-streams-StreamsMetricsThreadImpl.adoc#sensors, sensors>> and record metrics.
+NOTE: `runOnce` uses the <<streamsMetrics, StreamsMetricsThreadImpl>> to access <<kafka-streams-internals-StreamsMetricsThreadImpl.adoc#sensors, sensors>> and record metrics.
 
 Internally, `runOnce` <<pollRequests, pollRequests>> with different poll times as follows:
 
@@ -275,7 +275,7 @@ Unexpected state [state] during normal iteration
 
 `runOnce` <<advanceNowAndComputeLatency, advanceNowAndComputeLatency>>.
 
-With records polled, `runOnce` requests the <<streamsMetrics, StreamsMetricsThreadImpl>> for the <<kafka-streams-StreamsMetricsThreadImpl.adoc#pollTimeSensor, pollTimeSensor>> and requests it to record the above `pollLatency` followed by <<addRecordsToTasks, adding the records polled to active stream tasks>>.
+With records polled, `runOnce` requests the <<streamsMetrics, StreamsMetricsThreadImpl>> for the <<kafka-streams-internals-StreamsMetricsThreadImpl.adoc#pollTimeSensor, pollTimeSensor>> and requests it to record the above `pollLatency` followed by <<addRecordsToTasks, adding the records polled to active stream tasks>>.
 
 If in <<PARTITIONS_ASSIGNED, PARTITIONS_ASSIGNED>> state, `runOnce` requests the <<taskManager, TaskManager>> to <<kafka-streams-internals-TaskManager.adoc#updateNewAndRestoringTasks, updateNewAndRestoringTasks>> and (when all stream tasks are running) changes to the <<RUNNING, RUNNING>> state.
 
@@ -583,7 +583,7 @@ Committing all active tasks [activeTaskIds] and standby tasks [standbyTaskIds] s
 
 Only if there are still running active and standby tasks, `maybeCommit` does the following:
 
-. Requests the <<streamsMetrics, StreamsMetricsThreadImpl>> for the <<kafka-streams-StreamsMetricsThreadImpl.adoc#commitTimeSensor, commitTimeSensor>> and records the commit time (as the latency of committing all the tasks by their number)
+. Requests the <<streamsMetrics, StreamsMetricsThreadImpl>> for the <<kafka-streams-internals-StreamsMetricsThreadImpl.adoc#commitTimeSensor, commitTimeSensor>> and records the commit time (as the latency of committing all the tasks by their number)
 
 . Requests the <<taskManager, TaskManager>> to <<kafka-streams-internals-TaskManager.adoc#maybePurgeCommitedRecords, maybePurgeCommitedRecords>>
 
@@ -608,7 +608,7 @@ boolean maybePunctuate()
 
 `maybePunctuate` requests the <<taskManager, TaskManager>> to <<kafka-streams-internals-TaskManager.adoc#punctuate, punctuate stream tasks>>.
 
-If the punctuate returned a positive number (greater than `0`), `maybePunctuate` <<advanceNowAndComputeLatency, advanceNowAndComputeLatency>> and requests the <<streamsMetrics, StreamsMetricsThreadImpl>> for the <<kafka-streams-StreamsMetricsThreadImpl.adoc#punctuateTimeSensor, punctuateTimeSensor>> to record the punctuate time.
+If the punctuate returned a positive number (greater than `0`), `maybePunctuate` <<advanceNowAndComputeLatency, advanceNowAndComputeLatency>> and requests the <<streamsMetrics, StreamsMetricsThreadImpl>> for the <<kafka-streams-internals-StreamsMetricsThreadImpl.adoc#punctuateTimeSensor, punctuateTimeSensor>> to record the punctuate time.
 
 In the end, `maybePunctuate` returns whether the punctuate returned a positive number (`true`) or not (`false`).
 
