@@ -20,7 +20,7 @@
 * [[threadClientId]] `threadClientId`
 * [[log]] `Logger`
 
-=== [[createTask]] Creating Stream Processor Task -- `createTask` Factory Method
+=== [[createTask]] Creating Stream Task -- `createTask` Factory Method
 
 [source, java]
 ----

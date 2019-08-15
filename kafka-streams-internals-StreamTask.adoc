@@ -42,9 +42,29 @@ log4j.logger.org.apache.kafka.streams.processor.internals.StreamTask=ALL
 Refer to <<kafka-logging.adoc#log4j.properties, Application Logging Using log4j>>.
 ====
 
+=== [[partitionGroup]] StreamTask and PartitionGroup (of RecordCollectors per Assigned Partition)
+
+`StreamTask` creates a <<kafka-streams-internals-PartitionGroup.adoc#, PartitionGroup>> (with <<kafka-streams-internals-RecordQueue.adoc#, RecordQueues>> per every <<partitions, partition assigned>>) when...FIXME
+
+`StreamTask` uses the `PartitionGroup` for the following:
+
+* <<addRecords, Buffer new records (from a partition)>>
+
+* <<isProcessable, isProcessable>>
+
+* <<process, Process a single record>>
+
+* <<closeTopology, closeTopology>>
+
+* <<closeSuspended, closeSuspended>>
+
+* <<numBuffered, numBuffered>>
+
+* <<maybePunctuateStreamTime, maybePunctuateStreamTime>>
+
 === StreamTask and RecordCollector
 
-`StreamTask` creates a new <<recordCollector, RecordCollector>> or is given one (when <<creating-instance, created>>).
+`StreamTask` creates a new <<recordCollector, RecordCollector>> (or is given one for testing) when <<creating-instance, created>>.
 
 The <<recordCollector, RecordCollector>> is requested to <<kafka-streams-internals-RecordCollector.adoc#init, initialize>> (with the <<producer, Kafka Producer>>) when `StreamTask` is <<creating-instance, created>> and <<resume, resumed>>.
 
@@ -106,7 +126,7 @@ NOTE: `close` is part of link:kafka-streams-internals-Task.adoc#close[Task Contr
 `StreamTask` takes the following to be created:
 
 * [[id]] <<kafka-streams-TaskId.adoc#, TaskId>>
-* [[partitions]] Partitions (Kafka https://kafka.apache.org/22/javadoc/org/apache/kafka/common/TopicPartition.html[TopicPartition])
+* [[partitions]] Assigned partitions (Kafka https://kafka.apache.org/22/javadoc/org/apache/kafka/common/TopicPartition.html[TopicPartition])
 * [[topology]] <<kafka-streams-internals-ProcessorTopology.adoc#, ProcessorTopology>>
 * [[consumer]] Kafka https://kafka.apache.org/22/javadoc/org/apache/kafka/clients/consumer/KafkaConsumer.html[Consumer] (`Consumer<byte[], byte[]>`)
 * [[changelogReader]] <<kafka-streams-internals-ChangelogReader.adoc#, ChangelogReader>>
@@ -597,25 +617,6 @@ Disabled after <<commit, commit>>
 
 | idleStartTime
 a| [[idleStartTime]]
-
-| partitionGroup
-a| [[partitionGroup]] <<kafka-streams-internals-PartitionGroup.adoc#, PartitionGroup>> (with <<kafka-streams-internals-RecordQueue.adoc#, RecordQueues>> per every <<partitions, partition assigned>>)
-
-Used when `StreamTask` is requested for the following:
-
-* <<addRecords, Buffer new records (from a partition)>>
-
-* <<isProcessable, isProcessable>>
-
-* <<process, Process a single record>>
-
-* <<closeTopology, closeTopology>>
-
-* <<closeSuspended, closeSuspended>>
-
-* <<numBuffered, numBuffered>>
-
-* <<maybePunctuateStreamTime, maybePunctuateStreamTime>>
 
 | processorContext
 a| [[processorContext]] <<kafka-streams-internals-ProcessorContextImpl.adoc#, ProcessorContextImpl>>

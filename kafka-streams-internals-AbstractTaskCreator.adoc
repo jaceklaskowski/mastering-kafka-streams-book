@@ -15,14 +15,15 @@ a| [[createTask]]
 [source, java]
 ----
 T createTask(
-  final Consumer<byte[], byte[]> consumer,
-  final TaskId id,
-  final Set<TopicPartition> partitions)
+  Consumer<byte[], byte[]> consumer,
+  TaskId id,
+  Set<TopicPartition> partitions)
 ----
 
-Creates a <<kafka-streams-internals-Task.adoc#, Task>>
+Creates a <<kafka-streams-internals-Task.adoc#, task>>
 
 Used exclusively when `AbstractTaskCreator` is requested to <<createTasks, create tasks>> (when `TaskManager` is requested for link:kafka-streams-internals-TaskManager.adoc#addStandbyTasks[standby] or link:kafka-streams-internals-TaskManager.adoc#addStreamTasks[stream] tasks)
+
 |===
 
 NOTE: `AbstractTaskCreator` is a Java abstract class and cannot be <<creating-instance, created>> directly. It is created indirectly when the <<implementations, concrete AbstractTaskCreators>> are.
@@ -41,18 +42,18 @@ NOTE: `AbstractTaskCreator` is a Java abstract class and cannot be <<creating-in
 | Creates link:kafka-streams-internals-StreamTask.adoc[stream tasks]
 |===
 
-=== [[createTasks]] Creating Processor Tasks -- `createTasks` Method
+=== [[createTasks]] Creating Tasks -- `createTasks` Method
 
 [source, java]
 ----
 Collection<T> createTasks(
-  final Consumer<byte[], byte[]> consumer,
-  final Map<TaskId, Set<TopicPartition>> tasksToBeCreated)
+  Consumer<byte[], byte[]> consumer,
+  Map<TaskId, Set<TopicPartition>> tasksToBeCreated)
 ----
 
 `createTasks`...FIXME
 
-NOTE: `createTasks` is used when `TaskManager` is requested for <<kafka-streams-internals-TaskManager.adoc#addStandbyTasks, standby>> or <<kafka-streams-internals-TaskManager.adoc#addStreamTasks, stream>> tasks.
+NOTE: `createTasks` is used when `TaskManager` is requested for <<kafka-streams-internals-TaskManager.adoc#addStandbyTasks, standby>> and <<kafka-streams-internals-TaskManager.adoc#addStreamTasks, stream>> tasks.
 
 === [[creating-instance]] Creating AbstractTaskCreator Instance
 

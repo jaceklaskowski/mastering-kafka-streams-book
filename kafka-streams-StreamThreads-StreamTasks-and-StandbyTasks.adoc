@@ -6,6 +6,14 @@ With that, there will always be at least two threads running for a Kafka Streams
 
 Every `StreamThread` manages its own <<kafka-streams-internals-TaskManager.adoc#, TaskManager>> (with the factories of <<kafka-streams-internals-TaskCreator.adoc#, StreamTasks>> and <<kafka-streams-internals-StandbyTaskCreator.adoc#, StandbyTasks>>).
 
+When requested to <<kafka-streams-internals-StreamThread.adoc#runOnce, poll records once and process them using active stream tasks>>, `StreamThread` requests the `TaskManager` for <<kafka-streams-internals-TaskManager.adoc#activeTask, active stream tasks>> for every partition with records (see <<kafka-streams-internals-StreamThread.adoc#addRecordsToTasks, StreamThread.addRecordsToTasks>>).
+
+A single `StreamTask` is responsible for processing records from <<kafka-streams-internals-StreamTask.adoc#partitions, one or more assigned partitions>> (using <<kafka-streams-internals-StreamTask.adoc#partitionGroup, partition queues of RecordQueues per TopicPartition>>).
+
+When requested for a <<kafka-streams-internals-TaskCreator.adoc#createTask, StreamTask>>, `TaskCreator` is given partitions.
+
+NOTE: Explore the relationship between topic groups, partitions and tasks (`builder.build(taskId.topicGroupId)` while creating a `StreamTask`) which is <<kafka-streams-internals-TaskManager.adoc#addStreamTask, TaskManager.addStreamTask>>.
+
 * Number of StreamTasks = # TaskCreator.createTask = # AbstractTaskCreator.createTasks = TaskManager.addStreamTasks
 
 <<kafka-streams-StreamsConfig.adoc#NUM_STANDBY_REPLICAS_CONFIG, StreamsConfig.NUM_STANDBY_REPLICAS_CONFIG>> (`num.standby.replicas`) is the number of <<kafka-streams-internals-StandbyTask.adoc#, standby replicas>> for each task.

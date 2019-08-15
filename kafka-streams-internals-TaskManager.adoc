@@ -249,12 +249,13 @@ NOTE: `createTasks` is used exclusively when `RebalanceListener` is requested to
 
 [source, java]
 ----
-void addStreamTasks(final Collection<TopicPartition> assignment)
+void addStreamTasks(
+  Collection<TopicPartition> assignment)
 ----
 
 `addStreamTasks` registers new stream tasks.
 
-NOTE: `addStreamTasks` does nothing (and simply returns back) unless <<assignedActiveTasks, assignedActiveTasks>> has at least one task id.
+NOTE: `addStreamTasks` does nothing (and simply exits) unless <<assignedActiveTasks, assignedActiveTasks>> has at least one task id.
 
 .TaskManager.addStreamTasks
 image::images/kafka-streams-TaskManager-addStreamTasks.png[align="center"]
@@ -281,7 +282,7 @@ New active tasks to be created: [newTasks]
 
 `addStreamTasks` then requests <<taskCreator, StreamThread.AbstractTaskCreator<StreamTask&gt;>> to <<kafka-streams-internals-AbstractTaskCreator.adoc#createTasks, createTasks>> for every new task (with the <<consumer, Kafka Consumer>>) and requests <<active, AssignedStreamsTasks>> to link:kafka-streams-internals-AssignedTasks.adoc#addNewTask[register a new task].
 
-NOTE: `addStreamTasks` is used exclusively when `TaskManager` is requested to <<createTasks, create processor tasks for assigned topic partitions>>.
+NOTE: `addStreamTasks` is used exclusively when `TaskManager` is requested to <<createTasks, create tasks for assigned topic partitions>>.
 
 === [[addStandbyTasks]] Adding Assigned Standby Tasks -- `addStandbyTasks` Internal Method
 

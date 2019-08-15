@@ -152,6 +152,35 @@ In the end, `create` creates a <<creating-instance, StreamThread>>.
 
 NOTE: `create` is used exclusively when `KafkaStreams` is <<kafka-streams-KafkaStreams.adoc#, created>>.
 
+=== [[run]] Starting Stream Thread -- `run` Method
+
+[source, java]
+----
+void run()
+----
+
+NOTE: `run` is part of Java's https://docs.oracle.com/javase/10/docs/api/java/lang/Thread.html#run--[Thread Contract] to be executed by a JVM thread.
+
+`run` prints out the following INFO message to the logs.
+
+```
+Starting
+```
+
+`run` <<setState, sets the state>> to <<RUNNING, RUNNING>> and <<runLoop, runs the main record processing loop>>.
+
+At the end, `run` <<completeShutdown, shuts down>> (per `cleanRun` flag that says whether <<runLoop, running the main loop>> stopped cleanly or not).
+
+`run` re-throws any `KafkaException`.
+
+`run` prints out the following ERROR message to the logs for any other `Exception`:
+
+```
+Encountered the following error during processing: [exception]
+```
+
+NOTE: `run` is used exclusively when `KafkaStreams` is requested to <<kafka-streams-KafkaStreams.adoc#start, start>>.
+
 === [[state]][[State]] Life Cycle of StreamThread -- StreamThread's States
 
 `StreamThread` can be in exactly one of the following *states* at any given point in time:
@@ -189,16 +218,31 @@ assert(CREATED.isValidTransition(RUNNING))
 assert(CREATED.isValidTransition(DEAD) == false)
 ----
 
-=== [[shutdown]] `shutdown` Method
+=== [[shutdown]] Shutting Down Stream Thread -- `shutdown` Method
 
 [source, java]
 ----
 void shutdown()
 ----
 
-`shutdown`...FIXME
+`shutdown` prints out the following INFO message to the logs:
 
-NOTE: `shutdown` is used exclusively when `KafkaStreams` is requested to link:kafka-streams-KafkaStreams.adoc#close[close].
+```
+Informed to shut down
+```
+
+`shutdown` <<setState, tries to transition the current state>> to <<PENDING_SHUTDOWN, PENDING_SHUTDOWN>>.
+
+(only when transitioning from <<CREATED, CREATED>> state) `shutdown` <<completeShutdown, completeShutdown>> (with `cleanRun` flag enabled).
+
+[NOTE]
+====
+`shutdown` is used when:
+
+* `KafkaStreams` is requested to <<kafka-streams-KafkaStreams.adoc#close, close>>
+
+* `RebalanceListener` is requested to <<kafka-streams-StreamThread-RebalanceListener.adoc#onPartitionsAssigned, handle partition assignment>> (and failed due to `INCOMPLETE_SOURCE_TOPIC_METADATA` error).
+====
 
 === [[runOnce]] Polling Records Once And Processing Them Using Active Stream Tasks -- `runOnce` Method
 
@@ -314,35 +358,6 @@ Detected task [taskId] that got migrated to another thread. This implies that th
 ```
 
 NOTE: `runLoop` is used exclusively when `StreamThread` is requested to <<run, start>>.
-
-=== [[run]] Starting Stream Processor Thread -- `run` Method
-
-[source, java]
-----
-void run()
-----
-
-NOTE: `run` is part of Java's https://docs.oracle.com/javase/10/docs/api/java/lang/Thread.html#run--[Thread Contract] to be executed by a JVM thread.
-
-`run` prints out the following INFO message to the logs.
-
-```
-Starting
-```
-
-`run` <<setState, sets the state>> to <<RUNNING, RUNNING>> and <<runLoop, runs the main record processing loop>>.
-
-At the end, `run` <<completeShutdown, shuts down>> (per `cleanRun` flag that says whether <<runLoop, running the main loop>> stopped cleanly or not).
-
-`run` re-throws any `KafkaException`.
-
-`run` prints out the following ERROR message to the logs for any other `Exception`:
-
-```
-Encountered the following error during processing: [exception]
-```
-
-NOTE: `run` is used exclusively when `KafkaStreams` is requested to <<kafka-streams-KafkaStreams.adoc#start, start>>.
 
 === [[setState]] Setting New State -- `setState` Method
 
