@@ -6,9 +6,17 @@ A <<kafka-streams-KafkaStreams.adoc#, KafkaStreams>> instance uses <<kafka-strea
 
 The number of `StreamThreads` is controlled by <<kafka-streams-StreamsConfig.adoc#NUM_STREAM_THREADS_CONFIG, StreamsConfig.NUM_STREAM_THREADS_CONFIG>> (`num.stream.threads`) configuration property.
 
-=== StreamThread and Kafka Consumer
+=== StreamThread, Kafka Consumer and Consumer Group
 
-`StreamThread` uses a <<kafka-streams-internals-StreamThread.adoc#consumer, Kafka Consumer>>.
+`StreamThread` is given a <<kafka-streams-internals-StreamThread.adoc#consumer, Kafka Consumer>> (`Consumer<byte[], byte[]>`) using <<kafka-streams-KafkaClientSupplier.adoc#, KafkaClientSupplier>> when <<kafka-streams-internals-StreamThread.adoc#create, created>>.
+
+`StreamThread` <<kafka-streams-internals-StreamThread.adoc#StreamThread-Consumer, uses the Kafka consumer>> to act as a regular Kafka consumer (e.g. subscribes to the source topics of a topology or poll records) and simply becomes a Kafka client.
+
+When `KafkaClientSupplier` is requested for a <<kafka-streams-KafkaClientSupplier.adoc#getConsumer, Kafka Consumer>>, `StreamThread` passes on the <<kafka-streams-StreamsConfig.adoc#getMainConsumerConfigs, consumer configuration>> with `ConsumerConfig.GROUP_ID_CONFIG` for consumer group ID and `CommonClientConfigs.CLIENT_ID_CONFIG` for client ID.
+
+`ConsumerConfig.GROUP_ID_CONFIG` is exactly <<kafka-streams-StreamsConfig.adoc#APPLICATION_ID_CONFIG, StreamsConfig.APPLICATION_ID_CONFIG>>.
+
+In summary, using the required <<kafka-streams-StreamsConfig.adoc#APPLICATION_ID_CONFIG, StreamsConfig.APPLICATION_ID_CONFIG>> for group ID among all `StreamThreads` of a Kafka Streams application creates a consumer group. Dynamic partition assignment is controlled using Kafka protocol via <<kafka-streams-internals-StreamsPartitionAssignor.adoc#, StreamsPartitionAssignor>> among all `StreamThreads`.
 
 === StreamThread, TaskManager and StreamTask
 

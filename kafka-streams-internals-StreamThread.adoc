@@ -68,7 +68,7 @@ Refer to <<kafka-logging.adoc#log4j.properties, Application Logging Using log4j>
 * [[config]] <<kafka-streams-StreamsConfig.adoc#, StreamsConfig>>
 * [[producer]] Kafka http://kafka.apache.org/22/javadoc/org/apache/kafka/clients/producer/KafkaProducer.html[Producer] (`Producer<byte[], byte[]>`)
 * [[restoreConsumer]] Kafka "restore" https://kafka.apache.org/22/javadoc/org/apache/kafka/clients/consumer/KafkaConsumer.html[Consumer] (`Consumer<byte[], byte[]>`)
-* [[consumer]] Kafka https://kafka.apache.org/22/javadoc/org/apache/kafka/clients/consumer/KafkaConsumer.html[Consumer] (`Consumer<byte[], byte[]>`)
+* [[consumer]] <<StreamThread-Consumer, ++Consumer<byte[], byte[]>++>>
 * [[originalReset]] `originalReset`
 * [[taskManager]] <<kafka-streams-internals-TaskManager.adoc#, TaskManager>>
 * [[streamsMetrics]] <<kafka-streams-internals-StreamsMetricsThreadImpl.adoc#, StreamsMetricsThreadImpl>>
@@ -78,6 +78,32 @@ Refer to <<kafka-logging.adoc#log4j.properties, Application Logging Using log4j>
 * [[assignmentErrorCode]] Assignment Error Code (`AtomicInteger`)
 
 `StreamThread` initializes the <<internal-properties, internal properties>>.
+
+=== [[StreamThread-Consumer]] StreamThread and Kafka Consumer
+
+When <<create, created>>, `StreamThread` is given a <<kafka-streams-KafkaClientSupplier.adoc#, KafkaClientSupplier>>.
+
+`StreamThread` uses the `KafkaClientSupplier` to <<kafka-streams-KafkaClientSupplier.adoc#getConsumer, get a Kafka consumer>> with the consumer-specific configuration.
+
+The Kafka Consumer is then assigned to the <<kafka-streams-internals-TaskManager.adoc#setConsumer, TaskManager>> and to <<creating-instance, create the StreamThread>>.
+
+The Kafka Consumer is used in the following:
+
+* <<runLoop, runLoop>> (to subscribe to <<kafka-streams-internals-InternalTopologyBuilder.adoc#sourceTopicPattern, source topics>> with the <<rebalanceListener, ConsumerRebalanceListener>>)
+
+* <<enforceRebalance, enforceRebalance>> (by unsubscribing from the source topics and (re)subscribing)
+
+* <<pollRequests, pollRequests>> (to poll records)
+
+* <<resetInvalidOffsets, resetInvalidOffsets>> (to seek to the beginning or the end of partitions assigned)
+
+* <<completeShutdown, completeShutdown>> (to close the consumer)
+
+* <<consumerMetrics, consumerMetrics>> (for the consumer metrics)
+
+=== [[AdminClient]] StreamThread and AdminClient
+
+When <<create, created>>, `StreamThread` is given an `AdminClient` that is only used to create the <<taskManager, TaskManager>>.
 
 === [[create]] Creating StreamThread Instance -- `create` Factory Method
 
