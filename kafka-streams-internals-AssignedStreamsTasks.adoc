@@ -208,16 +208,16 @@ Failed to commit StreamTask [taskId] due to the following error:
 
 NOTE: `maybeCommitPerUserRequested` is used exclusively when `TaskManager` is requested to <<kafka-streams-internals-TaskManager.adoc#maybeCommitActiveTasksPerUserRequested, maybeCommitActiveTasksPerUserRequested>>.
 
-=== [[recordsToDelete]] `recordsToDelete` Method
+=== [[recordsToDelete]] Purgable Offsets of Repartition Topics (of Topology) -- `recordsToDelete` Method
 
 [source, java]
 ----
 Map<TopicPartition, Long> recordsToDelete()
 ----
 
-`recordsToDelete` requests the <<running, running StreamTasks>> for the <<kafka-streams-internals-StreamTask.adoc#purgableOffsets, purgableOffsets>> and returns them.
+`recordsToDelete` simply requests all the <<running, running StreamTasks>> for the <<kafka-streams-internals-StreamTask.adoc#purgableOffsets, purgable offsets of the repartition topics (of a topology)>>.
 
-NOTE: `recordsToDelete` is used exclusively when `TaskManager` is requested to <<maybePurgeCommitedRecords, maybePurgeCommitedRecords>>.
+NOTE: `recordsToDelete` is used exclusively when `TaskManager` is requested to <<kafka-streams-internals-TaskManager.adoc#maybePurgeCommitedRecords, attempt to purge (delete) committed records>>.
 
 === [[closeAllRestoringTasks]] `closeAllRestoringTasks` Method
 

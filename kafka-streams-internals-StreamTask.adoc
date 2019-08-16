@@ -585,7 +585,7 @@ void requestCommit()
 
 NOTE: `requestCommit` is used exclusively when `ProcessorContextImpl` is requested to <<kafka-streams-internals-ProcessorContextImpl.adoc#commit, commit>>.
 
-=== [[purgableOffsets]] `purgableOffsets` Method
+=== [[purgableOffsets]] Purgable Offsets of Repartition Topics (of Topology) -- `purgableOffsets` Method
 
 [source, java]
 ----
@@ -596,7 +596,7 @@ In essence, `purgableOffsets` returns the partition-offset pairs for the <<consu
 
 `purgableOffsets`...FIXME
 
-NOTE: `purgableOffsets` is used when...FIXME
+NOTE: `purgableOffsets` is used exclusively when `AssignedStreamsTasks` is requested for the <<kafka-streams-internals-AssignedStreamsTasks.adoc#recordsToDelete, purgable offsets of the repartition topics (of a topology)>>.
 
 === [[internal-properties]] Internal Properties
 
@@ -613,7 +613,9 @@ Default: `false`
 Disabled after <<commit, commit>>
 
 | consumedOffsets
-| [[consumedOffsets]] Offsets by https://kafka.apache.org/22/javadoc/org/apache/kafka/common/TopicPartition.html[TopicPartitions] (`Map<TopicPartition, Long>`) that `StreamTask` has <<process, processed>> successfully
+a| [[consumedOffsets]] Consumer offsets by https://kafka.apache.org/22/javadoc/org/apache/kafka/common/TopicPartition.html[TopicPartitions] (`Map<TopicPartition, Long>`) that `StreamTask` has <<process, processed>> successfully
+
+Used when requested for the <<purgableOffsets, purgable offsets of the repartition topics of a topology>>, to <<activeTaskCheckpointableOffsets, activeTaskCheckpointableOffsets>>, and to <<commit, commit>>
 
 | idleStartTime
 a| [[idleStartTime]]

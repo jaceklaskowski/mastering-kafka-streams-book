@@ -462,7 +462,7 @@ Map<MetricName, Metric> adminClientMetrics()
 
 `adminClientMetrics`...FIXME
 
-NOTE: `adminClientMetrics` is used when...FIXME
+NOTE: `adminClientMetrics` is used exclusively when `KafkaStreams` is requested for the <<kafka-streams-KafkaStreams.adoc#metrics, metrics>>.
 
 === [[consumerMetrics]] `consumerMetrics` Method
 

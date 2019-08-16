@@ -27,12 +27,6 @@ image::images/kafka-streams-TaskManager.png[align="center"]
 
 * <<shutdown, shutdown>>
 
-When <<creating-instance, created>>, `TaskManager` is given a Kafka <<adminClient, AdminClient>> that is used for the following:
-
-* `TaskManager` is requested to <<maybePurgeCommitedRecords, maybePurgeCommitedRecords>> (and deletes records)
-
-* `StreamsPartitionAssignor` is requested to <<kafka-streams-internals-StreamsPartitionAssignor.adoc#configure, configure>> (and creates an <<kafka-streams-internals-StreamsPartitionAssignor.adoc#internalTopicManager, InternalTopicManager>>)
-
 When <<creating-instance, created>>, `TaskManager` is given a <<streamsMetadataState, StreamsMetadataState>> that is used exclusively to <<setPartitionsByHostState, get notifications about the changes in cluster metadata>>. The <<streamsMetadataState, StreamsMetadataState>> can then be displayed when `TaskManager` is requested for <<toString, text representation>>.
 
 .Displaying StreamsMetadataState (In Textual Representation)
@@ -54,6 +48,35 @@ log4j.logger.org.apache.kafka.streams.processor.internals.TaskManager=ALL
 
 Refer to <<kafka-logging.adoc#log4j.properties, Application Logging Using log4j>>.
 ====
+
+=== [[creating-instance]] Creating TaskManager Instance
+
+`TaskManager` takes the following to be created:
+
+* [[changelogReader]] <<kafka-streams-internals-ChangelogReader.adoc#, ChangelogReader>>
+* [[processId]] Process ID
+* [[logPrefix]] `logPrefix`
+* [[restoreConsumer]] Kafka "restore" https://kafka.apache.org/22/javadoc/org/apache/kafka/clients/consumer/KafkaConsumer.html[Consumer] (`Consumer<byte[], byte[]>`)
+* [[streamsMetadataState]] <<kafka-streams-internals-StreamsMetadataState.adoc#, StreamsMetadataState>>
+* [[taskCreator]] <<kafka-streams-internals-AbstractTaskCreator.adoc#, AbstractTaskCreator>> of <<kafka-streams-internals-StreamTask.adoc#, StreamTasks>> (`StreamThread.AbstractTaskCreator<StreamTask>`)
+* [[standbyTaskCreator]] <<kafka-streams-internals-AbstractTaskCreator.adoc#, AbstractTaskCreator>> of <<kafka-streams-internals-StandbyTask.adoc#, StandbyTasks>> (`StreamThread.AbstractTaskCreator<StandbyTask>`)
+* [[adminClient]] <<TaskManager-AdminClient, AdminClient>>
+* [[active]] <<kafka-streams-internals-AssignedStreamsTasks.adoc#, AssignedStreamsTasks>>
+* [[standby]] <<kafka-streams-internals-AssignedStandbyTasks.adoc#, AssignedStandbyTasks>>
+
+`TaskManager` initializes the <<internal-properties, internal properties>>.
+
+=== [[TaskManager-AdminClient]] TaskManager and AdminClient
+
+When <<creating-instance, created>>, `TaskManager` is given a Kafka https://kafka.apache.org/22/javadoc/org/apache/kafka/clients/admin/AdminClient.html[AdminClient].
+
+`TaskManager` uses the `AdminClient` when requested to <<maybePurgeCommitedRecords, try to purge (delete) commited records>>.
+
+The `AdminClient` is also used for the following:
+
+* `StreamsPartitionAssignor` is requested to <<kafka-streams-internals-StreamsPartitionAssignor.adoc#configure, configure>> (and creates an <<kafka-streams-internals-StreamsPartitionAssignor.adoc#internalTopicManager, InternalTopicManager>>)
+
+* `StreamThread` is requested for the <<kafka-streams-internals-StreamThread.adoc#adminClientMetrics, adminClientMetrics>>
 
 === [[setPartitionsByHostState]] Notifying StreamsMetadataState About Changes in Cluster Metadata -- `setPartitionsByHostState` Method
 
@@ -165,23 +188,6 @@ StreamTask activeTask(TopicPartition partition)
 `activeTask` simply requests the <<active, AssignedStreamsTasks>> for the <<kafka-streams-internals-AssignedTasks.adoc#runningTaskFor, running StreamTask>> for the input https://kafka.apache.org/22/javadoc/org/apache/kafka/common/TopicPartition.html[partition].
 
 NOTE: `activeTask` is used exclusively when `StreamThread` is requested to <<kafka-streams-internals-StreamThread.adoc#addRecordsToTasks, add records to active stream tasks>>.
-
-=== [[creating-instance]] Creating TaskManager Instance
-
-`TaskManager` takes the following to be created:
-
-* [[changelogReader]] <<kafka-streams-internals-ChangelogReader.adoc#, ChangelogReader>>
-* [[processId]] Process ID
-* [[logPrefix]] `logPrefix`
-* [[restoreConsumer]] Kafka "restore" https://kafka.apache.org/22/javadoc/org/apache/kafka/clients/consumer/KafkaConsumer.html[Consumer] (`Consumer<byte[], byte[]>`)
-* [[streamsMetadataState]] <<kafka-streams-internals-StreamsMetadataState.adoc#, StreamsMetadataState>>
-* [[taskCreator]] <<kafka-streams-internals-AbstractTaskCreator.adoc#, AbstractTaskCreator>> of <<kafka-streams-internals-StreamTask.adoc#, StreamTasks>> (`StreamThread.AbstractTaskCreator<StreamTask>`)
-* [[standbyTaskCreator]] <<kafka-streams-internals-AbstractTaskCreator.adoc#, AbstractTaskCreator>> of <<kafka-streams-internals-StandbyTask.adoc#, StandbyTasks>> (`StreamThread.AbstractTaskCreator<StandbyTask>`)
-* [[adminClient]] Kafka https://kafka.apache.org/22/javadoc/org/apache/kafka/clients/admin/AdminClient.html[AdminClient]
-* [[active]] <<kafka-streams-internals-AssignedStreamsTasks.adoc#, AssignedStreamsTasks>>
-* [[standby]] <<kafka-streams-internals-AssignedStandbyTasks.adoc#, AssignedStandbyTasks>>
-
-`TaskManager` initializes the <<internal-properties, internal properties>>.
 
 === [[hasActiveRunningTasks]] `hasActiveRunningTasks` Method
 
@@ -338,14 +344,14 @@ FIXME toString in action
 
 NOTE: `toString` is used exclusively when `StreamThread` is requested to <<kafka-streams-internals-StreamThread.adoc#toString, describe itself>>.
 
-=== [[maybePurgeCommitedRecords]] `maybePurgeCommitedRecords` Method
+=== [[maybePurgeCommitedRecords]] Attempting to Purge (Delete) Committed Records of Repartition Topics -- `maybePurgeCommitedRecords` Method
 
 [source, java]
 ----
 void maybePurgeCommitedRecords()
 ----
 
-In essence, `maybePurgeCommitedRecords` requests the <<active, AssignedStreamsTasks>> for the <<kafka-streams-internals-AssignedStreamsTasks.adoc#recordsToDelete, recordsToDelete>> and then the <<adminClient, AdminClient>> to delete the records (whose offset is smaller than the given offset of the corresponding partition).
+In essence, `maybePurgeCommitedRecords` requests the <<active, AssignedStreamsTasks>> for the <<kafka-streams-internals-AssignedStreamsTasks.adoc#recordsToDelete, purgable offsets of the repartition topics (of a topology)>> and then the <<adminClient, AdminClient>> to delete the records (whose offset is smaller than the given offset of the corresponding partition).
 
 `maybePurgeCommitedRecords`...FIXME
 
