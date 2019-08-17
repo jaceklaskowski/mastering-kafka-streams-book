@@ -417,19 +417,21 @@ NOTE: `commitOffsets` is used exclusively when `StreamTask` is requested to <<co
 [source, java]
 ----
 void commit() // <1>
-void commit(final boolean startNewTransaction)
+void commit(
+  boolean startNewTransaction)
 ----
-<1> Uses the other `commit` with the `startNewTransaction` flag on
+<1> Uses `startNewTransaction` flag enabled (`true`)
 
 NOTE: `commit` is part of <<kafka-streams-internals-Task.adoc#commit, Task Contract>> to commit the task.
 
-`commit` simply <<commit-startNewTransaction, commits>> with the `startNewTransaction` flag on.
+`commit` simply <<commit-startNewTransaction, commits>> with the `startNewTransaction` flag enabled (`true`).
 
-=== [[commit-startNewTransaction]] `commit` Internal Method
+==== [[commit-startNewTransaction]] `commit` Internal Method
 
 [source, java]
 ----
-void commit(final boolean startNewTransaction)
+void commit(
+  boolean startNewTransaction)
 ----
 
 `commit` prints out the following DEBUG message to the logs:
@@ -440,15 +442,19 @@ Committing
 
 `commit` <<flushState, flushState>>.
 
-(only when <<kafka-streams-internals-AbstractTask.adoc#eosEnabled, exactly-once support>> is off) `commit` requests the <<stateMgr, ProcessorStateManager>> to <<kafka-streams-internals-ProcessorStateManager.adoc#checkpoint, checkpoint>> with the <<activeTaskCheckpointableOffsets, checkpointable offsets>>.
+(only when <<kafka-streams-internals-AbstractTask.adoc#eosEnabled, exactly-once support>> is disabled) `commit` requests the <<kafka-streams-internals-AbstractTask.adoc#stateMgr, ProcessorStateManager>> to <<kafka-streams-internals-ProcessorStateManager.adoc#checkpoint, checkpoint>> with the <<activeTaskCheckpointableOffsets, checkpointable offsets>>.
 
-`commit` <<commitOffsets, commitOffsets>> with the input `startNewTransaction` flag.
+For every partition and offset (in the <<consumedOffsets, consumedOffsets>> internal registry), `commit` requests the <<kafka-streams-internals-AbstractTask.adoc#stateMgr, ProcessorStateManager>> to <<kafka-streams-internals-ProcessorStateManager.adoc#putOffsetLimit, putOffsetLimit>> with the partition and the offset incremented.
 
-`commit` turns the <<commitRequested, commitRequested>> internal flag off.
+(only when <<kafka-streams-internals-AbstractTask.adoc#eosEnabled, exactly-once support>> is disabled), `commit` requests the <<kafka-streams-internals-AbstractTask.adoc#consumer, Consumer>> to synchronously commit (`Consumer.commitSync`) the partitions and offsets from the <<consumedOffsets, consumedOffsets>> internal registry).
 
-In the end, `commit` requests the <<taskMetrics, TaskMetrics>> for the <<taskCommitTimeSensor, taskCommitTimeSensor>> and records the duration (i.e. the time since `commit` was executed).
+NOTE: `Consumer.commitSync` commits the specified offsets for a given list of partitions. This commits offsets to Kafka. The offsets committed using this API will be used on the first fetch after every rebalance and also on startup. The committed offset should be the next message your application will consume (and that's why the offsets are incremented).
 
-NOTE: `commit` is used when `StreamTask` is requested to <<commit, commit>> (that turns the input `startNewTransaction` flag on) and <<suspend, suspend>> (with the input `startNewTransaction` flag off).
+With <<kafka-streams-internals-AbstractTask.adoc#eosEnabled, exactly-once support>> enabled, `commit` requests the <<producer, Producer>> to `sendOffsetsToTransaction` for the partitions and offsets in the <<consumedOffsets, consumedOffsets>> internal registry and the <<kafka-streams-internals-AbstractTask.adoc#applicationId, applicationId>>. `commit` requests the <<producer, Producer>> to `commitTransaction` and sets the <<transactionInFlight, transactionInFlight>> off (`false`). With the given `transactionInFlight` enabled (`true`), `commit` requests the <<producer, Producer>> to `beginTransaction` and sets the <<transactionInFlight, transactionInFlight>> on (`true`).
+
+In the end, `commit` sets the <<kafka-streams-internals-AbstractTask.adoc#commitNeeded, commitNeeded>> and <<commitRequested, commitRequested>> flags off (`false`), and requests the <<taskMetrics, TaskMetrics>> for the <<taskCommitTimeSensor, taskCommitTimeSensor>> to record the duration (i.e. the time since `commit` was executed).
+
+NOTE: `commit` is used when `StreamTask` is requested to <<commit, commit>> (with the `startNewTransaction` flag enabled) and <<suspend, suspend>> (with the `startNewTransaction` flag disabled).
 
 === [[activeTaskCheckpointableOffsets]] `activeTaskCheckpointableOffsets` Method
 

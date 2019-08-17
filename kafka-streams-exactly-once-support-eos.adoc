@@ -14,3 +14,7 @@
 With EOS enabled, the frequency with which to save the position of a processor (<<kafka-streams-StreamsConfig.adoc#COMMIT_INTERVAL_MS_CONFIG, StreamsConfig.COMMIT_INTERVAL_MS_CONFIG>>) is always `100L`.
 
 Exactly-once processing requires a cluster of at least three brokers (by default) what is the recommended setting for production. For development you can change this, by adjusting broker setting `transaction.state.log.replication.factor` and `transaction.state.log.min.isr`.
+
+* <<kafka-streams-internals-StreamTask.adoc#commit, Committing StreamTasks>> is sensitive to EOS
+
+* <<kafka-streams-internals-AbstractTask.adoc#eosEnabled, AbstractTask.eosEnabled>>

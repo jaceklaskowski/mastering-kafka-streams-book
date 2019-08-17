@@ -213,8 +213,14 @@ Map<TopicPartition, Long> activeTaskCheckpointableOffsets()
 | Name
 | Description
 
+| applicationId
+a| [[applicationId]]
+
+| commitNeeded
+a| [[commitNeeded]]
+
 | eosEnabled
-a| [[eosEnabled]][[isEosEnabled]] Flag that controls whether to enable <<kafka-streams-exactly-once-support-eos.adoc#, Exactly-Once Support>> (`true`) or not (`false`)
+a| [[eosEnabled]][[isEosEnabled]] Flag that controls whether <<kafka-streams-exactly-once-support-eos.adoc#, Exactly-Once Support>> is enabled (`true`) or not (`false`)
 
 * Enabled (`true`) when <<kafka-streams-StreamsConfig.adoc#PROCESSING_GUARANTEE_CONFIG, StreamsConfig.PROCESSING_GUARANTEE_CONFIG>> configuration property is <<kafka-streams-StreamsConfig.adoc#EXACTLY_ONCE, StreamsConfig.EXACTLY_ONCE>>
 
