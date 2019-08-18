@@ -80,17 +80,6 @@ The <<recordCollector, RecordCollector>> is requested to <<kafka-streams-interna
 
 The <<recordCollector, RecordCollector>> is requested to <<kafka-streams-internals-RecordCollector.adoc#close, close>> when `StreamTask` is requested to <<suspend, suspend>> and <<maybeAbortTransactionAndCloseRecordCollector, maybeAbortTransactionAndCloseRecordCollector>>.
 
-=== [[closeTopology]] `closeTopology` Internal Method
-
-[source, java]
-----
-void closeTopology()
-----
-
-`closeTopology`...FIXME
-
-NOTE: `closeTopology` is used exclusively when `StreamTask` is requested to <<suspend, suspend>>.
-
 === [[suspend]] Suspending Task -- `suspend` Method
 
 [source, java]
@@ -607,6 +596,27 @@ In essence, `purgableOffsets` returns the partition-offset pairs for the <<consu
 `purgableOffsets`...FIXME
 
 NOTE: `purgableOffsets` is used exclusively when `AssignedStreamsTasks` is requested for the <<kafka-streams-internals-AssignedStreamsTasks.adoc#recordsToDelete, purgable offsets of the repartition topics (of a topology)>>.
+
+=== [[closeTopology]] Closing Processor Topology -- `closeTopology` Internal Method
+
+[source, java]
+----
+void closeTopology()
+----
+
+`closeTopology` prints out the following TRACE message to the logs:
+
+```
+Closing processor topology
+```
+
+`closeTopology` requests the <<partitionGroup, PartitionGroup>> to <<kafka-streams-internals-PartitionGroup.adoc#clear, clear>>.
+
+With the task <<kafka-streams-internals-AbstractTask.adoc#taskInitialized, initialized>>, `closeTopology` requests every <<kafka-streams-internals-ProcessorTopology.adoc#processors, ProcessorNode>> (in the <<kafka-streams-internals-AbstractTask.adoc#topology, ProcessorTopology>>) to <<kafka-streams-internals-ProcessorNode.adoc#close, close>>.
+
+In case of `RuntimeException` while closing `ProcessorNodes`, `closeTopology` re-throws it.
+
+NOTE: `closeTopology` is used exclusively when `StreamTask` is requested to <<suspend, suspend>>.
 
 === [[internal-properties]] Internal Properties
 

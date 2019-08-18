@@ -34,20 +34,9 @@ The `taskInitialized` flag is used by the <<implementations, concrete AbstractTa
 | [[StreamTask]]
 |===
 
-=== [[closeStateManager]] Closing State Manager -- `closeStateManager` Method
-
-[source, java]
-----
-void closeStateManager(final boolean writeCheckpoint) throws ProcessorStateException
-----
-
-`closeStateManager`...FIXME
-
-NOTE: `closeStateManager` is used when...FIXME
-
 === [[creating-instance]] Creating AbstractTask Instance
 
-`AbstractTask` takes the following when created:
+`AbstractTask` takes the following to be created:
 
 * [[id]] `TaskId`
 * [[partitions]] Assigned Kafka https://kafka.apache.org/23/javadoc/org/apache/kafka/common/TopicPartition.html[partitions]
@@ -61,6 +50,17 @@ NOTE: `closeStateManager` is used when...FIXME
 `AbstractTask` initializes the <<internal-registries, internal registries and counters>>.
 
 NOTE: `AbstractTask` is a Java abstract class and cannot be <<creating-instance, created>> directly. It is created indirectly for the <<implementations, concrete AbstractTasks>>.
+
+=== [[closeStateManager]] Closing State Manager -- `closeStateManager` Method
+
+[source, java]
+----
+void closeStateManager(final boolean writeCheckpoint) throws ProcessorStateException
+----
+
+`closeStateManager`...FIXME
+
+NOTE: `closeStateManager` is used when...FIXME
 
 === [[hasStateStores]] Checking If Topology Uses State Stores -- `hasStateStores` Method
 
