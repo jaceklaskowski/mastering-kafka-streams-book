@@ -18,7 +18,7 @@ The `taskInitialized` flag is used by the <<implementations, concrete AbstractTa
 * `StreamTask` is requested to link:kafka-streams-internals-StreamTask.adoc#closeTopology[closeTopology]
 
 [[taskClosed]]
-`AbstractTask` has `taskClosed` flag that is on (i.e. `true`) to mark when <<kafka-streams-internals-StandbyTask.adoc#close, StandbyTask>> and <<kafka-streams-internals-StreamTask.adoc#close, StreamTask>> have already been requested to close.
+`AbstractTask` has `taskClosed` flag that is enabled (i.e. `true`) to mark when <<kafka-streams-internals-StandbyTask.adoc#close, StandbyTask>> and <<kafka-streams-internals-StreamTask.adoc#close, StreamTask>> have already been requested to close.
 
 [[implementations]]
 .AbstractTasks

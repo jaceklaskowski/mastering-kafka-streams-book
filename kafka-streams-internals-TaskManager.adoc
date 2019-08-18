@@ -456,7 +456,7 @@ int maybeCommitActiveTasksPerUserRequested()
 
 `maybeCommitActiveTasksPerUserRequested` simply requests the <<active, AssignedStreamsTasks>> to <<kafka-streams-internals-AssignedStreamsTasks.adoc#maybeCommitPerUserRequested, maybeCommitPerUserRequested>>.
 
-NOTE: `maybeCommitActiveTasksPerUserRequested` is used when `StreamThread` is requested to <<kafka-streams-internals-StreamThread.adoc#runOnce, poll records once and process them using active stream tasks>> and <<kafka-streams-internals-StreamThread.adoc#maybeCommit, commit all tasks (when commit interval elapsed)>>.
+NOTE: `maybeCommitActiveTasksPerUserRequested` is used when `StreamThread` is requested to <<kafka-streams-internals-StreamThread.adoc#runOnce, poll records once and process them using active stream tasks>> (and any of the active stream tasks have processed a record) and <<kafka-streams-internals-StreamThread.adoc#maybeCommit, commit all tasks (when commit interval elapsed)>>.
 
 === [[shutdown]] Shutting Down -- `shutdown` Method
 

@@ -42,6 +42,26 @@ log4j.logger.org.apache.kafka.streams.processor.internals.StreamTask=ALL
 Refer to <<kafka-logging.adoc#log4j.properties, Application Logging Using log4j>>.
 ====
 
+=== [[creating-instance]] Creating StreamTask Instance
+
+`StreamTask` takes the following to be created:
+
+* [[id]] <<kafka-streams-TaskId.adoc#, TaskId>>
+* [[partitions]] Assigned partitions (Kafka https://kafka.apache.org/22/javadoc/org/apache/kafka/common/TopicPartition.html[TopicPartition])
+* [[topology]] <<kafka-streams-internals-ProcessorTopology.adoc#, ProcessorTopology>>
+* [[consumer]] Kafka https://kafka.apache.org/22/javadoc/org/apache/kafka/clients/consumer/KafkaConsumer.html[Consumer] (`Consumer<byte[], byte[]>`)
+* [[changelogReader]] <<kafka-streams-internals-ChangelogReader.adoc#, ChangelogReader>>
+* [[config]] <<kafka-streams-StreamsConfig.adoc#, StreamsConfig>>
+* [[metrics]] <<kafka-streams-internals-StreamsMetricsImpl.adoc#, StreamsMetricsImpl>>
+* [[stateDirectory]] <<kafka-streams-internals-StateDirectory.adoc#, StateDirectory>>
+* [[cache]] <<kafka-streams-internals-ThreadCache.adoc#, ThreadCache>>
+* [[time]] `Time`
+* [[producerSupplier]] <<kafka-streams-internals-ProducerSupplier.adoc#, ProducerSupplier>>
+* [[recordCollector]] <<kafka-streams-internals-RecordCollector.adoc#, RecordCollector>>
+* [[closeSensor]] `closeSensor` Kafka `Sensor`
+
+`StreamTask` initializes the <<internal-properties, internal properties>>.
+
 === [[partitionGroup]] StreamTask and PartitionGroup (of RecordCollectors per Assigned Partition)
 
 `StreamTask` creates a <<kafka-streams-internals-PartitionGroup.adoc#, PartitionGroup>> (with <<kafka-streams-internals-RecordQueue.adoc#, RecordQueues>> per every <<partitions, partition assigned>>) when...FIXME
@@ -93,6 +113,12 @@ suspend(boolean clean, boolean isZombie)
 
 NOTE: `suspend` is part of <<kafka-streams-internals-Task.adoc#suspend, Task Contract>> to suspend the task.
 
+`suspend` prints out the following DEBUG message to the logs:
+
+```
+Suspending
+```
+
 `suspend` <<closeTopology, closes the processor topology>>.
 
 With `clean` flag enabled (`true`), `suspend` <<commit, commits the task>> (with `startNewTransaction` flag disabled) first. With <<kafka-streams-internals-AbstractTask.adoc#eosEnabled, exactly-once support enabled>>, `suspend` requests the <<kafka-streams-internals-AbstractTask.adoc#stateMgr, ProcessorStateManager>> to <<kafka-streams-internals-ProcessorStateManager.adoc#checkpoint, checkpoint>> (with the <<activeTaskCheckpointableOffsets, checkpointable offsets>>) and the <<recordCollector, RecordCollector>> to <<kafka-streams-internals-RecordCollector.adoc#close, close>>.
@@ -101,55 +127,57 @@ With `clean` flag disabled (`false`), `suspend` <<maybeAbortTransactionAndCloseR
 
 NOTE: The private `suspend` is used when `StreamTask` is requested to <<close, close>>.
 
-=== [[close]] `close` Method
+==== [[maybeAbortTransactionAndCloseRecordCollector]] `maybeAbortTransactionAndCloseRecordCollector` Internal Method
+
+[source, java]
+----
+void maybeAbortTransactionAndCloseRecordCollector(
+  boolean isZombie)
+----
+
+`maybeAbortTransactionAndCloseRecordCollector`...FIXME
+
+NOTE: `maybeAbortTransactionAndCloseRecordCollector` is used exclusively when <<suspend, suspend>> (with `clean` flag disabled).
+
+==== [[closeTopology]] Closing Processor Topology -- `closeTopology` Internal Method
+
+[source, java]
+----
+void closeTopology()
+----
+
+`closeTopology` prints out the following TRACE message to the logs:
+
+```
+Closing processor topology
+```
+
+`closeTopology` requests the <<partitionGroup, PartitionGroup>> to <<kafka-streams-internals-PartitionGroup.adoc#clear, clear>>.
+
+With the task <<kafka-streams-internals-AbstractTask.adoc#taskInitialized, initialized>>, `closeTopology` requests every <<kafka-streams-internals-ProcessorTopology.adoc#processors, ProcessorNode>> (in the <<kafka-streams-internals-AbstractTask.adoc#topology, ProcessorTopology>>) to <<kafka-streams-internals-ProcessorNode.adoc#close, close>>.
+
+In case of `RuntimeException` while closing `ProcessorNodes`, `closeTopology` re-throws it.
+
+NOTE: `closeTopology` is used exclusively when `StreamTask` is requested to <<suspend, suspend>>.
+
+=== [[close]] Closing Task -- `close` Method
 
 [source, java]
 ----
 void close(
-  final boolean clean,
-  final boolean isZombie)
+  boolean clean,
+  boolean isZombie)
 ----
 
-NOTE: `close` is part of link:kafka-streams-internals-Task.adoc#close[Task Contract] to...FIXME.
+NOTE: `close` is part of link:kafka-streams-internals-Task.adoc#close[Task Contract] to close the task.
 
-`close`...FIXME
-
-=== [[creating-instance]] Creating StreamTask Instance
-
-`StreamTask` takes the following to be created:
-
-* [[id]] <<kafka-streams-TaskId.adoc#, TaskId>>
-* [[partitions]] Assigned partitions (Kafka https://kafka.apache.org/22/javadoc/org/apache/kafka/common/TopicPartition.html[TopicPartition])
-* [[topology]] <<kafka-streams-internals-ProcessorTopology.adoc#, ProcessorTopology>>
-* [[consumer]] Kafka https://kafka.apache.org/22/javadoc/org/apache/kafka/clients/consumer/KafkaConsumer.html[Consumer] (`Consumer<byte[], byte[]>`)
-* [[changelogReader]] <<kafka-streams-internals-ChangelogReader.adoc#, ChangelogReader>>
-* [[config]] <<kafka-streams-StreamsConfig.adoc#, StreamsConfig>>
-* [[metrics]] <<kafka-streams-internals-StreamsMetricsImpl.adoc#, StreamsMetricsImpl>>
-* [[stateDirectory]] <<kafka-streams-internals-StateDirectory.adoc#, StateDirectory>>
-* [[cache]] <<kafka-streams-internals-ThreadCache.adoc#, ThreadCache>>
-* [[time]] `Time`
-* [[producerSupplier]] <<kafka-streams-internals-ProducerSupplier.adoc#, ProducerSupplier>>
-* [[recordCollector]] <<kafka-streams-internals-RecordCollector.adoc#, RecordCollector>>
-* [[closeSensor]] `closeSensor` Kafka `Sensor`
-
-`StreamTask` initializes the <<internal-properties, internal properties>>.
-
-=== [[initTopology]] Initializing ProcessorNodes (in ProcessorTopology) -- `initTopology` Internal Method
-
-[source, java]
-----
-void initTopology()
-----
-
-`initTopology` prints out the following TRACE message to the logs:
+`close` prints out the following DEBUG message to the logs:
 
 ```
-Initializing processor nodes of the topology
+Closing
 ```
 
-`initTopology` then walks over all the <<kafka-streams-internals-ProcessorTopology.adoc#processors, processor nodes>> in the <<topology, topology>> and requests them to <<kafka-streams-internals-ProcessorNode.adoc#init, initialize>> (one by one). While doing this node initialization, `initTopology` requests the <<processorContext, InternalProcessorContext>> to <<kafka-streams-internals-InternalProcessorContext.adoc#setCurrentNode, set the current node>> to the processor node that is currently initialized and, after initialization, <<kafka-streams-internals-InternalProcessorContext.adoc#setCurrentNode, resets the current node>> (to `null`).
-
-NOTE: `initTopology` is used exclusively when `StreamTask` is requested to <<initializeTopology, initialize the topology>>.
+`close` <<suspend, suspends the task>> followed by <<closeSuspended, closeSuspended>>. In the end, `close` sets the <<kafka-streams-internals-AbstractTask.adoc#taskClosed, taskClosed>> flag off (`false`).
 
 === [[initializeTopology]] Initializing Topology (of Processor Nodes) -- `initializeTopology` Method
 
@@ -168,20 +196,22 @@ With <<kafka-streams-internals-AbstractTask.adoc#eosEnabled, exactly-once suppor
 
 In the end, `initializeTopology` turns the <<kafka-streams-internals-AbstractTask.adoc#taskInitialized, taskInitialized>> flag on (`true`) and the <<idleStartTime, idleStartTime>> to `UNKNOWN`.
 
-=== [[updateProcessorContext]] Updating InternalProcessorContext -- `updateProcessorContext` Internal Method
+==== [[initTopology]] Initializing ProcessorNodes (in ProcessorTopology) -- `initTopology` Internal Method
 
 [source, java]
 ----
-void updateProcessorContext(
-  final StampedRecord record,
-  final ProcessorNode currNode)
+void initTopology()
 ----
 
-`updateProcessorContext` requests the <<processorContext, InternalProcessorContext>> to <<kafka-streams-internals-InternalProcessorContext.adoc#setRecordContext, set the current ProcessorRecordContext>> to a new <<kafka-streams-internals-ProcessorRecordContext.adoc#, ProcessorRecordContext>> (per the input <<kafka-streams-internals-StampedRecord.adoc#, StampedRecord>>).
+`initTopology` prints out the following TRACE message to the logs:
 
-`updateProcessorContext` then requests the <<processorContext, InternalProcessorContext>> to <<kafka-streams-internals-InternalProcessorContext.adoc#setCurrentNode, set the current ProcessorNode>> to the input <<kafka-streams-internals-ProcessorNode.adoc#, ProcessorNode>>.
+```
+Initializing processor nodes of the topology
+```
 
-NOTE: `updateProcessorContext` is used when `StreamTask` is requested to <<process, process a single record>> and <<punctuate, execute a scheduled periodic action (aka punctuate)>>.
+`initTopology` then walks over all the <<kafka-streams-internals-ProcessorTopology.adoc#processors, processor nodes>> in the <<topology, topology>> and requests them to <<kafka-streams-internals-ProcessorNode.adoc#init, initialize>> (one by one). While doing this node initialization, `initTopology` requests the <<kafka-streams-internals-AbstractTask.adoc#processorContext, InternalProcessorContext>> to <<kafka-streams-internals-InternalProcessorContext.adoc#setCurrentNode, set the current node>> to the processor node that is currently initialized and, after initialization, <<kafka-streams-internals-InternalProcessorContext.adoc#setCurrentNode, resets the current node>> (to `null`).
+
+NOTE: `initTopology` is used exclusively when `StreamTask` is requested to <<initializeTopology, initialize the topology>>.
 
 === [[process]] Processing Single Record -- `process` Method
 
@@ -235,7 +265,7 @@ NOTE: `process` is used exclusively when `AssignedStreamsTasks` is requested to 
 ----
 void closeSuspended(
   boolean clean,
-  final boolean isZombie,
+  boolean isZombie,
   RuntimeException firstException)
 ----
 
@@ -248,8 +278,8 @@ NOTE: `closeSuspended` is part of link:kafka-streams-internals-Task.adoc#closeSu
 [source, java]
 ----
 void addRecords(
-  final TopicPartition partition,
-  final Iterable<ConsumerRecord<byte[], byte[]>> records)
+  TopicPartition partition,
+  Iterable<ConsumerRecord<byte[], byte[]>> records)
 ----
 
 `addRecords` simply requests the <<partitionGroup, PartitionGroup>> to <<kafka-streams-internals-PartitionGroup.adoc#addRawRecords, add the new records to the RecordQueue for the specified partition>>.
@@ -275,17 +305,6 @@ NOTE: `addRecords` uses link:++https://kafka.apache.org/22/javadoc/org/apache/ka
 
 * `TopologyTestDriver` is requested to <<kafka-streams-TopologyTestDriver.adoc#pipeInput, pipeInput>>
 ====
-
-=== [[recordCollectorOffsets]] `recordCollectorOffsets` Method
-
-[source, java]
-----
-Map<TopicPartition, Long> recordCollectorOffsets()
-----
-
-NOTE: `recordCollectorOffsets` is part of link:kafka-streams-internals-AbstractTask.adoc#recordCollectorOffsets[AbstractTask Contract] to...FIXME.
-
-`recordCollectorOffsets`...FIXME
 
 === [[punctuate]] Punctuating Processor (Executing Scheduled Periodic Action) -- `punctuate` Method
 
@@ -394,17 +413,6 @@ Initializing state stores
 
 In the end, `initializeStateStores` returns `true` if the <<kafka-streams-internals-Task.adoc#changelogPartitions, task has any changelog partitions>>. Otherwise, `initializeStateStores` returns `false`.
 
-=== [[commitOffsets]] `commitOffsets` Internal Method
-
-[source, java]
-----
-void commitOffsets(final boolean startNewTransaction)
-----
-
-`commitOffsets`...FIXME
-
-NOTE: `commitOffsets` is used exclusively when `StreamTask` is requested to <<commit, commit>>.
-
 === [[commit]] Committing Task -- `commit` Method
 
 [source, java]
@@ -483,7 +491,8 @@ Flushing state and producer
 
 [source, java]
 ----
-boolean isProcessable(final long now)
+boolean isProcessable(
+  long now)
 ----
 
 `isProcessable` returns `true` when one of the following is met:
@@ -517,16 +526,40 @@ Resuming
 
 `resume`...FIXME
 
-=== [[maybeAbortTransactionAndCloseRecordCollector]] `maybeAbortTransactionAndCloseRecordCollector` Internal Method
+=== [[numBuffered]] `numBuffered` Method
 
 [source, java]
 ----
-void maybeAbortTransactionAndCloseRecordCollector(final boolean isZombie)
+int numBuffered()
 ----
 
-`maybeAbortTransactionAndCloseRecordCollector`...FIXME
+`numBuffered` simply requests the <<partitionGroup, PartitionGroup>> for the <<kafka-streams-internals-PartitionGroup.adoc#numBuffered, numBuffered>>.
 
-NOTE: `maybeAbortTransactionAndCloseRecordCollector` is used when...FIXME
+NOTE: `numBuffered` seems to be used for tests only.
+
+=== [[requestCommit]] Requesting Commit -- `requestCommit` Method
+
+[source, java]
+----
+void requestCommit()
+----
+
+`requestCommit` simply turns the <<commitRequested, commitRequested>> internal flag on (`true`).
+
+NOTE: `requestCommit` is used exclusively when `ProcessorContextImpl` is requested to <<kafka-streams-internals-ProcessorContextImpl.adoc#commit, commit>>.
+
+=== [[purgableOffsets]] Purgable Offsets of Repartition Topics (of Topology) -- `purgableOffsets` Method
+
+[source, java]
+----
+Map<TopicPartition, Long> purgableOffsets()
+----
+
+In essence, `purgableOffsets` returns the partition-offset pairs for the <<consumedOffsets, consumedOffsets>> of the repartition topics (i.e. the <<topology, ProcessorTopology>> uses as <<kafka-streams-internals-ProcessorTopology.adoc#isRepartitionTopic, repartition topics>>).
+
+`purgableOffsets`...FIXME
+
+NOTE: `purgableOffsets` is used exclusively when `AssignedStreamsTasks` is requested for the <<kafka-streams-internals-AssignedStreamsTasks.adoc#recordsToDelete, purgable offsets of the repartition topics (of a topology)>>.
 
 === [[initializeTransactions]] `initializeTransactions` Internal Method
 
@@ -551,72 +584,20 @@ In the end, `initializeTransactions` throws a `StreamsException`.
 
 NOTE: `initializeTransactions` is used when `StreamTask` is <<creating-instance, created>> and requested to <<resume, resume>> (both with <<kafka-streams-internals-AbstractTask.adoc#eosEnabled, exactly-once support enabled>>).
 
-=== [[producerMetrics]] `producerMetrics` Method
+=== [[updateProcessorContext]] Updating InternalProcessorContext -- `updateProcessorContext` Internal Method
 
 [source, java]
 ----
-Map<MetricName, Metric> producerMetrics()
+void updateProcessorContext(
+  StampedRecord record,
+  ProcessorNode currNode)
 ----
 
-`producerMetrics`...FIXME
+`updateProcessorContext` requests the <<kafka-streams-internals-AbstractTask.adoc#processorContext, InternalProcessorContext>> to <<kafka-streams-internals-InternalProcessorContext.adoc#setRecordContext, set the current ProcessorRecordContext>> to a new <<kafka-streams-internals-ProcessorRecordContext.adoc#, ProcessorRecordContext>> (per the input <<kafka-streams-internals-StampedRecord.adoc#, StampedRecord>>).
 
-NOTE: `producerMetrics` is used when...FIXME
+`updateProcessorContext` then requests the <<kafka-streams-internals-AbstractTask.adoc#processorContext, InternalProcessorContext>> to <<kafka-streams-internals-InternalProcessorContext.adoc#setCurrentNode, set the current ProcessorNode>> to the input <<kafka-streams-internals-ProcessorNode.adoc#, ProcessorNode>>.
 
-=== [[numBuffered]] `numBuffered` Method
-
-[source, java]
-----
-int numBuffered()
-----
-
-`numBuffered` simply requests the <<partitionGroup, PartitionGroup>> for the <<kafka-streams-internals-PartitionGroup.adoc#numBuffered, numBuffered>>.
-
-NOTE: `numBuffered` seems to be used for tests only.
-
-=== [[requestCommit]] `requestCommit` Method
-
-[source, java]
-----
-void requestCommit()
-----
-
-`requestCommit` simply turns the <<commitRequested, commitRequested>> internal flag on (`true`).
-
-NOTE: `requestCommit` is used exclusively when `ProcessorContextImpl` is requested to <<kafka-streams-internals-ProcessorContextImpl.adoc#commit, commit>>.
-
-=== [[purgableOffsets]] Purgable Offsets of Repartition Topics (of Topology) -- `purgableOffsets` Method
-
-[source, java]
-----
-Map<TopicPartition, Long> purgableOffsets()
-----
-
-In essence, `purgableOffsets` returns the partition-offset pairs for the <<consumedOffsets, consumedOffsets>> of the repartition topics (i.e. the <<topology, ProcessorTopology>> uses as <<kafka-streams-internals-ProcessorTopology.adoc#isRepartitionTopic, repartition topics>>).
-
-`purgableOffsets`...FIXME
-
-NOTE: `purgableOffsets` is used exclusively when `AssignedStreamsTasks` is requested for the <<kafka-streams-internals-AssignedStreamsTasks.adoc#recordsToDelete, purgable offsets of the repartition topics (of a topology)>>.
-
-=== [[closeTopology]] Closing Processor Topology -- `closeTopology` Internal Method
-
-[source, java]
-----
-void closeTopology()
-----
-
-`closeTopology` prints out the following TRACE message to the logs:
-
-```
-Closing processor topology
-```
-
-`closeTopology` requests the <<partitionGroup, PartitionGroup>> to <<kafka-streams-internals-PartitionGroup.adoc#clear, clear>>.
-
-With the task <<kafka-streams-internals-AbstractTask.adoc#taskInitialized, initialized>>, `closeTopology` requests every <<kafka-streams-internals-ProcessorTopology.adoc#processors, ProcessorNode>> (in the <<kafka-streams-internals-AbstractTask.adoc#topology, ProcessorTopology>>) to <<kafka-streams-internals-ProcessorNode.adoc#close, close>>.
-
-In case of `RuntimeException` while closing `ProcessorNodes`, `closeTopology` re-throws it.
-
-NOTE: `closeTopology` is used exclusively when `StreamTask` is requested to <<suspend, suspend>>.
+NOTE: `updateProcessorContext` is used when `StreamTask` is requested to <<process, process a single record>> and <<punctuate, execute a scheduled periodic action (aka punctuate)>>.
 
 === [[internal-properties]] Internal Properties
 
@@ -626,11 +607,13 @@ NOTE: `closeTopology` is used exclusively when `StreamTask` is requested to <<su
 | Description
 
 | commitRequested
-a| [[commitRequested]] Flag that indicates whether a <<requestCommit, commit was requested>> (`true`) or not (`false`)
+a| [[commitRequested]] Flag that indicates whether a <<requestCommit, commit was requested>> (`true`)
 
 Default: `false`
 
-Disabled after <<commit, commit>>
+Disabled (`false`) after <<commit, commit>>
+
+Used exclusively when `AssignedStreamsTasks` is requested to <<kafka-streams-internals-AssignedStreamsTasks.adoc#maybeCommitPerUserRequested, maybeCommitPerUserRequested>>.
 
 | consumedOffsets
 a| [[consumedOffsets]] Consumer offsets by https://kafka.apache.org/22/javadoc/org/apache/kafka/common/TopicPartition.html[TopicPartitions] (`Map<TopicPartition, Long>`) that `StreamTask` has <<process, processed>> successfully
@@ -639,9 +622,6 @@ Used when requested for the <<purgableOffsets, purgable offsets of the repartiti
 
 | idleStartTime
 a| [[idleStartTime]]
-
-| processorContext
-a| [[processorContext]] <<kafka-streams-internals-ProcessorContextImpl.adoc#, ProcessorContextImpl>>
 
 | producer
 a| [[producer]][[getProducer]] Kafka xref:https://kafka.apache.org/22/javadoc/org/apache/kafka/clients/producer/KafkaProducer.html#[Producer] (`Producer<byte[], byte[]>`)
@@ -681,5 +661,12 @@ Used when `StreamTask` is requested for the following:
 * <<closeSuspended, closeSuspended>> (to <<kafka-streams-StreamTask-TaskMetrics.adoc#removeAllSensors, remove all task sensors>>)
 
 | transactionInFlight
-a| [[transactionInFlight]] Controls whether...FIXME
+a| [[transactionInFlight]] Flag that controls whether the <<maybeAbortTransactionAndCloseRecordCollector, producer should abort transaction>> (with <<kafka-streams-internals-AbstractTask.adoc#eosEnabled, exactly-once support enabled>>)
+
+Default: `false`
+
+* Enabled (`true`) in <<initializeTopology, initializeTopology>> and <<commit, commit>>
+
+* Disabled (`false`) in <<maybeAbortTransactionAndCloseRecordCollector, maybeAbortTransactionAndCloseRecordCollector>> and <<commit, commit>>
+
 |===
