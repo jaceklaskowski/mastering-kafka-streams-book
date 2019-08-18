@@ -91,7 +91,7 @@ void closeTopology()
 
 NOTE: `closeTopology` is used exclusively when `StreamTask` is requested to <<suspend, suspend>>.
 
-=== [[suspend]] `suspend` Method
+=== [[suspend]] Suspending Task -- `suspend` Method
 
 [source, java]
 ----
@@ -100,11 +100,15 @@ void suspend()  // <1>
 // PRIVATE API
 suspend(boolean clean, boolean isZombie)
 ----
-<1> Uses the private `suspend` with `clean` enabled and `isZombie` disabled
+<1> Uses `clean` enabled (`true`) and `isZombie` disabled (`false`)
 
-NOTE: `suspend` is part of <<kafka-streams-internals-Task.adoc#suspend, Task Contract>> to...FIXME
+NOTE: `suspend` is part of <<kafka-streams-internals-Task.adoc#suspend, Task Contract>> to suspend the task.
 
-`suspend`...FIXME
+`suspend` <<closeTopology, closes the processor topology>>.
+
+With `clean` flag enabled (`true`), `suspend` <<commit, commits the task>> (with `startNewTransaction` flag disabled) first. With <<kafka-streams-internals-AbstractTask.adoc#eosEnabled, exactly-once support enabled>>, `suspend` requests the <<kafka-streams-internals-AbstractTask.adoc#stateMgr, ProcessorStateManager>> to <<kafka-streams-internals-ProcessorStateManager.adoc#checkpoint, checkpoint>> (with the <<activeTaskCheckpointableOffsets, checkpointable offsets>>) and the <<recordCollector, RecordCollector>> to <<kafka-streams-internals-RecordCollector.adoc#close, close>>.
+
+With `clean` flag disabled (`false`), `suspend` <<maybeAbortTransactionAndCloseRecordCollector, maybeAbortTransactionAndCloseRecordCollector>>.
 
 NOTE: The private `suspend` is used when `StreamTask` is requested to <<close, close>>.
 
