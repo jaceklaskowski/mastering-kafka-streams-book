@@ -220,7 +220,9 @@ NOTE: `initTopology` is used exclusively when `StreamTask` is requested to <<ini
 boolean process()
 ----
 
-`process` requests the <<partitionGroup, PartitionGroup>> for the <<kafka-streams-internals-PartitionGroup.adoc#nextRecord, next stamped record (record with timestamp) and the RecordQueue>> (with the <<recordInfo, RecordInfo>>).
+`process` processes a single record and returns `true` when processed successfully, and `false` when there were no records to process.
+
+Internally, `process` requests the <<partitionGroup, PartitionGroup>> for the <<kafka-streams-internals-PartitionGroup.adoc#nextRecord, next stamped record (record with timestamp) and the RecordQueue>> (with the <<recordInfo, RecordInfo>>).
 
 .StreamTask and Processing Single Record
 image::images/kafka-streams-StreamTask-process.png[align="center"]
@@ -233,9 +235,9 @@ Start processing one record [record]
 
 `process` requests the <<recordInfo, RecordInfo>> for the <<kafka-streams-internals-RecordInfo.adoc#node, source processor node>>.
 
-`process` <<updateProcessorContext, updateProcessorContext>> (with the current record and the source processor node).
+`process` <<updateProcessorContext, updates the ProcessorContext>> to hold the current record and the source processor node.
 
-`process` requests the source processor node to <<kafka-streams-internals-ProcessorNode.adoc#process, process>> the key and the value of the record.
+`process` requests the source processor node to <<kafka-streams-internals-ProcessorNode.adoc#process, process>> the record.
 
 `process` prints out the following TRACE message to the logs:
 
@@ -245,17 +247,15 @@ Completed processing one record [record]
 
 `process` requests the <<recordInfo, RecordInfo>> for the <<kafka-streams-internals-RecordInfo.adoc#partition, partition>> and stores it and the record's <<kafka-streams-internals-StampedRecord.adoc#offset, offset>> in the <<consumedOffsets, consumedOffsets>> internal registry.
 
-`process` turns the <<commitOffsetNeeded, commitOffsetNeeded>> flag on.
+`process` turns the <<commitNeeded, commitNeeded>> flag on (`true`).
 
-`process` requests the <<consumer, Kafka consumer>> to resume the partition if the size of the <<kafka-streams-internals-RecordInfo.adoc#queue, queue>> of the <<recordInfo, RecordInfo>> is exactly <<maxBufferedSize, buffered.records.per.partition>> configuration property (default: `1000`).
+(only if the size of the <<kafka-streams-internals-RecordInfo.adoc#queue, queue>> of the <<recordInfo, RecordInfo>> is exactly <<maxBufferedSize, buffered.records.per.partition>> configuration property (default: `1000`)) `process` requests the <<consumer, Kafka consumer>> to resume the partition (and consume records from the partition again).
 
-`process` always requests <<kafka-streams-internals-AbstractTask.adoc#processorContext, InternalProcessorContext>> to <<kafka-streams-internals-InternalProcessorContext.adoc#setCurrentNode, setCurrentNode>> as `null`.
+`process` resets the current node (and requests the <<kafka-streams-internals-AbstractTask.adoc#processorContext, InternalProcessorContext>> to <<kafka-streams-internals-InternalProcessorContext.adoc#setCurrentNode, set the current node>> to be `null`).
 
 In case of a `ProducerFencedException`, `process` throws a `TaskMigratedException`.
 
 In case of a `KafkaException`, `process` throws a `StreamsException`.
-
-In the end, `process` returns `true` when the single record was processed successfully, and `false` when there were no records to process.
 
 NOTE: `process` is used exclusively when `AssignedStreamsTasks` is requested to <<kafka-streams-internals-AssignedStreamsTasks.adoc#process, request the running stream tasks to process records (one record per task)>>.
 

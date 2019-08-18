@@ -41,14 +41,14 @@ log4j.logger.org.apache.kafka.streams.processor.internals.AssignedStreamsTasks=A
 Refer to <<kafka-logging.adoc#log4j.properties, Application Logging Using log4j>>.
 ====
 
-=== [[process]] Requesting Running Stream Tasks to Process Records (One Record per Task) -- `process` Method
+=== [[process]] Processing Records Using Running Stream Tasks (One Record per Task) -- `process` Method
 
 [source, java]
 ----
 int process()
 ----
 
-`process` requests every <<kafka-streams-internals-AssignedTasks.adoc#running, running>> stream task to <<kafka-streams-internals-StreamTask.adoc#process, process a single record>>.
+`process` requests every <<kafka-streams-internals-AssignedTasks.adoc#running, running stream task>> (that <<kafka-streams-internals-StreamTask.adoc#isProcessable, is processable>>) to <<kafka-streams-internals-StreamTask.adoc#process, process a single record>>.
 
 In the end, `process` returns how many <<kafka-streams-internals-StreamTask.adoc#, stream tasks>> processed a single record.
 

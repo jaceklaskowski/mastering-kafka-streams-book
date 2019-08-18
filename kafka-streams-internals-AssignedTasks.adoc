@@ -494,7 +494,7 @@ a| [[restoring]]
 a| [[log]]
 
 | running
-a| [[running]] Running tasks by their ids
+a| [[running]] Running <<kafka-streams-internals-Task.adoc#, tasks>> by <<kafka-streams-TaskId.adoc#, TaskId>> (`Map<TaskId, T>`)
 
 `running` is a https://docs.oracle.com/javase/9/docs/api/java/util/concurrent/ConcurrentHashMap.html[java.util.concurrent.ConcurrentHashMap], i.e. `ConcurrentHashMap<TaskId, Task>`.
 

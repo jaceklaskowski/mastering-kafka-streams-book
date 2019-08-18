@@ -22,7 +22,9 @@ NOTE: `init` is part of link:kafka-streams-internals-ProcessorNode.adoc#init[Pro
 
 [source, java]
 ----
-void process(final K key, final V value)
+void process(
+  K key,
+  V value)
 ----
 
 NOTE: `process` is part of link:kafka-streams-internals-ProcessorNode.adoc#process[ProcessorNode Contract] to...FIXME.

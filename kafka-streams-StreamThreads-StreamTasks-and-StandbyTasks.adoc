@@ -18,13 +18,25 @@ When `KafkaClientSupplier` is requested for a <<kafka-streams-KafkaClientSupplie
 
 In summary, using the required <<kafka-streams-StreamsConfig.adoc#APPLICATION_ID_CONFIG, StreamsConfig.APPLICATION_ID_CONFIG>> for group ID among all `StreamThreads` of a Kafka Streams application creates a consumer group. Dynamic partition assignment is controlled using Kafka protocol via <<kafka-streams-internals-StreamsPartitionAssignor.adoc#, StreamsPartitionAssignor>> among all `StreamThreads`.
 
-=== StreamThread, TaskManager and StreamTask
+=== StreamThread, TaskManager and StreamTasks
 
 Every `StreamThread` manages its own <<kafka-streams-internals-TaskManager.adoc#, TaskManager>> (with the factories to create <<kafka-streams-internals-TaskCreator.adoc#, stream>> and <<kafka-streams-internals-StandbyTaskCreator.adoc#, standby>> tasks).
 
 When requested to <<kafka-streams-internals-StreamThread.adoc#runOnce, poll records once and process them using active stream tasks>>, `StreamThread` requests the `TaskManager` for <<kafka-streams-internals-TaskManager.adoc#activeTask, active stream tasks>> for every partition with records (see <<kafka-streams-internals-StreamThread.adoc#addRecordsToTasks, StreamThread.addRecordsToTasks>>).
 
-A single `StreamTask` is responsible for processing records from <<kafka-streams-internals-StreamTask.adoc#partitions, one or more assigned partitions>> (using <<kafka-streams-internals-StreamTask.adoc#partitionGroup, partition queues of RecordQueues per TopicPartition>>).
+A `StreamTask` is responsible for <<kafka-streams-internals-StreamTask.adoc#process, processing records>> (one at a time) from the <<kafka-streams-internals-StreamTask.adoc#partitions, assigned partitions>> (using <<kafka-streams-internals-StreamTask.adoc#partitionGroup, record buffers (partition queues of RecordQueues per TopicPartition)>>).
+
+When <<kafka-streams-internals-StreamTask.adoc#creating-instance, created>>, `StreamTask` creates a <<kafka-streams-internals-PartitionGroup.adoc#, PartitionGroup>> (with <<kafka-streams-internals-RecordQueue.adoc#, RecordQueues>>). A `RecordQueue` is created with the <<kafka-streams-internals-SourceNode.adoc#, SourceNode>> of the <<kafka-streams-internals-ProcessorTopology.adoc#, ProcessorTopology>> for the topic of the partition.
+
+A `RecordQueue` is simply a partition and a `SourceNode`.
+
+When requested to <<process, process a single record>>, `StreamTask` requests the `PartitionGroup` for the <<kafka-streams-internals-PartitionGroup.adoc#nextRecord, next stamped record (record with timestamp) and the RecordQueue>> and simply requests the corresponding `SourceNode` to <<kafka-streams-internals-SourceNode.adoc#process, process the record>>.
+
+When requested to <<kafka-streams-internals-SourceNode.adoc#process, process a record>>, a `SourceNode` simply requests the <<kafka-streams-ProcessorContext.adoc#, ProcessorContext>> to <<kafka-streams-ProcessorContext.adoc#forward, forward it (down the topology)>> and so the record goes (_visits_ / _is pushed down to_) every node in the topology.
+
+`StreamThread` uses <<kafka-streams-internals-TaskManager.adoc#, TaskManager>> for <<kafka-streams-internals-TaskManager.adoc#process, processing records>> using <<kafka-streams-internals-AssignedStreamsTasks.adoc#, AssignedStreamsTasks>> (that uses the <<kafka-streams-internals-AssignedTasks.adoc#, running StreamTasks>>).
+
+<<kafka-streams-internals-StreamThread.adoc#runOnce, Every loop of StreamThread>> (through the `TaskManager` and the `AssignedStreamsTasks`), every running `StreamTask` is requested to <<kafka-streams-internals-StreamTask.adoc#process, process a single record>> (the next <<kafka-streams-internals-StampedRecord.adoc#, StampedRecord>> from the <<kafka-streams-internals-PartitionGroup.adoc#, PartitionGroup>>).
 
 When requested for a <<kafka-streams-internals-TaskCreator.adoc#createTask, StreamTask>>, `TaskCreator` is given partitions.
 
